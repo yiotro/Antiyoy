@@ -1,0 +1,17 @@
+package yio.tro.antiyoy.behaviors.menu_creation;
+
+import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.behaviors.ReactBehavior;
+
+/**
+ * Created by ivan on 05.08.14.
+ */
+public class RbCampaignMenu extends ReactBehavior {
+
+    @Override
+    public void reactAction(ButtonLighty buttonLighty) {
+        getYioGdxGame(buttonLighty).setGamePaused(true);
+        buttonLighty.menuControllerLighty.createCampaignMenu();
+        getYioGdxGame(buttonLighty).setAnimToPlayButtonSpecial();
+    }
+}
