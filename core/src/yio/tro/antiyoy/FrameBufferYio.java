@@ -17,7 +17,15 @@ public class FrameBufferYio extends FrameBuffer{
         try {
             return new FrameBufferYio(format, width, height, hasDepth, 1);
         } catch (Exception e) {
-            return new FrameBufferYio(format, width / 2, height / 2, hasDepth, 0.5f);
+            try {
+                return new FrameBufferYio(Pixmap.Format.RGBA8888, width, height, hasDepth, 1);
+            } catch (Exception e2) {
+                try {
+                    return new FrameBufferYio(Pixmap.Format.RGB565, width, height, true, 1);
+                } catch (Exception e3) {
+                    return new FrameBufferYio(format, width / 2, height / 2, hasDepth, 0.5f);
+                }
+            }
         }
     }
 
