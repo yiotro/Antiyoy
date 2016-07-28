@@ -147,6 +147,16 @@ public class MenuControllerLighty {
     }
 
 
+    public void onResume() {
+        ListIterator iterator = buttons.listIterator();
+        while (iterator.hasNext()) {
+            ButtonLighty buttonLighty = (ButtonLighty) iterator.next();
+            if (buttonLighty.isVisible()) continue;
+            iterator.remove();
+        }
+    }
+
+
     private void loadButtonOnce(ButtonLighty buttonLighty, String fileName) {
         if (buttonLighty.notRendered()) {
             buttonLighty.loadTexture(fileName);
@@ -200,7 +210,7 @@ public class MenuControllerLighty {
             if (buttonLighty.id >= 22 && buttonLighty.id <= 29 && buttonLighty.isVisible()) {
                 buttonLighty.factorModel.beginDestroying(1, 2.1);
             }
-            if (buttonLighty.id == 30) {
+            if (buttonLighty.id == 30 && buttonLighty.factorModel.get() > 0) {
                 buttonLighty.factorModel.setValues(1, 0);
                 buttonLighty.factorModel.beginDestroying(1, 1);
             }

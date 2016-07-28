@@ -625,6 +625,11 @@ public class GameView {
     }
 
 
+    public void onResume() {
+        loadTextures();
+    }
+
+
     private void renderSelectedHexes() {
         for (Hex hex : gameController.selectedHexes) {
             if (hex.selectionFactor.get() < 0.01) continue;

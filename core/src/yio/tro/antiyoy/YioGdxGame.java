@@ -642,8 +642,13 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
     public void setAnimToPlayButtonSpecial() {
         ButtonLighty buttonLighty = menuControllerLighty.getButtonById(3);
-        animX = buttonLighty.cx;
-        animY = buttonLighty.cy;
+        if (buttonLighty != null) {
+            animX = buttonLighty.cx;
+            animY = buttonLighty.cy;
+        } else {
+            animX = w/2;
+            animY = h/2;
+        }
         transitionFactor.setValues(0.15, 0);
     }
 
@@ -950,6 +955,15 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     public boolean scrolled(int amount) {
         if (gameView.factorModel.get() > 0.1) gameController.scrolled(amount);
         return true;
+    }
+
+
+    @Override
+    public void resume() {
+        super.resume();
+        menuControllerLighty.onResume();
+        gameView.onResume();
+        System.out.println("Yio -> On resume.");
     }
 
 
