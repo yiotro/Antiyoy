@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.behaviors;
 
 import com.badlogic.gdx.Gdx;
-import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.ButtonYio;
 
 /**
  * Created by ivan on 05.08.14.
@@ -9,8 +9,8 @@ import yio.tro.antiyoy.ButtonLighty;
 public class RbExit extends ReactBehavior {
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
-        getYioGdxGame(buttonLighty).close();
+    public void reactAction(ButtonYio buttonYio) {
+        getYioGdxGame(buttonYio).close();
         Gdx.app.exit();
     }
 }

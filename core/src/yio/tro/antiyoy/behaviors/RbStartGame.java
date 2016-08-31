@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors;
 
-import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.ButtonYio;
 
 /**
  * Created by ivan on 05.08.14.
@@ -8,8 +8,10 @@ import yio.tro.antiyoy.ButtonLighty;
 public class RbStartGame extends ReactBehavior {
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
-        getYioGdxGame(buttonLighty).startGame(true, true);
-        getYioGdxGame(buttonLighty).setAnimToStartButtonSpecial();
+    public void reactAction(ButtonYio buttonYio) {
+        getYioGdxGame(buttonYio).menuControllerYio.getButtonById(80).setTouchable(false);
+        getYioGdxGame(buttonYio).startGame(true, true);
+        getYioGdxGame(buttonYio).setAnimToStartButtonSpecial();
+        getYioGdxGame(buttonYio).menuControllerYio.saveSkirmishSettings();
     }
 }

@@ -13,6 +13,8 @@ import yio.tro.antiyoy.factor_yio.FactorYio;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+import static yio.tro.antiyoy.YioGdxGame.getDifficultyNameByPower;
+
 /**
  * Created by ivan on 06.10.2014.
  */
@@ -20,7 +22,7 @@ public class ScrollerYio {
 
     float pos, speed, topLimit, bottomLimit, lineHeight, maxOffset;
     private YioGdxGame yioGdxGame;
-    SimpleRectangle frame, animFrame;
+    RectangleYio frame, animFrame;
     ArrayList<TextureRegion> cache, icons;
     private ArrayList<String> strings;
     FactorYio factorModel, selectionFactor, selAlphaFactor, speedCutFactor;
@@ -33,12 +35,12 @@ public class ScrollerYio {
     int selectionIndex;
 
 
-    public ScrollerYio(YioGdxGame yioGdxGame, SimpleRectangle frame, float lineHeight, SpriteBatch batch) {
+    public ScrollerYio(YioGdxGame yioGdxGame, RectangleYio frame, float lineHeight, SpriteBatch batch) {
         this.yioGdxGame = yioGdxGame;
         this.frame = frame;
         this.lineHeight = lineHeight;
         this.batch = batch;
-        this.animFrame = new SimpleRectangle(frame);
+        this.animFrame = new RectangleYio(frame);
         selectionIndex = -1;
         pos = 0;
         speed = 0;
@@ -100,41 +102,6 @@ public class ScrollerYio {
         String diffString = "";
         diffString = getDifficultyNameByPower(languagesManager, difficulty);
         return index + " " + diffString;
-    }
-
-
-    public static String getDifficultyNameByPower(LanguagesManager languagesManager, int difficulty) {
-        String diffString = null;
-        switch (difficulty) {
-            case GameController.EASY:
-                diffString = languagesManager.getString("easy");
-                break;
-            case GameController.NORMAL:
-                diffString = languagesManager.getString("normal");
-                break;
-            case GameController.HARD:
-                diffString = languagesManager.getString("hard");
-                break;
-            case GameController.EXPERT:
-                diffString = languagesManager.getString("expert");
-                break;
-        }
-        return diffString;
-    }
-
-
-    public boolean isLevelLocked(int index) {
-        if (index == CampaignLevelFactory.NORMAL_LEVELS_START) return false;
-        if (index == CampaignLevelFactory.HARD_LEVELS_START) return false;
-        if (index == CampaignLevelFactory.EXPERT_LEVELS_START) return false;
-        if (yioGdxGame.gameController != null) return yioGdxGame.gameController.progress < index;
-        return yioGdxGame.selectedLevelIndex < index;
-    }
-
-
-    public boolean isLevelComplete(int index) {
-        if (yioGdxGame.gameController != null) return yioGdxGame.gameController.progress > index;
-        return yioGdxGame.selectedLevelIndex > index;
     }
 
 

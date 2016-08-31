@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 class SliderYio {
 
-    private final MenuControllerLighty menuControllerLighty;
+    private final MenuControllerYio menuControllerYio;
     float runnerValue, currentVerticalPos, circleSize, segmentSize, textWidth;
     float viewMagnifier, circleDefaultSize, verticalTouchOffset, viewX, viewWidth;
     FactorYio appearFactor;
@@ -31,8 +31,8 @@ class SliderYio {
     ArrayList<SliderYio> listeners;
 
 
-    public SliderYio(MenuControllerLighty menuControllerLighty) {
-        this.menuControllerLighty = menuControllerLighty;
+    public SliderYio(MenuControllerYio menuControllerYio) {
+        this.menuControllerYio = menuControllerYio;
         appearFactor = new FactorYio();
         sizeFactor = new FactorYio();
         pos = new Rect(0, 0, 0, 0);
@@ -147,6 +147,12 @@ class SliderYio {
     }
 
 
+    public void setRunnerValueByIndex(int index) {
+        setRunnerValue((float)index / numberOfSegments);
+        updateValueString();
+    }
+
+
     private void setNumberOfSegments(int numberOfSegments) {
         this.numberOfSegments = numberOfSegments;
         segmentSize = 1.01f / numberOfSegments;
@@ -225,7 +231,7 @@ class SliderYio {
 
 
     void updateValueString() {
-        LanguagesManager languagesManager = menuControllerLighty.languagesManager;
+        LanguagesManager languagesManager = menuControllerYio.languagesManager;
         switch (configureType) {
             default:
             case CONFIGURE_HUMANS:
@@ -370,12 +376,12 @@ class SliderYio {
 
 
     private void configureHumans(LanguagesManager languagesManager) {
-        if (getCurrentRunnerIndex() + minNumber <= 1)
-            valueString = (getCurrentRunnerIndex() + minNumber) + " " + languagesManager.getString("human1");
-        else if (getCurrentRunnerIndex() + minNumber <= 4)
-            valueString = (getCurrentRunnerIndex() + minNumber) + " " + languagesManager.getString("human2");
+        if (getCurrentRunnerIndex() + minNumber == 0)
+            valueString = languagesManager.getString("ai_only");
+        else if (getCurrentRunnerIndex() + minNumber == 1)
+            valueString = languagesManager.getString("single_player");
         else
-            valueString = (getCurrentRunnerIndex() + minNumber) + " " + languagesManager.getString("human3");
+            valueString = languagesManager.getString("multiplayer") + " " + (getCurrentRunnerIndex() + minNumber) + "x";
     }
 
 

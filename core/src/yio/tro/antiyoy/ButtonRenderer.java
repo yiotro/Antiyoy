@@ -8,8 +8,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.utils.StringBuilder;
+
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  * Created by ivan on 22.07.14.
@@ -17,8 +20,10 @@ import com.badlogic.gdx.math.Matrix4;
 class ButtonRenderer {
     private FrameBuffer frameBuffer;
     private final SpriteBatch batch;
-    private SimpleRectangle pos;
+    private RectangleYio pos;
     private TextureRegion buttonBackground1, buttonBackground2, buttonBackground3, bigButtonBackground;
+    private ArrayList<String> text;
+    private int horizontalOffset;
 
 
     ButtonRenderer() {
@@ -34,8 +39,8 @@ class ButtonRenderer {
     }
 
 
-    TextureRegion getButtonBackground(ButtonLighty buttonLighty) {
-        switch (buttonLighty.id % 3) {
+    TextureRegion getButtonBackground(ButtonYio buttonYio) {
+        switch (buttonYio.id % 3) {
             case 0:
                 return buttonBackground1;
             case 1:
@@ -48,37 +53,77 @@ class ButtonRenderer {
     }
 
 
-    private void beginRender(ButtonLighty buttonLighty, BitmapFont font) {
+    private void beginRender(ButtonYio buttonYio, BitmapFont font, int FONT_SIZE) {
+        horizontalOffset = (int) (0.3f * FONT_SIZE);
         frameBuffer = FrameBufferYio.getInstance(Pixmap.Format.RGB565, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         frameBuffer.begin();
-        Gdx.gl.glClearColor(buttonLighty.backColor.r, buttonLighty.backColor.g, buttonLighty.backColor.b, 1);
+        Gdx.gl.glClearColor(buttonYio.backColor.r, buttonYio.backColor.g, buttonYio.backColor.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Matrix4 matrix4 = new Matrix4();
-        int orthoWidth = getExpectedOrthoWidth(buttonLighty, font);
+        int orthoWidth = getExpectedOrthoWidth(buttonYio, font);
         int orthoHeight = (orthoWidth / Gdx.graphics.getWidth()) * Gdx.graphics.getHeight();
         matrix4.setToOrtho2D(0, 0, orthoWidth, orthoHeight);
         batch.setProjectionMatrix(matrix4);
         batch.begin();
-        if (buttonLighty.position.height < 0.2 * Gdx.graphics.getHeight())
-            batch.draw(getButtonBackground(buttonLighty), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        if (buttonYio.position.height < 0.2 * Gdx.graphics.getHeight())
+            batch.draw(getButtonBackground(buttonYio), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         else
             batch.draw(bigButtonBackground, 0, 0, orthoWidth, orthoHeight);
         batch.end();
-        pos = new SimpleRectangle(buttonLighty.position);
+        pos = new RectangleYio(buttonYio.position);
+        initText(buttonYio, font);
     }
 
 
-    void endRender(ButtonLighty buttonLighty) {
+    private void initText(ButtonYio buttonYio, BitmapFont font) {
+        text = new ArrayList<>();
+        if (buttonYio.text.size() == 1) {
+            text = buttonYio.text;
+            return;
+        }
+        double currentX, currentWidth;
+        StringBuilder builder = new StringBuilder();
+        for (String srcLine : buttonYio.text) {
+            currentX = horizontalOffset;
+            ArrayList<String> tokens = convertSourceLineToTokens(srcLine);
+            for (String token : tokens) {
+                currentWidth = GraphicsYio.getTextWidth(font, token);
+                if (currentX + currentWidth > Gdx.graphics.getWidth()) {
+                    text.add(builder.toString());
+                    builder = new StringBuilder();
+                    currentX = 0;
+                }
+                builder.append(token);
+                currentX += currentWidth;
+            }
+            text.add(builder.toString());
+            builder = new StringBuilder();
+        }
+    }
+
+
+    private ArrayList<String> convertSourceLineToTokens(String line) {
+        ArrayList<String> tokens = new ArrayList<>();
+        StringTokenizer tokenizer = new StringTokenizer(line, " ");
+        while (tokenizer.hasMoreTokens()) {
+            String token = tokenizer.nextToken();
+            tokens.add(token + " ");
+        }
+        return tokens;
+    }
+
+
+    void endRender(ButtonYio buttonYio) {
         Texture texture = frameBuffer.getColorBufferTexture();
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         float f = ((FrameBufferYio) frameBuffer).f;
-        buttonLighty.textureRegion = new TextureRegion(texture, (int) (pos.width * f), (int) (pos.height * f));
+        buttonYio.textureRegion = new TextureRegion(texture, (int) (pos.width * f), (int) (pos.height * f));
         frameBuffer.end();
         frameBuffer.dispose();
     }
 
 
-    private int getExpectedOrthoWidth(ButtonLighty buttonLighty, BitmapFont font) {
+    private int getExpectedOrthoWidth(ButtonYio buttonYio, BitmapFont font) {
 //        float longestLineLength = 0, currentLineLength;
 //        for (String line : buttonLighty.text) {
 //            currentLineLength = font.getBounds(line).width;
@@ -98,14 +143,13 @@ class ButtonRenderer {
     }
 
 
-    public void renderButton(ButtonLighty buttonLighty, BitmapFont font, int FONT_SIZE) {
-        beginRender(buttonLighty, font);
+    public void renderButton(ButtonYio buttonYio, BitmapFont font, int FONT_SIZE) {
+        beginRender(buttonYio, font, FONT_SIZE);
         float ratio = (float) (pos.width / pos.height);
         int lineHeight = (int) (1.2f * FONT_SIZE);
-        int horizontalOffset = (int) (0.3f * FONT_SIZE);
-        if (buttonLighty.text.size() == 1) {
+        if (text.size() == 1) {
             //if button has single line of text then center it
-            float textWidth = getTextWidth(buttonLighty.text.get(0), font);
+            float textWidth = getTextWidth(text.get(0), font);
             horizontalOffset = (int) (0.5 * (1.35f * FONT_SIZE * ratio - textWidth));
             if (horizontalOffset < 0) {
                 horizontalOffset = (int) (0.3f * FONT_SIZE);
@@ -116,23 +160,23 @@ class ButtonRenderer {
         float longestLineLength = 0, currentLineLength;
         batch.begin();
         font.setColor(0, 0, 0, 1);
-        for (String line : buttonLighty.text) {
+        for (String line : text) {
             font.draw(batch, line, horizontalOffset, verticalOffset + lineNumber * lineHeight);
             currentLineLength = getTextWidth(line, font);
             if (currentLineLength > longestLineLength) longestLineLength = currentLineLength;
             lineNumber++;
         }
         batch.end();
-        pos.height = buttonLighty.text.size() * lineHeight + verticalOffset / 2;
+        pos.height = text.size() * lineHeight + verticalOffset / 2;
         pos.width = pos.height * ratio;
         if (longestLineLength > pos.width - 0.3f * (float) lineHeight) {
             pos.width = longestLineLength + 2 * horizontalOffset;
         }
-        endRender(buttonLighty);
+        endRender(buttonYio);
     }
 
 
-    public void renderButton(ButtonLighty buttonLighty) {
-        renderButton(buttonLighty, YioGdxGame.buttonFont, YioGdxGame.FONT_SIZE);
+    public void renderButton(ButtonYio buttonYio) {
+        renderButton(buttonYio, YioGdxGame.buttonFont, YioGdxGame.FONT_SIZE);
     }
 }

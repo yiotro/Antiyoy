@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors.editor;
 
-import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.ButtonYio;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 
 /**
@@ -9,8 +9,8 @@ import yio.tro.antiyoy.behaviors.ReactBehavior;
 public class RbShowOptionsPanel extends ReactBehavior {
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
-        buttonLighty.menuControllerLighty.hideAllEditorPanels();
-        buttonLighty.menuControllerLighty.showEditorOptionsPanel();
+    public void reactAction(ButtonYio buttonYio) {
+        buttonYio.menuControllerYio.hideAllEditorPanels();
+        buttonYio.menuControllerYio.showEditorOptionsPanel();
     }
 }

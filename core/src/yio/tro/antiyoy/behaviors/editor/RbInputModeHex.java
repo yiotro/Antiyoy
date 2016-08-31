@@ -1,10 +1,8 @@
 package yio.tro.antiyoy.behaviors.editor;
 
-import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.ButtonYio;
 import yio.tro.antiyoy.LevelEditor;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
-
-import java.util.Random;
 
 /**
  * Created by ivan on 27.11.2015.
@@ -12,8 +10,8 @@ import java.util.Random;
 public class RbInputModeHex extends ReactBehavior {
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
-        getGameController(buttonLighty).getLevelEditor().setInputMode(LevelEditor.MODE_SET_HEX);
-        getGameController(buttonLighty).getLevelEditor().setInputColor(buttonLighty.id - 150);
+    public void reactAction(ButtonYio buttonYio) {
+        getGameController(buttonYio).getLevelEditor().setInputMode(LevelEditor.MODE_SET_HEX);
+        getGameController(buttonYio).getLevelEditor().setInputColor(buttonYio.id - 150);
     }
 }

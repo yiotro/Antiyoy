@@ -167,8 +167,30 @@ public class LevelEditor {
 
 
     public void importLevel() {
+        String fromClipboard = "";
+
         Clipboard clipboard = Gdx.app.getClipboard();
-        String fromClipboard = clipboard.getContents();
+        fromClipboard = clipboard.getContents();
+
+//        if (YioGdxGame.ANDROID) {
+//            GetAndroidClipboardContents getAndroidClipboardContents = new GetAndroidClipboardContents();
+//            getAndroidClipboardContents.run();
+//            while (!getAndroidClipboardContents.isComplete()) {
+//                try {
+//                    Thread.holdsLock(Thread.currentThread());
+//                    Thread.currentThread().wait(100);
+//                    System.out.println("waiting!!!!!");
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            System.out.println("--------------------- 2");
+//            fromClipboard = getAndroidClipboardContents.getResult();
+//        } else {
+//            Clipboard clipboard = Gdx.app.getClipboard();
+//            fromClipboard = clipboard.getContents();
+//        }
+
         if (isValidLevelString(fromClipboard)) {
             recreateLevelFromString(fromClipboard, true);
         }
@@ -179,7 +201,7 @@ public class LevelEditor {
         String fullLevel = getFullLevelString();
         Clipboard clipboard = Gdx.app.getClipboard();
         clipboard.setContents(fullLevel);
-        gameController.yioGdxGame.menuControllerLighty.showNotification(gameController.yioGdxGame.menuControllerLighty.languagesManager.getString("exported"), true);
+        gameController.yioGdxGame.menuControllerYio.showNotification(gameController.yioGdxGame.menuControllerYio.languagesManager.getString("exported"), true);
     }
 
 
@@ -300,7 +322,7 @@ public class LevelEditor {
         numPlayers++;
         if (numPlayers > GameController.MAX_COLOR_NUMBER) numPlayers = 1;
         gameController.setPlayersNumber(numPlayers);
-        gameController.yioGdxGame.menuControllerLighty.showNotification(getLangManager().getString("player_number") + " " + numPlayers, true);
+        gameController.yioGdxGame.menuControllerYio.showNotification(getLangManager().getString("player_number") + " " + numPlayers, true);
     }
 
 
@@ -309,7 +331,7 @@ public class LevelEditor {
         diff++;
         if (diff > GameController.EXPERT) diff = GameController.EASY;
         gameController.setDifficulty(diff);
-        gameController.yioGdxGame.menuControllerLighty.showNotification(getLangManager().getString("difficulty") + " " + getDiffString(diff), true);
+        gameController.yioGdxGame.menuControllerYio.showNotification(getLangManager().getString("difficulty") + " " + getDiffString(diff), true);
     }
 
 
@@ -329,7 +351,7 @@ public class LevelEditor {
 
 
     private LanguagesManager getLangManager() {
-        return gameController.yioGdxGame.menuControllerLighty.languagesManager;
+        return gameController.yioGdxGame.menuControllerYio.languagesManager;
     }
 
 

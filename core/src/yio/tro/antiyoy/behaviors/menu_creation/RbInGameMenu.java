@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors.menu_creation;
 
-import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.ButtonYio;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 
 /**
@@ -9,9 +9,9 @@ import yio.tro.antiyoy.behaviors.ReactBehavior;
 public class RbInGameMenu extends ReactBehavior {
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
-        getGameController(buttonLighty).deselectAll(); // stupid bug fix to prevent flickering of selection
-        buttonLighty.menuControllerLighty.createInGameMenu();
-        getYioGdxGame(buttonLighty).setGamePaused(true);
+    public void reactAction(ButtonYio buttonYio) {
+        getGameController(buttonYio).deselectAll(); // stupid bug fix to prevent flickering of selection
+        buttonYio.menuControllerYio.createInGameMenu();
+        getYioGdxGame(buttonYio).setGamePaused(true);
     }
 }

@@ -34,7 +34,7 @@ public class GameView {
     OrthographicCamera orthoCam, cacheCam;
     TextureRegion cacheLevelTextures[], sideShadow, moveZonePixel, responseAnimHexTexture, selectionBorder, defenseIcon;
     FrameBuffer frameBufferList[];
-    SimpleRectangle screenRectangle;
+    RectangleYio screenRectangle;
     PointYio pos;
     double camBlurSpeed, zoomLevelOne, zoomLevelTwo;
 
@@ -68,7 +68,7 @@ public class GameView {
         for (int i = 0; i < frameBufferList.length; i++)
             frameBufferList[i] = FrameBufferYio.getInstance(Pixmap.Format.RGB565, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         loadTextures();
-        screenRectangle = new SimpleRectangle(0, 0, w, h);
+        screenRectangle = new RectangleYio(0, 0, w, h);
         camBlurSpeed = 0.001 * w;
     }
 
@@ -424,7 +424,7 @@ public class GameView {
         double a2 = a + 0.5 * Math.PI;
         double cx = 0.5 * (hex1.pos.x + hex2.pos.x);
         double cy = 0.5 * (hex1.pos.y + hex2.pos.y);
-        double s = 0.5 * gameController.hexSize * (0.7 + 0.3 * factor);
+        double s = 0.5 * gameController.hexSize * (0.7 + 0.37 * factor);
         drawSpecialHexedLine(cx + offset * Math.cos(a) + s * Math.cos(a2), cy + offset * Math.sin(a) + s * Math.sin(a2), cx + offset * Math.cos(a) - s * Math.cos(a2), cy + offset * Math.sin(a) - s * Math.sin(a2), thickness, spriteBatch, textureRegion, rotation);
     }
 

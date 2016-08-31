@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors.editor;
 
-import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.ButtonYio;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 
 /**
@@ -9,8 +9,8 @@ import yio.tro.antiyoy.behaviors.ReactBehavior;
 public class RbEditorSlotMenu extends ReactBehavior {
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
-        buttonLighty.menuControllerLighty.createEditorSlotMenu();
-        getGameController(buttonLighty).turnOffEditorMode();
+    public void reactAction(ButtonYio buttonYio) {
+        buttonYio.menuControllerYio.createEditorSlotMenu();
+        getGameController(buttonYio).turnOffEditorMode();
     }
 }

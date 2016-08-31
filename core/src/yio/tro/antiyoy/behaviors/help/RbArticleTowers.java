@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors.help;
 
-import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.ButtonYio;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 
 /**
@@ -9,7 +9,7 @@ import yio.tro.antiyoy.behaviors.ReactBehavior;
 public class RbArticleTowers extends ReactBehavior {
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
-        buttonLighty.menuControllerLighty.createInfoMenu("help_towers_article", ReactBehavior.rbHelpIndex, 18);
+    public void reactAction(ButtonYio buttonYio) {
+        buttonYio.menuControllerYio.createInfoMenu("help_towers_article", ReactBehavior.rbHelpIndex, 18);
     }
 }

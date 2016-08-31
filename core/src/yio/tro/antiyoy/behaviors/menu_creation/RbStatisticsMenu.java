@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors.menu_creation;
 
-import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.ButtonYio;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 
 /**
@@ -9,7 +9,7 @@ import yio.tro.antiyoy.behaviors.ReactBehavior;
 public class RbStatisticsMenu extends ReactBehavior {
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
-        buttonLighty.menuControllerLighty.createStatisticsMenu(getGameController(buttonLighty).statistics);
+    public void reactAction(ButtonYio buttonYio) {
+        buttonYio.menuControllerYio.createStatisticsMenu(getGameController(buttonYio).statistics);
     }
 }

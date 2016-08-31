@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors;
 
-import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.ButtonYio;
 
 /**
  * Created by ivan on 10.07.2015.
@@ -8,7 +8,7 @@ import yio.tro.antiyoy.ButtonLighty;
 public class RbDebugActions extends ReactBehavior {
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
-        getGameController(buttonLighty).debugActions();
+    public void reactAction(ButtonYio buttonYio) {
+        getGameController(buttonYio).debugActions();
     }
 }

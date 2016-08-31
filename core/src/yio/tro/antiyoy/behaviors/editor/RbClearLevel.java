@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors.editor;
 
-import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.ButtonYio;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 
 /**
@@ -9,7 +9,7 @@ import yio.tro.antiyoy.behaviors.ReactBehavior;
 public class RbClearLevel extends ReactBehavior {
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
-        getGameController(buttonLighty).clearLevel();
+    public void reactAction(ButtonYio buttonYio) {
+        getGameController(buttonYio).clearLevel();
     }
 }

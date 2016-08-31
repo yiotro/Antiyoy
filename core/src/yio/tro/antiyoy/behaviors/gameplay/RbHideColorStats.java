@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors.gameplay;
 
-import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.ButtonYio;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 
 /**
@@ -9,7 +9,7 @@ import yio.tro.antiyoy.behaviors.ReactBehavior;
 public class RbHideColorStats extends ReactBehavior {
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
-        buttonLighty.menuControllerLighty.hideColorStats();
+    public void reactAction(ButtonYio buttonYio) {
+        buttonYio.menuControllerYio.hideColorStats();
     }
 }

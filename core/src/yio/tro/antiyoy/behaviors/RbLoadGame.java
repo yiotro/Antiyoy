@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors;
 
-import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.ButtonYio;
 import yio.tro.antiyoy.YioGdxGame;
 
 /**
@@ -9,11 +9,11 @@ import yio.tro.antiyoy.YioGdxGame;
 public class RbLoadGame extends ReactBehavior {
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
+    public void reactAction(ButtonYio buttonYio) {
         if (YioGdxGame.interface_type == YioGdxGame.INTERFACE_SIMPLE) {
-            getGameController(buttonLighty).loadGame();
+            getGameController(buttonYio).loadGame();
         } else { // complicated
-            buttonLighty.menuControllerLighty.createSaveSlotsMenu(true);
+            buttonYio.menuControllerYio.createSaveSlotsMenu(true);
         }
     }
 }

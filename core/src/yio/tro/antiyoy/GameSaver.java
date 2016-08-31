@@ -95,7 +95,7 @@ public class GameSaver {
         String dateString = dateFormat.format(date);
         prefs.putString("date", dateString);
         prefs.flush();
-        gameController.yioGdxGame.menuControllerLighty.updateSaveSlotButton(slotIndex);
+        gameController.yioGdxGame.menuControllerYio.updateSaveSlotButton(slotIndex);
     }
 
 

@@ -19,7 +19,7 @@ public class RbShowColorStats extends ReactBehavior {
 
     private FrameBuffer frameBuffer;
     private SpriteBatch batch;
-    private SimpleRectangle pos;
+    private RectangleYio pos;
     TextureRegion buttonBackground, greenPixel, redPixel, bluePixel, cyanPixel, yellowPixel, blackPixel;
     TextureRegion pixelColor1, pixelColor2, pixelColor3;
 
@@ -40,9 +40,9 @@ public class RbShowColorStats extends ReactBehavior {
 
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
-        buttonLighty.menuControllerLighty.showColorStats();
-        renderStatButton(buttonLighty.menuControllerLighty.getButtonById(56321), getGameController(buttonLighty).getPlayerHexCount());
+    public void reactAction(ButtonYio buttonYio) {
+        buttonYio.menuControllerYio.showColorStats();
+        renderStatButton(buttonYio.menuControllerYio.getButtonById(56321), getGameController(buttonYio).getPlayerHexCount());
     }
 
 
@@ -100,7 +100,7 @@ public class RbShowColorStats extends ReactBehavior {
     }
 
 
-    void renderStatButton(ButtonLighty statButton, int playerHexCount[]) {
+    void renderStatButton(ButtonYio statButton, int playerHexCount[]) {
         initEverything();
         beginRender(statButton, YioGdxGame.gameFont);
         batch.begin();
@@ -130,11 +130,11 @@ public class RbShowColorStats extends ReactBehavior {
     }
 
 
-    private void beginRender(ButtonLighty buttonLighty, BitmapFont font) {
+    private void beginRender(ButtonYio buttonYio, BitmapFont font) {
         if (frameBuffer != null) frameBuffer.dispose();
         frameBuffer = FrameBufferYio.getInstance(Pixmap.Format.RGB565, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 2, false);
         frameBuffer.begin();
-        Gdx.gl.glClearColor(buttonLighty.backColor.r, buttonLighty.backColor.g, buttonLighty.backColor.b, 1);
+        Gdx.gl.glClearColor(buttonYio.backColor.r, buttonYio.backColor.g, buttonYio.backColor.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Matrix4 matrix4 = new Matrix4();
         int orthoWidth = Gdx.graphics.getWidth();
@@ -144,15 +144,15 @@ public class RbShowColorStats extends ReactBehavior {
         batch.begin();
         batch.draw(buttonBackground, 0, 0, orthoWidth, orthoHeight);
         batch.end();
-        pos = new SimpleRectangle(buttonLighty.position);
+        pos = new RectangleYio(buttonYio.position);
     }
 
 
-    void endRender(ButtonLighty buttonLighty) {
+    void endRender(ButtonYio buttonYio) {
         Texture texture = frameBuffer.getColorBufferTexture();
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         float f = ((FrameBufferYio) frameBuffer).f;
-        buttonLighty.textureRegion = new TextureRegion(texture, (int) (pos.width * f), (int) (pos.height * f));
+        buttonYio.textureRegion = new TextureRegion(texture, (int) (pos.width * f), (int) (pos.height * f));
         frameBuffer.end();
         frameBuffer.dispose();
     }

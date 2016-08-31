@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors;
 
-import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.ButtonYio;
 import yio.tro.antiyoy.YioGdxGame;
 
 /**
@@ -9,12 +9,12 @@ import yio.tro.antiyoy.YioGdxGame;
 public class RbSaveGame extends ReactBehavior {
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
+    public void reactAction(ButtonYio buttonYio) {
         if (YioGdxGame.interface_type == YioGdxGame.INTERFACE_SIMPLE) {
-            getGameController(buttonLighty).saveGame();
-            buttonLighty.menuControllerLighty.showNotification(buttonLighty.menuControllerLighty.languagesManager.getString("game_saved"), true);
+            getGameController(buttonYio).saveGame();
+            buttonYio.menuControllerYio.showNotification(buttonYio.menuControllerYio.languagesManager.getString("game_saved"), true);
         } else { // complicated
-            buttonLighty.menuControllerLighty.createSaveSlotsMenu(false);
+            buttonYio.menuControllerYio.createSaveSlotsMenu(false);
         }
     }
 }

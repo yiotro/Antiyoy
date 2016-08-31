@@ -1,7 +1,6 @@
 package yio.tro.antiyoy.behaviors.editor;
 
-import yio.tro.antiyoy.ButtonLighty;
-import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.ButtonYio;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 
 /**
@@ -10,8 +9,8 @@ import yio.tro.antiyoy.behaviors.ReactBehavior;
 public class RbStartEditorMode extends ReactBehavior {
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
+    public void reactAction(ButtonYio buttonYio) {
 //        getYioGdxGame(buttonLighty).startInEditorMode();
-        getGameController(buttonLighty).getLevelEditor().loadSlot();
+        getGameController(buttonYio).getLevelEditor().loadSlot();
     }
 }

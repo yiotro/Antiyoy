@@ -1,7 +1,6 @@
 package yio.tro.antiyoy.behaviors;
 
-import yio.tro.antiyoy.ButtonLighty;
-import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.ButtonYio;
 
 /**
  * Created by ivan on 11.11.2015.
@@ -9,11 +8,11 @@ import yio.tro.antiyoy.YioGdxGame;
 public class RbRestartGame extends ReactBehavior {
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
-        if (buttonLighty.id == 221) { // restart game confirmed
-            getYioGdxGame(buttonLighty).restartGame();
+    public void reactAction(ButtonYio buttonYio) {
+        if (buttonYio.id == 221) { // restart game confirmed
+            getYioGdxGame(buttonYio).restartGame();
         } else {
-            buttonLighty.menuControllerLighty.createConfirmRestartMenu();
+            buttonYio.menuControllerYio.createConfirmRestartMenu();
         }
     }
 }

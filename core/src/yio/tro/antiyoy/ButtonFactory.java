@@ -4,31 +4,31 @@ package yio.tro.antiyoy;
  * Created by ivan on 22.07.14.
  */
 class ButtonFactory {
-    private final MenuControllerLighty menuControllerLighty;
+    private final MenuControllerYio menuControllerYio;
     private final ButtonRenderer buttonRenderer;
 
 
-    public ButtonFactory(MenuControllerLighty menuControllerLighty) {
-        this.menuControllerLighty = menuControllerLighty;
+    public ButtonFactory(MenuControllerYio menuControllerYio) {
+        this.menuControllerYio = menuControllerYio;
         buttonRenderer = new ButtonRenderer();
     }
 
 
-    public ButtonLighty getButton(SimpleRectangle position, int id, String text) {
-        ButtonLighty buttonLighty = menuControllerLighty.getButtonById(id);
-        if (buttonLighty == null) { // if it's the first time
-            buttonLighty = new ButtonLighty(position, id, menuControllerLighty);
+    public ButtonYio getButton(RectangleYio position, int id, String text) {
+        ButtonYio buttonYio = menuControllerYio.getButtonById(id);
+        if (buttonYio == null) { // if it's the first time
+            buttonYio = new ButtonYio(position, id, menuControllerYio);
             if (text != null) {
-                buttonLighty.addTextLine(text);
-                buttonRenderer.renderButton(buttonLighty);
+                buttonYio.addTextLine(text);
+                buttonRenderer.renderButton(buttonYio);
             }
-            menuControllerLighty.addMenuBlockToArray(buttonLighty);
+            menuControllerYio.addMenuBlockToArray(buttonYio);
         }
-        buttonLighty.setVisible(true);
-        buttonLighty.setTouchable(true);
-        buttonLighty.factorModel.beginSpawning(MenuControllerLighty.SPAWN_ANIM, MenuControllerLighty.SPAWN_SPEED);
-        buttonLighty.factorModel.setValues(0, 0.001);
-        buttonLighty.touchAnimation = true;
-        return buttonLighty;
+        buttonYio.setVisible(true);
+        buttonYio.setTouchable(true);
+        buttonYio.factorModel.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
+        buttonYio.factorModel.setValues(0, 0.001);
+        buttonYio.touchAnimation = true;
+        return buttonYio;
     }
 }

@@ -84,7 +84,7 @@ public class GameController {
         sin60 = (float) Math.sin(Math.PI / 3d);
         random = new Random();
         predictableRandom = new Random(0);
-        languagesManager = yioGdxGame.menuControllerLighty.languagesManager;
+        languagesManager = yioGdxGame.menuControllerYio.languagesManager;
         progress = yioGdxGame.selectedLevelIndex;
         defaultBubbleRadius = 0.01f * Gdx.graphics.getWidth();
         fieldPos = new PointYio();
@@ -422,8 +422,8 @@ public class GameController {
         if (!proposedSurrender) {
             int possibleWinner = possibleWinner();
             if (possibleWinner >= 0 && isPlayerTurn(possibleWinner)) {
-                yioGdxGame.menuControllerLighty.createTutorialTip(yioGdxGame.menuControllerLighty.getArrayListFromString(languagesManager.getString("win_or_continue")));
-                yioGdxGame.menuControllerLighty.addWinButtonToTutorialTip();
+                yioGdxGame.menuControllerYio.createTutorialTip(yioGdxGame.menuControllerYio.getArrayListFromString(languagesManager.getString("win_or_continue")));
+                yioGdxGame.menuControllerYio.addWinButtonToTutorialTip();
                 proposedSurrender = true;
             }
         }
@@ -479,17 +479,18 @@ public class GameController {
 //        yioGdxGame.setGamePaused(true);
         if (completedCampaignLevel(winColor)) {
             int ls = yioGdxGame.selectedLevelIndex;
-            yioGdxGame.increaseLevelSelection();
+//            yioGdxGame.increaseLevelSelection();
             if (yioGdxGame.selectedLevelIndex >= progress) {
                 progress = yioGdxGame.selectedLevelIndex;
                 if (ls == progress) progress++; // last level completed
                 Preferences preferences = Gdx.app.getPreferences("main");
                 preferences.putInteger("progress", progress);
                 preferences.flush();
-                yioGdxGame.menuControllerLighty.updateScrollerLinesBeforeIndex(progress);
+//                yioGdxGame.menuControllerYio.updateScrollerLinesBeforeIndex(progress);
+                yioGdxGame.menuControllerYio.levelSelector.update();
             }
         }
-        yioGdxGame.menuControllerLighty.createAfterGameMenu(winColor, isPlayerTurn(winColor));
+        yioGdxGame.menuControllerYio.createAfterGameMenu(winColor, isPlayerTurn(winColor));
         if (YioGdxGame.CHECKING_BALANCE_MODE) {
             yioGdxGame.balanceIndicator[winColor]++;
             yioGdxGame.startGame(true, false);
@@ -759,7 +760,7 @@ public class GameController {
 
 
     private float boundPower() {
-        return 0.005f * w * trackerZoom;
+        return 0.002f * w * trackerZoom * (1 + trackerZoom);
     }
 
 
@@ -874,10 +875,10 @@ public class GameController {
 
         predictableRandom = new Random(index); // used in map generation
         if (readParametersFromSliders) {
-            setLevelSize(getLevelSizeBySliderPos(yioGdxGame.menuControllerLighty.sliders.get(0)));
-            setPlayersNumberBySlider(yioGdxGame.menuControllerLighty.sliders.get(1));
-            setColorNumberBySlider(yioGdxGame.menuControllerLighty.sliders.get(2));
-            setDifficultyBySlider(yioGdxGame.menuControllerLighty.sliders.get(3));
+            setLevelSize(getLevelSizeBySliderPos(yioGdxGame.menuControllerYio.sliders.get(0)));
+            setPlayersNumberBySlider(yioGdxGame.menuControllerYio.sliders.get(1));
+            setColorNumberBySlider(yioGdxGame.menuControllerYio.sliders.get(2));
+            setDifficultyBySlider(yioGdxGame.menuControllerYio.sliders.get(3));
         }
         createField(generateMap); // generating map
 
@@ -1134,7 +1135,7 @@ public class GameController {
         tipFactor.setValues(0, 0);
         tipFactor.beginDestroying(1, 1);
         hideMoveZone();
-        yioGdxGame.menuControllerLighty.hideBuildButtons();
+        yioGdxGame.menuControllerYio.hideBuildButtons();
         tipType = 0;
     }
 
@@ -1146,7 +1147,7 @@ public class GameController {
             hex.select();
             if (!selectedHexes.contains(hex)) listIterator.add(hex);
         }
-        yioGdxGame.menuControllerLighty.revealBuildButtons();
+        yioGdxGame.menuControllerYio.revealBuildButtons();
         updateBalanceString();
 //        ArrayList<Hex> tempList = new ArrayList<Hex>();
 //        Hex tempHex;
@@ -1276,27 +1277,28 @@ public class GameController {
     }
 
 
-    public void loadCampaignLevel(int index) {
+    public boolean loadCampaignLevel(int index) {
         setCurrentLevelIndex(index);
         yioGdxGame.setSelectedLevelIndex(index);
         if (index == 0) { // tutorial level
             initTutorial();
             campaignMode = true;
-            return;
+            return true;
         }
-        if (isLevelLocked(index)) return;
+        if (isLevelLocked(index)) return false;
         campaignLevelFactory.createCampaignLevel(index);
         campaignMode = true;
+        return true;
     }
 
 
     private boolean isLevelLocked(int index) {
-        return yioGdxGame.menuControllerLighty.scrollerYio.isLevelLocked(index);
+        return yioGdxGame.isLevelLocked(index);
     }
 
 
     boolean isLevelComplete(int index) {
-        return yioGdxGame.menuControllerLighty.scrollerYio.isLevelComplete(index);
+        return yioGdxGame.isLevelComplete(index);
     }
 
 
@@ -1359,7 +1361,7 @@ public class GameController {
 
 
     private void tickleMoneySign() {
-        ButtonLighty coinButton = yioGdxGame.menuControllerLighty.getButtonById(37);
+        ButtonYio coinButton = yioGdxGame.menuControllerYio.getButtonById(37);
         coinButton.factorModel.setValues(1, 0.13);
         coinButton.factorModel.beginSpawning(4, 1);
     }

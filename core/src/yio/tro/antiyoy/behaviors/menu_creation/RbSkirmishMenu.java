@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors.menu_creation;
 
-import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.ButtonYio;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 
 /**
@@ -9,9 +9,9 @@ import yio.tro.antiyoy.behaviors.ReactBehavior;
 public class RbSkirmishMenu extends ReactBehavior {
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
-        getYioGdxGame(buttonLighty).setGamePaused(true);
-        buttonLighty.menuControllerLighty.createSkirmishMenu();
-        getYioGdxGame(buttonLighty).setAnimToPlayButtonSpecial();
+    public void reactAction(ButtonYio buttonYio) {
+        getYioGdxGame(buttonYio).setGamePaused(true);
+        buttonYio.menuControllerYio.createSkirmishMenu();
+        getYioGdxGame(buttonYio).setAnimToPlayButtonSpecial();
     }
 }

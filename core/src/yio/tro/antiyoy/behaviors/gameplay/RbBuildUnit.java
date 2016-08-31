@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors.gameplay;
 
-import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.ButtonYio;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 
@@ -10,15 +10,15 @@ import yio.tro.antiyoy.behaviors.ReactBehavior;
 public class RbBuildUnit extends ReactBehavior {
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
-        if (!getGameController(buttonLighty).isSomethingSelected()) {
+    public void reactAction(ButtonYio buttonYio) {
+        if (!getGameController(buttonYio).isSomethingSelected()) {
             YioGdxGame.say("detected strange bug in RbBuildUnit");
             return;
         }
-        int t = getGameController(buttonLighty).getTipType();
+        int t = getGameController(buttonYio).getTipType();
         t += 1;
         if (t > 4) t = 1;
-        getGameController(buttonLighty).awakeTip(t);
-        getGameController(buttonLighty).detectAndShowMoveZoneForBuildingUnit(t);
+        getGameController(buttonYio).awakeTip(t);
+        getGameController(buttonYio).detectAndShowMoveZoneForBuildingUnit(t);
     }
 }

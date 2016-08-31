@@ -5,7 +5,7 @@ package yio.tro.antiyoy;
  */
 class NotificationHolder {
 
-    private ButtonLighty button;
+    private ButtonYio button;
     private boolean autoHide;
     private long timeToHide;
 
@@ -19,7 +19,7 @@ class NotificationHolder {
     public void move() {
         if (button == null) return;
         if (autoHide && System.currentTimeMillis() > timeToHide) {
-            button.menuControllerLighty.hideNotification();
+            button.menuControllerYio.hideNotification();
             autoHide = false;
         }
     }
@@ -31,7 +31,7 @@ class NotificationHolder {
     }
 
 
-    public void setButton(ButtonLighty button) {
+    public void setButton(ButtonYio button) {
         this.button = button;
     }
 }

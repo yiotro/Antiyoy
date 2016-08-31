@@ -21,12 +21,13 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     int w, h;
-    MenuControllerLighty menuControllerLighty;
-    private MenuViewLighty menuViewLighty;
+    public MenuControllerYio menuControllerYio;
+    private MenuViewYio menuViewYio;
     public static BitmapFont buttonFont, gameFont, listFont, cityFont;
     private static GlyphLayout glyphLayout = new GlyphLayout();
-    public static final String FONT_CHARACTERS = "йцукенгшщзхъёфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮіІїЇєЄabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<^>";
+    public static final String SPECIAL_CHARACTERS = "SORNCEabcdefghijklmnopqrstuvwxyz0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<^>";
     public static int FONT_SIZE;
+    public static boolean ANDROID = false;
     public static final int INDEX_OF_LAST_LEVEL = 70; // with tutorial
     public static final boolean CHECKING_BALANCE_MODE = false; // to measure balance
     public static boolean SOUND = true;
@@ -140,8 +141,8 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         if (selectedLevelIndex > INDEX_OF_LAST_LEVEL) { // completed campaign
             selectedLevelIndex = INDEX_OF_LAST_LEVEL;
         }
-        menuControllerLighty = new MenuControllerLighty(this);
-        menuViewLighty = new MenuViewLighty(this);
+        menuControllerYio = new MenuControllerYio(this);
+        menuViewYio = new MenuViewYio(this);
         gameController = new GameController(this); // must be called after menu controller is created. because of languages manager and other stuff
         gameView = new GameView(this);
         gameView.factorModel.beginDestroying(1, 1);
@@ -166,7 +167,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         FONT_SIZE = (int) (0.041 * Gdx.graphics.getHeight());
 
         parameter.size = FONT_SIZE;
-        parameter.characters = FONT_CHARACTERS;
+        parameter.characters = getAllCharacters();
         parameter.flip = true;
         buttonFont = generator.generateFont(parameter);
 
@@ -214,14 +215,20 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
     public void saveSettings() {
         Preferences prefs = Gdx.app.getPreferences("settings");
-        prefs.putInteger("sound", menuControllerLighty.sliders.get(4).getCurrentRunnerIndex());
-        prefs.putInteger("skin", menuControllerLighty.sliders.get(5).getCurrentRunnerIndex());
-        prefs.putInteger("interface", menuControllerLighty.sliders.get(6).getCurrentRunnerIndex()); // slot number
-        prefs.putInteger("autosave", menuControllerLighty.sliders.get(7).getCurrentRunnerIndex());
-        prefs.putInteger("ask_to_end_turn", menuControllerLighty.sliders.get(8).getCurrentRunnerIndex());
-        prefs.putInteger("anim_style", menuControllerLighty.sliders.get(9).getCurrentRunnerIndex());
-        prefs.putInteger("city_names", menuControllerLighty.sliders.get(10).getCurrentRunnerIndex());
+        prefs.putInteger("sound", boolToInteger(menuControllerYio.getCheckButtonById(5).isChecked()));
+        prefs.putInteger("skin", menuControllerYio.sliders.get(5).getCurrentRunnerIndex());
+        prefs.putInteger("interface", boolToInteger(menuControllerYio.getCheckButtonById(2).isChecked())); // slot number
+        prefs.putInteger("autosave", boolToInteger(menuControllerYio.getCheckButtonById(1).isChecked()));
+        prefs.putInteger("ask_to_end_turn", boolToInteger(menuControllerYio.getCheckButtonById(3).isChecked()));
+        prefs.putInteger("anim_style", menuControllerYio.sliders.get(9).getCurrentRunnerIndex());
+        prefs.putInteger("city_names", boolToInteger(menuControllerYio.getCheckButtonById(4).isChecked()));
         prefs.flush();
+    }
+
+
+    private int boolToInteger(boolean b) {
+        if (b) return 1;
+        return 0;
     }
 
 
@@ -232,42 +239,46 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         int soundIndex = prefs.getInteger("sound");
         if (soundIndex == 0) SOUND = false;
         else SOUND = true;
-        menuControllerLighty.sliders.get(4).setRunnerValue(soundIndex);
+//        menuControllerYio.sliders.get(4).setRunnerValue(soundIndex);
+        menuControllerYio.getCheckButtonById(5).setChecked(SOUND);
 
         // skin
         int skin = prefs.getInteger("skin");
         gameView.loadSkin(skin);
         float slSkinValue = (float) skin / 2f;
-        menuControllerLighty.sliders.get(5).setRunnerValue(slSkinValue);
+        menuControllerYio.sliders.get(5).setRunnerValue(slSkinValue);
 
-        // interface
+        // interface. Number of save slots
         interface_type = prefs.getInteger("interface");
-        menuControllerLighty.sliders.get(6).setRunnerValue(interface_type);
+//        menuControllerYio.sliders.get(6).setRunnerValue(interface_type);
+        menuControllerYio.getCheckButtonById(2).setChecked(interface_type == 1);
 
         // autosave
         int AS = prefs.getInteger("autosave");
         autosave = false;
         if (AS == 1) autosave = true;
-        menuControllerLighty.sliders.get(7).setRunnerValue(AS);
+//        menuControllerYio.sliders.get(7).setRunnerValue(AS);
+        menuControllerYio.getCheckButtonById(1).setChecked(autosave);
 
         // animations style
-        menuControllerLighty.anim_style = prefs.getInteger("anim_style", 2);
-        menuControllerLighty.sliders.get(9).setRunnerValue(MenuControllerLighty.anim_style / 3f);
-        menuControllerLighty.applyAnimStyle();
+        menuControllerYio.anim_style = prefs.getInteger("anim_style", 2);
+        menuControllerYio.sliders.get(9).setRunnerValue(MenuControllerYio.anim_style / 3f);
+        menuControllerYio.applyAnimStyle();
 
         // ask to end turn
         int ATET = prefs.getInteger("ask_to_end_turn");
         ask_to_end_turn = (ATET == 1);
-        menuControllerLighty.sliders.get(8).setRunnerValue(ATET);
+//        menuControllerYio.sliders.get(8).setRunnerValue(ATET);
+        menuControllerYio.getCheckButtonById(3).setChecked(ask_to_end_turn);
 
         // show city names
         int cityNames = prefs.getInteger("city_names", 0);
         gameController.setShowCityNames(cityNames);
-        menuControllerLighty.sliders.get(10).setRunnerValue(cityNames);
+//        menuControllerYio.sliders.get(10).setRunnerValue(cityNames);
+        menuControllerYio.getCheckButtonById(4).setChecked(cityNames == 1);
 
-        for (int i = 4; i <= 10; i++) {
-            menuControllerLighty.sliders.get(i).updateValueString();
-        }
+        menuControllerYio.sliders.get(5).updateValueString();
+        menuControllerYio.sliders.get(9).updateValueString();
     }
 
 
@@ -347,8 +358,8 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
                 useMenuMasks = true;
                 return;
             }
-            ButtonLighty buttonLighty = menuControllerLighty.getButtonById(30);
-            if (buttonLighty != null && buttonLighty.isCurrentlyTouched()) {
+            ButtonYio buttonYio = menuControllerYio.getButtonById(30);
+            if (buttonYio != null && buttonYio.isCurrentlyTouched()) {
                 useMenuMasks = true;
                 return;
             }
@@ -379,7 +390,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             needToHideSplats = false;
         }
         gameView.moveFactors();
-        menuControllerLighty.move();
+        menuControllerYio.move();
         if (!loadedResources) return; // if exit button was pressed
         checkToUseMenuMasks();
         if (!gamePaused) {
@@ -437,6 +448,12 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 //            batch.draw(gameView.redUnit, x - s, y - s, 2 * s, 2 * s);
 //        }
 //        batch.end();
+    }
+
+
+    public static String getAllCharacters() {
+        String langChars = MenuControllerYio.languagesManager.getString("lang_characters");
+        return langChars + SPECIAL_CHARACTERS;
     }
 
 
@@ -508,12 +525,12 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         renderSplats(c);
         batch.end();
 
-        menuViewLighty.render(false, true);
+        menuViewYio.render(false, true);
     }
 
 
     private void renderMenuWhenGameViewNotVisible() {
-        if (transitionFactor.get() == 1 && !menuControllerLighty.notificationIsDestroying()) {
+        if (transitionFactor.get() == 1 && !menuControllerYio.notificationIsDestroying()) {
             renderMenuLayersWhenNothingIsMoving();
             return;
         }
@@ -536,12 +553,13 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         if (!gameView.coversAllScreen()) {
             renderMenuWhenGameViewNotVisible();
         }
-        menuViewLighty.renderScroller();
+//        menuViewYio.renderScroller();
+        MenuRender.renderLevelSelector.renderLevelSelector(menuControllerYio.levelSelector);
         gameView.render();
         if (gamePaused) {
-            menuViewLighty.render(true, false);
+            menuViewYio.render(true, false);
         } else {
-            menuViewLighty.render(true, true);
+            menuViewYio.render(true, true);
         }
         if (showFpsInfo) {
             batch.begin();
@@ -612,7 +630,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             if (!alreadyShownErrorMessageOnce) {
                 exception.printStackTrace();
                 alreadyShownErrorMessageOnce = true;
-                menuControllerLighty.createExceptionReport(exception);
+                menuControllerYio.createExceptionReport(exception);
             }
         }
 
@@ -634,6 +652,41 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     }
 
 
+    public boolean isLevelLocked(int index) {
+        if (index == CampaignLevelFactory.NORMAL_LEVELS_START) return false;
+        if (index == CampaignLevelFactory.HARD_LEVELS_START) return false;
+        if (index == CampaignLevelFactory.EXPERT_LEVELS_START) return false;
+        if (gameController != null) return gameController.progress < index;
+        return selectedLevelIndex < index;
+    }
+
+
+    public boolean isLevelComplete(int index) {
+        if (gameController != null) return gameController.progress > index;
+        return selectedLevelIndex > index;
+    }
+
+
+    public static String getDifficultyNameByPower(LanguagesManager languagesManager, int difficulty) {
+        String diffString = null;
+        switch (difficulty) {
+            case GameController.EASY:
+                diffString = languagesManager.getString("easy");
+                break;
+            case GameController.NORMAL:
+                diffString = languagesManager.getString("normal");
+                break;
+            case GameController.HARD:
+                diffString = languagesManager.getString("hard");
+                break;
+            case GameController.EXPERT:
+                diffString = languagesManager.getString("expert");
+                break;
+        }
+        return diffString;
+    }
+
+
     private void unPauseAfterSomeTime() {
         readyToUnPause = true;
         timeToUnPause = System.currentTimeMillis() + 450; // время анимации - около 420мс
@@ -641,10 +694,10 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
 
     public void setAnimToPlayButtonSpecial() {
-        ButtonLighty buttonLighty = menuControllerLighty.getButtonById(3);
-        if (buttonLighty != null) {
-            animX = buttonLighty.cx;
-            animY = buttonLighty.cy;
+        ButtonYio buttonYio = menuControllerYio.getButtonById(3);
+        if (buttonYio != null) {
+            animX = buttonYio.cx;
+            animY = buttonYio.cy;
         } else {
             animX = w/2;
             animY = h/2;
@@ -723,7 +776,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         if (selectedLevelIndex < 0 || selectedLevelIndex > INDEX_OF_LAST_LEVEL) return;
         gameController.prepareForNewGame(index, generateMap, readParametersFromSliders);
         gameView.beginSpawnProcess();
-        menuControllerLighty.createGameOverlay();
+        menuControllerYio.createGameOverlay();
 //        menuControllerLighty.scrollerYio.factorModel.setValues(0, 0);
         setGamePaused(false);
         letsIgnoreNextTimeCorrection();
@@ -731,7 +784,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
 
     void increaseLevelSelection() {
-        menuControllerLighty.scrollerYio.increaseSelection();
+//        menuControllerYio.scrollerYio.increaseSelection();
         setSelectedLevelIndex(selectedLevelIndex + 1);
     }
 
@@ -774,7 +827,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
 
     private void pressButtonIfVisible(int id) {
-        ButtonLighty button = menuControllerLighty.getButtonById(id);
+        ButtonYio button = menuControllerYio.getButtonById(id);
         if (button != null && button.isVisible() && button.factorModel.get() == 1) button.press();
     }
 
@@ -791,9 +844,9 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.BACK || keycode == Input.Keys.ESCAPE) {
             if (!gamePaused) {
-                ButtonLighty pauseButton = menuControllerLighty.getButtonById(30);
+                ButtonYio pauseButton = menuControllerYio.getButtonById(30);
                 if (pauseButton != null && pauseButton.isVisible()) pauseButton.press();
-                else menuControllerLighty.getButtonById(140).press();
+                else menuControllerYio.getButtonById(140).press();
             } else {
                 // back buttons
                 for (Integer integer : backButtonIds) {
@@ -803,12 +856,12 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         }
         if (keycode == Input.Keys.Q) {
             if (!gamePaused) {
-                menuControllerLighty.getButtonById(32).press(); // debug
+                menuControllerYio.getButtonById(32).press(); // debug
             }
         }
         if (keycode == Input.Keys.SPACE) {
             if (!gamePaused) {
-                menuControllerLighty.getButtonById(31).press();
+                menuControllerYio.getButtonById(31).press();
             }
         }
         return false;
@@ -833,7 +886,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         pressX = screenX;
         pressY = h - screenY;
         try {
-            if (!gameView.isInMotion() && transitionFactor.get() > 0.99 && menuControllerLighty.touchDown(screenX, Gdx.graphics.getHeight() - screenY, pointer, button)) {
+            if (!gameView.isInMotion() && transitionFactor.get() > 0.99 && menuControllerYio.touchDown(screenX, Gdx.graphics.getHeight() - screenY, pointer, button)) {
                 lastTimeButtonPressed = System.currentTimeMillis();
                 return false;
             } else {
@@ -844,7 +897,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             if (!alreadyShownErrorMessageOnce) {
                 exception.printStackTrace();
                 alreadyShownErrorMessageOnce = true;
-                menuControllerLighty.createExceptionReport(exception);
+                menuControllerYio.createExceptionReport(exception);
             }
         }
         return false;
@@ -854,14 +907,14 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         try {
-            menuControllerLighty.touchUp(screenX, Gdx.graphics.getHeight() - screenY, pointer, button);
+            menuControllerYio.touchUp(screenX, Gdx.graphics.getHeight() - screenY, pointer, button);
             if (!gamePaused && gameView.coversAllScreen() && System.currentTimeMillis() > lastTimeButtonPressed + 300)
                 gameController.touchUp(screenX, Gdx.graphics.getHeight() - screenY, pointer, button);
         } catch (Exception exception) {
             if (!alreadyShownErrorMessageOnce) {
                 exception.printStackTrace();
                 alreadyShownErrorMessageOnce = true;
-                menuControllerLighty.createExceptionReport(exception);
+                menuControllerYio.createExceptionReport(exception);
             }
         }
         return false;
@@ -870,7 +923,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        menuControllerLighty.touchDragged(screenX, Gdx.graphics.getHeight() - screenY, pointer);
+        menuControllerYio.touchDragged(screenX, Gdx.graphics.getHeight() - screenY, pointer);
         if (!ignoreDrag && !gamePaused && gameView.coversAllScreen())
             gameController.touchDragged(screenX, Gdx.graphics.getHeight() - screenY, pointer);
         return false;
@@ -961,7 +1014,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     @Override
     public void resume() {
         super.resume();
-        menuControllerLighty.onResume();
+        menuControllerYio.onResume();
         gameView.onResume();
         System.out.println("Yio -> On resume.");
     }
@@ -971,11 +1024,11 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         if (true) return;
         loadedResources = false;
         gameController.close();
-        menuControllerLighty.close();
+        menuControllerYio.close();
 
         gameController = null;
-        menuControllerLighty = null;
-        menuViewLighty = null;
+        menuControllerYio = null;
+        menuViewYio = null;
         gameView = null;
     }
 }

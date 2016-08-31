@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors;
 
-import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.ButtonYio;
 import yio.tro.antiyoy.GameController;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.behaviors.editor.*;
@@ -13,16 +13,16 @@ import yio.tro.antiyoy.behaviors.menu_creation.*;
  */
 public abstract class ReactBehavior {
 
-    public abstract void reactAction(ButtonLighty buttonLighty);
+    public abstract void reactAction(ButtonYio buttonYio);
 
 
-    protected YioGdxGame getYioGdxGame(ButtonLighty buttonLighty) {
-        return buttonLighty.menuControllerLighty.yioGdxGame;
+    protected YioGdxGame getYioGdxGame(ButtonYio buttonYio) {
+        return buttonYio.menuControllerYio.yioGdxGame;
     }
 
 
-    protected GameController getGameController(ButtonLighty buttonLighty) {
-        return buttonLighty.menuControllerLighty.yioGdxGame.gameController;
+    protected GameController getGameController(ButtonYio buttonYio) {
+        return buttonYio.menuControllerYio.yioGdxGame.gameController;
     }
 
 
@@ -85,6 +85,7 @@ public abstract class ReactBehavior {
     public static final RbShowColorStats rbShowColorStats = new RbShowColorStats();
     public static final RbHideColorStats rbHideColorStats = new RbHideColorStats();
     public static final RbNextLevel rbNextLevel = new RbNextLevel();
-    public static final RbInterfaceSettings rbInterfaceSettings = new RbInterfaceSettings();
+    public static final RbMoreSettings rbMoreSettings = new RbMoreSettings();
     public static final RbHideEndTurnConfirm rbHideEndTurnConfirm = new RbHideEndTurnConfirm();
+    public static final RbSpecialThanksMenu rbSpecialThanksMenu = new RbSpecialThanksMenu();
 }

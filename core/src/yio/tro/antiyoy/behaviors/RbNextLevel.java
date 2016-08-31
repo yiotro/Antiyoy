@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors;
 
-import yio.tro.antiyoy.ButtonLighty;
+import yio.tro.antiyoy.ButtonYio;
 
 /**
  * Created by ivan on 24.03.2016.
@@ -8,7 +8,7 @@ import yio.tro.antiyoy.ButtonLighty;
 public class RbNextLevel extends ReactBehavior{
 
     @Override
-    public void reactAction(ButtonLighty buttonLighty) {
-        getGameController(buttonLighty).loadCampaignLevel(getGameController(buttonLighty).getNextLevelIndex());
+    public void reactAction(ButtonYio buttonYio) {
+        getGameController(buttonYio).loadCampaignLevel(getGameController(buttonYio).getNextLevelIndex());
     }
 }
