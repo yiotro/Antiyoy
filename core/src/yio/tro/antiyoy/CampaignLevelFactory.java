@@ -2,6 +2,8 @@ package yio.tro.antiyoy;
 
 import com.badlogic.gdx.Gdx;
 
+import java.util.Random;
+
 /**
  * Created by ivan on 18.11.2015.
  */
@@ -30,6 +32,7 @@ class CampaignLevelFactory {
         gameSaver.setActiveHexesString(levels[index]);
         gameSaver.beginRecreation();
         gameSaver.setBasicInfo(0, 1, getColorNumberByIndex(index), getLevelSizeByIndex(index), getDifficultyByIndex(index));
+        gameController.colorIndexViewOffset = (new Random(index)).nextInt(getColorNumberByIndex(index));
         gameSaver.endRecreation();
     }
 
@@ -39,7 +42,15 @@ class CampaignLevelFactory {
         gameController.setPlayersNumber(1);
         GameController.setColorNumber(getColorNumberByIndex(index));
         gameController.setDifficulty(getDifficultyByIndex(index));
-        gameController.yioGdxGame.startGame(index, true, false);
+        gameController.colorIndexViewOffset = (new Random(index)).nextInt(getColorNumberByIndex(index));
+        gameController.yioGdxGame.startGame(index, false, false);
+        while (true) {
+            gameController.clearAnims();
+            gameController.createField(true);
+            if (gameController.getPredictionForWinner() == 0) break;
+        }
+        gameController.yioGdxGame.gameView.updateCacheLevelTextures();
+        gameController.yioGdxGame.gameView.beginSpawnProcess();
     }
 
 

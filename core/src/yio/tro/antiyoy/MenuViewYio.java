@@ -367,6 +367,7 @@ class MenuViewYio {
         GameView.drawFromCenter(batch, yioGdxGame.gameView.blackCircleTexture, slider.getViewX() + slider.runnerValue * slider.getViewWidth(), slider.currentVerticalPos, slider.circleSize);
         if (slider.textVisible())
             YioGdxGame.gameFont.draw(batch, slider.getValueString(), slider.getViewX() + slider.getViewWidth() - slider.textWidth, slider.currentVerticalPos + 0.05f * h);
+//        GraphicsYio.renderBorder(slider.getTouchRectangle(), batch, yioGdxGame.gameView.blackPixel);
         batch.end();
     }
 

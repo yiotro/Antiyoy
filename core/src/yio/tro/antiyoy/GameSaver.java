@@ -32,6 +32,7 @@ public class GameSaver {
         prefs.putBoolean("save_campaign_mode", gameController.campaignMode);
         prefs.putInteger("save_current_level", gameController.currentLevelIndex);
         prefs.putInteger("save_difficulty", gameController.difficulty);
+        prefs.putInteger("save_color_offset", gameController.colorIndexViewOffset);
     }
 
 
@@ -218,6 +219,7 @@ public class GameSaver {
                 prefs.getInteger("save_difficulty"));
         gameController.campaignMode = prefs.getBoolean("save_campaign_mode");
         gameController.setCurrentLevelIndex(prefs.getInteger("save_current_level"));
+        gameController.colorIndexViewOffset = prefs.getInteger("save_color_offset", 0);
     }
 
 

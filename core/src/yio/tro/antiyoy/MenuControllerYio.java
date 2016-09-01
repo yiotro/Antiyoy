@@ -82,17 +82,18 @@ public class MenuControllerYio {
         }
         sliders.get(2).addListener(sliders.get(1));
         sliders.get(0).addListener(sliders.get(2));
+
         sliders.get(0).setValues(0.5f, 1, 3, true, SliderYio.CONFIGURE_SIZE); // map size
         sliders.get(1).setValues(0.2f, 0, 5, false, SliderYio.CONFIGURE_HUMANS); // humans
         sliders.get(2).setValues(0.6, 3, 6, false, SliderYio.CONFIGURE_COLORS); // colors
         sliders.get(3).setValues(0.33, 1, 4, true, SliderYio.CONFIGURE_DIFFICULTY); // difficulty
-        sliders.get(4).setValues(1, 0, 1, true, SliderYio.CONFIGURE_ON_OFF); // sound
+        sliders.get(4).setValues(0, 0, 4, true, SliderYio.CONFIGURE_FIRST_COLOR); // first color
         sliders.get(5).setValues(0, 0, 2, true, SliderYio.CONFIGURE_SKIN); // hex skin
         sliders.get(6).setValues(0, 0, 1, true, SliderYio.CONFIGURE_SLOT_NUMBER); // slot number
-        sliders.get(7).setValues(0, 0, 1, false, SliderYio.CONFIGURE_ON_OFF); // autosave
+        sliders.get(7).setValues(0, 0, 1, false, SliderYio.CONFIGURE_FIRST_COLOR); // autosave
         sliders.get(8).setValues(0, 0, 1, true, SliderYio.CONFIGURE_ASK_END_TURN); // ask to end turn
         sliders.get(9).setValues(0.75, 0, 3, false, SliderYio.CONFIGURE_ANIM_STYLE); // animation style
-        sliders.get(10).setValues(0, 0, 1, false, SliderYio.CONFIGURE_ON_OFF); // city names
+        sliders.get(10).setValues(0, 0, 1, false, SliderYio.CONFIGURE_FIRST_COLOR); // city names
     }
 
 
@@ -466,12 +467,46 @@ public class MenuControllerYio {
     }
 
 
+    public void saveMoreSkirmishOptions() {
+        Preferences prefs = Gdx.app.getPreferences("skirmish");
+        prefs.putInteger("color_offset", sliders.get(4).getCurrentRunnerIndex());
+        prefs.flush();
+    }
+
+
+    public void loadMoreSkirmishOptions() {
+        Preferences prefs = Gdx.app.getPreferences("skirmish");
+        sliders.get(4).setRunnerValueByIndex(prefs.getInteger("color_offset", 0));
+    }
+
+
     public void loadSkirmishSettings() {
         Preferences prefs = Gdx.app.getPreferences("skirmish");
         sliders.get(3).setRunnerValueByIndex(prefs.getInteger("difficulty", 1));
         sliders.get(0).setRunnerValueByIndex(prefs.getInteger("map_size", 1));
         sliders.get(2).setRunnerValueByIndex(prefs.getInteger("color_number", 2));
         sliders.get(1).setRunnerValueByIndex(prefs.getInteger("player_number", 1));
+    }
+
+
+    public void createMoreSkirmishOptionsMenu() {
+        beginMenuCreation();
+
+        yioGdxGame.beginBackgroundChange(2, true, true);
+
+        spawnBackButton(231, ReactBehavior.rbSaveMoreSkirmishOptions);
+
+        sliders.get(4).appear();
+        sliders.get(4).setPos(0.15, 0.73, 0.7, 0);
+
+        ButtonYio firstColorLabel = buttonFactory.getButton(generateRectangle(0.1, 0.67, 0.8, 0.2), 230, null);
+        renderTextAndSomeEmptyLines(firstColorLabel, languagesManager.getString("player_color"), 2);
+        firstColorLabel.setTouchable(false);
+        firstColorLabel.setAnimType(ButtonYio.ANIM_UP);
+
+        loadMoreSkirmishOptions();
+
+        endMenuCreation();
     }
 
 
@@ -488,9 +523,11 @@ public class MenuControllerYio {
 
         sliders.get(1).appear();
         sliders.get(1).setPos(0.15, 0.31, 0.7, 0);
+        sliders.get(1).setVerticalTouchOffset(0.06f * Gdx.graphics.getHeight());
 
         sliders.get(2).appear();
         sliders.get(2).setPos(0.15, 0.1, 0.7, 0);
+        sliders.get(2).setVerticalTouchOffset(0.06f * Gdx.graphics.getHeight());
 
         ButtonYio difficultyLabel = buttonFactory.getButton(generateRectangle(0.1, 0.67, 0.8, 0.2), 88, null);
         renderTextAndSomeEmptyLines(difficultyLabel, languagesManager.getString("difficulty"), 2);
@@ -524,6 +561,11 @@ public class MenuControllerYio {
         startButton.setReactBehavior(ReactBehavior.rbStartGame);
         startButton.setAnimType(ButtonYio.ANIM_UP);
         startButton.disableTouchAnimation();
+
+        ButtonYio moreButton = buttonFactory.getButton(generateRectangle(0.6, 0.2, 0.3, 0.04), 86, languagesManager.getString("more"));
+        moreButton.setReactBehavior(ReactBehavior.rbMoreSkirmishOptions);
+        moreButton.setAnimType(ButtonYio.ANIM_DOWN);
+        moreButton.disableTouchAnimation();
 
         loadSkirmishSettings();
 
@@ -1398,6 +1440,7 @@ public class MenuControllerYio {
 
 
     private String getColorNameByIndex(int index) {
+        index = yioGdxGame.gameController.getColorIndexWithOffset(index);
         switch (index) {
             default:
             case 6:
@@ -1428,11 +1471,11 @@ public class MenuControllerYio {
         if (playerIsWinner) {
             message = getColorNameByIndex(whoWon) + " " +
                     languagesManager.getString("player") + " " +
-                    languagesManager.getString("won") + ".";
+                    languagesManager.getString("won_player") + ".";
         } else {
             message = getColorNameByIndex(whoWon) + " " +
                     languagesManager.getString("ai") + " " +
-                    languagesManager.getString("won") + ".";
+                    languagesManager.getString("won_ai") + ".";
         }
         if (yioGdxGame.gameController.completedCampaignLevel(whoWon))
             message = languagesManager.getString("level_complete");

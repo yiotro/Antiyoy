@@ -61,7 +61,7 @@ public class GameController {
     ArrayList<Province> provinces;
     Province selectedProvince;
     int selectedProvinceMoney, tipType, tipShowType, marchDelay, playersNumber, currentLevelIndex, compensationOffsetY, defTipDelay;
-    int difficulty;
+    int difficulty, colorIndexViewOffset;
     String balanceString, currentPriceString, levelInitialString;
     double currentCamSpeed, zoomUpperLimit;
     private ArrayList<LevelSnapshot> levelSnapshots;
@@ -879,6 +879,7 @@ public class GameController {
             setPlayersNumberBySlider(yioGdxGame.menuControllerYio.sliders.get(1));
             setColorNumberBySlider(yioGdxGame.menuControllerYio.sliders.get(2));
             setDifficultyBySlider(yioGdxGame.menuControllerYio.sliders.get(3));
+            colorIndexViewOffset = yioGdxGame.menuControllerYio.sliders.get(4).getCurrentRunnerIndex();
         }
         createField(generateMap); // generating map
 
@@ -1262,6 +1263,15 @@ public class GameController {
         if (hadHouse) {
             spawnTree(hex);
         }
+    }
+
+
+    public int getColorIndexWithOffset(int srcIndex) {
+        srcIndex += colorIndexViewOffset;
+        if (srcIndex >= colorNumber) {
+            srcIndex -= colorNumber;
+        }
+        return srcIndex;
     }
 
 

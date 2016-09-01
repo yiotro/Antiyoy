@@ -21,7 +21,7 @@ class SliderYio {
     public static final int CONFIGURE_HUMANS = 1;
     public static final int CONFIGURE_COLORS = 2;
     public static final int CONFIGURE_DIFFICULTY = 3;
-    public static final int CONFIGURE_ON_OFF = 4;
+    public static final int CONFIGURE_FIRST_COLOR = 4;
     public static final int CONFIGURE_SKIN = 5;
     public static final int CONFIGURE_SLOT_NUMBER = 6;
     public static final int CONFIGURE_ASK_END_TURN = 7;
@@ -29,6 +29,7 @@ class SliderYio {
     Rect pos;
     String valueString;
     ArrayList<SliderYio> listeners;
+    private RectangleYio touchRectangle; // used only for debug
 
 
     public SliderYio(MenuControllerYio menuControllerYio) {
@@ -41,6 +42,7 @@ class SliderYio {
         circleSize = circleDefaultSize;
         listeners = new ArrayList<SliderYio>();
         verticalTouchOffset = 0.1f * Gdx.graphics.getHeight();
+        touchRectangle = new RectangleYio(0, 0, 0, 0);
     }
 
 
@@ -57,6 +59,15 @@ class SliderYio {
                 x < pos.x + pos.width + 0.05f * Gdx.graphics.getWidth() &&
                 y > currentVerticalPos - verticalTouchOffset &&
                 y < currentVerticalPos + verticalTouchOffset;
+    }
+
+
+    public RectangleYio getTouchRectangle() {
+        touchRectangle.x = pos.x - 0.05f * Gdx.graphics.getWidth();
+        touchRectangle.y = currentVerticalPos - verticalTouchOffset;
+        touchRectangle.width = pos.width + 0.1f * Gdx.graphics.getWidth();
+        touchRectangle.height = 2 * verticalTouchOffset;;
+        return touchRectangle;
     }
 
 
@@ -246,8 +257,8 @@ class SliderYio {
             case CONFIGURE_DIFFICULTY:
                 configureDifficulty(languagesManager);
                 break;
-            case CONFIGURE_ON_OFF:
-                configureOnOff(languagesManager);
+            case CONFIGURE_FIRST_COLOR:
+                configureFirstColor(languagesManager);
                 break;
             case CONFIGURE_SKIN:
                 configureSkin(languagesManager);
@@ -324,11 +335,24 @@ class SliderYio {
     }
 
 
-    private void configureOnOff(LanguagesManager languagesManager) {
-        if (getCurrentRunnerIndex() == 0)
-            valueString = languagesManager.getString("off");
-        else
-            valueString = languagesManager.getString("on");
+    private void configureFirstColor(LanguagesManager languagesManager) {
+        switch (getCurrentRunnerIndex()) {
+            case 0:
+                valueString = languagesManager.getString("green");
+                break;
+            case 1:
+                valueString = languagesManager.getString("red");
+                break;
+            case 2:
+                valueString = languagesManager.getString("magenta");
+                break;
+            case 3:
+                valueString = languagesManager.getString("cyan");
+                break;
+            case 4:
+                valueString = languagesManager.getString("yellow");
+                break;
+        }
     }
 
 

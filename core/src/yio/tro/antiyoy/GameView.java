@@ -493,6 +493,9 @@ public class GameView {
 
 
     private TextureRegion getHexTextureByColor(int colorIndex) {
+        if (gameController.colorIndexViewOffset > 0) {
+            colorIndex = gameController.getColorIndexWithOffset(colorIndex);
+        }
         switch (colorIndex) {
             default:
             case 0:

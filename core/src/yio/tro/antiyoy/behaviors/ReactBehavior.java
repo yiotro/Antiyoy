@@ -88,4 +88,6 @@ public abstract class ReactBehavior {
     public static final RbMoreSettings rbMoreSettings = new RbMoreSettings();
     public static final RbHideEndTurnConfirm rbHideEndTurnConfirm = new RbHideEndTurnConfirm();
     public static final RbSpecialThanksMenu rbSpecialThanksMenu = new RbSpecialThanksMenu();
+    public static final RbMoreSkirmishOptions rbMoreSkirmishOptions = new RbMoreSkirmishOptions();
+    public static final RbSaveMoreSkirmishOptions rbSaveMoreSkirmishOptions = new RbSaveMoreSkirmishOptions();
 }
