@@ -163,7 +163,9 @@ class Province {
 
 
     public String getName() {
-        if (name == null) return " --- ";
+        if (name == null) {
+            updateName();
+        }
         return name;
     }
 

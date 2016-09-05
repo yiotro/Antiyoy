@@ -10,8 +10,8 @@ public class RbChooseGameModeMenu extends ReactBehavior {
 
     @Override
     public void reactAction(ButtonYio buttonYio) {
-        getYioGdxGame(buttonYio).setGamePaused(true);
         buttonYio.menuControllerYio.createChooseGameModeMenu();
+        getYioGdxGame(buttonYio).setGamePaused(true);
         getYioGdxGame(buttonYio).setAnimToPlayButtonSpecial();
     }
 }

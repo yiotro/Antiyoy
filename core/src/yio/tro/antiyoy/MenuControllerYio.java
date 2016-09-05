@@ -486,6 +486,8 @@ public class MenuControllerYio {
         sliders.get(0).setRunnerValueByIndex(prefs.getInteger("map_size", 1));
         sliders.get(2).setRunnerValueByIndex(prefs.getInteger("color_number", 2));
         sliders.get(1).setRunnerValueByIndex(prefs.getInteger("player_number", 1));
+
+        loadMoreSkirmishOptions();
     }
 
 
@@ -554,7 +556,7 @@ public class MenuControllerYio {
         getButtonById(84).factorModel.beginSpawning(2, 1.5);
         getButtonById(87).factorModel.beginSpawning(2, 1.5);
 
-        spawnBackButton(80, ReactBehavior.rbChooseGameModeMenu);
+        spawnBackButton(80, ReactBehavior.rbBackFromSkirmish);
         getButtonById(80).setTouchable(true);
 
         ButtonYio startButton = buttonFactory.getButton(generateRectangle(0.55, 0.9, 0.4, 0.07), 83, languagesManager.getString("game_settings_start"));
@@ -1439,24 +1441,24 @@ public class MenuControllerYio {
     }
 
 
-    private String getColorNameByIndex(int index) {
+    private String getColorNameByIndex(int index, String keyModifier) {
         index = yioGdxGame.gameController.getColorIndexWithOffset(index);
         switch (index) {
             default:
             case 6:
             case 0:
-                return languagesManager.getString("green");
+                return languagesManager.getString("green" + keyModifier);
             case 1:
             case 5:
-                return languagesManager.getString("red");
+                return languagesManager.getString("red" + keyModifier);
             case 2:
-                return languagesManager.getString("magenta");
+                return languagesManager.getString("magenta" + keyModifier);
             case 3:
-                return languagesManager.getString("cyan");
+                return languagesManager.getString("cyan" + keyModifier);
             case 4:
-                return languagesManager.getString("yellow");
+                return languagesManager.getString("yellow" + keyModifier);
             case 7:
-                return languagesManager.getString("gray");
+                return languagesManager.getString("gray" + keyModifier);
         }
     }
 
@@ -1469,13 +1471,13 @@ public class MenuControllerYio {
 
         String message = "ERROR";
         if (playerIsWinner) {
-            message = getColorNameByIndex(whoWon) + " " +
+            message = getColorNameByIndex(whoWon, "_player") + " " +
                     languagesManager.getString("player") + " " +
-                    languagesManager.getString("won_player") + ".";
+                    languagesManager.getString("won") + ".";
         } else {
-            message = getColorNameByIndex(whoWon) + " " +
+            message = getColorNameByIndex(whoWon, "_ai") + " " +
                     languagesManager.getString("ai") + " " +
-                    languagesManager.getString("won_ai") + ".";
+                    languagesManager.getString("won") + ".";
         }
         if (yioGdxGame.gameController.completedCampaignLevel(whoWon))
             message = languagesManager.getString("level_complete");

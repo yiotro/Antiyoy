@@ -1,5 +1,7 @@
 package yio.tro.antiyoy;
 
+import yio.tro.antiyoy.behaviors.ReactBehavior;
+
 /**
  * Created by ivan on 12.11.2015.
  */
@@ -51,6 +53,7 @@ public class TutorialScript {
         allButtonsIgnoreTouches();
         allHexesIgnoreTouches();
         showTutorialTip("tip_capture_with_units");
+        menuControllerYio.getButtonById(30).setReactBehavior(ReactBehavior.rbChooseGameModeMenu);
     }
 
 
@@ -158,6 +161,7 @@ public class TutorialScript {
                 break;
             case STEP_GOOD_LUCK:
                 resetIgnores();
+                menuControllerYio.getButtonById(30).setReactBehavior(ReactBehavior.rbInGameMenu);
 //                menuControllerLighty.showNotification(languagesManager.getString("tut_good_luck"), true);
                 break;
         }
@@ -298,7 +302,7 @@ public class TutorialScript {
 
     private void resetIgnores() {
         gameController.setIgnoreMarch(false);
-        for (int i = 30; i <= 32; i++) {
+        for (int i = 31; i <= 32; i++) {
             ButtonYio buttonYio = menuControllerYio.getButtonById(i);
             buttonYio.setTouchable(true);
         }
@@ -316,7 +320,7 @@ public class TutorialScript {
 
 
     private void allButtonsIgnoreTouches() {
-        for (int i = 30; i <= 32; i++) {
+        for (int i = 31; i <= 32; i++) {
             ButtonYio buttonYio = menuControllerYio.getButtonById(i);
             buttonYio.setTouchable(false);
         }

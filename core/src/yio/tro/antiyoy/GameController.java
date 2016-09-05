@@ -365,6 +365,7 @@ public class GameController {
 
 
     private int checkIfWeHaveWinner() {
+        if (activeHexes.size() == 0) return -1;
         int color = activeHexes.get(0).colorIndex;
         for (Hex activeHex : activeHexes) {
             if (activeHex.colorIndex != color) return -1;
@@ -429,7 +430,7 @@ public class GameController {
         }
 
         // too long game
-        if (statistics.turnsMade == 200) {
+        if (statistics.turnsMade == 299) {
             int playerHexCount[] = getPlayerHexCount();
             endGame(indexOfNumberInArray(playerHexCount, maxNumberFromArray(playerHexCount)));
         }
@@ -815,6 +816,7 @@ public class GameController {
         tutorialMode = false;
         campaignMode = false;
         proposedSurrender = false;
+        colorIndexViewOffset = 0;
     }
 
 
@@ -1267,9 +1269,10 @@ public class GameController {
 
 
     public int getColorIndexWithOffset(int srcIndex) {
+        if (editorMode) return srcIndex;
         srcIndex += colorIndexViewOffset;
-        if (srcIndex >= colorNumber) {
-            srcIndex -= colorNumber;
+        if (srcIndex >= Math.max(colorNumber, 5)) {
+            srcIndex -= Math.max(colorNumber, 5);
         }
         return srcIndex;
     }

@@ -39,7 +39,6 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     TextureRegion mainBackground, infoBackground, settingsBackground, pauseBackground;
     TextureRegion currentBackground, lastBackground, splatTexture;
     public static float screenRatio;
-    private GameSettings gameSettings;
     public GameController gameController;
     public GameView gameView;
     boolean gamePaused, readyToUnPause;
@@ -113,8 +112,8 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
 
     private void loadResourcesAndInitEverything() {
+        long time1 = System.currentTimeMillis();
         loadedResources = true;
-        gameSettings = new GameSettings(this);
         screenVerySmall = Gdx.graphics.getDensity() < 1.2;
         mainBackground = GameView.loadTextureRegionByName("main_menu_background.png", true);
         infoBackground = GameView.loadTextureRegionByName("info_background.png", true);
@@ -156,6 +155,8 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         Gdx.gl.glClearColor(0, 0, 0, 1);
 
         loadSettings();
+
+        YioGdxGame.say("full loading time: " + (System.currentTimeMillis() - time1));
     }
 
 

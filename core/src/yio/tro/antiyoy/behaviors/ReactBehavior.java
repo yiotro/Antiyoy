@@ -90,4 +90,5 @@ public abstract class ReactBehavior {
     public static final RbSpecialThanksMenu rbSpecialThanksMenu = new RbSpecialThanksMenu();
     public static final RbMoreSkirmishOptions rbMoreSkirmishOptions = new RbMoreSkirmishOptions();
     public static final RbSaveMoreSkirmishOptions rbSaveMoreSkirmishOptions = new RbSaveMoreSkirmishOptions();
+    public static final RbBackFromSkirmish rbBackFromSkirmish = new RbBackFromSkirmish();
 }

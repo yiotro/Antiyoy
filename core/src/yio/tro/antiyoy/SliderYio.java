@@ -338,19 +338,19 @@ class SliderYio {
     private void configureFirstColor(LanguagesManager languagesManager) {
         switch (getCurrentRunnerIndex()) {
             case 0:
-                valueString = languagesManager.getString("green");
+                valueString = languagesManager.getString("green_menu");
                 break;
             case 1:
-                valueString = languagesManager.getString("red");
+                valueString = languagesManager.getString("red_menu");
                 break;
             case 2:
-                valueString = languagesManager.getString("magenta");
+                valueString = languagesManager.getString("magenta_menu");
                 break;
             case 3:
-                valueString = languagesManager.getString("cyan");
+                valueString = languagesManager.getString("cyan_menu");
                 break;
             case 4:
-                valueString = languagesManager.getString("yellow");
+                valueString = languagesManager.getString("yellow_menu");
                 break;
         }
     }

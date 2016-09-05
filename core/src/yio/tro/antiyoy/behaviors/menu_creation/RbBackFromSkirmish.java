@@ -3,11 +3,11 @@ package yio.tro.antiyoy.behaviors.menu_creation;
 import yio.tro.antiyoy.ButtonYio;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 
-public class RbSaveMoreSkirmishOptions extends ReactBehavior{
+public class RbBackFromSkirmish extends ReactBehavior{
 
     @Override
     public void reactAction(ButtonYio buttonYio) {
-        buttonYio.menuControllerYio.saveMoreSkirmishOptions();
-        buttonYio.menuControllerYio.createSkirmishMenu();
+        buttonYio.menuControllerYio.saveSkirmishSettings();
+        buttonYio.menuControllerYio.createChooseGameModeMenu();
     }
 }
