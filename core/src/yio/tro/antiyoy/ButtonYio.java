@@ -1,6 +1,7 @@
 package yio.tro.antiyoy;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -38,6 +39,7 @@ public class ButtonYio {
     float hor, ver, cx, cy, touchX, touchY, animR;
     float x1, x2, y1, y2;
     private float deltaSizeArgument, deltaSize, touchOffset;
+    Sound pressSound;
     boolean hasShadow, mandatoryShadow, rectangularMask, onlyShadow, touchAnimation, lockAction, deltaAnimationEnabled; // mandatory shadow - draw shadow right before button
 
 
@@ -57,6 +59,7 @@ public class ButtonYio {
         mandatoryShadow = false;
         animPos = new RectangleYio(0, 0, 0, 0);
         deltaAnimationEnabled = false;
+        pressSound = null;
     }
 
 
@@ -191,7 +194,7 @@ public class ButtonYio {
         if (!touchable) return;
         currentlyTouched = true;
         lastTimeTouched = System.currentTimeMillis();
-        SoundControllerYio.playPressButton();
+        playPressSound();
         selectionFactor.setValues(0.2, 0.02);
         selectionFactor.beginSpawning(0, 1);
         selAlphaFactor.setValues(1, 0);
@@ -206,6 +209,19 @@ public class ButtonYio {
             needToPerformAction = true;
             timeToPerformAction = System.currentTimeMillis() + 100;
         }
+    }
+
+
+    private void playPressSound() {
+        if (pressSound == null)
+            SoundControllerYio.playSound(SoundControllerYio.soundPressButton);
+        else
+            SoundControllerYio.playSound(pressSound);
+    }
+
+
+    public void setPressSound(Sound pressSound) {
+        this.pressSound = pressSound;
     }
 
 

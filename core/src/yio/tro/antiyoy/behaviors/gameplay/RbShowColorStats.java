@@ -120,7 +120,8 @@ public class RbShowColorStats extends ReactBehavior {
 
             float currentSize = (float) playerHexCount[i] / maxNumber;
             currentSize *= columnHeight;
-            batch.draw(getPixelByIndex(i), columnX - columnWidth / 2, 0.01f * h + columnHeight - currentSize, columnWidth, currentSize);
+            int pixelIndex = getGameController(statButton).getColorIndexWithOffset(i);
+            batch.draw(getPixelByIndex(pixelIndex), columnX - columnWidth / 2, 0.01f * h + columnHeight - currentSize, columnWidth, currentSize);
         }
         batch.draw(blackPixel, 0.025f * w, 0.0125f * h + columnHeight, 0.95f * w, 0.005f * h);
 

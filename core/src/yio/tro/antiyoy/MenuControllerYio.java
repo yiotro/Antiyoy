@@ -82,18 +82,19 @@ public class MenuControllerYio {
         }
         sliders.get(2).addListener(sliders.get(1));
         sliders.get(0).addListener(sliders.get(2));
+        sliders.get(2).addListener(sliders.get(4));
 
         sliders.get(0).setValues(0.5f, 1, 3, true, SliderYio.CONFIGURE_SIZE); // map size
         sliders.get(1).setValues(0.2f, 0, 5, false, SliderYio.CONFIGURE_HUMANS); // humans
         sliders.get(2).setValues(0.6, 3, 6, false, SliderYio.CONFIGURE_COLORS); // colors
         sliders.get(3).setValues(0.33, 1, 4, true, SliderYio.CONFIGURE_DIFFICULTY); // difficulty
-        sliders.get(4).setValues(0, 0, 4, true, SliderYio.CONFIGURE_FIRST_COLOR); // first color
+        sliders.get(4).setValues(0, 0, 6, true, SliderYio.CONFIGURE_COLOR_OFFSET); // color offset
         sliders.get(5).setValues(0, 0, 2, true, SliderYio.CONFIGURE_SKIN); // hex skin
-        sliders.get(6).setValues(0, 0, 1, true, SliderYio.CONFIGURE_SLOT_NUMBER); // slot number
-        sliders.get(7).setValues(0, 0, 1, false, SliderYio.CONFIGURE_FIRST_COLOR); // autosave
-        sliders.get(8).setValues(0, 0, 1, true, SliderYio.CONFIGURE_ASK_END_TURN); // ask to end turn
+        sliders.get(6).setValues(0.5f, 0, 4, true, SliderYio.CONFIGURE_CAMERA_OFFSET); // camera offset
+//        sliders.get(7).setValues(0, 0, 1, false, SliderYio.CONFIGURE_COLOR_OFFSET); // autosave
+//        sliders.get(8).setValues(0, 0, 1, true, SliderYio.CONFIGURE_ASK_END_TURN); // ask to end turn
         sliders.get(9).setValues(0.75, 0, 3, false, SliderYio.CONFIGURE_ANIM_STYLE); // animation style
-        sliders.get(10).setValues(0, 0, 1, false, SliderYio.CONFIGURE_FIRST_COLOR); // city names
+//        sliders.get(10).setValues(0, 0, 1, false, SliderYio.CONFIGURE_COLOR_OFFSET); // city names
     }
 
 
@@ -385,7 +386,6 @@ public class MenuControllerYio {
         renderTextAndSomeEmptyLines(skinLabel, languagesManager.getString("skin"), 2);
         skinLabel.setTouchable(false);
         skinLabel.setAnimType(ButtonYio.ANIM_UP);
-
         sliders.get(5).appear();
         sliders.get(5).setPos(0.15, 0.52, 0.7, 0);
         sliders.get(5).setVerticalTouchOffset(0.06f * Gdx.graphics.getHeight());
@@ -397,6 +397,14 @@ public class MenuControllerYio {
         sliders.get(9).appear();
         sliders.get(9).setPos(0.15, 0.31, 0.7, 0);
         sliders.get(9).setVerticalTouchOffset(0.06f * Gdx.graphics.getHeight());
+
+        ButtonYio fieldCameraOffset = buttonFactory.getButton(generateRectangle(0.1, 0.67, 0.8, 0.2), 314, null);
+        renderTextAndSomeEmptyLines(fieldCameraOffset, languagesManager.getString("camera_offset"), 2);
+        fieldCameraOffset.setTouchable(false);
+        fieldCameraOffset.setAnimType(ButtonYio.ANIM_UP);
+        sliders.get(6).appear();
+        sliders.get(6).setPos(0.15, 0.73, 0.7, 0);
+        sliders.get(6).setVerticalTouchOffset(0.06f * Gdx.graphics.getHeight());
 
         endMenuCreation();
     }
@@ -1191,6 +1199,7 @@ public class MenuControllerYio {
         endTurnButton.setAnimType(ButtonYio.ANIM_DOWN);
         endTurnButton.enableRectangularMask();
         endTurnButton.disableTouchAnimation();
+        endTurnButton.setPressSound(SoundControllerYio.soundEndTurn);
 
         ButtonYio undoButton = buttonFactory.getButton(generateSquare(0, 0, 0.07), 32, null);
         loadButtonOnce(undoButton, "undo_icon.png");
@@ -1199,9 +1208,9 @@ public class MenuControllerYio {
         undoButton.enableRectangularMask();
         undoButton.disableTouchAnimation();
 
-//        ButtonLighty debugButton = buttonFactory.getButton(generateSquare(0.72, 0, 0.07), 3128773, "Q");
+//        ButtonYio debugButton = buttonFactory.getButton(generateSquare(0.72, 0, 0.07), 3128773, "Q");
 //        debugButton.setReactBehavior(ReactBehavior.rbDebugActions);
-//        debugButton.setAnimType(ButtonLighty.ANIM_DOWN);
+//        debugButton.setAnimType(ButtonYio.ANIM_DOWN);
 //        debugButton.disableTouchAnimation();
 
         endMenuCreation();
@@ -1236,6 +1245,7 @@ public class MenuControllerYio {
             coinButton = buttonFactory.getButton(generateSquare(0, 0.93, 0.07), 37, null);
             loadButtonOnce(coinButton, "coin.png");
             coinButton.setAnimType(ButtonYio.ANIM_UP);
+            coinButton.setPressSound(SoundControllerYio.soundCoin);
             coinButton.enableRectangularMask();
             coinButton.disableTouchAnimation();
         }

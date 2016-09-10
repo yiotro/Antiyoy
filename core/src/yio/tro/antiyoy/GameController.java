@@ -63,7 +63,7 @@ public class GameController {
     int selectedProvinceMoney, tipType, tipShowType, marchDelay, playersNumber, currentLevelIndex, compensationOffsetY, defTipDelay;
     int difficulty, colorIndexViewOffset;
     String balanceString, currentPriceString, levelInitialString;
-    double currentCamSpeed, zoomUpperLimit;
+    double currentCamSpeed, zoomUpperLimit, cameraOffset;
     private ArrayList<LevelSnapshot> levelSnapshots;
     long timeToCheckAnimHexes, defTipSpawnTime;
     MapGenerator mapGenerator;
@@ -97,6 +97,7 @@ public class GameController {
         deltaMovementFactor = 48;
         marchDelay = 500;
         defTipDelay = 1000;
+        cameraOffset = 0.1 * w;
         activeHexes = new ArrayList<Hex>();
         selectedHexes = new ArrayList<Hex>();
         animHexes = new ArrayList<Hex>();
@@ -730,32 +731,34 @@ public class GameController {
             yioGdxGame.gameView.orthoCam.translate(deltaX, 0);
             backgroundVisible = true;
         } else {
-            if (fieldX1 > 0) {
+            if (fieldX1 > 0 || fieldX2 < w) {
+                backgroundVisible = true;
+            }
+            if (fieldX1 > 0 + cameraOffset) {
                 camDx = boundPower();
-                backgroundVisible = true;
             }
-            if (fieldX1 > -0.1 * w) blockDragToLeft = true;
-            if (fieldX2 < w) {
+            if (fieldX1 > -0.1 * w + cameraOffset) blockDragToLeft = true;
+            if (fieldX2 < w - cameraOffset) {
                 camDx = -boundPower();
-                backgroundVisible = true;
             }
-            if (fieldX2 < 1.1 * w) blockDragToRight = true;
+            if (fieldX2 < 1.1 * w - cameraOffset) blockDragToRight = true;
         }
         if (fieldY2 - fieldY1 < 1.1f * h) {
             float deltaY = 0.2f * (0.5f * boundHeight / orthoCam.zoom - orthoCam.position.y / orthoCam.zoom);
             yioGdxGame.gameView.orthoCam.translate(0, deltaY);
             backgroundVisible = true;
         } else {
-            if (fieldY1 > 0) {
+            if (fieldY1 > 0 || fieldY2 < h) {
+                backgroundVisible = true;
+            }
+            if (fieldY1 > 0 + cameraOffset) {
                 camDy = boundPower();
-                backgroundVisible = true;
             }
-            if (fieldY1 > -0.1 * w) blockDragToDown = true;
-            if (fieldY2 < h) {
+            if (fieldY1 > -0.1 * w + cameraOffset) blockDragToDown = true;
+            if (fieldY2 < h - cameraOffset) {
                 camDy = -boundPower();
-                backgroundVisible = true;
             }
-            if (fieldY2 < 1.1 * h) blockDragToUp = true;
+            if (fieldY2 < 1.1 * h - cameraOffset) blockDragToUp = true;
         }
     }
 
@@ -1052,6 +1055,7 @@ public class GameController {
             }
         }
         setResponseAnimHex(toWhere);
+        SoundControllerYio.playSound(SoundControllerYio.soundHoldToMarch);
     }
 
 
@@ -1271,8 +1275,8 @@ public class GameController {
     public int getColorIndexWithOffset(int srcIndex) {
         if (editorMode) return srcIndex;
         srcIndex += colorIndexViewOffset;
-        if (srcIndex >= Math.max(colorNumber, 5)) {
-            srcIndex -= Math.max(colorNumber, 5);
+        if (srcIndex >= colorNumber) {
+            srcIndex -= colorNumber;
         }
         return srcIndex;
     }
@@ -1896,12 +1900,14 @@ public class GameController {
                     tipType = 0;
                 }
                 setResponseAnimHex(focusedHex);
+                SoundControllerYio.playSound(SoundControllerYio.soundBuild);
                 // else attack by building unit
             } else if (focusedHex.isInMoveZone() && focusedHex.colorIndex != turn && tipType > 0 && selectedProvince.hasMoneyForUnit(tipType)) {
                 buildUnit(selectedProvince, focusedHex, tipType);
                 selectedProvince = getProvinceByHex(focusedHex); // when uniting provinces, selected province object may change
                 selectAdjacentHexes(focusedHex);
                 tipType = 0;
+                SoundControllerYio.playSound(SoundControllerYio.soundBuild);
             } else setResponseAnimHex(focusedHex);
             hideTip();
             hideMoveZone();
@@ -1924,6 +1930,7 @@ public class GameController {
         if (focusedHex.colorIndex != turn && focusedHex.inMoveZone && selectedUnit != null) {
             takeSnapshot();
             moveUnit(selectedUnit, focusedHex, selectedProvince);
+            SoundControllerYio.playSound(SoundControllerYio.soundAttack);
             selectedUnit = null;
         }
 
@@ -1938,6 +1945,7 @@ public class GameController {
             if (selectedUnit == null) { // check to select unit
                 if (focusedHex.containsUnit() && focusedHex.unit.isReadyToMove() && focusedHex.unit.moveFactor.get() == 1) {
                     selectedUnit = focusedHex.unit;
+                    SoundControllerYio.playSound(SoundControllerYio.soundSelectUnit);
                     detectAndShowMoveZone(selectedUnit.currHex, selectedUnit.strength, UNIT_MOVE_LIMIT);
                     selUnitFactor.setValues(0, 0);
                     selUnitFactor.beginSpawning(3, 2);
@@ -1946,6 +1954,7 @@ public class GameController {
             } else { // move unit peacefully
                 if (focusedHex.inMoveZone && isCurrentTurn(focusedHex.colorIndex) && selectedUnit.canMoveToFriendlyHex(focusedHex)) {
                     takeSnapshot();
+                    SoundControllerYio.playSound(SoundControllerYio.soundWalk);
                     moveUnit(selectedUnit, focusedHex, selectedProvince);
                     selectedUnit = null;
                 }

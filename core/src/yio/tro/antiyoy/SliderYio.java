@@ -21,9 +21,9 @@ class SliderYio {
     public static final int CONFIGURE_HUMANS = 1;
     public static final int CONFIGURE_COLORS = 2;
     public static final int CONFIGURE_DIFFICULTY = 3;
-    public static final int CONFIGURE_FIRST_COLOR = 4;
+    public static final int CONFIGURE_COLOR_OFFSET = 4;
     public static final int CONFIGURE_SKIN = 5;
-    public static final int CONFIGURE_SLOT_NUMBER = 6;
+    public static final int CONFIGURE_CAMERA_OFFSET = 6;
     public static final int CONFIGURE_ASK_END_TURN = 7;
     public static final int CONFIGURE_ANIM_STYLE = 8;
     Rect pos;
@@ -208,17 +208,25 @@ class SliderYio {
 
     private void beNotifiedAboutChange(SliderYio sliderYio) {
         int s = 0;
-        switch (sliderYio.configureType) {
-            case CONFIGURE_COLORS:
+        int currentIndex = getCurrentRunnerIndex();
+        switch (configureType) {
+            case CONFIGURE_HUMANS:
                 s = sliderYio.getCurrentRunnerIndex() + sliderYio.minNumber;
                 break;
-            case CONFIGURE_SIZE:
+            case CONFIGURE_COLORS:
                 s = 2;
                 if (sliderYio.getCurrentRunnerIndex() == 1) s = GameController.MAX_COLOR_NUMBER - 5;
                 if (sliderYio.getCurrentRunnerIndex() == 2) s = GameController.MAX_COLOR_NUMBER - 3;
                 break;
+            case CONFIGURE_COLOR_OFFSET:
+                menuControllerYio.loadMoreSkirmishOptions();
+                s = sliderYio.getCurrentRunnerIndex() + sliderYio.minNumber - 1;
+                menuControllerYio.saveMoreSkirmishOptions();
+                break;
         }
         setNumberOfSegments(s);
+        setRunnerValueByIndex(currentIndex);
+        if (runnerValue > 1) runnerValue = 1;
         updateValueString();
     }
 
@@ -257,14 +265,14 @@ class SliderYio {
             case CONFIGURE_DIFFICULTY:
                 configureDifficulty(languagesManager);
                 break;
-            case CONFIGURE_FIRST_COLOR:
+            case CONFIGURE_COLOR_OFFSET:
                 configureFirstColor(languagesManager);
                 break;
             case CONFIGURE_SKIN:
                 configureSkin(languagesManager);
                 break;
-            case CONFIGURE_SLOT_NUMBER:
-                configureSlotNumber(languagesManager);
+            case CONFIGURE_CAMERA_OFFSET:
+                configureCameraOffset(languagesManager);
                 break;
             case CONFIGURE_ASK_END_TURN:
                 configureAskToEndTurn(languagesManager);
@@ -308,13 +316,22 @@ class SliderYio {
     }
 
 
-    private void configureSlotNumber(LanguagesManager languagesManager) {
+    private void configureCameraOffset(LanguagesManager languagesManager) {
         switch (getCurrentRunnerIndex()) {
             case 0:
-                valueString = languagesManager.getString("slot_single");
+                valueString = "0";
                 break;
             case 1:
-                valueString = languagesManager.getString("slot_multiple");
+                valueString = "0.25";
+                break;
+            case 2:
+                valueString = "0.5";
+                break;
+            case 3:
+                valueString = "0.75";
+                break;
+            case 4:
+                valueString = "1";
                 break;
         }
     }
@@ -351,6 +368,12 @@ class SliderYio {
                 break;
             case 4:
                 valueString = languagesManager.getString("yellow_menu");
+                break;
+            case 5:
+                valueString = languagesManager.getString("red_menu") + "+";
+                break;
+            case 6:
+                valueString = languagesManager.getString("green_menu") + "+";
                 break;
         }
     }
@@ -421,5 +444,10 @@ class SliderYio {
 
     private void setFromUp(boolean fromUp) {
         this.fromUp = fromUp;
+    }
+
+
+    public int getMinNumber() {
+        return minNumber;
     }
 }

@@ -25,7 +25,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     private MenuViewYio menuViewYio;
     public static BitmapFont buttonFont, gameFont, listFont, cityFont;
     private static GlyphLayout glyphLayout = new GlyphLayout();
-    public static final String SPECIAL_CHARACTERS = "SORNCEabcdefghijklmnopqrstuvwxyz0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<^>";
+    public static final String SPECIAL_CHARACTERS = "JSORNCEabcdefghijklmnopqrstuvwxyz0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<^>";
     public static int FONT_SIZE;
     public static boolean ANDROID = false;
     public static final int INDEX_OF_LAST_LEVEL = 70; // with tutorial
@@ -120,7 +120,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         settingsBackground = GameView.loadTextureRegionByName("settings_background.png", true);
         pauseBackground = GameView.loadTextureRegionByName("pause_background.png", true);
         splatTexture = GameView.loadTextureRegionByName("splat.png", true);
-        SoundControllerYio.loadSounds();
+        SoundControllerYio.loadAllSounds();
         Province.decodeCityNameParts();
         transitionFactor = new FactorYio();
         splatTransparencyFactor = new FactorYio();
@@ -223,6 +223,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         prefs.putInteger("ask_to_end_turn", boolToInteger(menuControllerYio.getCheckButtonById(3).isChecked()));
         prefs.putInteger("anim_style", menuControllerYio.sliders.get(9).getCurrentRunnerIndex());
         prefs.putInteger("city_names", boolToInteger(menuControllerYio.getCheckButtonById(4).isChecked()));
+        prefs.putInteger("camera_offset", menuControllerYio.sliders.get(6).getCurrentRunnerIndex());
         prefs.flush();
     }
 
@@ -278,7 +279,13 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 //        menuControllerYio.sliders.get(10).setRunnerValue(cityNames);
         menuControllerYio.getCheckButtonById(4).setChecked(cityNames == 1);
 
+        // camera offset
+        int camOffsetIndex = prefs.getInteger("camera_offset", 2);
+        gameController.cameraOffset = 0.05f * w * camOffsetIndex;
+        menuControllerYio.sliders.get(6).setRunnerValueByIndex(camOffsetIndex);
+
         menuControllerYio.sliders.get(5).updateValueString();
+        menuControllerYio.sliders.get(6).updateValueString();
         menuControllerYio.sliders.get(9).updateValueString();
     }
 
