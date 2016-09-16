@@ -12,6 +12,7 @@ public class RbCampaignMenu extends ReactBehavior {
     public void reactAction(ButtonYio buttonYio) {
         getYioGdxGame(buttonYio).setGamePaused(true);
         buttonYio.menuControllerYio.createCampaignMenu();
+        buttonYio.menuControllerYio.loadMoreCampaignOptions();
         getYioGdxGame(buttonYio).setAnimToPlayButtonSpecial();
     }
 }

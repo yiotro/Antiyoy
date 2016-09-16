@@ -37,7 +37,7 @@ public abstract class ReactBehavior {
     public static RbNothing rbNothing = new RbNothing();
     public static final RbEndTurn rbEndTurn = new RbEndTurn();
     public static final RbBuildUnit rbBuildUnit = new RbBuildUnit();
-    public static final RbBuildTower rbBuildTower = new RbBuildTower();
+    public static final RbBuildSolidObject RB_BUILD_SOLID_OBJECT = new RbBuildSolidObject();
     public static final RbUndo rbUndo = new RbUndo();
     public static RbDebugActions rbDebugActions = new RbDebugActions();
     public static final RbChooseGameModeMenu rbChooseGameModeMenu = new RbChooseGameModeMenu();
@@ -47,7 +47,8 @@ public abstract class ReactBehavior {
     public static final RbSaveGame rbSaveGame = new RbSaveGame();
     public static final RbLoadGame rbLoadGame = new RbLoadGame();
     public static final RbRestartGame rbRestartGame = new RbRestartGame();
-    public static final RbTutorial rbTutorial = new RbTutorial();
+    public static final RbTutorialSlay rbTutorialSlay = new RbTutorialSlay();
+    public static final RbTutorialGeneric rbTutorialGeneric = new RbTutorialGeneric();
     public static final RbCampaignLevel rbCampaignLevel = new RbCampaignLevel();
     public static final RbHelpIndex rbHelpIndex = new RbHelpIndex();
     public static final RbArticleUnits rbArticleUnits = new RbArticleUnits();
@@ -91,4 +92,7 @@ public abstract class ReactBehavior {
     public static final RbMoreSkirmishOptions rbMoreSkirmishOptions = new RbMoreSkirmishOptions();
     public static final RbSaveMoreSkirmishOptions rbSaveMoreSkirmishOptions = new RbSaveMoreSkirmishOptions();
     public static final RbBackFromSkirmish rbBackFromSkirmish = new RbBackFromSkirmish();
+    public static final RbMoreCampaignOptions rbMoreCampaignOptions = new RbMoreCampaignOptions();
+    public static final RbExitToCampaign rbExitToCampaign = new RbExitToCampaign();
+    public static final RbTutorialIndex rbTutorialIndex = new RbTutorialIndex();
 }

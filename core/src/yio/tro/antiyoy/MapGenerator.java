@@ -9,14 +9,14 @@ import java.util.Random;
  */
 class MapGenerator {
 
-    private final GameController gameController;
-    private float boundWidth, boundHeight;
-    private int fWidth, fHeight, w, h;
-    private Hex[][] field;
-    private Random random;
-    private ArrayList<PointYio> islandCenters;
-    static final int SMALL_PROVINCE_SIZE = 4;
-    private ArrayList<Link> links;
+    protected final GameController gameController;
+    protected float boundWidth, boundHeight;
+    protected int fWidth, fHeight, w, h;
+    protected Hex[][] field;
+    protected Random random;
+    protected ArrayList<PointYio> islandCenters;
+    static int SMALL_PROVINCE_SIZE = 4;
+    protected ArrayList<Link> links;
 
 
     public MapGenerator(GameController gameController) {
@@ -24,7 +24,7 @@ class MapGenerator {
     }
 
 
-    private void templateLoop() {
+    protected void templateLoop() {
         for (int i = 0; i < fWidth; i++) {
             for (int j = 0; j < fHeight; j++) {
 
@@ -33,13 +33,14 @@ class MapGenerator {
     }
 
 
-    private void setValues(Random random, Hex field[][]) {
+    protected void setValues(Random random, Hex field[][]) {
         boundWidth = gameController.boundWidth;
         boundHeight = gameController.boundHeight;
         fWidth = gameController.fWidth;
         fHeight = gameController.fHeight;
         w = gameController.w;
         h = gameController.h;
+        SMALL_PROVINCE_SIZE = 5;
         this.random = random;
         this.field = field;
     }
@@ -59,7 +60,7 @@ class MapGenerator {
     }
 
 
-    private void balanceMap() {
+    protected void balanceMap() {
         if (GameController.colorNumber < 4) return; // to prevent infinite loop
         spawnManySmallProvinces();
         cutProvincesToSmallSizes();
@@ -68,7 +69,7 @@ class MapGenerator {
     }
 
 
-    private void increaseProvince(ArrayList<Hex> provinceList, double power) {
+    protected void increaseProvince(ArrayList<Hex> provinceList, double power) {
         for (Hex hex : provinceList) {
             for (int i = 0; i < 6; i++) {
                 Hex adjHex = hex.adjacentHex(i);
@@ -80,7 +81,7 @@ class MapGenerator {
     }
 
 
-    private boolean hexHasEnemiesNear(Hex hex) {
+    protected boolean hexHasEnemiesNear(Hex hex) {
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.adjacentHex(i);
             if (adjHex.active && !adjHex.sameColor(hex)) return true;
@@ -89,7 +90,7 @@ class MapGenerator {
     }
 
 
-    private void decreaseProvince(ArrayList<Hex> provinceList, double power) {
+    protected void decreaseProvince(ArrayList<Hex> provinceList, double power) {
         for (Hex hex : provinceList) {
             if (hexHasEnemiesNear(hex) && random.nextDouble() < power) {
                 hex.colorIndex = getRandomColor();
@@ -98,7 +99,7 @@ class MapGenerator {
     }
 
 
-    private void giveDisadvantageToPlayer(int index, double power) {
+    protected void giveDisadvantageToPlayer(int index, double power) {
         clearGenFlags();
         for (Hex activeHex : gameController.activeHexes) {
             if (!activeHex.genFlag && activeHex.sameColor(index)) {
@@ -110,7 +111,7 @@ class MapGenerator {
     }
 
 
-    private void giveAdvantageToPlayer(int index, double power) {
+    protected void giveAdvantageToPlayer(int index, double power) {
         clearGenFlags();
         for (Hex activeHex : gameController.activeHexes) {
             if (!activeHex.genFlag && activeHex.sameColor(index)) {
@@ -123,7 +124,7 @@ class MapGenerator {
     }
 
 
-    private void giveLastPlayersSlightAdvantage() {
+    protected void giveLastPlayersSlightAdvantage() {
         giveAdvantageToPlayer(GameController.colorNumber - 1, 0.053); // last
         giveAdvantageToPlayer(GameController.colorNumber - 2, 0.033);
         if (GameController.colorNumber >= 5) {
@@ -139,15 +140,14 @@ class MapGenerator {
     }
 
 
-    private void spawnManySmallProvinces() {
+    protected void spawnManySmallProvinces() {
         for (Hex activeHex : gameController.activeHexes) {
-            if (activeHex.noProvincesNearby()) spawnSmallProvince(activeHex);
+            if (activeHex.noProvincesNearby()) spawnProvince(activeHex, 2);
         }
     }
 
 
-    private void spawnSmallProvince(Hex spawnHex) {
-        int startingPotential = 2;
+    protected void spawnProvince(Hex spawnHex, int startingPotential) {
         spawnHex.genPotential = startingPotential;
         ArrayList<Hex> propagationList = new ArrayList<Hex>();
         propagationList.add(spawnHex);
@@ -168,7 +168,7 @@ class MapGenerator {
     }
 
 
-    private ArrayList<Hex> detectProvince(Hex startHex) {
+    protected ArrayList<Hex> detectProvince(Hex startHex) {
         ArrayList<Hex> provinceList = new ArrayList<Hex>();
         ArrayList<Hex> propagationList = new ArrayList<Hex>();
         Hex tempHex, adjHex;
@@ -188,7 +188,7 @@ class MapGenerator {
     }
 
 
-    private boolean atLeastOneProvinceIsTooBig() {
+    protected boolean atLeastOneProvinceIsTooBig() {
         for (Hex activeHex : gameController.activeHexes) {
             if (detectProvince(activeHex).size() > SMALL_PROVINCE_SIZE) return true;
         }
@@ -196,7 +196,7 @@ class MapGenerator {
     }
 
 
-    private void cutProvincesToSmallSizes() {
+    protected void cutProvincesToSmallSizes() {
         int loopLimit = 100;
         while (atLeastOneProvinceIsTooBig() && loopLimit > 0) {
             for (Hex activeHex : gameController.activeHexes) {
@@ -209,7 +209,7 @@ class MapGenerator {
     }
 
 
-    private int getRandomColorExceptOne(int excludedColor) {
+    protected int getRandomColorExceptOne(int excludedColor) {
         while (true) {
             int color = getRandomColor();
             if (color != excludedColor) return color;
@@ -217,13 +217,13 @@ class MapGenerator {
     }
 
 
-    private Hex findHexToExcludeFromProvince(ArrayList<Hex> provinceList) {
-        Hex resultHex = provinceList.get(0);
-        int minNumber = resultHex.numberOfFriendlyHexesNearby();
-        for (int i = 1; i < provinceList.size(); i++) {
+    protected Hex findHexToExcludeFromProvince(ArrayList<Hex> provinceList) {
+        Hex resultHex = null;
+        int minNumber = 0;
+        for (int i = 0; i < provinceList.size(); i++) {
             Hex currHex = provinceList.get(i);
             int currNumber = currHex.numberOfFriendlyHexesNearby();
-            if (currNumber < minNumber) {
+            if (resultHex == null || currNumber < minNumber) {
                 minNumber = currNumber;
                 resultHex = currHex;
             }
@@ -232,7 +232,7 @@ class MapGenerator {
     }
 
 
-    private void reduceProvinceSize(ArrayList<Hex> provinceList) {
+    protected void reduceProvinceSize(ArrayList<Hex> provinceList) {
         int provinceColor = provinceList.get(0).colorIndex;
         while (provinceList.size() > SMALL_PROVINCE_SIZE) {
             Hex hex = findHexToExcludeFromProvince(provinceList);
@@ -242,7 +242,7 @@ class MapGenerator {
     }
 
 
-    private void countProvinces(int numbers[]) {
+    protected void countProvinces(int numbers[]) {
         for (int i = 0; i < numbers.length; i++) {
             numbers[i] = 0;
         }
@@ -261,7 +261,7 @@ class MapGenerator {
     }
 
 
-    private int maxDifferenceInNumbers(int numbers[]) {
+    protected int maxDifferenceInNumbers(int numbers[]) {
         int maxDifference = 0;
         for (int i = 0; i < numbers.length; i++) {
             for (int j = i + 1; j < numbers.length; j++) {
@@ -273,7 +273,7 @@ class MapGenerator {
     }
 
 
-    private int indexOfMax(int numbers[]) {
+    protected int indexOfMax(int numbers[]) {
         int indexMax = 0;
         int maxValue = numbers[0];
         for (int i = 1; i < numbers.length; i++) {
@@ -286,7 +286,7 @@ class MapGenerator {
     }
 
 
-    private int indexOfMin(int numbers[]) {
+    protected int indexOfMin(int numbers[]) {
         int indexMin = 0;
         int minValue = numbers[0];
         for (int i = 1; i < numbers.length; i++) {
@@ -299,7 +299,7 @@ class MapGenerator {
     }
 
 
-    private boolean provinceHasNeighbourWithColor(ArrayList<Hex> provinceList, int color) {
+    protected boolean provinceHasNeighbourWithColor(ArrayList<Hex> provinceList, int color) {
         for (Hex hex : provinceList) {
             for (int i = 0; i < 6; i++) {
                 Hex adjHex = hex.adjacentHex(i);
@@ -310,7 +310,7 @@ class MapGenerator {
     }
 
 
-    private boolean tryToGiveAwayProvince(ArrayList<Hex> provinceList) {
+    protected boolean tryToGiveAwayProvince(ArrayList<Hex> provinceList) {
         for (int i = 0; i < GameController.colorNumber; i++) {
             if (i == provinceList.get(0).colorIndex) continue;
             if (!provinceHasNeighbourWithColor(provinceList, i)) {
@@ -324,14 +324,14 @@ class MapGenerator {
     }
 
 
-    private void tagProvince(ArrayList<Hex> provinceList) {
+    protected void tagProvince(ArrayList<Hex> provinceList) {
         for (Hex hex : provinceList) {
             hex.genFlag = true;
         }
     }
 
 
-    private boolean giveProvinceToSomeone(int giverIndex) {
+    protected boolean giveProvinceToSomeone(int giverIndex) {
         clearGenFlags();
         for (Hex activeHex : gameController.activeHexes) {
             if (activeHex.sameColor(giverIndex) && !activeHex.genFlag) {
@@ -346,7 +346,7 @@ class MapGenerator {
     }
 
 
-    private void achieveFairNumberOfProvincesForEveryPlayer() {
+    protected void achieveFairNumberOfProvincesForEveryPlayer() {
         int numbers[] = new int[GameController.colorNumber];
         countProvinces(numbers);
         int loopLimit = 50;
@@ -360,7 +360,7 @@ class MapGenerator {
     }
 
 
-    private void centerLand() {
+    protected void centerLand() {
         Hex centerHex = getCenterHex();
         int utterLeft = centerHex.index1;
         int utterRight = centerHex.index1;
@@ -378,7 +378,7 @@ class MapGenerator {
     }
 
 
-    private void relocateMap(int deltaX, int deltaY) {
+    protected void relocateMap(int deltaX, int deltaY) {
         clearGenFlags();
 
         for (int i = 0; i < fWidth; i++) {
@@ -405,12 +405,12 @@ class MapGenerator {
     }
 
 
-    private boolean isGood() {
+    protected boolean isGood() {
         return isLinked() && gameController.activeHexes.size() > 0.3 * numberOfAvailableHexes();
     }
 
 
-    private int numberOfAvailableHexes() {
+    protected int numberOfAvailableHexes() {
         int c = 0;
         for (int i = 0; i < fWidth; i++) {
             for (int j = 0; j < fHeight; j++) {
@@ -421,7 +421,7 @@ class MapGenerator {
     }
 
 
-    private boolean isLinked() {
+    protected boolean isLinked() {
         clearGenFlags();
 
         Hex activeHex = findActiveHex();
@@ -452,7 +452,7 @@ class MapGenerator {
     }
 
 
-    private Hex findActiveHex() {
+    protected Hex findActiveHex() {
         for (int i = 0; i < fWidth; i++) {
             for (int j = 0; j < fHeight; j++) {
                 if (field[i][j].active) return field[i][j];
@@ -462,7 +462,7 @@ class MapGenerator {
     }
 
 
-    private void maybeDeactivateIfPossible(Hex hex) {
+    protected void maybeDeactivateIfPossible(Hex hex) {
         if (!hex.active) return;
         if (random.nextDouble() > 0.8) return;
         int activeNearby = hex.numberOfActiveHexesNearby();
@@ -473,7 +473,7 @@ class MapGenerator {
     }
 
 
-    private void cutOffHexesOutsideOfBounds() {
+    protected void cutOffHexesOutsideOfBounds() {
         for (int i = 0; i < fWidth; i++) {
             for (int j = 0; j < fHeight; j++) {
                 if (field[i][j].active && !isHexInsideBounds(field[i][j])) {
@@ -485,7 +485,7 @@ class MapGenerator {
     }
 
 
-    private void clearHexes() {
+    protected void clearHexes() {
         for (int i = 0; i < fWidth; i++) {
             for (int j = 0; j < fHeight; j++) {
                 if (field[i][j].active) deactivateHex(field[i][j]);
@@ -494,7 +494,7 @@ class MapGenerator {
     }
 
 
-    private void clearGenFlags() {
+    protected void clearGenFlags() {
         for (int i = 0; i < fWidth; i++) {
             for (int j = 0; j < fHeight; j++) {
                 field[i][j].genFlag = false;
@@ -503,17 +503,17 @@ class MapGenerator {
     }
 
 
-    private Hex getCenterHex() {
+    protected Hex getCenterHex() {
         return gameController.getHexByPos(boundWidth / 2, boundHeight / 2);
     }
 
 
-    private double distanceFromCenterToCorners() {
+    protected double distanceFromCenterToCorners() {
         return YioGdxGame.distance(0, 0, boundWidth / 2, boundHeight / 2);
     }
 
 
-    private Hex getRandomHexNearCenter() {
+    protected Hex getRandomHexNearCenter() {
         while (true) {
             double a = getRandomAngle();
             double r = random.nextDouble();
@@ -525,12 +525,12 @@ class MapGenerator {
     }
 
 
-    private double getRandomAngle() {
+    protected double getRandomAngle() {
         return random.nextDouble() * 2d * Math.PI;
     }
 
 
-    private Hex getRandomHex() {
+    protected Hex getRandomHex() {
         while (true) {
             Hex hex = field[random.nextInt(fWidth)][random.nextInt(fHeight)];
             if (isHexInsideBounds(hex)) return hex;
@@ -538,12 +538,12 @@ class MapGenerator {
     }
 
 
-    private int getRandomColor() {
+    protected int getRandomColor() {
         return random.nextInt(GameController.colorNumber);
     }
 
 
-    private boolean activateHex(Hex hex, int color) {
+    protected boolean activateHex(Hex hex, int color) {
         if (hex.active) return false;
         hex.active = true;
         hex.setColorIndex(color);
@@ -553,13 +553,13 @@ class MapGenerator {
     }
 
 
-    private void deactivateHex(Hex hex) {
+    protected void deactivateHex(Hex hex) {
         hex.active = false;
         gameController.activeHexes.remove(hex);
     }
 
 
-    private void spawnIsland(Hex startHex, int size) {
+    protected void spawnIsland(Hex startHex, int size) {
         clearGenFlags();
         startHex.genPotential = size;
         ArrayList<Hex> propagationList = new ArrayList<Hex>();
@@ -582,14 +582,14 @@ class MapGenerator {
     }
 
 
-    private void uniteIslandsWithRoads() {
+    protected void uniteIslandsWithRoads() {
         for (int i = 0; i < islandCenters.size(); i++) {
             createRoadBetweenIslands(i, getClosestIslandIndex(i));
         }
     }
 
 
-    private void createRoadBetweenIslands(int islandOne, int islandTwo) {
+    protected void createRoadBetweenIslands(int islandOne, int islandTwo) {
         if (islandTwo == -1) return;
         PointYio startPoint = islandCenters.get(islandOne);
         PointYio endPoint = islandCenters.get(islandTwo);
@@ -607,7 +607,7 @@ class MapGenerator {
     }
 
 
-    private boolean areIslandsAlreadyUnited(PointYio p1, PointYio p2) {
+    protected boolean areIslandsAlreadyUnited(PointYio p1, PointYio p2) {
         for (int i = 0; i < links.size(); i++) {
             if (links.get(i).equals(p1, p2)) return true;
         }
@@ -615,7 +615,7 @@ class MapGenerator {
     }
 
 
-    private int getClosestIslandIndex(int searcherIslandIndex) {
+    protected int getClosestIslandIndex(int searcherIslandIndex) {
         PointYio startPoint = islandCenters.get(searcherIslandIndex);
         int closestIslandIndex = -1;
         double minDistance = fWidth * fHeight, currentDistance;
@@ -632,7 +632,7 @@ class MapGenerator {
     }
 
 
-    private void addTrees() {
+    protected void addTrees() {
         for (Hex activeHex : gameController.activeHexes) {
             if (random.nextDouble() < 0.1 && !activeHex.containsSolidObject()) {
                 gameController.spawnTree(activeHex);
@@ -641,7 +641,7 @@ class MapGenerator {
     }
 
 
-    private void removeSingleHoles() {
+    protected void removeSingleHoles() {
         for (int i = 0; i < fWidth; i++) {
             for (int j = 0; j < fHeight; j++) {
                 if (!field[i][j].active && isHexInsideBounds(field[i][j]) && field[i][j].numberOfActiveHexesNearby() == 6) {
@@ -652,13 +652,13 @@ class MapGenerator {
     }
 
 
-    private boolean isHexInsideBounds(Hex hex) {
+    protected boolean isHexInsideBounds(Hex hex) {
         PointYio pos = hex.getPos();
         return pos.x > 0.1 * w && pos.x < boundWidth - 0.1 * w && pos.y > 0.15 * h && pos.y < boundHeight - 0.1 * h;
     }
 
 
-    private int numberOfIslandsByLevelSize() {
+    protected int numberOfIslandsByLevelSize() {
         switch (gameController.levelSize) {
             default:
             case GameController.SIZE_SMALL:
@@ -671,7 +671,7 @@ class MapGenerator {
     }
 
 
-    private void createLand() {
+    protected void createLand() {
         while (!isGood()) {
             clearHexes();
             int N = numberOfIslandsByLevelSize();
@@ -687,12 +687,12 @@ class MapGenerator {
     }
 
 
-    private void endGeneration() {
+    protected void endGeneration() {
         gameController.emptyHex.active = false;
     }
 
 
-    private void beginGeneration() {
+    protected void beginGeneration() {
         gameController.createFieldMatrix();
         islandCenters = new ArrayList<PointYio>();
         links = new ArrayList<Link>();

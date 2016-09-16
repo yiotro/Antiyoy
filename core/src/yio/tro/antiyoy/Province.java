@@ -60,8 +60,8 @@ class Province {
     }
 
 
-    void placeCapitalInRandomPlace() {
-        Hex randomPlace = getFreeHex();
+    void placeCapitalInRandomPlace(Random random) {
+        Hex randomPlace = getFreeHex(random);
         if (randomPlace == null) randomPlace = getPlaceToBuildUnit();
         if (randomPlace == null) randomPlace = getRandomHex();
         gameController.cleanOutHex(randomPlace);
@@ -114,13 +114,13 @@ class Province {
     }
 
 
-    private Hex getFreeHex() {
+    private Hex getFreeHex(Random random) {
         tempList.clear();
         for (Hex hex : hexList)
             if (hex.isFree())
                 tempList.add(hex);
         if (tempList.size() == 0) return null;
-        return tempList.get(YioGdxGame.random.nextInt(tempList.size()));
+        return tempList.get(random.nextInt(tempList.size()));
     }
 
 
@@ -135,6 +135,7 @@ class Province {
         int income = 0;
         for (Hex hex : hexList) {
             if (!hex.containsTree()) income++;
+            if (!GameController.slay_rules && hex.objectInside == Hex.OBJECT_FARM) income += 3;
         }
         return income;
     }
@@ -144,6 +145,10 @@ class Province {
         int taxes = 0;
         for (Hex hex : hexList) {
             if (hex.containsUnit()) taxes += hex.unit.getTax();
+            if (!GameController.slay_rules) {
+                if (hex.objectInside == Hex.OBJECT_TOWER) taxes += 1;
+                if (hex.objectInside == Hex.OBJECT_STRONG_TOWER) taxes += 10;
+            }
         }
         return taxes;
     }
@@ -219,6 +224,29 @@ class Province {
 
     boolean hasMoneyForTower() {
         return money >= GameController.PRICE_TOWER;
+    }
+
+
+    boolean hasMoneyForFarm() {
+        return money >= GameController.PRICE_FARM + getExtraFarmCost();
+    }
+
+
+    boolean hasMoneyForStrongTower() {
+        return money >= GameController.PRICE_STRONG_TOWER;
+    }
+
+
+    public int getExtraFarmCost() {
+        int c = 0;
+
+        for (Hex hex : hexList) {
+            if (hex.objectInside == Hex.OBJECT_FARM) {
+                c += 2;
+            }
+        }
+
+        return c;
     }
 
 

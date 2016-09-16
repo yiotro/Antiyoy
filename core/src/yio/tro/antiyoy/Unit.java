@@ -11,7 +11,7 @@ public class Unit {
     Hex lastHex, currHex;
     final PointYio currentPos;
     final FactorYio moveFactor;
-    final int strength;
+    int strength;
     final GameController gameController;
     boolean readyToMove;
     float jumpPos, jumpGravity, jumpDy, jumpStartingImpulse;
@@ -41,6 +41,10 @@ public class Unit {
     boolean moveToHex(Hex destinationHex) {
         if (destinationHex.sameColor(currHex) && destinationHex.containsBuilding()) return false;
         if (destinationHex.containsSolidObject()) {
+            if (!GameController.slay_rules && destinationHex.containsTree()) {
+                gameController.getProvinceByHex(destinationHex).money += 5;
+                gameController.updateSelectedProvinceMoney();
+            }
             gameController.cleanOutHex(destinationHex); // unit crushes object
             gameController.updateCacheOnceAfterSomeTime();
         }

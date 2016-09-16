@@ -57,18 +57,34 @@ public class LevelEditor {
 
 
     private void inputModeSetObjectActions(Hex focusedHex) {
-        if (focusedHex.active) {
+        if (!focusedHex.active) return;
+
+        if (!focusedHex.containsUnit()) {
             gameController.cleanOutHex(focusedHex);
-            if (inputObject == 0) { // delete object
-                focusedHex.setObjectInside(0);
-                gameController.addAnimHex(focusedHex);
-            } else if (inputObject < 5) { // objects
-                gameController.addSolidObject(focusedHex, inputObject);
-                gameController.addAnimHex(focusedHex);
-            } else { // units
-                gameController.addUnit(focusedHex, inputObject - 4);
-                focusedHex.unit.stopJumping();
+        }
+
+        if (inputObject == 0) { // delete object
+            focusedHex.setObjectInside(0);
+            gameController.addAnimHex(focusedHex);
+        } else if (inputObject < 5) { // objects
+            gameController.addSolidObject(focusedHex, inputObject);
+            gameController.addAnimHex(focusedHex);
+        } else { // units
+            tryToAddUnitToFocusedHex(focusedHex);
+        }
+    }
+
+
+    private void tryToAddUnitToFocusedHex(Hex focusedHex) {
+        if (focusedHex.containsUnit()) {
+            int str = focusedHex.unit.strength + inputObject - 4;
+            while (str > 4) {
+                str -= 4;
             }
+            focusedHex.unit.strength = str;
+        } else {
+            gameController.addUnit(focusedHex, inputObject - 4);
+            focusedHex.unit.stopJumping();
         }
     }
 
@@ -141,11 +157,25 @@ public class LevelEditor {
         gameSaver.setActiveHexesString(activeHexes);
         gameSaver.beginRecreation();
         gameSaver.setBasicInfo(0, basicInfoValues[2], basicInfoValues[3], basicInfoValues[1], basicInfoValues[0]);
+        gameController.colorIndexViewOffset = 0;
+        detectRules();
         gameSaver.endRecreation();
 
         if (editorMode) {
             for (Unit unit : gameController.unitList) {
                 unit.stopJumping();
+            }
+        }
+    }
+
+
+    private void detectRules() {
+        GameController.slay_rules = true;
+        for (Hex activeHex : gameController.activeHexes) {
+            if (activeHex.colorIndex == gameController.neutralLandsIndex) {
+                GameController.slay_rules = false;
+                System.out.println("detected generic rules");
+                return;
             }
         }
     }
@@ -356,9 +386,15 @@ public class LevelEditor {
 
 
     public void randomize() {
+        detectRules();
+        GameController.colorNumber = countUpColorNumber();
         gameController.clearField();
         gameController.createFieldMatrix();
-        gameController.mapGenerator.generateMap(gameController.random, gameController.field);
+        if (GameController.slay_rules) {
+            gameController.mapGeneratorSlay.generateMap(gameController.random, gameController.field);
+        } else {
+            gameController.mapGeneratorGeneric.generateMap(gameController.random, gameController.field);
+        }
         gameController.yioGdxGame.gameView.updateCacheLevelTextures();
     }
 
@@ -374,7 +410,7 @@ public class LevelEditor {
     public void setInputColor(int inputColor) {
         this.inputColor = inputColor;
         setRandomColor(false);
-        if (inputColor >= GameController.MAX_COLOR_NUMBER) setRandomColor(true);
+        if (inputColor >= GameController.MAX_COLOR_NUMBER && inputColor != gameController.neutralLandsIndex) setRandomColor(true);
     }
 
 

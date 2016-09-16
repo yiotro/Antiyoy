@@ -7,7 +7,7 @@ import yio.tro.antiyoy.factor_yio.FactorYio;
  */
 public class Hex {
     boolean active, selected, changingColor, flag, inMoveZone, genFlag, ignoreTouch;
-    int index1, index2, moveZoneNumber, genPotential;
+    int index1, index2, moveZoneNumber, genPotential, viewDiversityIndex;
     PointYio pos, fieldPos;
     private GameController gameController;
     float cos60, sin60;
@@ -19,6 +19,8 @@ public class Hex {
     public static final int OBJECT_HOUSE = 3;
     public static final int OBJECT_TOWER = 4;
     public static final int OBJECT_GRAVE = 5;
+    public static final int OBJECT_FARM = 6;
+    public static final int OBJECT_STRONG_TOWER = 7;
     FactorYio animFactor, selectionFactor;
     Unit unit;
 
@@ -35,6 +37,7 @@ public class Hex {
         animFactor = new FactorYio();
         selectionFactor = new FactorYio();
         unit = null;
+        viewDiversityIndex = (100 * index1 + 1000 * index2) % 3;
         updatePos();
     }
 
@@ -103,12 +106,15 @@ public class Hex {
 
 
     boolean containsSolidObject() {
-        return objectInside >= 1 && objectInside <= 5;
+        return objectInside >= 1 && objectInside <= 6;
     }
 
 
     boolean containsBuilding() {
-        return objectInside == OBJECT_HOUSE || objectInside == OBJECT_TOWER;
+        return objectInside == OBJECT_HOUSE
+                || objectInside == OBJECT_TOWER
+                || objectInside == OBJECT_FARM
+                || objectInside == OBJECT_STRONG_TOWER;
     }
 
 
@@ -133,21 +139,6 @@ public class Hex {
     }
 
 
-    int getStaticDefenseNumber() {
-        int defenseNumber = 0;
-        if (this.objectInside == Hex.OBJECT_HOUSE) defenseNumber = Math.max(defenseNumber, 1);
-        if (this.objectInside == Hex.OBJECT_TOWER) defenseNumber = Math.max(defenseNumber, 2);
-        Hex neighbour;
-        for (int i = 0; i < 6; i++) {
-            neighbour = adjacentHex(i);
-            if (!(neighbour.active && neighbour.sameColor(this))) continue;
-            if (neighbour.objectInside == Hex.OBJECT_HOUSE) defenseNumber = Math.max(defenseNumber, 1);
-            if (neighbour.objectInside == Hex.OBJECT_TOWER) defenseNumber = Math.max(defenseNumber, 2);
-        }
-        return defenseNumber;
-    }
-
-
     public int numberOfActiveHexesNearby() {
         return numberOfFriendlyHexesNearby() + howManyEnemyHexesNear();
     }
@@ -167,6 +158,7 @@ public class Hex {
         int c = 0;
         for (int i = 0; i < 6; i++) {
             Hex adjHex = adjacentHex(i);
+            if (adjHex.colorIndex == gameController.neutralLandsIndex) continue;
             if (adjHex.active && adjHex.sameColor(this)) c++;
         }
         return c;
@@ -177,6 +169,7 @@ public class Hex {
         int defenseNumber = 0;
         if (this.objectInside == Hex.OBJECT_HOUSE) defenseNumber = Math.max(defenseNumber, 1);
         if (this.objectInside == Hex.OBJECT_TOWER) defenseNumber = Math.max(defenseNumber, 2);
+        if (this.objectInside == Hex.OBJECT_STRONG_TOWER) defenseNumber = Math.max(defenseNumber, 3);
         if (this.containsUnit()) defenseNumber = Math.max(defenseNumber, this.unit.strength);
         Hex neighbour;
         for (int i = 0; i < 6; i++) {
@@ -184,6 +177,7 @@ public class Hex {
             if (!(neighbour.active && neighbour.sameColor(this))) continue;
             if (neighbour.objectInside == Hex.OBJECT_HOUSE) defenseNumber = Math.max(defenseNumber, 1);
             if (neighbour.objectInside == Hex.OBJECT_TOWER) defenseNumber = Math.max(defenseNumber, 2);
+            if (neighbour.objectInside == Hex.OBJECT_STRONG_TOWER) defenseNumber = Math.max(defenseNumber, 3);
             if (neighbour.containsUnit()) defenseNumber = Math.max(defenseNumber, neighbour.unit.strength);
         }
         return defenseNumber;
@@ -214,6 +208,19 @@ public class Hex {
         for (int i = 0; i < 6; i++) {
             adjHex = adjacentHex(i);
             if (adjHex.active && !adjHex.sameColor(this) && adjHex.isInProvince()) return true;
+        }
+        return false;
+    }
+
+
+    boolean hasThisObjectNearby(int objectIndex) {
+        if (objectInside == objectIndex) return true;
+        for (int i = 0; i < 6; i++) {
+            Hex adjHex = adjacentHex(i);
+            if (adjHex.colorIndex != colorIndex) continue;
+            if (adjHex.active && adjHex.objectInside == objectIndex) {
+                return true;
+            }
         }
         return false;
     }
@@ -316,6 +323,12 @@ public class Hex {
     }
 
 
+    public boolean isNeutral() {
+        if (GameController.slay_rules) return false;
+        return colorIndex == gameController.neutralLandsIndex;
+    }
+
+
     public boolean isInMoveZone() {
         return inMoveZone;
     }
@@ -323,5 +336,11 @@ public class Hex {
 
     void close() {
         gameController = null;
+    }
+
+
+    @Override
+    public String toString() {
+        return "[Hex: c" + colorIndex + " (" + index1 + ", " + index2 + ")]";
     }
 }

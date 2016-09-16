@@ -214,13 +214,13 @@ class SliderYio {
                 s = sliderYio.getCurrentRunnerIndex() + sliderYio.minNumber;
                 break;
             case CONFIGURE_COLORS:
-                s = 2;
-                if (sliderYio.getCurrentRunnerIndex() == 1) s = GameController.MAX_COLOR_NUMBER - 5;
-                if (sliderYio.getCurrentRunnerIndex() == 2) s = GameController.MAX_COLOR_NUMBER - 3;
+                s = 3;
+                if (sliderYio.getCurrentRunnerIndex() == 1) s = GameController.MAX_COLOR_NUMBER - 3;
+                if (sliderYio.getCurrentRunnerIndex() == 2) s = GameController.MAX_COLOR_NUMBER - 2;
                 break;
             case CONFIGURE_COLOR_OFFSET:
                 menuControllerYio.loadMoreSkirmishOptions();
-                s = sliderYio.getCurrentRunnerIndex() + sliderYio.minNumber - 1;
+                s = sliderYio.getCurrentRunnerIndex() + sliderYio.minNumber;
                 menuControllerYio.saveMoreSkirmishOptions();
                 break;
         }
@@ -355,24 +355,27 @@ class SliderYio {
     private void configureFirstColor(LanguagesManager languagesManager) {
         switch (getCurrentRunnerIndex()) {
             case 0:
-                valueString = languagesManager.getString("green_menu");
+                valueString = languagesManager.getString("random");
                 break;
             case 1:
-                valueString = languagesManager.getString("red_menu");
+                valueString = languagesManager.getString("green_menu");
                 break;
             case 2:
-                valueString = languagesManager.getString("magenta_menu");
+                valueString = languagesManager.getString("red_menu");
                 break;
             case 3:
-                valueString = languagesManager.getString("cyan_menu");
+                valueString = languagesManager.getString("magenta_menu");
                 break;
             case 4:
-                valueString = languagesManager.getString("yellow_menu");
+                valueString = languagesManager.getString("cyan_menu");
                 break;
             case 5:
-                valueString = languagesManager.getString("red_menu") + "+";
+                valueString = languagesManager.getString("yellow_menu");
                 break;
             case 6:
+                valueString = languagesManager.getString("red_menu") + "+";
+                break;
+            case 7:
                 valueString = languagesManager.getString("green_menu") + "+";
                 break;
         }

@@ -27,7 +27,7 @@ public class MenuControllerYio {
     private ButtonRenderer buttonRenderer;
     public static LanguagesManager languagesManager = LanguagesManager.getInstance();
     TextureRegion unlockedLevelIcon, lockedLevelIcon, openedLevelIcon;
-//    public ScrollerYio scrollerYio;
+    //    public ScrollerYio scrollerYio;
     public LevelSelector levelSelector;
     FactorYio infoPanelFactor;
     ArrayList<SliderYio> sliders;
@@ -61,8 +61,9 @@ public class MenuControllerYio {
         CheckButtonYio.getCheckButton(this, generateRectangle(0, 0, 0, 0), 3);
         CheckButtonYio.getCheckButton(this, generateRectangle(0, 0, 0, 0), 4);
         CheckButtonYio.getCheckButton(this, generateRectangle(0, 0, 0, 0), 5);
+        CheckButtonYio.getCheckButton(this, generateRectangle(0, 0, 0, 0), 6);
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             getCheckButtonById(i + 1).destroy();
         }
     }
@@ -86,7 +87,7 @@ public class MenuControllerYio {
 
         sliders.get(0).setValues(0.5f, 1, 3, true, SliderYio.CONFIGURE_SIZE); // map size
         sliders.get(1).setValues(0.2f, 0, 5, false, SliderYio.CONFIGURE_HUMANS); // humans
-        sliders.get(2).setValues(0.6, 3, 6, false, SliderYio.CONFIGURE_COLORS); // colors
+        sliders.get(2).setValues(0.6, 2, 6, false, SliderYio.CONFIGURE_COLORS); // colors
         sliders.get(3).setValues(0.33, 1, 4, true, SliderYio.CONFIGURE_DIFFICULTY); // difficulty
         sliders.get(4).setValues(0, 0, 6, true, SliderYio.CONFIGURE_COLOR_OFFSET); // color offset
         sliders.get(5).setValues(0, 0, 2, true, SliderYio.CONFIGURE_SKIN); // hex skin
@@ -365,7 +366,7 @@ public class MenuControllerYio {
             getCheckButtonById(i).setAnimType(ButtonYio.ANIM_FROM_CENTER);
         }
 
-        ButtonYio moreSettingsButton = buttonFactory.getButton(generateRectangle(0.65, 0.21, 0.3, 0.05), 194, languagesManager.getString("more"));
+        ButtonYio moreSettingsButton = buttonFactory.getButton(generateRectangle(0.65, 0.21, 0.3, 0.05), 199, languagesManager.getString("more"));
         moreSettingsButton.setReactBehavior(ReactBehavior.rbMoreSettings);
         moreSettingsButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
         moreSettingsButton.disableTouchAnimation();
@@ -478,6 +479,7 @@ public class MenuControllerYio {
     public void saveMoreSkirmishOptions() {
         Preferences prefs = Gdx.app.getPreferences("skirmish");
         prefs.putInteger("color_offset", sliders.get(4).getCurrentRunnerIndex());
+        prefs.putBoolean("slay_rules", getCheckButtonById(6).isChecked());
         prefs.flush();
     }
 
@@ -485,6 +487,7 @@ public class MenuControllerYio {
     public void loadMoreSkirmishOptions() {
         Preferences prefs = Gdx.app.getPreferences("skirmish");
         sliders.get(4).setRunnerValueByIndex(prefs.getInteger("color_offset", 0));
+        getCheckButtonById(6).setChecked(prefs.getBoolean("slay_rules", false));
     }
 
 
@@ -499,22 +502,49 @@ public class MenuControllerYio {
     }
 
 
-    public void createMoreSkirmishOptionsMenu() {
+    public void createMoreSkirmishOptionsMenu(ReactBehavior backBehavior) {
         beginMenuCreation();
 
         yioGdxGame.beginBackgroundChange(2, true, true);
 
-        spawnBackButton(231, ReactBehavior.rbSaveMoreSkirmishOptions);
+        spawnBackButton(231, backBehavior);
 
         sliders.get(4).appear();
         sliders.get(4).setPos(0.15, 0.73, 0.7, 0);
 
-        ButtonYio firstColorLabel = buttonFactory.getButton(generateRectangle(0.1, 0.67, 0.8, 0.2), 230, null);
+        ButtonYio shadow = buttonFactory.getButton(generateRectangle(0.05, 0.45, 0.9, 0.42), 233, null);
+        shadow.onlyShadow = true;
+        shadow.setAnimType(ButtonYio.ANIM_UP);
+        shadow.setTouchable(false);
+
+        ButtonYio firstColorLabel = buttonFactory.getButton(generateRectangle(0.05, 0.67, 0.9, 0.2), 230, null);
         renderTextAndSomeEmptyLines(firstColorLabel, languagesManager.getString("player_color"), 2);
         firstColorLabel.setTouchable(false);
         firstColorLabel.setAnimType(ButtonYio.ANIM_UP);
+        firstColorLabel.setShadow(false);
 
-        loadMoreSkirmishOptions();
+        ButtonYio chkBase = buttonFactory.getButton(generateRectangle(0.05, 0.45, 0.9, 0.25), 232, null);
+        if (chkBase.notRendered()) {
+            chkBase.cleatText();
+            chkBase.addTextLine(" ");
+            chkBase.addTextLine(" ");
+            chkBase.addTextLine(" ");
+            chkBase.addTextLine(languagesManager.getString("slay_rules"));
+            chkBase.addTextLine(" ");
+            buttonRenderer.renderButton(chkBase);
+        }
+        chkBase.setTouchable(false);
+        chkBase.setAnimType(ButtonYio.ANIM_UP);
+        chkBase.setShadow(false);
+
+        double checkButtonSize = 0.05;
+        double hSize = GraphicsYio.convertToHeight(checkButtonSize);
+        double chkX = 0.88 - checkButtonSize;
+        double chkY = 0.53;
+
+        CheckButtonYio chkSlayRules = CheckButtonYio.getCheckButton(this, generateSquare(chkX, chkY - hSize / 2, hSize), 6);
+        chkSlayRules.setTouchPosition(generateRectangle(0.05, chkY - hSize * 1.5, 0.9, hSize * 3));
+        chkSlayRules.setAnimType(ButtonYio.ANIM_UP);
 
         endMenuCreation();
     }
@@ -721,7 +751,7 @@ public class MenuControllerYio {
 
         ButtonYio tutorialButton = buttonFactory.getButton(generateRectangle(0.1, 0.46, 0.8, 0.08), 73, languagesManager.getString("choose_game_mode_tutorial"));
         tutorialButton.setShadow(false);
-        tutorialButton.setReactBehavior(ReactBehavior.rbTutorial);
+        tutorialButton.setReactBehavior(ReactBehavior.rbTutorialIndex);
         tutorialButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
 
         ButtonYio campaignButton = buttonFactory.getButton(generateRectangle(0.1, 0.38, 0.8, 0.08), 74, languagesManager.getString("choose_game_mode_campaign"));
@@ -742,6 +772,43 @@ public class MenuControllerYio {
         editorButton.setReactBehavior(ReactBehavior.rbEditorSlotMenu);
 
         spawnBackButton(76, ReactBehavior.rbMainMenu);
+
+        endMenuCreation();
+    }
+
+
+    public void createTutorialIndexMenu() {
+        beginMenuCreation();
+
+        yioGdxGame.beginBackgroundChange(1, false, true);
+
+        ButtonYio basePanel = buttonFactory.getButton(generateRectangle(0.05, 0.37, 0.9, 0.34), 200, null);
+        if (basePanel.notRendered()) {
+            basePanel.addTextLine(languagesManager.getString("choose_game_mode_tutorial") + ":");
+            for (int i = 0; i < 5; i++) {
+                basePanel.addTextLine(" ");
+            }
+            buttonRenderer.renderButton(basePanel);
+        }
+        basePanel.setTouchable(false);
+        basePanel.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        ButtonYio helpIndexButton = buttonFactory.getButton(generateRectangle(0.05, 0.53, 0.9, 0.08), 202, languagesManager.getString("help"));
+        helpIndexButton.setReactBehavior(ReactBehavior.rbHelpIndex);
+        helpIndexButton.setShadow(false);
+        helpIndexButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        ButtonYio slayTutorialButton = buttonFactory.getButton(generateRectangle(0.05, 0.45, 0.9, 0.08), 203, languagesManager.getString("normal_rules"));
+        slayTutorialButton.setShadow(false);
+        slayTutorialButton.setReactBehavior(ReactBehavior.rbTutorialGeneric);
+        slayTutorialButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        ButtonYio genericTutorialButton = buttonFactory.getButton(generateRectangle(0.05, 0.37, 0.9, 0.08), 204, languagesManager.getString("slay_rules"));
+        genericTutorialButton.setReactBehavior(ReactBehavior.rbTutorialSlay);
+        genericTutorialButton.setShadow(false);
+        genericTutorialButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        spawnBackButton(209, ReactBehavior.rbChooseGameModeMenu);
 
         endMenuCreation();
     }
@@ -796,6 +863,21 @@ public class MenuControllerYio {
     }
 
 
+    public void saveMoreCampaignOptions() {
+        Preferences prefs = Gdx.app.getPreferences("campaign_options");
+        prefs.putInteger("color_offset", sliders.get(4).getCurrentRunnerIndex());
+        prefs.putBoolean("slay_rules", getCheckButtonById(6).isChecked());
+        prefs.flush();
+    }
+
+
+    public void loadMoreCampaignOptions() {
+        Preferences prefs = Gdx.app.getPreferences("campaign_options");
+        sliders.get(4).setRunnerValueByIndex(prefs.getInteger("color_offset", 0));
+        getCheckButtonById(6).setChecked(prefs.getBoolean("slay_rules", false));
+    }
+
+
     public void createCampaignMenu() {
         beginMenuCreation();
 
@@ -804,9 +886,10 @@ public class MenuControllerYio {
         spawnBackButton(20, ReactBehavior.rbChooseGameModeMenu);
         getButtonById(20).setTouchable(true);
 
-//        ButtonLighty startButton = buttonFactory.getButton(generateRectangle(0.55, 0.9, 0.4, 0.07), 21, languagesManager.getString("game_settings_start"));
-//        startButton.setReactBehavior(ReactBehavior.rbCampaignLevel);
-//        startButton.setAnimType(ButtonLighty.ANIM_UP);
+        ButtonYio moreOptionsButton = buttonFactory.getButton(generateRectangle(0.75, 0.9, 0.2, 0.07), 21, languagesManager.getString("..."));
+        moreOptionsButton.setReactBehavior(ReactBehavior.rbMoreCampaignOptions);
+        moreOptionsButton.setAnimType(ButtonYio.ANIM_UP);
+        moreOptionsButton.disableTouchAnimation();
 
 //        if (scrollerYio.selectionIndex > 6) {
 //            scrollerYio.pos = (scrollerYio.selectionIndex - 1) * scrollerYio.lineHeight - 0.5f * scrollerYio.lineHeight;
@@ -1233,7 +1316,7 @@ public class MenuControllerYio {
         if (towerButton == null) { // init
             towerButton = buttonFactory.getButton(generateSquare(0.30, 0, 0.13 * YioGdxGame.screenRatio), 38, null);
             loadButtonOnce(towerButton, "field_elements/tower.png");
-            towerButton.setReactBehavior(ReactBehavior.rbBuildTower);
+            towerButton.setReactBehavior(ReactBehavior.RB_BUILD_SOLID_OBJECT);
             towerButton.setAnimType(ButtonYio.ANIM_DOWN);
             towerButton.enableRectangularMask();
         }
@@ -1369,8 +1452,6 @@ public class MenuControllerYio {
 
 
     public void createTutorialTip(ArrayList<String> text) {
-//        yioGdxGame.setGamePaused(true);
-        getButtonById(30).setTouchable(false);
         getButtonById(31).setTouchable(false);
         getButtonById(32).setTouchable(false);
 
@@ -1379,6 +1460,31 @@ public class MenuControllerYio {
         textPanel.setPosition(generateRectangle(0, 0.1, 1, 0.05 * (double) text.size()));
         textPanel.cleatText();
         textPanel.addManyLines(text);
+        buttonRenderer.renderButton(textPanel);
+        textPanel.setTouchable(false);
+        textPanel.setAnimType(ButtonYio.ANIM_COLLAPSE_DOWN);
+        textPanel.factorModel.beginSpawning(3, 1);
+
+        ButtonYio okButton = buttonFactory.getButton(generateRectangle(0.6, 0.1, 0.4, 0.07), 53, languagesManager.getString("end_game_ok"));
+        okButton.setShadow(false);
+        okButton.setReactBehavior(ReactBehavior.rbCloseTutorialTip);
+        okButton.setAnimType(ButtonYio.ANIM_COLLAPSE_DOWN);
+        okButton.factorModel.beginSpawning(3, 1);
+    }
+
+
+    public void createTutorialTipWithFixedHeight(ArrayList<String> text, int lines) {
+        getButtonById(31).setTouchable(false);
+        getButtonById(32).setTouchable(false);
+
+        for (int i = 0; i < 2; i++) text.add("");
+        ButtonYio textPanel = buttonFactory.getButton(generateRectangle(0, 0, 1, 1), 50, null);
+        textPanel.setPosition(generateRectangle(0, 0.1, 1, 0.3));
+        textPanel.cleatText();
+        textPanel.addManyLines(text);
+        while (textPanel.text.size() < lines) {
+            textPanel.addTextLine(" ");
+        }
         buttonRenderer.renderButton(textPanel);
         textPanel.setTouchable(false);
         textPanel.setAnimType(ButtonYio.ANIM_COLLAPSE_DOWN);
@@ -1438,6 +1544,7 @@ public class MenuControllerYio {
 
     public void hideNotification() {
         ButtonYio notificationButton = getButtonById(3614);
+        if (notificationButton == null) return;
         notificationButton.destroy();
         notificationButton.factorModel.beginDestroying(1, 3);
     }
@@ -1519,6 +1626,15 @@ public class MenuControllerYio {
         statisticsButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
 
         endMenuCreation();
+    }
+
+
+    public void forceDyingButtonsToEnd() {
+        for (ButtonYio button : buttons) {
+            if (button.factorModel.getGravity() < 0) {
+                button.factorModel.setValues(0, 0);
+            }
+        }
     }
 
 

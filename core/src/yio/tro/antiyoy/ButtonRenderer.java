@@ -99,6 +99,11 @@ class ButtonRenderer {
             text.add(builder.toString());
             builder = new StringBuilder();
         }
+        while (text.size() > buttonYio.text.size()) {
+            String lastLine = text.get(text.size() - 1);
+            if (lastLine.length() > 2) break;
+            text.remove(text.size() - 1);
+        }
     }
 
 

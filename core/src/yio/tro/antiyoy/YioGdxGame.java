@@ -17,6 +17,8 @@ import java.util.ListIterator;
 import java.util.Random;
 import java.util.StringTokenizer;
 
+import static yio.tro.antiyoy.GameController.slay_rules;
+
 public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
@@ -25,7 +27,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     private MenuViewYio menuViewYio;
     public static BitmapFont buttonFont, gameFont, listFont, cityFont;
     private static GlyphLayout glyphLayout = new GlyphLayout();
-    public static final String SPECIAL_CHARACTERS = "JSORNCEabcdefghijklmnopqrstuvwxyz0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<^>";
+    public static final String SPECIAL_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<^>";
     public static int FONT_SIZE;
     public static boolean ANDROID = false;
     public static final int INDEX_OF_LAST_LEVEL = 70; // with tutorial
@@ -155,8 +157,28 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         Gdx.gl.glClearColor(0, 0, 0, 1);
 
         loadSettings();
+        checkTemporaryFlags();
 
         YioGdxGame.say("full loading time: " + (System.currentTimeMillis() - time1));
+    }
+
+
+    private void checkTemporaryFlags() {
+        // check_slay_rules
+        Preferences prefs = Gdx.app.getPreferences("temporary_flags");
+
+        // slay rules
+        if (!prefs.getBoolean("check_slay_rules", false)) {
+            menuControllerYio.loadMoreSkirmishOptions();
+            Preferences tempPrefs = Gdx.app.getPreferences("settings");
+            slay_rules = tempPrefs.getBoolean("slay_rules", false);
+            menuControllerYio.getCheckButtonById(6).setChecked(slay_rules);
+            menuControllerYio.saveMoreSkirmishOptions();
+            menuControllerYio.saveMoreCampaignOptions();
+            prefs.putBoolean("check_slay_rules", true);
+        }
+
+        prefs.flush();
     }
 
 
@@ -297,6 +319,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             gameController.deselectAll();
             revealSplats();
             gameFont.setColor(Color.BLACK);
+            menuControllerYio.forceDyingButtonsToEnd();
         } else if (!gamePaused && this.gamePaused) { // actions when unpaused
             unPauseAfterSomeTime();
             beginBackgroundChange(4, true, true);
@@ -856,6 +879,9 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
                 if (pauseButton != null && pauseButton.isVisible()) pauseButton.press();
                 else menuControllerYio.getButtonById(140).press();
             } else {
+                pressButtonIfVisible(42);
+                pressButtonIfVisible(1);
+
                 // back buttons
                 for (Integer integer : backButtonIds) {
                     pressButtonIfVisible(integer.intValue());
@@ -871,6 +897,12 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             if (!gamePaused) {
                 menuControllerYio.getButtonById(31).press();
             }
+        }
+        if (keycode == Input.Keys.NUM_1) {
+            if (!gamePaused) pressButtonIfVisible(39);
+        }
+        if (keycode == Input.Keys.NUM_2) {
+            if (!gamePaused) pressButtonIfVisible(38);
         }
         return false;
     }

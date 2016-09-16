@@ -101,7 +101,7 @@ abstract class ArtificialIntelligence {
     }
 
 
-    private void spendMoney(Province province) {
+    protected void spendMoney(Province province) {
         tryToBuildTowers(province);
         tryToBuildUnits(province);
     }

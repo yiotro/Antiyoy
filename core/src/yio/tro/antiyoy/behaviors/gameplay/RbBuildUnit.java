@@ -16,6 +16,7 @@ public class RbBuildUnit extends ReactBehavior {
             return;
         }
         int t = getGameController(buttonYio).getTipType();
+        if (t < 0) t = 0;
         t += 1;
         if (t > 4) t = 1;
         getGameController(buttonYio).awakeTip(t);

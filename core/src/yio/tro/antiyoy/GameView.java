@@ -30,6 +30,7 @@ public class GameView {
     float linkLineThickness, hexViewSize, cacheFrameX1, cacheFrameY1, cacheFrameX2, cacheFrameY2, hexShadowSize;
     TextureRegion blackPixel, grayPixel, selectionPixel, shadowHexTexture, gradientShadow, transCircle1, transCircle2, selUnitShadow, currentObjectTexture;
     Storage3xTexture manTextures[], palmTexture, houseTexture, towerTexture, graveTexture, pineTexture;
+    Storage3xTexture castleTexture, strongTowerTexture, farmTexture[];
     int segments, w, h, currentZoomQuality;
     OrthographicCamera orthoCam, cacheCam;
     TextureRegion cacheLevelTextures[], sideShadow, moveZonePixel, responseAnimHexTexture, selectionBorder, defenseIcon;
@@ -173,6 +174,12 @@ public class GameView {
         palmTexture = new Storage3xTexture(atlasLoader, "palm.png");
         pineTexture = new Storage3xTexture(atlasLoader, "pine.png");
         towerTexture = new Storage3xTexture(atlasLoader, "tower.png");
+        castleTexture = new Storage3xTexture(atlasLoader, "castle.png");
+        farmTexture = new Storage3xTexture[3];
+        farmTexture[0] = new Storage3xTexture(atlasLoader, "farm1.png");
+        farmTexture[1] = new Storage3xTexture(atlasLoader, "farm2.png");
+        farmTexture[2] = new Storage3xTexture(atlasLoader, "farm3.png");
+        strongTowerTexture = new Storage3xTexture(atlasLoader, "tower_strong.png");
     }
 
 
@@ -350,7 +357,7 @@ public class GameView {
 
         // solid objects
         for (Hex hex : gameController.solidObjects) {
-            renderSolidObject(spriteBatch, hex.getPos(), hex.objectInside);
+            renderSolidObject(spriteBatch, hex.getPos(), hex);
         }
     }
 
@@ -378,31 +385,36 @@ public class GameView {
     }
 
 
-    private TextureRegion getSolidObjectTexture(int objectType, int quality) {
-        switch (objectType) {
+    private TextureRegion getSolidObjectTexture(Hex hex, int quality) {
+        switch (hex.objectInside) {
             case Hex.OBJECT_GRAVE:
                 return graveTexture.getTexture(quality);
             case Hex.OBJECT_HOUSE:
-                return houseTexture.getTexture(quality);
+                if (GameController.slay_rules) return houseTexture.getTexture(quality);
+                return castleTexture.getTexture(quality);
             case Hex.OBJECT_PALM:
                 return palmTexture.getTexture(quality);
             case Hex.OBJECT_PINE:
                 return pineTexture.getTexture(quality);
             case Hex.OBJECT_TOWER:
                 return towerTexture.getTexture(quality);
+            case Hex.OBJECT_FARM:
+                return farmTexture[hex.viewDiversityIndex].getTexture(quality);
+            case Hex.OBJECT_STRONG_TOWER:
+                return strongTowerTexture.getTexture(quality);
             default:
                 return selectionPixel;
         }
     }
 
 
-    private TextureRegion getSolidObjectTexture(int objectType) {
-        return getSolidObjectTexture(objectType, currentZoomQuality);
+    private TextureRegion getSolidObjectTexture(Hex hex) {
+        return getSolidObjectTexture(hex, currentZoomQuality);
     }
 
 
-    private void renderSolidObject(SpriteBatch spriteBatch, PointYio pos, int objectType) {
-        currentObjectTexture = getSolidObjectTexture(objectType);
+    private void renderSolidObject(SpriteBatch spriteBatch, PointYio pos, Hex hex) {
+        currentObjectTexture = getSolidObjectTexture(hex);
         spriteBatch.draw(currentObjectTexture, pos.x - 0.7f * hexViewSize, pos.y - 0.5f * hexViewSize, 1.4f * hexViewSize, 1.6f * hexViewSize);
     }
 
@@ -493,7 +505,7 @@ public class GameView {
 
 
     private TextureRegion getHexTextureByColor(int colorIndex) {
-        if (gameController.colorIndexViewOffset > 0) {
+        if (gameController.colorIndexViewOffset > 0 && colorIndex != gameController.neutralLandsIndex) {
             colorIndex = gameController.getColorIndexWithOffset(colorIndex);
         }
         switch (colorIndex) {
@@ -521,7 +533,7 @@ public class GameView {
     private void renderAllSolidObjects() {
         for (Hex activeHex : gameController.activeHexes) {
             if (activeHex.containsSolidObject())
-                renderSolidObject(batchMovable, activeHex.getPos(), activeHex.objectInside);
+                renderSolidObject(batchMovable, activeHex.getPos(), activeHex);
         }
     }
 
@@ -558,7 +570,7 @@ public class GameView {
             }
             if (hex.containsSolidObject()) {
                 batchMovable.setColor(c.r, c.g, c.b, 1);
-                renderSolidObject(batchMovable, pos, hex.objectInside);
+                renderSolidObject(batchMovable, pos, hex);
             }
         }
         batchMovable.setColor(c.r, c.g, c.b, 1);
@@ -645,7 +657,7 @@ public class GameView {
 
         for (Hex hex : gameController.selectedHexes) {
             if (hex.containsSolidObject()) {
-                renderSolidObject(batchMovable, hex.getPos(), hex.objectInside);
+                renderSolidObject(batchMovable, hex.getPos(), hex);
             }
         }
     }
@@ -715,7 +727,7 @@ public class GameView {
                 }
             }
             if (hex.containsBuilding() || hex.objectInside == Hex.OBJECT_GRAVE)
-                renderSolidObject(batchMovable, pos, hex.objectInside);
+                renderSolidObject(batchMovable, pos, hex);
         }
 
         renderResponseAnimHex();
@@ -731,7 +743,7 @@ public class GameView {
                         renderLineBetweenHexesWithOffset(hex, h, batchMovable, gameController.moveZoneFactor.get() * 0.02 * w, moveZonePixel, -(1d - gameController.moveZoneFactor.get()) * 0.01 * w, i, gameController.moveZoneFactor.get());
                 }
                 if (hex.containsUnit()) renderUnit(batchMovable, hex.unit);
-                if (hex.containsTree()) renderSolidObject(batchMovable, hex.pos, hex.objectInside);
+                if (hex.containsTree()) renderSolidObject(batchMovable, hex.pos, hex);
             }
         }
 
@@ -916,6 +928,8 @@ public class GameView {
             batchSolid.begin();
             TextureRegion textureRegion;
             if (gameController.tipShowType == 0) textureRegion = towerTexture.getNormal();
+            else if (!GameController.slay_rules && gameController.tipShowType == 5) textureRegion = farmTexture[0].getNormal();
+            else if (!GameController.slay_rules && gameController.tipShowType == 6) textureRegion = strongTowerTexture.getNormal();
             else textureRegion = manTextures[gameController.tipShowType - 1].getNormal();
             float s = 0.2f * w;
             batchSolid.draw(textureRegion, 0.5f * w - 0.5f * s, -s + 0.165f * h * gameController.tipFactor.get(), s, s);
