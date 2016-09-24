@@ -115,9 +115,16 @@ class LevelSnapshot {
 //        }
 
         for (Province copy : provincesCopy) {
-            Province province = gameController.getProvinceByHex(getHexByCopy(copy.hexList.get(0)));
-            province.money = copy.money;
-            province.updateName();
+            Province province = gameController.findProvinceCopy(copy);
+            if (province == null) {
+//                province.money = 999;
+//                province.name = "Bugged province";
+                System.out.println("Problem in level snapshot.");
+                System.out.println("Wasn't been able to find province by hex. Color = " + copy.getColor());
+            } else {
+                province.money = copy.money;
+                province.updateName();
+            }
         }
 
         gameController.deselectAll();

@@ -19,6 +19,7 @@ public class GameController {
     int maxTouchCount, currentTouchCount, lastTouchCount;
     public static int colorNumber = 5;
     public static boolean slay_rules = false;
+    public static float sensitivity;
     public static final int MAX_COLOR_NUMBER = 7;
     public static final int SIZE_SMALL = 1;
     public static final int SIZE_MEDIUM = 2;
@@ -511,10 +512,10 @@ public class GameController {
     private void endGame(int winColor) {
 //        yioGdxGame.setGamePaused(true);
         if (completedCampaignLevel(winColor)) {
-            int ls = yioGdxGame.selectedLevelIndex;
+            int ls = currentLevelIndex;
 //            yioGdxGame.increaseLevelSelection();
-            if (yioGdxGame.selectedLevelIndex >= progress) {
-                progress = yioGdxGame.selectedLevelIndex;
+            if (currentLevelIndex >= progress) {
+                progress = currentLevelIndex;
                 if (ls == progress) progress++; // last level completed
                 Preferences preferences = Gdx.app.getPreferences("main");
                 preferences.putInteger("progress", progress);
@@ -762,7 +763,7 @@ public class GameController {
     private void cameraMovement() {
         if (editorMode && !levelEditor.isCameraMovementAllowed()) return;
 
-        float k = deltaMovementFactor * 0.025f;
+        float k = sensitivity * deltaMovementFactor * 0.025f;
         yioGdxGame.gameView.orthoCam.translate(k * camDx, k * camDy);
         yioGdxGame.gameView.updateCam();
         if ((currentTouchCount == 0 && currentTime > lastTimeTouched + 10) || (currentTouchCount == 1 && currentTime > lastTimeDragged + 10)) {
@@ -1056,9 +1057,9 @@ public class GameController {
 
         boolean testingNewAi = false;
         if (YioGdxGame.CHECKING_BALANCE_MODE && testingNewAi && colorNumber == 5) {
-            aiList.add(new AiHard(this, 0));
-            aiList.add(new AiHard(this, 1));
-            aiList.add(new AiHard(this, 2));
+            aiList.add(new AiHardSlayRules(this, 0));
+            aiList.add(new AiHardSlayRules(this, 1));
+            aiList.add(new AiHardSlayRules(this, 2));
             aiList.add(new AiExpertSlayRules(this, 3));
             aiList.add(new AiExpertSlayRules(this, 4));
             return;
@@ -1071,10 +1072,18 @@ public class GameController {
                     aiList.add(new AiEasy(this, i));
                     break;
                 case NORMAL:
-                    aiList.add(new AiNormal(this, i));
+                    if (GameController.slay_rules) {
+                        aiList.add(new AiNormalSlayRules(this, i));
+                    } else {
+                        aiList.add(new AiNormalGenericRules(this, i));
+                    }
                     break;
                 case HARD:
-                    aiList.add(new AiHard(this, i));
+                    if (GameController.slay_rules) {
+                        aiList.add(new AiHardSlayRules(this, i));
+                    } else {
+                        aiList.add(new AiHardGenericRules(this, i));
+                    }
                     break;
                 case EXPERT:
                     if (GameController.slay_rules) {
@@ -1204,10 +1213,10 @@ public class GameController {
 
     public void debugActions() {
 //        System.out.println("" + gameSaver.getActiveHexesString());
-        for (Hex activeHex : activeHexes) {
-            if (random.nextDouble() > 0.5)
-                setHexColor(activeHex, 0);
-        }
+//        for (Hex activeHex : activeHexes) {
+//            if (random.nextDouble() > 0.5)
+//                setHexColor(activeHex, 0);
+//        }
     }
 
 
@@ -1869,6 +1878,17 @@ public class GameController {
     }
 
 
+    Province findProvinceCopy(Province src) {
+        Province result;
+        for (Hex hex : src.hexList) {
+            result = getProvinceByHex(hex);
+            if (result == null) continue;
+            return result;
+        }
+        return null;
+    }
+
+
     Province getProvinceByHex(Hex hex) {
         for (Province province : provinces) {
             if (province.containsHex(hex))
@@ -2056,7 +2076,7 @@ public class GameController {
 
     private void focusedHexActions(Hex focusedHex) {
         // don't change order in this method
-        YioGdxGame.say(focusedHex.index1 + " " + focusedHex.index2);
+//        YioGdxGame.say(focusedHex.index1 + " " + focusedHex.index2);
         if (focusedHex.ignoreTouch) return;
         if (editorMode) return;
 
@@ -2216,13 +2236,18 @@ public class GameController {
             if (blockDragToRight && currX > 0) currX = 0;
             if (blockDragToUp && currY > 0) currY = 0;
             if (blockDragToDown && currY < 0) currY = 0;
-            if (Math.abs(currX) > 0.5 * Math.abs(camDx)) {
+            if (notTooSlow(currX, camDx)) {
                 camDx = currX;
             }
-            if (Math.abs(currY) > 0.5 * Math.abs(camDy)) {
+            if (notTooSlow(currY, camDy)) {
                 camDy = currY;
             }
         }
+    }
+
+
+    private boolean notTooSlow(float curr, float cam) {
+        return Math.abs(curr) > 0.5 * Math.abs(cam);
     }
 
 

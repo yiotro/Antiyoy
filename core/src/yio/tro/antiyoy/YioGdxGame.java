@@ -243,7 +243,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         prefs.putInteger("interface", boolToInteger(menuControllerYio.getCheckButtonById(2).isChecked())); // slot number
         prefs.putInteger("autosave", boolToInteger(menuControllerYio.getCheckButtonById(1).isChecked()));
         prefs.putInteger("ask_to_end_turn", boolToInteger(menuControllerYio.getCheckButtonById(3).isChecked()));
-        prefs.putInteger("anim_style", menuControllerYio.sliders.get(9).getCurrentRunnerIndex());
+        prefs.putInteger("sensitivity", menuControllerYio.sliders.get(9).getCurrentRunnerIndex());
         prefs.putInteger("city_names", boolToInteger(menuControllerYio.getCheckButtonById(4).isChecked()));
         prefs.putInteger("camera_offset", menuControllerYio.sliders.get(6).getCurrentRunnerIndex());
         prefs.flush();
@@ -284,10 +284,10 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 //        menuControllerYio.sliders.get(7).setRunnerValue(AS);
         menuControllerYio.getCheckButtonById(1).setChecked(autosave);
 
-        // animations style
-        menuControllerYio.anim_style = prefs.getInteger("anim_style", 2);
-        menuControllerYio.sliders.get(9).setRunnerValue(MenuControllerYio.anim_style / 3f);
-        menuControllerYio.applyAnimStyle();
+        // sensitivity
+        int sensitivity = prefs.getInteger("sensitivity", 6);
+        menuControllerYio.sliders.get(9).setRunnerValueByIndex(sensitivity);
+        GameController.sensitivity = Math.max(0.1f, menuControllerYio.sliders.get(9).runnerValue);
 
         // ask to end turn
         int ATET = prefs.getInteger("ask_to_end_turn");
@@ -891,6 +891,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         if (keycode == Input.Keys.Q) {
             if (!gamePaused) {
                 menuControllerYio.getButtonById(32).press(); // debug
+                pressButtonIfVisible(53); // skip tutorial tip
             }
         }
         if (keycode == Input.Keys.SPACE) {

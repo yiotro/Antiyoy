@@ -116,7 +116,7 @@ abstract class ArtificialIntelligence {
     }
 
 
-    private Hex findHexThatNeedsTower(Province province) {
+    protected Hex findHexThatNeedsTower(Province province) {
         for (Hex hex : province.hexList) {
             if (needTowerOnHex(hex)) return hex;
         }

@@ -2,7 +2,7 @@ package yio.tro.antiyoy;
 
 import java.util.ArrayList;
 
-public class AiExpertGenericRules extends ArtificialIntelligence {
+public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
 
     private final Hex tempHex;
 
@@ -141,51 +141,6 @@ public class AiExpertGenericRules extends ArtificialIntelligence {
 
 
     @Override
-    protected void spendMoney(Province province) {
-        tryToBuildTowers(province);
-        tryToBuildFarms(province);
-        tryToBuildUnits(province);
-    }
-
-
-    private void tryToBuildFarms(Province province) {
-        if (province.getExtraFarmCost() > province.getIncome()) return;
-
-        while (province.hasMoneyForFarm()) {
-            Hex hex = findGoodHexForFarm(province);
-            if (hex == null) return;
-            gameController.buildFarm(province, hex);
-        }
-    }
-
-
-    private Hex findGoodHexForFarm(Province province) {
-        if (!hasProvinceGoodHexForFarm(province)) return null;
-
-        while (true) {
-            Hex hex = province.hexList.get(random.nextInt(province.hexList.size()));
-            if (isHexGoodForFarm(hex)) return hex;
-        }
-    }
-
-
-    private boolean hasProvinceGoodHexForFarm(Province province) {
-        for (Hex hex : province.hexList) {
-            if (!isHexGoodForFarm(hex)) continue;
-            return true;
-        }
-        return false;
-    }
-
-
-    private boolean isHexGoodForFarm(Hex hex) {
-        if (!hex.isFree()) return false;
-        if (!hex.hasThisObjectNearby(Hex.OBJECT_HOUSE) && !hex.hasThisObjectNearby(Hex.OBJECT_FARM)) return false;
-        return true;
-    }
-
-
-    @Override
     void tryToBuildUnits(Province province) {
         tryToBuildUnitsOnPalms(province);
 
@@ -201,6 +156,21 @@ public class AiExpertGenericRules extends ArtificialIntelligence {
         // this is to kick start province
         if (province.hasMoneyForUnit(1) && howManyUnitsInProvince(province) <= 1)
             tryToAttackWithStrength(province, 1);
+    }
+
+
+    @Override
+    void tryToBuildTowers(Province province) {
+        while (province.hasMoneyForTower()) {
+            Hex hex = findHexThatNeedsTower(province);
+            if (hex == null) return;
+
+            if (province.hasMoneyForStrongTower()) {
+                gameController.buildStrongTower(province, hex);
+                continue;
+            }
+            gameController.buildTower(province, hex);
+        }
     }
 
 

@@ -59,10 +59,12 @@ class CampaignLevelFactory {
 
 
     private void generateMapForSlayRules() {
-        while (true) {
+        int c = 0;
+        while (c < 6) {
             gameController.clearAnims();
             gameController.createField(true);
             if (gameController.getPredictionForWinner() == 0) break;
+            c++;
         }
     }
 

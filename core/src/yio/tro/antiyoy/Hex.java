@@ -37,7 +37,7 @@ public class Hex {
         animFactor = new FactorYio();
         selectionFactor = new FactorYio();
         unit = null;
-        viewDiversityIndex = (100 * index1 + 1000 * index2) % 3;
+        viewDiversityIndex = (101 * index1 + 1001 * index2) % 3;
         updatePos();
     }
 
@@ -106,7 +106,12 @@ public class Hex {
 
 
     boolean containsSolidObject() {
-        return objectInside >= 1 && objectInside <= 6;
+        return objectInside > 0;
+    }
+
+
+    boolean containsTower() {
+        return objectInside == OBJECT_TOWER || objectInside == OBJECT_STRONG_TOWER;
     }
 
 
@@ -283,7 +288,7 @@ public class Hex {
     public boolean isDefendedByTower() {
         for (int i = 0; i < 6; i++) {
             Hex adjHex = adjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(this) && adjHex.objectInside == OBJECT_TOWER) return true;
+            if (adjHex.active && adjHex.sameColor(this) && adjHex.containsTower()) return true;
         }
         return false;
     }

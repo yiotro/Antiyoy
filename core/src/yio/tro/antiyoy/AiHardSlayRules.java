@@ -5,9 +5,9 @@ import java.util.ArrayList;
 /**
  * Created by ivan on 24.11.2015.
  */
-class AiHard extends ArtificialIntelligence {
+class AiHardSlayRules extends ArtificialIntelligence {
 
-    public AiHard(GameController gameController, int color) {
+    public AiHardSlayRules(GameController gameController, int color) {
         super(gameController, color);
     }
 

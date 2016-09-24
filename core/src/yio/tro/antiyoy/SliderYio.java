@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by ivan on 15.08.2015.
  */
-class SliderYio {
+public class SliderYio {
 
     private final MenuControllerYio menuControllerYio;
     float runnerValue, currentVerticalPos, circleSize, segmentSize, textWidth;
@@ -25,7 +25,7 @@ class SliderYio {
     public static final int CONFIGURE_SKIN = 5;
     public static final int CONFIGURE_CAMERA_OFFSET = 6;
     public static final int CONFIGURE_ASK_END_TURN = 7;
-    public static final int CONFIGURE_ANIM_STYLE = 8;
+    public static final int CONFIGURE_SENSITIVITY = 8;
     Rect pos;
     String valueString;
     ArrayList<SliderYio> listeners;
@@ -164,7 +164,7 @@ class SliderYio {
     }
 
 
-    private void setNumberOfSegments(int numberOfSegments) {
+    public void setNumberOfSegments(int numberOfSegments) {
         this.numberOfSegments = numberOfSegments;
         segmentSize = 1.01f / numberOfSegments;
         viewMagnifier = (numberOfSegments + 1f) / numberOfSegments;
@@ -249,7 +249,7 @@ class SliderYio {
     }
 
 
-    void updateValueString() {
+    public void updateValueString() {
         LanguagesManager languagesManager = menuControllerYio.languagesManager;
         switch (configureType) {
             default:
@@ -277,8 +277,8 @@ class SliderYio {
             case CONFIGURE_ASK_END_TURN:
                 configureAskToEndTurn(languagesManager);
                 break;
-            case CONFIGURE_ANIM_STYLE:
-                configureAnimStyle();
+            case CONFIGURE_SENSITIVITY:
+                configureSensitivity();
                 break;
         }
         textWidth = YioGdxGame.getTextWidth(YioGdxGame.gameFont, valueString);
@@ -286,21 +286,8 @@ class SliderYio {
     }
 
 
-    private void configureAnimStyle() {
-        switch (getCurrentRunnerIndex()) {
-            case 0:
-                valueString = "simple";
-                break;
-            case 1:
-                valueString = "lighty";
-                break;
-            case 2:
-                valueString = "material";
-                break;
-            case 3:
-                valueString = "playful";
-                break;
-        }
+    private void configureSensitivity() {
+        valueString = "" + (getCurrentRunnerIndex() + 1);
     }
 
 

@@ -2,12 +2,9 @@ package yio.tro.antiyoy;
 
 import java.util.ArrayList;
 
-/**
- * Created by ivan on 24.11.2015.
- */
-class AiNormal extends ArtificialIntelligence {
+public class AiNormalGenericRules extends ArtificialIntelligenceGeneric{
 
-    public AiNormal(GameController gameController, int color) {
+    public AiNormalGenericRules(GameController gameController, int color) {
         super(gameController, color);
     }
 

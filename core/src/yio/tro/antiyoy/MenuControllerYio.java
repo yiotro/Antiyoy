@@ -30,7 +30,7 @@ public class MenuControllerYio {
     //    public ScrollerYio scrollerYio;
     public LevelSelector levelSelector;
     FactorYio infoPanelFactor;
-    ArrayList<SliderYio> sliders;
+    public ArrayList<SliderYio> sliders;
     ArrayList<CheckButtonYio> checkButtons;
     private NotificationHolder notificationHolder;
 
@@ -49,6 +49,7 @@ public class MenuControllerYio {
         initLevelSelector();
         initSliders();
         notificationHolder = new NotificationHolder();
+        applyAnimStyle();
 
         createMainMenu();
     }
@@ -94,7 +95,7 @@ public class MenuControllerYio {
         sliders.get(6).setValues(0.5f, 0, 4, true, SliderYio.CONFIGURE_CAMERA_OFFSET); // camera offset
 //        sliders.get(7).setValues(0, 0, 1, false, SliderYio.CONFIGURE_COLOR_OFFSET); // autosave
 //        sliders.get(8).setValues(0, 0, 1, true, SliderYio.CONFIGURE_ASK_END_TURN); // ask to end turn
-        sliders.get(9).setValues(0.75, 0, 3, false, SliderYio.CONFIGURE_ANIM_STYLE); // animation style
+        sliders.get(9).setValues(0.5, 0, 6, false, SliderYio.CONFIGURE_SENSITIVITY); // sensitivity
 //        sliders.get(10).setValues(0, 0, 1, false, SliderYio.CONFIGURE_COLOR_OFFSET); // city names
     }
 
@@ -873,7 +874,7 @@ public class MenuControllerYio {
 
     public void loadMoreCampaignOptions() {
         Preferences prefs = Gdx.app.getPreferences("campaign_options");
-        sliders.get(4).setRunnerValueByIndex(prefs.getInteger("color_offset", 0));
+        sliders.get(4).setRunnerValueByIndex(prefs.getInteger("color_offset", 1));
         getCheckButtonById(6).setChecked(prefs.getBoolean("slay_rules", false));
     }
 
@@ -1422,6 +1423,7 @@ public class MenuControllerYio {
 
 
     public void applyAnimStyle() {
+        anim_style = 2;
         switch (anim_style) {
             case 0: // simple
                 SPAWN_ANIM = 0;

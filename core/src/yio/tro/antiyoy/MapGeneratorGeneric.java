@@ -20,10 +20,21 @@ public class MapGeneratorGeneric extends MapGenerator {
         createLand();
 //        removeSingleHoles();
         addTrees();
-        genericBalance();
-
+        while (!hasGreenProvince()) {
+            genericBalance();
+        }
 
         endGeneration();
+    }
+
+
+    // not actually needed right now
+    private boolean hasGreenProvince() {
+        for (Hex activeHex : gameController.activeHexes) {
+            if (activeHex.colorIndex == 0 && activeHex.numberOfFriendlyHexesNearby() > 0) return true;
+        }
+
+        return false;
     }
 
 
@@ -54,7 +65,11 @@ public class MapGeneratorGeneric extends MapGenerator {
 
 
     private void genericBalance() {
-//        System.out.println("started balancing");
+        // default field
+        for (Hex activeHex : gameController.activeHexes) {
+            activeHex.colorIndex = gameController.neutralLandsIndex;
+        }
+
         for (int i = 0; i < numberOfProvincesByLevelSize(); i++) {
             for (int colorIndex = 0; colorIndex < GameController.colorNumber; colorIndex++) {
                 Hex hex = findGoodPlaceForNewProvince();
@@ -64,7 +79,24 @@ public class MapGeneratorGeneric extends MapGenerator {
         }
 
         cutProvincesToSmallSizes();
+        makeSingleHexesIntoProvinces();
         giveLastPlayersSlightAdvantage();
+    }
+
+
+    private void makeSingleHexesIntoProvinces() {
+        for (Hex activeHex : gameController.activeHexes) {
+            if (activeHex.isNeutral()) continue;
+            if (activeHex.numberOfFriendlyHexesNearby() > 0) continue;
+            int c = 3;
+            for (int i = 0; i < 6; i++) {
+                Hex adjHex = activeHex.adjacentHex(i);
+                if (!adjHex.active || !adjHex.isNeutral()) continue;
+                adjHex.colorIndex = activeHex.colorIndex;
+                c--;
+                if (c == 0) break;
+            }
+        }
     }
 
 
@@ -203,11 +235,7 @@ public class MapGeneratorGeneric extends MapGenerator {
 
 
     protected Hex getRandomFreeHex() {
-        while (true) {
-            Hex hex = field[random.nextInt(fWidth)][random.nextInt(fHeight)];
-            if (!hex.isNeutral()) continue;
-            if (isHexInsideBounds(hex)) return hex;
-        }
+        return gameController.activeHexes.get(random.nextInt(gameController.activeHexes.size()));
     }
 
 
