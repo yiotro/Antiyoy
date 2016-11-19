@@ -1,0 +1,321 @@
+<language name="cs_CZ">
+    <!-- All characters -->
+    <string key="lang_characters" value="öěščřžýáíéůúňťďóĚŠČŘŽÝÁÍÉŮÚŇŤĎÓ"/>
+
+    <!-- Main menu -->
+    <string key="main_menu_info" value="Info"/>
+    <string key="main_menu_exit" value="Konec"/>
+    <string key="main_menu_something" value="Prázdný text o ničem"/>
+
+    <!-- Random stuff -->
+    <string key="menu_level" value="Level"/>
+    <string key="menu_reset" value="Reset"/>
+    <string key="game_saved" value="Hra uložena"/>
+    <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
+    <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
+    <string key="city_name_three" value="nsk, rra, ko, rry"/>
+
+    <!-- Info -->
+    <string key="info_back" value="Zpět"/>
+    <string key="info_array" value="Toto je jednoduchá
+        #strategická hra v
+        #minimalistickém stylu.
+        #Je zdarma bez reklam
+        #a příspěvků.
+        #Pokud jste v této hře noví,
+        #zkuste tutoriál nebo
+        #nápovědu.
+        #
+        #Tato hra je inspirována hrou
+        #Slay kterou napsal
+        #Sean O'Connor
+        #
+        #
+        #
+        #E-mail: yiotro93@gmail.com
+        #Vytvořil yiotro
+        "/>
+    <string key="reset_campaign_data" value="Resetovat data"/>
+    <string key="special_thanks" value="Zvláštní poděkování těmto lidem
+        #
+        #Rebecca Nöll:
+        #Německý překlad
+        #
+        #Jirka Justra:
+        #český překlad
+        #
+        #Olek Jablonski:
+        #Polský překlad
+        #
+        #Andrea Rinaldi:
+        #italský překlad
+        #
+        #Louis Philibert-Morrissette:
+        #francouzský překlad"/>
+
+    <!-- Choose game mode menu-->
+    <string key="choose_game_mode_skirmish" value="Rychlá hra"/>
+    <string key="choose_game_mode_tutorial" value="Tutoriál"/>
+    <string key="choose_game_mode_campaign" value="Kampaň"/>
+    <string key="choose_game_mode_load" value="Načíst hru"/>
+
+    <!-- Skirmish menu -->
+    <string key="game_settings_main_menu" value="Hlavní menu"/>
+    <string key="game_settings_tutorial" value="Tutoriál"/>
+    <string key="game_settings_start" value="Start"/>
+    <string key="map_size" value="Velikost mapy"/>
+    <string key="color_number" value="Barvy"/>
+    <string key="player_number" value="Hráči"/>
+    <string key="small" value="malá"/>
+    <string key="medium" value="střední"/>
+    <string key="big" value="velká"/>
+    <string key="ai_only" value="pouze počítač"/>
+    <string key="single_player" value="sólová hra"/>
+    <string key="multiplayer" value="více hráčů"/>
+    <string key="colors" value="barev"/>
+    <string key="color" value="barvy"/>
+    <string key="difficulty" value="Obtížnost"/>
+    <string key="easy" value="snadná"/>
+    <string key="normal" value="normální"/>
+    <string key="hard" value="těžká"/>
+    <string key="expert" value="expert"/>
+    <string key="player_color" value="Barva hráče"/>
+
+    <!-- In game menu -->
+    <string key="in_game_menu_resume" value="Pokračovat"/>
+    <string key="in_game_menu_save" value="Uložit hru"/>
+    <string key="in_game_menu_surrender" value="Vzdát se"/>
+    <string key="in_game_menu_main_menu" value="Hlavní menu"/>
+    <string key="in_game_menu_restart" value="Restart"/>
+    <string key="confirm_restart" value="Restartovat hru?"/>
+    <string key="cancel" value="Zrušit"/>
+    <string key="confirm_end_turn" value="Konec tahu?"/>
+    <string key="yes" value="Ano"/>
+
+    <!-- End game menu -->
+    <string key="end_game_ok" value="Ok"/>
+    <string key="player" value="hráč"/>
+    <string key="ai" value="počítač"/>
+    <string key="won" value="vyhrál"/>
+    <string key="statistics" value="Statistiky"/>
+    <string key="next" value="Další"/>
+    <string key="level_complete" value="Level kompletní"/>
+    <string key="win_game" value="Vítězství"/>
+    <string key="win_or_continue" value="Vyhrát nyní#nebo pokračovat?"/>
+
+    <!-- Colors -->
+    <string key="green_player" value="Zelený"/>
+    <string key="red_player" value="Červený"/>
+    <string key="magenta_player" value="Purprový"/>
+    <string key="cyan_player" value="Azurový"/>
+    <string key="yellow_player" value="Žlutý"/>
+    <string key="gray_player" value="Šedý"/>
+    <string key="green_ai" value="Zelený"/>
+    <string key="red_ai" value="Červený"/>
+    <string key="magenta_ai" value="Purpurový"/>
+    <string key="cyan_ai" value="Azurový"/>
+    <string key="yellow_ai" value="Žlutý"/>
+    <string key="gray_ai" value="Šedý"/>
+    <string key="green_menu" value="Zelená"/>
+    <string key="red_menu" value="Červená"/>
+    <string key="magenta_menu" value="Purpurová"/>
+    <string key="cyan_menu" value="Azurová"/>
+    <string key="yellow_menu" value="Žlutá"/>
+    <string key="gray_menu" value="Šedá"/>
+
+    <!-- Tutorial -->
+    <string key="normal_rules" value="Normální pravidla"/>
+    <string key="how_to_play" value="Jak hrát?"/>
+    <string key="tutorial_ok" value="Ok"/>
+    <string key="tut_select_unit" value="Vyber jednotku"/>
+    <string key="tut_tap_on_hex" value="Tapni na hex"/>
+    <string key="tut_press_button" value="Zmáčkni tlačítko"/>
+    <string key="tut_build_tower" value="Postav věž"/>
+    <string key="tut_again" value="Znovu"/>
+    <string key="tut_build_spearman" value="Postav kopitníka"/>
+    <string key="tut_tap_to_undo" value="Tapni na 'zpět'"/>
+    <string key="tut_tap_to_end_turn" value="Tapni pro konec tahu"/>
+    <string key="tut_hold_hex" value="Tapni a drž"/>
+    <string key="tut_merge_units" value="Spoj jednotky"/>
+    <string key="tut_good_luck" value="Hodně štěstí!"/>
+
+    <!-- Tutorial tips -->
+    <string key="tip_capture_with_units" value="Zaútoč se svýmy jednotkami#pro obsazení teritorií"/>
+    <string key="tip_about_money" value="Čím větší je tvé území#tím víc dostáváš peněz"/>
+    <string key="tip_build_towers" value="Postav věže k ochraně#okolních hexů"/>
+    <string key="tip_about_taxes" value="Silnější jednotky spotřebují#víc peněz"/>
+    <string key="tip_about_defense" value="Jednotky a domky také#ochraňují okolní hexy"/>
+    <string key="tip_hold_to_march" value="Pro rychlý přesun armád#pouřij 'drž pro přesun'"/>
+    <string key="tip_about_unit_death" value="Pokud dojdou peníze#jednotky zemřou.#Hraj obezřetně"/>
+    <string key="tip_merging" value="Spoj jednotky pro#zvýšení síly"/>
+    <string key="tip_trees" value="Zarostlé hexy nedávají peníze#stromy je třeba pokácet"/>
+    <string key="tip_help" value="Více podrobností#v nápovědě"/>
+
+    <!-- Generic Tutorial -->
+    <string key="gen_greetings" value="Ahoj, tento tutoriál ti vysvětlí pravidla hry."/>
+    <string key="gen_select_province" value="Tapnutím vyber své město."/>
+    <string key="gen_select_unit" value="Dobře. Máš několik jednotek. Tapni na jednu z nich."/>
+    <string key="gen_move_unit" value="Každý panáček se pohybuje jednou za tah. Nyní obsaď neutrální hex poblíž vybrané jednotky tapnutím na něj."/>
+    <string key="gen_income" value="Obsazováním nových hexů zvyšuješ příjem svého města. Víc hexů - víc peněz."/>
+    <string key="gen_lets_build_farm" value="Nyní postavíme farmu pro další zvýšení příjmu."/>
+    <string key="gen_press_button_twice" value="Zmáčkni dvakrát tlačítko."/>
+    <string key="gen_build_farm" value="Farmy mohou být stavěny jen poblíž měst, nebo jiných farem."/>
+    <string key="gen_about_farms" value="Každá farma dává 3 mince za tah. Každá nová farma stojí víc než farma minulá."/>
+    <string key="gen_lets_build_peasant" value="Nyní postavíme novou jednotku a obsadíme neutrální hex."/>
+    <string key="gen_press_button" value="Zmáčkni tlačítko naspodku."/>
+    <string key="gen_build_peasant" value="Postav svou jednotku na hex poblíž hranic města."/>
+    <string key="gen_capture_peasant" value="Nyní tapni na svou novou jednotkou a obsaď neutrální hex."/>
+    <string key="gen_capture_hex" value="Obsaď neutrální hex."/>
+    <string key="gen_lets_build_tower" value="Své území musíš chránit. Na to jsou dobré věže."/>
+    <string key="gen_build_tower" value="Postav věž tapnutím na zvýrazněný hex."/>
+    <string key="gen_about_towers" value="Věže ochrání okolní hexy proti rolníkům a kopitníkům."/>
+    <string key="gen_lets_build_spearman" value="Kopitník je silnější než rolník. Postavíme ho."/>
+    <string key="gen_build_spearman" value="Tapni na hex a postav kopitníka."/>
+    <string key="gen_units_consume_money" value="Jednotky potřebují peníze na jídlo. Silnější jednotky jich potřebují víc."/>
+    <string key="gen_undo_spearman" value="Nyní je tvůj příjem -1. To je zlé, klikni na levé dolní tlačítko a vrať kopitníka."/>
+    <string key="gen_why_units_die" value="Jednotky zemřou pokud městu dojdou peníze. Svůj příjem musíš sledovat."/>
+    <string key="gen_about_trees_one" value="Stromy jsou také problém. Hexy na kterých jsou stromy nedávají peníze."/>
+    <string key="gen_about_trees_two" value="Vykácej stromy co nejdřív, dokud jich není moc."/>
+    <string key="gen_end_turn" value="Pro ukončení tahu zmáčkni tlačítko v pravém dolním rohu."/>
+    <string key="gen_choose_to_merge" value="Jednotky můžeš spojovat. Vyber rolníka na dolním hexu."/>
+    <string key="gen_merge_units" value="Nyní, když je vybraný, tapni na druhého rolníka a spoj je."/>
+    <string key="gen_long_tap" value="Pokud máš víc jednotek, můžeš je všechny přesunout dlouhým tapnutím."/>
+    <string key="gen_several_provinces" value="Můžeš mít více měst. Každé s vlastní ekonomikou."/>
+
+    <!-- Tutorial help -->
+    <string key="help" value="Nápověda"/>
+    <string key="help_about_units" value="Jednotky"/>
+    <string key="help_about_trees" value="Stromy"/>
+    <string key="help_about_towers" value="Věže"/>
+    <string key="help_about_money" value="Peníze"/>
+    <string key="help_about_tactics" value="Taktiky"/>
+
+    <string key="help_units_article" value="Jsou čtyři typy jednotek
+        #Liší se pouze silou.
+        #Vzestupně podle síly:
+        #[1] rolník
+        #[2] kopitník
+        #[3] baron
+        #[4] rytíř
+        #
+        #Jednotky dávají okolním
+        #hexům ochranu rovnou jejich
+        #síle.
+        #
+        #Pro obsazení hexu musí být
+        #síla útočné jednotky větší
+        #než obrana hexu.
+        #
+        #Každá jednotka spotřebuje
+        #2, 6, 18 respektive 54
+        #mincí za jeden tah.
+        "/>
+
+    <string key="help_trees_article" value="Stromy vyrostou tam,
+        #kde zemře jednotka.
+        #
+        #Hexy se stromy nedávají žádný
+        #příjem. Stromy tedy poškozují
+        #ekonomiku.
+        #
+        #Musíš je vykácet, jinak se
+        #rozrostou a vyhladoví tě.
+        #
+        #Palmy se objevují v rozích
+        #a rostou velmi rychle.
+        #Musí být tedy i velmi rychle
+        #vykáceny.
+        "/>
+
+    <string key="help_towers_article" value="Věže ochraňují okolní hexy.
+        #
+        #Veže dávají ochranu [2].
+        #Tudíš jen baroni a rytíři
+        #je mohou porazit.
+        #
+        #Domky dávají ochranu [1].
+        #
+        #Na počátku hry je toto
+        #nejlepší způsob, jak
+        #ochránit své teritorium.
+        #Cena věží je nízká
+        #a nespotřebovávají žádné
+        #peníze.
+        "/>
+
+    <string key="help_money_article" value="Příjem závisí na počtu
+        #hexů. Větší území má větší
+        #příjem.
+        #
+        #Stromy příjem omezují.
+        #
+        #Jednotky spotřebovávají
+        #peníze. Silnější jednotky
+        #jich potřebují víc.
+        #
+        #Když dojdou peníze,
+        #jednotky umřou.
+        #
+        #Příjem se ukazuje
+        #nahoře uprostřed.
+        "/>
+
+    <string key="help_tactics_article" value="Na počátku hry obsaď
+        #neutrální hexy.
+        #Poté ochraňuj své území.
+        #
+        #Ujisti se, že tvůj příjem
+        #je dostatečně velký,
+        #než postavíš nové jednotky.
+        #
+        #Rozkouskuj území nepřítele
+        #pro zničení jeho ekonomiky.
+        "/>
+
+    <string key="about_complicated_mode_article" value="Pokročilý mód znamená
+        #členitější menu.
+        #Odlišnosti od jednoduchého:
+        #Difference from simple:
+        #
+        #- Několik ukládacích slotů
+        #
+        #- Potvrzení restartu levelu
+        #
+        #- Ukazuje statistiky barev
+        #(zmáčkni tlačítko s mincí)
+        "/>
+
+    <!-- Statistics -->
+    <string key="turns_made" value="Provedeno tahů:"/>
+    <string key="units_died" value="Zabito jednotek:"/>
+    <string key="units_produced" value="Postaveno jednotek:"/>
+    <string key="money_spent" value="Utraceno peněz:"/>
+
+    <!-- Editor -->
+    <string key="editor" value="Editor"/>
+    <string key="slot" value="Slot"/>
+    <string key="slots" value="Ukládací sloty"/>
+    <string key="import" value="Importuj"/>
+    <string key="export" value="Exportuj"/>
+    <string key="empty" value="prádný"/>
+    <string key="play" value="Hraj"/>
+    <string key="edit" value="Edituj"/>
+    <string key="random" value="Náhodně"/>
+    <string key="exported" value="Mapa je ve schránce"/>
+    <string key="editor_clear" value="Vymaž"/>
+
+    <!-- Settings -->
+    <string key="main_label" value=" #Auto ukládání
+            # #Několik slotů
+            # #Potvrď konec tahu
+            # #Jména měst
+            # #Zvuky"/>
+    <string key="skin" value="Skin"/>
+    <string key="original" value="originální"/>
+    <string key="points" value="body"/>
+    <string key="grid" value="mřížka"/>
+    <string key="anim_style" value="Citlivost"/>
+    <string key="more" value="Více"/>
+    <string key="camera_offset" value="Offset kamery"/>
+    <string key="slay_rules" value="Slay pravidla"/>
+</language>

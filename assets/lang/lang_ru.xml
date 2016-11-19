@@ -1,0 +1,330 @@
+<language name="ru_RU">
+    <!-- All characters -->
+    <string key="lang_characters" value="йцукенгшщзхъёфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮö"/>
+
+    <!-- Main menu -->
+    <string key="main_menu_info" value="Инфо"/>
+    <string key="main_menu_exit" value="Выход"/>
+    <string key="main_menu_something" value="Белый текст ни о чем"/>
+
+    <!-- Random stuff -->
+    <string key="menu_level" value="Уровень"/>
+    <string key="menu_reset" value="Сбросить"/>
+    <string key="game_saved" value="Игра сохранена"/>
+    <string key="city_name_one" value="ки, мос, ми, до, пе"/>
+    <string key="city_name_two" value="X, X, X, X, те, га, ре"/>
+    <string key="city_name_three" value="рев, ров, нск, нск, ква, рево"/>
+
+    <!-- Info -->
+    <string key="info_back" value="Назад"/>
+    <string key="info_array" value="Это простая стратегия в
+        #минималистичном стиле.
+        #Игра бесплатна, в ней нет
+        #ни рекламы ни доната.
+        #Чтобы узнать правила игры
+        #советую пройти обучение.
+        #
+        #Игра основана на
+        #Slay от Sean O'Connor
+        #
+        #
+        #
+        #
+        #
+        #
+        #
+        #E-mail: yiotro93@gmail.com
+        #Игру сделал yiotro
+		"/>
+    <string key="reset_campaign_data" value="Стереть данные"/>
+    <string key="special_thanks" value="Отдельное спасибо этим людям
+        #
+        #Rebecca Nöll:
+        #Немецкий перевод
+        #
+        #Jirka Justra:
+        #Чешский перевод
+        #
+        #Olek Jablonski:
+        #Польский перевод
+        #
+        #Andrea Rinaldi:
+        #Итальянский перевод
+        #
+        #Louis Philibert-Morrissette:
+        #Французский перевод"/>
+
+    <!-- Choose game mode menu-->
+    <string key="choose_game_mode_skirmish" value="Сражение"/>
+    <string key="choose_game_mode_tutorial" value="Обучение"/>
+    <string key="choose_game_mode_campaign" value="Кампания"/>
+    <string key="choose_game_mode_load" value="Загрузить"/>
+
+    <!-- Skirmish menu -->
+    <string key="game_settings_main_menu" value="Назад"/>
+    <string key="game_settings_tutorial" value="Обучение"/>
+    <string key="game_settings_start" value="Начать"/>
+    <string key="map_size" value="Размер карты"/>
+    <string key="color_number" value="Цвета"/>
+    <string key="player_number" value="Игроки"/>
+    <string key="small" value="маленькая"/>
+    <string key="medium" value="средняя"/>
+    <string key="big" value="большая"/>
+    <string key="ai_only" value="битва роботов"/>
+    <string key="single_player" value="один игрок"/>
+    <string key="multiplayer" value="мультиплеер"/>
+    <string key="colors" value="цветов"/>
+    <string key="color" value="цвета"/>
+    <string key="difficulty" value="Сложность"/>
+    <string key="easy" value="легкий"/>
+    <string key="normal" value="обычный"/>
+    <string key="hard" value="сложный"/>
+    <string key="expert" value="эксперт"/>
+    <string key="player_color" value="Цвет игрока"/>
+
+    <!-- In game menu -->
+    <string key="in_game_menu_resume" value="Продолжить"/>
+    <string key="in_game_menu_save" value="Сохранить"/>
+    <string key="in_game_menu_surrender" value="Сдаться"/>
+    <string key="in_game_menu_main_menu" value="Главное меню"/>
+    <string key="in_game_menu_restart" value="Заново"/>
+    <string key="confirm_restart" value="Начать заново?"/>
+    <string key="cancel" value="Отмена"/>
+    <string key="confirm_end_turn" value="Закончить ход?"/>
+    <string key="yes" value="Да"/>
+
+    <!-- End game menu -->
+    <string key="end_game_ok" value="Хорошо"/>
+    <string key="player" value="игрок"/>
+    <string key="ai" value="комп"/>
+    <string key="won" value="победил"/>
+    <string key="statistics" value="Статистика"/>
+    <string key="next" value="Дальше"/>
+    <string key="level_complete" value="Уровень пройден"/>
+    <string key="win_game" value="Победа"/>
+    <string key="win_or_continue" value="Закончить игру#или продолжить?"/>
+
+    <!-- Colors -->
+    <string key="green_player" value="Зеленый"/>
+    <string key="red_player" value="Красный"/>
+    <string key="magenta_player" value="Фиолетовый"/>
+    <string key="cyan_player" value="Голубой"/>
+    <string key="yellow_player" value="Желтый"/>
+    <string key="gray_player" value="Серый"/>
+    <string key="green_ai" value="Зеленый"/>
+    <string key="red_ai" value="Красный"/>
+    <string key="magenta_ai" value="Фиолетовый"/>
+    <string key="cyan_ai" value="Голубой"/>
+    <string key="yellow_ai" value="Желтый"/>
+    <string key="gray_ai" value="Серый"/>
+    <string key="green_menu" value="Зеленый"/>
+    <string key="red_menu" value="Красный"/>
+    <string key="magenta_menu" value="Фиолетовый"/>
+    <string key="cyan_menu" value="Голубой"/>
+    <string key="yellow_menu" value="Желтый"/>
+    <string key="gray_menu" value="Серый"/>
+
+    <!-- Tutorial -->
+    <string key="normal_rules" value="Обычные правила"/>
+    <string key="how_to_play" value="Как играть?"/>
+    <string key="tutorial_ok" value="Хорошо"/>
+    <string key="tut_select_unit" value="Выбери юнита"/>
+    <string key="tut_tap_on_hex" value="Нажми на поле"/>
+    <string key="tut_press_button" value="Нажми кнопку"/>
+    <string key="tut_build_tower" value="Построй башню"/>
+    <string key="tut_again" value="Еще раз"/>
+    <string key="tut_build_spearman" value="Построй копейщика"/>
+    <string key="tut_tap_to_undo" value="Нажми 'отменить'"/>
+    <string key="tut_tap_to_end_turn" value="Нажми 'конец хода'"/>
+    <string key="tut_hold_hex" value="Зажми на секунду"/>
+    <string key="tut_merge_units" value="Схлопни юнитов"/>
+    <string key="tut_good_luck" value="Удачи!"/>
+
+    <!-- Tutorial tips -->
+    <string key="tip_capture_with_units" value="Атакуй своими юнитами#чтобы захватывать земли"/>
+    <string key="tip_about_money" value="Чем больше земель#тем больше прибыль"/>
+    <string key="tip_build_towers" value="Строй башни чтобы защитить#соседние клетки"/>
+    <string key="tip_about_taxes" value="Юниты жрут деньги.#Сильные жрут больше"/>
+    <string key="tip_about_defense" value="Юниты и домики тоже#защищают соседние клетки"/>
+    <string key="tip_hold_to_march" value="Чтобы быстро двигать армии#тапни и держи"/>
+    <string key="tip_about_unit_death" value="Если деньги кончатся,#то юниты умрут.#"/>
+    <string key="tip_merging" value="Соединяй юнитов чтобы#получить более сильных"/>
+    <string key="tip_trees" value="Деревья уменьшают доход.#Поэтому их надо рубить"/>
+    <string key="tip_help" value="Больше подробностей#в справке"/>
+
+    <!-- Generic Tutorial -->
+    <string key="gen_greetings" value="Привет. Это обучение расскажет про основные правила игры."/>
+    <string key="gen_select_province" value="Нажми на свой город чтобы выбрать его."/>
+    <string key="gen_select_unit" value="Отлично. У тебя есть несколько юнитов. Нажми на одного из них."/>
+    <string key="gen_move_unit" value="Каждый юнит ходит раз в ход. Захвати ничейную территорию нажав на ячейку рядом с выбранным юнитом."/>
+    <string key="gen_income" value="Захватив новую ячейку ты увеличил прибыль своего города. Больше ячеек - больше прибыль."/>
+    <string key="gen_lets_build_farm" value="Давай построим ферму чтобы увеличить прибыль города."/>
+    <string key="gen_press_button_twice" value="Нажми дважды на кнопку"/>
+    <string key="gen_build_farm" value="Фермы можно строить только рядом с городом или рядом с другими фермами."/>
+    <string key="gen_about_farms" value="Каждая ферма приносит 3 монеты в ход. Каждая новая ферма стоит дороже предыдущей."/>
+    <string key="gen_lets_build_peasant" value="Давай построим нового юнита и сразу захватим ничейную ячейку."/>
+    <string key="gen_press_button" value="Нажми на кнопку снизу"/>
+    <string key="gen_build_peasant" value="Поставь нового юнита на ячейку рядом с границей города."/>
+    <string key="gen_capture_peasant" value="Захвати ничейную ячейку выбрав юнита и указав куда ему идти."/>
+    <string key="gen_capture_hex" value="Захвати ячейку"/>
+    <string key="gen_lets_build_tower" value="Свои земли надо защищать. Для этого хорошо подходят башни."/>
+    <string key="gen_build_tower" value="Построй башню нажав на указанную ячейку."/>
+    <string key="gen_about_towers" value="Башни защищают прилегающие ячейки от крестьян и копейщиков."/>
+    <string key="gen_lets_build_spearman" value="Копейщик сильнее любого крестьянина. Давай построим его."/>
+    <string key="gen_build_spearman" value="Нажми на ячейку чтобы построить копейщика."/>
+    <string key="gen_units_consume_money" value="Юниты потребляют деньги чтобы жить. Чем сильнее юнит, тем больше ему нужно денег."/>
+    <string key="gen_undo_spearman" value="Сейчас прибыль города равна -1. Это плохо, поэтому давай отменим постройку копейщика."/>
+    <string key="gen_why_units_die" value="Если деньги у города кончатся, то юниты умрут. Поэтому надо следить чтобы прибыль была больше нуля."/>
+    <string key="gen_about_trees_one" value="Деревья тоже представляют опасность. Ячейки на которых растет дерево не приносят дохода."/>
+    <string key="gen_about_trees_two" value="Деревья лучше рубить сразу, пока их мало."/>
+    <string key="gen_end_turn" value="Чтобы закончить ход нажми на кнопку справу снизу."/>
+    <string key="gen_choose_to_merge" value="Юнитов также можно схлопывать. Выбери нижнего крестьянина."/>
+    <string key="gen_merge_units" value="Теперь когда крестьянин выбран, нажми на верхнего чтобы схлопнуть их."/>
+    <string key="gen_long_tap" value="Если юнитов слишком много, то можно двигать сразу всех по длинному тапу."/>
+    <string key="gen_several_provinces" value="Городов может быть несколько, причем у каждого своя экономика."/>
+
+    <!-- Tutorial help -->
+    <string key="help" value="Справка"/>
+    <string key="help_about_units" value="Юниты"/>
+    <string key="help_about_trees" value="Деревья"/>
+    <string key="help_about_towers" value="Башни"/>
+    <string key="help_about_money" value="Деньги"/>
+    <string key="help_about_tactics" value="Тактика"/>
+
+    <string key="help_units_article" value="Есть 4 типа юнитов.
+        #Отличаются они только силой.
+        #В порядке возрастания силы:
+        #[1] крестьяне
+        #[2] копейщики
+        #[3] бароны
+        #[4] рыцари
+        #
+        #Юнит дает соседним клеткам
+        #защиту равную своей силе.
+        #
+        #Чтобы захватить клетку
+        #сила юнита должна быть
+        #больше чем защита клетки.
+        #
+        #Каждый юнит кушает
+        #2, 6, 18 или 54
+        #монет за ход.
+        "/>
+
+    <string key="help_trees_article" value="Деревья остаются после
+        #умерших юнитов.
+        #
+        #Клетка с деревом не
+        #дает дохода. Так что
+        #деревья наносят вред.
+        #
+        #С ними нужно бороться, иначе
+        #они разрастутся и приведут
+        #к кризису экономики.
+        #
+        #Пальмы появляются по краям
+        #и растут очень быстро.
+        #Их нужно мочить сразу.
+        "/>
+
+    <string key="help_towers_article" value="Башни служат для
+        #защиты соседних клеток.
+        #
+        #Башни дают защиту силы 2.
+        #Поэтому только бароны и
+        #рыцари могут пробить её.
+        #
+        #Хижины дают защиту 1.
+        #
+        #В начале игры это лучший
+        #способ защиты.
+        #Башни стоят дешевле
+        #копейщиков и не жрут
+        #денег.
+        "/>
+
+    <string key="help_money_article" value="Доход зависит от
+        #количества клеток.
+        #Чем больше территория
+        #тем больше доход.
+        #Деревья уменьшают доход.
+        #
+        #Расход зависит от юнитов.
+        #Чем больше юнитов
+        #и чем они сильнее,
+        #тем больше затраты
+        #на их содержание.
+        #
+        #Если деньги кончаются,
+        #то юниты умирают.
+        #
+        #Прибыль показывается
+        #сверху по центру.
+        "/>
+
+    <string key="help_tactics_article" value="В начале игры важно
+        #захватить ничейные клетки.
+        #После этого надо не
+        #допустить потерю клеток.
+        #
+        #Прежде чем строить
+        #сильных юнитов, надо
+        #убедиться что прибыль
+        #способна покрыть затраты
+        #на их содержание.
+        #
+        #Разрезайте территории
+        #врагов на части
+        #чтобы разрушить их
+        #экономику.
+        "/>
+
+    <string key="about_complicated_mode_article" value="В расширенном режиме
+        #больше всяких меню.
+        #Отличия от простого:
+        #
+        #- Несколько слотов
+        #сохранения
+        #
+        #- Подтверждение рестарта
+        #уровня
+        #
+        #- Показ количества
+        #цветов на карте
+        #(нажмите кнопку 'монета')
+        "/>
+
+    <!-- Statistics -->
+    <string key="turns_made" value="Ходов сделано:"/>
+    <string key="units_died" value="Юнитов умерло:"/>
+    <string key="units_produced" value="Юнитов построено:"/>
+    <string key="money_spent" value="Денег потрачено:"/>
+
+    <!-- Editor -->
+    <string key="editor" value="Редактор"/>
+    <string key="slot" value="Слот"/>
+    <string key="slots" value="Сохранения"/>
+    <string key="import" value="Импорт"/>
+    <string key="export" value="Экспорт"/>
+    <string key="empty" value="пусто"/>
+    <string key="play" value="Играть"/>
+    <string key="edit" value="Редакт."/>
+    <string key="random" value="Случайно"/>
+    <string key="exported" value="Карта в буфере обмена"/>
+    <string key="editor_clear" value="Очистить"/>
+
+    <!-- Settings -->
+    <string key="main_label" value=" #Автосохранение
+            # #Несколько слотов
+            # #Спраш. конец хода
+            # #Имена городов
+            # #Звук"/>
+    <string key="skin" value="Скин"/>
+    <string key="original" value="обычный"/>
+    <string key="points" value="точки"/>
+    <string key="grid" value="сетка"/>
+    <string key="anim_style" value="Чувствительность"/>
+    <string key="more" value="Еще"/>
+    <string key="camera_offset" value="Отступ камеры"/>
+    <string key="slay_rules" value="Правила Slay"/>
+</language>

@@ -1,0 +1,334 @@
+<language name="de_DE">
+    <!-- All characters -->
+    <string key="lang_characters" value="ÄÜÖäüöß"/>
+
+    <!-- Main menu -->
+    <string key="main_menu_info" value="Info"/>
+    <string key="main_menu_exit" value="Schließen"/>
+    <string key="main_menu_something" value="Weißer Text über nichts"/>
+
+    <!-- Random stuff -->
+    <string key="menu_level" value="Level"/>
+    <string key="menu_reset" value="Reset"/>
+    <string key="game_saved" value="Spiel gespeichert"/>
+    <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
+    <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
+    <string key="city_name_three" value="nsk, rra, ko, rry"/>
+
+    <!-- Info -->
+    <string key="info_back" value="Zurück"/>
+    <string key="info_array" value="Dies ist ein simples Strategie-
+        #spiel im minimalistischen Stil.
+        #Es ist kostenlos und nicht
+        #durch Werbung oder
+        #Spenden finanziert.
+        #Wenn du dieses Spiel
+        #zum ersten Mal spielst
+        #probiere das Tutorial aus
+        #oder klicke auf 'Hilfe'.
+        #
+        #Dieses Spiel wurde inspiriert
+        #von 'Slay' von Sean O'Connor
+        #
+        #
+        #
+        #
+        #
+        #E-Mail: yiotro93@gmail.com
+        #Made by yiotro
+        "/>
+    <string key="reset_campaign_data" value="Daten zurücksetzen"/>
+    <string key="special_thanks" value="Ein besonderer Dank gilt den folgenden Personen
+        #
+        #Rebecca Nöll:
+        #Deutsche Übersetzung
+        #
+        #Jirka Justra:
+        #Tschechische Übersetzung
+        #
+        #Olek Jablonski:
+        #Polnische Übersetzung
+        #
+        #Andrea Rinaldi:
+        #Italienische Übersetzung
+        #
+        #Louis Philibert-Morrissette:
+        #Französische Übersetzung"/>
+
+    <!-- Choose game mode menu-->
+    <string key="choose_game_mode_skirmish" value="Gefecht"/>
+    <string key="choose_game_mode_tutorial" value="Tutorial"/>
+    <string key="choose_game_mode_campaign" value="Kampagne"/>
+    <string key="choose_game_mode_load" value="Spiel laden"/>
+
+    <!-- Skirmish menu -->
+    <string key="game_settings_main_menu" value="Hauptmenü"/>
+    <string key="game_settings_tutorial" value="Tutorial"/>
+    <string key="game_settings_start" value="Start"/>
+    <string key="map_size" value="Kartengröße"/>
+    <string key="color_number" value="Farben"/>
+    <string key="player_number" value="Spieler"/>
+    <string key="small" value="klein"/>
+    <string key="medium" value="mittel"/>
+    <string key="big" value="groß"/>
+    <string key="ai_only" value="nur AI"/>
+    <string key="single_player" value="Einzelspieler"/>
+    <string key="multiplayer" value="Mehrspieler"/>
+    <string key="colors" value="Farben"/>
+    <string key="color" value="Farben"/>
+    <string key="difficulty" value="Schwierigkeit"/>
+    <string key="easy" value="einfach"/>
+    <string key="normal" value="normal"/>
+    <string key="hard" value="schwer"/>
+    <string key="expert" value="Experte"/>
+    <string key="player_color" value="Spielerfarbe"/>
+
+    <!-- In game menu -->
+    <string key="in_game_menu_resume" value="Fortfahren"/>
+    <string key="in_game_menu_save" value="Spiel speichern"/>
+    <string key="in_game_menu_surrender" value="Aufgeben"/>
+    <string key="in_game_menu_main_menu" value="Hauptmenü"/>
+    <string key="in_game_menu_restart" value="Neustart"/>
+    <string key="confirm_restart" value="Spiel neu starten?"/>
+    <string key="cancel" value="Abbrechen"/>
+    <string key="confirm_end_turn" value="Zug beenden?"/>
+    <string key="yes" value="Ja"/>
+
+    <!-- End game menu -->
+    <string key="end_game_ok" value="Ok"/>
+    <string key="player" value="Spieler"/>
+    <string key="ai" value="AI"/>
+    <string key="won" value="hat gewonnen"/>
+    <string key="statistics" value="Statistik"/>
+    <string key="next" value="Weiter"/>
+    <string key="level_complete" value="Level abgeschlossen"/>
+    <string key="win_game" value="Gewinnen"/>
+    <string key="win_or_continue" value="Jetzt gewinnen#oder weiterspielen?"/>
+
+    <!-- Colors -->
+    <string key="green_player" value="Grüner"/>
+    <string key="red_player" value="Roter"/>
+    <string key="magenta_player" value="Magenta"/>
+    <string key="cyan_player" value="Cyan"/>
+    <string key="yellow_player" value="Gelber"/>
+    <string key="gray_player" value="Grauer"/>
+    <string key="green_ai" value="Grüne"/>
+    <string key="red_ai" value="Rote"/>
+    <string key="magenta_ai" value="Magenta"/>
+    <string key="cyan_ai" value="Cyan"/>
+    <string key="yellow_ai" value="Gelbe"/>
+    <string key="gray_ai" value="Graue"/>
+    <string key="green_menu" value="Grüner"/>
+    <string key="red_menu" value="Roter"/>
+    <string key="magenta_menu" value="Magenta"/>
+    <string key="cyan_menu" value="Cyan"/>
+    <string key="yellow_menu" value="Gelber"/>
+    <string key="gray_menu" value="Grauer"/>
+
+    <!-- Tutorial -->
+    <string key="normal_rules" value="Normale Regeln"/>
+    <string key="how_to_play" value="Wie spielt man?"/>
+    <string key="tutorial_ok" value="Ok"/>
+    <string key="tut_select_unit" value="Einheit auswählen"/>
+    <string key="tut_tap_on_hex" value="Feld antippen"/>
+    <string key="tut_press_button" value="Button antippen"/>
+    <string key="tut_build_tower" value="Turm bauen"/>
+    <string key="tut_again" value="Nochmal tippen"/>
+    <string key="tut_build_spearman" value="Speerträger bauen"/>
+    <string key="tut_tap_to_undo" value="Zug rückgängig machen"/>
+    <string key="tut_tap_to_end_turn" value="Antippen um Zug zu beenden"/>
+    <string key="tut_hold_hex" value="Antippen und halten"/>
+    <string key="tut_merge_units" value="Einheiten zusammenfügen"/>
+    <string key="tut_good_luck" value="Viel Glück!"/>
+
+    <!-- Tutorial tips -->
+    <string key="tip_capture_with_units" value="Greife mit Deinen Einheiten#an, um Gebiete einzunehmen."/>
+    <string key="tip_about_money" value="Je größer Dein Gebiet, desto#mehr Geld bekommst Du."/>
+    <string key="tip_build_towers" value="Baue Türme, um benachbarte#Felder zu beschützen."/>
+    <string key="tip_about_taxes" value="Stärkere Einheiten konsu-#mieren mehr Geld."/>
+    <string key="tip_about_defense" value="Einheiten und Häuser#verteidigen auch#angrenzende Felder."/>
+    <string key="tip_hold_to_march" value="Halte ein Feld gedrückt, um#mit der gesamten Armee#zu marschieren."/>
+    <string key="tip_about_unit_death" value="Wenn Dir das Geld ausgeht#sterben Deine Einheiten.#Sei also vorsichtig!"/>
+    <string key="tip_merging" value="Füge Einheiten zusammen,#um sie stärker zu machen."/>
+    <string key="tip_trees" value="Bäume verringern das#Einkommen, also ist es#besser sie zu fällen."/>
+    <string key="tip_help" value="Mehr Details gibt es#unter 'Hilfe'."/>
+
+    <!-- Generic Tutorial -->
+    <string key="gen_greetings" value="Hi. Dieses Tutorial wird Dir die Spielregeln erklären."/>
+    <string key="gen_select_province" value="Tippe auf Deine Stadt, um sie auszuwählen."/>
+    <string key="gen_select_unit" value="Sehr gut. Du hast einige Einheiten. Tippe eine von ihnen an."/>
+    <string key="gen_move_unit" value="Jede Einheit kann sich einmal pro Zug bewegen. Nimm das neutrale Feld neben dieser Einheit ein, indem Du darauf tippst."/>
+    <string key="gen_income" value="Indem Du neue Felder einnimmst, erhöhst Du das Einkommen deiner Stadt. Größeres Gebiet - höheres Einkommen."/>
+    <string key="gen_lets_build_farm" value="Baue eine Farm, um Dein Einkommen noch weiter zu erhöhen."/>
+    <string key="gen_press_button_twice" value="Tippe den Button zweimal"/>
+    <string key="gen_build_farm" value="Eine Farm kann nur neben der Hauptstadt oder neben einer anderen Farm gebaut werden."/>
+    <string key="gen_about_farms" value="Für jede Farm erhältst Du drei Münzen pro Runde. Jede weitere Farm kostet mehr als die vorherige."/>
+    <string key="gen_lets_build_peasant" value="Baue eine neue Einheit, um ein neutrales Feld einzunehmen."/>
+    <string key="gen_press_button" value="Tippe auf den Button unten"/>
+    <string key="gen_build_peasant" value="Platziere die Einheit auf einem Feld nahe der Stadtgrenze."/>
+    <string key="gen_capture_peasant" value="Nimm nun ein neutrales Feld ein, indem Du die Einheit auswählst und auf das Feld tippst, das sie einnehmen soll."/>
+    <string key="gen_capture_hex" value="Nimm das neutrale Feld ein."/>
+    <string key="gen_lets_build_tower" value="Deine Stadt muss auch verteidigt werden. Türme eignen sich dafür gut."/>
+    <string key="gen_build_tower" value="Baue einen Turm, indem Du auf das hervorgehobene Feld tippst."/>
+    <string key="gen_about_towers" value="Türme beschützen angrenzende Felder vor Bauern und Speerträgern."/>
+    <string key="gen_lets_build_spearman" value="Speerträger sind stärker als Bauern. Baue einen von ihnen."/>
+    <string key="gen_build_spearman" value="Tippe das Feld an, um einen Speerträger zu bauen."/>
+    <string key="gen_units_consume_money" value="Einheiten konsumieren Geld, um am Leben zu bleiben. Stärkere Einheiten konsumieren mehr Geld."/>
+    <string key="gen_undo_spearman" value="Deine Bilanz liegt jetzt bei -1. Das ist schlecht, also lass uns den Bau des Speerträgers rückgängig machen."/>
+    <string key="gen_why_units_die" value="Deine Einheiten sterben, wenn der Stadt das Geld ausgeht. Also achte gut auf Dein Einkommen."/>
+    <string key="gen_about_trees_one" value="Auch Bäume stellen ein Problem dar. Felder mit Bäumen produzieren kein Geld."/>
+    <string key="gen_about_trees_two" value="Zerstöre die Bäume so früh wie möglich, bevor es zuviele werden."/>
+    <string key="gen_end_turn" value="Um Deinen Zug zu beenden, drücke auf den Button unten rechts."/>
+    <string key="gen_choose_to_merge" value="Du kannst Deine Einheiten auch zusammenfügen. Wähle den unteren Bauern aus."/>
+    <string key="gen_merge_units" value="Wenn der Bauer ausgewählt ist, tippe auf den anderen Bauern, um sie zusammenzufügen."/>
+    <string key="gen_long_tap" value="Wenn Du viele Einheiten hast, kannst Du sie alle auf einmal bewegen, indem Du ein Feld gedrückt hältst."/>
+    <string key="gen_several_provinces" value="Du kannst mehrere Städte gleichzeitig haben. Jede von ihnen hat ihre eigene Wirtschaft."/>
+
+    <!-- Tutorial help -->
+    <string key="help" value="Hilfe"/>
+    <string key="help_about_units" value="Einheiten"/>
+    <string key="help_about_trees" value="Bäume"/>
+    <string key="help_about_towers" value="Türme"/>
+    <string key="help_about_money" value="Geld"/>
+    <string key="help_about_tactics" value="Taktik"/>
+
+    <string key="help_units_article" value="Es gibt 4 Arten von Einheiten,
+        #die sich nur durch ihre
+        #Stärke unterscheiden.
+        #Geordnet nach zunehmender Stärke sind dies:
+        #[1] Bauer
+        #[2] Speerträger
+        #[3] Baron
+        #[4] Ritter
+        #Sie beschützen angrenzende
+        #Felder entsprechend ihrer Stärke.
+        #
+        #Um ein Feld einzunehmen,
+        #muss die Stärke der Einheit
+        #größer sein als dessen Schutz.
+        #
+        #Jede Einheit konsumiert
+        #2, 6, 18 oder 54 Münzen
+        #in einer Runde.
+        "/>
+
+
+    <string key="help_trees_article" value="Bäume erscheinen nach
+        #dem Tod von Einheiten.
+        #
+        #Felder mit Bäumen generieren
+        #kein Einkommen. Das
+        #bedeutet, dass Bäume
+        #Deiner Wirtschaft schaden.
+        #
+        #Du musst sie fällen.
+        #Anderenfalls vermehren sie
+        #sich und zerstören Deine Bilanz.
+        #
+        #Palmen tauchen am Rand des
+        #Spielfelds auf und vermehren
+        #sich rasant.
+        #Sie müssen sehr schnell
+        #gefällt werden.
+        "/>
+
+    <string key="help_towers_article" value="Baue Türme um Nachbar-
+        #felder zu beschützen.
+        #
+        #Türme geben Schutz [2].
+        #Das bedeutet, dass nur
+        #Barone und Ritter sie
+        #zerstören können.
+        #
+        #Häuser geben Schutz [1].
+        #
+        #Am Anfang des Spiels
+        #ist dies der beste Weg,
+        #um Dein Gebiet zu beschützen.
+        #Türme sind günstig und
+        #konsumieren kein Geld.
+        "/>
+
+    <string key="help_money_article" value="Das Einkommen hängt von
+        #der Anzahl der Felder ab.
+        #Ein größeres Gebiet hat
+        #ein höheres Einkommen.
+        #Bäume verringern
+        #das Einkommen.
+        #
+        #Einheiten konsumieren Geld.
+        #Stärkere Einheiten
+        #konsumieren mehr Geld.
+        #
+        #
+        #
+        #Wenn Dir das Geld ausgeht,
+        #sterben Deine Einheiten.
+        #
+        #Dein Einkommen wird
+        #oben mittig angezeigt.
+        "/>
+
+    <string key="help_tactics_article" value="Nehme am Anfang des
+        #Spiels neutrale Felder ein.
+        #Verteidige danach das
+        #eingenommene Gebiet.
+        #
+        #Stelle sicher, dass dein
+        #Einkommen hoch genug ist
+        #bevor du Einheiten baust.
+        #
+        #
+        #
+        #
+        #Trenne feindliche Gebiete
+        #voneinander ab, um so
+        #ihre Wirtschaft zu zerstören.
+        "/>
+
+    <string key="about_complicated_mode_article" value="Im komplizierten Modus
+        #gibt es mehr Optionen.
+        #Der Unterschied zum einfachen Modus ist:
+        #
+        #- Mehrere Speicherplätze
+        #
+        #- Level Restart bestätigen
+        #
+        #- Farb-Statistiken anzeigen
+        #(Auf den Münzen-Kopf drücken)
+        "/>
+
+    <!-- Statistics -->
+    <string key="turns_made" value="Gemachte Züge:"/>
+    <string key="units_died" value="Im Spiel gestorbene Einheiten:"/>
+    <string key="units_produced" value="Im Spiel produzierte Einheiten:"/>
+    <string key="money_spent" value="Ausgegebenes Geld:"/>
+
+    <!-- Editor -->
+    <string key="editor" value="Editor"/>
+    <string key="slot" value="Platz"/>
+    <string key="slots" value="Speicherplätze"/>
+    <string key="import" value="Importieren"/>
+    <string key="export" value="Exportieren"/>
+    <string key="empty" value="leer"/>
+    <string key="play" value="Spielen"/>
+    <string key="edit" value="Bearbeiten"/>
+    <string key="random" value="Zufall"/>
+    <string key="exported" value="Karte in der Zwischenablage"/>
+    <string key="editor_clear" value="Zurücksetzen"/>
+
+    <!-- Settings -->
+    <string key="main_label" value=" #Autosave
+            # #Mehrere Speicherplätze
+            # #Vor Zug beenden fragen
+            # #Städtenamen
+            # #Ton"/>
+    <string key="skin" value="Darstellung"/>
+    <string key="original" value="Original"/>
+    <string key="points" value="Punkte"/>
+    <string key="grid" value="Raster"/>
+    <string key="anim_style" value="Empfindlichkeit"/>
+    <string key="more" value="Mehr"/>
+    <string key="camera_offset" value="Kamera Einzug"/>
+    <string key="slay_rules" value="Slay Regeln"/>
+</language>

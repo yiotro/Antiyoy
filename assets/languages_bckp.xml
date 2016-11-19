@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE languages [
+        <!ELEMENT languages (language*)>
+        <!ELEMENT language (string*)>
+        <!ELEMENT string (#PCDATA)>
+        <!ATTLIST language name CDATA #REQUIRED>
+        <!ATTLIST string key CDATA #REQUIRED>
+        <!ATTLIST string value CDATA #REQUIRED>
+        <!ENTITY lang_ru SYSTEM "lang/lang_ru.xml">
+        <!ENTITY lang_en SYSTEM "lang/lang_en.xml">
+        <!ENTITY lang_ua SYSTEM "lang/lang_ua.xml">
+        <!ENTITY lang_de SYSTEM "lang/lang_de.xml">
+        <!ENTITY lang_cz SYSTEM "lang/lang_cz.xml">
+        <!ENTITY lang_fr SYSTEM "lang/lang_fr.xml">
+        <!ENTITY lang_pl SYSTEM "lang/lang_pl.xml">
+        <!ENTITY lang_it SYSTEM "lang/lang_it.xml">
+        ]>
+
+<languages>
+
+    &lang_en;
+    &lang_ru;
+    &lang_ua;
+    &lang_de;
+    &lang_cz;
+    &lang_fr;
+    &lang_pl;
+    &lang_it;
+
+</languages>

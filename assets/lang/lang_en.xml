@@ -1,0 +1,327 @@
+<language name="en_UK">
+    <!-- All characters -->
+    <string key="lang_characters" value="ö"/>
+
+    <!-- Main menu -->
+    <string key="main_menu_info" value="Info"/>
+    <string key="main_menu_exit" value="Exit"/>
+    <string key="main_menu_something" value="White text about nothing"/>
+
+    <!-- Random stuff -->
+    <string key="menu_level" value="Level"/>
+    <string key="menu_reset" value="Reset"/>
+    <string key="game_saved" value="Game saved"/>
+    <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
+    <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
+    <string key="city_name_three" value="nsk, rra, ko, rry"/>
+
+    <!-- Info -->
+    <string key="info_back" value="Back"/>
+    <string key="info_array" value="This is a simple strategy
+        #game in minimalistic style.
+        #It's free and has no ads or donate.
+        #If this is your first run
+        #If you are new to game
+        #check tutorial or 'help'.
+        #
+        #This game was inspired by
+        #Slay from Sean O'Connor
+        #
+        #
+        #
+        #
+        #
+        #
+        #
+        #E-mail: yiotro93@gmail.com
+        #Made by yiotro
+		"/>
+    <string key="reset_campaign_data" value="Reset data"/>
+    <string key="special_thanks" value="Special thanks to this people
+        #
+        #Rebecca Nöll:
+        #German translation
+        #
+        #Jirka Justra:
+        #Czech translation
+        #
+        #Olek Jablonski:
+        #Polish translation
+        #
+        #Andrea Rinaldi:
+        #Italian translation
+        #
+        #Louis Philibert-Morrissette:
+        #French translation"/>
+
+    <!-- Choose game mode menu-->
+    <string key="choose_game_mode_skirmish" value="Skirmish"/>
+    <string key="choose_game_mode_tutorial" value="Tutorial"/>
+    <string key="choose_game_mode_campaign" value="Campaign"/>
+    <string key="choose_game_mode_load" value="Load game"/>
+
+    <!-- Skirmish menu -->
+    <string key="game_settings_main_menu" value="Main menu"/>
+    <string key="game_settings_tutorial" value="Tutorial"/>
+    <string key="game_settings_start" value="Start"/>
+    <string key="map_size" value="Map size"/>
+    <string key="color_number" value="Colors"/>
+    <string key="player_number" value="Players"/>
+    <string key="small" value="small"/>
+    <string key="medium" value="medium"/>
+    <string key="big" value="big"/>
+    <string key="ai_only" value="AI only"/>
+    <string key="single_player" value="single player"/>
+    <string key="multiplayer" value="multiplayer"/>
+    <string key="colors" value="colors"/>
+    <string key="color" value="colors"/>
+    <string key="difficulty" value="Difficulty"/>
+    <string key="easy" value="easy"/>
+    <string key="normal" value="normal"/>
+    <string key="hard" value="hard"/>
+    <string key="expert" value="expert"/>
+    <string key="player_color" value="Player color"/>
+
+    <!-- In game menu -->
+    <string key="in_game_menu_resume" value="Resume"/>
+    <string key="in_game_menu_save" value="Save game"/>
+    <string key="in_game_menu_surrender" value="Surrender"/>
+    <string key="in_game_menu_main_menu" value="Main menu"/>
+    <string key="in_game_menu_restart" value="Restart"/>
+    <string key="confirm_restart" value="Restart game?"/>
+    <string key="cancel" value="Cancel"/>
+    <string key="confirm_end_turn" value="End turn?"/>
+    <string key="yes" value="Yes"/>
+
+    <!-- End game menu -->
+    <string key="end_game_ok" value="Ok"/>
+    <string key="player" value="player"/>
+    <string key="ai" value="AI"/>
+    <string key="won" value="won"/>
+    <string key="statistics" value="Statistics"/>
+    <string key="next" value="Next"/>
+    <string key="level_complete" value="Level complete"/>
+    <string key="win_game" value="Win"/>
+    <string key="win_or_continue" value="Win now#or continue?"/>
+
+    <!-- Colors -->
+    <string key="green_player" value="Green"/>
+    <string key="red_player" value="Red"/>
+    <string key="magenta_player" value="Magenta"/>
+    <string key="cyan_player" value="Cyan"/>
+    <string key="yellow_player" value="Yellow"/>
+    <string key="gray_player" value="Gray"/>
+    <string key="green_ai" value="Green"/>
+    <string key="red_ai" value="Red"/>
+    <string key="magenta_ai" value="Magenta"/>
+    <string key="cyan_ai" value="Cyan"/>
+    <string key="yellow_ai" value="Yellow"/>
+    <string key="gray_ai" value="Gray"/>
+    <string key="green_menu" value="Green"/>
+    <string key="red_menu" value="Red"/>
+    <string key="magenta_menu" value="Magenta"/>
+    <string key="cyan_menu" value="Cyan"/>
+    <string key="yellow_menu" value="Yellow"/>
+    <string key="gray_menu" value="Gray"/>
+
+    <!-- Tutorial -->
+    <string key="normal_rules" value="Normal rules"/>
+    <string key="how_to_play" value="How to play?"/>
+    <string key="tutorial_ok" value="Ok"/>
+    <string key="tut_select_unit" value="Select unit"/>
+    <string key="tut_tap_on_hex" value="Tap on hex"/>
+    <string key="tut_press_button" value="Press button"/>
+    <string key="tut_build_tower" value="Build tower"/>
+    <string key="tut_again" value="Again"/>
+    <string key="tut_build_spearman" value="Build spearman"/>
+    <string key="tut_tap_to_undo" value="Tap 'undo'"/>
+    <string key="tut_tap_to_end_turn" value="Tap to end turn"/>
+    <string key="tut_hold_hex" value="Tap and hold"/>
+    <string key="tut_merge_units" value="Merge units"/>
+    <string key="tut_good_luck" value="Good luck!"/>
+
+    <!-- Tutorial tips -->
+    <string key="tip_capture_with_units" value="Attack with your units#to capture territories"/>
+    <string key="tip_about_money" value="The bigger your territory#the more money you get"/>
+    <string key="tip_build_towers" value="Build towers to protect#nearby cells"/>
+    <string key="tip_about_taxes" value="Stronger units eat#more money"/>
+    <string key="tip_about_defense" value="Units and house also#defend nearby cells"/>
+    <string key="tip_hold_to_march" value="To quickly move armies#use 'hold to march'"/>
+    <string key="tip_about_unit_death" value="If money runs out then#units will die.#So be careful"/>
+    <string key="tip_merging" value="Merge units to get#more powerful"/>
+    <string key="tip_trees" value="Trees decrease income#So it's better to cut them"/>
+    <string key="tip_help" value="More details#in 'help'"/>
+
+    <!-- Generic Tutorial -->
+    <string key="gen_greetings" value="Hi. This tutorial will explain rules of this game."/>
+    <string key="gen_select_province" value="Tap on your city to select it."/>
+    <string key="gen_select_unit" value="Nice. You have several units. Tap on one of them."/>
+    <string key="gen_move_unit" value="Every unit moves once per turn. Now, capture neutral hex near selected unit by tapping there."/>
+    <string key="gen_income" value="By capturing new hexes you enlarge your city income. More hexes - more income."/>
+    <string key="gen_lets_build_farm" value="Let's build a farm to get even higher income."/>
+    <string key="gen_press_button_twice" value="Press button twice"/>
+    <string key="gen_build_farm" value="Farms can only be built near capital or other farms."/>
+    <string key="gen_about_farms" value="Every farm gives 3 coins per turn. Every new farm costs more than previous."/>
+    <string key="gen_lets_build_peasant" value="Let's build a new unit and capture neutral hex."/>
+    <string key="gen_press_button" value="Press button at the bottom"/>
+    <string key="gen_build_peasant" value="Place your unit on hex near city borders."/>
+    <string key="gen_capture_peasant" value="Now, capture neutral hex by selecting unit and pointing him where to go."/>
+    <string key="gen_capture_hex" value="Capture neutral hex"/>
+    <string key="gen_lets_build_tower" value="You need to defend your lands. Towers are good for this."/>
+    <string key="gen_build_tower" value="Build a tower by tapping on highlighted hex."/>
+    <string key="gen_about_towers" value="Towers defend adjacent hexes from peasants and spearmen."/>
+    <string key="gen_lets_build_spearman" value="Spearman is stronger than any peasant. Let's build him."/>
+    <string key="gen_build_spearman" value="Tap on hex to build spearman."/>
+    <string key="gen_units_consume_money" value="Units consume money to live. Stronger units need more money."/>
+    <string key="gen_undo_spearman" value="Now your income equals to -1. This is bad, so let's undo a spearman."/>
+    <string key="gen_why_units_die" value="Units die when city runs out of money. So you have to be careful with your income."/>
+    <string key="gen_about_trees_one" value="Trees are also a problem. Hexes with trees don't produce any money."/>
+    <string key="gen_about_trees_two" value="Cut trees as soon as possible when they are in low numbers."/>
+    <string key="gen_end_turn" value="To end turn press button in lower right corner."/>
+    <string key="gen_choose_to_merge" value="You can also merge units. Select lower peasant."/>
+    <string key="gen_merge_units" value="Now, when peasant is selected, press on other peasant to merge them."/>
+    <string key="gen_long_tap" value="If you have too many units you can move them all at once with long tap."/>
+    <string key="gen_several_provinces" value="You can have multiple cities, every one them of with it's own economy."/>
+
+    <!-- Tutorial help -->
+    <string key="help" value="Help"/>
+    <string key="help_about_units" value="Units"/>
+    <string key="help_about_trees" value="Trees"/>
+    <string key="help_about_towers" value="Towers"/>
+    <string key="help_about_money" value="Money"/>
+    <string key="help_about_tactics" value="Tactics"/>
+
+    <string key="help_units_article" value="There are 4 unit types.
+        #They differ only by strength.
+        #In ascending order of strength:
+        #[1] peasants
+        #[2] spearman
+        #[3] baron
+        #[4] knight
+        #
+        #Unit gives adjacent cells
+        #protection equal to strength.
+        #
+        #To capture a cell
+        #unit strength must be
+        #bigger than protection.
+        #
+        #Every units eats
+        #2, 6, 18 or 54 coins
+        #in 1 turn.
+        "/>
+
+    <string key="help_trees_article" value="Trees spawn after
+        #dead units.
+        #
+        #Cell with tree gives no
+        #income. It means that
+        #trees harm economy.
+        #
+        #You have to fight them.
+        #Otherwise they will grow
+        #and kill economy.
+        #
+        #Palms spawn at edges
+        #and grow very fast.
+        #They have to be killed
+        #very fast.
+        "/>
+
+    <string key="help_towers_article" value="Towers are used to
+        #protect neighbour cells.
+        #
+        #Towers give protection [2].
+        #Therefore, only barons
+        #and knights can fight it.
+        #
+        #Huts give protection [1].
+        #
+        #At the beginning of game
+        #this is the best way to
+        #protect you territory.
+        #Tower price is low and they
+        #don't eat money.
+        "/>
+
+    <string key="help_money_article" value="Income depends on
+        #number of cells.
+        #Bigger territory has
+        #bigger income.
+        #Trees decrease income.
+        #
+        #Units consume money.
+        #Powerful units
+        #eat more money.
+        #
+        #
+        #
+        #When money runs out,
+        #units die.
+        #
+        #Income is shown
+        #in the top center.
+        "/>
+
+    <string key="help_tactics_article" value="At the beginning of game
+        #capture neutral cells.
+        #After that defend
+        #all your cells.
+        #
+        #Make sure that your income
+        #is good enough before
+        #building units.
+        #
+        #
+        #
+        #Cut enemy territories
+        #to pieces in order
+        #to destroy their economy.
+        "/>
+
+    <string key="about_complicated_mode_article" value="Complicated mode means
+        #more menus.
+        #Difference from simple:
+        #
+        #- Multiple save slots
+        #
+        #- confirm level restart
+        #
+        #- Show color stats
+        #(press coin button)
+        "/>
+
+    <!-- Statistics -->
+    <string key="turns_made" value="Turns made:"/>
+    <string key="units_died" value="Units died in game:"/>
+    <string key="units_produced" value="Units produced in game:"/>
+    <string key="money_spent" value="Money spent:"/>
+
+    <!-- Editor -->
+    <string key="editor" value="Editor"/>
+    <string key="slot" value="Slot"/>
+    <string key="slots" value="Save slots"/>
+    <string key="import" value="Import"/>
+    <string key="export" value="Export"/>
+    <string key="empty" value="empty"/>
+    <string key="play" value="Play"/>
+    <string key="edit" value="Edit"/>
+    <string key="random" value="Random"/>
+    <string key="exported" value="Map in clipboard"/>
+    <string key="editor_clear" value="Clear"/>
+
+    <!-- Settings -->
+    <string key="main_label" value=" #Autosave
+            # #Several slots
+            # #Ask turn end
+            # #City names
+            # #Sound"/>
+    <string key="skin" value="Skin"/>
+    <string key="original" value="original"/>
+    <string key="points" value="points"/>
+    <string key="grid" value="grid"/>
+    <string key="anim_style" value="Sensitivity"/>
+    <string key="more" value="More"/>
+    <string key="camera_offset" value="Camera offset"/>
+    <string key="slay_rules" value="Slay rules"/>
+</language>

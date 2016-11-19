@@ -1,0 +1,326 @@
+<language name="fr_FR">
+    <!-- All characters -->
+    <string key="lang_characters" value="ABCDEFGHIJKLMNOPQRSTUVWXYZÀÂÄÇÉÈÊËÎÏÔÖÙÛÜŸàâäçéèêëîïôöùûüÿÆŒæœ"/>
+
+    <!-- Main menu -->
+    <string key="main_menu_info" value="Infos"/>
+    <string key="main_menu_exit" value="Quitter"/>
+    <string key="main_menu_something" value="Texte blanc sur rien"/>
+
+    <!-- Random stuff -->
+    <string key="menu_level" value="Niveau"/>
+    <string key="menu_reset" value="Réinitialiser"/>
+    <string key="game_saved" value="Partie sauvegardée"/>
+    <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
+    <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
+    <string key="city_name_three" value="nsk, rra, ko, rry"/>
+
+    <!-- Info -->
+    <string key="info_back" value="Précédent"/>
+    <string key="info_array" value="Il s’agit d’un simple jeu de
+        #stratégie d’un style minimaliste.
+        #Il est gratuit, sans publicité et sans demande de don.
+        #Si vous jouez pour la première fois
+        #Si ce jeu est nouveau pour vous
+        #Suivez le didacticiel ou lisez « Aide ».
+        #
+        #Ce jeu est inspiré de
+        #Slay, de Sean O’Connor
+        #
+        #
+        #
+        #
+        #
+        #
+        #
+        #Courriel : yiotro93@gmail.com
+        #Auteur : yiotro
+        "/>
+    <string key="reset_campaign_data" value="Effacer données"/>
+    <string key="special_thanks" value="Merci beaucoup aux gens qui suivent :
+        #
+        #Rebecca Nöll :
+        #Traduction allemande
+        #
+        #Jirka Justra :
+        #Traduction tchèque
+        #
+        #Olek Jablonski :
+        #Traduction polonaise
+        #
+        #Andrea Rinaldi :
+        #Traduction italienne
+        #
+        #Louis Philibert-Morrissette :
+        #Traduction française"/>
+
+    <!-- Choose game mode menu-->
+    <string key="choose_game_mode_skirmish" value="Affrontement"/>
+    <string key="choose_game_mode_tutorial" value="Didacticiel"/>
+    <string key="choose_game_mode_campaign" value="Campagne"/>
+    <string key="choose_game_mode_load" value="Charger partie"/>
+
+    <!-- Skirmish menu -->
+    <string key="game_settings_main_menu" value="Menu principal"/>
+    <string key="game_settings_tutorial" value="Didacticiel"/>
+    <string key="game_settings_start" value="Démarrer"/>
+    <string key="map_size" value="Taille carte"/>
+    <string key="color_number" value="Couleurs"/>
+    <string key="player_number" value="Joueurs"/>
+    <string key="small" value="petite"/>
+    <string key="medium" value="moyenne"/>
+    <string key="big" value="grande"/>
+    <string key="ai_only" value="IA uniquement"/>
+    <string key="single_player" value="solo"/>
+    <string key="multiplayer" value="multijoueur"/>
+    <string key="colors" value="couleurs"/>
+    <string key="color" value="couleurs"/>
+    <string key="difficulty" value="Niveau difficulté"/>
+    <string key="easy" value="facile"/>
+    <string key="normal" value="normal"/>
+    <string key="hard" value="difficile"/>
+    <string key="expert" value="expert"/>
+    <string key="player_color" value="Couleur du joueur"/>
+
+    <!-- In game menu -->
+    <string key="in_game_menu_resume" value="Reprendre"/>
+    <string key="in_game_menu_save" value="Sauvegarder partie"/>
+    <string key="in_game_menu_surrender" value="Capituler"/>
+    <string key="in_game_menu_main_menu" value="Menu principal"/>
+    <string key="in_game_menu_restart" value="Recommencer"/>
+    <string key="confirm_restart" value="Recommencer partie?"/>
+    <string key="cancel" value="Annuler"/>
+    <string key="confirm_end_turn" value="Tour suivant?"/>
+    <string key="yes" value="Oui"/>
+
+    <!-- End game menu -->
+    <string key="end_game_ok" value="Ok"/>
+    <string key="player" value="joueur"/>
+    <string key="ai" value="IA"/>
+    <string key="won" value="victoire"/>
+    <string key="statistics" value="Statistiques"/>
+    <string key="next" value="Suivant"/>
+    <string key="level_complete" value="Niveau terminé"/>
+    <string key="win_game" value="Gagner"/>
+    <string key="win_or_continue" value="Gagner maintenant#ou poursuivre?"/>
+
+    <!-- Colors -->
+    <string key="green_player" value="Vert"/>
+    <string key="red_player" value="Rouge"/>
+    <string key="magenta_player" value="Magenta"/>
+    <string key="cyan_player" value="Cyan"/>
+    <string key="yellow_player" value="Jaune"/>
+    <string key="gray_player" value="Gris"/>
+    <string key="green_ai" value="Vert"/>
+    <string key="red_ai" value="Rouge"/>
+    <string key="magenta_ai" value="Magenta"/>
+    <string key="cyan_ai" value="Cyan"/>
+    <string key="yellow_ai" value="Jaune"/>
+    <string key="gray_ai" value="Gris"/>
+    <string key="green_menu" value="Vert"/>
+    <string key="red_menu" value="Rouge"/>
+    <string key="magenta_menu" value="Magenta"/>
+    <string key="cyan_menu" value="Cyan"/>
+    <string key="yellow_menu" value="Jaune"/>
+    <string key="gray_menu" value="Gris"/>
+
+    <!-- Tutorial -->
+    <string key="normal_rules" value="Règles normales"/>
+    <string key="how_to_play" value="Instructions"/>
+    <string key="tutorial_ok" value="Ok"/>
+    <string key="tut_select_unit" value="Sélectionner l’unité"/>
+    <string key="tut_tap_on_hex" value="Taper sur l’hexagone"/>
+    <string key="tut_press_button" value="Appuyer sur le bouton"/>
+    <string key="tut_build_tower" value="Construire une tour"/>
+    <string key="tut_again" value="Encore"/>
+    <string key="tut_build_spearman" value="Construire un lancier"/>
+    <string key="tut_tap_to_undo" value="Taper sur « annuler »"/>
+    <string key="tut_tap_to_end_turn" value="Taper pour terminer le tour"/>
+    <string key="tut_hold_hex" value="Taper et tenir appuyé"/>
+    <string key="tut_merge_units" value="Fusionner les unités"/>
+    <string key="tut_good_luck" value="Bonne chance!"/>
+
+    <!-- Tutorial tips -->
+    <string key="tip_capture_with_units" value="Attaquez avec vos unités pour#conquérir des territoires"/>
+    <string key="tip_about_money" value="Plus vaste est votre territoire,#plus vous empocherez d’argent"/>
+    <string key="tip_build_towers" value="Construire des tours protège les#cellules adjacentes"/>
+    <string key="tip_about_taxes" value="Des unités plus puissantes#impliquent un entretien plus coûteux"/>
+    <string key="tip_about_defense" value="Les unités et la maison#défendent aussi les cellules proches"/>
+    <string key="tip_hold_to_march" value="Vous pouvez déplacer vos armées rapidement#en appuyant longuement sur un hexagone"/>
+    <string key="tip_about_unit_death" value="Si vos coffres se vident,#vos unités mourront.#Soyez prudent"/>
+    <string key="tip_merging" value="Fusionnez des unités pour #devenir plus puissant"/>
+    <string key="tip_trees" value="Les arbres diminuent vos revenus#Vaut mieux les abattre"/>
+    <string key="tip_help" value="Détails supplémentaires#dans la section « Aide »"/>
+
+    <!-- Generic Tutorial -->
+    <string key="gen_greetings" value="Bonjour. Ce didacticiel vous expliquera les règles du jeu."/>
+    <string key="gen_select_province" value="Tapez sur votre cité pour la sélectionner."/>
+    <string key="gen_select_unit" value="Bien joué! Vous disposez de quelques unités. Tapez sur l’une d’entre elles."/>
+    <string key="gen_move_unit" value="Chaque unité peut se déplacer une fois par tour. Maintenant, conquérez une cellule neutre près de l’unité sélectionnée en tapant là."/>
+    <string key="gen_income" value="Vous augmenterez les revenus de votre cité en conquérant des cellules. Plus de cellules = de meilleurs revenus."/>
+    <string key="gen_lets_build_farm" value="Construisez une ferme pour gonfler vos revenus."/>
+    <string key="gen_press_button_twice" value="Appuyez deux fois sur le bouton"/>
+    <string key="gen_build_farm" value="Une ferme ne peut être construire qu’à proximité d’une capitale ou d’une autre ferme."/>
+    <string key="gen_about_farms" value="Une ferme produit 3 pièces par tour. Chaque ferme supplémentaire est plus coûteuse que la précédente."/>
+    <string key="gen_lets_build_peasant" value="Construisez une nouvelle unité, puis conquérez une cellule neutre."/>
+    <string key="gen_press_button" value="Appuyez sur le bouton dans le bas"/>
+    <string key="gen_build_peasant" value="Placez l’unité sur une cellule aux frontières de la cité."/>
+    <string key="gen_capture_peasant" value="Maintenant, conquérez une cellule neutre en sélectionnant l’unité, puis en pointant sa destination."/>
+    <string key="gen_capture_hex" value="Conquérez une cellule neutre."/>
+    <string key="gen_lets_build_tower" value="Vous devez défendre votre territoire. Les tours le font bien."/>
+    <string key="gen_build_tower" value="Construisez une tour en tapant sur la cellule en surbrillance."/>
+    <string key="gen_about_towers" value="Les tours protègent les cellules adjacentes des attaques des paysans et des lanciers."/>
+    <string key="gen_lets_build_spearman" value="Le lancier est plus puissant que le paysan. Construisons-en un."/>
+    <string key="gen_build_spearman" value="Tapez sur une cellule pour construire un lancier."/>
+    <string key="gen_units_consume_money" value="L’entretien des unités coûte de l’argent. Plus puissante une unité, plus coûteux est son entretien."/>
+    <string key="gen_undo_spearman" value="Vos revenus viennent de passer à -1. Ça regarde mal... Renvoyons un lancier."/>
+    <string key="gen_why_units_die" value="Lorsqu’une cité n’a plus d’argent, ses unités meurent. Vous devez donc gérer vos revenus avec prudence."/>
+    <string key="gen_about_trees_one" value="Les arbres sont aussi problématiques. Une cellule où se trouve un arbre ne produit aucun argent."/>
+    <string key="gen_about_trees_two" value="Abattez les arbres aussitôt que possible, tant qu’ils sont peu nombreux."/>
+    <string key="gen_end_turn" value="Pour mettre fin au tour, appuyez sur le bouton situé dans le coin inférieur droit."/>
+    <string key="gen_choose_to_merge" value="Vous pouvez également fusionner des unités. Sélectionnez le paysan en-dessous."/>
+    <string key="gen_merge_units" value="Une fois le paysan sélectionné, appuyez sur l’autre paysan : vous les fusionnerez."/>
+    <string key="gen_long_tap" value="Si vous disposez de trop d’unités, vous pouvez toutes les déplacer d’un coup en appuyant longuement."/>
+    <string key="gen_several_provinces" value="Vous pouvez posséder plusieurs villes dont les économies sont autonomes."/>
+
+    <!-- Tutorial help -->
+    <string key="help" value="Aide"/>
+    <string key="help_about_units" value="Unités"/>
+    <string key="help_about_trees" value="Arbres"/>
+    <string key="help_about_towers" value="Tours"/>
+    <string key="help_about_money" value="Argent"/>
+    <string key="help_about_tactics" value="Tactiques"/>
+
+    <string key="help_units_article" value="Il existe 4 types d’unités.
+        #Elles diffèrent uniquement au plan de leur force.
+        #De la plus faible à la plus puissante :
+        #[1] paysans
+        #[2] lanciers
+        #[3] barons
+        #[4] chevaliers
+        #
+        #L’unité accorde aux cellules adjacentes
+        #une protection égale à sa force.
+        #
+        #Pour conquérir une cellule
+        #la force d’une unité doit
+        #surpasser celle de la protection.
+        #
+        #Chaque unité coûte
+        #2, 6, 18 ou 54 pièces
+        #par tour.
+        "/>
+
+    <string key="help_trees_article" value="Des arbres poussent après
+        #la mort d’unités.
+        #
+        #Une cellule occupée par un
+        #arbre ne produit aucun revenu. Bref, les arbres
+        #ralentissent l’économie.
+        #
+        #Vous devez vous mesurer à eux.
+        #Sinon, ils pousseront
+        #et étoufferont votre économie.
+        #
+        #Les palmiers apparaissent aux franges
+        #et poussent à toute vitesse.
+        #Leur élimination doit être
+        #une priorité.
+        "/>
+
+    <string key="help_towers_article" value="Les tours servent à
+        #protéger des cellules adjacentes.
+        #
+        #Les tours accordent une protection de [2].
+        #Donc, seuls les barons
+        #et les chevaliers peuvent s’y attaquer.
+        #
+        #Les maisons accordent une protection de [1].
+        #
+        #En début de partie,
+        #c’est le meilleur moyen de
+        #protéger votre territoire.
+        #Les tours sont abordables et
+        #les entretenir ne coûte rien.
+        "/>
+
+    <string key="help_money_article" value="Le revenu varie en
+        #fonction du nombre de cellules.
+        #Un plus grand territoire
+        #apporte des revenus plus élevés.
+        #Les arbres diminuent le revenu.
+        #
+        #Entretenir des unités coûte de l’argent.
+        #Plus puissante l’unité,
+        #plus son entretien est coûteux.
+        #
+        #
+        #
+        #Lorsqu’il n’y a plus d’argent,
+        #les unités meurent.
+        #
+        #Le revenu est affiché
+        #au centre dans le haut de l’écran.
+        "/>
+
+    <string key="help_tactics_article" value="En début de partie,
+        #conquérez des cellules neutres.
+        #Ensuite, défendez
+        #toutes vos cellules.
+        #
+        #Veillez à ce que votre revenu
+        #soit suffisant avant
+        #de construire des unités.
+        #
+        #
+        #
+        #Morcelez les territoires adverses
+        #pour abattre leur économie.
+        "/>
+
+    <string key="about_complicated_mode_article" value="Le mode complexe se traduit par
+        #des menus plus nombreux.
+        #Différence par rapport au mode simple :
+        #
+        #- Sauvegardes multiples
+        #
+        #- Confirmer avant de recommencer un niveau
+        #
+        #- Afficher les statistiques selon les couleurs
+        #(appuyer sur le bouton de pièce)
+        "/>
+
+    <!-- Statistics -->
+    <string key="turns_made" value="Tours joués :"/>
+    <string key="units_died" value="Unités mortes durant la partie :"/>
+    <string key="units_produced" value="Unités produits durant la partie :"/>
+    <string key="money_spent" value="Argent dépensé :"/>
+
+    <!-- Editor -->
+    <string key="editor" value="Éditeur"/>
+    <string key="slot" value="Emplacement"/>
+    <string key="slots" value="Emplacements de sauvegarde"/>
+    <string key="import" value="Importer"/>
+    <string key="export" value="Exporter"/>
+    <string key="empty" value="vide"/>
+    <string key="play" value="Jouer"/>
+    <string key="edit" value="Modifier"/>
+    <string key="random" value="Aléatoire"/>
+    <string key="exported" value="Copie de la carte"/>
+    <string key="editor_clear" value="Vider"/>
+
+    <!-- Settings -->
+    <string key="main_label" value=" #Sauvegarde automatique
+            # #Emplacements multiples
+            # #Confirmation tour suivant
+            # #Noms de villes
+            # #Son"/>
+    <string key="skin" value="Habillage"/>
+    <string key="original" value="original"/>
+    <string key="points" value="points"/>
+    <string key="grid" value="grille"/>
+    <string key="anim_style" value="Sensibilité"/>
+    <string key="more" value="Plus"/>
+    <string key="camera_offset" value="Cadrage"/>
+    <string key="slay_rules" value="Règles de Slay"/>
+</language>
