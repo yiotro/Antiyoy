@@ -1,4 +1,6 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.ai;
+
+import yio.tro.antiyoy.*;
 
 import java.util.ArrayList;
 
@@ -14,7 +16,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
 
 
     @Override
-    void makeMove() {
+    public void makeMove() {
         ArrayList<Unit> unitsReadyToMove = detectUnitsReadyToMove();
 
         moveUnits(unitsReadyToMove);
@@ -37,7 +39,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
             boolean cleanedTrees = checkToCleanSomeTrees(unit, moveZone, province);
             if (!cleanedTrees) {
                 if (unit.currHex.isInPerimeter()) {
-                    pushUnitToDefenseLine(unit, province);
+                    pushUnitToBetterDefense(unit, province);
                 }
             }
         }
@@ -86,7 +88,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
     @Override
     Hex findMostAttractiveHex(ArrayList<Hex> attackableHexes, Province province, int strength) {
         if (strength == 3 || strength == 4) {
-            Hex hex = findHexAttractiveToBaron(attackableHexes);
+            Hex hex = findHexAttractiveToBaron(attackableHexes, strength);
             if (hex != null) return hex;
         }
 
@@ -102,7 +104,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
         Hex result = null;
         int currMax = -1;
         for (Hex attackableHex : attackableHexes) {
-            int currNum = numberOfAdjacentHexesWithThisColor(attackableHex, province.getColor());
+            int currNum = getAttackAllure(attackableHex, province.getColor());
             if (currNum > currMax) {
                 currMax = currNum;
                 result = attackableHex;

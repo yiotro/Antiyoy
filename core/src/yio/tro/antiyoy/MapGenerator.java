@@ -134,7 +134,7 @@ class MapGenerator {
             giveAdvantageToPlayer(1, 0.0065);
             giveAdvantageToPlayer(GameController.colorNumber - 1, 0.01);
         }
-        giveDisadvantageToPlayer(0, 0.046);
+        giveDisadvantageToPlayer(0, 0.048);
 
         // [ 156 154 159 177 154 ] - [ 207 183 217 199 194 ] - [ 221 193 181 211 194 ] - [ 198 190 211 198 203 ] - [ 202 204 209 207 178 ] - [ 204 176 203 209 208 ]
     }

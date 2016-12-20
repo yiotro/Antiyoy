@@ -1,9 +1,11 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.menu;
+
+import yio.tro.antiyoy.menu.ButtonYio;
 
 /**
  * Created by ivan on 11.11.2015.
  */
-class NotificationHolder {
+public class NotificationHolder {
 
     private ButtonYio button;
     private boolean autoHide;

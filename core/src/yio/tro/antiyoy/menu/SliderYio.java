@@ -1,6 +1,7 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.menu;
 
 import com.badlogic.gdx.Gdx;
+import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 
 import java.util.ArrayList;
@@ -11,12 +12,12 @@ import java.util.ArrayList;
 public class SliderYio {
 
     private final MenuControllerYio menuControllerYio;
-    float runnerValue, currentVerticalPos, circleSize, segmentSize, textWidth;
+    public float runnerValue, currentVerticalPos, circleSize, segmentSize, textWidth;
     float viewMagnifier, circleDefaultSize, verticalTouchOffset, viewX, viewWidth;
-    FactorYio appearFactor;
+    public FactorYio appearFactor;
     FactorYio sizeFactor;
     boolean fromUp, isCurrentlyPressed;
-    int numberOfSegments, configureType, minNumber, index;
+    public int numberOfSegments, configureType, minNumber, index;
     public static final int CONFIGURE_SIZE = 0;
     public static final int CONFIGURE_HUMANS = 1;
     public static final int CONFIGURE_COLORS = 2;
@@ -46,7 +47,7 @@ public class SliderYio {
     }
 
 
-    void setPos(double kx, double ky, double kw, double kh) {
+    public void setPos(double kx, double ky, double kw, double kh) {
         pos.x = (int) (kx * Gdx.graphics.getWidth());
         pos.y = (int) (ky * Gdx.graphics.getHeight());
         pos.width = (int) (kw * Gdx.graphics.getWidth());
@@ -71,7 +72,7 @@ public class SliderYio {
     }
 
 
-    boolean touchDown(float x, float y) {
+    public boolean touchDown(float x, float y) {
         if (isCoorInsideSlider(x, y) && appearFactor.get() == 1) {
             sizeFactor.beginSpawning(3, 2);
             isCurrentlyPressed = true;
@@ -82,7 +83,7 @@ public class SliderYio {
     }
 
 
-    boolean touchUp(float x, float y) {
+    public boolean touchUp(float x, float y) {
         if (isCurrentlyPressed) {
             sizeFactor.beginDestroying(1, 1);
             isCurrentlyPressed = false;
@@ -93,14 +94,14 @@ public class SliderYio {
     }
 
 
-    void touchDrag(float x, float y) {
+    public void touchDrag(float x, float y) {
         if (isCurrentlyPressed) {
             setValueByX(x);
         }
     }
 
 
-    boolean isVisible() {
+    public boolean isVisible() {
         return appearFactor.get() > 0;
     }
 
@@ -121,7 +122,7 @@ public class SliderYio {
     }
 
 
-    void move() {
+    public void move() {
         if (appearFactor.needsToMove()) {
             appearFactor.move();
             viewWidth = pos.width * appearFactor.get();
@@ -231,7 +232,7 @@ public class SliderYio {
     }
 
 
-    float getSegmentCenterSize(int index) {
+    public float getSegmentCenterSize(int index) {
 //        float cx = index * segmentSize;
 //        float dist = Math.abs(runnerValue - cx);
 //        if (dist > 0.5f * segmentSize) dist = 0.5f * segmentSize;
@@ -244,7 +245,7 @@ public class SliderYio {
     }
 
 
-    float getSegmentLeftSidePos(int index) {
+    public float getSegmentLeftSidePos(int index) {
         return pos.x + index * segmentSize * pos.width;
     }
 
@@ -383,6 +384,9 @@ public class SliderYio {
             case 3:
                 valueString = languagesManager.getString("expert");
                 break;
+            case 4:
+                valueString = languagesManager.getString("balancer");
+                break;
         }
     }
 
@@ -427,7 +431,7 @@ public class SliderYio {
     }
 
 
-    String getValueString() {
+    public String getValueString() {
         return valueString;
     }
 

@@ -31,7 +31,7 @@ public class MapGeneratorGeneric extends MapGenerator {
     // not actually needed right now
     private boolean hasGreenProvince() {
         for (Hex activeHex : gameController.activeHexes) {
-            if (activeHex.colorIndex == 0 && activeHex.numberOfFriendlyHexesNearby() > 0) return true;
+            if (activeHex.colorIndex == 0 && activeHex.numberOfFriendlyHexesNearby() > 2) return true;
         }
 
         return false;

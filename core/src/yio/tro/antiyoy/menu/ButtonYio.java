@@ -1,10 +1,12 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import yio.tro.antiyoy.RectangleYio;
+import yio.tro.antiyoy.SoundControllerYio;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 
@@ -30,17 +32,17 @@ public class ButtonYio {
     public static final int ANIM_COLLAPSE_DOWN = 6;
     private ReactBehavior reactBehavior;
     private long lastTimeTouched;
-    boolean currentlyTouched;
+    public boolean currentlyTouched;
     private int touchDelay, animType;
-    final ArrayList<String> text;
+    public final ArrayList<String> text;
     public final Color backColor;
     private boolean needToPerformAction;
     private long timeToPerformAction;
-    float hor, ver, cx, cy, touchX, touchY, animR;
-    float x1, x2, y1, y2;
+    public float hor, ver, cx, cy, touchX, touchY, animR;
+    public float x1, x2, y1, y2;
     private float deltaSizeArgument, deltaSize, touchOffset;
     Sound pressSound;
-    boolean hasShadow, mandatoryShadow, rectangularMask, onlyShadow, touchAnimation, lockAction, deltaAnimationEnabled; // mandatory shadow - draw shadow right before button
+    public boolean hasShadow, mandatoryShadow, rectangularMask, onlyShadow, touchAnimation, lockAction, deltaAnimationEnabled; // mandatory shadow - draw shadow right before button
 
 
     public ButtonYio(RectangleYio position, int id, MenuControllerYio menuControllerYio) {
@@ -152,7 +154,7 @@ public class ButtonYio {
     }
 
 
-    boolean checkToPerformAction() {
+    public boolean checkToPerformAction() {
         if (needToPerformAction && System.currentTimeMillis() > timeToPerformAction && !lockAction) {
             needToPerformAction = false;
             reactBehavior.reactAction(this);
@@ -190,7 +192,7 @@ public class ButtonYio {
     }
 
 
-    void press(int screenX, int screenY) {
+    public void press(int screenX, int screenY) {
         if (!touchable) return;
         currentlyTouched = true;
         lastTimeTouched = System.currentTimeMillis();

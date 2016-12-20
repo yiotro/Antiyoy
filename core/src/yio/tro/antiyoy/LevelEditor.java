@@ -3,6 +3,7 @@ package yio.tro.antiyoy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Clipboard;
+import yio.tro.antiyoy.ai.ArtificialIntelligence;
 
 import java.util.ListIterator;
 import java.util.StringTokenizer;
@@ -228,7 +229,12 @@ public class LevelEditor {
 
 
     public void exportLevel() {
-        String fullLevel = getFullLevelString();
+        // this was not working properly
+//        String fullLevel = getFullLevelString();
+
+        Preferences prefs = Gdx.app.getPreferences("editor");
+        String fullLevel = prefs.getString("slot" + currentSlotNumber, "");
+        System.out.println("fullLevel = " + fullLevel);
         Clipboard clipboard = Gdx.app.getClipboard();
         clipboard.setContents(fullLevel);
         gameController.yioGdxGame.menuControllerYio.showNotification(gameController.yioGdxGame.menuControllerYio.languagesManager.getString("exported"), true);
@@ -350,7 +356,7 @@ public class LevelEditor {
     public void changeNumberOfPlayers() {
         int numPlayers = gameController.playersNumber;
         numPlayers++;
-        if (numPlayers > GameController.MAX_COLOR_NUMBER) numPlayers = 1;
+        if (numPlayers > GameController.MAX_COLOR_NUMBER) numPlayers = 0;
         gameController.setPlayersNumber(numPlayers);
         gameController.yioGdxGame.menuControllerYio.showNotification(getLangManager().getString("player_number") + " " + numPlayers, true);
     }
@@ -359,7 +365,7 @@ public class LevelEditor {
     public void changeDifficulty() {
         int diff = gameController.difficulty;
         diff++;
-        if (diff > GameController.EXPERT) diff = GameController.EASY;
+        if (diff > ArtificialIntelligence.DIFFICULTY_BALANCER) diff = ArtificialIntelligence.DIFFICULTY_EASY;
         gameController.setDifficulty(diff);
         gameController.yioGdxGame.menuControllerYio.showNotification(getLangManager().getString("difficulty") + " " + getDiffString(diff), true);
     }
@@ -368,13 +374,13 @@ public class LevelEditor {
     private String getDiffString(int diff) {
         switch (diff) {
             default:
-            case GameController.EASY:
+            case ArtificialIntelligence.DIFFICULTY_EASY:
                 return getLangManager().getString("easy");
-            case GameController.NORMAL:
+            case ArtificialIntelligence.DIFFICULTY_NORMAL:
                 return getLangManager().getString("normal");
-            case GameController.HARD:
+            case ArtificialIntelligence.DIFFICULTY_HARD:
                 return getLangManager().getString("hard");
-            case GameController.EXPERT:
+            case ArtificialIntelligence.DIFFICULTY_EXPERT:
                 return getLangManager().getString("expert");
         }
     }

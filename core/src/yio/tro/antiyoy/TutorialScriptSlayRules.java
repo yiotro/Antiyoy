@@ -1,6 +1,7 @@
 package yio.tro.antiyoy;
 
 import yio.tro.antiyoy.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.ButtonYio;
 
 /**
  * Created by ivan on 12.11.2015.

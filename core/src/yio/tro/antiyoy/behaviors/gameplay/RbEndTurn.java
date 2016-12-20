@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.behaviors.gameplay;
 
-import yio.tro.antiyoy.ButtonYio;
-import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 
 /**
@@ -11,7 +11,7 @@ public class RbEndTurn extends ReactBehavior {
 
     @Override
     public void reactAction(ButtonYio buttonYio) {
-        if (YioGdxGame.ask_to_end_turn) {
+        if (Settings.ask_to_end_turn && getGameController(buttonYio).atLeastOneUnitIsReadyToMove()) {
             if (buttonYio.id == 321) {
                 buttonYio.menuControllerYio.hideConfirmEndTurnMenu();
                 getGameController(buttonYio).endTurnButtonPressed();

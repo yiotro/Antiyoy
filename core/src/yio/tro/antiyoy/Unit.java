@@ -8,10 +8,10 @@ import java.util.ArrayList;
  * Created by ivan on 24.05.2015.
  */
 public class Unit {
-    Hex lastHex, currHex;
+    public Hex lastHex, currHex;
     final PointYio currentPos;
     final FactorYio moveFactor;
-    int strength;
+    public int strength;
     final GameController gameController;
     boolean readyToMove;
     float jumpPos, jumpGravity, jumpDy, jumpStartingImpulse;
@@ -115,7 +115,7 @@ public class Unit {
     }
 
 
-    void marchToHex(Hex toWhere, Province province) {
+    public void marchToHex(Hex toWhere, Province province) {
         if (toWhere == currHex) return;
         ArrayList<Hex> moveZone = gameController.detectMoveZone(currHex, strength, GameController.UNIT_MOVE_LIMIT);
         if (moveZone.size() == 0) return;

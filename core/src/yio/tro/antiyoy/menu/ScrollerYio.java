@@ -1,4 +1,4 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 
 import java.util.ArrayList;
@@ -20,19 +21,19 @@ import static yio.tro.antiyoy.YioGdxGame.getDifficultyNameByPower;
  */
 public class ScrollerYio {
 
-    float pos, speed, topLimit, bottomLimit, lineHeight, maxOffset;
+    public float pos, speed, topLimit, bottomLimit, lineHeight, maxOffset;
     private YioGdxGame yioGdxGame;
-    RectangleYio frame, animFrame;
-    ArrayList<TextureRegion> cache, icons;
+    public RectangleYio frame, animFrame;
+    public ArrayList<TextureRegion> cache, icons;
     private ArrayList<String> strings;
-    FactorYio factorModel, selectionFactor, selAlphaFactor, speedCutFactor;
+    public FactorYio factorModel, selectionFactor, selAlphaFactor, speedCutFactor;
     private FrameBuffer frameBuffer;
     private SpriteBatch batch;
     private BitmapFont font;
-    TextureRegion bg1, bg2;
-    float startY, lastY, variation, selectX, animRadius;
+    public TextureRegion bg1, bg2;
+    public float startY, lastY, variation, selectX, animRadius;
     private boolean dragged;
-    int selectionIndex;
+    public int selectionIndex;
 
 
     public ScrollerYio(YioGdxGame yioGdxGame, RectangleYio frame, float lineHeight, SpriteBatch batch) {

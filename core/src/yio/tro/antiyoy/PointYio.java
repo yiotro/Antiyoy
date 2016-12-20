@@ -4,7 +4,7 @@ package yio.tro.antiyoy;
  * Created by ivan on 28.08.2014.
  */
 public class PointYio {
-    float x, y;
+    public float x, y;
 
 
     public PointYio() {

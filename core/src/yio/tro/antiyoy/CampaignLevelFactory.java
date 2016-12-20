@@ -1,13 +1,11 @@
 package yio.tro.antiyoy;
 
-import com.badlogic.gdx.Gdx;
-
-import java.util.Random;
+import yio.tro.antiyoy.ai.ArtificialIntelligence;
 
 /**
  * Created by ivan on 18.11.2015.
  */
-class CampaignLevelFactory {
+public class CampaignLevelFactory {
 
     private final GameController gameController;
     public static final int NORMAL_LEVELS_START = 9;
@@ -80,11 +78,11 @@ class CampaignLevelFactory {
     }
 
 
-    static int getDifficultyByIndex(int index) {
-        if (index <= 8) return GameController.EASY;
-        if (index <= 23) return GameController.NORMAL;
-        if (index >= 60) return GameController.EXPERT;
-        return GameController.HARD;
+    public static int getDifficultyByIndex(int index) {
+        if (index <= 8) return ArtificialIntelligence.DIFFICULTY_EASY;
+        if (index <= 23) return ArtificialIntelligence.DIFFICULTY_NORMAL;
+        if (index >= 60) return ArtificialIntelligence.DIFFICULTY_EXPERT;
+        return ArtificialIntelligence.DIFFICULTY_HARD;
     }
 
 

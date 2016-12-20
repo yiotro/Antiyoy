@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors;
 
-import yio.tro.antiyoy.ButtonYio;
+import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.GameController;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.behaviors.editor.*;
@@ -95,4 +95,7 @@ public abstract class ReactBehavior {
     public static final RbMoreCampaignOptions rbMoreCampaignOptions = new RbMoreCampaignOptions();
     public static final RbExitToCampaign rbExitToCampaign = new RbExitToCampaign();
     public static final RbTutorialIndex rbTutorialIndex = new RbTutorialIndex();
+    public static final RbLanguageMenu rbLanguageMenu = new RbLanguageMenu();
+    public static final RbSetLanguage rbSetLanguage = new RbSetLanguage();
+    public static final RbEditorImportConfirmMenu rbEditorImportConfirmMenu = new RbEditorImportConfirmMenu();
 }

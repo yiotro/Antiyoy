@@ -6,23 +6,23 @@ import yio.tro.antiyoy.factor_yio.FactorYio;
  * Created by ivan on 19.10.2014.
  */
 public class Hex {
-    boolean active, selected, changingColor, flag, inMoveZone, genFlag, ignoreTouch;
-    int index1, index2, moveZoneNumber, genPotential, viewDiversityIndex;
+    public boolean active, selected, changingColor, flag, inMoveZone, genFlag, ignoreTouch;
+    public int index1, index2, moveZoneNumber, genPotential, viewDiversityIndex;
     PointYio pos, fieldPos;
     private GameController gameController;
     float cos60, sin60;
-    int colorIndex, lastColorIndex, objectInside;
+    public int colorIndex, lastColorIndex, objectInside;
     long animStartTime;
     boolean blockToTreeFromExpanding;
     public static final int OBJECT_PINE = 1;
     public static final int OBJECT_PALM = 2;
-    public static final int OBJECT_HOUSE = 3;
+    public static final int OBJECT_TOWN = 3;
     public static final int OBJECT_TOWER = 4;
     public static final int OBJECT_GRAVE = 5;
     public static final int OBJECT_FARM = 6;
     public static final int OBJECT_STRONG_TOWER = 7;
     FactorYio animFactor, selectionFactor;
-    Unit unit;
+    public Unit unit;
 
 
     public Hex(int index1, int index2, PointYio fieldPos, GameController gameController) {
@@ -87,36 +87,37 @@ public class Hex {
     void addUnit(int strength) {
         unit = new Unit(gameController, this, strength);
         gameController.unitList.add(unit);
+        gameController.statistics.unitWasProduced();
     }
 
 
-    boolean isFree() {
+    public boolean isFree() {
         return !containsSolidObject() && !containsUnit();
     }
 
 
-    boolean nothingBlocksWayForUnit() {
+    public boolean nothingBlocksWayForUnit() {
         return !containsUnit() && !containsBuilding();
     }
 
 
-    boolean containsTree() {
+    public boolean containsTree() {
         return objectInside == OBJECT_PALM || objectInside == OBJECT_PINE;
     }
 
 
-    boolean containsSolidObject() {
+    public boolean containsSolidObject() {
         return objectInside > 0;
     }
 
 
-    boolean containsTower() {
+    public boolean containsTower() {
         return objectInside == OBJECT_TOWER || objectInside == OBJECT_STRONG_TOWER;
     }
 
 
-    boolean containsBuilding() {
-        return objectInside == OBJECT_HOUSE
+    public boolean containsBuilding() {
+        return objectInside == OBJECT_TOWN
                 || objectInside == OBJECT_TOWER
                 || objectInside == OBJECT_FARM
                 || objectInside == OBJECT_STRONG_TOWER;
@@ -139,7 +140,7 @@ public class Hex {
     }
 
 
-    boolean containsUnit() {
+    public boolean containsUnit() {
         return unit != null;
     }
 
@@ -170,20 +171,25 @@ public class Hex {
     }
 
 
-    int getDefenseNumber() {
+    public int getDefenseNumber() {
+        return getDefenseNumber(null);
+    }
+
+
+    public int getDefenseNumber(Unit ignoreUnit) {
         int defenseNumber = 0;
-        if (this.objectInside == Hex.OBJECT_HOUSE) defenseNumber = Math.max(defenseNumber, 1);
+        if (this.objectInside == Hex.OBJECT_TOWN) defenseNumber = Math.max(defenseNumber, 1);
         if (this.objectInside == Hex.OBJECT_TOWER) defenseNumber = Math.max(defenseNumber, 2);
         if (this.objectInside == Hex.OBJECT_STRONG_TOWER) defenseNumber = Math.max(defenseNumber, 3);
-        if (this.containsUnit()) defenseNumber = Math.max(defenseNumber, this.unit.strength);
+        if (this.containsUnit() && unit != ignoreUnit) defenseNumber = Math.max(defenseNumber, this.unit.strength);
         Hex neighbour;
         for (int i = 0; i < 6; i++) {
             neighbour = adjacentHex(i);
             if (!(neighbour.active && neighbour.sameColor(this))) continue;
-            if (neighbour.objectInside == Hex.OBJECT_HOUSE) defenseNumber = Math.max(defenseNumber, 1);
+            if (neighbour.objectInside == Hex.OBJECT_TOWN) defenseNumber = Math.max(defenseNumber, 1);
             if (neighbour.objectInside == Hex.OBJECT_TOWER) defenseNumber = Math.max(defenseNumber, 2);
             if (neighbour.objectInside == Hex.OBJECT_STRONG_TOWER) defenseNumber = Math.max(defenseNumber, 3);
-            if (neighbour.containsUnit()) defenseNumber = Math.max(defenseNumber, neighbour.unit.strength);
+            if (neighbour.containsUnit() && neighbour.unit != ignoreUnit) defenseNumber = Math.max(defenseNumber, neighbour.unit.strength);
         }
         return defenseNumber;
     }
@@ -193,7 +199,7 @@ public class Hex {
         Hex adjHex;
         for (int i = 0; i < 6; i++) {
             adjHex = adjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(this) && adjHex.objectInside == OBJECT_HOUSE) return true;
+            if (adjHex.active && adjHex.sameColor(this) && adjHex.objectInside == OBJECT_TOWN) return true;
         }
         return false;
     }
@@ -218,7 +224,7 @@ public class Hex {
     }
 
 
-    boolean hasThisObjectNearby(int objectIndex) {
+    public boolean hasThisObjectNearby(int objectIndex) {
         if (objectInside == objectIndex) return true;
         for (int i = 0; i < 6; i++) {
             Hex adjHex = adjacentHex(i);

@@ -1,4 +1,4 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 
@@ -22,16 +23,16 @@ public class MenuControllerYio {
     public static int SPAWN_ANIM = 2, DESTROY_ANIM = 2;
     public static double SPAWN_SPEED = 1.5, DESTROY_SPEED = 1.5;
     public final YioGdxGame yioGdxGame;
-    final ArrayList<ButtonYio> buttons;
+    public final ArrayList<ButtonYio> buttons;
     private final ButtonFactory buttonFactory;
     private ButtonRenderer buttonRenderer;
     public static LanguagesManager languagesManager = LanguagesManager.getInstance();
     TextureRegion unlockedLevelIcon, lockedLevelIcon, openedLevelIcon;
     //    public ScrollerYio scrollerYio;
     public LevelSelector levelSelector;
-    FactorYio infoPanelFactor;
+    public FactorYio infoPanelFactor;
     public ArrayList<SliderYio> sliders;
-    ArrayList<CheckButtonYio> checkButtons;
+    public ArrayList<CheckButtonYio> checkButtons;
     private NotificationHolder notificationHolder;
 
 
@@ -44,6 +45,7 @@ public class MenuControllerYio {
         unlockedLevelIcon = GameView.loadTextureRegionByName("unlocked_level_icon.png", true);
         lockedLevelIcon = GameView.loadTextureRegionByName("locked_level_icon.png", true);
         openedLevelIcon = GameView.loadTextureRegionByName("opened_level_icon.png", true);
+        loadLanguage();
         initCheckButtons();
 //        initScroller();
         initLevelSelector();
@@ -52,6 +54,24 @@ public class MenuControllerYio {
         applyAnimStyle();
 
         createMainMenu();
+        checkToCreateSingleMessage();
+    }
+
+
+    private void checkToCreateSingleMessage() {
+        SingleMessages.load();
+
+        if (SingleMessages.achikapsRelease) {
+            SingleMessages.achikapsRelease = false;
+            SingleMessages.save();
+            createSingleMessageMenu("achikaps_release");
+            return;
+        }
+    }
+
+
+    private void loadLanguage() {
+        CustomLanguageLoader.loadLanguage();
     }
 
 
@@ -89,7 +109,7 @@ public class MenuControllerYio {
         sliders.get(0).setValues(0.5f, 1, 3, true, SliderYio.CONFIGURE_SIZE); // map size
         sliders.get(1).setValues(0.2f, 0, 5, false, SliderYio.CONFIGURE_HUMANS); // humans
         sliders.get(2).setValues(0.6, 2, 6, false, SliderYio.CONFIGURE_COLORS); // colors
-        sliders.get(3).setValues(0.33, 1, 4, true, SliderYio.CONFIGURE_DIFFICULTY); // difficulty
+        sliders.get(3).setValues(0.33, 1, 5, true, SliderYio.CONFIGURE_DIFFICULTY); // difficulty
         sliders.get(4).setValues(0, 0, 6, true, SliderYio.CONFIGURE_COLOR_OFFSET); // color offset
         sliders.get(5).setValues(0, 0, 2, true, SliderYio.CONFIGURE_SKIN); // hex skin
         sliders.get(6).setValues(0.5f, 0, 4, true, SliderYio.CONFIGURE_CAMERA_OFFSET); // camera offset
@@ -263,7 +283,7 @@ public class MenuControllerYio {
     }
 
 
-    ArrayList<String> getArrayListFromString(String src) {
+    public ArrayList<String> getArrayListFromString(String src) {
         ArrayList<String> list = new ArrayList<String>();
         StringTokenizer tokenizer = new StringTokenizer(src, "#");
         while (tokenizer.hasMoreTokens()) {
@@ -327,7 +347,7 @@ public class MenuControllerYio {
         infoButton.setReactBehavior(ReactBehavior.rbInfo);
         infoButton.disableTouchAnimation();
 
-        ButtonYio mainLabel = buttonFactory.getButton(generateRectangle(0.05, 0.21, 0.9, 0.57), 192, null);
+        ButtonYio mainLabel = buttonFactory.getButton(generateRectangle(0.02, 0.1, 0.96, 0.7), 192, null);
         mainLabel.cleatText();
         ArrayList<String> list = getArrayListFromString(languagesManager.getString("main_label"));
         mainLabel.addManyLines(list);
@@ -341,33 +361,41 @@ public class MenuControllerYio {
 
         double checkButtonSize = 0.05;
         double hSize = GraphicsYio.convertToHeight(checkButtonSize);
-        double chkX = 0.88 - checkButtonSize;
-        double chkY = 0.71;
+        double chkX = 0.94 - checkButtonSize;
+        double chkY = 0.73;
 
         CheckButtonYio chkAutosave = CheckButtonYio.getCheckButton(this, generateSquare(chkX, chkY - hSize / 2, hSize), 1);
-        chkAutosave.setTouchPosition(generateRectangle(0.05, chkY - hSize * 1.5, 0.9, hSize * 3));
+        chkAutosave.setTouchPosition(generateRectangle(0.02, chkY - hSize * 1.5, 0.96, hSize * 3));
 
         chkY -= 0.086;
         CheckButtonYio chkSlots = CheckButtonYio.getCheckButton(this, generateSquare(chkX, chkY - hSize / 2, hSize), 2);
-        chkSlots.setTouchPosition(generateRectangle(0.05, chkY - hSize * 1.5, 0.9, hSize * 3));
+        chkSlots.setTouchPosition(generateRectangle(0.02, chkY - hSize * 1.5, 0.96, hSize * 3));
 
         chkY -= 0.086;
         CheckButtonYio chkTurnEnd = CheckButtonYio.getCheckButton(this, generateSquare(chkX, chkY - hSize / 2, hSize), 3);
-        chkTurnEnd.setTouchPosition(generateRectangle(0.05, chkY - hSize * 1.5, 0.9, hSize * 3));
+        chkTurnEnd.setTouchPosition(generateRectangle(0.02, chkY - hSize * 1.5, 0.96, hSize * 3));
 
         chkY -= 0.086;
         CheckButtonYio chkCityNames = CheckButtonYio.getCheckButton(this, generateSquare(chkX, chkY - hSize / 2, hSize), 4);
-        chkCityNames.setTouchPosition(generateRectangle(0.05, chkY - hSize * 1.5, 0.9, hSize * 3));
+        chkCityNames.setTouchPosition(generateRectangle(0.02, chkY - hSize * 1.5, 0.96, hSize * 3));
 
         chkY -= 0.086;
         CheckButtonYio chkSound = CheckButtonYio.getCheckButton(this, generateSquare(chkX, chkY - hSize / 2, hSize), 5);
-        chkSound.setTouchPosition(generateRectangle(0.05, chkY - hSize * 1.5, 0.9, hSize * 3));
+        chkSound.setTouchPosition(generateRectangle(0.02, chkY - hSize * 1.5, 0.96, hSize * 3));
 
-        for (int i = 1; i <= 5; i++) {
+        chkY -= 0.086;
+        CheckButtonYio chkTurnLimit = CheckButtonYio.getCheckButton(this, generateSquare(chkX, chkY - hSize / 2, hSize), 6);
+        chkTurnLimit.setTouchPosition(generateRectangle(0.02, chkY - hSize * 1.5, 0.96, hSize * 3));
+
+        chkY -= 0.086;
+        CheckButtonYio chkLongTapToMove = CheckButtonYio.getCheckButton(this, generateSquare(chkX, chkY - hSize / 2, hSize), 7);
+        chkLongTapToMove.setTouchPosition(generateRectangle(0.02, chkY - hSize * 1.5, 0.96, hSize * 3));
+
+        for (int i = 1; i <= 7; i++) {
             getCheckButtonById(i).setAnimType(ButtonYio.ANIM_FROM_CENTER);
         }
 
-        ButtonYio moreSettingsButton = buttonFactory.getButton(generateRectangle(0.65, 0.21, 0.3, 0.05), 199, languagesManager.getString("more"));
+        ButtonYio moreSettingsButton = buttonFactory.getButton(generateRectangle(0.65, 0.1, 0.3, 0.05), 199, languagesManager.getString("more"));
         moreSettingsButton.setReactBehavior(ReactBehavior.rbMoreSettings);
         moreSettingsButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
         moreSettingsButton.disableTouchAnimation();
@@ -384,29 +412,128 @@ public class MenuControllerYio {
 
         spawnBackButton(310, ReactBehavior.rbSettingsMenu);
 
-        ButtonYio skinLabel = buttonFactory.getButton(generateRectangle(0.1, 0.46, 0.8, 0.2), 312, null);
-        renderTextAndSomeEmptyLines(skinLabel, languagesManager.getString("skin"), 2);
-        skinLabel.setTouchable(false);
-        skinLabel.setAnimType(ButtonYio.ANIM_UP);
-        sliders.get(5).appear();
-        sliders.get(5).setPos(0.15, 0.52, 0.7, 0);
-        sliders.get(5).setVerticalTouchOffset(0.06f * Gdx.graphics.getHeight());
+        double panelHeight = 0.14;
+        double offset = 0.03;
+        double y = 0.9 - offset - panelHeight;
 
-        ButtonYio animStyleButton = buttonFactory.getButton(generateRectangle(0.1, 0.25, 0.8, 0.2), 313, null);
-        renderTextAndSomeEmptyLines(animStyleButton, languagesManager.getString("anim_style"), 2);
-        animStyleButton.setTouchable(false);
-        animStyleButton.setAnimType(ButtonYio.ANIM_DOWN);
-        sliders.get(9).appear();
-        sliders.get(9).setPos(0.15, 0.31, 0.7, 0);
-        sliders.get(9).setVerticalTouchOffset(0.06f * Gdx.graphics.getHeight());
-
-        ButtonYio fieldCameraOffset = buttonFactory.getButton(generateRectangle(0.1, 0.67, 0.8, 0.2), 314, null);
+        ButtonYio fieldCameraOffset = buttonFactory.getButton(generateRectangle(0.1, y, 0.8, panelHeight), 314, null);
         renderTextAndSomeEmptyLines(fieldCameraOffset, languagesManager.getString("camera_offset"), 2);
         fieldCameraOffset.setTouchable(false);
         fieldCameraOffset.setAnimType(ButtonYio.ANIM_UP);
         sliders.get(6).appear();
-        sliders.get(6).setPos(0.15, 0.73, 0.7, 0);
+        sliders.get(6).setPos(0.15, y + 0.3 * panelHeight, 0.7, 0);
         sliders.get(6).setVerticalTouchOffset(0.06f * Gdx.graphics.getHeight());
+
+        y -= panelHeight + offset;
+        ButtonYio skinLabel = buttonFactory.getButton(generateRectangle(0.1, y, 0.8, panelHeight), 312, null);
+        renderTextAndSomeEmptyLines(skinLabel, languagesManager.getString("skin"), 2);
+        skinLabel.setTouchable(false);
+        skinLabel.setAnimType(ButtonYio.ANIM_UP);
+        sliders.get(5).appear();
+        sliders.get(5).setPos(0.15, y + 0.3 * panelHeight, 0.7, 0);
+        sliders.get(5).setVerticalTouchOffset(0.06f * Gdx.graphics.getHeight());
+
+        y -= panelHeight + offset;
+        ButtonYio animStyleButton = buttonFactory.getButton(generateRectangle(0.1, y, 0.8, panelHeight), 313, null);
+        renderTextAndSomeEmptyLines(animStyleButton, languagesManager.getString("anim_style"), 2);
+        animStyleButton.setTouchable(false);
+        animStyleButton.setAnimType(ButtonYio.ANIM_DOWN);
+        sliders.get(9).appear();
+        sliders.get(9).setPos(0.15, y + 0.3 * panelHeight, 0.7, 0);
+        sliders.get(9).setVerticalTouchOffset(0.06f * Gdx.graphics.getHeight());
+
+        panelHeight = 0.17;
+        y -= panelHeight + offset;
+        ButtonYio chkPanel = buttonFactory.getButton(generateRectangle(0.1, y, 0.8, panelHeight), 316, null);
+        if (chkPanel.notRendered()) {
+            chkPanel.cleatText();
+            chkPanel.addManyLines(getArrayListFromString(languagesManager.getString("more_settings_checks")));
+            buttonRenderer.renderButton(chkPanel);
+        }
+        chkPanel.setTouchable(false);
+        chkPanel.setAnimType(ButtonYio.ANIM_DOWN);
+
+        double checkButtonSize = 0.045;
+        double hSize = GraphicsYio.convertToHeight(checkButtonSize);
+        double chkX = 0.87 - checkButtonSize;
+        double chkY = 0.29;
+
+        CheckButtonYio chkWaterTexture = CheckButtonYio.getCheckButton(this, generateSquare(chkX, chkY - hSize / 2, hSize), 10);
+        chkWaterTexture.setTouchPosition(generateRectangle(0.1, chkY - hSize * 1.5, 0.8, hSize * 3));
+        chkWaterTexture.setAnimType(ButtonYio.ANIM_DOWN);
+
+        ButtonYio chooseLanguageButton = buttonFactory.getButton(generateRectangle(0.1, 0.08, 0.8, 0.07), 315, languagesManager.getString("language"));
+        chooseLanguageButton.setReactBehavior(ReactBehavior.rbLanguageMenu);
+        chooseLanguageButton.setAnimType(ButtonYio.ANIM_DOWN);
+
+        endMenuCreation();
+    }
+
+
+    public void createLanguageMenu() {
+        beginMenuCreation();
+
+        yioGdxGame.beginBackgroundChange(1, false, true);
+
+        spawnBackButton(330, ReactBehavior.rbMoreSettings);
+
+        double buttonHeight = 0.08;
+        int langNumber = 8;
+        RectangleYio base = new RectangleYio(0.1, 0.5 * (0.9 - buttonHeight * langNumber), 0.8, buttonHeight * langNumber);
+        double y = base.y + base.height;
+
+        ButtonYio basePanel = buttonFactory.getButton(generateRectangle(base.x, base.y, base.width, base.height), 331, " ");
+        basePanel.setTouchable(false);
+        basePanel.onlyShadow = true;
+        basePanel.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        y -= buttonHeight;
+        ButtonYio engButton = buttonFactory.getButton(generateRectangle(base.x, y, base.width, buttonHeight), 332, "English");
+        engButton.setReactBehavior(ReactBehavior.rbSetLanguage);
+        engButton.setShadow(false);
+        engButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        y -= buttonHeight;
+        ButtonYio rusButton = buttonFactory.getButton(generateRectangle(base.x, y, base.width, buttonHeight), 333, "Russian");
+        rusButton.setReactBehavior(ReactBehavior.rbSetLanguage);
+        rusButton.setShadow(false);
+        rusButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        y -= buttonHeight;
+        ButtonYio uaButton = buttonFactory.getButton(generateRectangle(base.x, y, base.width, buttonHeight), 334, "Ukrainian");
+        uaButton.setReactBehavior(ReactBehavior.rbSetLanguage);
+        uaButton.setShadow(false);
+        uaButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        y -= buttonHeight;
+        ButtonYio gerButton = buttonFactory.getButton(generateRectangle(base.x, y, base.width, buttonHeight), 335, "German");
+        gerButton.setReactBehavior(ReactBehavior.rbSetLanguage);
+        gerButton.setShadow(false);
+        gerButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        y -= buttonHeight;
+        ButtonYio czeButton = buttonFactory.getButton(generateRectangle(base.x, y, base.width, buttonHeight), 336, "Czech");
+        czeButton.setReactBehavior(ReactBehavior.rbSetLanguage);
+        czeButton.setShadow(false);
+        czeButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        y -= buttonHeight;
+        ButtonYio polButton = buttonFactory.getButton(generateRectangle(base.x, y, base.width, buttonHeight), 337, "Polish");
+        polButton.setReactBehavior(ReactBehavior.rbSetLanguage);
+        polButton.setShadow(false);
+        polButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        y -= buttonHeight;
+        ButtonYio itaButton = buttonFactory.getButton(generateRectangle(base.x, y, base.width, buttonHeight), 338, "Italian");
+        itaButton.setReactBehavior(ReactBehavior.rbSetLanguage);
+        itaButton.setShadow(false);
+        itaButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        y -= buttonHeight;
+        ButtonYio freButton = buttonFactory.getButton(generateRectangle(base.x, y, base.width, buttonHeight), 340, "French");
+        freButton.setReactBehavior(ReactBehavior.rbSetLanguage);
+        freButton.setShadow(false);
+        freButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
 
         endMenuCreation();
     }
@@ -1001,27 +1128,54 @@ public class MenuControllerYio {
         basePanel.setTouchable(false);
         basePanel.onlyShadow = true;
 
-        ButtonYio mainMenuButton = buttonFactory.getButton(generateRectangle(0.1, 0.3, 0.8, 0.1), 182, languagesManager.getString("play"));
-        mainMenuButton.setReactBehavior(ReactBehavior.rbEditorPlay);
-        mainMenuButton.setShadow(false);
+        ButtonYio playButton = buttonFactory.getButton(generateRectangle(0.1, 0.3, 0.8, 0.1), 182, languagesManager.getString("play"));
+        playButton.setReactBehavior(ReactBehavior.rbEditorPlay);
+        playButton.setShadow(false);
 
         ButtonYio exportButton = buttonFactory.getButton(generateRectangle(0.1, 0.4, 0.8, 0.1), 183, languagesManager.getString("export"));
         exportButton.setReactBehavior(ReactBehavior.rbEditorExport);
         exportButton.setShadow(false);
 
-        ButtonYio restartButton = buttonFactory.getButton(generateRectangle(0.1, 0.5, 0.8, 0.1), 184, languagesManager.getString("import"));
-        restartButton.setReactBehavior(ReactBehavior.rbEditorImport);
-        restartButton.setShadow(false);
+        ButtonYio importButton = buttonFactory.getButton(generateRectangle(0.1, 0.5, 0.8, 0.1), 184, languagesManager.getString("import"));
+        importButton.setReactBehavior(ReactBehavior.rbEditorImportConfirmMenu);
+        importButton.setShadow(false);
 
-        ButtonYio resumeButton = buttonFactory.getButton(generateRectangle(0.1, 0.6, 0.8, 0.1), 185, languagesManager.getString("edit"));
-        resumeButton.setReactBehavior(ReactBehavior.rbStartEditorMode);
-        resumeButton.setShadow(false);
+        ButtonYio editButton = buttonFactory.getButton(generateRectangle(0.1, 0.6, 0.8, 0.1), 185, languagesManager.getString("edit"));
+        editButton.setReactBehavior(ReactBehavior.rbStartEditorMode);
+        editButton.setShadow(false);
 
         for (int i = 181; i <= 185; i++) {
             ButtonYio buttonYio = getButtonById(i);
             buttonYio.setAnimType(ButtonYio.ANIM_FROM_CENTER);
             buttonYio.disableTouchAnimation();
         }
+
+        endMenuCreation();
+    }
+
+
+    public void createEditorImportConfirmationMenu() {
+        beginMenuCreation();
+
+        yioGdxGame.beginBackgroundChange(3, true, true);
+
+        ButtonYio labelButton = buttonFactory.getButton(generateRectangle(0.1, 0.45, 0.8, 0.2), 350, null);
+        if (labelButton.notRendered()) {
+            labelButton.cleatText();
+            renderTextAndSomeEmptyLines(labelButton, languagesManager.getString("confirm_import"), 3);
+        }
+        labelButton.setTouchable(false);
+        labelButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        ButtonYio noButton = buttonFactory.getButton(generateRectangle(0.1, 0.45, 0.4, 0.08), 351, languagesManager.getString("no"));
+        noButton.setReactBehavior(ReactBehavior.rbEditorActionsMenu);
+        noButton.setShadow(false);
+        noButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        ButtonYio yesButton = buttonFactory.getButton(generateRectangle(0.5, 0.45, 0.4, 0.08), 352, languagesManager.getString("yes"));
+        yesButton.setReactBehavior(ReactBehavior.rbEditorImport);
+        yesButton.setShadow(false);
+        yesButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
 
         endMenuCreation();
     }
@@ -1125,6 +1279,7 @@ public class MenuControllerYio {
     public void hideEditorObjectPanel() {
         for (int i = 160; i <= 168; i++) {
             ButtonYio buttonYio = getButtonById(i);
+            if (buttonYio == null) continue;
             buttonYio.destroy();
         }
     }
@@ -1600,7 +1755,7 @@ public class MenuControllerYio {
         }
         if (yioGdxGame.gameController.completedCampaignLevel(whoWon))
             message = languagesManager.getString("level_complete");
-        if (YioGdxGame.CHECKING_BALANCE_MODE && yioGdxGame.gamesPlayed() % 50 == 0)
+        if (Debug.CHECKING_BALANCE_MODE && yioGdxGame.gamesPlayed() % 50 == 0)
             YioGdxGame.say(yioGdxGame.gamesPlayed() + " : " + yioGdxGame.getBalanceIndicatorString());
         ButtonYio textPanel = buttonFactory.getButton(generateRectangle(0.05, 0.4, 0.9, 0.2), 60, null);
         textPanel.cleatText();
@@ -1614,7 +1769,13 @@ public class MenuControllerYio {
         ButtonYio okButton = buttonFactory.getButton(generateRectangle(0.55, 0.4, 0.4, 0.07), 62, null);
         if (yioGdxGame.gameController.completedCampaignLevel(whoWon))
             okButton.setTextLine(languagesManager.getString("next"));
-        else okButton.setTextLine(languagesManager.getString("end_game_ok"));
+        else {
+            if (playerIsWinner) {
+                okButton.setTextLine(languagesManager.getString("end_game_ok"));
+            } else {
+                okButton.setTextLine(languagesManager.getString("end_game_okay"));
+            }
+        }
         buttonRenderer.renderButton(okButton);
         okButton.setShadow(false);
         okButton.setReactBehavior(ReactBehavior.rbChooseGameModeMenu);
@@ -1691,6 +1852,33 @@ public class MenuControllerYio {
         else textureRegion = unlockedLevelIcon;
 //        scrollerYio.icons.set(index, textureRegion);
 //        scrollerYio.updateCacheLine(index);
+    }
+
+
+    public void createSingleMessageMenu(String key) {
+        beginMenuCreation();
+
+        yioGdxGame.beginBackgroundChange(0, false, false);
+        ButtonYio textPanel = buttonFactory.getButton(generateRectangle(0.05, 0.25, 0.9, 0.5), 400, null);
+        if (textPanel.notRendered()) {
+            textPanel.cleatText();
+            ArrayList<String> list = getArrayListFromString(languagesManager.getString(key));
+            textPanel.addManyLines(list);
+            int lines = 12;
+            int addedEmptyLines = lines - list.size();
+            for (int i = 0; i < addedEmptyLines; i++) {
+                textPanel.addTextLine(" ");
+            }
+            buttonRenderer.renderButton(textPanel);
+        }
+        textPanel.setTouchable(false);
+        textPanel.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        ButtonYio okButton = buttonFactory.getButton(generateRectangle(0.65, 0.25, 0.3, 0.07), 401, "Ok");
+        okButton.setReactBehavior(ReactBehavior.rbMainMenu);
+        okButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        endMenuCreation();
     }
 
 
@@ -1789,6 +1977,12 @@ public class MenuControllerYio {
         okButton.setReactBehavior(ReactBehavior.rbInGameMenu);
 
         endMenuCreation();
+    }
+
+
+    public void clear() {
+        buttons.clear();
+        initSliders();
     }
 
 

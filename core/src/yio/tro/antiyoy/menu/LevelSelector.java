@@ -1,4 +1,4 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -9,10 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Matrix4;
+import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 
 
-public class LevelSelector extends InterfaceElement{
+public class LevelSelector extends InterfaceElement {
 
     MenuControllerYio menuControllerYio;
 

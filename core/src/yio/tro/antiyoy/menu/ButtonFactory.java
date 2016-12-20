@@ -1,9 +1,11 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.menu;
+
+import yio.tro.antiyoy.RectangleYio;
 
 /**
  * Created by ivan on 22.07.14.
  */
-class ButtonFactory {
+public class ButtonFactory {
     private final MenuControllerYio menuControllerYio;
     private final ButtonRenderer buttonRenderer;
 

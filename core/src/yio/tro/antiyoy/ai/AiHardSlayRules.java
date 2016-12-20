@@ -1,11 +1,14 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.ai;
+
+import yio.tro.antiyoy.GameController;
+import yio.tro.antiyoy.Unit;
 
 import java.util.ArrayList;
 
 /**
  * Created by ivan on 24.11.2015.
  */
-class AiHardSlayRules extends ArtificialIntelligence {
+public class AiHardSlayRules extends ArtificialIntelligence {
 
     public AiHardSlayRules(GameController gameController, int color) {
         super(gameController, color);
@@ -13,7 +16,7 @@ class AiHardSlayRules extends ArtificialIntelligence {
 
 
     @Override
-    void makeMove() {
+    public void makeMove() {
         ArrayList<Unit> unitsReadyToMove = detectUnitsReadyToMove();
 
         moveUnits(unitsReadyToMove);

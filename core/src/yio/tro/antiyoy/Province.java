@@ -5,10 +5,10 @@ import java.util.*;
 /**
  * Created by ivan on 27.05.2015.
  */
-class Province {
+public class Province {
 
     int money;
-    ArrayList<Hex> hexList, tempList;
+    public ArrayList<Hex> hexList, tempList;
     private GameController gameController;
     public String name;
     public float nameWidth;
@@ -65,7 +65,7 @@ class Province {
         if (randomPlace == null) randomPlace = getPlaceToBuildUnit();
         if (randomPlace == null) randomPlace = getRandomHex();
         gameController.cleanOutHex(randomPlace);
-        gameController.addSolidObject(randomPlace, Hex.OBJECT_HOUSE);
+        gameController.addSolidObject(randomPlace, Hex.OBJECT_TOWN);
         gameController.addAnimHex(randomPlace);
         gameController.updateCacheOnceAfterSomeTime();
         randomPlace.lastColorIndex = randomPlace.colorIndex;
@@ -77,15 +77,15 @@ class Province {
 
     boolean hasCapital() {
         for (Hex hex : hexList)
-            if (hex.objectInside == Hex.OBJECT_HOUSE)
+            if (hex.objectInside == Hex.OBJECT_TOWN)
                 return true;
         return false;
     }
 
 
-    Hex getCapital() {
+    public Hex getCapital() {
         for (Hex hex : hexList)
-            if (hex.objectInside == Hex.OBJECT_HOUSE)
+            if (hex.objectInside == Hex.OBJECT_TOWN)
                 return hex;
         return hexList.get(0);
     }
@@ -131,11 +131,11 @@ class Province {
     }
 
 
-    int getIncome() {
+    public int getIncome() {
         int income = 0;
         for (Hex hex : hexList) {
             if (!hex.containsTree()) income++;
-            if (!GameController.slay_rules && hex.objectInside == Hex.OBJECT_FARM) income += 3;
+            if (!GameController.slay_rules && hex.objectInside == Hex.OBJECT_FARM) income += 4;
         }
         return income;
     }
@@ -156,7 +156,7 @@ class Province {
 
     private void clearFromHouses() {
         for (Hex hex : hexList)
-            if (hex.objectInside == Hex.OBJECT_HOUSE)
+            if (hex.objectInside == Hex.OBJECT_TOWN)
                 gameController.cleanOutHex(hex);
     }
 
@@ -197,7 +197,7 @@ class Province {
 
     void setCapital(Hex hex) {
         clearFromHouses();
-        gameController.addSolidObject(hex, Hex.OBJECT_HOUSE);
+        gameController.addSolidObject(hex, Hex.OBJECT_TOWN);
         updateName();
     }
 
@@ -210,29 +210,34 @@ class Province {
     }
 
 
-    boolean hasEnoughIncomeToAffordUnit(int strength) {
+    public boolean hasEnoughIncomeToAffordUnit(int strength) {
+        return hasEnoughIncomeToAffordUnit(strength, 2);
+    }
+
+
+    public boolean hasEnoughIncomeToAffordUnit(int strength, int turnsToSurvive) {
         int newIncome = getIncome() - getTaxes() - Unit.getTax(strength);
-        if (money + 2 * newIncome >= 0) return true; // hold 2 turns
+        if (money + turnsToSurvive * newIncome >= 0) return true;
         return false;
     }
 
 
-    boolean hasMoneyForUnit(int strength) {
+    public boolean hasMoneyForUnit(int strength) {
         return money >= GameController.PRICE_UNIT * strength;
     }
 
 
-    boolean hasMoneyForTower() {
+    public boolean hasMoneyForTower() {
         return money >= GameController.PRICE_TOWER;
     }
 
 
-    boolean hasMoneyForFarm() {
+    public boolean hasMoneyForFarm() {
         return money >= GameController.PRICE_FARM + getExtraFarmCost();
     }
 
 
-    boolean hasMoneyForStrongTower() {
+    public boolean hasMoneyForStrongTower() {
         return money >= GameController.PRICE_STRONG_TOWER;
     }
 
@@ -255,7 +260,7 @@ class Province {
     }
 
 
-    int getColor() {
+    public int getColor() {
         if (hexList.size() == 0) return -1;
         return hexList.get(0).colorIndex;
     }

@@ -24,11 +24,11 @@ public class GameView {
     SpriteBatch batchMovable, batchSolid, batchCache;
     private ShapeRenderer shapeRenderer;
     float cx, cy, dw, dh, borderLineThickness;
-    TextureRegion blackCircleTexture, redRectTexture, exclamationMarkTexture, forefingerTexture;
+    public TextureRegion blackCircleTexture, redRectTexture, exclamationMarkTexture, forefingerTexture;
     TextureRegion animationTextureRegion, blackBorderTexture, blackTriangle, greenPixel;
     TextureRegion hexGreen, hexRed, hexBlue, hexYellow, hexCyan, hexColor1, hexColor2, hexColor3;
     float linkLineThickness, hexViewSize, cacheFrameX1, cacheFrameY1, cacheFrameX2, cacheFrameY2, hexShadowSize;
-    TextureRegion blackPixel, grayPixel, selectionPixel, shadowHexTexture, gradientShadow, transCircle1, transCircle2, selUnitShadow, currentObjectTexture;
+    public TextureRegion blackPixel, grayPixel, selectionPixel, shadowHexTexture, gradientShadow, transCircle1, transCircle2, selUnitShadow, currentObjectTexture;
     Storage3xTexture manTextures[], palmTexture, houseTexture, towerTexture, graveTexture, pineTexture;
     Storage3xTexture castleTexture, strongTowerTexture, farmTexture[];
     int segments, w, h, currentZoomQuality;
@@ -87,7 +87,7 @@ public class GameView {
 
 
     private void loadTextures() {
-        backgroundRegion = loadTextureRegionByName("game_background.png", true);
+        loadBackgroundTexture();
         blackCircleTexture = loadTextureRegionByName("black_circle.png", true);
         redRectTexture = loadTextureRegionByName("red_rect.png", false);
         shadowHexTexture = loadTextureRegionByName("shadow_hex.png", true);
@@ -108,6 +108,15 @@ public class GameView {
         blackTriangle = loadTextureRegionByName("triangle.png", false);
         greenPixel = loadTextureRegionByName("pixels/pixel_green.png", false);
         grayPixel = blackPixel;
+    }
+
+
+    public void loadBackgroundTexture() {
+        if (Settings.waterTexture) {
+            backgroundRegion = loadTextureRegionByName("game_background_water.png", true);
+        } else {
+            backgroundRegion = loadTextureRegionByName("game_background.png", true);
+        }
     }
 
 
@@ -191,7 +200,7 @@ public class GameView {
 
 
     public void updateCacheLevelTextures() {
-        if (YioGdxGame.CHECKING_BALANCE_MODE) return;
+        if (Debug.CHECKING_BALANCE_MODE) return;
         gameController.letsUpdateCacheByAnim = false;
         for (int i = 0; i < cacheLevelTextures.length; i++) {
             FrameBuffer cacheLevelFrameBuffer = frameBufferList[i];
@@ -234,7 +243,7 @@ public class GameView {
 
 
     void updateCacheNearAnimHexes() {
-        if (YioGdxGame.CHECKING_BALANCE_MODE) return;
+        if (Debug.CHECKING_BALANCE_MODE) return;
         float up, right, down, left;
         ArrayList<Hex> ah = gameController.animHexes;
         if (ah.size() == 0) return;
@@ -389,7 +398,7 @@ public class GameView {
         switch (hex.objectInside) {
             case Hex.OBJECT_GRAVE:
                 return graveTexture.getTexture(quality);
-            case Hex.OBJECT_HOUSE:
+            case Hex.OBJECT_TOWN:
                 if (GameController.slay_rules) return houseTexture.getTexture(quality);
                 return castleTexture.getTexture(quality);
             case Hex.OBJECT_PALM:
@@ -856,7 +865,7 @@ public class GameView {
 
 
     private void renderInternals() {
-        if (YioGdxGame.CHECKING_BALANCE_MODE) return;
+        if (Debug.CHECKING_BALANCE_MODE) return;
         batchMovable.begin();
         renderCacheLevelTextures();
         if (YioGdxGame.isScreenVerySmall()) renderAllSolidObjects();
@@ -932,8 +941,11 @@ public class GameView {
             else if (!GameController.slay_rules && gameController.tipShowType == 6) textureRegion = strongTowerTexture.getNormal();
             else textureRegion = manTextures[gameController.tipShowType - 1].getNormal();
             float s = 0.2f * w;
-            batchSolid.draw(textureRegion, 0.5f * w - 0.5f * s, -s + 0.165f * h * gameController.tipFactor.get(), s, s);
-            YioGdxGame.gameFont.draw(batchSolid, gameController.currentPriceString, 0.43f * w, -s + 0.165f * h * gameController.tipFactor.get());
+            batchSolid.draw(textureRegion, 0.5f * w - 0.5f * s, s * (gameController.tipFactor.get() - 1) + 0.04f * h, s, s);
+            YioGdxGame.gameFont.draw(batchSolid,
+                    gameController.currentPriceString,
+                    0.5f * w - 0.5f * gameController.priceStringWidth,
+                    s * (gameController.tipFactor.get() - 1) + 0.04f * h);
             batchSolid.end();
         }
     }

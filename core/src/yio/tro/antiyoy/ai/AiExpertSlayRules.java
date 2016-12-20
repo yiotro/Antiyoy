@@ -1,12 +1,13 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.ai;
+
+import yio.tro.antiyoy.*;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 
 /**
  * Created by ivan on 21.12.2015.
  */
-class AiExpertSlayRules extends ArtificialIntelligence {
+public class AiExpertSlayRules extends ArtificialIntelligence {
 
     private final Hex tempHex;
 
@@ -18,7 +19,7 @@ class AiExpertSlayRules extends ArtificialIntelligence {
 
 
     @Override
-    void makeMove() {
+    public void makeMove() {
         ArrayList<Unit> unitsReadyToMove = detectUnitsReadyToMove();
 
         moveUnits(unitsReadyToMove);
@@ -41,14 +42,14 @@ class AiExpertSlayRules extends ArtificialIntelligence {
             boolean cleanedTrees = checkToCleanSomeTrees(unit, moveZone, province);
             if (!cleanedTrees) {
                 if (unit.currHex.isInPerimeter()) {
-                    pushUnitToDefenseLine(unit, province);
+                    pushUnitToBetterDefense(unit, province);
                 }
             }
         }
     }
 
 
-    private boolean isHexDefendedBySomethingElse(Hex hex, Unit unit) {
+    protected boolean isHexDefendedBySomethingElse(Hex hex, Unit unit) {
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.adjacentHex(i);
             if (adjHex.active && adjHex.sameColor(hex)) {
@@ -60,18 +61,21 @@ class AiExpertSlayRules extends ArtificialIntelligence {
     }
 
 
-    private boolean unitCanMoveSafely(Unit unit) {
+    protected boolean unitCanMoveSafely(Unit unit) {
         int leftBehindNumber = 0;
         for (int i = 0; i < 6; i++) {
             Hex adjHex = unit.currHex.adjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(unit.currHex) && !isHexDefendedBySomethingElse(adjHex, unit) && adjHex.isInPerimeter())
+            if (    adjHex.active &&
+                    adjHex.sameColor(unit.currHex) &&
+                    !isHexDefendedBySomethingElse(adjHex, unit) &&
+                    adjHex.isInPerimeter())
                 leftBehindNumber++;
         }
         return leftBehindNumber <= 3;
     }
 
 
-    private void tryToAttackSomething(Unit unit, Province province, ArrayList<Hex> attackableHexes) {
+    protected void tryToAttackSomething(Unit unit, Province province, ArrayList<Hex> attackableHexes) {
         if (!unitCanMoveSafely(unit)) return;
         Hex mostAttackableHex = findMostAttractiveHex(attackableHexes, province, unit.strength);
         gameController.moveUnit(unit, mostAttackableHex, province);
@@ -90,7 +94,7 @@ class AiExpertSlayRules extends ArtificialIntelligence {
     @Override
     Hex findMostAttractiveHex(ArrayList<Hex> attackableHexes, Province province, int strength) {
         if (strength == 3 || strength == 4) {
-            Hex hex = findHexAttractiveToBaron(attackableHexes);
+            Hex hex = findHexAttractiveToBaron(attackableHexes, strength);
             if (hex != null) return hex;
         }
 
@@ -106,7 +110,7 @@ class AiExpertSlayRules extends ArtificialIntelligence {
         Hex result = null;
         int currMax = -1;
         for (Hex attackableHex : attackableHexes) {
-            int currNum = numberOfAdjacentHexesWithThisColor(attackableHex, province.getColor());
+            int currNum = getAttackAllure(attackableHex, province.getColor());
             if (currNum > currMax) {
                 currMax = currNum;
                 result = attackableHex;

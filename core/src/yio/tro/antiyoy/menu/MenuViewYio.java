@@ -1,24 +1,25 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import yio.tro.antiyoy.*;
 
 import java.util.ArrayList;
 
 /**
  * Created by ivan on 22.07.14.
  */
-class MenuViewYio {
-    final YioGdxGame yioGdxGame;
+public class MenuViewYio {
+    public final YioGdxGame yioGdxGame;
     private final MenuControllerYio menuControllerYio;
     TextureRegion buttonPixel, shadowCorner, shadowSide, blackCircle, scrollerCircle, grayTransCircle;
     public ShapeRenderer shapeRenderer;
-    SpriteBatch batch;
+    public SpriteBatch batch;
     private int cornerSize;
-    float w, h;
+    public float w, h;
     private float x1, y1, x2, y2; // local variables for rendering
     private Color c; // local variable for rendering
 

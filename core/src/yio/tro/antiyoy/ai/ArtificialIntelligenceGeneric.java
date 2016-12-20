@@ -1,4 +1,8 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.ai;
+
+import yio.tro.antiyoy.GameController;
+import yio.tro.antiyoy.Hex;
+import yio.tro.antiyoy.Province;
 
 public abstract class ArtificialIntelligenceGeneric extends ArtificialIntelligence{
 
@@ -49,7 +53,7 @@ public abstract class ArtificialIntelligenceGeneric extends ArtificialIntelligen
 
     protected boolean isHexGoodForFarm(Hex hex) {
         if (!hex.isFree()) return false;
-        if (!hex.hasThisObjectNearby(Hex.OBJECT_HOUSE) && !hex.hasThisObjectNearby(Hex.OBJECT_FARM)) return false;
+        if (!hex.hasThisObjectNearby(Hex.OBJECT_TOWN) && !hex.hasThisObjectNearby(Hex.OBJECT_FARM)) return false;
         return true;
     }
 }

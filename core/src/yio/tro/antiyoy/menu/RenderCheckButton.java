@@ -1,8 +1,12 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.menu;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import yio.tro.antiyoy.GraphicsYio;
+import yio.tro.antiyoy.menu.CheckButtonYio;
+import yio.tro.antiyoy.menu.InterfaceElement;
+import yio.tro.antiyoy.menu.MenuRender;
 
-public class RenderCheckButton extends MenuRender{
+public class RenderCheckButton extends MenuRender {
 
     TextureRegion backgroundTexture, activeTexture, blackPixel;
 

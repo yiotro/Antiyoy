@@ -1,4 +1,4 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.StringBuilder;
+import yio.tro.antiyoy.*;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -17,7 +18,7 @@ import java.util.StringTokenizer;
 /**
  * Created by ivan on 22.07.14.
  */
-class ButtonRenderer {
+public class ButtonRenderer {
     private FrameBuffer frameBuffer;
     private final SpriteBatch batch;
     private RectangleYio pos;
@@ -26,7 +27,7 @@ class ButtonRenderer {
     private int horizontalOffset;
 
 
-    ButtonRenderer() {
+    public ButtonRenderer() {
         batch = new SpriteBatch();
         buttonBackground1 = GameView.loadTextureRegionByName("button_background_1.png", true);
         buttonBackground1.flip(false, true);
@@ -65,7 +66,7 @@ class ButtonRenderer {
         matrix4.setToOrtho2D(0, 0, orthoWidth, orthoHeight);
         batch.setProjectionMatrix(matrix4);
         batch.begin();
-        if (buttonYio.position.height < 0.2 * Gdx.graphics.getHeight())
+        if (buttonYio.position.height < 0.12 * Gdx.graphics.getHeight())
             batch.draw(getButtonBackground(buttonYio), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         else
             batch.draw(bigButtonBackground, 0, 0, orthoWidth, orthoHeight);

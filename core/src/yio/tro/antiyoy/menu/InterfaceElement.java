@@ -1,5 +1,6 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.menu;
 
+import yio.tro.antiyoy.RectangleYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 
 public abstract class InterfaceElement {

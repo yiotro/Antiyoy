@@ -6,7 +6,7 @@ package yio.tro.antiyoy;
 public class Statistics {
 
     final GameController gameController;
-    int turnsMade, unitsDied, unitsProduced, moneySpent;
+    public int turnsMade, unitsDied, unitsProduced, moneySpent;
 
 
     public Statistics(GameController gameController) {

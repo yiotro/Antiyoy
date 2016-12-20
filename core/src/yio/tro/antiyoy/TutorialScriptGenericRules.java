@@ -1,6 +1,8 @@
 package yio.tro.antiyoy;
 
 import yio.tro.antiyoy.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.ButtonYio;
+import yio.tro.antiyoy.menu.MenuControllerYio;
 
 public class TutorialScriptGenericRules extends TutorialScript{
 

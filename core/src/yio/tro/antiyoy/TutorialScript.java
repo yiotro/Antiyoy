@@ -1,5 +1,7 @@
 package yio.tro.antiyoy;
 
+import yio.tro.antiyoy.menu.MenuControllerYio;
+
 public abstract class TutorialScript {
 
     GameController gameController;

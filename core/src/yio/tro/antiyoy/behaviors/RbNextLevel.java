@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors;
 
-import yio.tro.antiyoy.ButtonYio;
+import yio.tro.antiyoy.menu.ButtonYio;
 
 /**
  * Created by ivan on 24.03.2016.

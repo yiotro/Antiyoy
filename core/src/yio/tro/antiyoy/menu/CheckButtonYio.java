@@ -1,8 +1,9 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.menu;
 
+import yio.tro.antiyoy.RectangleYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 
-public class CheckButtonYio extends ButtonYio{
+public class CheckButtonYio extends ButtonYio {
 
     boolean checked;
     RectangleYio touchPosition;
@@ -67,7 +68,7 @@ public class CheckButtonYio extends ButtonYio{
 
 
     @Override
-    void press(int screenX, int screenY) {
+    public void press(int screenX, int screenY) {
         super.press(screenX, screenY);
         viewFactor.setValues(1, 0);
         viewFactor.beginDestroying(1, 3);

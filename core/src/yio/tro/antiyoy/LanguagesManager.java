@@ -3,6 +3,9 @@ package yio.tro.antiyoy;
 import java.util.HashMap;
 import javax.xml.parsers.*;
 
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.util.Log;
 import org.w3c.dom.*;
 
 import com.badlogic.gdx.Gdx;
@@ -47,6 +50,12 @@ public class LanguagesManager {
     }
 
 
+    public void setLanguage(String langName) {
+        loadLanguage(langName);
+        _languageName = langName;
+    }
+
+
     public String getString(String key) {
         String string;
 
@@ -69,6 +78,7 @@ public class LanguagesManager {
     }
 
 
+    @TargetApi(Build.VERSION_CODES.FROYO)
     public boolean loadLanguage(String languageName) {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

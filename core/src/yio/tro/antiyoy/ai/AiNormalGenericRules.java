@@ -1,19 +1,21 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.ai;
+
+import yio.tro.antiyoy.GameController;
+import yio.tro.antiyoy.Hex;
+import yio.tro.antiyoy.Province;
+import yio.tro.antiyoy.Unit;
 
 import java.util.ArrayList;
 
-/**
- * Created by ivan on 24.11.2015.
- */
-class AiNormalSlayRules extends ArtificialIntelligence {
+public class AiNormalGenericRules extends ArtificialIntelligenceGeneric{
 
-    public AiNormalSlayRules(GameController gameController, int color) {
+    public AiNormalGenericRules(GameController gameController, int color) {
         super(gameController, color);
     }
 
 
     @Override
-    void makeMove() {
+    public void makeMove() {
         ArrayList<Unit> unitsReadyToMove = detectUnitsReadyToMove();
 
         moveUnits(unitsReadyToMove);

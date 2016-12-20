@@ -1,9 +1,15 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.menu;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import yio.tro.antiyoy.GraphicsYio;
+import yio.tro.antiyoy.Masking;
+import yio.tro.antiyoy.RectangleYio;
+import yio.tro.antiyoy.menu.InterfaceElement;
+import yio.tro.antiyoy.menu.LevelSelector;
+import yio.tro.antiyoy.menu.MenuRender;
 
-public class RenderLevelSelector extends MenuRender{
+public class RenderLevelSelector extends MenuRender {
 
     TextureRegion blackPixel;
 
@@ -32,7 +38,7 @@ public class RenderLevelSelector extends MenuRender{
     }
 
 
-    void renderLevelSelector(LevelSelector levelSelector) {
+    public void renderLevelSelector(LevelSelector levelSelector) {
         if (levelSelector.getFactor().get() == 0) return;
         c = batch.getColor();
 

@@ -1,16 +1,24 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.ai;
+
+import yio.tro.antiyoy.GameController;
+import yio.tro.antiyoy.Hex;
+import yio.tro.antiyoy.Province;
+import yio.tro.antiyoy.Unit;
 
 import java.util.ArrayList;
 
-public class AiNormalGenericRules extends ArtificialIntelligenceGeneric{
+/**
+ * Created by ivan on 24.11.2015.
+ */
+public class AiEasy extends ArtificialIntelligence {
 
-    public AiNormalGenericRules(GameController gameController, int color) {
+    public AiEasy(GameController gameController, int color) {
         super(gameController, color);
     }
 
 
     @Override
-    void makeMove() {
+    public void makeMove() {
         ArrayList<Unit> unitsReadyToMove = detectUnitsReadyToMove();
 
         moveUnits(unitsReadyToMove);
@@ -21,15 +29,13 @@ public class AiNormalGenericRules extends ArtificialIntelligenceGeneric{
 
     @Override
     void decideAboutUnit(Unit unit, ArrayList<Hex> moveZone, Province province) {
-        if (checkChance(0.5)) return;
-        super.decideAboutUnit(unit, moveZone, province);
+        if (checkToCleanSomeTrees(unit, moveZone, province)) return;
+        gameController.moveUnit(unit, moveZone.get(random.nextInt(moveZone.size())), province);
     }
 
 
     @Override
     void tryToBuildUnits(Province province) {
-        tryToBuildUnitsOnPalms(province);
-
         for (int i = 1; i <= 4; i++) {
             if (!province.hasEnoughIncomeToAffordUnit(i)) break;
             while (province.hasMoneyForUnit(i)) {
@@ -40,5 +46,17 @@ public class AiNormalGenericRules extends ArtificialIntelligenceGeneric{
         // this is to kick start province
         if (province.hasMoneyForUnit(1) && howManyUnitsInProvince(province) <= 1)
             tryToAttackWithStrength(province, 1);
+    }
+
+
+    @Override
+    void tryToBuildTowers(Province province) {
+        return; // easy AI can't build towers
+    }
+
+
+    @Override
+    void mergeUnits(Province province) {
+        return; // easy AI can't merge units
     }
 }

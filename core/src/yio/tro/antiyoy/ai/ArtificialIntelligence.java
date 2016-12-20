@@ -1,4 +1,9 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.ai;
+
+import yio.tro.antiyoy.GameController;
+import yio.tro.antiyoy.Hex;
+import yio.tro.antiyoy.Province;
+import yio.tro.antiyoy.Unit;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -6,10 +11,17 @@ import java.util.Random;
 /**
  * Created by ivan on 26.10.2014.
  */
-abstract class ArtificialIntelligence {
+public abstract class ArtificialIntelligence {
+
+    public static final int DIFFICULTY_EASY = 0;
+    public static final int DIFFICULTY_NORMAL = 1;
+    public static final int DIFFICULTY_HARD = 2;
+    public static final int DIFFICULTY_EXPERT = 3;
+    public static final int DIFFICULTY_BALANCER = 4;
+
     final GameController gameController;
     final Random random;
-    private final int color;
+    protected final int color;
 
 
     ArtificialIntelligence(GameController gameController, int color) {
@@ -66,7 +78,7 @@ abstract class ArtificialIntelligence {
     }
 
 
-    abstract void makeMove();
+    public abstract void makeMove();
 
 
     void moveAfkUnit(Province province, Unit unit) {
@@ -222,7 +234,7 @@ abstract class ArtificialIntelligence {
             boolean cleanedTrees = checkToCleanSomeTrees(unit, moveZone, province);
             if (!cleanedTrees) {
                 if (unit.currHex.isInPerimeter()) {
-                    pushUnitToDefenseLine(unit, province);
+                    pushUnitToBetterDefense(unit, province);
                 }
             }
         }
@@ -234,7 +246,7 @@ abstract class ArtificialIntelligence {
     }
 
 
-    void pushUnitToDefenseLine(Unit unit, Province province) {
+    void pushUnitToBetterDefense(Unit unit, Province province) {
         for (int i = 0; i < 6; i++) {
             Hex adjHex = unit.currHex.adjacentHex(i);
             if (adjHex.active && adjHex.sameColor(unit.currHex) && adjHex.isFree() && adjHex.howManyEnemyHexesNear() == 0) {
@@ -244,7 +256,7 @@ abstract class ArtificialIntelligence {
     }
 
 
-    int numberOfAdjacentHexesWithThisColor(Hex hex, int color) {
+    int getAttackAllure(Hex hex, int color) {
         int c = 0;
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.adjacentHex(i);
@@ -254,9 +266,10 @@ abstract class ArtificialIntelligence {
     }
 
 
-    Hex findHexAttractiveToBaron(ArrayList<Hex> attackableHexes) {
+    Hex findHexAttractiveToBaron(ArrayList<Hex> attackableHexes, int strength) {
         for (Hex attackableHex : attackableHexes) {
             if (attackableHex.objectInside == Hex.OBJECT_TOWER) return attackableHex;
+            if (strength == 4 && attackableHex.objectInside == Hex.OBJECT_STRONG_TOWER) return attackableHex;
         }
         for (Hex attackableHex : attackableHexes) {
             if (attackableHex.isDefendedByTower()) return attackableHex;
@@ -267,14 +280,14 @@ abstract class ArtificialIntelligence {
 
     Hex findMostAttractiveHex(ArrayList<Hex> attackableHexes, Province province, int strength) {
         if (strength == 3 || strength == 4) {
-            Hex hex = findHexAttractiveToBaron(attackableHexes);
+            Hex hex = findHexAttractiveToBaron(attackableHexes, strength);
             if (hex != null) return hex;
         }
 
         Hex result = null;
         int currMax = -1;
         for (Hex attackableHex : attackableHexes) {
-            int currNum = numberOfAdjacentHexesWithThisColor(attackableHex, province.getColor());
+            int currNum = getAttackAllure(attackableHex, province.getColor());
             if (currNum > currMax) {
                 currMax = currNum;
                 result = attackableHex;

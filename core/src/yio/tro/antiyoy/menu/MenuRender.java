@@ -1,7 +1,8 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.menu;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import yio.tro.antiyoy.*;
 
 import java.util.ArrayList;
 import java.util.ListIterator;

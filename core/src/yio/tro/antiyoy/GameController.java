@@ -3,7 +3,10 @@ package yio.tro.antiyoy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import yio.tro.antiyoy.ai.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.menu.ButtonYio;
+import yio.tro.antiyoy.menu.SliderYio;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -19,7 +22,6 @@ public class GameController {
     int maxTouchCount, currentTouchCount, lastTouchCount;
     public static int colorNumber = 5;
     public static boolean slay_rules = false;
-    public static float sensitivity;
     public static final int MAX_COLOR_NUMBER = 7;
     public static final int SIZE_SMALL = 1;
     public static final int SIZE_MEDIUM = 2;
@@ -29,13 +31,9 @@ public class GameController {
     public static final int PRICE_TOWER = 15;
     public static final int PRICE_FARM = 12;
     public static final int PRICE_STRONG_TOWER = 50;
-    public static final int EASY = 0;
-    public static final int NORMAL = 1;
-    public static final int HARD = 2;
-    public static final int EXPERT = 3;
-    Random random, predictableRandom;
+    public Random random, predictableRandom;
     private LanguagesManager languagesManager;
-    boolean tutorialMode, multiTouchDetected, letsUpdateCacheByAnim, updateWholeCache, campaignMode, editorMode;
+    public boolean tutorialMode, multiTouchDetected, letsUpdateCacheByAnim, updateWholeCache, campaignMode, editorMode;
     int progress; // progress - index of unlocked level
     long currentTime;
     private long lastTimeTouched;
@@ -44,7 +42,7 @@ public class GameController {
     private boolean letsCheckAnimHexes;
     private boolean checkToMarch, ignoreMarch;
     float defaultBubbleRadius, hexSize, hexStep1, hexStep2;
-    Hex field[][];
+    public Hex field[][];
     ArrayList<Hex> activeHexes, selectedHexes, animHexes;
     int fWidth, fHeight, turn, levelSize;
     PointYio fieldPos;
@@ -61,8 +59,8 @@ public class GameController {
     ArrayList<Hex> solidObjects, moveZone, defenseTips;
     ArrayList<Unit> unitList;
     Unit selectedUnit;
-    FactorYio selUnitFactor, selMoneyFactor, responseAnimFactor, tipFactor, moveZoneFactor, blackoutFactor, defenseTipFactor;
-    ArrayList<Province> provinces;
+    public FactorYio selUnitFactor, selMoneyFactor, responseAnimFactor, tipFactor, moveZoneFactor, blackoutFactor, defenseTipFactor;
+    public ArrayList<Province> provinces;
     Province selectedProvince;
     int selectedProvinceMoney, tipType, tipShowType, marchDelay, playersNumber, currentLevelIndex, compensationOffsetY, defTipDelay;
     int difficulty, colorIndexViewOffset, neutralLandsIndex;
@@ -70,6 +68,7 @@ public class GameController {
     double currentCamSpeed, zoomUpperLimit, cameraOffset;
     private ArrayList<LevelSnapshot> levelSnapshots;
     long timeToCheckAnimHexes, defTipSpawnTime;
+    float priceStringWidth;
     MapGenerator mapGeneratorSlay, mapGeneratorGeneric;
     Unit jumperUnit;
     public Statistics statistics;
@@ -78,6 +77,7 @@ public class GameController {
     public TutorialScript tutorialScript;
     private CampaignLevelFactory campaignLevelFactory;
     private LevelEditor levelEditor;
+    private int[] playerHexCount;
 
 
     public GameController(YioGdxGame yioGdxGame) {
@@ -171,8 +171,19 @@ public class GameController {
             detectProvinces();
             deselectAll();
             detectNeutralLands();
+            takeAwaySomeMoneyToAchieveBalance();
         }
         prepareCertainUnitsToMove();
+    }
+
+
+    private void takeAwaySomeMoneyToAchieveBalance() {
+        // so the problem is that all players except first
+        // get income in the first turn
+        for (Province province : provinces) {
+            if (province.getColor() == 0) continue; // first player is not getting income at first turn
+            province.money -= province.getIncome() - province.getTaxes();
+        }
     }
 
 
@@ -324,6 +335,7 @@ public class GameController {
 
 
     private void moveCheckToMarch() {
+        if (!Settings.long_tap_to_move) return;
         if (ignoreMarch) return;
         if (!checkToMarch) return;
         if (currentTouchCount != 1) return;
@@ -332,7 +344,8 @@ public class GameController {
 
         checkToMarch = false;
         updateFocusedHex();
-        if (focusedHex.active) {
+        selectedUnit = null;
+        if (focusedHex != null && focusedHex.active) {
             marchUnitsToHex(focusedHex);
         }
     }
@@ -364,7 +377,7 @@ public class GameController {
 
 
     private boolean canEndTurn() {
-        if (YioGdxGame.CHECKING_BALANCE_MODE) return true; // fast forward when measuring balance
+        if (Debug.CHECKING_BALANCE_MODE) return true; // fast forward when measuring balance
         if (!readyToEndTurn) return false;
         if (currentCamSpeed > 0.01) return false;
         if (Math.abs(camDZoom) > 0.01) return false;
@@ -398,11 +411,30 @@ public class GameController {
 
     private int checkIfWeHaveWinner() {
         if (activeHexes.size() == 0) return -1;
-        int color = activeHexes.get(0).colorIndex;
-        for (Hex activeHex : activeHexes) {
-            if (activeHex.colorIndex != color) return -1;
+        if (numberOfActiveProvinces() != 1) return -1;
+
+        for (Province province : provinces) {
+            if (province.hexList.get(0).isNeutral()) continue;
+            return province.getColor();
         }
-        return color;
+        System.out.println("wtf?"); // this detects a possible bug
+        return -1;
+
+//        color = activeHexes.get(0).colorIndex;
+//        for (Hex activeHex : activeHexes) {
+//            if (activeHex.colorIndex != color) return -1;
+//        }
+//        return color;
+    }
+
+
+    private int numberOfActiveProvinces() {
+        int c = 0;
+        for (Province province : provinces) {
+            if (province.hexList.get(0).isNeutral()) continue;
+            c++;
+        }
+        return c;
     }
 
 
@@ -416,12 +448,16 @@ public class GameController {
 
 
     public int[] getPlayerHexCount() {
-        int playerHexCount[] = new int[colorNumber];
+        for (int i = 0; i < playerHexCount.length; i++) {
+            playerHexCount[i] = 0;
+        }
+
         for (Hex activeHex : activeHexes) {
             if (activeHex.isNeutral()) continue;
             if (activeHex.isInProvince())
                 playerHexCount[activeHex.colorIndex]++;
         }
+
         return playerHexCount;
     }
 
@@ -429,7 +465,7 @@ public class GameController {
     private int possibleWinner() {
         int numberOfAllHexes = activeHexes.size();
         for (Province province : provinces) {
-            if (province.hexList.size() > 0.5 * numberOfAllHexes) {
+            if (province.hexList.size() > 0.52 * numberOfAllHexes) {
                 return province.getColor();
             }
         }
@@ -463,7 +499,7 @@ public class GameController {
         }
 
         // too long game
-        if (statistics.turnsMade == 299) {
+        if (Settings.turns_limit && statistics.turnsMade == 299) {
             int playerHexCount[] = getPlayerHexCount();
             endGame(indexOfNumberInArray(playerHexCount, maxNumberFromArray(playerHexCount)));
         }
@@ -500,11 +536,12 @@ public class GameController {
         for (Hex activeHex : activeHexes) {
             activeHex.colorIndex = maxColor;
         }
+        detectProvinces();
         checkToEndGame();
     }
 
 
-    boolean completedCampaignLevel(int winColor) {
+    public boolean completedCampaignLevel(int winColor) {
         return campaignMode && winColor == 0;
     }
 
@@ -525,7 +562,7 @@ public class GameController {
             }
         }
         yioGdxGame.menuControllerYio.createAfterGameMenu(winColor, isPlayerTurn(winColor));
-        if (YioGdxGame.CHECKING_BALANCE_MODE) {
+        if (Debug.CHECKING_BALANCE_MODE) {
             yioGdxGame.balanceIndicator[winColor]++;
             yioGdxGame.startGame(true, false);
         }
@@ -534,7 +571,6 @@ public class GameController {
 
     private void turnEndActions() {
         checkToEndGame();
-        collectTributesAndPayTaxes();
         for (Unit unit : unitList) {
             unit.setReadyToMove(false);
             unit.stopJumping();
@@ -553,6 +589,7 @@ public class GameController {
         }
         prepareCertainUnitsToMove();
         transformGraves(); // this must be called before 'check for bankrupts' and after 'expand trees'
+        collectTributesAndPayTaxes();
         checkForBankrupts();
         checkForAloneUnits();
         if (isCurrentTurn(0)) yioGdxGame.gameView.updateCacheLevelTextures();
@@ -568,7 +605,7 @@ public class GameController {
                 animHex.animFactor.setValues(1, 0);
             }
         }
-        if (YioGdxGame.autosave && turn == 0 && playersNumber == 1) autoSave();
+        if (Settings.autosave && turn == 0 && playersNumber > 0) autoSave();
     }
 
 
@@ -763,7 +800,7 @@ public class GameController {
     private void cameraMovement() {
         if (editorMode && !levelEditor.isCameraMovementAllowed()) return;
 
-        float k = sensitivity * deltaMovementFactor * 0.025f;
+        float k = Settings.sensitivity * deltaMovementFactor * 0.025f;
         yioGdxGame.gameView.orthoCam.translate(k * camDx, k * camDy);
         yioGdxGame.gameView.updateCam();
         if ((currentTouchCount == 0 && currentTime > lastTimeTouched + 10) || (currentTouchCount == 1 && currentTime > lastTimeDragged + 10)) {
@@ -772,11 +809,11 @@ public class GameController {
         }
         currentCamSpeed = YioGdxGame.distance(0, 0, camDx, camDy);
         if (Math.abs(camDZoom) > 0.01) {
-            if (trackerZoom > zoomUpperLimit) {
+            if (trackerZoom > zoomUpperLimit && camDZoom > 0) {
                 camDZoom = -0.1f;
                 blockMultiInputForSomeTime(50);
             }
-            if (trackerZoom < 0.5) {
+            if (trackerZoom < 0.5 && camDZoom < 0) {
                 camDZoom = 0.1f;
                 blockMultiInputForSomeTime(50);
             }
@@ -785,6 +822,8 @@ public class GameController {
             yioGdxGame.gameView.updateCam();
             if ((currentTouchCount == 0 && currentTime > lastTimeTouched + 10) || (currentTouchCount == 1 && currentTime > lastTimeDragged + 10)) {
                 camDZoom *= 0.75;
+            } else if (currentTouchCount > 1) {
+                camDZoom *= 0.95;
             }
         }
         fieldX1 = 0.5f * w - orthoCam.position.x / orthoCam.zoom;
@@ -862,6 +901,15 @@ public class GameController {
     }
 
 
+    public boolean atLeastOneUnitIsReadyToMove() {
+        int size = unitList.size();
+        for (Unit unit : unitList) {
+            if (unit.isReadyToMove()) return true;
+        }
+        return false;
+    }
+
+
     private void blockMultiInputForSomeTime(int time) {
         blockMultiInput = true;
         timeToUnblockMultiInput = System.currentTimeMillis() + time;
@@ -910,7 +958,7 @@ public class GameController {
 
     public void setPlayersNumber(int playersNumber) {
         this.playersNumber = playersNumber;
-        if (YioGdxGame.CHECKING_BALANCE_MODE) this.playersNumber = 0;
+        if (Debug.CHECKING_BALANCE_MODE) this.playersNumber = 0;
     }
 
 
@@ -955,6 +1003,7 @@ public class GameController {
         yioGdxGame.beginBackgroundChange(4, false, true);
 
         predictableRandom = new Random(index); // used in map generation
+        playerHexCount = new int[colorNumber];
         if (readParametersFromSliders) {
             setLevelSize(getLevelSizeBySliderPos(yioGdxGame.menuControllerYio.sliders.get(0)));
             setPlayersNumberBySlider(yioGdxGame.menuControllerYio.sliders.get(1));
@@ -973,7 +1022,7 @@ public class GameController {
         clearAnims();
         createAiList(difficulty);
         updateLevelInitialString();
-        if (YioGdxGame.CHECKING_BALANCE_MODE) {
+        if (Debug.CHECKING_BALANCE_MODE) {
             while (true) {
                 move();
                 checkToEndGame();
@@ -1055,41 +1104,48 @@ public class GameController {
     private void createAiList(int difficulty) {
         aiList = new ArrayList<ArtificialIntelligence>();
 
-        boolean testingNewAi = false;
-        if (YioGdxGame.CHECKING_BALANCE_MODE && testingNewAi && colorNumber == 5) {
-            aiList.add(new AiHardSlayRules(this, 0));
-            aiList.add(new AiHardSlayRules(this, 1));
-            aiList.add(new AiHardSlayRules(this, 2));
-            aiList.add(new AiExpertSlayRules(this, 3));
-            aiList.add(new AiExpertSlayRules(this, 4));
+        boolean testingNewAi = true;
+        if (Debug.CHECKING_BALANCE_MODE && testingNewAi && colorNumber == 5) {
+            aiList.add(new AiExpertSlayRules(this, 0));
+            aiList.add(new AiExpertSlayRules(this, 1));
+            aiList.add(new AiExpertSlayRules(this, 2));
+            aiList.add(new AiBalancerSlayRules(this, 3));
+            aiList.add(new AiBalancerSlayRules(this, 4));
             return;
         }
 
         for (int i = 0; i < colorNumber; i++) {
             switch (difficulty) {
                 default:
-                case EASY:
+                case ArtificialIntelligence.DIFFICULTY_EASY:
                     aiList.add(new AiEasy(this, i));
                     break;
-                case NORMAL:
+                case ArtificialIntelligence.DIFFICULTY_NORMAL:
                     if (GameController.slay_rules) {
                         aiList.add(new AiNormalSlayRules(this, i));
                     } else {
                         aiList.add(new AiNormalGenericRules(this, i));
                     }
                     break;
-                case HARD:
+                case ArtificialIntelligence.DIFFICULTY_HARD:
                     if (GameController.slay_rules) {
                         aiList.add(new AiHardSlayRules(this, i));
                     } else {
                         aiList.add(new AiHardGenericRules(this, i));
                     }
                     break;
-                case EXPERT:
+                case ArtificialIntelligence.DIFFICULTY_EXPERT:
                     if (GameController.slay_rules) {
                         aiList.add(new AiExpertSlayRules(this, i));
                     } else {
                         aiList.add(new AiExpertGenericRules(this, i));
+                    }
+                    break;
+                case ArtificialIntelligence.DIFFICULTY_BALANCER:
+                    if (GameController.slay_rules) {
+                        aiList.add(new AiBalancerSlayRules(this, i));
+                    } else {
+                        aiList.add(new AiBalancerGenericRules(this, i));
                     }
                     break;
             }
@@ -1213,10 +1269,20 @@ public class GameController {
 
     public void debugActions() {
 //        System.out.println("" + gameSaver.getActiveHexesString());
-//        for (Hex activeHex : activeHexes) {
-//            if (random.nextDouble() > 0.5)
-//                setHexColor(activeHex, 0);
+
+        for (Hex activeHex : activeHexes) {
+            if (random.nextDouble() > 0.5)
+                setHexColor(activeHex, 0);
+        }
+
+//        StringBuilder builder = new StringBuilder();
+//        for (Province province : provinces) {
+//            if (province.getColor() == 0) continue;
+//            String balance = province.getBalanceString();
+//            if (balance.equals("0")) balance = "+0";
+//            builder.append(province.money).append(balance).append("  ");
 //        }
+//        System.out.println(builder.toString());
     }
 
 
@@ -1376,7 +1442,7 @@ public class GameController {
 
 
     private void destroyBuildingsOnHex(Hex hex) {
-        boolean hadHouse = (hex.objectInside == Hex.OBJECT_HOUSE);
+        boolean hadHouse = (hex.objectInside == Hex.OBJECT_TOWN);
         if (hex.containsBuilding()) cleanOutHex(hex);
 //        if (hex.containsUnit()) killUnitOnHex(hex);
         if (hadHouse) {
@@ -1434,9 +1500,9 @@ public class GameController {
 
 
     private void autoSave() {
-        if (YioGdxGame.interface_type == YioGdxGame.INTERFACE_SIMPLE) {
+        if (Settings.interface_type == Settings.INTERFACE_SIMPLE) {
             gameSaver.saveGame();
-        } else if (YioGdxGame.interface_type == YioGdxGame.INTERFACE_COMPLICATED) {
+        } else if (Settings.interface_type == Settings.INTERFACE_COMPLICATED) {
             gameSaver.saveGameToSlot(0);
         }
     }
@@ -1460,7 +1526,7 @@ public class GameController {
     }
 
 
-    int mergedUnitStrength(Unit unit1, Unit unit2) {
+    public int mergedUnitStrength(Unit unit1, Unit unit2) {
         return unit1.strength + unit2.strength;
     }
 
@@ -1475,7 +1541,7 @@ public class GameController {
     }
 
 
-    boolean mergeUnits(Hex hex, Unit unit1, Unit unit2) {
+    public boolean mergeUnits(Hex hex, Unit unit1, Unit unit2) {
         if (canMergeUnits(unit1, unit2)) {
             cleanOutHex(unit1.currHex);
             cleanOutHex(unit2.currHex);
@@ -1498,7 +1564,7 @@ public class GameController {
     }
 
 
-    boolean buildUnit(Province province, Hex hex, int strength) {
+    public boolean buildUnit(Province province, Hex hex, int strength) {
         if (province == null || hex == null) return false;
         if (province.hasMoneyForUnit(strength)) {
             // check if can build unit
@@ -1526,7 +1592,6 @@ public class GameController {
                 updateCacheOnceAfterSomeTime();
             }
             updateBalanceString();
-            statistics.unitWasProduced();
             return true;
         }
         // can't build unit
@@ -1535,7 +1600,7 @@ public class GameController {
     }
 
 
-    boolean buildTower(Province province, Hex hex) {
+    public boolean buildTower(Province province, Hex hex) {
         if (province == null) return false;
         if (province.hasMoneyForTower()) {
             takeSnapshot();
@@ -1554,7 +1619,7 @@ public class GameController {
     }
 
 
-    boolean buildStrongTower(Province province, Hex hex) {
+    public boolean buildStrongTower(Province province, Hex hex) {
         if (province == null) return false;
         if (province.hasMoneyForStrongTower()) {
             takeSnapshot();
@@ -1573,9 +1638,9 @@ public class GameController {
     }
 
 
-    boolean buildFarm(Province province, Hex hex) {
+    public boolean buildFarm(Province province, Hex hex) {
         if (province == null) return false;
-        if (!hex.hasThisObjectNearby(Hex.OBJECT_HOUSE) && !hex.hasThisObjectNearby(Hex.OBJECT_FARM)) {
+        if (!hex.hasThisObjectNearby(Hex.OBJECT_TOWN) && !hex.hasThisObjectNearby(Hex.OBJECT_FARM)) {
             return false;
         }
         if (province.hasMoneyForFarm()) {
@@ -1596,8 +1661,11 @@ public class GameController {
 
 
     public void restartGame() {
+        int currentColorOffset = colorIndexViewOffset;
+
         gameSaver.setActiveHexesString(levelInitialString);
         gameSaver.beginRecreation(false);
+        colorIndexViewOffset = currentColorOffset;
         gameSaver.endRecreation();
     }
 
@@ -1620,20 +1688,17 @@ public class GameController {
     private void updateCurrentPriceString() {
         if (tipType == 0) {
             currentPriceString = "$" + PRICE_TOWER;
-            return;
         }
         if (tipType >= 1 && tipType <= 4) {
             currentPriceString = "$" + (PRICE_UNIT * tipType);
-            return;
         }
         if (tipType == 5) {
             currentPriceString = "$" + (PRICE_FARM + selectedProvince.getExtraFarmCost());
-            return;
         }
         if (tipType == 6) {
             currentPriceString = "$" + PRICE_STRONG_TOWER;
-            return;
         }
+        priceStringWidth = GraphicsYio.getTextWidth(YioGdxGame.gameFont, currentPriceString);
     }
 
 
@@ -1764,7 +1829,7 @@ public class GameController {
         unFlagAllHexesInArrayList(activeHexes);
         ArrayList<Hex> result = new ArrayList<Hex>();
         for (Hex hex : selectedProvince.hexList) {
-            if (hex.hasThisObjectNearby(Hex.OBJECT_FARM) || hex.hasThisObjectNearby(Hex.OBJECT_HOUSE)) {
+            if (hex.hasThisObjectNearby(Hex.OBJECT_FARM) || hex.hasThisObjectNearby(Hex.OBJECT_TOWN)) {
                 hex.inMoveZone = true;
                 result.add(hex);
             }
@@ -1774,12 +1839,12 @@ public class GameController {
     }
 
 
-    ArrayList<Hex> detectMoveZone(Hex startHex, int strength) {
+    public ArrayList<Hex> detectMoveZone(Hex startHex, int strength) {
         return detectMoveZone(startHex, strength, 9001); // move limit is almost infinite
     }
 
 
-    ArrayList<Hex> detectMoveZone(Hex startHex, int strength, int moveLimit) {
+    public ArrayList<Hex> detectMoveZone(Hex startHex, int strength, int moveLimit) {
         unFlagAllHexesInArrayList(activeHexes);
         ArrayList<Hex> result = new ArrayList<Hex>();
         ArrayList<Hex> propagationList = new ArrayList<Hex>();
@@ -1889,7 +1954,7 @@ public class GameController {
     }
 
 
-    Province getProvinceByHex(Hex hex) {
+    public Province getProvinceByHex(Hex hex) {
         for (Province province : provinces) {
             if (province.containsHex(hex))
                 return province;
@@ -1953,7 +2018,7 @@ public class GameController {
                 destroyBuildingsOnHex(startHex);
             }
         }
-        if (provincesAdded.size() > 0 && !(hex.objectInside == Hex.OBJECT_HOUSE)) {
+        if (provincesAdded.size() > 0 && !(hex.objectInside == Hex.OBJECT_TOWN)) {
             getMaxProvinceFromList(provincesAdded).money = oldProvince.money;
 //            YioGdxGame.say("transferring money: " + oldProvince.money + ", color = " + getMaxProvinceFromList(provincesAdded).getColor());
         }
@@ -2048,7 +2113,7 @@ public class GameController {
     }
 
 
-    void moveUnit(Unit unit, Hex toWhere, Province unitProvince) {
+    public void moveUnit(Unit unit, Hex toWhere, Province unitProvince) {
         if (unit.currHex.sameColor(toWhere)) { // move peacefully
             if (!toWhere.containsUnit()) {
                 unit.moveToHex(toWhere);

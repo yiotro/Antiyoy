@@ -36,7 +36,7 @@ public class SoundControllerYio {
 
 
     public static void playSound(Sound sound) {
-        if (!YioGdxGame.SOUND) return;
+        if (!Settings.SOUND) return;
 
         sound.play();
     }
