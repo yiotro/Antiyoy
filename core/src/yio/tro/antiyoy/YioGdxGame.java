@@ -12,10 +12,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import yio.tro.antiyoy.ai.ArtificialIntelligence;
 import yio.tro.antiyoy.factor_yio.FactorYio;
-import yio.tro.antiyoy.menu.ButtonYio;
-import yio.tro.antiyoy.menu.MenuControllerYio;
-import yio.tro.antiyoy.menu.MenuRender;
-import yio.tro.antiyoy.menu.MenuViewYio;
+import yio.tro.antiyoy.menu.*;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -245,7 +242,10 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         prefs.putInteger("camera_offset", menuControllerYio.sliders.get(6).getCurrentRunnerIndex());
         prefs.putBoolean("turns_limit", menuControllerYio.getCheckButtonById(6).isChecked());
         prefs.putBoolean("long_tap_to_move", menuControllerYio.getCheckButtonById(7).isChecked());
-        prefs.putBoolean("water_texture", menuControllerYio.getCheckButtonById(10).isChecked());
+        CheckButtonYio chkWaterTexture = menuControllerYio.getCheckButtonById(10);
+        if (chkWaterTexture != null) {
+            prefs.putBoolean("water_texture", chkWaterTexture.isChecked());
+        }
         prefs.flush();
     }
 
@@ -263,7 +263,6 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         int soundIndex = prefs.getInteger("sound", 0);
         if (soundIndex == 0) Settings.SOUND = false;
         else Settings.SOUND = true;
-//        menuControllerYio.sliders.get(4).setRunnerValue(soundIndex);
         menuControllerYio.getCheckButtonById(5).setChecked(Settings.SOUND);
 
         // skin
@@ -274,14 +273,12 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
         // interface. Number of save slots
         Settings.interface_type = prefs.getInteger("interface", 0);
-//        menuControllerYio.sliders.get(6).setRunnerValue(interface_type);
         menuControllerYio.getCheckButtonById(2).setChecked(Settings.interface_type == 1);
 
         // autosave
         int AS = prefs.getInteger("autosave", 0);
         Settings.autosave = false;
         if (AS == 1) Settings.autosave = true;
-//        menuControllerYio.sliders.get(7).setRunnerValue(AS);
         menuControllerYio.getCheckButtonById(1).setChecked(Settings.autosave);
 
         // sensitivity
@@ -298,7 +295,6 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         // show city names
         int cityNames = prefs.getInteger("city_names", 0);
         gameController.setShowCityNames(cityNames);
-//        menuControllerYio.sliders.get(10).setRunnerValue(cityNames);
         menuControllerYio.getCheckButtonById(4).setChecked(cityNames == 1);
 
         // camera offset
@@ -308,12 +304,22 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
         // turns limit
         Settings.turns_limit = prefs.getBoolean("turns_limit", true);
+        menuControllerYio.getCheckButtonById(6).setChecked(Settings.turns_limit);
 
         // long tap to move
         Settings.long_tap_to_move = prefs.getBoolean("long_tap_to_move", true);
+        CheckButtonYio checkButtonById = menuControllerYio.getCheckButtonById(7);
+        if (checkButtonById != null) {
+            checkButtonById.setChecked(Settings.long_tap_to_move);
+        }
 
+        // water texture
         Settings.waterTexture = prefs.getBoolean("water_texture", false);
         gameView.loadBackgroundTexture();
+        CheckButtonYio chkWaterTexture = menuControllerYio.getCheckButtonById(10);
+        if (chkWaterTexture != null) {
+            chkWaterTexture.setChecked(Settings.waterTexture);
+        }
 
         menuControllerYio.sliders.get(5).updateValueString();
         menuControllerYio.sliders.get(6).updateValueString();

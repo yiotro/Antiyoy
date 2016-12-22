@@ -46,7 +46,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
     }
 
 
-    private boolean isHexDefendedBySomethingElse(Hex hex, Unit unit) {
+    protected boolean isHexDefendedBySomethingElse(Hex hex, Unit unit) {
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.adjacentHex(i);
             if (adjHex.active && adjHex.sameColor(hex)) {
@@ -58,7 +58,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
     }
 
 
-    private boolean unitCanMoveSafely(Unit unit) {
+    protected boolean unitCanMoveSafely(Unit unit) {
         int leftBehindNumber = 0;
         for (int i = 0; i < 6; i++) {
             Hex adjHex = unit.currHex.adjacentHex(i);
@@ -69,7 +69,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
     }
 
 
-    private void tryToAttackSomething(Unit unit, Province province, ArrayList<Hex> attackableHexes) {
+    protected void tryToAttackSomething(Unit unit, Province province, ArrayList<Hex> attackableHexes) {
         if (!unitCanMoveSafely(unit)) return;
         Hex mostAttackableHex = findMostAttractiveHex(attackableHexes, province, unit.strength);
         gameController.moveUnit(unit, mostAttackableHex, province);

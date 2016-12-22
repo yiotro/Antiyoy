@@ -77,14 +77,9 @@ public class MenuControllerYio {
 
     private void initCheckButtons() {
         checkButtons = new ArrayList<>();
-        CheckButtonYio.getCheckButton(this, generateRectangle(0, 0, 0, 0), 1);
-        CheckButtonYio.getCheckButton(this, generateRectangle(0, 0, 0, 0), 2);
-        CheckButtonYio.getCheckButton(this, generateRectangle(0, 0, 0, 0), 3);
-        CheckButtonYio.getCheckButton(this, generateRectangle(0, 0, 0, 0), 4);
-        CheckButtonYio.getCheckButton(this, generateRectangle(0, 0, 0, 0), 5);
-        CheckButtonYio.getCheckButton(this, generateRectangle(0, 0, 0, 0), 6);
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 30; i++) {
+            CheckButtonYio.getCheckButton(this, generateRectangle(0, 0, 0, 0), i + 1);
             getCheckButtonById(i + 1).destroy();
         }
     }
@@ -1755,8 +1750,9 @@ public class MenuControllerYio {
         }
         if (yioGdxGame.gameController.completedCampaignLevel(whoWon))
             message = languagesManager.getString("level_complete");
-        if (Debug.CHECKING_BALANCE_MODE && yioGdxGame.gamesPlayed() % 50 == 0)
+        if (Debug.CHECKING_BALANCE_MODE && yioGdxGame.gamesPlayed() % 50 == 0) {
             YioGdxGame.say(yioGdxGame.gamesPlayed() + " : " + yioGdxGame.getBalanceIndicatorString());
+        }
         ButtonYio textPanel = buttonFactory.getButton(generateRectangle(0.05, 0.4, 0.9, 0.2), 60, null);
         textPanel.cleatText();
         textPanel.addTextLine(message);

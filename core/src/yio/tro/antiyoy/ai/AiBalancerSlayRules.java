@@ -256,9 +256,16 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
         int bDefense = unitsNearby(b);
 
         if (aDefense == bDefense) {
-            return playerHexCount[b.colorIndex] - playerHexCount[a.colorIndex];
+            return getHexCount(b.colorIndex) - getHexCount(a.colorIndex);
         }
 
         return bDefense - aDefense;
+    }
+
+
+    protected int getHexCount(int index) {
+        if (index < 0) return 0;
+        if (index >= playerHexCount.length) return 0;
+        return playerHexCount[index];
     }
 }

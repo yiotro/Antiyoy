@@ -9,6 +9,7 @@ import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.SliderYio;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ListIterator;
 import java.util.Random;
 
@@ -454,8 +455,9 @@ public class GameController {
 
         for (Hex activeHex : activeHexes) {
             if (activeHex.isNeutral()) continue;
-            if (activeHex.isInProvince())
+            if (activeHex.isInProvince() && activeHex.colorIndex >= 0 && activeHex.colorIndex < playerHexCount.length) {
                 playerHexCount[activeHex.colorIndex]++;
+            }
         }
 
         return playerHexCount;
@@ -533,10 +535,17 @@ public class GameController {
                 break;
             }
         }
+
+        provinces.clear();
+        ArrayList<Hex> hexList = new ArrayList<>();
         for (Hex activeHex : activeHexes) {
-            activeHex.colorIndex = maxColor;
+            if (activeHex.colorIndex == maxColor) {
+                hexList.add(activeHex);
+                break;
+            }
         }
-        detectProvinces();
+        provinces.add(new Province(this, hexList));
+
         checkToEndGame();
     }
 
@@ -1106,11 +1115,17 @@ public class GameController {
 
         boolean testingNewAi = true;
         if (Debug.CHECKING_BALANCE_MODE && testingNewAi && colorNumber == 5) {
-            aiList.add(new AiExpertSlayRules(this, 0));
-            aiList.add(new AiExpertSlayRules(this, 1));
-            aiList.add(new AiExpertSlayRules(this, 2));
-            aiList.add(new AiBalancerSlayRules(this, 3));
-            aiList.add(new AiBalancerSlayRules(this, 4));
+//            aiList.add(new AiExpertSlayRules(this, 0));
+//            aiList.add(new AiExpertSlayRules(this, 1));
+//            aiList.add(new AiExpertSlayRules(this, 2));
+//            aiList.add(new AiBalancerSlayRules(this, 3));
+//            aiList.add(new AiBalancerSlayRules(this, 4));
+
+            aiList.add(new AiExpertGenericRules(this, 0));
+            aiList.add(new AiExpertGenericRules(this, 1));
+            aiList.add(new AiExpertGenericRules(this, 2));
+            aiList.add(new AiBalancerGenericRules(this, 3));
+            aiList.add(new AiBalancerGenericRules(this, 4));
             return;
         }
 
