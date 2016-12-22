@@ -54,8 +54,8 @@
         #Italian translation
         #Louis Philibert-Morrissette:
         #French translation
-        #Istvan Galpal:
-        #Hungarian and romanian
+        #
+        #
         #
         #"/>
 
@@ -85,6 +85,7 @@
         <string key="normal" value="normal"/>
         <string key="hard" value="hard"/>
         <string key="expert" value="expert"/>
+        <string key="balancer" value="balancer"/>
         <string key="player_color" value="Player color"/>
 
         <!-- In game menu -->
@@ -100,6 +101,7 @@
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Ok"/>
+        <string key="end_game_okay" value="Okay..."/>
         <string key="player" value="player"/>
         <string key="ai" value="AI"/>
         <string key="won" value="won"/>
@@ -166,7 +168,7 @@
         <string key="gen_lets_build_farm" value="Let's build a farm to get even higher income."/>
         <string key="gen_press_button_twice" value="Press button twice"/>
         <string key="gen_build_farm" value="Farms can only be built near capital or other farms."/>
-        <string key="gen_about_farms" value="Every farm gives 3 coins per turn. Every new farm costs more than previous."/>
+        <string key="gen_about_farms" value="Every farm gives 4 coins per turn. Every new farm costs more than previous."/>
         <string key="gen_lets_build_peasant" value="Let's build a new unit and capture neutral hex."/>
         <string key="gen_press_button" value="Press button at the bottom"/>
         <string key="gen_build_peasant" value="Place your unit on hex near city borders."/>
@@ -314,13 +316,19 @@
         <string key="random" value="Random"/>
         <string key="exported" value="Map in clipboard"/>
         <string key="editor_clear" value="Clear"/>
+        <string key="no" value="No"/>
+        <string key="yes" value="Yes"/>
+        <string key="confirm_import" value="Confirm import"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" #Autosave
-            # #Several slots
-            # #Ask turn end
-            # #City names
-            # #Sound"/>
+        <string key="main_label" value=" # Autosave
+            # # Several slots
+            # # Ask turn end
+            # # City names
+            # # Sound
+            # # Limited turns
+            # # Long tap to move
+            # # "/>
         <string key="skin" value="Skin"/>
         <string key="original" value="original"/>
         <string key="points" value="points"/>
@@ -329,6 +337,11 @@
         <string key="more" value="More"/>
         <string key="camera_offset" value="Camera offset"/>
         <string key="slay_rules" value="Slay rules"/>
+        <string key="language" value="Language"/>
+        <string key="more_settings_checks" value="# #Water texture # # "/>
+
+        <!-- Single messages -->
+        <string key="achikaps_release" value="Hi. # #I've made a new game, it's called 'Achikaps'. It's a simple economic strategy without donations or ads. Hope you'll enjoy it :)"/>
     </language>
 
 
@@ -385,8 +398,8 @@
         #Итальянский перевод
         #Louis Philibert-Morrissette:
         #Французский перевод
-        #Istvan Galpal:
-        #Венгерский и румынский
+        #
+        #
         #
         #"/>
 
@@ -416,6 +429,7 @@
         <string key="normal" value="обычный"/>
         <string key="hard" value="сложный"/>
         <string key="expert" value="эксперт"/>
+        <string key="balancer" value="балансировщик"/>
         <string key="player_color" value="Цвет игрока"/>
 
         <!-- In game menu -->
@@ -431,6 +445,7 @@
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Хорошо"/>
+        <string key="end_game_okay" value="Ладно"/>
         <string key="player" value="игрок"/>
         <string key="ai" value="комп"/>
         <string key="won" value="победил"/>
@@ -497,7 +512,7 @@
         <string key="gen_lets_build_farm" value="Давай построим ферму чтобы увеличить прибыль города."/>
         <string key="gen_press_button_twice" value="Нажми дважды на кнопку"/>
         <string key="gen_build_farm" value="Фермы можно строить только рядом с городом или рядом с другими фермами."/>
-        <string key="gen_about_farms" value="Каждая ферма приносит 3 монеты в ход. Каждая новая ферма стоит дороже предыдущей."/>
+        <string key="gen_about_farms" value="Каждая ферма приносит 4 монеты в ход. Каждая новая ферма стоит дороже предыдущей."/>
         <string key="gen_lets_build_peasant" value="Давай построим нового юнита и сразу захватим ничейную ячейку."/>
         <string key="gen_press_button" value="Нажми на кнопку снизу"/>
         <string key="gen_build_peasant" value="Поставь нового юнита на ячейку рядом с границей города."/>
@@ -513,10 +528,10 @@
         <string key="gen_why_units_die" value="Если деньги у города кончатся, то юниты умрут. Поэтому надо следить чтобы прибыль была больше нуля."/>
         <string key="gen_about_trees_one" value="Деревья тоже представляют опасность. Ячейки на которых растет дерево не приносят дохода."/>
         <string key="gen_about_trees_two" value="Деревья лучше рубить сразу, пока их мало."/>
-        <string key="gen_end_turn" value="Чтобы закончить ход нажми на кнопку справу снизу."/>
+        <string key="gen_end_turn" value="Чтобы закончить ход нажми на кнопку справа снизу."/>
         <string key="gen_choose_to_merge" value="Юнитов также можно схлопывать. Выбери нижнего крестьянина."/>
         <string key="gen_merge_units" value="Теперь когда крестьянин выбран, нажми на верхнего чтобы схлопнуть их."/>
-        <string key="gen_long_tap" value="Если юнитов слишком много, то можно двигать сразу всех по длинному тапу."/>
+        <string key="gen_long_tap" value="Если юнитов слишком много, то можно двигать сразу всех по долгому тапу."/>
         <string key="gen_several_provinces" value="Городов может быть несколько, причем у каждого своя экономика."/>
 
         <!-- Tutorial help -->
@@ -648,13 +663,19 @@
         <string key="random" value="Случайно"/>
         <string key="exported" value="Карта в буфере обмена"/>
         <string key="editor_clear" value="Очистить"/>
+        <string key="no" value="Нет"/>
+        <string key="yes" value="Да"/>
+        <string key="confirm_import" value="Подтвердите импорт"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" #Автосохранение
-            # #Несколько слотов
-            # #Спраш. конец хода
-            # #Имена городов
-            # #Звук"/>
+        <string key="main_label" value=" # Автосохранение
+            # # Несколько слотов
+            # # Спраш. конец хода
+            # # Имена городов
+            # # Звук
+            # # Лимит ходов
+            # # Быстрое перемещение
+            # # "/>
         <string key="skin" value="Скин"/>
         <string key="original" value="обычный"/>
         <string key="points" value="точки"/>
@@ -663,6 +684,11 @@
         <string key="more" value="Еще"/>
         <string key="camera_offset" value="Отступ камеры"/>
         <string key="slay_rules" value="Правила Slay"/>
+        <string key="language" value="Язык"/>
+        <string key="more_settings_checks" value="# #Текстура воды # # "/>
+
+        <!-- Single messages -->
+        <string key="achikaps_release" value="Привет. # #Я сделал новую игру, она называется 'Achikaps'. Это простая экономическая стратегия без доната и рекламы. Надеюсь вам понравится :)"/>
     </language>
 
 
@@ -670,15 +696,15 @@
 
     <language name="uk_UA">
         <!-- All characters -->
-        <string key="lang_characters" value="йцукенгшщзхъёфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮіІїЇєЄö"/>
+        <string key="lang_characters" value="йцукенгшщзхъёфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮiІїЇєЄö"/>
 
         <!-- Main menu -->
         <string key="main_menu_info" value="Інфо"/>
-        <string key="main_menu_exit" value="Вихід"/>
-        <string key="main_menu_something" value="Білий текст в кутку"/>
+        <string key="main_menu_exit" value="Вихiд"/>
+        <string key="main_menu_something" value="Бiлий текст в кутку"/>
 
         <!-- Random stuff -->
-        <string key="menu_level" value="Рівень"/>
+        <string key="menu_level" value="Рiвень"/>
         <string key="menu_reset" value="Скинути"/>
         <string key="game_saved" value="Гра збережена"/>
         <string key="city_name_one" value="ки, мос, ми, до, пе"/>
@@ -687,15 +713,15 @@
 
         <!-- Info -->
         <string key="info_back" value="Назад"/>
-        <string key="info_array" value="Це проста стратегія у
-        #мінімалистичному стилі.
-        #Гра безкоштовна, в ній немає
+        <string key="info_array" value="Це проста стратегiя у
+        #мiнiмалистичному стилi.
+        #Гра безкоштовна, в нiй немає
         #реклами та донату.
-        #Щоб зрозуміти правила гри
-        #раджу пройти туторіал
+        #Щоб зрозумiти правила гри
+        #раджу пройти туторiал
         #
         #Гра базується на
-        #Slay від Sean O'Connor
+        #Slay вiд Sean O'Connor
         #
         #
         #
@@ -706,51 +732,52 @@
         #E-mail: yiotro93@gmail.com
         #Гру зробив yiotro
 		"/>
-        <string key="reset_campaign_data" value="Стерти дані"/>
+        <string key="reset_campaign_data" value="Стерти данi"/>
         <string key="special_thanks" value="Окреме дякую цим людям
         #
         #Rebecca Nöll:
-        #Німецький переклад
+        #Нiмецький переклад
         #Jirka Justra:
         #Чеський переклад
         #Olek Jablonski:
         #Польский переклад
         #Andrea Rinaldi:
-        #Італійский переклад
+        #Італiйский переклад
         #Louis Philibert-Morrissette:
         #Французький переклад
-        #Istvan Galpal:
-        #Угорський і румунський
+        #
+        #
         #
         #"/>
 
         <!-- Choose game mode menu-->
-        <string key="choose_game_mode_skirmish" value="Швидкий бій"/>
-        <string key="choose_game_mode_tutorial" value="Туторіал"/>
-        <string key="choose_game_mode_campaign" value="Кампанія"/>
+        <string key="choose_game_mode_skirmish" value="Швидкий бiй"/>
+        <string key="choose_game_mode_tutorial" value="Туторiал"/>
+        <string key="choose_game_mode_campaign" value="Кампанiя"/>
         <string key="choose_game_mode_load" value="Завантажити"/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Назад"/>
-        <string key="game_settings_tutorial" value="Туторіал"/>
+        <string key="game_settings_tutorial" value="Туторiал"/>
         <string key="game_settings_start" value="Почати"/>
-        <string key="map_size" value="Розмір карти"/>
+        <string key="map_size" value="Розмiр карти"/>
         <string key="color_number" value="Кольори"/>
-        <string key="player_number" value="Гравці"/>
+        <string key="player_number" value="Гравцi"/>
         <string key="small" value="маленька"/>
         <string key="medium" value="середня"/>
         <string key="big" value="велика"/>
-        <string key="ai_only" value="Битва роботів"/>
+        <string key="ai_only" value="Битва роботiв"/>
         <string key="single_player" value="один гравець"/>
         <string key="multiplayer" value="мультиплеер"/>
-        <string key="colors" value="кольорів"/>
+        <string key="colors" value="кольорiв"/>
         <string key="color" value="кольори"/>
-        <string key="difficulty" value="Складність"/>
+        <string key="difficulty" value="Складнiсть"/>
         <string key="easy" value="легкий"/>
         <string key="normal" value="звичайний"/>
         <string key="hard" value="складний"/>
         <string key="expert" value="експерт"/>
-        <string key="player_color" value="Колір гравця"/>
+        <string key="balancer" value="балансувальник"/>
+        <string key="player_color" value="Колiр гравця"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Продовжити"/>
@@ -759,215 +786,216 @@
         <string key="in_game_menu_main_menu" value="Головне меню"/>
         <string key="in_game_menu_restart" value="Заново"/>
         <string key="confirm_restart" value="Почати заново?"/>
-        <string key="cancel" value="Відміна"/>
-        <string key="confirm_end_turn" value="Кінець кроку?"/>
+        <string key="cancel" value="Вiдмiна"/>
+        <string key="confirm_end_turn" value="Кiнець кроку?"/>
         <string key="yes" value="Так"/>
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Добре"/>
+        <string key="end_game_okay" value="Okay..."/>
         <string key="player" value="гравець"/>
         <string key="ai" value="комп"/>
         <string key="won" value="виграв"/>
         <string key="statistics" value="Статистика"/>
-        <string key="next" value="Далі"/>
-        <string key="level_complete" value="Рівень пройдено"/>
+        <string key="next" value="Далi"/>
+        <string key="level_complete" value="Рiвень пройдено"/>
         <string key="win_game" value="Перемога"/>
-        <string key="win_or_continue" value="Закінчити гру#або продовжити?"/>
+        <string key="win_or_continue" value="Закiнчити гру#або продовжити?"/>
 
         <!-- Colors -->
         <string key="green_player" value="Зелений"/>
         <string key="red_player" value="Червоний"/>
-        <string key="magenta_player" value="Фіолетовий"/>
+        <string key="magenta_player" value="Фiолетовий"/>
         <string key="cyan_player" value="Блакитний"/>
         <string key="yellow_player" value="Жовтий"/>
-        <string key="gray_player" value="Сірий"/>
+        <string key="gray_player" value="Сiрий"/>
         <string key="green_ai" value="Зелений"/>
         <string key="red_ai" value="Червоний"/>
-        <string key="magenta_ai" value="Фіолетовий"/>
+        <string key="magenta_ai" value="Фiолетовий"/>
         <string key="cyan_ai" value="Блакитний"/>
         <string key="yellow_ai" value="Жовтий"/>
-        <string key="gray_ai" value="Сірий"/>
+        <string key="gray_ai" value="Сiрий"/>
         <string key="green_menu" value="Зелений"/>
         <string key="red_menu" value="Червоний"/>
-        <string key="magenta_menu" value="Фіолетовий"/>
+        <string key="magenta_menu" value="Фiолетовий"/>
         <string key="cyan_menu" value="Блакитний"/>
         <string key="yellow_menu" value="Жовтий"/>
-        <string key="gray_menu" value="Сірий"/>
+        <string key="gray_menu" value="Сiрий"/>
 
         <!-- Tutorial -->
-        <string key="normal_rules" value="Звичайні правила"/>
+        <string key="normal_rules" value="Звичайнi правила"/>
         <string key="how_to_play" value="Як грати?"/>
         <string key="tutorial_ok" value="Добре"/>
-        <string key="tut_select_unit" value="Вибери юніта"/>
+        <string key="tut_select_unit" value="Вибери юнiта"/>
         <string key="tut_tap_on_hex" value="Натисни на поле"/>
         <string key="tut_press_button" value="Натисни кнопку"/>
         <string key="tut_build_tower" value="Побудуй вежу"/>
         <string key="tut_again" value="Ще раз"/>
         <string key="tut_build_spearman" value="Побудуй воїна"/>
-        <string key="tut_tap_to_undo" value="Натисни 'відміна'"/>
-        <string key="tut_tap_to_end_turn" value="Натисни 'кінець кроку'"/>
+        <string key="tut_tap_to_undo" value="Натисни 'вiдмiна'"/>
+        <string key="tut_tap_to_end_turn" value="Натисни 'кiнець кроку'"/>
         <string key="tut_hold_hex" value="Затисни на секунду"/>
-        <string key="tut_merge_units" value="Об'єднай юнітів"/>
+        <string key="tut_merge_units" value="Об'єднай юнiтiв"/>
         <string key="tut_good_luck" value="Вдалої гри!"/>
 
         <!-- Tutorial tips -->
-        <string key="tip_capture_with_units" value="Атакуй своїми юнітами#щоб захоплювати землі"/>
-        <string key="tip_about_money" value="Чим більше земель#тим більше грошей"/>
-        <string key="tip_build_towers" value="Будуй вежі щоб захистити#сусідні клітини"/>
-        <string key="tip_about_taxes" value="Сильні юніти потребують#більше грошей"/>
-        <string key="tip_about_defense" value="Юніти та будівлі також#захищають сусідні клітини"/>
-        <string key="tip_hold_to_march" value="Щоб швидко рухати армії#натисни і тримай"/>
-        <string key="tip_about_unit_death" value="Якщо грощі закінчатся,#то юніти помруть.#Тому будь обережним"/>
-        <string key="tip_merging" value="Об'єднуй юнітів щоб#отримати сильніших"/>
-        <string key="tip_trees" value="Дерева зменшують дохід.#Тому їх треба рубати"/>
-        <string key="tip_help" value="Більше подробиць#у довідці"/>
+        <string key="tip_capture_with_units" value="Атакуй своїми юнiтами#щоб захоплювати землi"/>
+        <string key="tip_about_money" value="Чим бiльше земель#тим бiльше грошей"/>
+        <string key="tip_build_towers" value="Будуй вежi щоб захистити#сусiднi клiтини"/>
+        <string key="tip_about_taxes" value="Сильнi юнiти потребують#бiльше грошей"/>
+        <string key="tip_about_defense" value="Юнiти та будiвлi також#захищають сусiднi клiтини"/>
+        <string key="tip_hold_to_march" value="Щоб швидко рухати армiї#натисни i тримай"/>
+        <string key="tip_about_unit_death" value="Якщо грощi закiнчатся,#то юнiти помруть.#Тому будь обережним"/>
+        <string key="tip_merging" value="Об'єднуй юнiтiв щоб#отримати сильнiших"/>
+        <string key="tip_trees" value="Дерева зменшують дохiд.#Тому їх треба рубати"/>
+        <string key="tip_help" value="Бiльше подробиць#у довiдцi"/>
 
         <!-- Generic Tutorial -->
-        <string key="gen_greetings" value="Привіт. Цей туторіал розповість про основні правила гри."/>
-        <string key="gen_select_province" value="Натисни на своє місто щоб вибрати його."/>
-        <string key="gen_select_unit" value="Добре. В тебе є декілька юнітів. Натисни на одного з них."/>
-        <string key="gen_move_unit" value="Кожний юнит ходить один раз в хід. Захопи нічийну територію натиснувши на клітину біля вибраного юніта."/>
-        <string key="gen_income" value="Захопивши нову клітину ти збільшив прибуток свого міста. Більше клітин - більше прибуток."/>
-        <string key="gen_lets_build_farm" value="Тепер давай побудуємо ферму щоб збільшити прибуток міста."/>
+        <string key="gen_greetings" value="Привiт. Цей туторiал розповiсть про основнi правила гри."/>
+        <string key="gen_select_province" value="Натисни на своє мiсто щоб вибрати його."/>
+        <string key="gen_select_unit" value="Добре. В тебе є декiлька юнiтiв. Натисни на одного з них."/>
+        <string key="gen_move_unit" value="Кожний юнит ходить один раз в хiд. Захопи нiчийну територiю натиснувши на клiтину бiля вибраного юнiта."/>
+        <string key="gen_income" value="Захопивши нову клiтину ти збiльшив прибуток свого мiста. Бiльше клiтин - бiльше прибуток."/>
+        <string key="gen_lets_build_farm" value="Тепер давай побудуємо ферму щоб збiльшити прибуток мiста."/>
         <string key="gen_press_button_twice" value="Натисни два рази на кнопку"/>
-        <string key="gen_build_farm" value="Ферми можна будувати тільки поряд с містом або іншими фермами."/>
-        <string key="gen_about_farms" value="Кожна ферма дає 3 монети в хід. Кожна нова ферма коштує більше ніж попередня."/>
-        <string key="gen_lets_build_peasant" value="Давай побудуємо нового юніта і відразу захопимо нічийну клітину."/>
+        <string key="gen_build_farm" value="Ферми можна будувати тiльки поряд с мiстом або iншими фермами."/>
+        <string key="gen_about_farms" value="Кожна ферма дає 4 монети в хiд. Кожна нова ферма коштує бiльше нiж попередня."/>
+        <string key="gen_lets_build_peasant" value="Давай побудуємо нового юнiта i вiдразу захопимо нiчийну клiтину."/>
         <string key="gen_press_button" value="Натисни на кнопку знизу"/>
-        <string key="gen_build_peasant" value="Постав нового юніта на клітину поряд з межею міста."/>
-        <string key="gen_capture_peasant" value="Захопи нічийну клітину вібравши юніта та вказавши йому куди йти."/>
-        <string key="gen_capture_hex" value="Захопи клітину"/>
-        <string key="gen_lets_build_tower" value="Свої землі треба захищати. Для цього добре підходять вежі."/>
-        <string key="gen_build_tower" value="Побудуй вежу натиснувши на вказану клітину."/>
-        <string key="gen_about_towers" value="Вежі захищають прилеглі клітини від селян та воїнів."/>
-        <string key="gen_lets_build_spearman" value="Воїн сильніший за будь-якого селянина. Давай побудуємо його."/>
-        <string key="gen_build_spearman" value="Натисни на клітину щоб побудувати воїна."/>
-        <string key="gen_units_consume_money" value="Юніти споживають гроші щоб жити. Чим сильніший юніт, тим більше грошей він потребує."/>
-        <string key="gen_undo_spearman" value="Зараз прибуток міста рівний -1. Це погано, тому давай відмінимо побудову воїна."/>
-        <string key="gen_why_units_die" value="Якщо гроші у місті закінчатся, то юніти помруть. Тому треба слідкувати щоб прибуток був більше нуля."/>
-        <string key="gen_about_trees_one" value="Дерева теж становлять небезпеку. Клітини на яких росте дерево не приносять доходу."/>
-        <string key="gen_about_trees_two" value="Дерева краще рубати відразу, поки їх мало."/>
-        <string key="gen_end_turn" value="Щоб закінчити хід натисни на кнопку справа знизу."/>
-        <string key="gen_choose_to_merge" value="Юнітів також можна об'єднувати. Вибери нижнього селянина."/>
-        <string key="gen_merge_units" value="Тепер коли селянин вибраний, натисни на іншого щоб об'єднати їх."/>
-        <string key="gen_long_tap" value="Якщо юнітів занадто багато, то можна рухати відразу всіх по довгому тапу."/>
-        <string key="gen_several_provinces" value="Міст може бути декілька, причому у кожного своя економіка."/>
+        <string key="gen_build_peasant" value="Постав нового юнiта на клiтину поряд з межею мiста."/>
+        <string key="gen_capture_peasant" value="Захопи нiчийну клiтину вiбравши юнiта та вказавши йому куди йти."/>
+        <string key="gen_capture_hex" value="Захопи клiтину"/>
+        <string key="gen_lets_build_tower" value="Свої землi треба захищати. Для цього добре пiдходять вежi."/>
+        <string key="gen_build_tower" value="Побудуй вежу натиснувши на вказану клiтину."/>
+        <string key="gen_about_towers" value="Вежi захищають прилеглi клiтини вiд селян та воїнiв."/>
+        <string key="gen_lets_build_spearman" value="Воїн сильнiший за будь-якого селянина. Давай побудуємо його."/>
+        <string key="gen_build_spearman" value="Натисни на клiтину щоб побудувати воїна."/>
+        <string key="gen_units_consume_money" value="Юнiти споживають грошi щоб жити. Чим сильнiший юнiт, тим бiльше грошей вiн потребує."/>
+        <string key="gen_undo_spearman" value="Зараз прибуток мiста рiвний -1. Це погано, тому давай вiдмiнимо побудову воїна."/>
+        <string key="gen_why_units_die" value="Якщо грошi у мiстi закiнчатся, то юнiти помруть. Тому треба слiдкувати щоб прибуток був бiльше нуля."/>
+        <string key="gen_about_trees_one" value="Дерева теж становлять небезпеку. Клiтини на яких росте дерево не приносять доходу."/>
+        <string key="gen_about_trees_two" value="Дерева краще рубати вiдразу, поки їх мало."/>
+        <string key="gen_end_turn" value="Щоб закiнчити хiд натисни на кнопку справа знизу."/>
+        <string key="gen_choose_to_merge" value="Юнiтiв також можна об'єднувати. Вибери нижнього селянина."/>
+        <string key="gen_merge_units" value="Тепер коли селянин вибраний, натисни на iншого щоб об'єднати їх."/>
+        <string key="gen_long_tap" value="Якщо юнiтiв занадто багато, то можна рухати вiдразу всiх по довгому тапу."/>
+        <string key="gen_several_provinces" value="Мiст може бути декiлька, причому у кожного своя економiка."/>
 
         <!-- Tutorial help -->
-        <string key="help" value="Довідка"/>
-        <string key="help_about_units" value="Юніти"/>
+        <string key="help" value="Довiдка"/>
+        <string key="help_about_units" value="Юнiти"/>
         <string key="help_about_trees" value="Дерева"/>
-        <string key="help_about_towers" value="Вежі"/>
-        <string key="help_about_money" value="Гроші"/>
+        <string key="help_about_towers" value="Вежi"/>
+        <string key="help_about_money" value="Грошi"/>
         <string key="help_about_tactics" value="Тактика"/>
 
-        <string key="help_units_article" value="У грі 4 типи юнітів.
-        #Вони відрізняются силою.
-        #У порядку зростання силі:
+        <string key="help_units_article" value="У грi 4 типи юнiтiв.
+        #Вони вiдрiзняются силою.
+        #У порядку зростання силi:
         #[1] селяни
         #[2] воїни
         #[3] барони
-        #[4] лицарі
+        #[4] лицарi
         #
-        #Юніт дає сусіднім клітинам
-        #захист рівний своїй силі.
+        #Юнiт дає сусiднiм клiтинам
+        #захист рiвний своїй силi.
         #
-        #Щоб захопити клітину
-        #сила юніта має бути
-        #більше ніж захист клітини.
+        #Щоб захопити клiтину
+        #сила юнiта має бути
+        #бiльше нiж захист клiтини.
         #
-        #Кожен юніт їсть
+        #Кожен юнiт їсть
         #2, 6, 18 або 54
-        #монет за хід.
+        #монет за хiд.
         "/>
 
-        <string key="help_trees_article" value="Дерева залишаются після
-        #померлих юнітів.
+        <string key="help_trees_article" value="Дерева залишаются пiсля
+        #померлих юнiтiв.
         #
-        #Клітина с деревом не
+        #Клiтина с деревом не
         #дає прибутку. Отже
         #дерева наносять шкоду.
         #
         #З ними треба боротися.
         #Інакше вони розростутся
-        #і призведуть до
-        #економічної кризи
+        #i призведуть до
+        #економiчної кризи
         #
         #Пальми з'являются з країв
-        #і ростуть дуже швидко.
-        #Їх треба відразу рубати.
+        #i ростуть дуже швидко.
+        #Їх треба вiдразу рубати.
         "/>
 
-        <string key="help_towers_article" value="Вежі слугують для
-        #захисту сусідніх клітин.
+        <string key="help_towers_article" value="Вежi слугують для
+        #захисту сусiднiх клiтин.
         #
-        #Вежі дають захист сили 2.
-        #Тому тільки барони та
+        #Вежi дають захист сили 2.
+        #Тому тiльки барони та
         #лицари можуть її пробити.
         #
         #Хатини дають захист 1.
         #
         #На початку гри це найкращий
-        #спосіб захисту.
-        #Вежі коштують дешево
-        #і не потребують грошей
+        #спосiб захисту.
+        #Вежi коштують дешево
+        #i не потребують грошей
         #на обслуговування.
         "/>
 
-        <string key="help_money_article" value="Прибуток залежить від
-        #вількості клітин.
-        #Чим більша територія
-        #тим більший прибуток.
+        <string key="help_money_article" value="Прибуток залежить вiд
+        #вiлькостi клiтин.
+        #Чим бiльша територiя
+        #тим бiльший прибуток.
         #Дерева зменшують прибуток.
         #
-        #Витрати залежать від юнітів.
-        #Чим більше юнітів
-        #і чим вони сильніші
-        #тим більше грошей
+        #Витрати залежать вiд юнiтiв.
+        #Чим бiльше юнiтiв
+        #i чим вони сильнiшi
+        #тим бiльше грошей
         #вони потребують.
         #
-        #Якщо гроші закінчатся,
-        #то юніти помруть.
+        #Якщо грошi закiнчатся,
+        #то юнiти помруть.
         #
         #Прибуток показаний
         #зверху по центру.
         "/>
 
         <string key="help_tactics_article" value="На початку гри важливо
-        #захопити пусті клітини.
-        #Пілся цього треба не
-        #допустити втрату клітин.
+        #захопити пустi клiтини.
+        #Пiлся цього треба не
+        #допустити втрату клiтин.
         #
         #Перед тим як будувати
-        #сильних юнітів треба
+        #сильних юнiтiв треба
         #впевнитись, що прибуток
         #здатний покрити витрати
         #на їх утримання.
         #
-        #Розрізайте території
-        #ворогів на частини
+        #Розрiзайте територiї
+        #ворогiв на частини
         #для того, щоб зруйнувати
-        #їхню економіку.
+        #їхню економiку.
         "/>
 
-        <string key="about_complicated_mode_article" value="У розширеному режимі
-        #більше меню.
-        #Відмінності від простого:
+        <string key="about_complicated_mode_article" value="У розширеному режимi
+        #бiльше меню.
+        #Вiдмiнностi вiд простого:
         #
-        #- Декілька слотів
+        #- Декiлька слотiв
         #збереження
         #
-        #- Підтвердження рестарту
+        #- Пiдтвердження рестарту
         #
-        #- Показ кількості
-        #кольорів на рівні
+        #- Показ кiлькостi
+        #кольорiв на рiвнi
         #(натисн. кнопку 'монета')
         "/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="Кроків зроблено:"/>
-        <string key="units_died" value="Юнітів померло:"/>
-        <string key="units_produced" value="Юнітів побудовано:"/>
+        <string key="turns_made" value="Крокiв зроблено:"/>
+        <string key="units_died" value="Юнiтiв померло:"/>
+        <string key="units_produced" value="Юнiтiв побудовано:"/>
         <string key="money_spent" value="Грошей витрачено:"/>
 
         <!-- Editor -->
@@ -982,21 +1010,32 @@
         <string key="random" value="Рандом"/>
         <string key="exported" value="Експортовано"/>
         <string key="editor_clear" value="Очистити"/>
+        <string key="no" value="No"/>
+        <string key="yes" value="Yes"/>
+        <string key="confirm_import" value="Confirm import"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" #Автозбереження
-            # #Декілька слотів
-            # #Кінець ходу
-            # #Назви міст
-            # #Звук"/>
-        <string key="skin" value="Скін"/>
+        <string key="main_label" value=" # Автозбереження
+            # # Декiлька слотiв
+            # # Кiнець ходу
+            # # Назви мiст
+            # # Звук
+            # # Limited turns
+            # # Long tap to move
+            # # "/>
+        <string key="skin" value="Скiн"/>
         <string key="original" value="звичайний"/>
         <string key="points" value="точки"/>
-        <string key="grid" value="сітка"/>
-        <string key="anim_style" value="Чутливість"/>
+        <string key="grid" value="сiтка"/>
+        <string key="anim_style" value="Чутливiсть"/>
         <string key="more" value="Ще"/>
-        <string key="camera_offset" value="Відступ камери"/>
+        <string key="camera_offset" value="Вiдступ камери"/>
         <string key="slay_rules" value="Правила Slay"/>
+        <string key="language" value="Мова"/>
+        <string key="more_settings_checks" value="# #Water texture # # "/>
+
+        <!-- Single messages -->
+        <string key="achikaps_release" value="Hi. # #I've made a new game, it's called 'Achikaps'. It's a simple economic strategy without donations or ads. Hope you'll enjoy it :)"/>
     </language>
 
 
@@ -1053,8 +1092,8 @@
         #Italienische Übersetzung
         #Louis Philibert-Morrissette:
         #Französische Übersetzung
-        #Istvan Galpal:
-        #Ungarisch und rumänisch
+        #
+        #
         #
         #"/>
 
@@ -1084,6 +1123,7 @@
         <string key="normal" value="normal"/>
         <string key="hard" value="schwer"/>
         <string key="expert" value="Experte"/>
+        <string key="balancer" value="balancer"/>
         <string key="player_color" value="Spielerfarbe"/>
 
         <!-- In game menu -->
@@ -1099,6 +1139,7 @@
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Ok"/>
+        <string key="end_game_okay" value="Okay..."/>
         <string key="player" value="Spieler"/>
         <string key="ai" value="AI"/>
         <string key="won" value="hat gewonnen"/>
@@ -1165,7 +1206,7 @@
         <string key="gen_lets_build_farm" value="Baue eine Farm, um Dein Einkommen noch weiter zu erhöhen."/>
         <string key="gen_press_button_twice" value="Tippe den Button zweimal"/>
         <string key="gen_build_farm" value="Eine Farm kann nur neben der Hauptstadt oder neben einer anderen Farm gebaut werden."/>
-        <string key="gen_about_farms" value="Für jede Farm erhältst Du drei Münzen pro Runde. Jede weitere Farm kostet mehr als die vorherige."/>
+        <string key="gen_about_farms" value="Für jede Farm 4rhältst Du drei Münzen pro Runde. Jede weitere Farm kostet mehr als die vorherige."/>
         <string key="gen_lets_build_peasant" value="Baue eine neue Einheit, um ein neutrales Feld einzunehmen."/>
         <string key="gen_press_button" value="Tippe auf den Button unten"/>
         <string key="gen_build_peasant" value="Platziere die Einheit auf einem Feld nahe der Stadtgrenze."/>
@@ -1319,13 +1360,19 @@
         <string key="random" value="Zufall"/>
         <string key="exported" value="Karte in der Zwischenablage"/>
         <string key="editor_clear" value="Zurücksetzen"/>
+        <string key="no" value="No"/>
+        <string key="yes" value="Yes"/>
+        <string key="confirm_import" value="Confirm import"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" #Autosave
-            # #Mehrere Speicherplätze
-            # #Vor Zug beenden fragen
-            # #Städtenamen
-            # #Ton"/>
+        <string key="main_label" value=" # Autosave
+            # # Mehrere Speicherplätze
+            # # Vor Zug beenden fragen
+            # # Städtenamen
+            # # Ton
+            # # Limited turns
+            # # Long tap to move
+            # # "/>
         <string key="skin" value="Darstellung"/>
         <string key="original" value="Original"/>
         <string key="points" value="Punkte"/>
@@ -1334,6 +1381,11 @@
         <string key="more" value="Mehr"/>
         <string key="camera_offset" value="Kamera Einzug"/>
         <string key="slay_rules" value="Slay Regeln"/>
+        <string key="language" value="Language"/>
+        <string key="more_settings_checks" value="# #Water texture # # "/>
+
+        <!-- Single messages -->
+        <string key="achikaps_release" value="Hi. # #I've made a new game, it's called 'Achikaps'. It's a simple economic strategy without donations or ads. Hope you'll enjoy it :)"/>
     </language>
 
 
@@ -1389,8 +1441,8 @@
         #italský překlad
         #Louis Philibert-Morrissette:
         #francouzský překlad
-        #Istvan Galpal:
-        #Maďarských a rumunských
+        #
+        #
         #
         #"/>
 
@@ -1420,6 +1472,7 @@
         <string key="normal" value="normální"/>
         <string key="hard" value="těžká"/>
         <string key="expert" value="expert"/>
+        <string key="balancer" value="balancer"/>
         <string key="player_color" value="Barva hráče"/>
 
         <!-- In game menu -->
@@ -1435,6 +1488,7 @@
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Ok"/>
+        <string key="end_game_okay" value="Okay..."/>
         <string key="player" value="hráč"/>
         <string key="ai" value="počítač"/>
         <string key="won" value="vyhrál"/>
@@ -1501,7 +1555,7 @@
         <string key="gen_lets_build_farm" value="Nyní postavíme farmu pro další zvýšení příjmu."/>
         <string key="gen_press_button_twice" value="Zmáčkni dvakrát tlačítko."/>
         <string key="gen_build_farm" value="Farmy mohou být stavěny jen poblíž měst, nebo jiných farem."/>
-        <string key="gen_about_farms" value="Každá farma dává 3 mince za tah. Každá nová farma stojí víc než farma minulá."/>
+        <string key="gen_about_farms" value="Každá farma dává 4 mince za tah. Každá nová farma stojí víc než farma minulá."/>
         <string key="gen_lets_build_peasant" value="Nyní postavíme novou jednotku a obsadíme neutrální hex."/>
         <string key="gen_press_button" value="Zmáčkni tlačítko naspodku."/>
         <string key="gen_build_peasant" value="Postav svou jednotku na hex poblíž hranic města."/>
@@ -1644,13 +1698,19 @@
         <string key="random" value="Náhodně"/>
         <string key="exported" value="Mapa je ve schránce"/>
         <string key="editor_clear" value="Vymaž"/>
+        <string key="no" value="No"/>
+        <string key="yes" value="Yes"/>
+        <string key="confirm_import" value="Confirm import"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" #Auto ukládání
-            # #Několik slotů
-            # #Potvrď konec tahu
-            # #Jména měst
-            # #Zvuky"/>
+        <string key="main_label" value=" # Auto ukládání
+            # # Několik slotů
+            # # Potvrď konec tahu
+            # # Jména měst
+            # # Zvuky
+            # # Limited turns
+            # # Long tap to move
+            # # "/>
         <string key="skin" value="Skin"/>
         <string key="original" value="originální"/>
         <string key="points" value="body"/>
@@ -1659,6 +1719,11 @@
         <string key="more" value="Více"/>
         <string key="camera_offset" value="Offset kamery"/>
         <string key="slay_rules" value="Slay pravidla"/>
+        <string key="language" value="Language"/>
+        <string key="more_settings_checks" value="# #Water texture # # "/>
+
+        <!-- Single messages -->
+        <string key="achikaps_release" value="Hi. # #I've made a new game, it's called 'Achikaps'. It's a simple economic strategy without donations or ads. Hope you'll enjoy it :)"/>
     </language>
 
 
@@ -1715,8 +1780,8 @@
         #Traduction italienne
         #Louis Philibert-Morrissette :
         #Traduction française
-        #Istvan Galpal:
-        #Hongrois et roumain
+        #
+        #
         #
         #"/>
 
@@ -1746,6 +1811,7 @@
         <string key="normal" value="normal"/>
         <string key="hard" value="difficile"/>
         <string key="expert" value="expert"/>
+        <string key="balancer" value="balancer"/>
         <string key="player_color" value="Couleur du joueur"/>
 
         <!-- In game menu -->
@@ -1761,6 +1827,7 @@
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Ok"/>
+        <string key="end_game_okay" value="Okay..."/>
         <string key="player" value="joueur"/>
         <string key="ai" value="IA"/>
         <string key="won" value="victoire"/>
@@ -1827,7 +1894,7 @@
         <string key="gen_lets_build_farm" value="Construisez une ferme pour gonfler vos revenus."/>
         <string key="gen_press_button_twice" value="Appuyez deux fois sur le bouton"/>
         <string key="gen_build_farm" value="Une ferme ne peut être construire qu’à proximité d’une capitale ou d’une autre ferme."/>
-        <string key="gen_about_farms" value="Une ferme produit 3 pièces par tour. Chaque ferme supplémentaire est plus coûteuse que la précédente."/>
+        <string key="gen_about_farms" value="Une ferme produit 4 pièces par tour. Chaque ferme supplémentaire est plus coûteuse que la précédente."/>
         <string key="gen_lets_build_peasant" value="Construisez une nouvelle unité, puis conquérez une cellule neutre."/>
         <string key="gen_press_button" value="Appuyez sur le bouton dans le bas"/>
         <string key="gen_build_peasant" value="Placez l’unité sur une cellule aux frontières de la cité."/>
@@ -1974,13 +2041,19 @@
         <string key="random" value="Aléatoire"/>
         <string key="exported" value="Copie de la carte"/>
         <string key="editor_clear" value="Vider"/>
+        <string key="no" value="No"/>
+        <string key="yes" value="Yes"/>
+        <string key="confirm_import" value="Confirm import"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" #Sauvegarde automatique
-            # #Emplacements multiples
-            # #Confirmation tour suivant
-            # #Noms de villes
-            # #Son"/>
+        <string key="main_label" value=" # Sauvegarde automatique
+            # # Emplacements multiples
+            # # Confirmation tour suivant
+            # # Noms de villes
+            # # Son
+            # # Limited turns
+            # # Long tap to move
+            # # "/>
         <string key="skin" value="Habillage"/>
         <string key="original" value="original"/>
         <string key="points" value="points"/>
@@ -1989,6 +2062,11 @@
         <string key="more" value="Plus"/>
         <string key="camera_offset" value="Cadrage"/>
         <string key="slay_rules" value="Règles de Slay"/>
+        <string key="language" value="Language"/>
+        <string key="more_settings_checks" value="# #Water texture # # "/>
+
+        <!-- Single messages -->
+        <string key="achikaps_release" value="Hi. # #I've made a new game, it's called 'Achikaps'. It's a simple economic strategy without donations or ads. Hope you'll enjoy it :)"/>
     </language>
 
 
@@ -2046,8 +2124,8 @@
         #włoskie tłumaczenie
         #Louis Philibert-Morrissette:
         #francuskie tłumaczenie
-        #Istvan Galpal:
-        #Węgierskim i rumuńskim
+        #
+        #
         #
         #"/>
 
@@ -2078,6 +2156,7 @@
         <string key="normal" value="normalny"/>
         <string key="hard" value="trudny"/>
         <string key="expert" value="ekspert"/>
+        <string key="balancer" value="balancer"/>
         <string key="player_color" value="Kolor gracza"/>
 
         <!-- In game menu -->
@@ -2093,6 +2172,7 @@
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Ok"/>
+        <string key="end_game_okay" value="Okay..."/>
         <string key="player" value="gracz"/>
         <string key="ai" value="AI"/>
         <string key="won" value="wygrywa"/>
@@ -2159,7 +2239,7 @@
         <string key="gen_lets_build_farm" value="Zbudujmy farmę by jeszcze bardziej zwiększyć przychód."/>
         <string key="gen_press_button_twice" value="Naciśnij przycisk dwukrotnie"/>
         <string key="gen_build_farm" value="Farmy można budować tylko przy stolicy lub przy innych farmach."/>
-        <string key="gen_about_farms" value="Każda farma daje ci 3 monety na turę. Każda kolejna farma kosztuje więcej."/>
+        <string key="gen_about_farms" value="Każda farma daje i 4 monety na turę. Każda kolejna farma kosztuje więcej."/>
         <string key="gen_lets_build_peasant" value="Wynajmijmy jednostkę by przejąć neutralne pole."/>
         <string key="gen_press_button" value="Dotknij przycisku na dole"/>
         <string key="gen_build_peasant" value="Ustaw jednostkę na polu blisko granic swojego miasta."/>
@@ -2309,13 +2389,19 @@
         <string key="random" value="Losowy"/>
         <string key="exported" value="Mapa w schowku"/>
         <string key="editor_clear" value="Wyczyść"/>
+        <string key="no" value="No"/>
+        <string key="yes" value="Yes"/>
+        <string key="confirm_import" value="Confirm import"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" #Autozapis
-            # #Więcej slotów zapisu
-            # #Zapytaj czy zakończyć
-            # #Nazwy miast
-            # #Dźwięki"/>
+        <string key="main_label" value=" # Autozapis
+            # # Więcej slotów zapisu
+            # # Zapytaj czy zakończyć
+            # # Nazwy miast
+            # # Dźwięki
+            # # Limited turns
+            # # Long tap to move
+            # # "/>
         <string key="skin" value="Skórka"/>
         <string key="original" value="originalna"/>
         <string key="points" value="punkty"/>
@@ -2324,6 +2410,11 @@
         <string key="more" value="Więcej"/>
         <string key="camera_offset" value="offset kamery"/>
         <string key="slay_rules" value="Reguły Slaya"/>
+        <string key="language" value="Language"/>
+        <string key="more_settings_checks" value="# #Water texture # # "/>
+
+        <!-- Single messages -->
+        <string key="achikaps_release" value="Hi. # #I've made a new game, it's called 'Achikaps'. It's a simple economic strategy without donations or ads. Hope you'll enjoy it :)"/>
     </language>
 
 
@@ -2378,8 +2469,8 @@
         #traduzione italiana
         #Louis Philibert-Morrissette:
         #traduzione in francese
-        #Istvan Galpal:
-        #Ungherese e rumeno
+        #
+        #
         #
         #"/>
 
@@ -2409,6 +2500,7 @@
         <string key="normal" value="Normale"/>
         <string key="hard" value="Difficile"/>
         <string key="expert" value="Esperto"/>
+        <string key="balancer" value="balancer"/>
         <string key="player_color" value="Colore giocatore"/>
 
         <!-- In game menu -->
@@ -2424,6 +2516,7 @@
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Ok"/>
+        <string key="end_game_okay" value="Okay..."/>
         <string key="player" value="giocatore"/>
         <string key="ai" value="AI"/>
         <string key="won" value="Vincitore"/>
@@ -2490,7 +2583,7 @@
         <string key="gen_lets_build_farm" value="Costruiamo una fattoria per avere entrate maggiori."/>
         <string key="gen_press_button_twice" value="Premi il pulsante due volte."/>
         <string key="gen_build_farm" value="Le fattorie possono essere costruite soltanto vicino alla capitale o ad altre fattorie."/>
-        <string key="gen_about_farms" value="Ogni fattoria ti fa guadagnare 3 soldi per turno. Ogni nuova fattoria costa più della precedente."/>
+        <string key="gen_about_farms" value="Ogni fattoria ti a guadagnare 4 soldi per turno. Ogni nuova fattoria costa più della precedente."/>
         <string key="gen_lets_build_peasant" value="Costruisci una nuova unità per catturare uno slot neutrale."/>
         <string key="gen_press_button" value="Premi il pulsante di sopra"/>
         <string key="gen_build_peasant" value="Piazza una nuova unità vicino al bordo della città."/>
@@ -2638,13 +2731,19 @@
         <string key="random" value="Casuale"/>
         <string key="exported" value="Mappe negli appunti"/>
         <string key="editor_clear" value="Cancella"/>
+        <string key="no" value="No"/>
+        <string key="yes" value="Yes"/>
+        <string key="confirm_import" value="Confirm import"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" #Autosalvataggio
-            # #Più slot
-            # #Conferma a fine turno
-            # #Nome città
-            # #Audio"/>
+        <string key="main_label" value=" # Autosalvataggio
+            # # Più slot
+            # # Conferma a fine turno
+            # # Nome città
+            # # Audio
+            # # Limited turns
+            # # Long tap to move
+            # # "/>
         <string key="skin" value="Colore"/>
         <string key="original" value="originale"/>
         <string key="points" value="punti"/>
@@ -2653,6 +2752,11 @@
         <string key="more" value="di più"/>
         <string key="camera_offset" value="Camera offset"/>
         <string key="slay_rules" value="Slay regole"/>
+        <string key="language" value="Language"/>
+        <string key="more_settings_checks" value="# #Water texture # # "/>
+
+        <!-- Single messages -->
+        <string key="achikaps_release" value="Hi. # #I've made a new game, it's called 'Achikaps'. It's a simple economic strategy without donations or ads. Hope you'll enjoy it :)"/>
     </language>
 
 
