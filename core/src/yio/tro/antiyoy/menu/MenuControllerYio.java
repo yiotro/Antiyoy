@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.gameplay.*;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -45,7 +46,6 @@ public class MenuControllerYio {
         unlockedLevelIcon = GameView.loadTextureRegionByName("unlocked_level_icon.png", true);
         lockedLevelIcon = GameView.loadTextureRegionByName("locked_level_icon.png", true);
         openedLevelIcon = GameView.loadTextureRegionByName("opened_level_icon.png", true);
-        loadLanguage();
         initCheckButtons();
 //        initScroller();
         initLevelSelector();
@@ -67,11 +67,6 @@ public class MenuControllerYio {
             createSingleMessageMenu("achikaps_release");
             return;
         }
-    }
-
-
-    private void loadLanguage() {
-        CustomLanguageLoader.loadLanguage();
     }
 
 
@@ -473,7 +468,7 @@ public class MenuControllerYio {
         spawnBackButton(330, ReactBehavior.rbMoreSettings);
 
         double buttonHeight = 0.08;
-        int langNumber = 8;
+        int langNumber = 9;
         RectangleYio base = new RectangleYio(0.1, 0.5 * (0.9 - buttonHeight * langNumber), 0.8, buttonHeight * langNumber);
         double y = base.y + base.height;
 
@@ -529,6 +524,12 @@ public class MenuControllerYio {
         freButton.setReactBehavior(ReactBehavior.rbSetLanguage);
         freButton.setShadow(false);
         freButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        y -= buttonHeight;
+        ButtonYio spButton = buttonFactory.getButton(generateRectangle(base.x, y, base.width, buttonHeight), 341, "Spanish");
+        spButton.setReactBehavior(ReactBehavior.rbSetLanguage);
+        spButton.setShadow(false);
+        spButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
 
         endMenuCreation();
     }
@@ -1413,7 +1414,7 @@ public class MenuControllerYio {
 
 
     public void createGameOverlay() {
-        if (yioGdxGame.gameController.editorMode) {
+        if (GameRules.inEditorMode) {
             createEditorInstruments();
             return;
         }
@@ -1499,7 +1500,7 @@ public class MenuControllerYio {
         ButtonYio coinButton = getButtonById(37);
         if (coinButton != null) coinButton.destroy();
 
-        yioGdxGame.gameController.selMoneyFactor.beginDestroying(2, 8);
+        yioGdxGame.gameController.selectionController.getSelMoneyFactor().beginDestroying(2, 8);
     }
 
 
@@ -1542,7 +1543,7 @@ public class MenuControllerYio {
 
 
     public void showColorStats() {
-        yioGdxGame.gameController.deselectAll();
+        yioGdxGame.gameController.selectionController.deselectAll();
         getButtonById(30).setTouchable(false);
         getButtonById(31).setTouchable(false);
         getButtonById(32).setTouchable(false);
@@ -1748,7 +1749,7 @@ public class MenuControllerYio {
                     languagesManager.getString("ai") + " " +
                     languagesManager.getString("won") + ".";
         }
-        if (yioGdxGame.gameController.completedCampaignLevel(whoWon))
+        if (CampaignController.getInstance().completedCampaignLevel(whoWon))
             message = languagesManager.getString("level_complete");
         if (Debug.CHECKING_BALANCE_MODE && yioGdxGame.gamesPlayed() % 50 == 0) {
             YioGdxGame.say(yioGdxGame.gamesPlayed() + " : " + yioGdxGame.getBalanceIndicatorString());
@@ -1763,7 +1764,7 @@ public class MenuControllerYio {
         textPanel.setAnimType(ButtonYio.ANIM_FROM_CENTER);
 
         ButtonYio okButton = buttonFactory.getButton(generateRectangle(0.55, 0.4, 0.4, 0.07), 62, null);
-        if (yioGdxGame.gameController.completedCampaignLevel(whoWon))
+        if (CampaignController.getInstance().completedCampaignLevel(whoWon))
             okButton.setTextLine(languagesManager.getString("next"));
         else {
             if (playerIsWinner) {
@@ -1775,7 +1776,7 @@ public class MenuControllerYio {
         buttonRenderer.renderButton(okButton);
         okButton.setShadow(false);
         okButton.setReactBehavior(ReactBehavior.rbChooseGameModeMenu);
-        if (yioGdxGame.gameController.completedCampaignLevel(whoWon))
+        if (CampaignController.getInstance().completedCampaignLevel(whoWon))
             okButton.setReactBehavior(ReactBehavior.rbNextLevel);
         okButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
 
@@ -1957,7 +1958,7 @@ public class MenuControllerYio {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         int FONT_SIZE = (int) (0.021 * Gdx.graphics.getHeight());
         parameter.size = FONT_SIZE;
-        parameter.characters = YioGdxGame.getAllCharacters();
+        parameter.characters = Fonts.getAllCharacters();
         parameter.flip = true;
         BitmapFont font = generator.generateFont(parameter);
 

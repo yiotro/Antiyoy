@@ -1,7 +1,8 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.gameplay;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import yio.tro.antiyoy.YioGdxGame;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,14 +27,14 @@ public class GameSaver {
 
     private void saveBasicInfo() {
         prefs.putInteger("save_turn", gameController.turn);
-        prefs.putInteger("save_color_number", GameController.colorNumber);
-        prefs.putInteger("save_level_size", gameController.levelSize);
+        prefs.putInteger("save_color_number", GameRules.colorNumber);
+        prefs.putInteger("save_level_size", gameController.fieldController.levelSize);
         prefs.putInteger("save_player_number", gameController.playersNumber);
-        prefs.putBoolean("save_campaign_mode", gameController.campaignMode);
-        prefs.putInteger("save_current_level", gameController.currentLevelIndex);
-        prefs.putInteger("save_difficulty", gameController.difficulty);
+        prefs.putBoolean("save_campaign_mode", GameRules.campaignMode);
+        prefs.putInteger("save_current_level", CampaignController.getInstance().currentLevelIndex);
+        prefs.putInteger("save_difficulty", GameRules.difficulty);
         prefs.putInteger("save_color_offset", gameController.colorIndexViewOffset);
-        prefs.putBoolean("slay_rules", GameController.slay_rules);
+        prefs.putBoolean("slay_rules", GameRules.slay_rules);
     }
 
 
@@ -79,7 +80,7 @@ public class GameSaver {
 
     public String getActiveHexesString() {
         StringBuffer stringBuffer = new StringBuffer();
-        for (Hex activeHex : gameController.activeHexes) {
+        for (Hex activeHex : gameController.fieldController.activeHexes) {
             String hexString = getHexString(activeHex);
             stringBuffer.append(hexString);
             stringBuffer.append(tokenSeparator);
@@ -147,10 +148,10 @@ public class GameSaver {
     private void activateHexByString(String hexString) {
         int snapshot[] = getHexSnapshotByString(hexString);
         int index1 = snapshot[0], index2 = snapshot[1];
-        Hex hex = gameController.field[index1][index2];
+        Hex hex = gameController.fieldController.field[index1][index2];
         hex.active = true;
         hex.setColorIndex(snapshot[2]);
-        ListIterator activeIterator = gameController.activeHexes.listIterator();
+        ListIterator activeIterator = gameController.fieldController.activeHexes.listIterator();
         int objectInside = snapshot[3];
         if (objectInside > 0) {
             gameController.addSolidObject(hex, objectInside);
@@ -185,8 +186,8 @@ public class GameSaver {
         for (String hexString : hexStrings) {
             activateHexByString(hexString);
         }
-        gameController.detectProvinces();
-        for (Province province : gameController.provinces) {
+        gameController.fieldController.detectProvinces();
+        for (Province province : gameController.fieldController.provinces) {
             Hex hex = province.hexList.get(0);
             province.money = hex.moveZoneNumber;
             province.updateName();
@@ -197,9 +198,9 @@ public class GameSaver {
     void setBasicInfo(int turn, int playerNumber, int colorNumber, int levelSize, int difficulty) {
         gameController.turn = turn;
         gameController.setPlayersNumber(playerNumber);
-        GameController.setColorNumber(colorNumber);
+        GameRules.setColorNumber(colorNumber);
         gameController.setLevelSize(levelSize);
-        gameController.setDifficulty(difficulty);
+        GameRules.setDifficulty(difficulty);
     }
 
 
@@ -218,18 +219,18 @@ public class GameSaver {
                 prefs.getInteger("save_color_number"),
                 prefs.getInteger("save_level_size"),
                 prefs.getInteger("save_difficulty"));
-        gameController.campaignMode = prefs.getBoolean("save_campaign_mode");
-        gameController.setCurrentLevelIndex(prefs.getInteger("save_current_level"));
+        GameRules.campaignMode = prefs.getBoolean("save_campaign_mode");
+        CampaignController.getInstance().setCurrentLevelIndex(prefs.getInteger("save_current_level"));
         gameController.colorIndexViewOffset = prefs.getInteger("save_color_offset", 0);
-        GameController.slay_rules = prefs.getBoolean("slay_rules", true);
+        GameRules.slay_rules = prefs.getBoolean("slay_rules", true);
     }
 
 
     private boolean isOverTheTop() {
         for (String hexString : hexStrings) {
             int snapshot[] = getHexSnapshotByString(hexString);
-            float posY = gameController.fieldPos.y + gameController.hexStep1 * snapshot[0] + gameController.hexStep2 * snapshot[1] * gameController.cos60;
-            if (posY > gameController.boundHeight - gameController.hexSize) {
+            float posY = gameController.fieldController.fieldPos.y + gameController.fieldController.hexStep1 * snapshot[0] + gameController.fieldController.hexStep2 * snapshot[1] * gameController.fieldController.cos60;
+            if (posY > gameController.boundHeight - gameController.fieldController.hexSize) {
                 return true;
             }
         }
@@ -240,8 +241,8 @@ public class GameSaver {
     private boolean canMoveDown() {
         for (String hexString : hexStrings) {
             int snapshot[] = getHexSnapshotByString(hexString);
-            float posY = gameController.fieldPos.y + gameController.hexStep1 * snapshot[0] + gameController.hexStep2 * snapshot[1] * gameController.cos60;
-            if (posY < gameController.hexSize) return false;
+            float posY = gameController.fieldController.fieldPos.y + gameController.fieldController.hexStep1 * snapshot[0] + gameController.fieldController.hexStep2 * snapshot[1] * gameController.fieldController.cos60;
+            if (posY < gameController.fieldController.hexSize) return false;
             if (snapshot[0] < 1) return false;
         }
         return true;
@@ -257,7 +258,7 @@ public class GameSaver {
                 snapshot[0]--;
                 hexStrings.add(getHexStringBySnapshot(snapshot));
             }
-            gameController.compensationOffsetY--;
+            gameController.cameraController.compensationOffsetY--;
         }
     }
 
@@ -269,7 +270,7 @@ public class GameSaver {
 
     void beginRecreation(boolean readParametersFromSliders) {
         gameController.yioGdxGame.startGame(false, readParametersFromSliders);
-        gameController.createFieldMatrix();
+        gameController.fieldController.createFieldMatrix();
         createHexStrings();
         if (YioGdxGame.isScreenVeryWide()) supportForWideScreens();
         recreateMap();

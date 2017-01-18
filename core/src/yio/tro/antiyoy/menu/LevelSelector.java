@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Matrix4;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.gameplay.CampaignController;
+import yio.tro.antiyoy.gameplay.CampaignLevelFactory;
 
 
 public class LevelSelector extends InterfaceElement {
@@ -88,7 +90,7 @@ public class LevelSelector extends InterfaceElement {
 
 
     void renderPanel(int panelIndex) {
-        beginRender(panelIndex, YioGdxGame.gameFont);
+        beginRender(panelIndex, Fonts.gameFont);
 
         batch.begin();
         for (int i = 0; i < rowSize; i++) {
@@ -107,8 +109,8 @@ public class LevelSelector extends InterfaceElement {
                 }
                 GraphicsYio.drawFromCenter(batch, icon, horOffset + iconRadius + i * iconDiameter, verOffset + iconRadius + j * iconDiameter, iconRadius);
                 String levelString = getLevelStringNumber(levelNumber);
-                float textWidth = GraphicsYio.getTextWidth(YioGdxGame.gameFont, levelString);
-                YioGdxGame.gameFont.draw(batch, levelString, horOffset + iconRadius + i * iconDiameter - textWidth / 2, verOffset + iconRadius + j * iconDiameter + 0.25f * iconRadius);
+                float textWidth = GraphicsYio.getTextWidth(Fonts.gameFont, levelString);
+                Fonts.gameFont.draw(batch, levelString, horOffset + iconRadius + i * iconDiameter - textWidth / 2, verOffset + iconRadius + j * iconDiameter + 0.25f * iconRadius);
             }
         }
         batch.end();
@@ -147,7 +149,7 @@ public class LevelSelector extends InterfaceElement {
         batch.begin();
         batch.draw(backgroundTexture, 0, 0, orthoWidth, orthoHeight);
         batch.end();
-        YioGdxGame.gameFont.setColor(Color.BLACK);
+        Fonts.gameFont.setColor(Color.BLACK);
     }
 
 
@@ -222,7 +224,7 @@ public class LevelSelector extends InterfaceElement {
     public boolean checkToPerformAction() {
         if (selectionFactor.get() == 1) {
             int levelNumber = getLevelNumber(selIndexX, selIndexY, selectedPanelIndex);
-            boolean result = menuControllerYio.yioGdxGame.gameController.loadCampaignLevel(levelNumber);
+            boolean result = CampaignController.getInstance().loadCampaignLevel(levelNumber);
             if (result) { // level loaded
                 selectionFactor.setValues(0.99, 0);
                 selectionFactor.beginDestroying(0, 0);

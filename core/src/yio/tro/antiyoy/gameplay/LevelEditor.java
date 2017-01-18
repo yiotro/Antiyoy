@@ -1,9 +1,11 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.gameplay;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Clipboard;
+import yio.tro.antiyoy.LanguagesManager;
 import yio.tro.antiyoy.ai.ArtificialIntelligence;
+import yio.tro.antiyoy.menu.MenuControllerYio;
 
 import java.util.ListIterator;
 import java.util.StringTokenizer;
@@ -32,7 +34,7 @@ public class LevelEditor {
 
     private void focusedHexActions(Hex focusedHex) {
         if (focusedHex == null) return;
-        if (randomColor) inputColor = gameController.random.nextInt(gameController.MAX_COLOR_NUMBER);
+        if (randomColor) inputColor = gameController.random.nextInt(GameRules.MAX_COLOR_NUMBER);
         switch (inputMode) {
             case MODE_MOVE:
                 inputModeMoveActions(focusedHex);
@@ -97,8 +99,8 @@ public class LevelEditor {
 
     private String getBasicInfoString() {
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(gameController.difficulty + " ");
-        stringBuffer.append(gameController.levelSize + " ");
+        stringBuffer.append(GameRules.difficulty + " ");
+        stringBuffer.append(gameController.fieldController.levelSize + " ");
         stringBuffer.append(gameController.playersNumber + " ");
         stringBuffer.append(countUpColorNumber() + "");
         return stringBuffer.toString();
@@ -107,7 +109,7 @@ public class LevelEditor {
 
     private int countUpColorNumber() {
         int cn = 0;
-        for (Hex activeHex : gameController.activeHexes) {
+        for (Hex activeHex : gameController.fieldController.activeHexes) {
             if (activeHex.colorIndex > cn) {
                 cn = activeHex.colorIndex;
             }
@@ -135,11 +137,11 @@ public class LevelEditor {
 
 
     private void recreateLevelFromString(String fullLevel, boolean editorMode) {
-        gameController.editorMode = editorMode;
+        GameRules.inEditorMode = editorMode;
         String basicInfo, activeHexes;
         int delimiterChar = fullLevel.indexOf("/");
         if (delimiterChar < 0) { // empty slot
-            GameController.setColorNumber(0); // to notify yio gdx game
+            GameRules.setColorNumber(0); // to notify yio gdx game
             gameController.yioGdxGame.startInEditorMode();
             return;
         }
@@ -171,10 +173,10 @@ public class LevelEditor {
 
 
     private void detectRules() {
-        GameController.slay_rules = true;
-        for (Hex activeHex : gameController.activeHexes) {
-            if (activeHex.colorIndex == gameController.neutralLandsIndex) {
-                GameController.slay_rules = false;
+        GameRules.slay_rules = true;
+        for (Hex activeHex : gameController.fieldController.activeHexes) {
+            if (activeHex.colorIndex == gameController.fieldController.neutralLandsIndex) {
+                GameRules.slay_rules = false;
                 System.out.println("detected generic rules");
                 return;
             }
@@ -242,9 +244,9 @@ public class LevelEditor {
 
 
     void clearLevel() {
-        for (int i = 0; i < gameController.fWidth; i++) {
-            for (int j = 0; j < gameController.fHeight; j++) {
-                deactivateHex(gameController.field[i][j]);
+        for (int i = 0; i < gameController.fieldController.fWidth; i++) {
+            for (int j = 0; j < gameController.fieldController.fHeight; j++) {
+                deactivateHex(gameController.fieldController.field[i][j]);
             }
         }
     }
@@ -254,7 +256,7 @@ public class LevelEditor {
         if (!hex.active) return;
         gameController.cleanOutHex(hex);
         hex.active = false;
-        ListIterator activeIterator = gameController.activeHexes.listIterator();
+        ListIterator activeIterator = gameController.fieldController.activeHexes.listIterator();
         while (activeIterator.hasNext()) {
             Hex tHex = (Hex) activeIterator.next();
             if (tHex == hex) {
@@ -278,7 +280,7 @@ public class LevelEditor {
         if (hex.active) return;
         hex.active = true;
         hex.setColorIndex(color);
-        ListIterator activeIterator = gameController.activeHexes.listIterator();
+        ListIterator activeIterator = gameController.fieldController.activeHexes.listIterator();
         activeIterator.add(hex);
         gameController.addAnimHex(hex);
     }
@@ -286,7 +288,7 @@ public class LevelEditor {
 
     private void inputModeHexActions(Hex focusedHex) {
         if (focusedHex.active) {
-            gameController.setHexColor(focusedHex, inputColor);
+            gameController.fieldController.setHexColor(focusedHex, inputColor);
         } else {
             activateHex(focusedHex, inputColor);
         }
@@ -294,9 +296,9 @@ public class LevelEditor {
 
 
     private boolean updateFocusedHex() {
-        Hex lastFocHex = gameController.focusedHex;
-        gameController.updateFocusedHex(scrX, scrY);
-        if (gameController.focusedHex == lastFocHex) return false; // focused hex is same
+        Hex lastFocHex = gameController.fieldController.focusedHex;
+        gameController.selectionController.updateFocusedHex(scrX, scrY);
+        if (gameController.fieldController.focusedHex == lastFocHex) return false; // focused hex is same
         return true; // focused hex updated
     }
 
@@ -314,7 +316,7 @@ public class LevelEditor {
         lastTimeTouched = gameController.currentTime;
         updateFocusedHex();
         if (inputMode == MODE_SET_OBJECT || inputMode == MODE_SET_HEX || inputMode == MODE_DELETE)
-            focusedHexActions(gameController.focusedHex);
+            focusedHexActions(gameController.fieldController.focusedHex);
     }
 
 
@@ -332,7 +334,7 @@ public class LevelEditor {
         lastTimeTouched = gameController.currentTime;
         if (!updateFocusedHex()) return;
         if (inputMode == MODE_SET_HEX || inputMode == MODE_DELETE)
-            focusedHexActions(gameController.focusedHex);
+            focusedHexActions(gameController.fieldController.focusedHex);
     }
 
 
@@ -356,17 +358,17 @@ public class LevelEditor {
     public void changeNumberOfPlayers() {
         int numPlayers = gameController.playersNumber;
         numPlayers++;
-        if (numPlayers > GameController.MAX_COLOR_NUMBER) numPlayers = 0;
+        if (numPlayers > GameRules.MAX_COLOR_NUMBER) numPlayers = 0;
         gameController.setPlayersNumber(numPlayers);
         gameController.yioGdxGame.menuControllerYio.showNotification(getLangManager().getString("player_number") + " " + numPlayers, true);
     }
 
 
     public void changeDifficulty() {
-        int diff = gameController.difficulty;
+        int diff = GameRules.difficulty;
         diff++;
         if (diff > ArtificialIntelligence.DIFFICULTY_BALANCER) diff = ArtificialIntelligence.DIFFICULTY_EASY;
-        gameController.setDifficulty(diff);
+        GameRules.setDifficulty(diff);
         gameController.yioGdxGame.menuControllerYio.showNotification(getLangManager().getString("difficulty") + " " + getDiffString(diff), true);
     }
 
@@ -387,19 +389,19 @@ public class LevelEditor {
 
 
     private LanguagesManager getLangManager() {
-        return gameController.yioGdxGame.menuControllerYio.languagesManager;
+        return MenuControllerYio.languagesManager;
     }
 
 
     public void randomize() {
         detectRules();
-        GameController.colorNumber = countUpColorNumber();
-        gameController.clearField();
-        gameController.createFieldMatrix();
-        if (GameController.slay_rules) {
-            gameController.mapGeneratorSlay.generateMap(gameController.random, gameController.field);
+        GameRules.colorNumber = countUpColorNumber();
+        gameController.fieldController.clearField();
+        gameController.fieldController.createFieldMatrix();
+        if (GameRules.slay_rules) {
+            gameController.mapGeneratorSlay.generateMap(gameController.random, gameController.fieldController.field);
         } else {
-            gameController.mapGeneratorGeneric.generateMap(gameController.random, gameController.field);
+            gameController.mapGeneratorGeneric.generateMap(gameController.random, gameController.fieldController.field);
         }
         gameController.yioGdxGame.gameView.updateCacheLevelTextures();
     }
@@ -407,16 +409,16 @@ public class LevelEditor {
 
     public void setInputMode(int inputMode) {
         this.inputMode = inputMode;
-        gameController.camDx = 0;
-        gameController.camDy = 0;
-        gameController.camDZoom = 0;
+        gameController.cameraController.camDx = 0;
+        gameController.cameraController.camDy = 0;
+        gameController.cameraController.camDZoom = 0;
     }
 
 
     public void setInputColor(int inputColor) {
         this.inputColor = inputColor;
         setRandomColor(false);
-        if (inputColor >= GameController.MAX_COLOR_NUMBER && inputColor != gameController.neutralLandsIndex) setRandomColor(true);
+        if (inputColor >= GameRules.MAX_COLOR_NUMBER && inputColor != gameController.fieldController.neutralLandsIndex) setRandomColor(true);
     }
 
 

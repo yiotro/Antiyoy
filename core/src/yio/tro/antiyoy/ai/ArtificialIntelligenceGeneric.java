@@ -1,8 +1,8 @@
 package yio.tro.antiyoy.ai;
 
-import yio.tro.antiyoy.GameController;
-import yio.tro.antiyoy.Hex;
-import yio.tro.antiyoy.Province;
+import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.Hex;
+import yio.tro.antiyoy.gameplay.Province;
 
 public abstract class ArtificialIntelligenceGeneric extends ArtificialIntelligence{
 
@@ -27,7 +27,7 @@ public abstract class ArtificialIntelligenceGeneric extends ArtificialIntelligen
         while (province.hasMoneyForFarm()) {
             Hex hex = findGoodHexForFarm(province);
             if (hex == null) return;
-            gameController.buildFarm(province, hex);
+            gameController.fieldController.buildFarm(province, hex);
         }
     }
 

@@ -30,11 +30,11 @@ public class PointYio {
 
 
     public double distanceTo(PointYio pointYio) {
-        return YioGdxGame.distance(x, y, pointYio.x, pointYio.y);
+        return Yio.distance(x, y, pointYio.x, pointYio.y);
     }
 
 
     public double angleTo(PointYio pointYio) {
-        return YioGdxGame.angle(x, y, pointYio.x, pointYio.y);
+        return Yio.angle(x, y, pointYio.x, pointYio.y);
     }
 }

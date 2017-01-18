@@ -1,4 +1,4 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.menu.MenuControllerYio;
 

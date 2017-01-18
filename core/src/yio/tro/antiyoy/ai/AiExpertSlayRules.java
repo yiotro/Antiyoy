@@ -1,6 +1,10 @@
 package yio.tro.antiyoy.ai;
 
 import yio.tro.antiyoy.*;
+import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.Hex;
+import yio.tro.antiyoy.gameplay.Province;
+import yio.tro.antiyoy.gameplay.Unit;
 
 import java.util.ArrayList;
 
@@ -14,7 +18,7 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
 
     public AiExpertSlayRules(GameController gameController, int color) {
         super(gameController, color);
-        tempHex = new Hex(0, 0, new PointYio(), gameController);
+        tempHex = new Hex(0, 0, new PointYio(), gameController.fieldController);
     }
 
 

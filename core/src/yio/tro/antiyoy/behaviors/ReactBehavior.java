@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.behaviors;
 
 import yio.tro.antiyoy.menu.ButtonYio;
-import yio.tro.antiyoy.GameController;
+import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.behaviors.editor.*;
 import yio.tro.antiyoy.behaviors.gameplay.*;

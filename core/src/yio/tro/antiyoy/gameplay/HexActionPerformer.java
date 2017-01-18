@@ -1,4 +1,4 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.gameplay;
 
 /**
  * Created by ivan on 29.09.2015.

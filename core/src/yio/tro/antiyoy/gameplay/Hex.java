@@ -1,15 +1,18 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.PointYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 
 /**
  * Created by ivan on 19.10.2014.
  */
 public class Hex {
+
     public boolean active, selected, changingColor, flag, inMoveZone, genFlag, ignoreTouch;
     public int index1, index2, moveZoneNumber, genPotential, viewDiversityIndex;
     PointYio pos, fieldPos;
     private GameController gameController;
+    FieldController fieldController;
     float cos60, sin60;
     public int colorIndex, lastColorIndex, objectInside;
     long animStartTime;
@@ -25,11 +28,12 @@ public class Hex {
     public Unit unit;
 
 
-    public Hex(int index1, int index2, PointYio fieldPos, GameController gameController) {
+    public Hex(int index1, int index2, PointYio fieldPos, FieldController fieldController) {
         this.index1 = index1;
         this.index2 = index2;
         this.fieldPos = fieldPos;
-        this.gameController = gameController;
+        this.fieldController = fieldController;
+        gameController = fieldController.gameController;
         active = false;
         pos = new PointYio();
         cos60 = (float) Math.cos(Math.PI / 3d);
@@ -43,8 +47,8 @@ public class Hex {
 
 
     private void updatePos() {
-        pos.x = fieldPos.x + gameController.hexStep2 * index2 * sin60;
-        pos.y = fieldPos.y + gameController.hexStep1 * index1 + gameController.hexStep2 * index2 * cos60;
+        pos.x = fieldPos.x + fieldController.hexStep2 * index2 * sin60;
+        pos.y = fieldPos.y + fieldController.hexStep1 * index1 + fieldController.hexStep2 * index2 * cos60;
     }
 
 
@@ -61,7 +65,7 @@ public class Hex {
     boolean isNearWater() {
         if (!this.active) return false;
         for (int i = 0; i < 6; i++) {
-            if (!gameController.adjacentHex(this, i).active) return true;
+            if (!gameController.fieldController.adjacentHex(this, i).active) return true;
         }
         return false;
     }
@@ -125,7 +129,7 @@ public class Hex {
 
 
     public Hex getSnapshotCopy() {
-        Hex record = new Hex(index1, index2, fieldPos, gameController);
+        Hex record = new Hex(index1, index2, fieldPos, fieldController);
         record.active = active;
         record.colorIndex = colorIndex;
         record.objectInside = objectInside;
@@ -164,7 +168,7 @@ public class Hex {
         int c = 0;
         for (int i = 0; i < 6; i++) {
             Hex adjHex = adjacentHex(i);
-            if (adjHex.colorIndex == gameController.neutralLandsIndex) continue;
+            if (adjHex.colorIndex == fieldController.neutralLandsIndex) continue;
             if (adjHex.active && adjHex.sameColor(this)) c++;
         }
         return c;
@@ -189,7 +193,8 @@ public class Hex {
             if (neighbour.objectInside == Hex.OBJECT_TOWN) defenseNumber = Math.max(defenseNumber, 1);
             if (neighbour.objectInside == Hex.OBJECT_TOWER) defenseNumber = Math.max(defenseNumber, 2);
             if (neighbour.objectInside == Hex.OBJECT_STRONG_TOWER) defenseNumber = Math.max(defenseNumber, 3);
-            if (neighbour.containsUnit() && neighbour.unit != ignoreUnit) defenseNumber = Math.max(defenseNumber, neighbour.unit.strength);
+            if (neighbour.containsUnit() && neighbour.unit != ignoreUnit)
+                defenseNumber = Math.max(defenseNumber, neighbour.unit.strength);
         }
         return defenseNumber;
     }
@@ -301,7 +306,7 @@ public class Hex {
 
 
     public Hex adjacentHex(int neighbourNumber) {
-        return gameController.adjacentHex(this, neighbourNumber);
+        return gameController.fieldController.adjacentHex(this, neighbourNumber);
     }
 
 
@@ -335,8 +340,8 @@ public class Hex {
 
 
     public boolean isNeutral() {
-        if (GameController.slay_rules) return false;
-        return colorIndex == gameController.neutralLandsIndex;
+        if (GameRules.slay_rules) return false;
+        return colorIndex == fieldController.neutralLandsIndex;
     }
 
 

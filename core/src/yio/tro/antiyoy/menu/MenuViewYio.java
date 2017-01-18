@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import yio.tro.antiyoy.*;
+import yio.tro.antiyoy.gameplay.GameView;
 
 import java.util.ArrayList;
 
@@ -367,7 +368,7 @@ public class MenuViewYio {
         }
         GameView.drawFromCenter(batch, yioGdxGame.gameView.blackCircleTexture, slider.getViewX() + slider.runnerValue * slider.getViewWidth(), slider.currentVerticalPos, slider.circleSize);
         if (slider.textVisible())
-            YioGdxGame.gameFont.draw(batch, slider.getValueString(), slider.getViewX() + slider.getViewWidth() - slider.textWidth, slider.currentVerticalPos + 0.05f * h);
+            Fonts.gameFont.draw(batch, slider.getValueString(), slider.getViewX() + slider.getViewWidth() - slider.textWidth, slider.currentVerticalPos + 0.05f * h);
 //        GraphicsYio.renderBorder(slider.getTouchRectangle(), batch, yioGdxGame.gameView.blackPixel);
         batch.end();
     }
@@ -376,15 +377,15 @@ public class MenuViewYio {
     private static float maxDistanceToCorners(float x, float y, RectangleYio frame) {
         if (x > frame.x + 0.5f * frame.width) {
             if (y > frame.y + 0.5f * frame.height) {
-                return (float) YioGdxGame.distance(x, y, frame.x, frame.y);
+                return (float) Yio.distance(x, y, frame.x, frame.y);
             } else {
-                return (float) YioGdxGame.distance(x, y, frame.x, frame.y + frame.height);
+                return (float) Yio.distance(x, y, frame.x, frame.y + frame.height);
             }
         } else {
             if (y > frame.y + 0.5f * frame.height) {
-                return (float) YioGdxGame.distance(x, y, frame.x + frame.width, frame.y);
+                return (float) Yio.distance(x, y, frame.x + frame.width, frame.y);
             } else {
-                return (float) YioGdxGame.distance(x, y, frame.x + frame.width, frame.y + frame.height);
+                return (float) Yio.distance(x, y, frame.x + frame.width, frame.y + frame.height);
             }
         }
     }
@@ -394,7 +395,7 @@ public class MenuViewYio {
         Color c = batch.getColor();
         if (factor < 0.5) batch.setColor(c.r, c.g, c.b, 1);
         else batch.setColor(c.r, c.g, c.b, 1 - 2f * factor);
-//        float r = 0.5f * (float)Math.sqrt(2f * factor) * (float) YioGdxGame.distance(0, 0, frame.width, frame.height);
+//        float r = 0.5f * (float)Math.sqrt(2f * factor) * (float) Yio.distance(0, 0, frame.width, frame.height);
         float r = (float) Math.sqrt(2f * factor) * maxDistanceToCorners(x, y, frame);
         batch.begin();
         batch.draw(circleTexture, x - r, y - r, 2 * r, 2 * r);

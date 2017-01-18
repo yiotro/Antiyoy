@@ -1,4 +1,8 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.gameplay;
+
+import yio.tro.antiyoy.Fonts;
+import yio.tro.antiyoy.LanguagesManager;
+import yio.tro.antiyoy.YioGdxGame;
 
 import java.util.*;
 
@@ -135,7 +139,7 @@ public class Province {
         int income = 0;
         for (Hex hex : hexList) {
             if (!hex.containsTree()) income++;
-            if (!GameController.slay_rules && hex.objectInside == Hex.OBJECT_FARM) income += 4;
+            if (!GameRules.slay_rules && hex.objectInside == Hex.OBJECT_FARM) income += 4;
         }
         return income;
     }
@@ -145,7 +149,7 @@ public class Province {
         int taxes = 0;
         for (Hex hex : hexList) {
             if (hex.containsUnit()) taxes += hex.unit.getTax();
-            if (!GameController.slay_rules) {
+            if (!GameRules.slay_rules) {
                 if (hex.objectInside == Hex.OBJECT_TOWER) taxes += 1;
                 if (hex.objectInside == Hex.OBJECT_STRONG_TOWER) taxes += 10;
             }
@@ -191,7 +195,7 @@ public class Province {
 
     public void setName(String name) {
         this.name = name;
-        nameWidth = 0.5f * YioGdxGame.getTextWidth(YioGdxGame.cityFont, name) + 0.1f * gameController.yioGdxGame.gameView.hexViewSize;
+        nameWidth = 0.5f * YioGdxGame.getTextWidth(Fonts.cityFont, name) + 0.1f * gameController.yioGdxGame.gameView.hexViewSize;
     }
 
 
@@ -223,22 +227,22 @@ public class Province {
 
 
     public boolean hasMoneyForUnit(int strength) {
-        return money >= GameController.PRICE_UNIT * strength;
+        return money >= GameRules.PRICE_UNIT * strength;
     }
 
 
     public boolean hasMoneyForTower() {
-        return money >= GameController.PRICE_TOWER;
+        return money >= GameRules.PRICE_TOWER;
     }
 
 
     public boolean hasMoneyForFarm() {
-        return money >= GameController.PRICE_FARM + getExtraFarmCost();
+        return money >= GameRules.PRICE_FARM + getExtraFarmCost();
     }
 
 
     public boolean hasMoneyForStrongTower() {
-        return money >= GameController.PRICE_STRONG_TOWER;
+        return money >= GameRules.PRICE_STRONG_TOWER;
     }
 
 

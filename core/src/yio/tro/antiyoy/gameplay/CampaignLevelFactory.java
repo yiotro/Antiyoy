@@ -1,5 +1,6 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.ai.ArtificialIntelligence;
 
 /**
@@ -39,12 +40,12 @@ public class CampaignLevelFactory {
     private void createLevelWithPredictableRandom(int index) {
         gameController.setLevelSize(getLevelSizeByIndex(index));
         gameController.setPlayersNumber(1);
-        GameController.setColorNumber(getColorNumberByIndex(index));
-        gameController.setDifficulty(getDifficultyByIndex(index));
-        GameController.slay_rules = gameController.yioGdxGame.menuControllerYio.getCheckButtonById(6).isChecked();
+        GameRules.setColorNumber(getColorNumberByIndex(index));
+        GameRules.setDifficulty(getDifficultyByIndex(index));
+        GameRules.slay_rules = gameController.yioGdxGame.menuControllerYio.getCheckButtonById(6).isChecked();
         gameController.yioGdxGame.startGame(index, false, false);
 
-        if (GameController.slay_rules) {
+        if (GameRules.slay_rules) {
             generateMapForSlayRules();
         } else {
             generateMapForGenericRules();
@@ -59,9 +60,9 @@ public class CampaignLevelFactory {
     private void generateMapForSlayRules() {
         int c = 0;
         while (c < 6) {
-            gameController.clearAnims();
-            gameController.createField(true);
-            if (gameController.getPredictionForWinner() == 0) break;
+            gameController.fieldController.clearAnims();
+            gameController.fieldController.createField(true);
+            if (gameController.fieldController.getPredictionForWinner() == 0) break;
             c++;
         }
     }
@@ -70,9 +71,9 @@ public class CampaignLevelFactory {
     private void generateMapForGenericRules() {
         int c = 0;
         while (c < 6) {
-            gameController.clearAnims();
-            gameController.createField(true);
-            if (gameController.areConditionsGoodForPlayer()) break;
+            gameController.fieldController.clearAnims();
+            gameController.fieldController.createField(true);
+            if (gameController.fieldController.areConditionsGoodForPlayer()) break;
             c++;
         }
     }
@@ -95,18 +96,18 @@ public class CampaignLevelFactory {
 
 
     private int getLevelSizeByIndex(int index) {
-        if (index == 4 || index == 7) return GameController.SIZE_MEDIUM;
-        if (index == 15) return GameController.SIZE_SMALL;
-        if (index == 20 || index == 30 || index == 35) return GameController.SIZE_BIG;
-        if (index >= 60 && index <= 64) return GameController.SIZE_MEDIUM;
-        if (index > 50 && index <= 53) return GameController.SIZE_MEDIUM;
+        if (index == 4 || index == 7) return FieldController.SIZE_MEDIUM;
+        if (index == 15) return FieldController.SIZE_SMALL;
+        if (index == 20 || index == 30 || index == 35) return FieldController.SIZE_BIG;
+        if (index >= 60 && index <= 64) return FieldController.SIZE_MEDIUM;
+        if (index > 50 && index <= 53) return FieldController.SIZE_MEDIUM;
 
         if (index <= 10) {
-            return GameController.SIZE_SMALL;
+            return FieldController.SIZE_SMALL;
         } else if (index <= 40) {
-            return GameController.SIZE_MEDIUM;
+            return FieldController.SIZE_MEDIUM;
         } else {
-            return GameController.SIZE_BIG;
+            return FieldController.SIZE_BIG;
         }
     }
 
@@ -117,10 +118,10 @@ public class CampaignLevelFactory {
         for (int i = 0; i < levels.length; i++) {
             gameController.setLevelSize(getLevelSizeByIndex(i));
             gameController.setPlayersNumber(1);
-            GameController.setColorNumber(getColorNumberByIndex(i));
+            GameRules.setColorNumber(getColorNumberByIndex(i));
             while (true) {
-                gameController.createField(true);
-                if (gameController.getPredictionForWinner() == 0) break;
+                gameController.fieldController.createField(true);
+                if (gameController.fieldController.getPredictionForWinner() == 0) break;
             }
             String levelString = gameSaver.getActiveHexesString();
             YioGdxGame.say("levels[" + i + "] = \"" + levelString + "\";");

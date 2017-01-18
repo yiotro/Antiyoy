@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.StringBuilder;
 import yio.tro.antiyoy.*;
+import yio.tro.antiyoy.gameplay.GameView;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -183,6 +184,6 @@ public class ButtonRenderer {
 
 
     public void renderButton(ButtonYio buttonYio) {
-        renderButton(buttonYio, YioGdxGame.buttonFont, YioGdxGame.FONT_SIZE);
+        renderButton(buttonYio, Fonts.buttonFont, Fonts.FONT_SIZE);
     }
 }

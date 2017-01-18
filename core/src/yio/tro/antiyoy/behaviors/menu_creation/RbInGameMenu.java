@@ -10,7 +10,7 @@ public class RbInGameMenu extends ReactBehavior {
 
     @Override
     public void reactAction(ButtonYio buttonYio) {
-        getGameController(buttonYio).deselectAll(); // fix to prevent flickering of selection
+        getGameController(buttonYio).selectionController.deselectAll(); // fix to prevent flickering of selection
         buttonYio.menuControllerYio.createInGameMenu();
         getYioGdxGame(buttonYio).setGamePaused(true);
     }

@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.ai;
 
-import yio.tro.antiyoy.GameController;
-import yio.tro.antiyoy.Unit;
+import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.Unit;
 
 import java.util.ArrayList;
 

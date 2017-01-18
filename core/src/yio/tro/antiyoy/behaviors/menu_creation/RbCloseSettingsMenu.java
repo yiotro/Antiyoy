@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.behaviors.menu_creation;
 
+import yio.tro.antiyoy.Settings;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 
@@ -10,8 +11,8 @@ public class RbCloseSettingsMenu extends ReactBehavior {
 
     @Override
     public void reactAction(ButtonYio buttonYio) {
-        getYioGdxGame(buttonYio).saveSettings();
+        Settings.getInstance().saveSettings();
         buttonYio.menuControllerYio.createMainMenu();
-        getYioGdxGame(buttonYio).loadSettings();
+        Settings.getInstance().loadSettings();
     }
 }

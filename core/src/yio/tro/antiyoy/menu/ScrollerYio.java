@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.gameplay.CampaignLevelFactory;
+import yio.tro.antiyoy.gameplay.GameView;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -165,7 +167,7 @@ public class ScrollerYio {
         batch.begin();
         batch.draw(bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.end();
-        font = YioGdxGame.listFont;
+        font = Fonts.listFont;
 
         batch.begin();
         batch.draw(icon, lineHeight, lineHeight, 0, 0, lineHeight, lineHeight, 1, 1, 180);

@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Matrix4;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
+import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.GameView;
 import yio.tro.antiyoy.menu.ButtonYio;
 
 /**
@@ -43,7 +45,7 @@ public class RbShowColorStats extends ReactBehavior {
     @Override
     public void reactAction(ButtonYio buttonYio) {
         buttonYio.menuControllerYio.showColorStats();
-        renderStatButton(buttonYio.menuControllerYio.getButtonById(56321), getGameController(buttonYio).getPlayerHexCount());
+        renderStatButton(buttonYio.menuControllerYio.getButtonById(56321), getGameController(buttonYio).fieldController.getPlayerHexCount());
     }
 
 
@@ -71,7 +73,7 @@ public class RbShowColorStats extends ReactBehavior {
 
 
     void setFontColorByIndex(int index) {
-        BitmapFont font = YioGdxGame.buttonFont;
+        BitmapFont font = Fonts.buttonFont;
         switch (index) {
             case 0:
                 font.setColor(0.37f, 0.7f, 0.36f, 1);
@@ -103,7 +105,7 @@ public class RbShowColorStats extends ReactBehavior {
 
     void renderStatButton(ButtonYio statButton, int playerHexCount[]) {
         initEverything();
-        beginRender(statButton, YioGdxGame.gameFont);
+        beginRender(statButton, Fonts.gameFont);
         batch.begin();
 
         float w = Gdx.graphics.getWidth();
@@ -114,10 +116,10 @@ public class RbShowColorStats extends ReactBehavior {
         float columnHeight = 0.25f * h;
         for (int i = 0; i < playerHexCount.length; i++) {
             setFontColorByIndex(i);
-            float numberLineWidth = YioGdxGame.getTextWidth(YioGdxGame.buttonFont, "" + playerHexCount[i]);
+            float numberLineWidth = YioGdxGame.getTextWidth(Fonts.buttonFont, "" + playerHexCount[i]);
             float columnX = columnWidth + distanceBetweenColumns * i;
             batch.draw(blackPixel, columnX - numberLineWidth / 2 - 0.01f * w, 0.28f * h, numberLineWidth + 0.02f * w, 0.05f * h);
-            YioGdxGame.buttonFont.draw(batch, "" + playerHexCount[i], columnX - numberLineWidth / 2, 0.29f * h);
+            Fonts.buttonFont.draw(batch, "" + playerHexCount[i], columnX - numberLineWidth / 2, 0.29f * h);
 
             float currentSize = (float) playerHexCount[i] / maxNumber;
             currentSize *= columnHeight;
@@ -126,7 +128,7 @@ public class RbShowColorStats extends ReactBehavior {
         }
         batch.draw(blackPixel, 0.025f * w, 0.0125f * h + columnHeight, 0.95f * w, 0.005f * h);
 
-        YioGdxGame.buttonFont.setColor(0, 0, 0, 1);
+        Fonts.buttonFont.setColor(0, 0, 0, 1);
         batch.end();
         endRender(statButton);
     }

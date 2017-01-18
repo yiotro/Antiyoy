@@ -1,5 +1,6 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.LanguagesManager;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -53,7 +54,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
         gameSaver.beginRecreation();
         gameSaver.setBasicInfo(0, 1, 5, 1, 0);
         gameController.colorIndexViewOffset = 0;
-        GameController.slay_rules = false;
+        GameRules.slay_rules = false;
         gameSaver.endRecreation();
 
 
@@ -68,7 +69,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
 
 
     private Hex getHex(int x, int y) {
-        return gameController.field[x + gameController.compensationOffsetY][y];
+        return gameController.fieldController.field[x + gameController.cameraController.compensationOffsetY][y];
     }
 
 
@@ -293,10 +294,10 @@ public class TutorialScriptGenericRules extends TutorialScript{
             default:
             case STEP_GREETINGS: return true;
             case STEP_SELECT_PROVINCE:
-                if (gameController.selectedProvince != null) return true;
+                if (gameController.fieldController.selectedProvince != null) return true;
                 return false;
             case STEP_SELECT_UNIT:
-                if (gameController.selectedUnit != null) return true;
+                if (gameController.selectionController.selectedUnit != null) return true;
                 return false;
             case STEP_MOVE_UNIT:
                 if (getHex(17, 9).containsUnit()) return true;
@@ -304,7 +305,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
             case STEP_INCOME:
                 return true;
             case STEP_CHOOSE_FARM:
-                if (gameController.tipType == 5) return true;
+                if (gameController.selectionController.getTipType() == 5) return true;
                 return false;
             case STEP_BUILD_FARM:
                 if (getHex(18, 11).objectInside == Hex.OBJECT_FARM) return true;
@@ -312,7 +313,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
             case STEP_ABOUT_FARM:
                 return true;
             case STEP_CHOOSE_PEASANT:
-                if (gameController.tipType == 1) return true;
+                if (gameController.selectionController.getTipType() == 1) return true;
                 return false;
             case STEP_BUILD_PEASANT:
                 if (getHex(19, 9).containsUnit()) return true;
@@ -321,7 +322,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
                 if (getHex(20, 9).containsUnit()) return true;
                 return false;
             case STEP_CHOOSE_TOWER:
-                if (gameController.tipType == 0) return true;
+                if (gameController.selectionController.getTipType() == 0) return true;
                 return false;
             case STEP_BUILD_TOWER:
                 if (getHex(18, 10).objectInside == Hex.OBJECT_TOWER) return true;
@@ -329,7 +330,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
             case STEP_ABOUT_TOWERS:
                 return true;
             case STEP_CHOOSE_SPEARMAN:
-                if (gameController.tipType == 2) return true;
+                if (gameController.selectionController.getTipType() == 2) return true;
                 return false;
             case STEP_BUILD_SPEARMAN:
                 if (getHex(19, 8).containsUnit()) return true;
@@ -349,7 +350,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
                 if (menuControllerYio.getButtonById(31).isCurrentlyTouched()) return true;
                 return false;
             case STEP_CHOOSE_TO_MERGE:
-                if (gameController.selectedUnit != null) return true;
+                if (gameController.selectionController.selectedUnit != null) return true;
                 return false;
             case STEP_MERGE_UNITS:
                 if (getHex(20, 9).unit.strength == 2) return true;
@@ -384,9 +385,9 @@ public class TutorialScriptGenericRules extends TutorialScript{
             if (buttonYio == null) continue;
             buttonYio.setTouchable(true);
         }
-        for (int i = 0; i < gameController.fWidth; i++) {
-            for (int j = 0; j < gameController.fHeight; j++) {
-                gameController.field[i][j].setIgnoreTouch(false);
+        for (int i = 0; i < gameController.fieldController.fWidth; i++) {
+            for (int j = 0; j < gameController.fieldController.fHeight; j++) {
+                gameController.fieldController.field[i][j].setIgnoreTouch(false);
             }
         }
     }
@@ -414,7 +415,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
 
     private void setHexToRespondByColor(int color) {
         ignoreAll();
-        for (Hex activeHex : gameController.activeHexes) {
+        for (Hex activeHex : gameController.fieldController.activeHexes) {
             if (activeHex.colorIndex == color && !activeHex.containsUnit()) {
                 activeHex.setIgnoreTouch(false);
             }
@@ -423,9 +424,9 @@ public class TutorialScriptGenericRules extends TutorialScript{
 
 
     private void allHexesIgnoreTouches() {
-        for (int i = 0; i < gameController.fWidth; i++) {
-            for (int j = 0; j < gameController.fHeight; j++) {
-                gameController.field[i][j].setIgnoreTouch(true);
+        for (int i = 0; i < gameController.fieldController.fWidth; i++) {
+            for (int j = 0; j < gameController.fieldController.fHeight; j++) {
+                gameController.fieldController.field[i][j].setIgnoreTouch(true);
             }
         }
     }

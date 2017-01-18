@@ -1,4 +1,4 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.gameplay;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -21,54 +21,54 @@ class LevelSnapshot {
 
 
     void takeSnapshot() {
-        if (gameController.isSomethingSelected()) {
-            selectionHex = gameController.selectedProvince.hexList.get(0);
+        if (gameController.selectionController.isSomethingSelected()) {
+            selectionHex = gameController.fieldController.selectedProvince.hexList.get(0);
         } else selectionHex = null;
 
-        fieldCopy = new Hex[gameController.fWidth][gameController.fHeight];
-        for (int i = 0; i < gameController.fWidth; i++) {
-            for (int j = 0; j < gameController.fHeight; j++) {
-                fieldCopy[i][j] = gameController.field[i][j].getSnapshotCopy();
+        fieldCopy = new Hex[gameController.fieldController.fWidth][gameController.fieldController.fHeight];
+        for (int i = 0; i < gameController.fieldController.fWidth; i++) {
+            for (int j = 0; j < gameController.fieldController.fHeight; j++) {
+                fieldCopy[i][j] = gameController.fieldController.field[i][j].getSnapshotCopy();
             }
         }
 
         provincesCopy = new ArrayList<Province>();
-        for (Province province : gameController.provinces) {
+        for (Province province : gameController.fieldController.provinces) {
             provincesCopy.add(province.getSnapshotCopy());
         }
 
         activeHexesCopy = new ArrayList<Hex>();
-        for (Hex activeHex : gameController.activeHexes) {
+        for (Hex activeHex : gameController.fieldController.activeHexes) {
             activeHexesCopy.add(activeHex.getSnapshotCopy());
         }
     }
 
 
     private void cleanOutEveryHexInField() {
-        for (int i = 0; i < gameController.fWidth; i++) {
-            for (int j = 0; j < gameController.fHeight; j++) {
-                if (!gameController.field[i][j].active) continue;
-                gameController.cleanOutHex(gameController.field[i][j]);
+        for (int i = 0; i < gameController.fieldController.fWidth; i++) {
+            for (int j = 0; j < gameController.fieldController.fHeight; j++) {
+                if (!gameController.fieldController.field[i][j].active) continue;
+                gameController.cleanOutHex(gameController.fieldController.field[i][j]);
             }
         }
     }
 
 
     private Hex getHexByCopy(Hex copy) {
-        return gameController.field[copy.index1][copy.index2];
+        return gameController.fieldController.field[copy.index1][copy.index2];
     }
 
 
     void recreateSnapshot() {
-        gameController.clearField();
+        gameController.fieldController.clearField();
         cleanOutEveryHexInField();
-        gameController.clearAnims();
+        gameController.fieldController.clearAnims();
 
         Hex currHex;
-        for (int i = 0; i < gameController.fWidth; i++) {
-            for (int j = 0; j < gameController.fHeight; j++) {
+        for (int i = 0; i < gameController.fieldController.fWidth; i++) {
+            for (int j = 0; j < gameController.fieldController.fHeight; j++) {
 
-                currHex = gameController.field[i][j];
+                currHex = gameController.fieldController.field[i][j];
                 if (!currHex.active) continue;
 
                 if (!currHex.sameColor(fieldCopy[i][j])) {
@@ -98,12 +98,12 @@ class LevelSnapshot {
             }
         }
 
-        ListIterator iterator = gameController.activeHexes.listIterator();
+        ListIterator iterator = gameController.fieldController.activeHexes.listIterator();
         for (Hex hex : activeHexesCopy) {
             iterator.add(getHexByCopy(hex));
         }
 
-        gameController.detectProvinces();
+        gameController.fieldController.detectProvinces();
 
         // gameController.provinces have to be exactly in the same order as provincesCopy
 //        ComparatorProvince comparatorProvince = new ComparatorProvince();
@@ -127,12 +127,12 @@ class LevelSnapshot {
             }
         }
 
-        gameController.deselectAll();
+        gameController.selectionController.deselectAll();
         if (selectionHex != null) {
             gameController.selectAdjacentHexes(selectionHex);
         }
 
-        gameController.addAnimHex(gameController.field[0][0]);
+        gameController.addAnimHex(gameController.fieldController.field[0][0]);
         gameController.updateWholeCache = true;
     }
 }

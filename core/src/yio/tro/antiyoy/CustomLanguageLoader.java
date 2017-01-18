@@ -30,6 +30,6 @@ public class CustomLanguageLoader {
 
         preferences.flush();
 
-        loadLanguage();
+        Fonts.initFonts();
     }
 }

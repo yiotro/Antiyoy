@@ -1,6 +1,10 @@
 package yio.tro.antiyoy.ai;
 
 import yio.tro.antiyoy.*;
+import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.Hex;
+import yio.tro.antiyoy.gameplay.Province;
+import yio.tro.antiyoy.gameplay.Unit;
 
 import java.util.ArrayList;
 
@@ -11,7 +15,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
 
     public AiExpertGenericRules(GameController gameController, int color) {
         super(gameController, color);
-        tempHex = new Hex(0, 0, new PointYio(), gameController);
+        tempHex = new Hex(0, 0, new PointYio(), gameController.fieldController);
     }
 
 
@@ -168,10 +172,10 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
             if (hex == null) return;
 
             if (province.hasMoneyForStrongTower()) {
-                gameController.buildStrongTower(province, hex);
+                gameController.fieldController.buildStrongTower(province, hex);
                 continue;
             }
-            gameController.buildTower(province, hex);
+            gameController.fieldController.buildTower(province, hex);
         }
     }
 

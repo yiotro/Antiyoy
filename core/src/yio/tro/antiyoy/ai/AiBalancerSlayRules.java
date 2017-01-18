@@ -1,6 +1,9 @@
 package yio.tro.antiyoy.ai;
 
-import yio.tro.antiyoy.*;
+import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.Hex;
+import yio.tro.antiyoy.gameplay.Province;
+import yio.tro.antiyoy.gameplay.Unit;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +22,7 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
 
 
     private void updateSortConditions() {
-        playerHexCount = gameController.getPlayerHexCount();
+        playerHexCount = gameController.fieldController.getPlayerHexCount();
     }
 
 
@@ -93,7 +96,7 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
         gameController.moveUnit(unit, moveZone.get(random.nextInt(moveZone.size())), province);
 
         // place tower
-        gameController.buildTower(province, gameController.field[x][y]);
+        gameController.fieldController.buildTower(province, gameController.fieldController.field[x][y]);
     }
 
 

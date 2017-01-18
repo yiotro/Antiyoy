@@ -1,4 +1,6 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.gameplay;
+
+import yio.tro.antiyoy.YioGdxGame;
 
 /**
  * Created by ivan on 05.08.14.

@@ -3,6 +3,7 @@ package yio.tro.antiyoy.menu;
 import com.badlogic.gdx.Gdx;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.gameplay.GameRules;
 
 import java.util.ArrayList;
 
@@ -216,8 +217,8 @@ public class SliderYio {
                 break;
             case CONFIGURE_COLORS:
                 s = 3;
-                if (sliderYio.getCurrentRunnerIndex() == 1) s = GameController.MAX_COLOR_NUMBER - 3;
-                if (sliderYio.getCurrentRunnerIndex() == 2) s = GameController.MAX_COLOR_NUMBER - 2;
+                if (sliderYio.getCurrentRunnerIndex() == 1) s = GameRules.MAX_COLOR_NUMBER - 3;
+                if (sliderYio.getCurrentRunnerIndex() == 2) s = GameRules.MAX_COLOR_NUMBER - 2;
                 break;
             case CONFIGURE_COLOR_OFFSET:
                 menuControllerYio.loadMoreSkirmishOptions();
@@ -282,7 +283,7 @@ public class SliderYio {
                 configureSensitivity();
                 break;
         }
-        textWidth = YioGdxGame.getTextWidth(YioGdxGame.gameFont, valueString);
+        textWidth = YioGdxGame.getTextWidth(Fonts.gameFont, valueString);
         notifyListeners();
     }
 

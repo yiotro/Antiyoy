@@ -1,9 +1,6 @@
 package yio.tro.antiyoy.ai;
 
-import yio.tro.antiyoy.GameController;
-import yio.tro.antiyoy.Hex;
-import yio.tro.antiyoy.Province;
-import yio.tro.antiyoy.Unit;
+import yio.tro.antiyoy.gameplay.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -33,7 +30,7 @@ public abstract class ArtificialIntelligence {
 
     ArrayList<Unit> detectUnitsReadyToMove() {
         ArrayList<Unit> unitsReadyToMove = new ArrayList<Unit>();
-        for (Province province : gameController.provinces) {
+        for (Province province : gameController.fieldController.provinces) {
             if (province.getColor() == color) {
                 for (int k = province.hexList.size() - 1; k >= 0; k--) {
                     Hex hex = province.hexList.get(k);
@@ -48,7 +45,7 @@ public abstract class ArtificialIntelligence {
 
     void moveUnits(ArrayList<Unit> unitsReadyToMove) {
         for (Unit unit : unitsReadyToMove) {
-            ArrayList<Hex> moveZone = gameController.detectMoveZone(unit.currHex, unit.strength, GameController.UNIT_MOVE_LIMIT);
+            ArrayList<Hex> moveZone = gameController.detectMoveZone(unit.currHex, unit.strength, GameRules.UNIT_MOVE_LIMIT);
             excludeFriendlyBuildingsFromMoveZone(moveZone);
             excludeFriendlyUnitsFromMoveZone(moveZone);
             if (moveZone.size() == 0) continue;
@@ -58,8 +55,8 @@ public abstract class ArtificialIntelligence {
 
 
     void spendMoneyAndMergeUnits() {
-        for (int i = 0; i < gameController.provinces.size(); i++) {
-            Province province = gameController.provinces.get(i);
+        for (int i = 0; i < gameController.fieldController.provinces.size(); i++) {
+            Province province = gameController.fieldController.provinces.get(i);
             if (province.getColor() == color) {
                 spendMoney(province);
                 mergeUnits(province);
@@ -82,7 +79,7 @@ public abstract class ArtificialIntelligence {
 
 
     void moveAfkUnit(Province province, Unit unit) {
-        ArrayList<Hex> moveZone = gameController.detectMoveZone(unit.currHex, unit.strength, GameController.UNIT_MOVE_LIMIT);
+        ArrayList<Hex> moveZone = gameController.detectMoveZone(unit.currHex, unit.strength, GameRules.UNIT_MOVE_LIMIT);
         excludeFriendlyUnitsFromMoveZone(moveZone);
         excludeFriendlyBuildingsFromMoveZone(moveZone);
         if (moveZone.size() == 0) return;
@@ -101,7 +98,7 @@ public abstract class ArtificialIntelligence {
 
 
     private void tryToMergeWithSomeone(Province province, Unit unit) {
-        ArrayList<Hex> moveZone = gameController.detectMoveZone(unit.currHex, unit.strength, GameController.UNIT_MOVE_LIMIT);
+        ArrayList<Hex> moveZone = gameController.detectMoveZone(unit.currHex, unit.strength, GameRules.UNIT_MOVE_LIMIT);
         if (moveZone.size() == 0) return;
         for (Hex hex : moveZone) {
             if (hex.sameColor(unit.currHex) && hex.containsUnit() && hex.unit.isReadyToMove() && unit != hex.unit &&
@@ -123,7 +120,7 @@ public abstract class ArtificialIntelligence {
         while (province.hasMoneyForTower()) {
             Hex hex = findHexThatNeedsTower(province);
             if (hex == null) return;
-            gameController.buildTower(province, hex);
+            gameController.fieldController.buildTower(province, hex);
         }
     }
 
@@ -151,7 +148,7 @@ public abstract class ArtificialIntelligence {
     boolean tryToBuiltUnitInsideProvince(Province province, int strength) {
         for (Hex hex : province.hexList) {
             if (hex.nothingBlocksWayForUnit()) {
-                gameController.buildUnit(province, hex, strength);
+                gameController.fieldController.buildUnit(province, hex, strength);
                 return true;
             }
         }
@@ -164,7 +161,7 @@ public abstract class ArtificialIntelligence {
         ArrayList<Hex> attackableHexes = findAttackableHexes(province.getColor(), moveZone);
         if (attackableHexes.size() == 0) return false;
         Hex bestHexForAttack = findMostAttractiveHex(attackableHexes, province, strength);
-        gameController.buildUnit(province, bestHexForAttack, strength);
+        gameController.fieldController.buildUnit(province, bestHexForAttack, strength);
         return true;
     }
 
@@ -176,7 +173,7 @@ public abstract class ArtificialIntelligence {
             boolean killedPalm = false;
             for (Hex hex : moveZone) {
                 if (hex.objectInside == Hex.OBJECT_PALM && hex.sameColor(province)) {
-                    gameController.buildUnit(province, hex, 1);
+                    gameController.fieldController.buildUnit(province, hex, 1);
                     killedPalm = true;
                 }
             }

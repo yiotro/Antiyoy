@@ -1,5 +1,6 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.PointYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 
 import java.util.ArrayList;
@@ -41,9 +42,9 @@ public class Unit {
     boolean moveToHex(Hex destinationHex) {
         if (destinationHex.sameColor(currHex) && destinationHex.containsBuilding()) return false;
         if (destinationHex.containsSolidObject()) {
-            if (!GameController.slay_rules && destinationHex.containsTree()) {
+            if (!GameRules.slay_rules && destinationHex.containsTree()) {
                 gameController.getProvinceByHex(destinationHex).money += 5;
-                gameController.updateSelectedProvinceMoney();
+                gameController.selectionController.updateSelectedProvinceMoney();
             }
             gameController.cleanOutHex(destinationHex); // unit crushes object
             gameController.updateCacheOnceAfterSomeTime();
@@ -117,14 +118,14 @@ public class Unit {
 
     public void marchToHex(Hex toWhere, Province province) {
         if (toWhere == currHex) return;
-        ArrayList<Hex> moveZone = gameController.detectMoveZone(currHex, strength, GameController.UNIT_MOVE_LIMIT);
+        ArrayList<Hex> moveZone = gameController.detectMoveZone(currHex, strength, GameRules.UNIT_MOVE_LIMIT);
         if (moveZone.size() == 0) return;
         double minDistance, currentDistance;
-        minDistance = GameController.distanceBetweenHexes(moveZone.get(0), toWhere);
+        minDistance = FieldController.distanceBetweenHexes(moveZone.get(0), toWhere);
         Hex closestHex = moveZone.get(0);
         for (Hex hex : moveZone) {
             if (hex.sameColor(currHex) && hex.nothingBlocksWayForUnit()) {
-                currentDistance = GameController.distanceBetweenHexes(toWhere, hex);
+                currentDistance = FieldController.distanceBetweenHexes(toWhere, hex);
                 if (currentDistance < minDistance) {
                     minDistance = currentDistance;
                     closestHex = hex;

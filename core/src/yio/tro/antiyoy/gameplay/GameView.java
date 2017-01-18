@@ -1,4 +1,4 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.gameplay;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class GameView {
         segments = Gdx.graphics.getWidth() / 75;
         if (segments < 12) segments = 12;
         if (segments > 24) segments = 24;
-        hexViewSize = 1.04f * gameController.hexSize;
+        hexViewSize = 1.04f * gameController.fieldController.hexSize;
         hexShadowSize = 1.00f * hexViewSize;
         frameBufferList = new FrameBuffer[4];
         for (int i = 0; i < frameBufferList.length; i++)
@@ -82,7 +83,7 @@ public class GameView {
 
 
     void createLevelCacheTextures() {
-        cacheLevelTextures = new TextureRegion[gameController.levelSize];
+        cacheLevelTextures = new TextureRegion[gameController.fieldController.levelSize];
     }
 
 
@@ -120,7 +121,7 @@ public class GameView {
     }
 
 
-    void loadSkin(int skin) {
+    public void loadSkin(int skin) {
         switch (skin) {
             case 0: // original
                 loadOriginalSkin();
@@ -245,7 +246,7 @@ public class GameView {
     void updateCacheNearAnimHexes() {
         if (Debug.CHECKING_BALANCE_MODE) return;
         float up, right, down, left;
-        ArrayList<Hex> ah = gameController.animHexes;
+        ArrayList<Hex> ah = gameController.fieldController.animHexes;
         if (ah.size() == 0) return;
         up = down = ah.get(0).getPos().y;
         left = right = ah.get(0).getPos().x;
@@ -331,7 +332,7 @@ public class GameView {
         TextureRegion currentHexTexture;
 
         // shadows
-        for (Hex hex : gameController.activeHexes) {
+        for (Hex hex : gameController.fieldController.activeHexes) {
             pos = hex.getPos();
             if (cutOffHexes) {
                 if (!isPosInCacheFrame(pos, hexViewSize)) continue;
@@ -340,7 +341,7 @@ public class GameView {
         }
 
         // hexes
-        for (Hex hex : gameController.activeHexes) {
+        for (Hex hex : gameController.fieldController.activeHexes) {
             pos = hex.getPos();
             if (cutOffHexes) {
                 if (!isPosInCacheFrame(pos, hexViewSize)) continue;
@@ -350,7 +351,7 @@ public class GameView {
         }
 
         // lines between hexes
-        for (Hex hex : gameController.activeHexes) {
+        for (Hex hex : gameController.fieldController.activeHexes) {
             pos = hex.getPos();
             if (cutOffHexes) {
                 if (!isPosInCacheFrame(pos, hexViewSize)) continue;
@@ -365,7 +366,7 @@ public class GameView {
         }
 
         // solid objects
-        for (Hex hex : gameController.solidObjects) {
+        for (Hex hex : gameController.fieldController.solidObjects) {
             renderSolidObject(spriteBatch, hex.getPos(), hex);
         }
     }
@@ -399,7 +400,7 @@ public class GameView {
             case Hex.OBJECT_GRAVE:
                 return graveTexture.getTexture(quality);
             case Hex.OBJECT_TOWN:
-                if (GameController.slay_rules) return houseTexture.getTexture(quality);
+                if (GameRules.slay_rules) return houseTexture.getTexture(quality);
                 return castleTexture.getTexture(quality);
             case Hex.OBJECT_PALM:
                 return palmTexture.getTexture(quality);
@@ -429,10 +430,10 @@ public class GameView {
 
 
     private void renderGradientShadow(Hex hex1, Hex hex2, SpriteBatch spriteBatch) {
-        double a = YioGdxGame.angle(hex1.pos.x, hex1.pos.y, hex2.pos.x, hex2.pos.y);
+        double a = Yio.angle(hex1.pos.x, hex1.pos.y, hex2.pos.x, hex2.pos.y);
         double cx = 0.5 * (hex1.pos.x + hex2.pos.x);
         double cy = 0.5 * (hex1.pos.y + hex2.pos.y);
-        double s = 0.5 * gameController.hexSize;
+        double s = 0.5 * gameController.fieldController.hexSize;
         cx -= 0.2 * s * Math.cos(a);
         cy -= 0.2 * s * Math.sin(a);
         a += 0.5 * Math.PI;
@@ -441,27 +442,27 @@ public class GameView {
 
 
     private void renderLineBetweenHexesWithOffset(Hex hex1, Hex hex2, SpriteBatch spriteBatch, double thickness, TextureRegion textureRegion, double offset, int rotation, double factor) {
-        double a = YioGdxGame.angle(hex1.pos.x, hex1.pos.y, hex2.pos.x, hex2.pos.y);
+        double a = Yio.angle(hex1.pos.x, hex1.pos.y, hex2.pos.x, hex2.pos.y);
         double a2 = a + 0.5 * Math.PI;
         double cx = 0.5 * (hex1.pos.x + hex2.pos.x);
         double cy = 0.5 * (hex1.pos.y + hex2.pos.y);
-        double s = 0.5 * gameController.hexSize * (0.7 + 0.37 * factor);
+        double s = 0.5 * gameController.fieldController.hexSize * (0.7 + 0.37 * factor);
         drawSpecialHexedLine(cx + offset * Math.cos(a) + s * Math.cos(a2), cy + offset * Math.sin(a) + s * Math.sin(a2), cx + offset * Math.cos(a) - s * Math.cos(a2), cy + offset * Math.sin(a) - s * Math.sin(a2), thickness, spriteBatch, textureRegion, rotation);
     }
 
 
     private void renderLineBetweenHexes(Hex hex1, Hex hex2, SpriteBatch spriteBatch, double thickness, int rotation) {
-        double a = YioGdxGame.angle(hex1.pos.x, hex1.pos.y, hex2.pos.x, hex2.pos.y);
+        double a = Yio.angle(hex1.pos.x, hex1.pos.y, hex2.pos.x, hex2.pos.y);
         a += 0.5 * Math.PI;
         double cx = 0.5 * (hex1.pos.x + hex2.pos.x);
         double cy = 0.5 * (hex1.pos.y + hex2.pos.y);
-        double s = 0.5 * gameController.hexSize;
+        double s = 0.5 * gameController.fieldController.hexSize;
         drawSpecialHexedLine(cx + s * Math.cos(a), cy + s * Math.sin(a), cx - s * Math.cos(a), cy - s * Math.sin(a), thickness, spriteBatch, blackBorderTexture, rotation + 3);
     }
 
 
     private void drawSpecialHexedLine(double x1, double y1, double x2, double y2, double thickness, SpriteBatch spriteBatch, TextureRegion blackPixel, int rotation) {
-        spriteBatch.draw(blackPixel, (float) x1, (float) (y1 - thickness * 0.5), 0f, (float) thickness * 0.5f, (float) YioGdxGame.distance(x1, y1, x2, y2), (float) thickness, 1f, 1f, (float) (180 * (-rotation / 3d)));
+        spriteBatch.draw(blackPixel, (float) x1, (float) (y1 - thickness * 0.5), 0f, (float) thickness * 0.5f, (float) Yio.distance(x1, y1, x2, y2), (float) thickness, 1f, 1f, (float) (180 * (-rotation / 3d)));
     }
 
 
@@ -505,16 +506,16 @@ public class GameView {
 
 
     private boolean isPosInViewFrame(PointYio pos, float offset) {
-        if (pos.x < gameController.frameX1 - offset) return false;
-        if (pos.x > gameController.frameX2 + offset) return false;
-        if (pos.y < gameController.frameY1 - offset) return false;
-        if (pos.y > gameController.frameY2 + offset) return false;
+        if (pos.x < gameController.cameraController.frameX1 - offset) return false;
+        if (pos.x > gameController.cameraController.frameX2 + offset) return false;
+        if (pos.y < gameController.cameraController.frameY1 - offset) return false;
+        if (pos.y > gameController.cameraController.frameY2 + offset) return false;
         return true;
     }
 
 
     private TextureRegion getHexTextureByColor(int colorIndex) {
-        if (gameController.colorIndexViewOffset > 0 && colorIndex != gameController.neutralLandsIndex) {
+        if (gameController.colorIndexViewOffset > 0 && colorIndex != gameController.fieldController.neutralLandsIndex) {
             colorIndex = gameController.getColorIndexWithOffset(colorIndex);
         }
         switch (colorIndex) {
@@ -540,7 +541,7 @@ public class GameView {
 
 
     private void renderAllSolidObjects() {
-        for (Hex activeHex : gameController.activeHexes) {
+        for (Hex activeHex : gameController.fieldController.activeHexes) {
             if (activeHex.containsSolidObject())
                 renderSolidObject(batchMovable, activeHex.getPos(), activeHex);
         }
@@ -552,7 +553,7 @@ public class GameView {
         TextureRegion currentHexLastTexture, currentHexTexture;
         Color c = batchMovable.getColor();
 
-        for (Hex hex : gameController.animHexes) {
+        for (Hex hex : gameController.fieldController.animHexes) {
             pos = hex.getPos();
             if (!isPosInViewFrame(pos, hexViewSize)) continue;
 
@@ -567,7 +568,7 @@ public class GameView {
         }
 
         batchMovable.setColor(c.r, c.g, c.b, 1);
-        for (Hex hex : gameController.animHexes) {
+        for (Hex hex : gameController.fieldController.animHexes) {
             pos = hex.getPos();
             if (!isPosInViewFrame(pos, hexViewSize)) continue;
             for (int i = 0; i < 6; i++) {
@@ -597,11 +598,11 @@ public class GameView {
 
 
     private void renderResponseAnimHex() {
-        if (gameController.responseAnimHex != null) {
-            pos = gameController.responseAnimHex.getPos();
+        if (gameController.fieldController.responseAnimHex != null) {
+            pos = gameController.fieldController.responseAnimHex.getPos();
             Color c = batchMovable.getColor();
-            batchMovable.setColor(c.r, c.g, c.b, 0.5f * Math.min(gameController.responseAnimFactor.get(), 1));
-            float s = Math.max(hexViewSize, hexViewSize * gameController.responseAnimFactor.get());
+            batchMovable.setColor(c.r, c.g, c.b, 0.5f * Math.min(gameController.fieldController.responseAnimFactor.get(), 1));
+            float s = Math.max(hexViewSize, hexViewSize * gameController.fieldController.responseAnimFactor.get());
             batchMovable.draw(responseAnimHexTexture, pos.x - s, pos.y - s, 2 * s, 2 * s);
             batchMovable.setColor(c.r, c.g, c.b, c.a);
         }
@@ -611,8 +612,8 @@ public class GameView {
     private void renderExclamationMarks() {
         if (!gameController.isPlayerTurn()) return;
 
-        for (Province province : gameController.provinces) {
-            if (gameController.isCurrentTurn(province.getColor()) && province.money >= GameController.PRICE_UNIT) {
+        for (Province province : gameController.fieldController.provinces) {
+            if (gameController.isCurrentTurn(province.getColor()) && province.money >= GameRules.PRICE_UNIT) {
                 Hex capitalHex = province.getCapital();
                 PointYio pos = capitalHex.getPos();
                 batchMovable.draw(exclamationMarkTexture, pos.x - 0.5f * hexViewSize, pos.y + 0.3f * hexViewSize + gameController.jumperUnit.jumpPos * hexViewSize, 0.35f * hexViewSize, 0.6f * hexViewSize);
@@ -622,10 +623,10 @@ public class GameView {
 
 
     private void renderCityNames() {
-        if (!gameController.isShowCityNames()) return;
+        if (!gameController.isCityNamesEnabled()) return;
         if (!gameController.isPlayerTurn()) return;
 
-        for (Province province : gameController.provinces) {
+        for (Province province : gameController.fieldController.provinces) {
             if (gameController.isCurrentTurn(province.getColor()) && province.isSelected()) {
                 renderSingleCityName(province);
             }
@@ -636,7 +637,7 @@ public class GameView {
     private void renderSingleCityName(Province province) {
         Hex capitalHex = province.getCapital();
         PointYio pos = capitalHex.getPos();
-        float factor = capitalHex.selectionFactor.get() - gameController.moveZoneFactor.get();
+        float factor = capitalHex.selectionFactor.get() - gameController.fieldController.moveZoneFactor.get();
         float pWidth = province.nameWidth;
         Color c = batchMovable.getColor();
         batchMovable.setColor(c.r, c.g, c.b, factor);
@@ -644,7 +645,7 @@ public class GameView {
         batchMovable.draw(blackTriangle, pos.x - 0.3f * hexViewSize, pos.y + 0.22f * hexViewSize + 0.2f * factor * hexViewSize, 0.6f * hexViewSize, 0.6f * hexViewSize);
         batchMovable.setColor(c.r, c.g, c.b, 0.3f + 0.7f * factor);
         batchMovable.draw(blackPixel, pos.x - pWidth, pos.y + 0.7f * hexViewSize + 0.3f * factor * hexViewSize, 2 * pWidth, 0.9f * hexViewSize);
-        YioGdxGame.cityFont.draw(batchMovable, province.getName(), pos.x - pWidth + 0.1f * hexViewSize, pos.y + 1.4f * hexViewSize + 0.3f * factor * hexViewSize);
+        Fonts.cityFont.draw(batchMovable, province.getName(), pos.x - pWidth + 0.1f * hexViewSize, pos.y + 1.4f * hexViewSize + 0.3f * factor * hexViewSize);
         batchMovable.setColor(c.r, c.g, c.b, c.a);
     }
 
@@ -655,7 +656,7 @@ public class GameView {
 
 
     private void renderSelectedHexes() {
-        for (Hex hex : gameController.selectedHexes) {
+        for (Hex hex : gameController.fieldController.selectedHexes) {
             if (hex.selectionFactor.get() < 0.01) continue;
             for (int i = 0; i < 6; i++) {
                 Hex h = hex.adjacentHex(i);
@@ -664,7 +665,7 @@ public class GameView {
             }
         }
 
-        for (Hex hex : gameController.selectedHexes) {
+        for (Hex hex : gameController.fieldController.selectedHexes) {
             if (hex.containsSolidObject()) {
                 renderSolidObject(batchMovable, hex.getPos(), hex);
             }
@@ -673,7 +674,7 @@ public class GameView {
 
 
     private void renderTextOnHex(Hex hex, String text) {
-        YioGdxGame.gameFont.draw(batchMovable, text, hex.pos.x - 0.02f * w, hex.pos.y + 0.02f * w);
+        Fonts.gameFont.draw(batchMovable, text, hex.pos.x - 0.02f * w, hex.pos.y + 0.02f * w);
     }
 
 
@@ -704,7 +705,7 @@ public class GameView {
         Color c = batchMovable.getColor();
 
         // drawing backgrounds of hexes in move zone
-        for (Hex hex : gameController.moveZone) {
+        for (Hex hex : gameController.fieldController.moveZone) {
             pos = hex.getPos();
             if (!isPosInViewFrame(pos, hexViewSize)) continue;
             if (gameController.isPlayerTurn(hex.colorIndex) && hex.animFactor.get() < 1 && hex.animFactor.getDy() > 0) {
@@ -725,7 +726,7 @@ public class GameView {
 
         // drawing buildings and black lines between hexes
         batchMovable.setColor(c.r, c.g, c.b, 1);
-        for (Hex hex : gameController.moveZone) {
+        for (Hex hex : gameController.fieldController.moveZone) {
             pos = hex.getPos();
             if (!isPosInViewFrame(pos, hexViewSize)) continue;
             for (int i = 0; i < 6; i++) {
@@ -743,13 +744,13 @@ public class GameView {
 
         // drawing move zone border line and units
         Hex hex;
-        if (gameController.selectedUnit != null || gameController.tipFactor.get() > 0 || gameController.moveZoneFactor.get() > 0) {
-            for (int k = gameController.moveZone.size() - 1; k >= 0; k--) {
-                hex = gameController.moveZone.get(k);
+        if (gameController.selectionController.selectedUnit != null || gameController.selectionController.tipFactor.get() > 0 || gameController.fieldController.moveZoneFactor.get() > 0) {
+            for (int k = gameController.fieldController.moveZone.size() - 1; k >= 0; k--) {
+                hex = gameController.fieldController.moveZone.get(k);
                 for (int i = 0; i < 6; i++) {
                     Hex h = hex.adjacentHex(i);
                     if (h != null && !h.isEmptyHex() && (!h.active || h.inMoveZone != hex.inMoveZone))
-                        renderLineBetweenHexesWithOffset(hex, h, batchMovable, gameController.moveZoneFactor.get() * 0.02 * w, moveZonePixel, -(1d - gameController.moveZoneFactor.get()) * 0.01 * w, i, gameController.moveZoneFactor.get());
+                        renderLineBetweenHexesWithOffset(hex, h, batchMovable, gameController.fieldController.moveZoneFactor.get() * 0.02 * w, moveZonePixel, -(1d - gameController.fieldController.moveZoneFactor.get()) * 0.01 * w, i, gameController.fieldController.moveZoneFactor.get());
                 }
                 if (hex.containsUnit()) renderUnit(batchMovable, hex.unit);
                 if (hex.containsTree()) renderSolidObject(batchMovable, hex.pos, hex);
@@ -757,10 +758,10 @@ public class GameView {
         }
 
         // drawing selection border for smooth fade in/out animation
-        if (gameController.selectedHexes.size() != 0) {
-            batchMovable.setColor(c.r, c.g, c.b, 1f - gameController.moveZoneFactor.get());
-            for (int k = gameController.moveZone.size() - 1; k >= 0; k--) {
-                hex = gameController.moveZone.get(k);
+        if (gameController.fieldController.selectedHexes.size() != 0) {
+            batchMovable.setColor(c.r, c.g, c.b, 1f - gameController.fieldController.moveZoneFactor.get());
+            for (int k = gameController.fieldController.moveZone.size() - 1; k >= 0; k--) {
+                hex = gameController.fieldController.moveZone.get(k);
                 for (int i = 0; i < 6; i++) {
                     Hex h = hex.adjacentHex(i);
                     if (h != null && !h.isEmptyHex() && (!h.active || !h.sameColor(hex)))
@@ -775,11 +776,11 @@ public class GameView {
 
     private void renderSelectedUnit() {
         PointYio pos;
-        if (gameController.selectedUnit != null) {
-            pos = gameController.selectedUnit.currentPos;
-            float ar = 0.35f * hexViewSize * gameController.selUnitFactor.get();
+        if (gameController.selectionController.selectedUnit != null) {
+            pos = gameController.selectionController.selectedUnit.currentPos;
+            float ar = 0.35f * hexViewSize * gameController.selectionController.selUnitFactor.get();
             batchMovable.draw(selUnitShadow, pos.x - 0.7f * hexViewSize - 2 * ar, pos.y - 0.6f * hexViewSize - 2 * ar, 1.4f * hexViewSize + 4 * ar, 1.6f * hexViewSize + 4 * ar);
-            batchMovable.draw(manTextures[gameController.selectedUnit.strength - 1].getNormal(), pos.x - 0.7f * hexViewSize - ar, pos.y - 0.6f * hexViewSize - ar, 1.4f * hexViewSize + 2 * ar, 1.6f * hexViewSize + 2 * ar);
+            batchMovable.draw(manTextures[gameController.selectionController.selectedUnit.strength - 1].getNormal(), pos.x - 0.7f * hexViewSize - ar, pos.y - 0.6f * hexViewSize - ar, 1.4f * hexViewSize + 2 * ar, 1.6f * hexViewSize + 2 * ar);
         }
     }
 
@@ -822,7 +823,7 @@ public class GameView {
 
     private void renderBlackout() {
         Color c = batchMovable.getColor();
-        batchMovable.setColor(c.r, c.g, c.b, 0.5f * gameController.blackoutFactor.get());
+        batchMovable.setColor(c.r, c.g, c.b, 0.5f * gameController.selectionController.getBlackoutFactor().get());
         batchMovable.draw(blackPixel, 0, 0, gameController.boundWidth, gameController.boundHeight);
         batchMovable.setColor(c.r, c.g, c.b, c.a);
     }
@@ -830,9 +831,9 @@ public class GameView {
 
     private void renderCacheLevelTextures() {
         batchMovable.draw(cacheLevelTextures[0], 0, 0);
-        if (gameController.levelSize >= GameController.SIZE_MEDIUM) {
+        if (gameController.fieldController.levelSize >= FieldController.SIZE_MEDIUM) {
             batchMovable.draw(cacheLevelTextures[1], w, 0);
-            if (gameController.levelSize >= GameController.SIZE_BIG) {
+            if (gameController.fieldController.levelSize >= FieldController.SIZE_BIG) {
                 batchMovable.draw(cacheLevelTextures[2], 0, h);
                 batchMovable.draw(cacheLevelTextures[3], w, h);
             }
@@ -841,22 +842,22 @@ public class GameView {
 
 
     private void renderDefenseTips() {
-        if (gameController.defenseTipFactor.get() == 0) return;
-        if (gameController.defenseTips.size() == 0) return;
+        if (gameController.fieldController.defenseTipFactor.get() == 0) return;
+        if (gameController.fieldController.defenseTips.size() == 0) return;
         Color c = batchMovable.getColor();
-        batchMovable.setColor(c.r, c.g, c.b, gameController.defenseTipFactor.get());
+        batchMovable.setColor(c.r, c.g, c.b, gameController.fieldController.defenseTipFactor.get());
         float x, y, size;
-        for (Hex defenseTip : gameController.defenseTips) {
+        for (Hex defenseTip : gameController.fieldController.defenseTips) {
             PointYio tipPos = defenseTip.getPos();
-            PointYio cPos = gameController.defTipHex.getPos();
-            if (gameController.defenseTipFactor.getDy() >= 0) {
-                x = cPos.x + gameController.defenseTipFactor.get() * (tipPos.x - cPos.x);
-                y = cPos.y + gameController.defenseTipFactor.get() * (tipPos.y - cPos.y);
-                size = (0.5f + 0.1f * gameController.defenseTipFactor.get()) * hexViewSize;
+            PointYio cPos = gameController.fieldController.defTipHex.getPos();
+            if (gameController.fieldController.defenseTipFactor.getDy() >= 0) {
+                x = cPos.x + gameController.fieldController.defenseTipFactor.get() * (tipPos.x - cPos.x);
+                y = cPos.y + gameController.fieldController.defenseTipFactor.get() * (tipPos.y - cPos.y);
+                size = (0.5f + 0.1f * gameController.fieldController.defenseTipFactor.get()) * hexViewSize;
             } else {
                 x = tipPos.x;
                 y = tipPos.y;
-                size = (0.7f - 0.1f * gameController.defenseTipFactor.get()) * hexViewSize;
+                size = (0.7f - 0.1f * gameController.fieldController.defenseTipFactor.get()) * hexViewSize;
             }
             drawFromCenter(batchMovable, defenseIcon, x, y, size);
         }
@@ -875,7 +876,7 @@ public class GameView {
         renderExclamationMarks();
         renderResponseAnimHex();
         renderCertainUnits(batchMovable);
-        if (gameController.moveZoneFactor.get() > 0.01) {
+        if (gameController.fieldController.moveZoneFactor.get() > 0.01) {
             renderBlackout();
         }
         renderMoveZone();
@@ -886,7 +887,7 @@ public class GameView {
         renderDebug();
         batchMovable.end();
 
-        if (gameController.tutorialMode) renderForefinger();
+        if (GameRules.tutorialMode) renderForefinger();
     }
 
 
@@ -896,7 +897,7 @@ public class GameView {
         } else if (factorModel.get() < 1) {
             renderTransitionFrame();
         } else {
-            if (gameController.backgroundVisible) {
+            if (gameController.cameraController.backgroundVisible) {
                 batchSolid.begin();
                 batchSolid.draw(blackPixel, 0, 0, w, h);
                 batchSolid.end();
@@ -905,12 +906,12 @@ public class GameView {
         }
 
         // render money
-        if (gameController.selMoneyFactor.get() > 0) {
+        if (gameController.selectionController.getSelMoneyFactor().get() > 0) {
             batchSolid.begin();
-            batchSolid.draw(sideShadow, w, h, 0, 0, w, 0.05f * h * gameController.selMoneyFactor.get(), 1, 1, 180);
-            batchSolid.draw(sideShadow, 0, 0, w, 0.05f * h * gameController.selMoneyFactor.get());
-            YioGdxGame.gameFont.draw(batchSolid, "" + gameController.selectedProvinceMoney, 0.12f * w, (1.08f - 0.1f * gameController.selMoneyFactor.get()) * h);
-            YioGdxGame.gameFont.draw(batchSolid, gameController.balanceString, 0.47f * w, (1.08f - 0.1f * gameController.selMoneyFactor.get()) * h);
+            batchSolid.draw(sideShadow, w, h, 0, 0, w, 0.05f * h * gameController.selectionController.getSelMoneyFactor().get(), 1, 1, 180);
+            batchSolid.draw(sideShadow, 0, 0, w, 0.05f * h * gameController.selectionController.getSelMoneyFactor().get());
+            Fonts.gameFont.draw(batchSolid, "" + gameController.fieldController.selectedProvinceMoney, 0.12f * w, (1.08f - 0.1f * gameController.selectionController.getSelMoneyFactor().get()) * h);
+            Fonts.gameFont.draw(batchSolid, gameController.balanceString, 0.47f * w, (1.08f - 0.1f * gameController.selectionController.getSelMoneyFactor().get()) * h);
             batchSolid.end();
         }
 
@@ -933,28 +934,28 @@ public class GameView {
 
 
     private void renderTip() {
-        if (gameController.tipFactor.get() > 0.01) {
+        if (gameController.selectionController.tipFactor.get() > 0.01) {
             batchSolid.begin();
             TextureRegion textureRegion;
-            if (gameController.tipShowType == 0) textureRegion = towerTexture.getNormal();
-            else if (!GameController.slay_rules && gameController.tipShowType == 5) textureRegion = farmTexture[0].getNormal();
-            else if (!GameController.slay_rules && gameController.tipShowType == 6) textureRegion = strongTowerTexture.getNormal();
-            else textureRegion = manTextures[gameController.tipShowType - 1].getNormal();
+            if (gameController.selectionController.tipShowType == 0) textureRegion = towerTexture.getNormal();
+            else if (!GameRules.slay_rules && gameController.selectionController.tipShowType == 5) textureRegion = farmTexture[0].getNormal();
+            else if (!GameRules.slay_rules && gameController.selectionController.tipShowType == 6) textureRegion = strongTowerTexture.getNormal();
+            else textureRegion = manTextures[gameController.selectionController.tipShowType - 1].getNormal();
             float s = 0.2f * w;
-            batchSolid.draw(textureRegion, 0.5f * w - 0.5f * s, s * (gameController.tipFactor.get() - 1) + 0.04f * h, s, s);
-            YioGdxGame.gameFont.draw(batchSolid,
+            batchSolid.draw(textureRegion, 0.5f * w - 0.5f * s, s * (gameController.selectionController.tipFactor.get() - 1) + 0.04f * h, s, s);
+            Fonts.gameFont.draw(batchSolid,
                     gameController.currentPriceString,
                     0.5f * w - 0.5f * gameController.priceStringWidth,
-                    s * (gameController.tipFactor.get() - 1) + 0.04f * h);
+                    s * (gameController.selectionController.tipFactor.get() - 1) + 0.04f * h);
             batchSolid.end();
         }
     }
 
 
-    void moveInsideStuff() {
-        if (gameController.trackerZoom < zoomLevelOne) {
+    public void moveInsideStuff() {
+        if (gameController.cameraController.trackerZoom < zoomLevelOne) {
             currentZoomQuality = 2;
-        } else if (gameController.trackerZoom < zoomLevelTwo) {
+        } else if (gameController.cameraController.trackerZoom < zoomLevelTwo) {
             currentZoomQuality = 1;
         } else {
             currentZoomQuality = 0;
@@ -962,13 +963,13 @@ public class GameView {
     }
 
 
-    void moveFactors() {
+    public void moveFactors() {
         factorModel.move();
     }
 
 
     private static void drawLine(double x1, double y1, double x2, double y2, double thickness, SpriteBatch spriteBatch, TextureRegion blackPixel) {
-        spriteBatch.draw(blackPixel, (float) x1, (float) (y1 - thickness * 0.5), 0f, (float) thickness * 0.5f, (float) YioGdxGame.distance(x1, y1, x2, y2), (float) thickness, 1f, 1f, (float) (180 / Math.PI * YioGdxGame.angle(x1, y1, x2, y2)));
+        spriteBatch.draw(blackPixel, (float) x1, (float) (y1 - thickness * 0.5), 0f, (float) thickness * 0.5f, (float) Yio.distance(x1, y1, x2, y2), (float) thickness, 1f, 1f, (float) (180 / Math.PI * Yio.angle(x1, y1, x2, y2)));
     }
 
 
@@ -977,7 +978,7 @@ public class GameView {
     }
 
 
-    boolean isInMotion() {
+    public boolean isInMotion() {
         return factorModel.get() > 0 && factorModel.get() < 1;
     }
 }

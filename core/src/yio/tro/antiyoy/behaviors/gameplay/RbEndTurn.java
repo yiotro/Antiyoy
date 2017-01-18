@@ -11,7 +11,7 @@ public class RbEndTurn extends ReactBehavior {
 
     @Override
     public void reactAction(ButtonYio buttonYio) {
-        if (Settings.ask_to_end_turn && getGameController(buttonYio).atLeastOneUnitIsReadyToMove()) {
+        if (Settings.ask_to_end_turn && getGameController(buttonYio).fieldController.atLeastOneUnitIsReadyToMove()) {
             if (buttonYio.id == 321) {
                 buttonYio.menuControllerYio.hideConfirmEndTurnMenu();
                 getGameController(buttonYio).endTurnButtonPressed();

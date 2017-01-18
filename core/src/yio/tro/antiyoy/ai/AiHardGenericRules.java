@@ -1,9 +1,9 @@
 package yio.tro.antiyoy.ai;
 
-import yio.tro.antiyoy.GameController;
-import yio.tro.antiyoy.Hex;
-import yio.tro.antiyoy.Province;
-import yio.tro.antiyoy.Unit;
+import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.Hex;
+import yio.tro.antiyoy.gameplay.Province;
+import yio.tro.antiyoy.gameplay.Unit;
 
 import java.util.ArrayList;
 
@@ -34,10 +34,10 @@ public class AiHardGenericRules extends ArtificialIntelligenceGeneric{
             if (hex == null) return;
 
             if (province.hasMoneyForStrongTower()) {
-                gameController.buildStrongTower(province, hex);
+                gameController.fieldController.buildStrongTower(province, hex);
                 continue;
             }
-            gameController.buildTower(province, hex);
+            gameController.fieldController.buildTower(province, hex);
         }
     }
 }

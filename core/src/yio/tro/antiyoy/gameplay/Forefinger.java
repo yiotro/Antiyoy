@@ -1,5 +1,7 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.GraphicsYio;
+import yio.tro.antiyoy.PointYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 
 /**
@@ -21,14 +23,14 @@ class Forefinger {
 
     public Forefinger(GameController gameController) {
         this.gameController = gameController;
-        jumpingUnit = new Unit(gameController, gameController.emptyHex, 0);
+        jumpingUnit = new Unit(gameController, gameController.fieldController.emptyHex, 0);
         sizeFactor = new FactorYio();
         jumpingUnit.startJumping();
         jumpingUnit.jumpGravity /= 2;
         pointPos = new PointYio();
         animPos = new PointYio();
-        w = gameController.w;
-        h = gameController.h;
+        w = GraphicsYio.width;
+        h = GraphicsYio.height;
     }
 
 

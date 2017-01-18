@@ -2,10 +2,8 @@ package yio.tro.antiyoy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import yio.tro.antiyoy.gameplay.GameView;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -13,7 +11,7 @@ import java.util.StringTokenizer;
 /**
  * Created by ivan on 23.09.2015.
  */
-class AtlasLoader {
+public class AtlasLoader {
 
     private String srcName, txtFileName;
     private TextureRegion atlasRegion;

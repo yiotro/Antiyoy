@@ -1,4 +1,6 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.gameplay;
+
+import yio.tro.antiyoy.YioGdxGame;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;

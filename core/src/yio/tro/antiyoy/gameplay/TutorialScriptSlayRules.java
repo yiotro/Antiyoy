@@ -1,5 +1,6 @@
-package yio.tro.antiyoy;
+package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.LanguagesManager;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 import yio.tro.antiyoy.menu.ButtonYio;
 
@@ -45,7 +46,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
         gameSaver.beginRecreation();
         gameSaver.setBasicInfo(0, 1, 5, 1, 0);
         gameController.colorIndexViewOffset = 0;
-        GameController.slay_rules = true;
+        GameRules.slay_rules = true;
         gameSaver.endRecreation();
 
 
@@ -61,7 +62,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
 
 
     private Hex getHex(int x, int y) {
-        return gameController.field[x + gameController.compensationOffsetY][y];
+        return gameController.fieldController.field[x + gameController.cameraController.compensationOffsetY][y];
     }
 
 
@@ -237,28 +238,28 @@ public class TutorialScriptSlayRules extends TutorialScript{
         switch (currentStep) {
             default:
             case STEP_SELECT_SPEARMAN:
-                if (gameController.selectedUnit != null) return true;
+                if (gameController.selectionController.selectedUnit != null) return true;
                 return false;
             case STEP_ATTACK_WITH_SPEARMAN:
                 if (getHex(19, 7).colorIndex == 0) return true;
                 return false;
             case STEP_SELECT_MAN:
-                if (gameController.selectedUnit != null) return true;
+                if (gameController.selectionController.selectedUnit != null) return true;
                 return false;
             case STEP_ATTACK_WITH_MAN:
                 if (getHex(18, 8).colorIndex == 0) return true;
                 return false;
             case STEP_PRESS_BUILD_TOWER_BUTTON:
-                if (gameController.tipFactor.get() > 0) return true;
+                if (gameController.selectionController.tipFactor.get() > 0) return true;
                 return false;
             case STEP_BUILD_TOWER:
                 if (getHex(21, 5).objectInside == Hex.OBJECT_TOWER) return true;
                 return false;
             case STEP_PRESS_BUILD_UNIT_BUTTON_FIRST_TIME:
-                if (gameController.tipFactor.get() > 0) return true;
+                if (gameController.selectionController.tipFactor.get() > 0) return true;
                 return false;
             case STEP_PRESS_BUILD_UNIT_BUTTON_SECOND_TIME:
-                if (gameController.tipType == 2) return true;
+                if (gameController.selectionController.getTipType() == 2) return true;
                 return false;
             case STEP_BUILD_SPEARMAN:
                 if (getHex(20, 5).colorIndex == 0) return true;
@@ -273,7 +274,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
                 if (menuControllerYio.getButtonById(31).isCurrentlyTouched()) return true;
                 return false;
             case STEP_SELECT_PROVINCE:
-                if (gameController.isSomethingSelected()) return true;
+                if (gameController.selectionController.isSomethingSelected()) return true;
                 return false;
             case STEP_HOLD_TO_MARCH:
                 if (!getHex(19, 8).containsUnit()) return true;
@@ -282,7 +283,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
                 if (getHex(19, 8).containsUnit()) return true;
                 return false;
             case STEP_SELECT_UNIT_TO_MERGE:
-                if (gameController.selectedUnit != null) return true;
+                if (gameController.selectionController.selectedUnit != null) return true;
                 return false;
             case STEP_MERGE_UNITS:
                 if (getHex(18, 8).unit.strength == 2) return true;
@@ -314,9 +315,9 @@ public class TutorialScriptSlayRules extends TutorialScript{
             if (buttonYio == null) continue;
             buttonYio.setTouchable(true);
         }
-        for (int i = 0; i < gameController.fWidth; i++) {
-            for (int j = 0; j < gameController.fHeight; j++) {
-                gameController.field[i][j].setIgnoreTouch(false);
+        for (int i = 0; i < gameController.fieldController.fWidth; i++) {
+            for (int j = 0; j < gameController.fieldController.fHeight; j++) {
+                gameController.fieldController.field[i][j].setIgnoreTouch(false);
             }
         }
     }
@@ -344,9 +345,9 @@ public class TutorialScriptSlayRules extends TutorialScript{
 
 
     private void allHexesIgnoreTouches() {
-        for (int i = 0; i < gameController.fWidth; i++) {
-            for (int j = 0; j < gameController.fHeight; j++) {
-                gameController.field[i][j].setIgnoreTouch(true);
+        for (int i = 0; i < gameController.fieldController.fWidth; i++) {
+            for (int j = 0; j < gameController.fieldController.fHeight; j++) {
+                gameController.fieldController.field[i][j].setIgnoreTouch(true);
             }
         }
     }
