@@ -15,7 +15,9 @@
         <!-- Random stuff -->
         <string key="menu_level" value="Level"/>
         <string key="menu_reset" value="Reset"/>
+
         <string key="game_saved" value="Game saved"/>
+        <string key="restart_app" value="Restart app"/>
         <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
         <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
         <string key="city_name_three" value="nsk, rra, ko, rry"/>
@@ -42,22 +44,7 @@
         #Made by yiotro
 		"/>
         <string key="reset_campaign_data" value="Reset data"/>
-        <string key="special_thanks" value="Special thanks to this people
-        #
-        #Rebecca Nöll:
-        #German translation
-        #Jirka Justra:
-        #Czech translation
-        #Olek Jablonski:
-        #Polish translation
-        #Andrea Rinaldi:
-        #Italian translation
-        #Louis Philibert-Morrissette:
-        #French translation
-        #
-        #
-        #
-        #"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Skirmish"/>
@@ -110,6 +97,7 @@
         <string key="level_complete" value="Level complete"/>
         <string key="win_game" value="Win"/>
         <string key="win_or_continue" value="Win now#or continue?"/>
+        <string key="continue" value="Continue"/>
 
         <!-- Colors -->
         <string key="green_player" value="Green"/>
@@ -319,6 +307,8 @@
         <string key="no" value="No"/>
         <string key="yes" value="Yes"/>
         <string key="confirm_import" value="Confirm import"/>
+        <string key="filter_no" value="No filter"/>
+        <string key="filter_only_land" value="Only land"/>
 
         <!-- Settings -->
         <string key="main_label" value=" # Autosave
@@ -333,6 +323,7 @@
         <string key="original" value="original"/>
         <string key="points" value="points"/>
         <string key="grid" value="grid"/>
+        <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
         <string key="anim_style" value="Sensitivity"/>
         <string key="more" value="More"/>
         <string key="camera_offset" value="Camera offset"/>
@@ -342,7 +333,30 @@
 
         <!-- Single messages -->
         <string key="achikaps_release" value="Hi. # #I've made a new game, it's called 'Achikaps'. It's a simple economic strategy without donations or ads. Hope you'll enjoy it :)"/>
+        <string key="one_time_only_one_knight" value="There must be only one knight for every player. You can't build 2 knights at the same time."/>
+        <string key="one_time_knight_penalty" value="Knight has to move every turn. Otherwise he will be demoted to spearman for being lazy."/>
+        <string key="one_time_strong_tower_demote" value="If province doesn't have money to support strong tower it turns into usual tower."/>
+        <string key="check_shroomarts" value="New skin by ShroomArts"/>
     </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -360,6 +374,7 @@
         <string key="menu_level" value="Уровень"/>
         <string key="menu_reset" value="Сбросить"/>
         <string key="game_saved" value="Игра сохранена"/>
+        <string key="restart_app" value="Перезапустите игру"/>
         <string key="city_name_one" value="ки, мос, ми, до, пе"/>
         <string key="city_name_two" value="X, X, X, X, те, га, ре"/>
         <string key="city_name_three" value="рев, ров, нск, нск, ква, рево"/>
@@ -386,22 +401,7 @@
         #Игру сделал yiotro
 		"/>
         <string key="reset_campaign_data" value="Стереть данные"/>
-        <string key="special_thanks" value="Отдельное спасибо этим людям
-        #
-        #Rebecca Nöll:
-        #Немецкий перевод
-        #Jirka Justra:
-        #Чешский перевод
-        #Olek Jablonski:
-        #Польский перевод
-        #Andrea Rinaldi:
-        #Итальянский перевод
-        #Louis Philibert-Morrissette:
-        #Французский перевод
-        #
-        #
-        #
-        #"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Сражение"/>
@@ -454,6 +454,7 @@
         <string key="level_complete" value="Уровень пройден"/>
         <string key="win_game" value="Победа"/>
         <string key="win_or_continue" value="Закончить игру#или продолжить?"/>
+        <string key="continue" value="Продолжить"/>
 
         <!-- Colors -->
         <string key="green_player" value="Зеленый"/>
@@ -666,6 +667,8 @@
         <string key="no" value="Нет"/>
         <string key="yes" value="Да"/>
         <string key="confirm_import" value="Подтвердите импорт"/>
+        <string key="filter_no" value="Без фильтра"/>
+        <string key="filter_only_land" value="Только земля"/>
 
         <!-- Settings -->
         <string key="main_label" value=" # Автосохранение
@@ -680,6 +683,7 @@
         <string key="original" value="обычный"/>
         <string key="points" value="точки"/>
         <string key="grid" value="сетка"/>
+        <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
         <string key="anim_style" value="Чувствительность"/>
         <string key="more" value="Еще"/>
         <string key="camera_offset" value="Отступ камеры"/>
@@ -689,7 +693,29 @@
 
         <!-- Single messages -->
         <string key="achikaps_release" value="Привет. # #Я сделал новую игру, она называется 'Achikaps'. Это простая экономическая стратегия без доната и рекламы. Надеюсь вам понравится :)"/>
+        <string key="one_time_only_one_knight" value="У каждого игрока может быть не более одного рыцаря одновременно."/>
+        <string key="one_time_knight_penalty" value="Рыцарь должен двигаться каждый ход чтобы имитировать бурную деятельность. Иначе он будет понижен в должности до копейщика."/>
+        <string key="one_time_strong_tower_demote" value="Если в провинции недостаточно денег на поддержание сильной башни, то она превращается в обычную."/>
+        <string key="check_shroomarts" value="Новый скин от ShroomArts"/>
     </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -707,6 +733,7 @@
         <string key="menu_level" value="Рiвень"/>
         <string key="menu_reset" value="Скинути"/>
         <string key="game_saved" value="Гра збережена"/>
+        <string key="restart_app" value="Перезапустіть гру"/>
         <string key="city_name_one" value="ки, мос, ми, до, пе"/>
         <string key="city_name_two" value="X, X, X, X, те, га, ре"/>
         <string key="city_name_three" value="рев, ров, нск, нск, ква, рево"/>
@@ -733,22 +760,7 @@
         #Гру зробив yiotro
 		"/>
         <string key="reset_campaign_data" value="Стерти данi"/>
-        <string key="special_thanks" value="Окреме дякую цим людям
-        #
-        #Rebecca Nöll:
-        #Нiмецький переклад
-        #Jirka Justra:
-        #Чеський переклад
-        #Olek Jablonski:
-        #Польский переклад
-        #Andrea Rinaldi:
-        #Італiйский переклад
-        #Louis Philibert-Morrissette:
-        #Французький переклад
-        #
-        #
-        #
-        #"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Швидкий бiй"/>
@@ -792,7 +804,7 @@
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Добре"/>
-        <string key="end_game_okay" value="Okay..."/>
+        <string key="end_game_okay" value="Гаразд..."/>
         <string key="player" value="гравець"/>
         <string key="ai" value="комп"/>
         <string key="won" value="виграв"/>
@@ -801,6 +813,7 @@
         <string key="level_complete" value="Рiвень пройдено"/>
         <string key="win_game" value="Перемога"/>
         <string key="win_or_continue" value="Закiнчити гру#або продовжити?"/>
+        <string key="continue" value="Продовжити"/>
 
         <!-- Colors -->
         <string key="green_player" value="Зелений"/>
@@ -1010,9 +1023,11 @@
         <string key="random" value="Рандом"/>
         <string key="exported" value="Експортовано"/>
         <string key="editor_clear" value="Очистити"/>
-        <string key="no" value="No"/>
-        <string key="yes" value="Yes"/>
-        <string key="confirm_import" value="Confirm import"/>
+        <string key="no" value="Ні"/>
+        <string key="yes" value="Так"/>
+        <string key="confirm_import" value="Підтвердіть імпорт"/>
+        <string key="filter_no" value="Без фільтру"/>
+        <string key="filter_only_land" value="Тільки земля"/>
 
         <!-- Settings -->
         <string key="main_label" value=" # Автозбереження
@@ -1027,16 +1042,41 @@
         <string key="original" value="звичайний"/>
         <string key="points" value="точки"/>
         <string key="grid" value="сiтка"/>
+        <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
         <string key="anim_style" value="Чутливiсть"/>
         <string key="more" value="Ще"/>
         <string key="camera_offset" value="Вiдступ камери"/>
         <string key="slay_rules" value="Правила Slay"/>
         <string key="language" value="Мова"/>
-        <string key="more_settings_checks" value="# #Water texture # # "/>
+        <string key="more_settings_checks" value="# #Текстура води # # "/>
 
         <!-- Single messages -->
-        <string key="achikaps_release" value="Hi. # #I've made a new game, it's called 'Achikaps'. It's a simple economic strategy without donations or ads. Hope you'll enjoy it :)"/>
+        <string key="achikaps_release" value="Вітаю. # #Я зробив нову гру, вона називається 'Achikaps'. Це проста економічна стратегія без донату або реклами. Сподіваюся вона вам сподобається :)"/>
+        <string key="one_time_only_one_knight" value="У кожного гравця може бути не більше одного лицаря одночасно."/>
+        <string key="one_time_knight_penalty" value="Лицар повинен рухатись кожного ходу. Інакше він буде понижений до воїна."/>
+        <string key="one_time_strong_tower_demote" value="Якщо в провінції недостатньо грошей на підтримку сильної вежі, то вона перетворюється на звичайну."/>
+        <string key="check_shroomarts" value="Новий скін від ShroomArts"/>
     </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1045,17 +1085,18 @@
         <string key="lang_characters" value="ÄÜÖäüöß"/>
 
         <!-- Main menu -->
-        <string key="main_menu_info" value="Info"/>
+        <string key="main_menu_info" value="Info"/>  <!-- Same as english -->
         <string key="main_menu_exit" value="Schließen"/>
         <string key="main_menu_something" value="Weißer Text über nichts"/>
 
         <!-- Random stuff -->
-        <string key="menu_level" value="Level"/>
-        <string key="menu_reset" value="Reset"/>
+        <string key="menu_level" value="Level"/>  <!-- Same as english -->
+        <string key="menu_reset" value="Reset"/>  <!-- Same as english -->
         <string key="game_saved" value="Spiel gespeichert"/>
-        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
-        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
-        <string key="city_name_three" value="nsk, rra, ko, rry"/>
+        <string key="restart_app" value="Restart app"/>
+        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>  <!-- Same as english -->
+        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>  <!-- Same as english -->
+        <string key="city_name_three" value="nsk, rra, ko, rry"/>  <!-- Same as english -->
 
         <!-- Info -->
         <string key="info_back" value="Zurück"/>
@@ -1080,33 +1121,18 @@
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Daten zurücksetzen"/>
-        <string key="special_thanks" value="Ein besonderer Dank gilt den folgenden Personen
-        #
-        #Rebecca Nöll:
-        #Deutsche Übersetzung
-        #Jirka Justra:
-        #Tschechische Übersetzung
-        #Olek Jablonski:
-        #Polnische Übersetzung
-        #Andrea Rinaldi:
-        #Italienische Übersetzung
-        #Louis Philibert-Morrissette:
-        #Französische Übersetzung
-        #
-        #
-        #
-        #"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Gefecht"/>
-        <string key="choose_game_mode_tutorial" value="Tutorial"/>
+        <string key="choose_game_mode_tutorial" value="Tutorial"/>  <!-- Same as english -->
         <string key="choose_game_mode_campaign" value="Kampagne"/>
         <string key="choose_game_mode_load" value="Spiel laden"/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Hauptmenü"/>
-        <string key="game_settings_tutorial" value="Tutorial"/>
-        <string key="game_settings_start" value="Start"/>
+        <string key="game_settings_tutorial" value="Tutorial"/>  <!-- Same as english -->
+        <string key="game_settings_start" value="Start"/>  <!-- Same as english -->
         <string key="map_size" value="Kartengröße"/>
         <string key="color_number" value="Farben"/>
         <string key="player_number" value="Spieler"/>
@@ -1120,10 +1146,10 @@
         <string key="color" value="Farben"/>
         <string key="difficulty" value="Schwierigkeit"/>
         <string key="easy" value="einfach"/>
-        <string key="normal" value="normal"/>
+        <string key="normal" value="normal"/>  <!-- Same as english -->
         <string key="hard" value="schwer"/>
         <string key="expert" value="Experte"/>
-        <string key="balancer" value="balancer"/>
+        <string key="balancer" value="angleichen"/>
         <string key="player_color" value="Spielerfarbe"/>
 
         <!-- In game menu -->
@@ -1138,8 +1164,8 @@
         <string key="yes" value="Ja"/>
 
         <!-- End game menu -->
-        <string key="end_game_ok" value="Ok"/>
-        <string key="end_game_okay" value="Okay..."/>
+        <string key="end_game_ok" value="Ok"/>  <!-- Same as english -->
+        <string key="end_game_okay" value="Okay..."/>  <!-- Same as english -->
         <string key="player" value="Spieler"/>
         <string key="ai" value="AI"/>
         <string key="won" value="hat gewonnen"/>
@@ -1148,31 +1174,32 @@
         <string key="level_complete" value="Level abgeschlossen"/>
         <string key="win_game" value="Gewinnen"/>
         <string key="win_or_continue" value="Jetzt gewinnen#oder weiterspielen?"/>
+        <string key="continue" value="Continue"/>
 
         <!-- Colors -->
         <string key="green_player" value="Grüner"/>
         <string key="red_player" value="Roter"/>
-        <string key="magenta_player" value="Magenta"/>
-        <string key="cyan_player" value="Cyan"/>
+        <string key="magenta_player" value="Magenta"/>  <!-- Same as english -->
+        <string key="cyan_player" value="Cyan"/>  <!-- Same as english -->
         <string key="yellow_player" value="Gelber"/>
         <string key="gray_player" value="Grauer"/>
         <string key="green_ai" value="Grüne"/>
         <string key="red_ai" value="Rote"/>
-        <string key="magenta_ai" value="Magenta"/>
-        <string key="cyan_ai" value="Cyan"/>
+        <string key="magenta_ai" value="Magenta"/>  <!-- Same as english -->
+        <string key="cyan_ai" value="Cyan"/>  <!-- Same as english -->
         <string key="yellow_ai" value="Gelbe"/>
         <string key="gray_ai" value="Graue"/>
         <string key="green_menu" value="Grüner"/>
         <string key="red_menu" value="Roter"/>
-        <string key="magenta_menu" value="Magenta"/>
-        <string key="cyan_menu" value="Cyan"/>
+        <string key="magenta_menu" value="Magenta"/>  <!-- Same as english -->
+        <string key="cyan_menu" value="Cyan"/>  <!-- Same as english -->
         <string key="yellow_menu" value="Gelber"/>
         <string key="gray_menu" value="Grauer"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Normale Regeln"/>
         <string key="how_to_play" value="Wie spielt man?"/>
-        <string key="tutorial_ok" value="Ok"/>
+        <string key="tutorial_ok" value="Ok"/>  <!-- Same as english -->
         <string key="tut_select_unit" value="Einheit auswählen"/>
         <string key="tut_tap_on_hex" value="Feld antippen"/>
         <string key="tut_press_button" value="Button antippen"/>
@@ -1206,7 +1233,7 @@
         <string key="gen_lets_build_farm" value="Baue eine Farm, um Dein Einkommen noch weiter zu erhöhen."/>
         <string key="gen_press_button_twice" value="Tippe den Button zweimal"/>
         <string key="gen_build_farm" value="Eine Farm kann nur neben der Hauptstadt oder neben einer anderen Farm gebaut werden."/>
-        <string key="gen_about_farms" value="Für jede Farm 4rhältst Du drei Münzen pro Runde. Jede weitere Farm kostet mehr als die vorherige."/>
+        <string key="gen_about_farms" value="Für jede Farm erhältst Du drei Münzen pro Runde. Jede weitere Farm kostet mehr als die vorherige."/>
         <string key="gen_lets_build_peasant" value="Baue eine neue Einheit, um ein neutrales Feld einzunehmen."/>
         <string key="gen_press_button" value="Tippe auf den Button unten"/>
         <string key="gen_build_peasant" value="Platziere die Einheit auf einem Feld nahe der Stadtgrenze."/>
@@ -1349,7 +1376,7 @@
         <string key="money_spent" value="Ausgegebenes Geld:"/>
 
         <!-- Editor -->
-        <string key="editor" value="Editor"/>
+        <string key="editor" value="Editor"/>  <!-- Same as english -->
         <string key="slot" value="Platz"/>
         <string key="slots" value="Speicherplätze"/>
         <string key="import" value="Importieren"/>
@@ -1360,33 +1387,56 @@
         <string key="random" value="Zufall"/>
         <string key="exported" value="Karte in der Zwischenablage"/>
         <string key="editor_clear" value="Zurücksetzen"/>
-        <string key="no" value="No"/>
-        <string key="yes" value="Yes"/>
-        <string key="confirm_import" value="Confirm import"/>
+        <string key="no" value="Nein"/>
+        <string key="yes" value="Ja"/>
+        <string key="confirm_import" value="Import bestätigen"/>
+        <string key="filter_no" value="No filter"/>
+        <string key="filter_only_land" value="Only land"/>
 
         <!-- Settings -->
         <string key="main_label" value=" # Autosave
             # # Mehrere Speicherplätze
-            # # Vor Zug beenden fragen
+            # # Vor Zugende fragen
             # # Städtenamen
             # # Ton
-            # # Limited turns
-            # # Long tap to move
+            # # Begrenzte Züge
+            # # Zum Bewegen gedrückt halten
             # # "/>
         <string key="skin" value="Darstellung"/>
         <string key="original" value="Original"/>
         <string key="points" value="Punkte"/>
         <string key="grid" value="Raster"/>
+        <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
         <string key="anim_style" value="Empfindlichkeit"/>
         <string key="more" value="Mehr"/>
         <string key="camera_offset" value="Kamera Einzug"/>
         <string key="slay_rules" value="Slay Regeln"/>
-        <string key="language" value="Language"/>
-        <string key="more_settings_checks" value="# #Water texture # # "/>
+        <string key="language" value="Sprache"/>
+        <string key="more_settings_checks" value="# #Wasser-Textur # # "/>
 
         <!-- Single messages -->
-        <string key="achikaps_release" value="Hi. # #I've made a new game, it's called 'Achikaps'. It's a simple economic strategy without donations or ads. Hope you'll enjoy it :)"/>
+        <string key="achikaps_release" value="Hi. # #Es gibt ein neues Spiel von mir, es heißt 'Achikaps'. Es ist ein simples Wirtschaftsstrategiespiel ohne Werbung oder Spendenaufforderungen. Ich hoffe es gefällt Euch :)"/>
+        <string key="one_time_only_one_knight" value="There must be only one knight for every player. You can't build 2 knights at the same time."/>  <!-- Same as english -->
+        <string key="one_time_knight_penalty" value="Knight has to move every turn. Otherwise he will be demoted to spearman for being lazy."/>  <!-- Same as english -->
+        <string key="one_time_strong_tower_demote" value="If province doesn't have money to support strong tower it turns into usual tower."/>
+        <string key="check_shroomarts" value="New skin by ShroomArts"/>
     </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1396,17 +1446,18 @@
         <string key="lang_characters" value="öěščřžýáíéůúňťďóĚŠČŘŽÝÁÍÉŮÚŇŤĎÓ"/>
 
         <!-- Main menu -->
-        <string key="main_menu_info" value="Info"/>
+        <string key="main_menu_info" value="Info"/>  <!-- Same as english -->
         <string key="main_menu_exit" value="Konec"/>
         <string key="main_menu_something" value="Prázdný text o ničem"/>
 
         <!-- Random stuff -->
-        <string key="menu_level" value="Level"/>
-        <string key="menu_reset" value="Reset"/>
+        <string key="menu_level" value="Level"/>  <!-- Same as english -->
+        <string key="menu_reset" value="Reset"/>  <!-- Same as english -->
         <string key="game_saved" value="Hra uložena"/>
-        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
-        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
-        <string key="city_name_three" value="nsk, rra, ko, rry"/>
+        <string key="restart_app" value="Restart app"/>
+        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>  <!-- Same as english -->
+        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>  <!-- Same as english -->
+        <string key="city_name_three" value="nsk, rra, ko, rry"/>  <!-- Same as english -->
 
         <!-- Info -->
         <string key="info_back" value="Zpět"/>
@@ -1429,22 +1480,7 @@
         #Vytvořil yiotro
         "/>
         <string key="reset_campaign_data" value="Resetovat data"/>
-        <string key="special_thanks" value="Zvláštní poděkování těmto lidem
-        #
-        #Rebecca Nöll:
-        #Německý překlad
-        #Jirka Justra:
-        #český překlad
-        #Olek Jablonski:
-        #Polský překlad
-        #Andrea Rinaldi:
-        #italský překlad
-        #Louis Philibert-Morrissette:
-        #francouzský překlad
-        #
-        #
-        #
-        #"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Rychlá hra"/>
@@ -1455,7 +1491,7 @@
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Hlavní menu"/>
         <string key="game_settings_tutorial" value="Tutoriál"/>
-        <string key="game_settings_start" value="Start"/>
+        <string key="game_settings_start" value="Start"/>  <!-- Same as english -->
         <string key="map_size" value="Velikost mapy"/>
         <string key="color_number" value="Barvy"/>
         <string key="player_number" value="Hráči"/>
@@ -1471,8 +1507,8 @@
         <string key="easy" value="snadná"/>
         <string key="normal" value="normální"/>
         <string key="hard" value="těžká"/>
-        <string key="expert" value="expert"/>
-        <string key="balancer" value="balancer"/>
+        <string key="expert" value="expert"/>  <!-- Same as english -->
+        <string key="balancer" value="balancer"/>  <!-- Same as english -->
         <string key="player_color" value="Barva hráče"/>
 
         <!-- In game menu -->
@@ -1480,15 +1516,15 @@
         <string key="in_game_menu_save" value="Uložit hru"/>
         <string key="in_game_menu_surrender" value="Vzdát se"/>
         <string key="in_game_menu_main_menu" value="Hlavní menu"/>
-        <string key="in_game_menu_restart" value="Restart"/>
+        <string key="in_game_menu_restart" value="Restart"/>  <!-- Same as english -->
         <string key="confirm_restart" value="Restartovat hru?"/>
         <string key="cancel" value="Zrušit"/>
         <string key="confirm_end_turn" value="Konec tahu?"/>
         <string key="yes" value="Ano"/>
 
         <!-- End game menu -->
-        <string key="end_game_ok" value="Ok"/>
-        <string key="end_game_okay" value="Okay..."/>
+        <string key="end_game_ok" value="Ok"/>  <!-- Same as english -->
+        <string key="end_game_okay" value="Okej..."/>
         <string key="player" value="hráč"/>
         <string key="ai" value="počítač"/>
         <string key="won" value="vyhrál"/>
@@ -1497,6 +1533,7 @@
         <string key="level_complete" value="Level kompletní"/>
         <string key="win_game" value="Vítězství"/>
         <string key="win_or_continue" value="Vyhrát nyní#nebo pokračovat?"/>
+        <string key="continue" value="Continue"/>
 
         <!-- Colors -->
         <string key="green_player" value="Zelený"/>
@@ -1521,7 +1558,7 @@
         <!-- Tutorial -->
         <string key="normal_rules" value="Normální pravidla"/>
         <string key="how_to_play" value="Jak hrát?"/>
-        <string key="tutorial_ok" value="Ok"/>
+        <string key="tutorial_ok" value="Ok"/>  <!-- Same as english -->
         <string key="tut_select_unit" value="Vyber jednotku"/>
         <string key="tut_tap_on_hex" value="Tapni na hex"/>
         <string key="tut_press_button" value="Zmáčkni tlačítko"/>
@@ -1687,20 +1724,22 @@
         <string key="money_spent" value="Utraceno peněz:"/>
 
         <!-- Editor -->
-        <string key="editor" value="Editor"/>
-        <string key="slot" value="Slot"/>
+        <string key="editor" value="Editor"/>  <!-- Same as english -->
+        <string key="slot" value="Ukládací Slot"/>
         <string key="slots" value="Ukládací sloty"/>
         <string key="import" value="Importuj"/>
         <string key="export" value="Exportuj"/>
-        <string key="empty" value="prádný"/>
+        <string key="empty" value="prázdný"/>
         <string key="play" value="Hraj"/>
         <string key="edit" value="Edituj"/>
         <string key="random" value="Náhodně"/>
         <string key="exported" value="Mapa je ve schránce"/>
         <string key="editor_clear" value="Vymaž"/>
-        <string key="no" value="No"/>
-        <string key="yes" value="Yes"/>
-        <string key="confirm_import" value="Confirm import"/>
+        <string key="no" value="Ne"/>
+        <string key="yes" value="Ano"/>
+        <string key="confirm_import" value="Potvrdit import"/>
+        <string key="filter_no" value="No filter"/>
+        <string key="filter_only_land" value="Only land"/>
 
         <!-- Settings -->
         <string key="main_label" value=" # Auto ukládání
@@ -1708,23 +1747,46 @@
             # # Potvrď konec tahu
             # # Jména měst
             # # Zvuky
-            # # Limited turns
-            # # Long tap to move
+            # # Limitovaný počet tahů
+            # # Dlouze tapni pro pohyb
             # # "/>
-        <string key="skin" value="Skin"/>
+        <string key="skin" value="Skin"/>  <!-- Same as english -->
         <string key="original" value="originální"/>
         <string key="points" value="body"/>
         <string key="grid" value="mřížka"/>
+        <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
         <string key="anim_style" value="Citlivost"/>
         <string key="more" value="Více"/>
         <string key="camera_offset" value="Offset kamery"/>
         <string key="slay_rules" value="Slay pravidla"/>
-        <string key="language" value="Language"/>
-        <string key="more_settings_checks" value="# #Water texture # # "/>
+        <string key="language" value="Jazyk"/>
+        <string key="more_settings_checks" value="# #Textura vody # # "/>
 
         <!-- Single messages -->
-        <string key="achikaps_release" value="Hi. # #I've made a new game, it's called 'Achikaps'. It's a simple economic strategy without donations or ads. Hope you'll enjoy it :)"/>
+        <string key="achikaps_release" value="Ahoj. # #Dokončil jsem novou hru, která se jmenuje 'Achikaps'.#Je to jednoduchý ekonomický simulátor bez dotací a reklam. Snad si ho užijete :)"/>
+        <string key="one_time_only_one_knight" value="There must be only one knight for every player. You can't build 2 knights at the same time."/>  <!-- Same as english -->
+        <string key="one_time_knight_penalty" value="Knight has to move every turn. Otherwise he will be demoted to spearman for being lazy."/>  <!-- Same as english -->
+        <string key="one_time_strong_tower_demote" value="If province doesn't have money to support strong tower it turns into usual tower."/>
+        <string key="check_shroomarts" value="New skin by ShroomArts"/>
     </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1742,6 +1804,7 @@
         <string key="menu_level" value="Niveau"/>
         <string key="menu_reset" value="Réinitialiser"/>
         <string key="game_saved" value="Partie sauvegardée"/>
+        <string key="restart_app" value="Restart app"/>
         <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
         <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
         <string key="city_name_three" value="nsk, rra, ko, rry"/>
@@ -1768,22 +1831,7 @@
         #Auteur : yiotro
         "/>
         <string key="reset_campaign_data" value="Effacer données"/>
-        <string key="special_thanks" value="Merci beaucoup aux gens qui suivent :
-        #
-        #Rebecca Nöll :
-        #Traduction allemande
-        #Jirka Justra :
-        #Traduction tchèque
-        #Olek Jablonski :
-        #Traduction polonaise
-        #Andrea Rinaldi :
-        #Traduction italienne
-        #Louis Philibert-Morrissette :
-        #Traduction française
-        #
-        #
-        #
-        #"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Affrontement"/>
@@ -1836,6 +1884,7 @@
         <string key="level_complete" value="Niveau terminé"/>
         <string key="win_game" value="Gagner"/>
         <string key="win_or_continue" value="Gagner maintenant#ou poursuivre?"/>
+        <string key="continue" value="Continue"/>
 
         <!-- Colors -->
         <string key="green_player" value="Vert"/>
@@ -2044,6 +2093,8 @@
         <string key="no" value="No"/>
         <string key="yes" value="Yes"/>
         <string key="confirm_import" value="Confirm import"/>
+        <string key="filter_no" value="No filter"/>
+        <string key="filter_only_land" value="Only land"/>
 
         <!-- Settings -->
         <string key="main_label" value=" # Sauvegarde automatique
@@ -2058,6 +2109,7 @@
         <string key="original" value="original"/>
         <string key="points" value="points"/>
         <string key="grid" value="grille"/>
+        <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
         <string key="anim_style" value="Sensibilité"/>
         <string key="more" value="Plus"/>
         <string key="camera_offset" value="Cadrage"/>
@@ -2067,7 +2119,27 @@
 
         <!-- Single messages -->
         <string key="achikaps_release" value="Hi. # #I've made a new game, it's called 'Achikaps'. It's a simple economic strategy without donations or ads. Hope you'll enjoy it :)"/>
+        <string key="one_time_only_one_knight" value="There must be only one knight for every player. You can't build 2 knights at the same time."/>
+        <string key="one_time_knight_penalty" value="Knight has to move every turn. Otherwise he will be demoted to spearman for being lazy."/>
+        <string key="one_time_strong_tower_demote" value="If province doesn't have money to support strong tower it turns into usual tower."/>
+        <string key="check_shroomarts" value="New skin by ShroomArts"/>
     </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2076,7 +2148,7 @@
         <string key="lang_characters" value="ĄąĆćĘęŁłŃńŚśÓóŻżŹźö"/>
 
         <!-- Main menu -->
-        <string key="main_menu_info" value="Info"/>
+        <string key="main_menu_info" value="Info"/>  <!-- Same as english -->
         <string key="main_menu_exit" value="Wyjście"/>
         <string key="main_menu_something" value="Biały tekst o niczym"/>
 
@@ -2084,50 +2156,36 @@
         <string key="menu_level" value="Poziom"/>
         <string key="menu_reset" value="Resetuj"/>
         <string key="game_saved" value="Gra zapisana"/>
-        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
-        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
-        <string key="city_name_three" value="nsk, rra, ko, rry"/>
+        <string key="restart_app" value="Restart app"/>
+        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>  <!-- Same as english -->
+        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>  <!-- Same as english -->
+        <string key="city_name_three" value="nsk, rra, ko, rry"/>  <!-- Same as english -->
 
         <!-- Info -->
         <string key="info_back" value="Cofnij"/>
         <string key="info_array" value="Antiyoy jest to prosta gra
-        #strategiczna w
-        #minimalistycznym stylu.
-        #Jest darmowa, więc nie ma
-        #w niej reklam lub dotacji.
-        #Jeśli włączyłeś grę po raz
-        #pierwszy i jesteś w niej nowy
-        #sprawdź samouczek i zakładkę
-        #pomoc.
-        #
-        #Gra została zainspirowana
-        #przez 'Slay' Seana O'Connora
-        #
-        #
-        #
-        #
-        #
-        #
-        #E-mail: yiotro93@gmail.com
-        #Wykonane przez yiotro
-        "/>
+    #strategiczna w
+    #minimalistycznym stylu.
+    #Jest darmowa, więc nie ma
+    #w niej reklam lub dotacji.
+    #Jeśli włączyłeś grę po raz
+    #pierwszy i jesteś w niej nowy
+    #sprawdź samouczek i zakładkę
+    #pomoc.
+    #
+    #Gra została zainspirowana
+    #przez 'Slay' Seana O'Connora
+    #
+    #
+    #
+    #
+    #
+    #
+    #E-mail: yiotro93@gmail.com
+    #Wykonane przez yiotro
+    "/>
         <string key="reset_campaign_data" value="Resetuj kampanie"/>
-        <string key="special_thanks" value="Specjalne podziękowania dla
-        #
-        #Rebecca Nöll:
-        #niemieckie tłumaczenie
-        #Aleksander Jabłoński:
-        #polskie tłumaczenie
-        #Jirka Justra:
-        #czeskie tłumaczenie
-        #Andrea Rinaldi:
-        #włoskie tłumaczenie
-        #Louis Philibert-Morrissette:
-        #francuskie tłumaczenie
-        #
-        #
-        #
-        #"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
 
 
         <!-- Choose game mode menu-->
@@ -2139,7 +2197,7 @@
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Menu główne"/>
         <string key="game_settings_tutorial" value="Samouczek"/>
-        <string key="game_settings_start" value="Start"/>
+        <string key="game_settings_start" value="Rozpocznij"/>
         <string key="map_size" value="Rozmiar mapy"/>
         <string key="color_number" value="Kolory"/>
         <string key="player_number" value="Gracze"/>
@@ -2156,7 +2214,7 @@
         <string key="normal" value="normalny"/>
         <string key="hard" value="trudny"/>
         <string key="expert" value="ekspert"/>
-        <string key="balancer" value="balancer"/>
+        <string key="balancer" value="stabilizujący"/>
         <string key="player_color" value="Kolor gracza"/>
 
         <!-- In game menu -->
@@ -2171,8 +2229,8 @@
         <string key="yes" value="Tak"/>
 
         <!-- End game menu -->
-        <string key="end_game_ok" value="Ok"/>
-        <string key="end_game_okay" value="Okay..."/>
+        <string key="end_game_ok" value="Ok"/>  <!-- Same as english -->
+        <string key="end_game_okay" value="Dobra..."/>
         <string key="player" value="gracz"/>
         <string key="ai" value="AI"/>
         <string key="won" value="wygrywa"/>
@@ -2181,6 +2239,7 @@
         <string key="level_complete" value="Poziom ukończony"/>
         <string key="win_game" value="Wygraj"/>
         <string key="win_or_continue" value="Wygrać teraz#czy kontynuować?"/>
+        <string key="continue" value="Continue"/>
 
         <!-- Colors -->
         <string key="green_player" value="Zielony"/>
@@ -2205,7 +2264,7 @@
         <!-- Tutorial -->
         <string key="normal_rules" value="Zwykła rozgrywka"/>
         <string key="how_to_play" value="Jak grać?"/>
-        <string key="tutorial_ok" value="Ok"/>
+        <string key="tutorial_ok" value="Ok"/>  <!-- Same as english -->
         <string key="tut_select_unit" value="Wybierz jednostkę"/>
         <string key="tut_tap_on_hex" value="Dotknij pola"/>
         <string key="tut_press_button" value="Naciśnij przycisk"/>
@@ -2270,106 +2329,106 @@
         <string key="help_about_tactics" value="Taktyki"/>
 
         <string key="help_units_article" value="Są 4 rodzaje jednostek.
-        #Różnią się one tylko siłą.
-        #Tu są wymienione według siły:
-        #[1] chłop,
-        #[2] włócznik,
-        #[3] baron,
-        #[4] rycerz.
-        #
-        #Jednostki dają pobliskim
-        #polom obronę w wartości
-        #ich siły.
-        #
-        #By przejąć pole siła
-        #jednostek musi być
-        #większa niż obrona.
-        #
-        #Każda jednostka żąda
-        #2, 6, 18 lub 54 monet
-        #na 1 turę.
-        "/>
+    #Różnią się one tylko siłą.
+    #Tu są wymienione według siły:
+    #[1] chłop,
+    #[2] włócznik,
+    #[3] baron,
+    #[4] rycerz.
+    #
+    #Jednostki dają pobliskim
+    #polom obronę w wartości
+    #ich siły.
+    #
+    #By przejąć pole siła
+    #jednostek musi być
+    #większa niż obrona.
+    #
+    #Każda jednostka żąda
+    #2, 6, 18 lub 54 monet
+    #na 1 turę.
+    "/>
 
         <string key="help_trees_article" value="Drzewa pojawiają się po
-        #martwych jednostkach.
-        #
-        #Pole z drzewem nie daje
-        #zysku. Znaczy to, że
-        #drzewa ranią ekonomie.
-        #
-        #Musisz się ich pozbyć,
-        #ponieważ zaczną się
-        #rozprzestrzeniać oraz
-        #zabiją całą ekonomie.
-        #
-        #Palmy pojawiają się przy
-        #krańcach i rosną bardzo
-        #szybko. Muisz się ich prędko
-        #pozbyć.
-        "/>
+    #martwych jednostkach.
+    #
+    #Pole z drzewem nie daje
+    #zysku. Znaczy to, że
+    #drzewa ranią ekonomie.
+    #
+    #Musisz się ich pozbyć,
+    #ponieważ zaczną się
+    #rozprzestrzeniać oraz
+    #zabiją całą ekonomie.
+    #
+    #Palmy pojawiają się przy
+    #krańcach i rosną bardzo
+    #szybko. Muisz się ich prędko
+    #pozbyć.
+    "/>
 
         <string key="help_towers_article" value="Wieże służą do obrony
-        #pobliskich pól.
-        #
-        #Wieże dają obronę [2],
-        #więc tylko baronowie i
-        #rycerze mogą je pokonać.
-        #
-        #Chaty dają obronę [1].
-        #
-        #Na początku gry wieże są
-        #najlepszym sposóbem by
-        #bronić swojego terytorium.
-        #Są one tanie oraz
-        #nie żądają pieniędzy.
-        "/>
+    #pobliskich pól.
+    #
+    #Wieże dają obronę [2],
+    #więc tylko baronowie i
+    #rycerze mogą je pokonać.
+    #
+    #Chaty dają obronę [1].
+    #
+    #Na początku gry wieże są
+    #najlepszym sposóbem by
+    #bronić swojego terytorium.
+    #Są one tanie oraz
+    #nie żądają pieniędzy.
+    "/>
 
         <string key="help_money_article" value="Zysk zależy od
-        #liczby pól.
-        #Większe terytorium
-        #to większy zysk.
-        #Drzewa zmniejszają zysk.
-        #
-        #Jednostki żądają pieniądzy.
-        #Silniejsze jednostki
-        #żądają ich więcej.
-        #
-        #
-        #Gdy skończą się pieniądze,
-        #jednostki zginą.
-        #
-        #Zysk jest pokazany
-        #w górnej części ekranu
-        #na środku.
-        "/>
+    #liczby pól.
+    #Większe terytorium
+    #to większy zysk.
+    #Drzewa zmniejszają zysk.
+    #
+    #Jednostki żądają pieniądzy.
+    #Silniejsze jednostki
+    #żądają ich więcej.
+    #
+    #
+    #Gdy skończą się pieniądze,
+    #jednostki zginą.
+    #
+    #Zysk jest pokazany
+    #w górnej części ekranu
+    #na środku.
+    "/>
 
         <string key="help_tactics_article" value="Na początku gry
-        #przejmij neutralne pola.
-        #Po tym broń wszystkich
-        #swoich pól.
-        #
-        #Upewnij się że zysk
-        #jest wystarczający
-        #by wynająć jednostki.
-        #
-        #
-        #
-        #Dziel wrogie terytoria
-        #by zniszczyć ich ekonomię.
-        "/>
+    #przejmij neutralne pola.
+    #Po tym broń wszystkich
+    #swoich pól.
+    #
+    #Upewnij się że zysk
+    #jest wystarczający
+    #by wynająć jednostki.
+    #
+    #
+    #
+    #Dziel wrogie terytoria
+    #by zniszczyć ich ekonomię.
+    "/>
 
         <string key="about_complicated_mode_article" value="Włączenie trybu
-        #skomplikowanego dodaje więcej menu.
-        #W odróżnieniu od prostego
-        #dostępne jest:
-        #
-        #- więcej slotów na zapisy
-        #
-        #- potwierdzenie rastartu poziomu
-        #
-        #- statystyki kolorów
-        #(wystarczy nacisnąć guzik monety)
-        "/>
+    #skomplikowanego dodaje więcej menu.
+    #W odróżnieniu od prostego
+    #dostępne jest:
+    #
+    #- więcej slotów na zapisy
+    #
+    #- potwierdzenie rastartu poziomu
+    #
+    #- statystyki kolorów
+    #(wystarczy nacisnąć guzik monety)
+    "/>
 
         <!-- Statistics -->
         <string key="turns_made" value="Wykonane ruchy:"/>
@@ -2379,7 +2438,7 @@
 
         <!-- Editor -->
         <string key="editor" value="Edytor"/>
-        <string key="slot" value="Slot"/>
+        <string key="slot" value="Slot"/>  <!-- Same as english -->
         <string key="slots" value="Sloty zapisu"/>
         <string key="import" value="Importuj"/>
         <string key="export" value="Exportuj"/>
@@ -2389,33 +2448,58 @@
         <string key="random" value="Losowy"/>
         <string key="exported" value="Mapa w schowku"/>
         <string key="editor_clear" value="Wyczyść"/>
-        <string key="no" value="No"/>
-        <string key="yes" value="Yes"/>
-        <string key="confirm_import" value="Confirm import"/>
+        <string key="no" value="Nie"/>
+        <string key="yes" value="Tak"/>
+        <string key="confirm_import" value="Czy chcesz importować?"/>
+        <string key="filter_no" value="No filter"/>
+        <string key="filter_only_land" value="Only land"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" # Autozapis
-            # # Więcej slotów zapisu
-            # # Zapytaj czy zakończyć
-            # # Nazwy miast
-            # # Dźwięki
-            # # Limited turns
-            # # Long tap to move
-            # # "/>
+        <string key="main_label" value=" #Autozapis
+        # #Więcej slotów zapisu
+        # #Zapytaj czy zakończyć
+        # #Nazwy miast
+        # #Dźwięki
+        # #Limitowane tury
+        # #Przytrzymaj by ruszyć
+				# # "/>
         <string key="skin" value="Skórka"/>
         <string key="original" value="originalna"/>
         <string key="points" value="punkty"/>
         <string key="grid" value="siatka"/>
-        <string key="anim_style" value="Wrażliwość"/>
+        <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
+        <string key="anim_style" value="Czułość"/>
         <string key="more" value="Więcej"/>
         <string key="camera_offset" value="offset kamery"/>
         <string key="slay_rules" value="Reguły Slaya"/>
-        <string key="language" value="Language"/>
-        <string key="more_settings_checks" value="# #Water texture # # "/>
+        <string key="language" value="Język"/>
+        <string key="more_settings_checks" value="# #Tekstura wody # # "/>
 
         <!-- Single messages -->
-        <string key="achikaps_release" value="Hi. # #I've made a new game, it's called 'Achikaps'. It's a simple economic strategy without donations or ads. Hope you'll enjoy it :)"/>
+        <string key="achikaps_release" value="Witaj! # #Stworzyłem nową grę o nazwie 'Achikaps'. To prosta ekonomiczna strategia bez dotacji lub reklam. Mam nadzieję, że ci się spodoba :)"/>
+        <string key="one_time_only_one_knight" value="There must be only one knight for every player. You can't build 2 knights at the same time."/>  <!-- Same as english -->
+        <string key="one_time_knight_penalty" value="Knight has to move every turn. Otherwise he will be demoted to spearman for being lazy."/>  <!-- Same as english -->
+        <string key="one_time_strong_tower_demote" value="If province doesn't have money to support strong tower it turns into usual tower."/>
+        <string key="check_shroomarts" value="New skin by ShroomArts"/>
     </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2432,6 +2516,7 @@
         <string key="menu_level" value="Livello"/>
         <string key="menu_reset" value="Reset"/>
         <string key="game_saved" value="Gioco salvato"/>
+        <string key="restart_app" value="Restart app"/>
         <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
         <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
         <string key="city_name_three" value="nsk, rra, ko, rry"/>
@@ -2457,22 +2542,7 @@
         "/>
 
         <string key="reset_campaign_data" value="Resetta campagna"/>
-        <string key="special_thanks" value="Un ringraziamento speciale:
-        #
-        #Rebecca Nöll:
-        #traduzione tedesca
-        #Jirka Justra:
-        #traduzione ceca
-        #Olek Jablonski:
-        #traduzioni polacco
-        #Andrea Rinaldi:
-        #traduzione italiana
-        #Louis Philibert-Morrissette:
-        #traduzione in francese
-        #
-        #
-        #
-        #"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Schermaglia"/>
@@ -2525,6 +2595,7 @@
         <string key="level_complete" value="Livello completato"/>
         <string key="win_game" value="Vittoria!"/>
         <string key="win_or_continue" value="Termina da vincitore#o continua?"/>
+        <string key="continue" value="Continue"/>
 
         <!-- Colors -->
         <string key="green_player" value="Verde"/>
@@ -2734,6 +2805,8 @@
         <string key="no" value="No"/>
         <string key="yes" value="Yes"/>
         <string key="confirm_import" value="Confirm import"/>
+        <string key="filter_no" value="No filter"/>
+        <string key="filter_only_land" value="Only land"/>
 
         <!-- Settings -->
         <string key="main_label" value=" # Autosalvataggio
@@ -2748,6 +2821,7 @@
         <string key="original" value="originale"/>
         <string key="points" value="punti"/>
         <string key="grid" value="griglia"/>
+        <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
         <string key="anim_style" value="Sensibilità"/>
         <string key="more" value="di più"/>
         <string key="camera_offset" value="Camera offset"/>
@@ -2757,7 +2831,358 @@
 
         <!-- Single messages -->
         <string key="achikaps_release" value="Hi. # #I've made a new game, it's called 'Achikaps'. It's a simple economic strategy without donations or ads. Hope you'll enjoy it :)"/>
+        <string key="one_time_only_one_knight" value="There must be only one knight for every player. You can't build 2 knights at the same time."/>
+        <string key="one_time_knight_penalty" value="Knight has to move every turn. Otherwise he will be demoted to spearman for being lazy."/>
+        <string key="one_time_strong_tower_demote" value="If province doesn't have money to support strong tower it turns into usual tower."/>
+        <string key="check_shroomarts" value="New skin by ShroomArts"/>
     </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <language name="es_MX">
+
+        <!-- All characters -->
+        <string key="lang_characters" value="Ááéíóúñö¿"/>
+
+        <!-- Main menu -->
+        <string key="main_menu_info" value="Información"/>
+        <string key="main_menu_exit" value="Salir" />
+        <string key="main_menu_something" value="Texto en blanco sin valor" />
+
+        <!-- Random stuff -->
+        <string key="menu_level" value="Nivel"/>
+        <string key="menu_reset" value="Reiniciar"/>
+        <string key="game_saved" value="Juego guardado"/>
+        <string key="restart_app" value="Restart app"/>
+        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
+        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
+        <string key="city_name_three" value="nsk, rra, ko, rry"/>
+
+        <!-- Info -->
+        <string key="info_back" value="Volver"/>
+        <string key="info_array" value="Este es un juego simple
+       #de estrategia de estilo minimalista.
+       #Es gratuito, sin publicidad, sin necesidad de donar.
+       #Si esta es tu primera partida,
+       #si eres nuevo en este juego,
+       #revisa el tutorial o la 'ayuda'.
+       #
+       #Este juego está inspirado en
+       #Slay de Sean O'Connor
+       #
+       #
+       #
+       #
+       #
+       #
+       #
+       #E-mail: yiotro93@gmail.com #Creado por yiotro"/>
+        <string key="reset_campaign_data" value="Borrar datos"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
+
+        <!-- Choose game mode menu -->
+        <string key="choose_game_mode_skirmish" value="Escaramuza"/>
+        <string key="choose_game_mode_tutorial" value="Tutorial"/>
+        <string key="choose_game_mode_campaign" value="Campaña"/>
+        <string key="choose_game_mode_load" value="Cargar juego"/>
+
+        <!-- Skirmish menu -->
+        <string key="game_settings_main_menu" value="Menú principal"/>
+        <string key="game_settings_tutorial" value="Tutorial"/>
+        <string key="game_settings_start" value="Iniciar"/>
+        <string key="map_size" value="Tamaño del mapa"/>
+        <string key="color_number" value="Colores"/>
+        <string key="player_number" value="Jugadores"/>
+        <string key="small" value="pequeño"/>
+        <string key="medium" value="mediano"/>
+        <string key="big" value="grande"/>
+        <string key="ai_only" value="Sólo IA"/>
+        <string key="single_player" value="Un jugador"/>
+        <string key="multiplayer" value="Multijugador"/>
+        <string key="colors" value="colores"/>
+        <string key="color" value="colores"/>
+        <string key="difficulty" value="Dificultad"/>
+        <string key="easy" value="fácil"/>
+        <string key="normal" value="normal"/>
+        <string key="hard" value="difícil"/>
+        <string key="expert" value="experto"/>
+        <string key="balancer" value="balanceado"/>
+        <string key="player_color" value="Color del jugador"/>
+
+        <!-- In game menu -->
+        <string key="in_game_menu_resume" value="Continuar"/>
+        <string key="in_game_menu_save" value="Guardar juego"/>
+        <string key="in_game_menu_surrender" value="Rendirse"/>
+        <string key="in_game_menu_main_menu" value="Menú principal"/>
+        <string key="in_game_menu_restart" value="Reiniciar"/>
+        <string key="confirm_restart" value="¿Reiniciar juego?"/>
+        <string key="cancel" value="Cancelar"/>
+        <string key="confirm_end_turn" value="¿Terminar turno?"/>
+        <string key="yes" value="Si"/>
+        <string key="confirm_import" value="Confirm import"/>
+        <string key="filter_no" value="No filter"/>
+        <string key="filter_only_land" value="Only land"/>
+
+        <!-- End game menu -->
+        <string key="end_game_ok" value="Ok"/>
+        <string key="end_game_okay" value="Aceptar..."/>
+        <string key="player" value="El jugador"/>
+        <string key="ai" value="AI"/>
+        <string key="won" value="Victoria de"/>
+        <string key="statistics" value="Estadísticas"/>
+        <string key="next" value="Siguiente"/>
+        <string key="level_complete" value="Nivel completado"/>
+        <string key="win_game" value="Victoria"/>
+        <string key="win_or_continue" value="¿Ganar ahora o continuar?"/>
+        <string key="continue" value="Continue"/>
+
+
+        <!-- Colors -->
+        <string key="green_player" value="Verde"/>
+        <string key="red_player" value="Rojo"/>
+        <string key="magenta_player" value="Magenta"/>
+        <string key="cyan_player" value="Cyan"/>
+        <string key="yellow_player" value="Amarillo"/>
+        <string key="gray_player" value="Gris"/>
+        <string key="green_ai" value="Verde"/>
+        <string key="red_ai" value="Rojo"/>
+        <string key="magenta_ai" value="Magenta"/>
+        <string key="cyan_ai" value="Cyan"/>
+        <string key="yellow_ai" value="Amarillo"/>
+        <string key="gray_ai" value="Gris"/>
+        <string key="green_menu" value="Verde"/>
+        <string key="red_menu" value="Rojo"/>
+        <string key="magenta_menu" value="Magenta"/>
+        <string key="cyan_menu" value="Cyan"/>
+        <string key="yellow_menu" value="Amarillo"/>
+        <string key="gray_menu" value="Gris"/>
+
+        <!-- Tutorial -->
+        <string key="normal_rules" value="Reglas normales"/>
+        <string key="how_to_play" value="¿Cómo jugar?"/>
+        <string key="tutorial_ok" value="Ok"/>
+        <string key="tut_select_unit" value="Selecciona la unidad"/>
+        <string key="tut_tap_on_hex" value="Selecciona la celda"/>
+        <string key="tut_press_button" value="Presiona el botón"/>
+        <string key="tut_build_tower" value="Constuir torre"/>
+        <string key="tut_again" value="De nuevo"/>
+        <string key="tut_build_spearman" value="Crear lancero"/>
+        <string key="tut_tap_to_undo" value="Presiona 'deshacer'"/>
+        <string key="tut_tap_to_end_turn" value="Toca para finalizar tu turno"/>
+        <string key="tut_hold_hex" value="Mantenga presionado"/>
+        <string key="tut_merge_units" value="Combina unidades"/>
+        <string key="tut_good_luck" value="¡Buena suerte!"/>
+
+        <!-- Tutorial tips -->
+        <string key="tip_capture_with_units" value="Ataca con tus unidades#para capturar territorio."/>
+        <string key="tip_about_money" value="Entre más grande sea tu territorio, más #dinero obtendrás."/>
+        <string key="tip_build_towers" value="Crea torres para proteger#las celdas contiguas."/>
+        <string key="tip_about_taxes" value="Unidades más fuertes consumen más #dinero."/>
+        <string key="tip_about_defense" value="Las unidades y casas también#defienden las celdas cercanas."/>
+        <string key="tip_hold_to_march" value="Para mover rápidamente tus unidades manten#presionado."/>
+        <string key="tip_about_unit_death" value="Si te quedas sin dinero,#tus unidades morirán.#Ten cuidado."/>
+        <string key="tip_merging" value="Combina unidades para formar una más#poderosa."/>
+        <string key="tip_trees" value="Los árboles reducen tus ingresos. Es mejor #cortarlos."/>
+        <string key="tip_help" value="Más detalles en 'Ayuda'"/>
+
+        <!-- Generic Tutorial -->
+        <string key="gen_greetings" value="Hola. Este tutorial te explicará las reglas del juego."/>
+        <string key="gen_select_province" value="Toca tu ciudad para seleccionarla"/>
+        <string key="gen_select_unit" value="Bien. Posees varias unidades. Toca una de ellas."/>
+        <string key="gen_move_unit" value="Cada unidad se mueve una vez por turno. Mientras tienes seleccionada una unidad, toca una celda neutral cercana para capturarla."/>
+        <string key="gen_income" value="Al capturar nuevas celdas puedes ampliar los ingresos de tu ciudad.#Más celdas = más ingresos."/>
+        <string key="gen_lets_build_farm" value="Construyamos una granja para obtener aún más ingresos."/>
+        <string key="gen_press_button_twice" value="Presiona el botón dos veces"/>
+        <string key="gen_build_farm" value="Las granjas sólo pueden ser construidas cercas de una capital u otras granjas."/>
+        <string key="gen_about_farms" value="Cada granja genera 4 monedas por turno y cada granja nueva cuesta más que la anterior."/>
+        <string key="gen_lets_build_peasant" value="Construyamos una nueva unidad y capturemos una celda neutral."/>
+        <string key="gen_press_button" value="Presiona el botón de abajo"/>
+        <string key="gen_build_peasant" value="Coloca tu unidad en una celda cercana dentro de los bordes de la ciudad."/>
+        <string key="gen_capture_peasant" value="Ahora, captura la celda neutral seleccionando la unidad creada e indicándole que celda capturar."/>
+        <string key="gen_capture_hex" value="Captura la celda neutral"/>
+        <string key="gen_lets_build_tower" value="Necesitas defender tus tierras. Las torres son buenas para eso."/>
+        <string key="gen_build_tower" value="Construye una torre tocando la celda señalada."/>
+        <string key="gen_about_towers" value="Las torres defienden las celdas contiguas de los campesinos y lanceros."/>
+        <string key="gen_lets_build_spearman" value="Los lanceros son más fuertes que los campesinos. Vamos a crear uno."/>
+        <string key="gen_build_spearman" value="Selecciona una celda para crear un lancero."/>
+        <string key="gen_units_consume_money" value="Las unidades consumen dinero para vivir. Unidades fuertes requieren más dinero."/>
+        <string key="gen_undo_spearman" value="Ahora tu ingreso es de -1. Esto es malo, así que deshagamos al lancero."/>
+        <string key="gen_why_units_die" value="Las unidades mueren cuando la ciudad se queda sin dinero. Será mejor que tengas cuidado con tus ingresos."/>
+        <string key="gen_about_trees_one" value="Los árboles también son un problema. Celdas con árboles no producen dinero."/>
+        <string key="gen_about_trees_two" value="Corta los árboles tan pronto como sea posible cuando aún no hay muchos."/>
+        <string key="gen_end_turn" value="Para terminar tu turno presiona el botón en la esquina inferior derecha."/>
+        <string key="gen_choose_to_merge" value="También puedes combinar unidades. Selecciona el campesino ubicado en la parte inferior."/>
+        <string key="gen_merge_units" value="Ahora, cuando el campesino está seleccionado, toca otro campesino para combinarlos."/>
+        <string key="gen_long_tap" value="Si posees muchas unidades, puedes moverlas al mismo tiempo dejando presionada la celda a donde quieras que se dirijan."/>
+        <string key="gen_several_provinces" value="Puedes tener muchas ciudades, cada una con su economia propia."/>
+
+        <!-- Tutorial help -->
+        <string key="help" value="Ayuda"/>
+        <string key="help_about_units" value="Unidades"/>
+        <string key="help_about_trees" value="Árboles"/>
+        <string key="help_about_towers" value="Torres"/>
+        <string key="help_about_money" value="Dinero"/>
+        <string key="help_about_tactics" value="Estrategias"/>
+
+        <string key="help_units_article" value="Existen 4 tipo de unidades.
+        #Sólo difieren en la fuerza.
+        #En orden ascendente de fuerza están:
+        #[1] Campesino
+        #[2] Lancero
+        #[3] Barón
+        #[4] Caballero
+        #
+        #Las unidades otorgan
+        #protección equivalente a su
+        #fuerza a las celdas contiguas.
+        #
+        #Para capturar una celda,
+        #la fuerza de una unidad debe
+        #ser más grande que la protección.
+        #
+        #Cada unidad consume
+        #2, 6, 18 o 54 monedas por turno."/>
+
+        <string key="help_trees_article" value="Los árboles aparecerán en la
+       #celda en donde haya muerto una unidad.
+       #
+       #Las celdas con árboles no
+       #aportan ingresos. Eso significa
+       #que los árboles dañan tu economía.
+       #
+       #Tienes que combatirlos.
+       #De no ser así, se expandirán y
+       #destruirán tu economía.
+       #
+       #Las palmeras aparecen en los
+       #bordes y se multiplican muy
+       #rápido.
+       #Deben ser erradicadas pronto."/>
+
+        <string key="help_towers_article" value="Las torres son usadas para
+       #proteger celdas contiguas.
+       #
+       #Las torres ofrecen protección
+       #de [2].
+       #Además, sólo barones y
+       #caballeros pueden destruirlas.
+       #
+       #Las chozas otorgan protección
+       #de [1].
+       #
+       #Al inicio del juego, esta es la
+       #mejor forma de proteger tu
+       #territorio.
+       #El precio de las torres es bajo
+       #y no consumen dinero."/>
+
+        <string key="help_money_article" value="Tus ingresos dependen de el
+       #número de celdas que domines.
+       #Grandes territorios aportan
+       #grandes ingresos.
+       #Los árboles reducen tus ingresos.
+       #
+       #Las unidades consumen
+       #dinero. Unidades poderosas
+       #consumen más dinero.
+       #
+       #Si tu dinero se agota,
+       #todas tus unidades morirán.
+       #
+       #Tus ingresos se muestran en la
+       #parte de arriba, en el centro."/>
+
+        <string key="help_tactics_article" value="Al inicio del juego, captura
+       #celdas neutrales.
+       #Luego, procede a defender
+       #todas tus celdas.
+       #
+       #Asegúrate de que tus ingresos
+       #sean lo suficientemente
+       #buenos antes de construir
+       #unidades.
+       #
+       #
+       #
+       #Divide el territorio enemigo
+       #para destruir su economia."/>
+
+        <string key="about_complicated_mode_article" value="El modo complicado significa
+       #más menús.
+       #Diferencias con el simple:
+       #
+       #- Múltiples archivos de guardado
+       #
+       #- confirmar el nivel de inicio
+       #
+       #- Mostrar estadísticas por colores
+       #(presione el botón de moneda)"/>
+
+        <!-- Statistics -->
+        <string key="turns_made" value="Turnos jugados:"/>
+        <string key="units_died" value="Unidades muertas en la partida:"/>
+        <string key="units_produced" value="Unidades creadas en la partida:"/>
+        <string key="money_spent" value="Dinero gastado:"/>
+
+        <!-- Editor -->
+        <string key="editor" value="Editor" />
+        <string key="slot" value="Archivo" />
+        <string key="slots" value="Guardar archivo" />
+        <string key="import" value="Importar" />
+        <string key="export" value="Exportar" />
+        <string key="empty" value="vacio" />
+        <string key="play" value="Jugar" />
+        <string key="edit" value="Editar" />
+        <string key="random" value="Aleatorio" />
+        <string key="exported" value="Mapa en portapapeles" />
+        <string key="editor_clear" value="Borrar" />
+        <string key="no" value="No"/>
+
+
+        <!-- Settings -->
+        <string key="main_label" value=" # Autoguardado
+       # # Múltiples archivos
+       # # Ask to end turn
+       # # Nombres de ciudades
+       # # Sonido
+       # # Turnos limitados
+       # # Long tap to move
+       # # "/>
+        <string key="skin" value="Apariencia"/>
+        <string key="original" value="original"/>
+        <string key="points" value="puntos"/>
+        <string key="grid" value="cuadrícula"/>
+        <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
+        <string key="anim_style" value="Sensibilidad"/>
+        <string key="more" value="Más"/>
+        <string key="camera_offset" value="Compensación de la cámara"/>
+        <string key="slay_rules" value="Combate total"/>
+        <string key="language" value="Idioma"/>
+        <string key="more_settings_checks" value="# #Textura acuática # # "/>
+
+        <!-- Single messages -->
+        <string key="achikaps_release" value="Hola. # #He creado un nuevo juego, se llama 'Achikaps'. Es un juego simple de estrategia económica sin publicidad ni necesidad de donar. Espero que lo disfrutes :)"/>
+        <string key="one_time_only_one_knight" value="There must be only one knight for every player. You can't build 2 knights at the same time."/>
+        <string key="one_time_knight_penalty" value="Knight has to move every turn. Otherwise he will be demoted to spearman for being lazy."/>
+        <string key="one_time_strong_tower_demote" value="If province doesn't have money to support strong tower it turns into usual tower."/>
+        <string key="check_shroomarts" value="New skin by ShroomArts"/>
+    </language>
+
 
 
 

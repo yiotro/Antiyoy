@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.ai.*;
-import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.SliderYio;
@@ -103,8 +102,8 @@ public class GameController {
     private void checkForAloneUnits() {
         for (int i = 0; i < unitList.size(); i++) {
             Unit unit = unitList.get(i);
-            if (isCurrentTurn(unit.getColor()) && unit.currHex.numberOfFriendlyHexesNearby() == 0) {
-                fieldController.killUnitOnHex(unit.currHex);
+            if (isCurrentTurn(unit.getColor()) && unit.currentHex.numberOfFriendlyHexesNearby() == 0) {
+                fieldController.killUnitOnHex(unit.currentHex);
                 i--;
             }
         }
@@ -208,7 +207,8 @@ public class GameController {
 
 
     private boolean canEndTurn() {
-        if (Debug.CHECKING_BALANCE_MODE) return true; // fast forward when measuring balance
+        if (DebugFlags.CHECKING_BALANCE_MODE) return true; // fast forward when measuring balance
+        if (isInEditorMode()) return false;
         if (!readyToEndTurn) return false;
         if (!cameraController.checkConditionsToEndTurn()) return false;
         if (isPlayerTurn() || isCurrentTurn(0)) {
@@ -222,7 +222,7 @@ public class GameController {
     private void checkToEndTurn() {
         if (canEndTurn()) {
             readyToEndTurn = false;
-            turnEndActions();
+            endTurnActions();
             turn = getNextTurnIndex();
             turnStartActions();
         }
@@ -351,15 +351,16 @@ public class GameController {
             }
         }
         yioGdxGame.menuControllerYio.createAfterGameMenu(winColor, isPlayerTurn(winColor));
-        if (Debug.CHECKING_BALANCE_MODE) {
+        if (DebugFlags.CHECKING_BALANCE_MODE) {
             yioGdxGame.balanceIndicator[winColor]++;
             yioGdxGame.startGame(true, false);
         }
     }
 
 
-    private void turnEndActions() {
+    private void endTurnActions() {
         checkToEndGame();
+        checkToKillKnights();
         for (Unit unit : unitList) {
             unit.setReadyToMove(false);
             unit.stopJumping();
@@ -367,6 +368,32 @@ public class GameController {
         if (!isPlayerTurn()) {
 
         }
+    }
+
+
+    private void checkToKillKnights() {
+        if (GameRules.slay_rules) return;
+
+        for (int i = unitList.size() - 1; i >= 0; i--) {
+            Unit unit = unitList.get(i);
+            if (unit.strength == 4 && unit.isReadyToMove()) {
+                checkForKnightPenaltyTip();
+                unit.strength = 2;
+            }
+        }
+    }
+
+
+    private void checkForKnightPenaltyTip() {
+        if (playersNumber == 0) return;
+        OneTimeInfo oneTimeInfo = OneTimeInfo.getInstance();
+        if (oneTimeInfo.aboutKnightPenalty) return;
+
+        MenuControllerYio menuControllerYio = yioGdxGame.menuControllerYio;
+        ArrayList<String> text = menuControllerYio.getArrayListFromString(LanguagesManager.getInstance().getString("one_time_knight_penalty"));
+        menuControllerYio.createTutorialTipWithFixedHeight(text, 8);
+        oneTimeInfo.aboutKnightPenalty = true;
+        oneTimeInfo.save();
     }
 
 
@@ -453,7 +480,7 @@ public class GameController {
 
     public void setPlayersNumber(int playersNumber) {
         this.playersNumber = playersNumber;
-        if (Debug.CHECKING_BALANCE_MODE) this.playersNumber = 0;
+        if (DebugFlags.CHECKING_BALANCE_MODE) this.playersNumber = 0;
     }
 
 
@@ -485,7 +512,7 @@ public class GameController {
             GameRules.setColorNumberBySlider(yioGdxGame.menuControllerYio.sliders.get(2));
             GameRules.setDifficultyBySlider(yioGdxGame.menuControllerYio.sliders.get(3));
             readColorOffsetFromSlider();
-            GameRules.slay_rules = yioGdxGame.menuControllerYio.getCheckButtonById(6).isChecked();
+            GameRules.slay_rules = yioGdxGame.menuControllerYio.getCheckButtonById(16).isChecked();
         }
         fieldController.createField(generateMap); // generating map
 
@@ -497,7 +524,7 @@ public class GameController {
         fieldController.clearAnims();
         createAiList(GameRules.difficulty);
         updateLevelInitialString();
-        if (Debug.CHECKING_BALANCE_MODE) {
+        if (DebugFlags.CHECKING_BALANCE_MODE) {
             while (true) {
                 move();
                 checkToEndGame();
@@ -543,8 +570,8 @@ public class GameController {
     private void createAiList(int difficulty) {
         aiList = new ArrayList<ArtificialIntelligence>();
 
-        boolean testingNewAi = true;
-        if (Debug.CHECKING_BALANCE_MODE && testingNewAi && GameRules.colorNumber == 5) {
+        boolean testingNewAi = false;
+        if (DebugFlags.CHECKING_BALANCE_MODE && testingNewAi && GameRules.colorNumber == 5) {
 //            aiList.add(new AiExpertSlayRules(this, 0));
 //            aiList.add(new AiExpertSlayRules(this, 1));
 //            aiList.add(new AiExpertSlayRules(this, 2));
@@ -746,7 +773,24 @@ public class GameController {
 
 
     boolean canMergeUnits(Unit unit1, Unit unit2) {
-        return mergedUnitStrength(unit1, unit2) <= 4;
+        int mergedUnitStrength = mergedUnitStrength(unit1, unit2);
+
+        Province provinceByHex = getProvinceByHex(unit1.currentHex);
+        if (playerHasAtLeastOneUnitWithStrength(provinceByHex.getColor(), 4) && mergedUnitStrength == 4) {
+            return false;
+        }
+
+        return mergedUnitStrength <= 4;
+    }
+
+
+    public boolean playerHasAtLeastOneUnitWithStrength(int playerColor, int strength) {
+        for (Unit unit : unitList) {
+            if (unit.getColor() == playerColor && unit.strength == strength) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -757,8 +801,8 @@ public class GameController {
 
     public boolean mergeUnits(Hex hex, Unit unit1, Unit unit2) {
         if (canMergeUnits(unit1, unit2)) {
-            fieldController.cleanOutHex(unit1.currHex);
-            fieldController.cleanOutHex(unit2.currHex);
+            fieldController.cleanOutHex(unit1.currentHex);
+            fieldController.cleanOutHex(unit2.currentHex);
             Unit mergedUnit = fieldController.addUnit(hex, mergedUnitStrength(unit1, unit2));
             mergedUnit.setReadyToMove(true);
             if (!unit1.isReadyToMove() || !unit2.isReadyToMove()) {
@@ -916,7 +960,13 @@ public class GameController {
 
 
     public void moveUnit(Unit unit, Hex toWhere, Province unitProvince) {
-        if (unit.currHex.sameColor(toWhere)) { // move peacefully
+        if (!unit.isReadyToMove()) {
+            System.out.println("AI tried to move unit that is not ready to move");
+            Yio.printStackTrace();
+            return;
+        }
+
+        if (unit.currentHex.sameColor(toWhere)) { // move peacefully
             if (!toWhere.containsUnit()) {
                 unit.moveToHex(toWhere);
             } else {
@@ -941,19 +991,15 @@ public class GameController {
     }
 
 
+    public void onClick() {
+        fieldController.updateFocusedHex();
+        if (fieldController.focusedHex != null && isPlayerTurn()) {
+            focusedHexActions(fieldController.focusedHex);
+        }
+    }
+
+
     public void focusedHexActions(Hex focusedHex) {
-        // don't change order in this method
-//        YioGdxGame.say(focusedHex.index1 + " " + focusedHex.index2);
-
-        // building stuff
-
-        // deselect
-
-        // attack enemy province
-
-        // select province
-
-        // select and move unit peacefully
         selectionController.focusedHexActions(focusedHex);
     }
 

@@ -17,7 +17,7 @@ public class CampaignLevelFactory {
 
     public CampaignLevelFactory(GameController gameController) {
         this.gameController = gameController;
-        levels = new String[YioGdxGame.INDEX_OF_LAST_LEVEL + 1];
+        levels = new String[CampaignController.INDEX_OF_LAST_LEVEL + 1];
 //        setLevels();
     }
 
@@ -42,7 +42,7 @@ public class CampaignLevelFactory {
         gameController.setPlayersNumber(1);
         GameRules.setColorNumber(getColorNumberByIndex(index));
         GameRules.setDifficulty(getDifficultyByIndex(index));
-        GameRules.slay_rules = gameController.yioGdxGame.menuControllerYio.getCheckButtonById(6).isChecked();
+        GameRules.slay_rules = gameController.yioGdxGame.menuControllerYio.getCheckButtonById(16).isChecked();
         gameController.yioGdxGame.startGame(index, false, false);
 
         if (GameRules.slay_rules) {

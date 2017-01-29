@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by ivan on 24.05.2015.
  */
 public class Unit {
-    public Hex lastHex, currHex;
+    public Hex lastHex, currentHex;
     final PointYio currentPos;
     final FactorYio moveFactor;
     public int strength;
@@ -18,13 +18,13 @@ public class Unit {
     float jumpPos, jumpGravity, jumpDy, jumpStartingImpulse;
 
 
-    public Unit(GameController gameController, Hex currHex, int strength) {
+    public Unit(GameController gameController, Hex currentHex, int strength) {
         this.gameController = gameController;
-        this.currHex = currHex;
+        this.currentHex = currentHex;
         this.strength = strength;
         moveFactor = new FactorYio();
         moveFactor.setValues(1, 0);
-        lastHex = currHex;
+        lastHex = currentHex;
         jumpStartingImpulse = 0.015f;
         currentPos = new PointYio();
         updateCurrentPos();
@@ -32,7 +32,7 @@ public class Unit {
 
 
     boolean canMoveToFriendlyHex(Hex hex) {
-        if (hex == currHex) return false;
+        if (hex == currentHex) return false;
         if (hex.containsBuilding()) return false;
         if (hex.containsUnit() && !gameController.canMergeUnits(this, hex.unit)) return false;
         return true;
@@ -40,7 +40,7 @@ public class Unit {
 
 
     boolean moveToHex(Hex destinationHex) {
-        if (destinationHex.sameColor(currHex) && destinationHex.containsBuilding()) return false;
+        if (destinationHex.sameColor(currentHex) && destinationHex.containsBuilding()) return false;
         if (destinationHex.containsSolidObject()) {
             if (!GameRules.slay_rules && destinationHex.containsTree()) {
                 gameController.getProvinceByHex(destinationHex).money += 5;
@@ -51,8 +51,8 @@ public class Unit {
         }
         stopJumping();
         setReadyToMove(false);
-        lastHex = currHex;
-        currHex = destinationHex;
+        lastHex = currentHex;
+        currentHex = destinationHex;
         moveFactor.setValues(0, 0);
         moveFactor.beginSpawning(1, 4);
         lastHex.unit = null;
@@ -83,19 +83,19 @@ public class Unit {
     }
 
 
-    public Hex getCurrHex() {
-        return currHex;
+    public Hex getCurrentHex() {
+        return currentHex;
     }
 
 
     public int getColor() {
-        return currHex.colorIndex;
+        return currentHex.colorIndex;
     }
 
 
     private void updateCurrentPos() {
-        currentPos.x = lastHex.pos.x + moveFactor.get() * (currHex.pos.x - lastHex.pos.x);
-        currentPos.y = lastHex.pos.y + moveFactor.get() * (currHex.pos.y - lastHex.pos.y);
+        currentPos.x = lastHex.pos.x + moveFactor.get() * (currentHex.pos.x - lastHex.pos.x);
+        currentPos.y = lastHex.pos.y + moveFactor.get() * (currentHex.pos.y - lastHex.pos.y);
     }
 
 
@@ -110,21 +110,21 @@ public class Unit {
 
 
     public Unit getSnapshotCopy() {
-        Unit copy = new Unit(gameController, currHex, strength);
+        Unit copy = new Unit(gameController, currentHex, strength);
         copy.readyToMove = readyToMove;
         return copy;
     }
 
 
     public void marchToHex(Hex toWhere, Province province) {
-        if (toWhere == currHex) return;
-        ArrayList<Hex> moveZone = gameController.detectMoveZone(currHex, strength, GameRules.UNIT_MOVE_LIMIT);
+        if (toWhere == currentHex) return;
+        ArrayList<Hex> moveZone = gameController.detectMoveZone(currentHex, strength, GameRules.UNIT_MOVE_LIMIT);
         if (moveZone.size() == 0) return;
         double minDistance, currentDistance;
         minDistance = FieldController.distanceBetweenHexes(moveZone.get(0), toWhere);
         Hex closestHex = moveZone.get(0);
         for (Hex hex : moveZone) {
-            if (hex.sameColor(currHex) && hex.nothingBlocksWayForUnit()) {
+            if (hex.sameColor(currentHex) && hex.nothingBlocksWayForUnit()) {
                 currentDistance = FieldController.distanceBetweenHexes(toWhere, hex);
                 if (currentDistance < minDistance) {
                     minDistance = currentDistance;
@@ -132,7 +132,7 @@ public class Unit {
                 }
             }
         }
-        if (closestHex != null && closestHex != currHex) gameController.moveUnit(this, closestHex, province);
+        if (closestHex != null && closestHex != currentHex) gameController.moveUnit(this, closestHex, province);
     }
 
 

@@ -98,4 +98,9 @@ public abstract class ReactBehavior {
     public static final RbLanguageMenu rbLanguageMenu = new RbLanguageMenu();
     public static final RbSetLanguage rbSetLanguage = new RbSetLanguage();
     public static final RbEditorImportConfirmMenu rbEditorImportConfirmMenu = new RbEditorImportConfirmMenu();
+    public static final RbResetProgress rbResetProgress = new RbResetProgress();
+    public static final RbConfirmReset rbConfirmReset = new RbConfirmReset();
+    public static final RbForceEnableShroomArts rbForceEnableShroomArts = new RbForceEnableShroomArts();
+    public static final RbRefuseEarlyGameEnd rbRefuseEarlyGameEnd = new RbRefuseEarlyGameEnd();
+    public static final RbSwitchFilterOnlyLand rbSwitchFilterOnlyLand = new RbSwitchFilterOnlyLand();
 }

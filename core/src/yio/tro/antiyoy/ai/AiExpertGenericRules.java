@@ -42,7 +42,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
         } else { // nothing to attack
             boolean cleanedTrees = checkToCleanSomeTrees(unit, moveZone, province);
             if (!cleanedTrees) {
-                if (unit.currHex.isInPerimeter()) {
+                if (unit.currentHex.isInPerimeter()) {
                     pushUnitToBetterDefense(unit, province);
                 }
             }
@@ -65,8 +65,8 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
     protected boolean unitCanMoveSafely(Unit unit) {
         int leftBehindNumber = 0;
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = unit.currHex.adjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(unit.currHex) && !isHexDefendedBySomethingElse(adjHex, unit) && adjHex.isInPerimeter())
+            Hex adjHex = unit.currentHex.adjacentHex(i);
+            if (adjHex.active && adjHex.sameColor(unit.currentHex) && !isHexDefendedBySomethingElse(adjHex, unit) && adjHex.isInPerimeter())
                 leftBehindNumber++;
         }
         return leftBehindNumber <= 3;
@@ -132,9 +132,9 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
     void moveAfkUnit(Province province, Unit unit) {
         Hex hexToMove = findRandomHexInPerimeter(province);
         if (hexToMove == null) return;
-        tempHex.set(unit.currHex);
+        tempHex.set(unit.currentHex);
         unit.marchToHex(hexToMove, province);
-        if (tempHex.equals(unit.currHex)) super.moveAfkUnit(province, unit); // to prevent infinite loop
+        if (tempHex.equals(unit.currentHex)) super.moveAfkUnit(province, unit); // to prevent infinite loop
     }
 
 
@@ -153,14 +153,14 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
         for (int i = 1; i <= 4; i++) {
             if (!provinceHasEnoughIncomeForUnit(province, i)) break;
             boolean successfullyAttacked = false;
-            if (province.hasMoneyForUnit(i)) {
+            if (province.canBuildUnit(i)) {
                 successfullyAttacked = tryToAttackWithStrength(province, i);
             }
             if (successfullyAttacked) i = 0;
         }
 
         // this is to kick start province
-        if (province.hasMoneyForUnit(1) && howManyUnitsInProvince(province) <= 1)
+        if (province.canBuildUnit(1) && howManyUnitsInProvince(province) <= 1)
             tryToAttackWithStrength(province, 1);
     }
 

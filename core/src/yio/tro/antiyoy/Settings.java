@@ -24,6 +24,7 @@ public class Settings {
     private MenuControllerYio menuControllerYio;
     private GameView gameView;
     private GameController gameController;
+    public static int skinIndex;
 
 
     public static Settings getInstance() {
@@ -48,36 +49,35 @@ public class Settings {
 
         // sound
         int soundIndex = prefs.getInteger("sound", 0);
-        if (soundIndex == 0) Settings.SOUND = false;
-        else Settings.SOUND = true;
-        menuControllerYio.getCheckButtonById(5).setChecked(Settings.SOUND);
+        if (soundIndex == 0) SOUND = false;
+        else SOUND = true;
+        menuControllerYio.getCheckButtonById(5).setChecked(SOUND);
 
         // skin
-        int skin = prefs.getInteger("skin", 0);
-        gameView.loadSkin(skin);
-        float slSkinValue = (float) skin / 2f;
-        menuControllerYio.sliders.get(5).setRunnerValue(slSkinValue);
+        skinIndex = prefs.getInteger("skin", 0);
+        gameView.loadSkin(skinIndex);
+        menuControllerYio.sliders.get(5).setRunnerValueByIndex(skinIndex);
 
         // interface. Number of save slots
-        Settings.interface_type = prefs.getInteger("interface", 0);
-        menuControllerYio.getCheckButtonById(2).setChecked(Settings.interface_type == 1);
+        interface_type = prefs.getInteger("interface", 0);
+        menuControllerYio.getCheckButtonById(2).setChecked(interface_type == 1);
 
         // autosave
         int AS = prefs.getInteger("autosave", 0);
-        Settings.autosave = false;
-        if (AS == 1) Settings.autosave = true;
-        menuControllerYio.getCheckButtonById(1).setChecked(Settings.autosave);
+        autosave = false;
+        if (AS == 1) autosave = true;
+        menuControllerYio.getCheckButtonById(1).setChecked(autosave);
 
         // sensitivity
-        int sensitivity = prefs.getInteger("sensitivity", 6);
-        menuControllerYio.sliders.get(9).setRunnerValueByIndex(sensitivity);
-        Settings.sensitivity = Math.max(0.1f, menuControllerYio.sliders.get(9).runnerValue);
+        sensitivity = prefs.getInteger("sensitivity", 6);
+        menuControllerYio.sliders.get(9).setRunnerValueByIndex((int) sensitivity);
+        sensitivity = Math.max(0.1f, menuControllerYio.sliders.get(9).runnerValue);
 
         // ask to end turn
         int ATET = prefs.getInteger("ask_to_end_turn", 0);
-        Settings.ask_to_end_turn = (ATET == 1);
+        ask_to_end_turn = (ATET == 1);
 //        menuControllerYio.sliders.get(8).setRunnerValue(ATET);
-        menuControllerYio.getCheckButtonById(3).setChecked(Settings.ask_to_end_turn);
+        menuControllerYio.getCheckButtonById(3).setChecked(ask_to_end_turn);
 
         // show city names
         int cityNames = prefs.getInteger("city_names", 0);
@@ -90,22 +90,22 @@ public class Settings {
         menuControllerYio.sliders.get(6).setRunnerValueByIndex(camOffsetIndex);
 
         // turns limit
-        Settings.turns_limit = prefs.getBoolean("turns_limit", true);
-        menuControllerYio.getCheckButtonById(6).setChecked(Settings.turns_limit);
+        turns_limit = prefs.getBoolean("turns_limit", true);
+        menuControllerYio.getCheckButtonById(6).setChecked(turns_limit);
 
         // long tap to move
-        Settings.long_tap_to_move = prefs.getBoolean("long_tap_to_move", true);
+        long_tap_to_move = prefs.getBoolean("long_tap_to_move", true);
         CheckButtonYio checkButtonById = menuControllerYio.getCheckButtonById(7);
         if (checkButtonById != null) {
-            checkButtonById.setChecked(Settings.long_tap_to_move);
+            checkButtonById.setChecked(long_tap_to_move);
         }
 
         // water texture
-        Settings.waterTexture = prefs.getBoolean("water_texture", false);
+        waterTexture = prefs.getBoolean("water_texture", false);
         gameView.loadBackgroundTexture();
         CheckButtonYio chkWaterTexture = menuControllerYio.getCheckButtonById(10);
         if (chkWaterTexture != null) {
-            chkWaterTexture.setChecked(Settings.waterTexture);
+            chkWaterTexture.setChecked(waterTexture);
         }
 
         menuControllerYio.sliders.get(5).updateValueString();
@@ -114,10 +114,12 @@ public class Settings {
     }
 
 
-    public void saveSettings() {
+    public boolean saveSettings() {
         Preferences prefs = Gdx.app.getPreferences("settings");
+        boolean needToRestart = false;
+
         prefs.putInteger("sound", boolToInteger(menuControllerYio.getCheckButtonById(5).isChecked()));
-        prefs.putInteger("skin", menuControllerYio.sliders.get(5).getCurrentRunnerIndex());
+        saveSkin(prefs);
         prefs.putInteger("interface", boolToInteger(menuControllerYio.getCheckButtonById(2).isChecked())); // slot number
         prefs.putInteger("autosave", boolToInteger(menuControllerYio.getCheckButtonById(1).isChecked()));
         prefs.putInteger("ask_to_end_turn", boolToInteger(menuControllerYio.getCheckButtonById(3).isChecked()));
@@ -126,11 +128,36 @@ public class Settings {
         prefs.putInteger("camera_offset", menuControllerYio.sliders.get(6).getCurrentRunnerIndex());
         prefs.putBoolean("turns_limit", menuControllerYio.getCheckButtonById(6).isChecked());
         prefs.putBoolean("long_tap_to_move", menuControllerYio.getCheckButtonById(7).isChecked());
+        saveWaterTexture(prefs);
+
+        prefs.flush();
+        return needToRestart;
+    }
+
+
+    private void saveWaterTexture(Preferences prefs) {
         CheckButtonYio chkWaterTexture = menuControllerYio.getCheckButtonById(10);
         if (chkWaterTexture != null) {
             prefs.putBoolean("water_texture", chkWaterTexture.isChecked());
         }
-        prefs.flush();
+    }
+
+
+    private boolean saveSkin(Preferences prefs) {
+        int lastIndex = skinIndex;
+        skinIndex = menuControllerYio.sliders.get(5).getCurrentRunnerIndex();
+        prefs.putInteger("skin", skinIndex);
+
+        // shroom arts
+        if (lastIndex != skinIndex && (lastIndex == 3 || skinIndex == 3)) {
+            return true; // restart app
+        }
+        return false;
+    }
+
+
+    public static boolean isShroomArtsEnabled() {
+        return skinIndex == 3;
     }
 
 

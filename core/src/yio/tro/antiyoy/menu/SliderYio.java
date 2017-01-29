@@ -160,6 +160,11 @@ public class SliderYio {
     }
 
 
+    public float getRunnerValue() {
+        return runnerValue;
+    }
+
+
     public void setRunnerValueByIndex(int index) {
         setRunnerValue((float)index / numberOfSegments);
         updateValueString();
@@ -336,6 +341,9 @@ public class SliderYio {
                 break;
             case 2:
                 valueString = languagesManager.getString("grid");
+                break;
+            case 3:
+                valueString = languagesManager.getString("skin_shroomarts");
                 break;
         }
     }

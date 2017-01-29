@@ -52,7 +52,7 @@ public class CameraController {
 
 
     public void move() {
-        if (GameRules.inEditorMode && !gameController.getLevelEditor().isCameraMovementAllowed()) return;
+//        if (GameRules.inEditorMode && !gameController.getLevelEditor().isCameraMovementAllowed()) return;
 
         float k = Settings.sensitivity * deltaMovementFactor * 0.025f;
         gameController.yioGdxGame.gameView.orthoCam.translate(k * camDx, k * camDy);
@@ -232,10 +232,7 @@ public class CameraController {
         }
         if (currentTouchCount == 0) {
             if (touchedAsClick()) {
-                gameController.selectionController.updateFocusedHex();
-                if (gameController.fieldController.focusedHex != null && gameController.isPlayerTurn()) {
-                    gameController.focusedHexActions(gameController.fieldController.focusedHex);
-                }
+                gameController.onClick();
             }
             multiTouchDetected = false;
         }
@@ -244,7 +241,7 @@ public class CameraController {
 
 
     public boolean touchedAsClick() {
-        return  !multiTouchDetected &&
+        return !multiTouchDetected &&
                 Yio.distance(gameController.screenX, gameController.screenY, touchDownX, touchDownY) < 0.03 * GraphicsYio.width &&
                 Math.abs(camDx) < 0.01 * GraphicsYio.width &&
                 Math.abs(camDy) < 0.01 * GraphicsYio.width;
@@ -259,6 +256,7 @@ public class CameraController {
             camDZoom = lastMultiTouchDistance / currentMultiTouchDistance - 1;
             if (camDZoom < 0) camDZoom *= 0.3;
         } else {
+            if (GameRules.inEditorMode && !gameController.getLevelEditor().isCameraMovementAllowed()) return;
             float currX, currY;
             currX = (gameController.screenX - screenX) * trackerZoom;
             currY = (gameController.screenY - screenY) * trackerZoom;

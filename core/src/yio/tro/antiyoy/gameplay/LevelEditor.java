@@ -5,8 +5,10 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Clipboard;
 import yio.tro.antiyoy.LanguagesManager;
 import yio.tro.antiyoy.ai.ArtificialIntelligence;
+import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 
+import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.StringTokenizer;
 
@@ -15,9 +17,11 @@ import java.util.StringTokenizer;
  */
 public class LevelEditor {
 
+    public static final String EDITOR_PREFS = "editor";
+    public static final String SLOT_NAME = "slot";
     private final GameController gameController;
     private int inputMode, inputColor, inputObject;
-    private boolean randomColor;
+    private boolean randomColor, filteredByOnlyLand;
     public static final int MODE_MOVE = 0;
     public static final int MODE_SET_HEX = 1;
     public static final int MODE_SET_OBJECT = 2;
@@ -25,10 +29,15 @@ public class LevelEditor {
     private int scrX, scrY;
     private long lastTimeTouched;
     private int currentSlotNumber;
+    private ArrayList<Hex> tempList;
+    private GameSaver gameSaver;
 
 
     public LevelEditor(GameController gameController) {
         this.gameController = gameController;
+        filteredByOnlyLand = false;
+        tempList = new ArrayList<>();
+        gameSaver = new GameSaver(gameController);
     }
 
 
@@ -62,33 +71,68 @@ public class LevelEditor {
     private void inputModeSetObjectActions(Hex focusedHex) {
         if (!focusedHex.active) return;
 
-        if (!focusedHex.containsUnit()) {
-            gameController.cleanOutHex(focusedHex);
+        int unitStrength = 0;
+        if (focusedHex.containsUnit()) {
+            unitStrength = focusedHex.unit.strength;
         }
+        gameController.cleanOutHex(focusedHex);
 
         if (inputObject == 0) { // delete object
             focusedHex.setObjectInside(0);
             gameController.addAnimHex(focusedHex);
         } else if (inputObject < 5) { // objects
             gameController.addSolidObject(focusedHex, inputObject);
+            checkToTurnIntoFarm(focusedHex);
             gameController.addAnimHex(focusedHex);
         } else { // units
-            tryToAddUnitToFocusedHex(focusedHex);
+            tryToAddUnitToFocusedHex(focusedHex, unitStrength);
         }
     }
 
 
-    private void tryToAddUnitToFocusedHex(Hex focusedHex) {
-        if (focusedHex.containsUnit()) {
-            int str = focusedHex.unit.strength + inputObject - 4;
-            while (str > 4) {
-                str -= 4;
+    private void checkToTurnIntoFarm(Hex srcHex) {
+        if (inputObject != Hex.OBJECT_TOWN) return;
+
+        ArrayList<Hex> province = detectProvince(srcHex);
+        for (Hex hex : province) {
+            if (hex.objectInside == Hex.OBJECT_TOWN && hex != srcHex) {
+                srcHex.objectInside = Hex.OBJECT_FARM;
+                return;
             }
-            focusedHex.unit.strength = str;
-        } else {
-            gameController.addUnit(focusedHex, inputObject - 4);
-            focusedHex.unit.stopJumping();
         }
+    }
+
+
+    private ArrayList<Hex> detectProvince(Hex start) {
+        ArrayList<Hex> province = new ArrayList<>();
+        tempList.clear();
+        tempList.add(start);
+        province.add(start);
+
+        while (tempList.size() > 0) {
+            Hex hex = tempList.get(0);
+            tempList.remove(0);
+            for (int i = 0; i < 6; i++) {
+                Hex adjacentHex = hex.adjacentHex(i);
+                if (adjacentHex.active && adjacentHex.sameColor(hex) && !province.contains(adjacentHex)) {
+                    tempList.add(adjacentHex);
+                    province.add(adjacentHex);
+                }
+            }
+        }
+
+        return province;
+    }
+
+
+    private void tryToAddUnitToFocusedHex(Hex focusedHex, int unitStrength) {
+        int defStr = inputObject - 4;
+        int str = unitStrength + defStr;
+        while (str > 4) {
+            str -= 4;
+        }
+        gameController.addUnit(focusedHex, str);
+        focusedHex.unit.stopJumping();
     }
 
 
@@ -130,64 +174,22 @@ public class LevelEditor {
 
     public void saveSlot() {
         String fullLevel = getFullLevelString();
-        Preferences prefs = Gdx.app.getPreferences("editor");
-        prefs.putString("slot" + currentSlotNumber, fullLevel);
+        Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
+        prefs.putString(SLOT_NAME + currentSlotNumber, fullLevel);
         prefs.flush();
     }
 
 
-    private void recreateLevelFromString(String fullLevel, boolean editorMode) {
-        GameRules.inEditorMode = editorMode;
-        String basicInfo, activeHexes;
-        int delimiterChar = fullLevel.indexOf("/");
-        if (delimiterChar < 0) { // empty slot
-            GameRules.setColorNumber(0); // to notify yio gdx game
-            gameController.yioGdxGame.startInEditorMode();
-            return;
-        }
-        basicInfo = fullLevel.substring(0, delimiterChar);
-        activeHexes = fullLevel.substring(delimiterChar + 1, fullLevel.length());
-        int basicInfoValues[] = new int[4];
-        StringTokenizer stringTokenizer = new StringTokenizer(basicInfo, " ");
-        int i = 0;
-        while (stringTokenizer.hasMoreTokens()) {
-            String token = stringTokenizer.nextToken();
-            basicInfoValues[i] = Integer.valueOf(token);
-            i++;
-        }
-
-        GameSaver gameSaver = gameController.gameSaver;
-        gameSaver.setActiveHexesString(activeHexes);
-        gameSaver.beginRecreation();
-        gameSaver.setBasicInfo(0, basicInfoValues[2], basicInfoValues[3], basicInfoValues[1], basicInfoValues[0]);
-        gameController.colorIndexViewOffset = 0;
-        detectRules();
-        gameSaver.endRecreation();
-
-        if (editorMode) {
-            for (Unit unit : gameController.unitList) {
-                unit.stopJumping();
-            }
-        }
-    }
-
-
-    private void detectRules() {
-        GameRules.slay_rules = true;
-        for (Hex activeHex : gameController.fieldController.activeHexes) {
-            if (activeHex.colorIndex == gameController.fieldController.neutralLandsIndex) {
-                GameRules.slay_rules = false;
-                System.out.println("detected generic rules");
-                return;
-            }
-        }
-    }
-
-
     public void loadSlot() {
-        Preferences prefs = Gdx.app.getPreferences("editor");
-        String fullLevel = prefs.getString("slot" + currentSlotNumber, "");
-        recreateLevelFromString(fullLevel, true);
+        Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
+        String fullLevel = prefs.getString(SLOT_NAME + currentSlotNumber, "");
+        gameSaver.recreateLevelFromString(fullLevel, true);
+        defaultValues();
+    }
+
+
+    private void defaultValues() {
+        inputMode = MODE_MOVE;
     }
 
 
@@ -225,7 +227,7 @@ public class LevelEditor {
 //        }
 
         if (isValidLevelString(fromClipboard)) {
-            recreateLevelFromString(fromClipboard, true);
+            gameSaver.recreateLevelFromString(fromClipboard, true);
         }
     }
 
@@ -234,8 +236,8 @@ public class LevelEditor {
         // this was not working properly
 //        String fullLevel = getFullLevelString();
 
-        Preferences prefs = Gdx.app.getPreferences("editor");
-        String fullLevel = prefs.getString("slot" + currentSlotNumber, "");
+        Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
+        String fullLevel = prefs.getString(SLOT_NAME + currentSlotNumber, "");
         System.out.println("fullLevel = " + fullLevel);
         Clipboard clipboard = Gdx.app.getClipboard();
         clipboard.setContents(fullLevel);
@@ -270,9 +272,9 @@ public class LevelEditor {
 
 
     public void playLevel() {
-        Preferences prefs = Gdx.app.getPreferences("editor");
-        String fullLevel = prefs.getString("slot" + currentSlotNumber, "");
-        recreateLevelFromString(fullLevel, false);
+        Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
+        String fullLevel = prefs.getString(SLOT_NAME + currentSlotNumber, "");
+        gameSaver.recreateLevelFromString(fullLevel, false);
     }
 
 
@@ -290,6 +292,7 @@ public class LevelEditor {
         if (focusedHex.active) {
             gameController.fieldController.setHexColor(focusedHex, inputColor);
         } else {
+            if (filteredByOnlyLand) return;
             activateHex(focusedHex, inputColor);
         }
     }
@@ -384,6 +387,8 @@ public class LevelEditor {
                 return getLangManager().getString("hard");
             case ArtificialIntelligence.DIFFICULTY_EXPERT:
                 return getLangManager().getString("expert");
+            case ArtificialIntelligence.DIFFICULTY_BALANCER:
+                return getLangManager().getString("balancer");
         }
     }
 
@@ -394,7 +399,7 @@ public class LevelEditor {
 
 
     public void randomize() {
-        detectRules();
+        gameSaver.detectRules();
         GameRules.colorNumber = countUpColorNumber();
         gameController.fieldController.clearField();
         gameController.fieldController.createFieldMatrix();
@@ -422,6 +427,30 @@ public class LevelEditor {
     }
 
 
+    public void switchFilterOnlyLand() {
+        setFilteredByOnlyLand(!filteredByOnlyLand);
+    }
+
+
+    private void updateTextOnFilterOnlyLandButton(ButtonYio filterButton) {
+        if (filteredByOnlyLand) {
+            filterButton.setTextLine(getLangManager().getString("filter_only_land"));
+        } else {
+            filterButton.setTextLine(getLangManager().getString("filter_no"));
+        }
+    }
+
+
+    public void updateFilterOnlyLandButton() {
+        MenuControllerYio menuControllerYio = gameController.yioGdxGame.menuControllerYio;
+        ButtonYio filterButton = menuControllerYio.getButtonById(12353);
+        if (filterButton == null) return;
+
+        updateTextOnFilterOnlyLandButton(filterButton);
+        menuControllerYio.buttonRenderer.renderButton(filterButton);
+    }
+
+
     public void setInputObject(int inputObject) {
         this.inputObject = inputObject;
     }
@@ -434,5 +463,17 @@ public class LevelEditor {
 
     public void setCurrentSlotNumber(int currentSlotNumber) {
         this.currentSlotNumber = currentSlotNumber;
+    }
+
+
+    public boolean isFilteredByOnlyLand() {
+        return filteredByOnlyLand;
+    }
+
+
+    public void setFilteredByOnlyLand(boolean filteredByOnlyLand) {
+        this.filteredByOnlyLand = filteredByOnlyLand;
+
+        updateFilterOnlyLandButton();
     }
 }

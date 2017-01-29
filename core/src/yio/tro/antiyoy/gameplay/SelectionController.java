@@ -61,7 +61,7 @@ public class SelectionController {
 
 
     public void awakeTip(int type) {
-        tipFactor.setValues(0, 0);
+        tipFactor.setValues(0.01, 0); // should be 0.01 to avoid blinking
         tipFactor.beginSpawning(3, 2);
         tipType = type;
         tipShowType = type;
@@ -167,7 +167,7 @@ public class SelectionController {
         // building stuff
         if (tipFactor.get() > 0 && tipFactor.getDy() >= 0) {
             // build peacefully inside province
-            if (focusedHex.selected && !focusedHex.containsBuilding()) {
+            if (canBuildOnHex(focusedHex, tipType)) {
                 if (tipType == 0) {
                     // build tower
                     if (!focusedHex.containsTree() && !focusedHex.containsUnit()) {
@@ -191,7 +191,7 @@ public class SelectionController {
                 gameController.fieldController.setResponseAnimHex(focusedHex);
                 SoundControllerYio.playSound(SoundControllerYio.soundBuild);
                 // else attack by building unit
-            } else if (focusedHex.isInMoveZone() && focusedHex.colorIndex != gameController.getTurn() && tipType > 0 && gameController.fieldController.selectedProvince.hasMoneyForUnit(tipType)) {
+            } else if (focusedHex.isInMoveZone() && focusedHex.colorIndex != gameController.getTurn() && tipType > 0 && gameController.fieldController.selectedProvince.canBuildUnit(tipType)) {
                 gameController.fieldController.buildUnit(gameController.fieldController.selectedProvince, focusedHex, tipType);
                 gameController.fieldController.selectedProvince = gameController.fieldController.getProvinceByHex(focusedHex); // when uniting provinces, selected province object may change
                 gameController.fieldController.selectAdjacentHexes(focusedHex);
@@ -235,7 +235,7 @@ public class SelectionController {
                 if (focusedHex.containsUnit() && focusedHex.unit.isReadyToMove() && focusedHex.unit.moveFactor.get() == 1) {
                     selectedUnit = focusedHex.unit;
                     SoundControllerYio.playSound(SoundControllerYio.soundSelectUnit);
-                    gameController.fieldController.detectAndShowMoveZone(selectedUnit.currHex, selectedUnit.strength, GameRules.UNIT_MOVE_LIMIT);
+                    gameController.fieldController.detectAndShowMoveZone(selectedUnit.currentHex, selectedUnit.strength, GameRules.UNIT_MOVE_LIMIT);
                     selUnitFactor.setValues(0, 0);
                     selUnitFactor.beginSpawning(3, 2);
                     hideTip();
@@ -252,8 +252,12 @@ public class SelectionController {
     }
 
 
-    public void updateFocusedHex() {
-        gameController.fieldController.updateFocusedHex();
+    private boolean canBuildOnHex(Hex focusedHex, int tipType) {
+        if (tipType == 6) { // strong tower
+            return focusedHex.selected && (!focusedHex.containsBuilding() || focusedHex.objectInside == Hex.OBJECT_TOWER);
+        }
+
+        return focusedHex.selected && !focusedHex.containsBuilding();
     }
 
 

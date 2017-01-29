@@ -16,6 +16,9 @@ import java.util.ArrayList;
  * Created by ivan on 22.07.14.
  */
 public class ButtonYio {
+
+    public static final int ACTION_DELAY = 50;
+    public static final int DEFAULT_TOUCH_DELAY = 1000;
     public final MenuControllerYio menuControllerYio;
     public RectangleYio position, animPos;
     public TextureRegion textureRegion;
@@ -51,7 +54,8 @@ public class ButtonYio {
         this.id = id;
         touchable = false;
         visible = false;
-        touchDelay = 1000;
+        touchDelay = DEFAULT_TOUCH_DELAY;
+        timeToPerformAction = 0;
         factorModel = new FactorYio();
         selectionFactor = new FactorYio();
         selAlphaFactor = new FactorYio();
@@ -207,7 +211,7 @@ public class ButtonYio {
 //        if (touchAnimation) lockAction = true;
         lockAction = true;
         menuControllerYio.yioGdxGame.render();
-        if (reactBehavior != null) {
+        if (reactBehavior != null && System.currentTimeMillis() - timeToPerformAction > ACTION_DELAY) {
             needToPerformAction = true;
             timeToPerformAction = System.currentTimeMillis() + 100;
         }
@@ -232,6 +236,11 @@ public class ButtonYio {
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         textureRegion = new TextureRegion(texture);
         hasShadow = false;
+    }
+
+
+    public void resetTexture() {
+        textureRegion = null;
     }
 
 

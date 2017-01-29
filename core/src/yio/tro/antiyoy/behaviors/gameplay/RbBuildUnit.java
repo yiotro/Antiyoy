@@ -15,6 +15,7 @@ public class RbBuildUnit extends ReactBehavior {
             YioGdxGame.say("detected strange bug in RbBuildUnit");
             return;
         }
+
         int t = getGameController(buttonYio).selectionController.getTipType();
         if (t < 0) t = 0;
         t += 1;

@@ -36,7 +36,7 @@ public class LevelSelector extends InterfaceElement {
     public LevelSelector(MenuControllerYio menuControllerYio, int id) {
         super(id);
         this.menuControllerYio = menuControllerYio;
-        levelNumber = YioGdxGame.INDEX_OF_LAST_LEVEL;
+        levelNumber = CampaignController.INDEX_OF_LAST_LEVEL;
         this.w = menuControllerYio.yioGdxGame.w;
         this.h = menuControllerYio.yioGdxGame.h;
         appearFactor = new FactorYio();
@@ -96,7 +96,7 @@ public class LevelSelector extends InterfaceElement {
         for (int i = 0; i < rowSize; i++) {
             for (int j = 0; j < columnSize; j++) {
                 int levelNumber = getLevelNumber(i, j, panelIndex);
-                if (levelNumber > YioGdxGame.INDEX_OF_LAST_LEVEL) continue;
+                if (levelNumber > CampaignController.INDEX_OF_LAST_LEVEL) continue;
                 TextureRegion icon;
                 if (menuControllerYio.yioGdxGame.isLevelLocked(levelNumber)) {
                     int difficulty = CampaignLevelFactory.getDifficultyByIndex(levelNumber);
@@ -296,7 +296,7 @@ public class LevelSelector extends InterfaceElement {
         float internalY = screenY - ((float)pos[panelIndex].y + verOffset);
         int selX = (int) (internalX / (2 * iconRadius));
         int selY = (int) (internalY / (2 * iconRadius));
-        if (getLevelNumber(selX, selY, panelIndex) > YioGdxGame.INDEX_OF_LAST_LEVEL) return false;
+        if (getLevelNumber(selX, selY, panelIndex) > CampaignController.INDEX_OF_LAST_LEVEL) return false;
         if (selX >= 0 && selX < rowSize && selY >= 0 && selY < columnSize) {
             selIndexX = selX;
             selIndexY = selY;

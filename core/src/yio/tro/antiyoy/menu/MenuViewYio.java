@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * Created by ivan on 22.07.14.
  */
 public class MenuViewYio {
+
     public final YioGdxGame yioGdxGame;
     private final MenuControllerYio menuControllerYio;
     TextureRegion buttonPixel, shadowCorner, shadowSide, blackCircle, scrollerCircle, grayTransCircle;

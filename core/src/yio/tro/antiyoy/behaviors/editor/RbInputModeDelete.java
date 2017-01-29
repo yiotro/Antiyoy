@@ -12,5 +12,6 @@ public class RbInputModeDelete extends ReactBehavior {
     @Override
     public void reactAction(ButtonYio buttonYio) {
         getGameController(buttonYio).getLevelEditor().setInputMode(LevelEditor.MODE_DELETE);
+        buttonYio.menuControllerYio.hideEditorHexPanel();
     }
 }

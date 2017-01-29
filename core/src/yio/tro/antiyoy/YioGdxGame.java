@@ -29,7 +29,6 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     private MenuViewYio menuViewYio;
     private static GlyphLayout glyphLayout = new GlyphLayout();
     public static boolean ANDROID = false;
-    public static final int INDEX_OF_LAST_LEVEL = 70; // with tutorial
     TextureRegion mainBackground, infoBackground, settingsBackground, pauseBackground;
     TextureRegion currentBackground;
     TextureRegion lastBackground;
@@ -130,8 +129,8 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
         Preferences preferences = Gdx.app.getPreferences("main");
         selectedLevelIndex = preferences.getInteger("progress", 1); // 1 - default value;
-        if (selectedLevelIndex > INDEX_OF_LAST_LEVEL) { // completed campaign
-            selectedLevelIndex = INDEX_OF_LAST_LEVEL;
+        if (selectedLevelIndex > CampaignController.INDEX_OF_LAST_LEVEL) { // completed campaign
+            selectedLevelIndex = CampaignController.INDEX_OF_LAST_LEVEL;
         }
         menuControllerYio = new MenuControllerYio(this);
         menuViewYio = new MenuViewYio(this);
@@ -164,7 +163,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             menuControllerYio.loadMoreSkirmishOptions();
             Preferences tempPrefs = Gdx.app.getPreferences("settings");
             slay_rules = tempPrefs.getBoolean("slay_rules", false);
-            menuControllerYio.getCheckButtonById(6).setChecked(slay_rules);
+            menuControllerYio.getCheckButtonById(16).setChecked(slay_rules);
             menuControllerYio.saveMoreSkirmishOptions();
             menuControllerYio.saveMoreCampaignOptions();
             prefs.putBoolean("check_slay_rules", true);
@@ -392,7 +391,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
     private void renderInternals() {
         currentFrameCount++;
-        if (Debug.showFpsInfo && System.currentTimeMillis() > timeToUpdateFpsInfo) {
+        if (DebugFlags.showFpsInfo && System.currentTimeMillis() > timeToUpdateFpsInfo) {
             timeToUpdateFpsInfo = System.currentTimeMillis() + 1000;
             fps = currentFrameCount;
             currentFrameCount = 0;
@@ -412,7 +411,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         } else {
             menuViewYio.render(true, true);
         }
-        if (Debug.showFpsInfo) {
+        if (DebugFlags.showFpsInfo) {
             batch.begin();
             Fonts.gameFont.draw(batch, "" + fps, 0.2f * w, Gdx.graphics.getHeight() - 10);
             batch.end();
@@ -612,7 +611,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
     public void startGame(int index, boolean generateMap, boolean readParametersFromSliders) {
 //        if (selectedLevelIndex > gameController.progress) return;
-        if (selectedLevelIndex < 0 || selectedLevelIndex > INDEX_OF_LAST_LEVEL) return;
+        if (selectedLevelIndex < 0 || selectedLevelIndex > CampaignController.INDEX_OF_LAST_LEVEL) return;
         gameController.prepareForNewGame(index, generateMap, readParametersFromSliders);
         gameView.beginSpawnProcess();
         menuControllerYio.createGameOverlay();
@@ -643,7 +642,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
 
     public void setSelectedLevelIndex(int selectedLevelIndex) {
-        if (selectedLevelIndex >= 0 && selectedLevelIndex <= INDEX_OF_LAST_LEVEL)
+        if (selectedLevelIndex >= 0 && selectedLevelIndex <= CampaignController.INDEX_OF_LAST_LEVEL)
             this.selectedLevelIndex = selectedLevelIndex;
     }
 
@@ -687,7 +686,8 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         }
         if (keycode == Input.Keys.SPACE) {
             if (!gamePaused) {
-                menuControllerYio.getButtonById(31).press();
+                menuControllerYio.getButtonById(31).press(); // end turn
+                pressButtonIfVisible(53); // close tip
             }
         }
         if (keycode == Input.Keys.NUM_1) {

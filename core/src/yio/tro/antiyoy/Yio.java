@@ -62,6 +62,15 @@ public class Yio {
     }
 
 
+    public static void printStackTrace() {
+        try {
+            throw new Exception();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public static ArrayList<String> decodeStringToArrayList(String string, String delimiters) {
         ArrayList<String> res = new ArrayList<String>();
         StringTokenizer tokenizer = new StringTokenizer(string, delimiters);

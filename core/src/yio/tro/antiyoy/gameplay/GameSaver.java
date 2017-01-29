@@ -300,9 +300,70 @@ public class GameSaver {
         prefs = Gdx.app.getPreferences(prefsName);
         activeHexesString = prefs.getString("save_active_hexes", "");
         if (activeHexesString.length() < 3) return;
-        beginRecreation();
-        loadBasicInfo();
+        loadBasicInfo(); // it's here twice for a reason
+        beginRecreation(false);
+        loadBasicInfo(); // it's here twice for a reason
         loadStatistics();
         endRecreation();
+    }
+
+
+    public void recreateLevelFromString(String fullLevel, boolean editorMode) {
+        GameRules.inEditorMode = editorMode;
+        String basicInfo, activeHexes;
+        int delimiterChar = fullLevel.indexOf("/");
+        if (delimiterChar < 0) { // empty slot
+            GameRules.setColorNumber(0); // to notify yio gdx game
+            gameController.yioGdxGame.startInEditorMode();
+            return;
+        }
+        basicInfo = fullLevel.substring(0, delimiterChar);
+        activeHexes = fullLevel.substring(delimiterChar + 1, fullLevel.length());
+        int basicInfoValues[] = new int[4];
+        StringTokenizer stringTokenizer = new StringTokenizer(basicInfo, " ");
+        int i = 0;
+        while (stringTokenizer.hasMoreTokens()) {
+            String token = stringTokenizer.nextToken();
+            basicInfoValues[i] = Integer.valueOf(token);
+            i++;
+        }
+
+        setActiveHexesString(activeHexes);
+
+        // this is special hack. Rules have to be detected before recreating map (detect provinces)
+        createHexStrings();
+        GameRules.slay_rules = true;
+        for (String hexString : hexStrings) {
+            int[] hexSnapshotByString = getHexSnapshotByString(hexString);
+            int color = hexSnapshotByString[2];
+            if (color == FieldController.NEUTRAL_LANDS_DEFAULT_INDEX) {
+                GameRules.slay_rules = false;
+                break;
+            }
+        }
+
+        setBasicInfo(0, basicInfoValues[2], basicInfoValues[3], basicInfoValues[1], basicInfoValues[0]);
+        beginRecreation(false);
+        gameController.colorIndexViewOffset = 0;
+        detectRules();
+        endRecreation();
+
+        if (editorMode) {
+            for (Unit unit : gameController.unitList) {
+                unit.stopJumping();
+            }
+        }
+    }
+
+
+    public void detectRules() {
+        GameRules.slay_rules = true;
+        for (Hex activeHex : gameController.fieldController.activeHexes) {
+            if (activeHex.colorIndex == gameController.fieldController.neutralLandsIndex) {
+                GameRules.slay_rules = false;
+                System.out.println("detected generic rules");
+                return;
+            }
+        }
     }
 }

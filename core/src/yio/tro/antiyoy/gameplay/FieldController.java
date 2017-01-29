@@ -1,15 +1,18 @@
 package yio.tro.antiyoy.gameplay;
 
+import android.util.Log;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.menu.MenuControllerYio;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
 
 public class FieldController {
 
+    public static final int NEUTRAL_LANDS_DEFAULT_INDEX = 7;
     public final GameController gameController;
     public static final int SIZE_SMALL = 1;
     public static final int SIZE_MEDIUM = 2;
@@ -87,7 +90,7 @@ public class FieldController {
     public void defaultValues() {
         selectedProvince = null;
         moveZoneFactor.setValues(0, 0);
-        neutralLandsIndex = 7;
+        neutralLandsIndex = NEUTRAL_LANDS_DEFAULT_INDEX;
     }
 
 
@@ -148,11 +151,33 @@ public class FieldController {
 
 
     public void killEveryoneInProvince(Province province) {
+        checkToDemoteStrongTower(province);
         for (Hex hex : province.hexList) {
             if (hex.containsUnit()) {
                 killUnitOnHex(hex);
             }
         }
+    }
+
+
+    private void checkToDemoteStrongTower(Province province) {
+        Hex strongTowerHex = province.getStrongTower();
+        if (strongTowerHex == null) return;
+        strongTowerHex.objectInside = Hex.OBJECT_TOWER;
+        checkForOneTimeInfoAboutStrongTowerDemote();
+    }
+
+
+    private void checkForOneTimeInfoAboutStrongTowerDemote() {
+        if (gameController.playersNumber == 0) return;
+        OneTimeInfo oneTimeInfo = OneTimeInfo.getInstance();
+        if (oneTimeInfo.aboutStrongTowerDemote) return;
+
+        MenuControllerYio menuControllerYio = gameController.yioGdxGame.menuControllerYio;
+        ArrayList<String> text = menuControllerYio.getArrayListFromString(LanguagesManager.getInstance().getString("one_time_strong_tower_demote"));
+        menuControllerYio.createTutorialTipWithFixedHeight(text, 8);
+        oneTimeInfo.aboutStrongTowerDemote = true;
+        oneTimeInfo.save();
     }
 
 
@@ -203,13 +228,29 @@ public class FieldController {
     }
 
 
+    private boolean checkRefuseStatistics() {
+        RefuseStatistics instance = RefuseStatistics.getInstance();
+
+        int sum = instance.refusedEarlyGameEnd + instance.acceptedEarlyGameEnd;
+        if (sum < 5) return true;
+
+        double ratio = (double) instance.acceptedEarlyGameEnd / (double) sum;
+
+        if (ratio < 0.1) return false;
+
+        return true;
+    }
+
+
     public int possibleWinner() {
+        if (!checkRefuseStatistics()) return -1;
+
         int numberOfAllHexes = activeHexes.size();
-        for (Province province : provinces) {
-            if (province.hexList.size() > 0.52 * numberOfAllHexes) {
-                return province.getColor();
-            }
-        }
+//        for (Province province : provinces) {
+//            if (province.hexList.size() > 0.52 * numberOfAllHexes) {
+//                return province.getColor();
+//            }
+//        }
 
         int playerHexCount[] = getPlayerHexCount();
         for (int i = 0; i < playerHexCount.length; i++) {
@@ -497,7 +538,7 @@ public class FieldController {
             hex.select();
             if (!selectedHexes.contains(hex)) listIterator.add(hex);
         }
-        gameController.getYioGdxGame().menuControllerYio.revealBuildButtons();
+        gameController.getYioGdxGame().menuControllerYio.showBuildButtons();
         gameController.updateBalanceString();
 //        ArrayList<Hex> tempList = new ArrayList<Hex>();
 //        Hex tempHex;
@@ -617,7 +658,7 @@ public class FieldController {
 
     public boolean buildUnit(Province province, Hex hex, int strength) {
         if (province == null || hex == null) return false;
-        if (province.hasMoneyForUnit(strength)) {
+        if (province.canBuildUnit(strength)) {
             // check if can build unit
             if (hex.sameColor(province) && hex.containsUnit() && !gameController.canMergeUnits(strength, hex.unit.strength))
                 return false;

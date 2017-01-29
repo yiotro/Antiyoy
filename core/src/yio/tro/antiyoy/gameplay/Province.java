@@ -2,7 +2,9 @@ package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.Fonts;
 import yio.tro.antiyoy.LanguagesManager;
+import yio.tro.antiyoy.OneTimeInfo;
 import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.menu.MenuControllerYio;
 
 import java.util.*;
 
@@ -66,7 +68,7 @@ public class Province {
 
     void placeCapitalInRandomPlace(Random random) {
         Hex randomPlace = getFreeHex(random);
-        if (randomPlace == null) randomPlace = getPlaceToBuildUnit();
+        if (randomPlace == null) randomPlace = getAnyHexExceptTowers();
         if (randomPlace == null) randomPlace = getRandomHex();
         gameController.cleanOutHex(randomPlace);
         gameController.addSolidObject(randomPlace, Hex.OBJECT_TOWN);
@@ -87,6 +89,16 @@ public class Province {
     }
 
 
+    public Hex getStrongTower() {
+        for (Hex hex : hexList) {
+            if (hex.objectInside == Hex.OBJECT_STRONG_TOWER) {
+                return hex;
+            }
+        }
+        return null;
+    }
+
+
     public Hex getCapital() {
         for (Hex hex : hexList)
             if (hex.objectInside == Hex.OBJECT_TOWN)
@@ -100,11 +112,13 @@ public class Province {
     }
 
 
-    private Hex getPlaceToBuildUnit() {
+    private Hex getAnyHexExceptTowers() {
         tempList.clear();
-        for (Hex hex : hexList)
-            if (hex.isFree() || hex.containsTree())
+        for (Hex hex : hexList) {
+            if (!hex.containsTower()) {
                 tempList.add(hex);
+            }
+        }
         if (tempList.size() == 0) return null;
         return tempList.get(YioGdxGame.random.nextInt(tempList.size()));
     }
@@ -139,7 +153,9 @@ public class Province {
         int income = 0;
         for (Hex hex : hexList) {
             if (!hex.containsTree()) income++;
-            if (!GameRules.slay_rules && hex.objectInside == Hex.OBJECT_FARM) income += 4;
+            if (!GameRules.slay_rules && hex.objectInside == Hex.OBJECT_FARM) {
+                income += GameRules.FARM_INCOME;
+            }
         }
         return income;
     }
@@ -226,8 +242,28 @@ public class Province {
     }
 
 
-    public boolean hasMoneyForUnit(int strength) {
+    public boolean canBuildUnit(int strength) {
+        if (    !GameRules.slay_rules &&
+                strength == 4 &&
+                gameController.playerHasAtLeastOneUnitWithStrength(getColor(), strength)) {
+            checkForOnlyOneKnightTip();
+            return false;
+        }
+
         return money >= GameRules.PRICE_UNIT * strength;
+    }
+
+
+    private void checkForOnlyOneKnightTip() {
+        if (gameController.playersNumber == 0) return;
+        OneTimeInfo oneTimeInfo = OneTimeInfo.getInstance();
+        if (oneTimeInfo.aboutOnlyOneKnight) return;
+
+        MenuControllerYio menuControllerYio = gameController.yioGdxGame.menuControllerYio;
+        ArrayList<String> text = menuControllerYio.getArrayListFromString(LanguagesManager.getInstance().getString("one_time_only_one_knight"));
+        menuControllerYio.createTutorialTipWithFixedHeight(text, 5);
+        oneTimeInfo.aboutOnlyOneKnight = true;
+        oneTimeInfo.save();
     }
 
 

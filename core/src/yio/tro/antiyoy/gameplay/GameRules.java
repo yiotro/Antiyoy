@@ -10,6 +10,7 @@ public class GameRules {
     public static final int PRICE_TOWER = 15;
     public static final int PRICE_FARM = 12;
     public static final int PRICE_STRONG_TOWER = 50;
+    public static final int FARM_INCOME = 4;
     public static int colorNumber = 5;
     public static boolean slay_rules = false;
     public static boolean tutorialMode;

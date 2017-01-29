@@ -38,7 +38,7 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
         if (attackableHexes.size() > 0) { // attack something
             tryToAttackSomething(unit, province, attackableHexes);
         } else { // nothing to attack
-            if (unit.currHex.isInPerimeter()) {
+            if (unit.currentHex.isInPerimeter()) {
                 pushUnitToBetterDefense(unit, province);
             }
 
@@ -52,14 +52,15 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
         if (!unit.isReadyToMove()) return;
 
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = unit.currHex.adjacentHex(i);
+            Hex adjHex = unit.currentHex.adjacentHex(i);
             if (!adjHex.active) continue;
-            if (!adjHex.sameColor(unit.currHex)) continue;
+            if (!adjHex.sameColor(unit.currentHex)) continue;
             if (!adjHex.isFree()) continue;
 
             if (predictDefenseGainWithUnit(adjHex, unit) < 3) continue;
 
             gameController.moveUnit(unit, adjHex, province);
+            break;
         }
     }
 
@@ -71,9 +72,9 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
         defenseGain += unit.strength;
 
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = unit.currHex.adjacentHex(i);
+            Hex adjHex = unit.currentHex.adjacentHex(i);
             if (!adjHex.active) continue;
-            if (!adjHex.sameColor(unit.currHex)) continue;
+            if (!adjHex.sameColor(unit.currentHex)) continue;
 
             defenseGain -= adjHex.getDefenseNumber();
             defenseGain += unit.strength;
@@ -86,11 +87,11 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
     private void checkToSwapUnitForTower(Unit unit, ArrayList<Hex> moveZone, Province province) {
         if (!unit.isReadyToMove()) return;
         if (!province.hasMoneyForTower()) return;
-        if (unit.currHex.hasThisObjectNearby(Hex.OBJECT_TOWER)) return;
+        if (unit.currentHex.hasThisObjectNearby(Hex.OBJECT_TOWER)) return;
 
         // remember that hex
-        int x = unit.currHex.index1;
-        int y = unit.currHex.index2;
+        int x = unit.currentHex.index1;
+        int y = unit.currentHex.index2;
 
         // move unit away
         gameController.moveUnit(unit, moveZone.get(random.nextInt(moveZone.size())), province);
@@ -160,13 +161,13 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
 
         for (int i = 1; i <= 4; i++) {
             if (!province.hasEnoughIncomeToAffordUnit(i, 5)) break;
-            while (province.hasMoneyForUnit(i)) {
+            while (province.canBuildUnit(i)) {
                 if (!tryToAttackWithStrength(province, i)) break;
             }
         }
 
         // this is to kick start province
-        if (province.hasMoneyForUnit(1) && howManyUnitsInProvince(province) <= 1)
+        if (province.canBuildUnit(1) && howManyUnitsInProvince(province) <= 1)
             tryToAttackWithStrength(province, 1);
     }
 
@@ -181,12 +182,12 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
     protected int predictDefenseLossWithoutUnit(Unit unit) {
         int defenseLoss = 0;
 
-        defenseLoss += unit.currHex.getDefenseNumber() - unit.currHex.getDefenseNumber(unit);
+        defenseLoss += unit.currentHex.getDefenseNumber() - unit.currentHex.getDefenseNumber(unit);
 
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = unit.currHex.adjacentHex(i);
+            Hex adjHex = unit.currentHex.adjacentHex(i);
             if (!adjHex.active) continue;
-            if (!adjHex.sameColor(unit.currHex)) continue;
+            if (!adjHex.sameColor(unit.currentHex)) continue;
             defenseLoss += adjHex.getDefenseNumber() - adjHex.getDefenseNumber(unit);
         }
 

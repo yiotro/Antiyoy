@@ -13,5 +13,6 @@ public class RbInputModeHex extends ReactBehavior {
     public void reactAction(ButtonYio buttonYio) {
         getGameController(buttonYio).getLevelEditor().setInputMode(LevelEditor.MODE_SET_HEX);
         getGameController(buttonYio).getLevelEditor().setInputColor(buttonYio.id - 150);
+        buttonYio.menuControllerYio.hideEditorHexPanel();
     }
 }

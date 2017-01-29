@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.menu.ButtonYio;
 
 import java.util.ArrayList;
 
@@ -102,13 +103,23 @@ public class GameView {
         moveZonePixel = loadTextureRegionByName("move_zone_pixel.png", false);
         responseAnimHexTexture = loadTextureRegionByName("response_anim_hex.png", false);
         selectionBorder = loadTextureRegionByName("selection_border.png", false);
-        exclamationMarkTexture = loadTextureRegionByName("exclamation_mark.png", true);
+        loadExclamationMark();
         forefingerTexture = loadTextureRegionByName("forefinger.png", true);
         defenseIcon = loadTextureRegionByName("defense_icon.png", true);
         blackBorderTexture = loadTextureRegionByName("pixels/black_border.png", true);
         blackTriangle = loadTextureRegionByName("triangle.png", false);
         greenPixel = loadTextureRegionByName("pixels/pixel_green.png", false);
         grayPixel = blackPixel;
+    }
+
+
+    private void loadExclamationMark() {
+        if (Settings.isShroomArtsEnabled()) {
+            exclamationMarkTexture = loadTextureRegionByName("skins/ant/exclamation_mark.png", true);
+            return;
+        }
+
+        exclamationMarkTexture = loadTextureRegionByName("exclamation_mark.png", true);
     }
 
 
@@ -123,6 +134,7 @@ public class GameView {
 
     public void loadSkin(int skin) {
         switch (skin) {
+            default:
             case 0: // original
                 loadOriginalSkin();
                 break;
@@ -132,6 +144,25 @@ public class GameView {
             case 2: // grid
                 loadGridSkin();
                 break;
+        }
+
+        reloadTextures();
+    }
+
+
+    private void reloadTextures() {
+        loadFieldTextures();
+        loadExclamationMark();
+        resetButtonTexture(37); // coin
+        resetButtonTexture(38); // tower (build)
+        resetButtonTexture(39); // unit (build)
+    }
+
+
+    private void resetButtonTexture(int id) {
+        ButtonYio button = yioGdxGame.menuControllerYio.getButtonById(id);
+        if (button != null) {
+            button.resetTexture();
         }
     }
 
@@ -173,7 +204,8 @@ public class GameView {
 
 
     private void loadFieldTextures() {
-        AtlasLoader atlasLoader = new AtlasLoader("field_elements/atlas_texture.png", "field_elements/atlas_structure.txt", true);
+        AtlasLoader atlasLoader;
+        atlasLoader = createAtlasLoader();
         selectionPixel = atlasLoader.getTexture("selection_pixel_lowest.png");
         manTextures = new Storage3xTexture[4];
         for (int i = 0; i < 4; i++) {
@@ -193,6 +225,16 @@ public class GameView {
     }
 
 
+    private AtlasLoader createAtlasLoader() {
+        String path = "field_elements/";
+        if (Settings.isShroomArtsEnabled()) {
+            path = "skins/ant/field_elements/";
+        }
+
+        return new AtlasLoader(path + "atlas_texture.png", path + "atlas_structure.txt", true);
+    }
+
+
     public static TextureRegion loadTextureRegionByName(String name, boolean antialias) {
         Texture texture = new Texture(Gdx.files.internal(name));
         if (antialias) texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -201,7 +243,7 @@ public class GameView {
 
 
     public void updateCacheLevelTextures() {
-        if (Debug.CHECKING_BALANCE_MODE) return;
+        if (DebugFlags.CHECKING_BALANCE_MODE) return;
         gameController.letsUpdateCacheByAnim = false;
         for (int i = 0; i < cacheLevelTextures.length; i++) {
             FrameBuffer cacheLevelFrameBuffer = frameBufferList[i];
@@ -244,7 +286,7 @@ public class GameView {
 
 
     void updateCacheNearAnimHexes() {
-        if (Debug.CHECKING_BALANCE_MODE) return;
+        if (DebugFlags.CHECKING_BALANCE_MODE) return;
         float up, right, down, left;
         ArrayList<Hex> ah = gameController.fieldController.animHexes;
         if (ah.size() == 0) return;
@@ -616,6 +658,7 @@ public class GameView {
             if (gameController.isCurrentTurn(province.getColor()) && province.money >= GameRules.PRICE_UNIT) {
                 Hex capitalHex = province.getCapital();
                 PointYio pos = capitalHex.getPos();
+                if (!isPosInViewFrame(pos, hexViewSize)) continue;
                 batchMovable.draw(exclamationMarkTexture, pos.x - 0.5f * hexViewSize, pos.y + 0.3f * hexViewSize + gameController.jumperUnit.jumpPos * hexViewSize, 0.35f * hexViewSize, 0.6f * hexViewSize);
             }
         }
@@ -809,7 +852,7 @@ public class GameView {
 //        }
 
 //        for (Unit unit : gameController.unitList) {
-//            if (unit.currHex.unit != unit) renderTextOnHex(unit.currHex, "" + unit.strength);
+//            if (unit.currentHex.unit != unit) renderTextOnHex(unit.currentHex, "" + unit.strength);
 //        }
 
 //        for (Hex activeHex : gameController.activeHexes) {
@@ -866,7 +909,7 @@ public class GameView {
 
 
     private void renderInternals() {
-        if (Debug.CHECKING_BALANCE_MODE) return;
+        if (DebugFlags.CHECKING_BALANCE_MODE) return;
         batchMovable.begin();
         renderCacheLevelTextures();
         if (YioGdxGame.isScreenVerySmall()) renderAllSolidObjects();
