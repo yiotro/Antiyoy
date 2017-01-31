@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors;
 
-import yio.tro.antiyoy.gameplay.GameRules;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.ButtonYio;
 
 /**
@@ -10,7 +10,7 @@ public class RbTutorialSlay extends ReactBehavior {
 
     @Override
     public void reactAction(ButtonYio buttonYio) {
-        GameRules.slay_rules = true;
+        GameRules.setSlayRules(true);
         getGameController(buttonYio).initTutorial();
     }
 }

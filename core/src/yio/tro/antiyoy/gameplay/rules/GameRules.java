@@ -1,4 +1,4 @@
-package yio.tro.antiyoy.gameplay;
+package yio.tro.antiyoy.gameplay.rules;
 
 import yio.tro.antiyoy.menu.SliderYio;
 
@@ -9,14 +9,18 @@ public class GameRules {
     public static final int PRICE_UNIT = 10;
     public static final int PRICE_TOWER = 15;
     public static final int PRICE_FARM = 12;
-    public static final int PRICE_STRONG_TOWER = 50;
+    public static final int PRICE_STRONG_TOWER = 25;
     public static final int FARM_INCOME = 4;
+    public static final int TREE_CUT_REWARD = 2;
+    public static final int TOWER_TAX = 1;
+    public static final int STRONG_TOWER_TAX = 10;
+    public static final int PRICE_TREE = 10;
     public static int colorNumber = 5;
     public static boolean slay_rules = false;
     public static boolean tutorialMode;
     public static boolean campaignMode;
     public static boolean inEditorMode;
-    static int difficulty;
+    public static int difficulty;
 
 
     public static void setColorNumber(int colorNumber) {
@@ -36,5 +40,10 @@ public class GameRules {
 
     public static void setDifficultyBySlider(SliderYio slider) {
         difficulty = slider.getCurrentRunnerIndex();
+    }
+
+
+    public static void setSlayRules(boolean slay_rules) {
+        GameRules.slay_rules = slay_rules;
     }
 }

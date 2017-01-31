@@ -3,7 +3,7 @@ package yio.tro.antiyoy.menu;
 import com.badlogic.gdx.Gdx;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
-import yio.tro.antiyoy.gameplay.GameRules;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 import java.util.ArrayList;
 
@@ -23,11 +23,12 @@ public class SliderYio {
     public static final int CONFIGURE_HUMANS = 1;
     public static final int CONFIGURE_COLORS = 2;
     public static final int CONFIGURE_DIFFICULTY = 3;
-    public static final int CONFIGURE_COLOR_OFFSET = 4;
+    public static final int CONFIGURE_COLOR_OFFSET_SKIRMISH = 4;
     public static final int CONFIGURE_SKIN = 5;
     public static final int CONFIGURE_CAMERA_OFFSET = 6;
     public static final int CONFIGURE_ASK_END_TURN = 7;
     public static final int CONFIGURE_SENSITIVITY = 8;
+    public static final int CONFIGURE_COLOR_OFFSET_CAMPAIGN = 9;
     Rect pos;
     String valueString;
     ArrayList<SliderYio> listeners;
@@ -144,9 +145,14 @@ public class SliderYio {
         setRunnerValue((float) runnerValue);
         setNumberOfSegments(maxNumber - minNumber);
         setFromUp(fromUp);
-        this.configureType = configureType;
+        setConfigureType(configureType);
         this.minNumber = minNumber;
         updateValueString();
+    }
+
+
+    public void setConfigureType(int configureType) {
+        this.configureType = configureType;
     }
 
 
@@ -225,10 +231,15 @@ public class SliderYio {
                 if (sliderYio.getCurrentRunnerIndex() == 1) s = GameRules.MAX_COLOR_NUMBER - 3;
                 if (sliderYio.getCurrentRunnerIndex() == 2) s = GameRules.MAX_COLOR_NUMBER - 2;
                 break;
-            case CONFIGURE_COLOR_OFFSET:
+            case CONFIGURE_COLOR_OFFSET_SKIRMISH:
                 menuControllerYio.loadMoreSkirmishOptions();
                 s = sliderYio.getCurrentRunnerIndex() + sliderYio.minNumber;
                 menuControllerYio.saveMoreSkirmishOptions();
+                break;
+            case CONFIGURE_COLOR_OFFSET_CAMPAIGN:
+                menuControllerYio.loadMoreCampaignOptions();
+                s = sliderYio.getCurrentRunnerIndex() + sliderYio.minNumber;
+                menuControllerYio.saveMoreCampaignOptions();
                 break;
         }
         setNumberOfSegments(s);
@@ -272,7 +283,8 @@ public class SliderYio {
             case CONFIGURE_DIFFICULTY:
                 configureDifficulty(languagesManager);
                 break;
-            case CONFIGURE_COLOR_OFFSET:
+            case CONFIGURE_COLOR_OFFSET_SKIRMISH:
+            case CONFIGURE_COLOR_OFFSET_CAMPAIGN:
                 configureFirstColor(languagesManager);
                 break;
             case CONFIGURE_SKIN:

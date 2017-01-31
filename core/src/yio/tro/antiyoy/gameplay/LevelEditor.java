@@ -5,12 +5,12 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Clipboard;
 import yio.tro.antiyoy.LanguagesManager;
 import yio.tro.antiyoy.ai.ArtificialIntelligence;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
-import java.util.StringTokenizer;
 
 /**
  * Created by ivan on 27.11.2015.
@@ -75,18 +75,30 @@ public class LevelEditor {
         if (focusedHex.containsUnit()) {
             unitStrength = focusedHex.unit.strength;
         }
+
+        int lastObject = focusedHex.objectInside;
         gameController.cleanOutHex(focusedHex);
 
         if (inputObject == 0) { // delete object
             focusedHex.setObjectInside(0);
             gameController.addAnimHex(focusedHex);
         } else if (inputObject < 5) { // objects
-            gameController.addSolidObject(focusedHex, inputObject);
+            addSolidObject(focusedHex, lastObject);
             checkToTurnIntoFarm(focusedHex);
             gameController.addAnimHex(focusedHex);
         } else { // units
             tryToAddUnitToFocusedHex(focusedHex, unitStrength);
         }
+    }
+
+
+    private void addSolidObject(Hex focusedHex, int lastObject) {
+        if (lastObject == Hex.OBJECT_TOWER && inputObject == Hex.OBJECT_TOWER) {
+            gameController.addSolidObject(focusedHex, Hex.OBJECT_STRONG_TOWER);
+            return;
+        }
+
+        gameController.addSolidObject(focusedHex, inputObject);
     }
 
 
@@ -183,7 +195,7 @@ public class LevelEditor {
     public void loadSlot() {
         Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
         String fullLevel = prefs.getString(SLOT_NAME + currentSlotNumber, "");
-        gameSaver.recreateLevelFromString(fullLevel, true);
+        gameSaver.recreateLevelFromString(fullLevel, true, true);
         defaultValues();
     }
 
@@ -227,7 +239,7 @@ public class LevelEditor {
 //        }
 
         if (isValidLevelString(fromClipboard)) {
-            gameSaver.recreateLevelFromString(fromClipboard, true);
+            gameSaver.recreateLevelFromString(fromClipboard, true, true);
         }
     }
 
@@ -274,7 +286,7 @@ public class LevelEditor {
     public void playLevel() {
         Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
         String fullLevel = prefs.getString(SLOT_NAME + currentSlotNumber, "");
-        gameSaver.recreateLevelFromString(fullLevel, false);
+        gameSaver.recreateLevelFromString(fullLevel, false, true);
     }
 
 

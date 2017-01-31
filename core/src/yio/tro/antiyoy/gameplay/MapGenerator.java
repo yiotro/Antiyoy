@@ -3,6 +3,7 @@ package yio.tro.antiyoy.gameplay;
 import yio.tro.antiyoy.GraphicsYio;
 import yio.tro.antiyoy.PointYio;
 import yio.tro.antiyoy.Yio;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 import java.util.ArrayList;
 import java.util.ListIterator;

@@ -1,11 +1,10 @@
 package yio.tro.antiyoy.gameplay;
 
-import android.util.Log;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
-import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -17,6 +16,7 @@ public class FieldController {
     public static final int SIZE_SMALL = 1;
     public static final int SIZE_MEDIUM = 2;
     public static final int SIZE_BIG = 4;
+    private final MoveZoneDetection moveZoneDetection;
     public boolean letsCheckAnimHexes;
     public float hexSize;
     public float hexStep1;
@@ -74,6 +74,7 @@ public class FieldController {
         emptyHex.active = false;
         defenseTipFactor = new FactorYio();
         defenseTips = new ArrayList<Hex>();
+        moveZoneDetection = new MoveZoneDetection(this);
     }
 
 
@@ -151,33 +152,11 @@ public class FieldController {
 
 
     public void killEveryoneInProvince(Province province) {
-        checkToDemoteStrongTower(province);
         for (Hex hex : province.hexList) {
             if (hex.containsUnit()) {
                 killUnitOnHex(hex);
             }
         }
-    }
-
-
-    private void checkToDemoteStrongTower(Province province) {
-        Hex strongTowerHex = province.getStrongTower();
-        if (strongTowerHex == null) return;
-        strongTowerHex.objectInside = Hex.OBJECT_TOWER;
-        checkForOneTimeInfoAboutStrongTowerDemote();
-    }
-
-
-    private void checkForOneTimeInfoAboutStrongTowerDemote() {
-        if (gameController.playersNumber == 0) return;
-        OneTimeInfo oneTimeInfo = OneTimeInfo.getInstance();
-        if (oneTimeInfo.aboutStrongTowerDemote) return;
-
-        MenuControllerYio menuControllerYio = gameController.yioGdxGame.menuControllerYio;
-        ArrayList<String> text = menuControllerYio.getArrayListFromString(LanguagesManager.getInstance().getString("one_time_strong_tower_demote"));
-        menuControllerYio.createTutorialTipWithFixedHeight(text, 8);
-        oneTimeInfo.aboutStrongTowerDemote = true;
-        oneTimeInfo.save();
     }
 
 
@@ -283,22 +262,14 @@ public class FieldController {
     }
 
 
-    public void unFlagAllHexesInArrayList(ArrayList<Hex> hexList) {
-        for (int i = hexList.size() - 1; i >= 0; i--) {
-            hexList.get(i).flag = false;
-            hexList.get(i).inMoveZone = false;
-        }
-    }
-
-
     public void detectProvinces() {
         if (gameController.isInEditorMode()) return;
-        unFlagAllHexesInArrayList(activeHexes);
+        MoveZoneDetection.unFlagAllHexesInArrayList(activeHexes);
         ArrayList<Hex> tempList = new ArrayList<Hex>();
         ArrayList<Hex> propagationList = new ArrayList<Hex>();
         Hex tempHex, adjHex;
         for (Hex hex : activeHexes) {
-            if (!GameRules.slay_rules && hex.colorIndex == neutralLandsIndex) continue;
+            if (hex.isNeutral()) continue;
             if (!hex.flag) {
                 tempList.clear();
                 propagationList.clear();
@@ -343,14 +314,14 @@ public class FieldController {
     public void expandTrees() {
         ArrayList<Hex> newPalmsList = new ArrayList<Hex>();
         for (Hex hex : activeHexes) {
-            if (canSpawnPalmOnHex(hex)) {
+            if (gameController.ruleset.canSpawnPalmOnHex(hex)) {
                 newPalmsList.add(hex);
             }
         }
 
         ArrayList<Hex> newPinesList = new ArrayList<Hex>();
         for (Hex hex : activeHexes) {
-            if (canSpawnPineOnHex(hex)) {
+            if (gameController.ruleset.canSpawnPineOnHex(hex)) {
                 newPinesList.add(hex);
             }
         }
@@ -371,53 +342,6 @@ public class FieldController {
             if (activeHex.containsTree() && activeHex.blockToTreeFromExpanding)
                 activeHex.blockToTreeFromExpanding = false;
         }
-    }
-
-
-    public boolean canSpawnPineOnHex(Hex hex) {
-        if (GameRules.slay_rules) {
-            return canSpawnPineOnHexSlayRules(hex);
-        } else {
-            return canSpawnPineOnHexGenericRules(hex);
-        }
-    }
-
-
-    public boolean canSpawnPalmOnHex(Hex hex) {
-        if (GameRules.slay_rules) {
-            return canSpawnPalmOnHexSlayRules(hex);
-        } else {
-            return canSpawnPalmOnHexGenericRules(hex);
-        }
-    }
-
-
-    public boolean canSpawnPineOnHexSlayRules(Hex hex) {
-        return hex.isFree() && howManyTreesNearby(hex) >= 2 && hex.hasPineReadyToExpandNearby() && gameController.getRandom().nextDouble() < 0.8;
-    }
-
-
-    public boolean canSpawnPalmOnHexSlayRules(Hex hex) {
-        return hex.isFree() && hex.isNearWater() && hex.hasPalmReadyToExpandNearby();
-    }
-
-
-    public boolean canSpawnPineOnHexGenericRules(Hex hex) {
-        return hex.isFree() && howManyTreesNearby(hex) >= 2 && hex.hasPineReadyToExpandNearby() && gameController.getRandom().nextDouble() < 0.2;
-    }
-
-
-    public boolean canSpawnPalmOnHexGenericRules(Hex hex) {
-        return hex.isFree() && hex.isNearWater() && hex.hasPalmReadyToExpandNearby() && gameController.getRandom().nextDouble() < 0.3;
-    }
-
-
-    public int howManyTreesNearby(Hex hex) {
-        if (!hex.active) return 0;
-        int c = 0;
-        for (int i = 0; i < 6; i++)
-            if (hex.adjacentHex(i).containsTree()) c++;
-        return c;
     }
 
 
@@ -752,6 +676,25 @@ public class FieldController {
     }
 
 
+    public boolean buildTree(Province province, Hex hex) {
+        if (province == null) return false;
+        if (province.hasMoneyForTree()) {
+            gameController.takeSnapshot();
+            spawnTree(hex);
+            addAnimHex(hex);
+            province.money -= GameRules.PRICE_TREE;
+            gameController.getStatistics().moneyWereSpent(GameRules.PRICE_TREE);
+            updateSelectedProvinceMoney();
+            gameController.updateCacheOnceAfterSomeTime();
+            return true;
+        }
+
+        // can't build tree
+        if (gameController.isPlayerTurn()) gameController.tickleMoneySign();
+        return false;
+    }
+
+
     public void updateSelectedProvinceMoney() {
         if (selectedProvince != null)
             selectedProvinceMoney = selectedProvince.money;
@@ -763,10 +706,7 @@ public class FieldController {
     public Unit addUnit(Hex hex, int strength) {
         if (hex == null) return null;
         if (hex.containsSolidObject()) {
-            if (!GameRules.slay_rules && hex.containsTree()) {
-                getProvinceByHex(hex).money += 5;
-                updateSelectedProvinceMoney();
-            }
+            gameController.ruleset.onUnitAdd(hex);
             cleanOutHex(hex);
             gameController.updateCacheOnceAfterSomeTime();
             hex.addUnit(strength);
@@ -816,7 +756,7 @@ public class FieldController {
 
 
     public void detectAndShowMoveZoneForFarm() {
-        moveZone = detectMoveZoneForFarm();
+        moveZone = moveZoneDetection.detectMoveZoneForFarm();
         checkToForceMoveZoneAnims();
         moveZoneFactor.setValues(0, 0);
         moveZoneFactor.beginSpawning(3, 1.5);
@@ -825,55 +765,18 @@ public class FieldController {
 
 
     public ArrayList<Hex> detectMoveZoneForFarm() {
-        clearMoveZone();
-        unFlagAllHexesInArrayList(activeHexes);
-        ArrayList<Hex> result = new ArrayList<Hex>();
-        for (Hex hex : selectedProvince.hexList) {
-            if (hex.hasThisObjectNearby(Hex.OBJECT_FARM) || hex.hasThisObjectNearby(Hex.OBJECT_TOWN)) {
-                hex.inMoveZone = true;
-                result.add(hex);
-            }
-        }
 
-        return result;
+        return moveZoneDetection.detectMoveZoneForFarm();
     }
 
 
     public ArrayList<Hex> detectMoveZone(Hex startHex, int strength) {
-        return detectMoveZone(startHex, strength, 9001); // move limit is almost infinite
+        return moveZoneDetection.detectMoveZone(startHex, strength);
     }
 
 
     public ArrayList<Hex> detectMoveZone(Hex startHex, int strength, int moveLimit) {
-        unFlagAllHexesInArrayList(activeHexes);
-        ArrayList<Hex> result = new ArrayList<Hex>();
-        ArrayList<Hex> propagationList = new ArrayList<Hex>();
-        Hex tempHex, adjHex;
-        propagationList.add(startHex);
-        startHex.moveZoneNumber = moveLimit;
-        while (propagationList.size() > 0) {
-            tempHex = propagationList.get(0);
-            result.add(tempHex);
-            tempHex.inMoveZone = true;
-            propagationList.remove(0);
-            if (!tempHex.sameColor(startHex) || tempHex.moveZoneNumber == 0) continue;
-            for (int i = 0; i < 6; i++) {
-                adjHex = tempHex.adjacentHex(i);
-                if (adjHex.active && !adjHex.flag) {
-                    if (adjHex.sameColor(startHex)) {
-                        propagationList.add(adjHex);
-                        adjHex.moveZoneNumber = tempHex.moveZoneNumber - 1;
-                        adjHex.flag = true;
-                    } else {
-                        if (adjHex.getDefenseNumber() < strength) {
-                            propagationList.add(adjHex);
-                            adjHex.flag = true;
-                        }
-                    }
-                }
-            }
-        }
-        return result;
+        return moveZoneDetection.detectMoveZone(startHex, strength, moveLimit);
     }
 
 
@@ -883,7 +786,7 @@ public class FieldController {
 
 
     public void detectAndShowMoveZone(Hex startHex, int strength, int moveLimit) {
-        moveZone = detectMoveZone(startHex, strength, moveLimit);
+        moveZone = moveZoneDetection.detectMoveZone(startHex, strength, moveLimit);
         checkToForceMoveZoneAnims();
         moveZoneFactor.setValues(0, 0);
         moveZoneFactor.beginSpawning(3, 1.5);
@@ -963,7 +866,7 @@ public class FieldController {
     public void splitProvince(Hex hex, int color) {
         Province oldProvince = getProvinceByHex(hex);
         if (oldProvince == null) return;
-        unFlagAllHexesInArrayList(oldProvince.hexList);
+        MoveZoneDetection.unFlagAllHexesInArrayList(oldProvince.hexList);
         ArrayList<Hex> tempList = new ArrayList<Hex>();
         ArrayList<Hex> propagationList = new ArrayList<Hex>();
         ArrayList<Province> provincesAdded = new ArrayList<Province>();

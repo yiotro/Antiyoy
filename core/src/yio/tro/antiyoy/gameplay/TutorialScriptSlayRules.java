@@ -2,6 +2,7 @@ package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.LanguagesManager;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.ButtonYio;
 
 /**
@@ -46,7 +47,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
         gameSaver.beginRecreation();
         gameSaver.setBasicInfo(0, 1, 5, 1, 0);
         gameController.colorIndexViewOffset = 0;
-        GameRules.slay_rules = true;
+        GameRules.setSlayRules(true);
         gameSaver.endRecreation();
 
 
@@ -259,7 +260,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
                 if (gameController.selectionController.tipFactor.get() > 0) return true;
                 return false;
             case STEP_PRESS_BUILD_UNIT_BUTTON_SECOND_TIME:
-                if (gameController.selectionController.getTipType() == 2) return true;
+                if (gameController.selectionController.getTipType() == SelectionController.TIP_INDEX_UNIT_2) return true;
                 return false;
             case STEP_BUILD_SPEARMAN:
                 if (getHex(20, 5).colorIndex == 0) return true;

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.ButtonYio;
 
 import java.util.ArrayList;
@@ -979,18 +980,41 @@ public class GameView {
     private void renderTip() {
         if (gameController.selectionController.tipFactor.get() > 0.01) {
             batchSolid.begin();
-            TextureRegion textureRegion;
-            if (gameController.selectionController.tipShowType == 0) textureRegion = towerTexture.getNormal();
-            else if (!GameRules.slay_rules && gameController.selectionController.tipShowType == 5) textureRegion = farmTexture[0].getNormal();
-            else if (!GameRules.slay_rules && gameController.selectionController.tipShowType == 6) textureRegion = strongTowerTexture.getNormal();
-            else textureRegion = manTextures[gameController.selectionController.tipShowType - 1].getNormal();
             float s = 0.2f * w;
-            batchSolid.draw(textureRegion, 0.5f * w - 0.5f * s, s * (gameController.selectionController.tipFactor.get() - 1) + 0.04f * h, s, s);
+
+            batchSolid.draw(
+                    getTipTypeTexture(gameController.selectionController.tipShowType),
+                    0.5f * w - 0.5f * s,
+                    s * (gameController.selectionController.tipFactor.get() - 1) + 0.04f * h, s, s);
+
             Fonts.gameFont.draw(batchSolid,
                     gameController.currentPriceString,
                     0.5f * w - 0.5f * gameController.priceStringWidth,
                     s * (gameController.selectionController.tipFactor.get() - 1) + 0.04f * h);
             batchSolid.end();
+        }
+    }
+
+
+    private TextureRegion getTipTypeTexture(int tipShowType) {
+        switch (tipShowType) {
+            default:
+            case SelectionController.TIP_INDEX_TOWER:
+                return towerTexture.getNormal();
+            case SelectionController.TIP_INDEX_FARM:
+                return farmTexture[0].getNormal();
+            case SelectionController.TIP_INDEX_STRONG_TOWER:
+                return strongTowerTexture.getNormal();
+            case SelectionController.TIP_INDEX_TREE:
+                return pineTexture.getNormal();
+            case SelectionController.TIP_INDEX_UNIT_1:
+                return manTextures[1].getNormal();
+            case SelectionController.TIP_INDEX_UNIT_2:
+                return manTextures[2].getNormal();
+            case SelectionController.TIP_INDEX_UNIT_3:
+                return manTextures[3].getNormal();
+            case SelectionController.TIP_INDEX_UNIT_4:
+                return manTextures[4].getNormal();
         }
     }
 

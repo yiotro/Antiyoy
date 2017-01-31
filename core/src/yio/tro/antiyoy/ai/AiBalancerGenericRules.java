@@ -157,6 +157,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
     @Override
     void tryToBuildUnits(Province province) {
         tryToBuildUnitsOnPalms(province);
+        tryToReinforceUnits(province);
 
         for (int i = 1; i <= 4; i++) {
             if (!province.hasEnoughIncomeToAffordUnit(i, 5)) break;
@@ -168,6 +169,38 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         // this is to kick start province
         if (province.canBuildUnit(1) && howManyUnitsInProvince(province) <= 1)
             tryToAttackWithStrength(province, 1);
+    }
+
+
+    private void tryToReinforceUnits(Province province) {
+        for (Hex hex : province.hexList) {
+            if (!hex.containsUnit()) continue;
+            Unit unit = hex.unit;
+            if (unitHasToBeReinforced(unit) && province.hasEnoughIncomeToAffordUnit(unit.strength + 1)) {
+                gameController.fieldController.buildUnit(province, hex, 1);
+            }
+        }
+    }
+
+
+    private boolean unitHasToBeReinforced(Unit unit) {
+        if (unit.strength == 4) return false;
+
+        ArrayList<Hex> moveZone = gameController.detectMoveZone(unit.currentHex, unit.strength);
+        if (!moveZoneContainsEnemyHexes(moveZone, unit.getColor())) return false;
+
+        ArrayList<Hex> attackableHexes = findAttackableHexes(unit.getColor(), moveZone);
+        if (attackableHexes.size() > 0) return false;
+
+        return true;
+    }
+
+
+    private boolean moveZoneContainsEnemyHexes(ArrayList<Hex> moveZone, int unitColor) {
+        for (Hex hex : moveZone) {
+            if (!hex.sameColor(unitColor)) return true;
+        }
+        return false;
     }
 
 

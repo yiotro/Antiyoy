@@ -2,6 +2,7 @@ package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.PointYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 /**
  * Created by ivan on 19.10.2014.
@@ -62,7 +63,7 @@ public class Hex {
     }
 
 
-    boolean isNearWater() {
+    public boolean isNearWater() {
         if (!this.active) return false;
         for (int i = 0; i < 6; i++) {
             if (!gameController.fieldController.adjacentHex(this, i).active) return true;
@@ -242,7 +243,7 @@ public class Hex {
     }
 
 
-    boolean hasPalmReadyToExpandNearby() {
+    public boolean hasPalmReadyToExpandNearby() {
         for (int i = 0; i < 6; i++) {
             Hex adjHex = adjacentHex(i);
             if (!adjHex.blockToTreeFromExpanding && adjHex.objectInside == Hex.OBJECT_PALM) return true;
@@ -251,7 +252,7 @@ public class Hex {
     }
 
 
-    boolean hasPineReadyToExpandNearby() {
+    public boolean hasPineReadyToExpandNearby() {
         for (int i = 0; i < 6; i++) {
             Hex adjHex = adjacentHex(i);
             if (!adjHex.blockToTreeFromExpanding && adjHex.objectInside == Hex.OBJECT_PINE) return true;

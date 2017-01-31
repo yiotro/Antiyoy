@@ -4,6 +4,7 @@ import yio.tro.antiyoy.Fonts;
 import yio.tro.antiyoy.LanguagesManager;
 import yio.tro.antiyoy.OneTimeInfo;
 import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 
 import java.util.*;
@@ -13,7 +14,7 @@ import java.util.*;
  */
 public class Province {
 
-    int money;
+    public int money;
     public ArrayList<Hex> hexList, tempList;
     private GameController gameController;
     public String name;
@@ -152,10 +153,7 @@ public class Province {
     public int getIncome() {
         int income = 0;
         for (Hex hex : hexList) {
-            if (!hex.containsTree()) income++;
-            if (!GameRules.slay_rules && hex.objectInside == Hex.OBJECT_FARM) {
-                income += GameRules.FARM_INCOME;
-            }
+            income += gameController.ruleset.getHexIncome(hex);
         }
         return income;
     }
@@ -164,11 +162,7 @@ public class Province {
     int getTaxes() {
         int taxes = 0;
         for (Hex hex : hexList) {
-            if (hex.containsUnit()) taxes += hex.unit.getTax();
-            if (!GameRules.slay_rules) {
-                if (hex.objectInside == Hex.OBJECT_TOWER) taxes += 1;
-                if (hex.objectInside == Hex.OBJECT_STRONG_TOWER) taxes += 10;
-            }
+            taxes += gameController.ruleset.getHexTax(hex);
         }
         return taxes;
     }
@@ -243,27 +237,7 @@ public class Province {
 
 
     public boolean canBuildUnit(int strength) {
-        if (    !GameRules.slay_rules &&
-                strength == 4 &&
-                gameController.playerHasAtLeastOneUnitWithStrength(getColor(), strength)) {
-            checkForOnlyOneKnightTip();
-            return false;
-        }
-
-        return money >= GameRules.PRICE_UNIT * strength;
-    }
-
-
-    private void checkForOnlyOneKnightTip() {
-        if (gameController.playersNumber == 0) return;
-        OneTimeInfo oneTimeInfo = OneTimeInfo.getInstance();
-        if (oneTimeInfo.aboutOnlyOneKnight) return;
-
-        MenuControllerYio menuControllerYio = gameController.yioGdxGame.menuControllerYio;
-        ArrayList<String> text = menuControllerYio.getArrayListFromString(LanguagesManager.getInstance().getString("one_time_only_one_knight"));
-        menuControllerYio.createTutorialTipWithFixedHeight(text, 5);
-        oneTimeInfo.aboutOnlyOneKnight = true;
-        oneTimeInfo.save();
+        return gameController.ruleset.canBuildUnit(this, strength);
     }
 
 
@@ -279,6 +253,11 @@ public class Province {
 
     public boolean hasMoneyForStrongTower() {
         return money >= GameRules.PRICE_STRONG_TOWER;
+    }
+
+
+    public boolean hasMoneyForTree() {
+        return money >= GameRules.PRICE_TREE;
     }
 
 

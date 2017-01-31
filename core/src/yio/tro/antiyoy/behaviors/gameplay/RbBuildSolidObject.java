@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.behaviors.gameplay;
 
-import yio.tro.antiyoy.gameplay.GameRules;
+import yio.tro.antiyoy.gameplay.SelectionController;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 
@@ -9,20 +10,44 @@ import yio.tro.antiyoy.behaviors.ReactBehavior;
  */
 public class RbBuildSolidObject extends ReactBehavior {
 
+    int chain[];
+
+
+    public RbBuildSolidObject() {
+        chain = new int[]{
+                SelectionController.TIP_INDEX_TOWER,
+                SelectionController.TIP_INDEX_FARM,
+                SelectionController.TIP_INDEX_STRONG_TOWER
+        };
+    }
+
+
     @Override
     public void reactAction(ButtonYio buttonYio) {
         if (GameRules.slay_rules) {
-            getGameController(buttonYio).selectionController.awakeTip(0);
+            getGameController(buttonYio).selectionController.awakeTip(SelectionController.TIP_INDEX_TOWER);
         } else {
             int tipType = getGameController(buttonYio).selectionController.getTipType();
-            switch (tipType) {
-                case 0: tipType = 5; break;
-                case 5: tipType = 6; break;
-                default:
-                case 6: tipType = 0; break;
+            int newTipType = -1;
+
+            for (int i = 0; i < chain.length; i++) {
+                if (tipType == chain[i]) {
+                    if (i == chain.length - 1) {
+                        newTipType = chain[0];
+                    } else {
+                        newTipType = chain[i + 1];
+                    }
+                }
             }
+
+            if (newTipType == -1) {
+                newTipType = chain[0]; // default
+            }
+
+            tipType = newTipType;
+
             getGameController(buttonYio).selectionController.awakeTip(tipType);
-            if (tipType == 5) {
+            if (tipType == SelectionController.TIP_INDEX_FARM) {
                 getGameController(buttonYio).detectAndShowMoveZoneForFarm();
             }
         }

@@ -2,6 +2,7 @@ package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.PointYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 import java.util.ArrayList;
 
@@ -34,18 +35,15 @@ public class Unit {
     boolean canMoveToFriendlyHex(Hex hex) {
         if (hex == currentHex) return false;
         if (hex.containsBuilding()) return false;
-        if (hex.containsUnit() && !gameController.canMergeUnits(this, hex.unit)) return false;
+        if (hex.containsUnit() && !gameController.ruleset.canMergeUnits(this, hex.unit)) return false;
         return true;
     }
 
 
     boolean moveToHex(Hex destinationHex) {
         if (destinationHex.sameColor(currentHex) && destinationHex.containsBuilding()) return false;
+        gameController.ruleset.onUnitMoveToHex(this, destinationHex);
         if (destinationHex.containsSolidObject()) {
-            if (!GameRules.slay_rules && destinationHex.containsTree()) {
-                gameController.getProvinceByHex(destinationHex).money += 5;
-                gameController.selectionController.updateSelectedProvinceMoney();
-            }
             gameController.cleanOutHex(destinationHex); // unit crushes object
             gameController.updateCacheOnceAfterSomeTime();
         }
@@ -63,7 +61,7 @@ public class Unit {
     }
 
 
-    int getTax() {
+    public int getTax() {
         return getTax(strength);
     }
 

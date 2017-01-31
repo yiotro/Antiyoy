@@ -3,6 +3,7 @@ package yio.tro.antiyoy.gameplay;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -222,7 +223,7 @@ public class GameSaver {
         GameRules.campaignMode = prefs.getBoolean("save_campaign_mode");
         CampaignController.getInstance().setCurrentLevelIndex(prefs.getInteger("save_current_level"));
         gameController.colorIndexViewOffset = prefs.getInteger("save_color_offset", 0);
-        GameRules.slay_rules = prefs.getBoolean("slay_rules", true);
+        GameRules.setSlayRules(prefs.getBoolean("slay_rules", true));
     }
 
 
@@ -283,6 +284,8 @@ public class GameSaver {
         gameController.yioGdxGame.gameView.updateAnimationTexture();
         gameController.createAiList();
         gameController.updateLevelInitialString();
+        gameController.updateRuleset();
+        gameController.selectionController.deselectAll();
     }
 
 
@@ -308,7 +311,7 @@ public class GameSaver {
     }
 
 
-    public void recreateLevelFromString(String fullLevel, boolean editorMode) {
+    public void recreateLevelFromString(String fullLevel, boolean editorMode, boolean resetColorOffset) {
         GameRules.inEditorMode = editorMode;
         String basicInfo, activeHexes;
         int delimiterChar = fullLevel.indexOf("/");
@@ -332,19 +335,23 @@ public class GameSaver {
 
         // this is special hack. Rules have to be detected before recreating map (detect provinces)
         createHexStrings();
-        GameRules.slay_rules = true;
+        GameRules.setSlayRules(true);
         for (String hexString : hexStrings) {
             int[] hexSnapshotByString = getHexSnapshotByString(hexString);
             int color = hexSnapshotByString[2];
             if (color == FieldController.NEUTRAL_LANDS_DEFAULT_INDEX) {
-                GameRules.slay_rules = false;
+                GameRules.setSlayRules(false);
                 break;
             }
         }
 
         setBasicInfo(0, basicInfoValues[2], basicInfoValues[3], basicInfoValues[1], basicInfoValues[0]);
         beginRecreation(false);
-        gameController.colorIndexViewOffset = 0;
+        if (resetColorOffset) {
+            gameController.colorIndexViewOffset = 0;
+        } else {
+            gameController.readColorOffsetFromSlider();
+        }
         detectRules();
         endRecreation();
 
@@ -357,10 +364,10 @@ public class GameSaver {
 
 
     public void detectRules() {
-        GameRules.slay_rules = true;
+        GameRules.setSlayRules(true);
         for (Hex activeHex : gameController.fieldController.activeHexes) {
             if (activeHex.colorIndex == gameController.fieldController.neutralLandsIndex) {
-                GameRules.slay_rules = false;
+                GameRules.setSlayRules(false);
                 System.out.println("detected generic rules");
                 return;
             }

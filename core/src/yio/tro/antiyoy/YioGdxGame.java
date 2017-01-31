@@ -11,13 +11,15 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import yio.tro.antiyoy.ai.ArtificialIntelligence;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.*;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.*;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.StringTokenizer;
 
-import static yio.tro.antiyoy.gameplay.GameRules.slay_rules;
+import static yio.tro.antiyoy.gameplay.rules.GameRules.setSlayRules;
+import static yio.tro.antiyoy.gameplay.rules.GameRules.slay_rules;
 
 public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
@@ -162,7 +164,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         if (!prefs.getBoolean("check_slay_rules", false)) {
             menuControllerYio.loadMoreSkirmishOptions();
             Preferences tempPrefs = Gdx.app.getPreferences("settings");
-            slay_rules = tempPrefs.getBoolean("slay_rules", false);
+            setSlayRules(tempPrefs.getBoolean("slay_rules", false));
             menuControllerYio.getCheckButtonById(16).setChecked(slay_rules);
             menuControllerYio.saveMoreSkirmishOptions();
             menuControllerYio.saveMoreCampaignOptions();
@@ -615,6 +617,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         gameController.prepareForNewGame(index, generateMap, readParametersFromSliders);
         gameView.beginSpawnProcess();
         menuControllerYio.createGameOverlay();
+        gameController.updateRuleset();
 //        menuControllerLighty.scrollerYio.factorModel.setValues(0, 0);
         setGamePaused(false);
     }

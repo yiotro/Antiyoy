@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.ai;
 
 import yio.tro.antiyoy.gameplay.*;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -51,23 +52,6 @@ public abstract class ArtificialIntelligence {
             if (moveZone.size() == 0) continue;
             Province provinceByHex = gameController.getProvinceByHex(unit.currentHex);
             decideAboutUnit(unit, moveZone, provinceByHex);
-            checkToMoveKnight(unit, moveZone, provinceByHex);
-        }
-    }
-
-
-    private void checkToMoveKnight(Unit unit, ArrayList<Hex> moveZone, Province provinceByHex) {
-        if (!unit.isReadyToMove()) return;
-        if (unit.strength != 4) return;
-
-        ArrayList<Hex> attackableHexes = findAttackableHexes(unit.getColor(), moveZone);
-        if (attackableHexes.size() > 0) { // attack something
-            Hex mostAttackableHex = findMostAttractiveHex(attackableHexes, provinceByHex, unit.strength);
-            gameController.moveUnit(unit, mostAttackableHex, provinceByHex);
-        } else { // nothing to attack
-            int size = moveZone.size();
-            int index = random.nextInt(size);
-            gameController.moveUnit(unit, moveZone.get(index), provinceByHex);
         }
     }
 

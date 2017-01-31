@@ -7,6 +7,9 @@ import yio.tro.antiyoy.gameplay.Province;
 public abstract class ArtificialIntelligenceGeneric extends ArtificialIntelligence{
 
 
+    public static final int MAX_EXTRA_FARM_COST = 50;
+
+
     ArtificialIntelligenceGeneric(GameController gameController, int color) {
         super(gameController, color);
     }
@@ -22,7 +25,7 @@ public abstract class ArtificialIntelligenceGeneric extends ArtificialIntelligen
 
     protected void tryToBuildFarms(Province province) {
         if (province.getExtraFarmCost() > province.getIncome()) return;
-        if (province.getExtraFarmCost() > 20) return;
+        if (province.getExtraFarmCost() > MAX_EXTRA_FARM_COST) return;
 
         while (province.hasMoneyForFarm()) {
             Hex hex = findGoodHexForFarm(province);

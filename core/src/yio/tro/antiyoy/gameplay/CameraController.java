@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import yio.tro.antiyoy.GraphicsYio;
 import yio.tro.antiyoy.Settings;
 import yio.tro.antiyoy.Yio;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 public class CameraController {
 

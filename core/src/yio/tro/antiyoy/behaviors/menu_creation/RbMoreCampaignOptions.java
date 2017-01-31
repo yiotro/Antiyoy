@@ -7,7 +7,7 @@ public class RbMoreCampaignOptions extends ReactBehavior{
 
     @Override
     public void reactAction(ButtonYio buttonYio) {
-        buttonYio.menuControllerYio.createMoreSkirmishOptionsMenu(ReactBehavior.rbExitToCampaign);
+        buttonYio.menuControllerYio.createMoreMatchOptionsMenu(ReactBehavior.rbExitToCampaign);
         buttonYio.menuControllerYio.sliders.get(2).setRunnerValueByIndex(3);
     }
 }

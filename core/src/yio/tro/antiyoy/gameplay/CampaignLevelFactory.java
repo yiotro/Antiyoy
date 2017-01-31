@@ -1,7 +1,12 @@
 package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.LanguagesManager;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.ai.ArtificialIntelligence;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.menu.MenuControllerYio;
+
+import java.util.ArrayList;
 
 /**
  * Created by ivan on 18.11.2015.
@@ -42,7 +47,7 @@ public class CampaignLevelFactory {
         gameController.setPlayersNumber(1);
         GameRules.setColorNumber(getColorNumberByIndex(index));
         GameRules.setDifficulty(getDifficultyByIndex(index));
-        GameRules.slay_rules = gameController.yioGdxGame.menuControllerYio.getCheckButtonById(16).isChecked();
+        GameRules.setSlayRules(gameController.yioGdxGame.menuControllerYio.getCheckButtonById(16).isChecked());
         gameController.yioGdxGame.startGame(index, false, false);
 
         if (GameRules.slay_rules) {
@@ -51,9 +56,27 @@ public class CampaignLevelFactory {
             generateMapForGenericRules();
         }
 
+        finishCreatingLevelWithPredictableRandom();
+
+        checkForHelloMessage(index);
+    }
+
+
+    private void finishCreatingLevelWithPredictableRandom() {
         gameController.readColorOffsetFromSlider();
         gameController.yioGdxGame.gameView.updateCacheLevelTextures();
         gameController.yioGdxGame.gameView.beginSpawnProcess();
+        gameController.selectionController.deselectAll();
+    }
+
+
+    private void checkForHelloMessage(int index) {
+        if (index == 24) { // first hard level
+            MenuControllerYio menuControllerYio = gameController.yioGdxGame.menuControllerYio;
+            ArrayList<String> text = menuControllerYio.getArrayListFromString(LanguagesManager.getInstance().getString("level_24"));
+            menuControllerYio.createTutorialTipWithFixedHeight(text, 5);
+            return;
+        }
     }
 
 

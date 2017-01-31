@@ -8,7 +8,7 @@ public class RbMoreSkirmishOptions extends ReactBehavior{
     @Override
     public void reactAction(ButtonYio buttonYio) {
         buttonYio.menuControllerYio.saveSkirmishSettings();
-        buttonYio.menuControllerYio.createMoreSkirmishOptionsMenu(ReactBehavior.rbSaveMoreSkirmishOptions);
+        buttonYio.menuControllerYio.createMoreMatchOptionsMenu(ReactBehavior.rbSaveMoreSkirmishOptions);
         buttonYio.menuControllerYio.loadMoreSkirmishOptions();
     }
 }

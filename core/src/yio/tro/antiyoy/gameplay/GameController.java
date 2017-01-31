@@ -4,6 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.ai.*;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.gameplay.rules.Ruleset;
+import yio.tro.antiyoy.gameplay.rules.RulesetGeneric;
+import yio.tro.antiyoy.gameplay.rules.RulesetSlay;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.SliderYio;
@@ -16,7 +20,7 @@ import java.util.Random;
  */
 public class GameController {
 
-    YioGdxGame yioGdxGame;
+    public YioGdxGame yioGdxGame;
     int screenX;
     int screenY;
 
@@ -39,10 +43,10 @@ public class GameController {
     private boolean proposedSurrender;
     private boolean cityNamesEnabled;
     private ArrayList<ArtificialIntelligence> aiList;
-    ArrayList<Unit> unitList;
+    public ArrayList<Unit> unitList;
     public int marchDelay;
     public int playersNumber;
-    int colorIndexViewOffset;
+    public int colorIndexViewOffset;
     String balanceString;
     String currentPriceString;
     String levelInitialString;
@@ -56,6 +60,7 @@ public class GameController {
     Forefinger forefinger;
     public TutorialScript tutorialScript;
     private LevelEditor levelEditor;
+    Ruleset ruleset;
 
 
     public GameController(YioGdxGame yioGdxGame) {
@@ -92,6 +97,7 @@ public class GameController {
     void takeAwaySomeMoneyToAchieveBalance() {
         // so the problem is that all players except first
         // get income in the first turn
+        updateRuleset();
         for (Province province : fieldController.provinces) {
             if (province.getColor() == 0) continue; // first player is not getting income at first turn
             province.money -= province.getIncome() - province.getTaxes();
@@ -360,7 +366,7 @@ public class GameController {
 
     private void endTurnActions() {
         checkToEndGame();
-        checkToKillKnights();
+        ruleset.onTurnEnd();
         for (Unit unit : unitList) {
             unit.setReadyToMove(false);
             unit.stopJumping();
@@ -368,32 +374,6 @@ public class GameController {
         if (!isPlayerTurn()) {
 
         }
-    }
-
-
-    private void checkToKillKnights() {
-        if (GameRules.slay_rules) return;
-
-        for (int i = unitList.size() - 1; i >= 0; i--) {
-            Unit unit = unitList.get(i);
-            if (unit.strength == 4 && unit.isReadyToMove()) {
-                checkForKnightPenaltyTip();
-                unit.strength = 2;
-            }
-        }
-    }
-
-
-    private void checkForKnightPenaltyTip() {
-        if (playersNumber == 0) return;
-        OneTimeInfo oneTimeInfo = OneTimeInfo.getInstance();
-        if (oneTimeInfo.aboutKnightPenalty) return;
-
-        MenuControllerYio menuControllerYio = yioGdxGame.menuControllerYio;
-        ArrayList<String> text = menuControllerYio.getArrayListFromString(LanguagesManager.getInstance().getString("one_time_knight_penalty"));
-        menuControllerYio.createTutorialTipWithFixedHeight(text, 8);
-        oneTimeInfo.aboutKnightPenalty = true;
-        oneTimeInfo.save();
     }
 
 
@@ -512,7 +492,7 @@ public class GameController {
             GameRules.setColorNumberBySlider(yioGdxGame.menuControllerYio.sliders.get(2));
             GameRules.setDifficultyBySlider(yioGdxGame.menuControllerYio.sliders.get(3));
             readColorOffsetFromSlider();
-            GameRules.slay_rules = yioGdxGame.menuControllerYio.getCheckButtonById(16).isChecked();
+            GameRules.setSlayRules(yioGdxGame.menuControllerYio.getCheckButtonById(16).isChecked());
         }
         fieldController.createField(generateMap); // generating map
 
@@ -732,11 +712,7 @@ public class GameController {
 
     public int getColorIndexWithOffset(int srcIndex) {
         if (GameRules.inEditorMode) return srcIndex;
-        srcIndex += colorIndexViewOffset;
-        if (srcIndex >= GameRules.colorNumber) {
-            srcIndex -= GameRules.colorNumber;
-        }
-        return srcIndex;
+        return ruleset.getColorIndexWithOffset(srcIndex);
     }
 
 
@@ -772,18 +748,6 @@ public class GameController {
     }
 
 
-    boolean canMergeUnits(Unit unit1, Unit unit2) {
-        int mergedUnitStrength = mergedUnitStrength(unit1, unit2);
-
-        Province provinceByHex = getProvinceByHex(unit1.currentHex);
-        if (playerHasAtLeastOneUnitWithStrength(provinceByHex.getColor(), 4) && mergedUnitStrength == 4) {
-            return false;
-        }
-
-        return mergedUnitStrength <= 4;
-    }
-
-
     public boolean playerHasAtLeastOneUnitWithStrength(int playerColor, int strength) {
         for (Unit unit : unitList) {
             if (unit.getColor() == playerColor && unit.strength == strength) {
@@ -800,7 +764,7 @@ public class GameController {
 
 
     public boolean mergeUnits(Hex hex, Unit unit1, Unit unit2) {
-        if (canMergeUnits(unit1, unit2)) {
+        if (ruleset.canMergeUnits(unit1, unit2)) {
             fieldController.cleanOutHex(unit1.currentHex);
             fieldController.cleanOutHex(unit2.currentHex);
             Unit mergedUnit = fieldController.addUnit(hex, mergedUnitStrength(unit1, unit2));
@@ -848,18 +812,7 @@ public class GameController {
 
 
     void updateCurrentPriceString() {
-        if (selectionController.getTipType() == 0) {
-            currentPriceString = "$" + GameRules.PRICE_TOWER;
-        }
-        if (selectionController.getTipType() >= 1 && selectionController.getTipType() <= 4) {
-            currentPriceString = "$" + (GameRules.PRICE_UNIT * selectionController.getTipType());
-        }
-        if (selectionController.getTipType() == 5) {
-            currentPriceString = "$" + (GameRules.PRICE_FARM + fieldController.selectedProvince.getExtraFarmCost());
-        }
-        if (selectionController.getTipType() == 6) {
-            currentPriceString = "$" + GameRules.PRICE_STRONG_TOWER;
-        }
+        currentPriceString = "$" + selectionController.getCurrentTipPrice();
         priceStringWidth = GraphicsYio.getTextWidth(Fonts.gameFont, currentPriceString);
     }
 
@@ -967,26 +920,39 @@ public class GameController {
         }
 
         if (unit.currentHex.sameColor(toWhere)) { // move peacefully
-            if (!toWhere.containsUnit()) {
-                unit.moveToHex(toWhere);
-            } else {
-                mergeUnits(toWhere, unit, toWhere.unit);
-            }
-            if (isPlayerTurn()) fieldController.setResponseAnimHex(toWhere);
+            moveUnitPeacefully(unit, toWhere);
         } else {
-            fieldController.setHexColor(toWhere, turn); // must be called before object in hex destroyed
-            fieldController.cleanOutHex(toWhere);
-            unit.moveToHex(toWhere);
-            unitProvince.addHex(toWhere);
-            if (isPlayerTurn()) {
-                fieldController.selectedHexes.add(toWhere);
-                updateCacheOnceAfterSomeTime();
-            }
+            moveUnitWithAttack(unit, toWhere, unitProvince);
         }
 
         if (isPlayerTurn()) {
             fieldController.hideMoveZone();
             updateBalanceString();
+        }
+    }
+
+
+    private void moveUnitWithAttack(Unit unit, Hex toWhere, Province unitProvince) {
+        fieldController.setHexColor(toWhere, turn); // must be called before object in hex destroyed
+        fieldController.cleanOutHex(toWhere);
+        unit.moveToHex(toWhere);
+        unitProvince.addHex(toWhere);
+        if (isPlayerTurn()) {
+            fieldController.selectedHexes.add(toWhere);
+            updateCacheOnceAfterSomeTime();
+        }
+    }
+
+
+    private void moveUnitPeacefully(Unit unit, Hex toWhere) {
+        if (!toWhere.containsUnit()) {
+            unit.moveToHex(toWhere);
+        } else {
+            mergeUnits(toWhere, unit, toWhere.unit);
+        }
+
+        if (isPlayerTurn()) {
+            fieldController.setResponseAnimHex(toWhere);
         }
     }
 
@@ -1021,6 +987,15 @@ public class GameController {
         if (GameRules.inEditorMode) levelEditor.touchDrag(screenX, screenY);
 
         cameraController.touchDrag(screenX, screenY);
+    }
+
+
+    public void updateRuleset() {
+        if (GameRules.slay_rules) {
+            ruleset = new RulesetSlay(this);
+        } else {
+            ruleset = new RulesetGeneric(this);
+        }
     }
 
 

@@ -10,6 +10,7 @@ import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.*;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -63,12 +64,12 @@ public class MenuControllerYio {
     private void checkToCreateSingleMessage() {
         SingleMessages.load();
 
-        if (SingleMessages.achikapsRelease) {
-            SingleMessages.achikapsRelease = false;
-            SingleMessages.save();
-            createSingleMessageMenu("achikaps_release");
-            return;
-        }
+//        if (SingleMessages.achikapsRelease) {
+//            SingleMessages.achikapsRelease = false;
+//            SingleMessages.save();
+//            createSingleMessageMenu("achikaps_release");
+//            return;
+//        }
     }
 
 
@@ -102,13 +103,13 @@ public class MenuControllerYio {
         sliders.get(1).setValues(0.2f, 0, 5, false, SliderYio.CONFIGURE_HUMANS); // humans
         sliders.get(2).setValues(0.6, 2, 6, false, SliderYio.CONFIGURE_COLORS); // colors
         sliders.get(3).setValues(0.33, 1, 5, true, SliderYio.CONFIGURE_DIFFICULTY); // difficulty
-        sliders.get(4).setValues(0, 0, 6, true, SliderYio.CONFIGURE_COLOR_OFFSET); // color offset
+        sliders.get(4).setValues(0, 0, 6, true, SliderYio.CONFIGURE_COLOR_OFFSET_SKIRMISH); // color offset
         sliders.get(5).setValues(0, 0, 3, true, SliderYio.CONFIGURE_SKIN); // skin
         sliders.get(6).setValues(0.5f, 0, 4, true, SliderYio.CONFIGURE_CAMERA_OFFSET); // camera offset
-//        sliders.get(7).setValues(0, 0, 1, false, SliderYio.CONFIGURE_COLOR_OFFSET); // autosave
+//        sliders.get(7).setValues(0, 0, 1, false, SliderYio.CONFIGURE_COLOR_OFFSET_SKIRMISH); // autosave
 //        sliders.get(8).setValues(0, 0, 1, true, SliderYio.CONFIGURE_ASK_END_TURN); // ask to end turn
         sliders.get(9).setValues(0.5, 0, 6, false, SliderYio.CONFIGURE_SENSITIVITY); // sensitivity
-//        sliders.get(10).setValues(0, 0, 1, false, SliderYio.CONFIGURE_COLOR_OFFSET); // city names
+//        sliders.get(10).setValues(0, 0, 1, false, SliderYio.CONFIGURE_COLOR_OFFSET_SKIRMISH); // city names
     }
 
 
@@ -636,6 +637,7 @@ public class MenuControllerYio {
     public void loadMoreSkirmishOptions() {
         Preferences prefs = Gdx.app.getPreferences("skirmish");
         sliders.get(4).setRunnerValueByIndex(prefs.getInteger("color_offset", 0));
+        sliders.get(4).setConfigureType(SliderYio.CONFIGURE_COLOR_OFFSET_SKIRMISH);
         getCheckButtonById(16).setChecked(prefs.getBoolean("slay_rules", false));
     }
 
@@ -651,7 +653,7 @@ public class MenuControllerYio {
     }
 
 
-    public void createMoreSkirmishOptionsMenu(ReactBehavior backBehavior) {
+    public void createMoreMatchOptionsMenu(ReactBehavior backBehavior) {
         beginMenuCreation();
 
         yioGdxGame.beginBackgroundChange(2, true, true);
@@ -1023,6 +1025,7 @@ public class MenuControllerYio {
     public void loadMoreCampaignOptions() {
         Preferences prefs = Gdx.app.getPreferences("campaign_options");
         sliders.get(4).setRunnerValueByIndex(prefs.getInteger("color_offset", 1));
+        sliders.get(4).setConfigureType(SliderYio.CONFIGURE_COLOR_OFFSET_CAMPAIGN);
         getCheckButtonById(16).setChecked(prefs.getBoolean("slay_rules", false));
     }
 

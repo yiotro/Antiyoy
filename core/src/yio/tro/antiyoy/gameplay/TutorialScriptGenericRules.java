@@ -2,6 +2,7 @@ package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.LanguagesManager;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 
@@ -54,7 +55,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
         gameSaver.beginRecreation();
         gameSaver.setBasicInfo(0, 1, 5, 1, 0);
         gameController.colorIndexViewOffset = 0;
-        GameRules.slay_rules = false;
+        GameRules.setSlayRules(false);
         gameSaver.endRecreation();
 
 
@@ -305,7 +306,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
             case STEP_INCOME:
                 return true;
             case STEP_CHOOSE_FARM:
-                if (gameController.selectionController.getTipType() == 5) return true;
+                if (gameController.selectionController.getTipType() == SelectionController.TIP_INDEX_FARM) return true;
                 return false;
             case STEP_BUILD_FARM:
                 if (getHex(18, 11).objectInside == Hex.OBJECT_FARM) return true;
@@ -313,7 +314,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
             case STEP_ABOUT_FARM:
                 return true;
             case STEP_CHOOSE_PEASANT:
-                if (gameController.selectionController.getTipType() == 1) return true;
+                if (gameController.selectionController.getTipType() == SelectionController.TIP_INDEX_UNIT_1) return true;
                 return false;
             case STEP_BUILD_PEASANT:
                 if (getHex(19, 9).containsUnit()) return true;
@@ -322,7 +323,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
                 if (getHex(20, 9).containsUnit()) return true;
                 return false;
             case STEP_CHOOSE_TOWER:
-                if (gameController.selectionController.getTipType() == 0) return true;
+                if (gameController.selectionController.getTipType() == SelectionController.TIP_INDEX_TOWER) return true;
                 return false;
             case STEP_BUILD_TOWER:
                 if (getHex(18, 10).objectInside == Hex.OBJECT_TOWER) return true;
@@ -330,7 +331,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
             case STEP_ABOUT_TOWERS:
                 return true;
             case STEP_CHOOSE_SPEARMAN:
-                if (gameController.selectionController.getTipType() == 2) return true;
+                if (gameController.selectionController.getTipType() == SelectionController.TIP_INDEX_UNIT_2) return true;
                 return false;
             case STEP_BUILD_SPEARMAN:
                 if (getHex(19, 8).containsUnit()) return true;
