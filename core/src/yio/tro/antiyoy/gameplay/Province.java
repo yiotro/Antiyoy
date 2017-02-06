@@ -230,7 +230,7 @@ public class Province {
 
 
     public boolean hasEnoughIncomeToAffordUnit(int strength, int turnsToSurvive) {
-        int newIncome = getIncome() - getTaxes() - Unit.getTax(strength);
+        int newIncome = getIncome() - getTaxes() - gameController.ruleset.getUnitTax(strength);
         if (money + turnsToSurvive * newIncome >= 0) return true;
         return false;
     }
@@ -247,7 +247,12 @@ public class Province {
 
 
     public boolean hasMoneyForFarm() {
-        return money >= GameRules.PRICE_FARM + getExtraFarmCost();
+        return money >= getCurrentFarmPrice();
+    }
+
+
+    public int getCurrentFarmPrice() {
+        return GameRules.PRICE_FARM + getExtraFarmCost();
     }
 
 

@@ -1,12 +1,8 @@
 package yio.tro.antiyoy.gameplay.rules;
 
-import yio.tro.antiyoy.LanguagesManager;
-import yio.tro.antiyoy.OneTimeInfo;
-import yio.tro.antiyoy.Yio;
 import yio.tro.antiyoy.gameplay.*;
-import yio.tro.antiyoy.menu.MenuControllerYio;
 
-import java.util.ArrayList;
+import static yio.tro.antiyoy.gameplay.rules.GameRules.*;
 
 public class RulesetGeneric extends Ruleset{
 
@@ -70,13 +66,30 @@ public class RulesetGeneric extends Ruleset{
     @Override
     public int getHexTax(Hex hex) {
         if (hex.containsUnit()) {
-            return hex.unit.getTax();
+            return getUnitTax(hex.unit.strength);
         }
 
-        if (hex.objectInside == Hex.OBJECT_TOWER) return GameRules.TOWER_TAX;
-        if (hex.objectInside == Hex.OBJECT_STRONG_TOWER) return GameRules.STRONG_TOWER_TAX;
+        if (hex.objectInside == Hex.OBJECT_TOWER) return GameRules.TAX_TOWER;
+        if (hex.objectInside == Hex.OBJECT_STRONG_TOWER) return GameRules.TAX_STRONG_TOWER;
 
         return 0;
+
+    }
+
+
+    @Override
+    public int getUnitTax(int strength) {
+        switch (strength) {
+            default:
+            case 1:
+                return TAX_UNIT_GENERIC_1;
+            case 2:
+                return TAX_UNIT_GENERIC_2;
+            case 3:
+                return TAX_UNIT_GENERIC_3;
+            case 4:
+                return TAX_UNIT_GENERIC_4;
+        }
 
     }
 
@@ -91,7 +104,7 @@ public class RulesetGeneric extends Ruleset{
     public void onUnitMoveToHex(Unit unit, Hex hex) {
         if (!hex.containsTree()) return;
 
-        gameController.getProvinceByHex(hex).money += 5;
+        gameController.getProvinceByHex(hex).money += GameRules.TREE_CUT_REWARD;
         gameController.selectionController.updateSelectedProvinceMoney();
     }
 
@@ -109,8 +122,8 @@ public class RulesetGeneric extends Ruleset{
         srcIndex += gameController.colorIndexViewOffset;
 
         // notice that last color index is for neutral lands
-        if (srcIndex >= GameRules.colorNumber - 1) {
-            srcIndex -= GameRules.colorNumber - 1;
+        if (srcIndex >= GameRules.colorNumber || srcIndex == FieldController.NEUTRAL_LANDS_INDEX) {
+            srcIndex -= GameRules.colorNumber;
         }
 
         return srcIndex;

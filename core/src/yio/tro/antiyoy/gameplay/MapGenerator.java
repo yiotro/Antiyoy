@@ -77,7 +77,7 @@ class MapGenerator {
     protected void increaseProvince(ArrayList<Hex> provinceList, double power) {
         for (Hex hex : provinceList) {
             for (int i = 0; i < 6; i++) {
-                Hex adjHex = hex.adjacentHex(i);
+                Hex adjHex = hex.getAdjacentHex(i);
                 if (adjHex.active && !adjHex.sameColor(hex) && random.nextDouble() < power) {
                     adjHex.colorIndex = hex.colorIndex;
                 }
@@ -88,7 +88,7 @@ class MapGenerator {
 
     protected boolean hexHasEnemiesNear(Hex hex) {
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = hex.adjacentHex(i);
+            Hex adjHex = hex.getAdjacentHex(i);
             if (adjHex.active && !adjHex.sameColor(hex)) return true;
         }
         return false;
@@ -163,7 +163,7 @@ class MapGenerator {
             hex.colorIndex = spawnHex.colorIndex;
             if (hex.genPotential == 0) continue;
             for (int i = 0; i < 6; i++) {
-                Hex adjHex = hex.adjacentHex(i);
+                Hex adjHex = hex.getAdjacentHex(i);
                 if (!propagationList.contains(adjHex) && adjHex.active && adjHex.colorIndex != spawnHex.colorIndex) {
                     adjHex.genPotential = hex.genPotential - 1;
                     propagationList.add(adjHex);
@@ -183,7 +183,7 @@ class MapGenerator {
             provinceList.add(tempHex);
             propagationList.remove(0);
             for (int i = 0; i < 6; i++) {
-                adjHex = tempHex.adjacentHex(i);
+                adjHex = tempHex.getAdjacentHex(i);
                 if (adjHex.active && adjHex.sameColor(tempHex) && !propagationList.contains(adjHex) && !provinceList.contains(adjHex)) {
                     propagationList.add(adjHex);
                 }
@@ -307,7 +307,7 @@ class MapGenerator {
     protected boolean provinceHasNeighbourWithColor(ArrayList<Hex> provinceList, int color) {
         for (Hex hex : provinceList) {
             for (int i = 0; i < 6; i++) {
-                Hex adjHex = hex.adjacentHex(i);
+                Hex adjHex = hex.getAdjacentHex(i);
                 if (adjHex.active && adjHex.sameColor(color) && adjHex.numberOfFriendlyHexesNearby() > 0) return true;
             }
         }
@@ -440,7 +440,7 @@ class MapGenerator {
             tempList.remove(0);
             hex.genFlag = true;
             for (int i = 0; i < 6; i++) {
-                Hex adjHex = hex.adjacentHex(i);
+                Hex adjHex = hex.getAdjacentHex(i);
                 if (adjHex.active && !adjHex.genFlag && !tempList.contains(adjHex)) {
                     tempList.add(adjHex);
                 }
@@ -483,7 +483,7 @@ class MapGenerator {
             for (int j = 0; j < fHeight; j++) {
                 if (field[i][j].active && !isHexInsideBounds(field[i][j])) {
                     deactivateHex(field[i][j]);
-                    for (int k = 0; k < 6; k++) maybeDeactivateIfPossible(field[i][j].adjacentHex(k));
+                    for (int k = 0; k < 6; k++) maybeDeactivateIfPossible(field[i][j].getAdjacentHex(k));
                 }
             }
         }
@@ -577,7 +577,7 @@ class MapGenerator {
             boolean activated = activateHex(hex, getRandomColor());
             if (hex.genPotential == 0 || !activated) continue;
             for (int i = 0; i < 6; i++) {
-                Hex adjHex = hex.adjacentHex(i);
+                Hex adjHex = hex.getAdjacentHex(i);
                 if (!adjHex.genFlag && !adjHex.isEmptyHex() && !propagationList.contains(adjHex)) {
                     adjHex.genPotential = hex.genPotential - 1;
                     propagationList.add(adjHex);

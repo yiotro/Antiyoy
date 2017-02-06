@@ -17,9 +17,9 @@ public class AiHardGenericRules extends ArtificialIntelligenceGeneric{
 
     @Override
     public void makeMove() {
-        ArrayList<Unit> unitsReadyToMove = detectUnitsReadyToMove();
+        updateUnitsReadyToMove();
 
-        moveUnits(unitsReadyToMove);
+        moveUnits();
 
         spendMoneyAndMergeUnits();
 

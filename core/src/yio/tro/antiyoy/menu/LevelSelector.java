@@ -31,6 +31,7 @@ public class LevelSelector extends InterfaceElement {
     public TextureRegion textures[], backgroundTexture, completedIcon, lockIconTextures[], unlockIconTextures[];
     FrameBuffer frameBuffer;
     SpriteBatch batch;
+    private int touchDownPanelIndex;
 
 
     public LevelSelector(MenuControllerYio menuControllerYio, int id) {
@@ -259,6 +260,7 @@ public class LevelSelector extends InterfaceElement {
         if (!checkTouchableConditions()) return false;
         touchDownLeftX = leftX;
         lastTouchX = screenX;
+        touchDownPanelIndex = -indexOfPanelThatContainsPoint(screenX, screenY); // minus is here for reason
         touchDownTime = System.currentTimeMillis();
         return true;
     }
@@ -362,6 +364,10 @@ public class LevelSelector extends InterfaceElement {
 
         if (index > 0) index = 0;
         if (index < -textures.length + 1) index = -textures.length + 1;
+
+        // fix for double scrolling bug
+        if (index > touchDownPanelIndex + 1) index = touchDownPanelIndex + 1;
+        if (index < touchDownPanelIndex - 1) index = touchDownPanelIndex - 1;
 
         return index * offsetBetweenPanels;
     }

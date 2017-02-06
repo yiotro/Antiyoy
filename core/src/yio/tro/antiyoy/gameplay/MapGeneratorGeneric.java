@@ -47,7 +47,7 @@ public class MapGeneratorGeneric extends MapGenerator {
         ArrayList<Hex> propagationList = new ArrayList<Hex>();
         Hex tempHex, adjHex;
         propagationList.add(startHex);
-        if (startHex.colorIndex == gameController.fieldController.neutralLandsIndex) {
+        if (startHex.colorIndex == FieldController.NEUTRAL_LANDS_INDEX) {
             provinceList.add(startHex);
             return provinceList;
         }
@@ -56,7 +56,7 @@ public class MapGeneratorGeneric extends MapGenerator {
             provinceList.add(tempHex);
             propagationList.remove(0);
             for (int i = 0; i < 6; i++) {
-                adjHex = tempHex.adjacentHex(i);
+                adjHex = tempHex.getAdjacentHex(i);
                 if (adjHex.active && adjHex.sameColor(tempHex) && !propagationList.contains(adjHex) && !provinceList.contains(adjHex)) {
                     propagationList.add(adjHex);
                 }
@@ -70,7 +70,7 @@ public class MapGeneratorGeneric extends MapGenerator {
     private void genericBalance() {
         // default field
         for (Hex activeHex : gameController.fieldController.activeHexes) {
-            activeHex.colorIndex = gameController.fieldController.neutralLandsIndex;
+            activeHex.colorIndex = FieldController.NEUTRAL_LANDS_INDEX;
         }
 
         for (int i = 0; i < numberOfProvincesByLevelSize(); i++) {
@@ -93,7 +93,7 @@ public class MapGeneratorGeneric extends MapGenerator {
             if (activeHex.numberOfFriendlyHexesNearby() > 0) continue;
             int c = 3;
             for (int i = 0; i < 6; i++) {
-                Hex adjHex = activeHex.adjacentHex(i);
+                Hex adjHex = activeHex.getAdjacentHex(i);
                 if (!adjHex.active || !adjHex.isNeutral()) continue;
                 adjHex.colorIndex = activeHex.colorIndex;
                 c--;
@@ -145,7 +145,7 @@ public class MapGeneratorGeneric extends MapGenerator {
         for (int i = 0; i < num; i++) {
             Hex hex = findHexToExcludeFromProvince(provinceList);
             provinceList.remove(hex);
-            hex.colorIndex = gameController.fieldController.neutralLandsIndex;
+            hex.colorIndex = FieldController.NEUTRAL_LANDS_INDEX;
         }
     }
 
@@ -162,8 +162,8 @@ public class MapGeneratorGeneric extends MapGenerator {
             hex.colorIndex = spawnHex.colorIndex;
             if (hex.genPotential == 0) continue;
             for (int i = 0; i < 6; i++) {
-                Hex adjHex = hex.adjacentHex(i);
-                if (!propagationList.contains(adjHex) && adjHex.active && adjHex.colorIndex == gameController.fieldController.neutralLandsIndex) {
+                Hex adjHex = hex.getAdjacentHex(i);
+                if (!propagationList.contains(adjHex) && adjHex.active && adjHex.colorIndex == FieldController.NEUTRAL_LANDS_INDEX) {
                     adjHex.genPotential = hex.genPotential - 1;
                     propagationList.add(adjHex);
                 }
@@ -179,7 +179,7 @@ public class MapGeneratorGeneric extends MapGenerator {
             Hex hex = findHexToExcludeFromProvince(provinceList);
 //            System.out.println("removed: " + hex);
             provinceList.remove(hex);
-            hex.colorIndex = gameController.fieldController.neutralLandsIndex;
+            hex.colorIndex = FieldController.NEUTRAL_LANDS_INDEX;
         }
     }
 
@@ -188,7 +188,7 @@ public class MapGeneratorGeneric extends MapGenerator {
     protected boolean activateHex(Hex hex, int color) {
         if (hex.active) return false;
         hex.active = true;
-        hex.setColorIndex(gameController.fieldController.neutralLandsIndex);
+        hex.setColorIndex(FieldController.NEUTRAL_LANDS_INDEX);
         ListIterator activeIterator = gameController.fieldController.activeHexes.listIterator();
         activeIterator.add(hex);
         return true;

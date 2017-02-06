@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.LanguagesManager;
+import yio.tro.antiyoy.Settings;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.ButtonYio;
@@ -59,6 +60,12 @@ public class TutorialScriptSlayRules extends TutorialScript{
         allHexesIgnoreTouches();
         showTutorialTip("tip_capture_with_units");
         menuControllerYio.getButtonById(30).setReactBehavior(ReactBehavior.rbChooseGameModeMenu);
+        enableLongTapToMoveInSettings();
+    }
+
+
+    private void enableLongTapToMoveInSettings() {
+        Settings.long_tap_to_move = true;
     }
 
 
@@ -142,7 +149,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
             case STEP_SELECT_PROVINCE:
                 setOnlyHexToRespond(22, 5);
                 for (int i = 0; i < 6; i++) {
-                    Hex adjHex = getHex(22, 5).adjacentHex(i);
+                    Hex adjHex = getHex(22, 5).getAdjacentHex(i);
                     adjHex.setIgnoreTouch(false);
                 }
                 showMessage("tut_tap_on_hex");

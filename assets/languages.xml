@@ -291,6 +291,7 @@
         <string key="units_died" value="Units died in game:"/>
         <string key="units_produced" value="Units produced in game:"/>
         <string key="money_spent" value="Money spent:"/>
+        <string key="time" value="Time:"/>
 
         <!-- Editor -->
         <string key="editor" value="Editor"/>
@@ -332,11 +333,8 @@
         <string key="more_settings_checks" value="# #Water texture # # "/>
 
         <!-- Single messages -->
-        <string key="achikaps_release" value="Hi. # #I've made a new game, it's called 'Achikaps'. It's a simple economic strategy without donations or ads. Hope you'll enjoy it :)"/>
-        <string key="one_time_only_one_knight" value="There must be only one knight for every player. You can't build 2 knights at the same time."/>
-        <string key="one_time_knight_penalty" value="Knight has to move every turn. Otherwise he will be demoted to spearman for being lazy."/>
-        <string key="one_time_strong_tower_demote" value="If province doesn't have money to support strong tower it turns into usual tower."/>
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
+        <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
     </language>
 
 
@@ -651,6 +649,7 @@
         <string key="units_died" value="Юнитов умерло:"/>
         <string key="units_produced" value="Юнитов построено:"/>
         <string key="money_spent" value="Денег потрачено:"/>
+        <string key="time" value="Время:"/>
 
         <!-- Editor -->
         <string key="editor" value="Редактор"/>
@@ -692,11 +691,8 @@
         <string key="more_settings_checks" value="# #Текстура воды # # "/>
 
         <!-- Single messages -->
-        <string key="achikaps_release" value="Привет. # #Я сделал новую игру, она называется 'Achikaps'. Это простая экономическая стратегия без доната и рекламы. Надеюсь вам понравится :)"/>
-        <string key="one_time_only_one_knight" value="У каждого игрока может быть не более одного рыцаря одновременно."/>
-        <string key="one_time_knight_penalty" value="Рыцарь должен двигаться каждый ход чтобы имитировать бурную деятельность. Иначе он будет понижен в должности до копейщика."/>
-        <string key="one_time_strong_tower_demote" value="Если в провинции недостаточно денег на поддержание сильной башни, то она превращается в обычную."/>
         <string key="check_shroomarts" value="Новый скин от ShroomArts"/>
+        <string key="level_24" value="Это первый 'сложный' уровень. Уделяй больше внимания защите."/>
     </language>
 
 
@@ -1010,6 +1006,7 @@
         <string key="units_died" value="Юнiтiв померло:"/>
         <string key="units_produced" value="Юнiтiв побудовано:"/>
         <string key="money_spent" value="Грошей витрачено:"/>
+        <string key="time" value="Час:"/>
 
         <!-- Editor -->
         <string key="editor" value="Редактор"/>
@@ -1051,11 +1048,8 @@
         <string key="more_settings_checks" value="# #Текстура води # # "/>
 
         <!-- Single messages -->
-        <string key="achikaps_release" value="Вітаю. # #Я зробив нову гру, вона називається 'Achikaps'. Це проста економічна стратегія без донату або реклами. Сподіваюся вона вам сподобається :)"/>
-        <string key="one_time_only_one_knight" value="У кожного гравця може бути не більше одного лицаря одночасно."/>
-        <string key="one_time_knight_penalty" value="Лицар повинен рухатись кожного ходу. Інакше він буде понижений до воїна."/>
-        <string key="one_time_strong_tower_demote" value="Якщо в провінції недостатньо грошей на підтримку сильної вежі, то вона перетворюється на звичайну."/>
         <string key="check_shroomarts" value="Новий скін від ShroomArts"/>
+        <string key="level_24" value="Це перший 'складний' рівень. Приділяй більше уваги захисту."/>
     </language>
 
 
@@ -1374,6 +1368,7 @@
         <string key="units_died" value="Im Spiel gestorbene Einheiten:"/>
         <string key="units_produced" value="Im Spiel produzierte Einheiten:"/>
         <string key="money_spent" value="Ausgegebenes Geld:"/>
+        <string key="time" value="Time:"/>
 
         <!-- Editor -->
         <string key="editor" value="Editor"/>  <!-- Same as english -->
@@ -1415,11 +1410,8 @@
         <string key="more_settings_checks" value="# #Wasser-Textur # # "/>
 
         <!-- Single messages -->
-        <string key="achikaps_release" value="Hi. # #Es gibt ein neues Spiel von mir, es heißt 'Achikaps'. Es ist ein simples Wirtschaftsstrategiespiel ohne Werbung oder Spendenaufforderungen. Ich hoffe es gefällt Euch :)"/>
-        <string key="one_time_only_one_knight" value="There must be only one knight for every player. You can't build 2 knights at the same time."/>  <!-- Same as english -->
-        <string key="one_time_knight_penalty" value="Knight has to move every turn. Otherwise he will be demoted to spearman for being lazy."/>  <!-- Same as english -->
-        <string key="one_time_strong_tower_demote" value="If province doesn't have money to support strong tower it turns into usual tower."/>
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
+        <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
     </language>
 
 
@@ -1722,6 +1714,7 @@
         <string key="units_died" value="Zabito jednotek:"/>
         <string key="units_produced" value="Postaveno jednotek:"/>
         <string key="money_spent" value="Utraceno peněz:"/>
+        <string key="time" value="Time:"/>
 
         <!-- Editor -->
         <string key="editor" value="Editor"/>  <!-- Same as english -->
@@ -1763,11 +1756,8 @@
         <string key="more_settings_checks" value="# #Textura vody # # "/>
 
         <!-- Single messages -->
-        <string key="achikaps_release" value="Ahoj. # #Dokončil jsem novou hru, která se jmenuje 'Achikaps'.#Je to jednoduchý ekonomický simulátor bez dotací a reklam. Snad si ho užijete :)"/>
-        <string key="one_time_only_one_knight" value="There must be only one knight for every player. You can't build 2 knights at the same time."/>  <!-- Same as english -->
-        <string key="one_time_knight_penalty" value="Knight has to move every turn. Otherwise he will be demoted to spearman for being lazy."/>  <!-- Same as english -->
-        <string key="one_time_strong_tower_demote" value="If province doesn't have money to support strong tower it turns into usual tower."/>
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
+        <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
     </language>
 
 
@@ -2077,6 +2067,7 @@
         <string key="units_died" value="Unités mortes durant la partie :"/>
         <string key="units_produced" value="Unités produits durant la partie :"/>
         <string key="money_spent" value="Argent dépensé :"/>
+        <string key="time" value="Time:"/>
 
         <!-- Editor -->
         <string key="editor" value="Éditeur"/>
@@ -2118,11 +2109,8 @@
         <string key="more_settings_checks" value="# #Water texture # # "/>
 
         <!-- Single messages -->
-        <string key="achikaps_release" value="Hi. # #I've made a new game, it's called 'Achikaps'. It's a simple economic strategy without donations or ads. Hope you'll enjoy it :)"/>
-        <string key="one_time_only_one_knight" value="There must be only one knight for every player. You can't build 2 knights at the same time."/>
-        <string key="one_time_knight_penalty" value="Knight has to move every turn. Otherwise he will be demoted to spearman for being lazy."/>
-        <string key="one_time_strong_tower_demote" value="If province doesn't have money to support strong tower it turns into usual tower."/>
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
+        <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
     </language>
 
 
@@ -2435,6 +2423,7 @@
         <string key="units_died" value="Zginęło jednostek:"/>
         <string key="units_produced" value="Wynajęte jednostki:"/>
         <string key="money_spent" value="Wydane pieniądze:"/>
+        <string key="time" value="Time:"/>
 
         <!-- Editor -->
         <string key="editor" value="Edytor"/>
@@ -2476,11 +2465,8 @@
         <string key="more_settings_checks" value="# #Tekstura wody # # "/>
 
         <!-- Single messages -->
-        <string key="achikaps_release" value="Witaj! # #Stworzyłem nową grę o nazwie 'Achikaps'. To prosta ekonomiczna strategia bez dotacji lub reklam. Mam nadzieję, że ci się spodoba :)"/>
-        <string key="one_time_only_one_knight" value="There must be only one knight for every player. You can't build 2 knights at the same time."/>  <!-- Same as english -->
-        <string key="one_time_knight_penalty" value="Knight has to move every turn. Otherwise he will be demoted to spearman for being lazy."/>  <!-- Same as english -->
-        <string key="one_time_strong_tower_demote" value="If province doesn't have money to support strong tower it turns into usual tower."/>
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
+        <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
     </language>
 
 
@@ -2789,6 +2775,7 @@
         <string key="units_died" value="Unità uccise:"/>
         <string key="units_produced" value="Unità prodotte:"/>
         <string key="money_spent" value="Soldi spesi:"/>
+        <string key="time" value="Time:"/>
 
         <!-- Editor -->
         <string key="editor" value="Editor"/>
@@ -2830,11 +2817,8 @@
         <string key="more_settings_checks" value="# #Water texture # # "/>
 
         <!-- Single messages -->
-        <string key="achikaps_release" value="Hi. # #I've made a new game, it's called 'Achikaps'. It's a simple economic strategy without donations or ads. Hope you'll enjoy it :)"/>
-        <string key="one_time_only_one_knight" value="There must be only one knight for every player. You can't build 2 knights at the same time."/>
-        <string key="one_time_knight_penalty" value="Knight has to move every turn. Otherwise he will be demoted to spearman for being lazy."/>
-        <string key="one_time_strong_tower_demote" value="If province doesn't have money to support strong tower it turns into usual tower."/>
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
+        <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
     </language>
 
 
@@ -3138,6 +3122,7 @@
         <string key="units_died" value="Unidades muertas en la partida:"/>
         <string key="units_produced" value="Unidades creadas en la partida:"/>
         <string key="money_spent" value="Dinero gastado:"/>
+        <string key="time" value="Time:"/>
 
         <!-- Editor -->
         <string key="editor" value="Editor" />
@@ -3176,11 +3161,8 @@
         <string key="more_settings_checks" value="# #Textura acuática # # "/>
 
         <!-- Single messages -->
-        <string key="achikaps_release" value="Hola. # #He creado un nuevo juego, se llama 'Achikaps'. Es un juego simple de estrategia económica sin publicidad ni necesidad de donar. Espero que lo disfrutes :)"/>
-        <string key="one_time_only_one_knight" value="There must be only one knight for every player. You can't build 2 knights at the same time."/>
-        <string key="one_time_knight_penalty" value="Knight has to move every turn. Otherwise he will be demoted to spearman for being lazy."/>
-        <string key="one_time_strong_tower_demote" value="If province doesn't have money to support strong tower it turns into usual tower."/>
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
+        <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
     </language>
 
 

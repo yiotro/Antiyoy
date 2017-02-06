@@ -69,7 +69,7 @@ public class MoveZoneDetection {
         if (tempHex.moveZoneNumber == 0) return;
 
         for (int i = 0; i < 6; i++) {
-            adjHex = tempHex.adjacentHex(i);
+            adjHex = tempHex.getAdjacentHex(i);
             if (!adjHex.active) continue;
             if (adjHex.flag) continue;
 

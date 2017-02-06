@@ -24,9 +24,9 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
 
     @Override
     public void makeMove() {
-        ArrayList<Unit> unitsReadyToMove = detectUnitsReadyToMove();
+        updateUnitsReadyToMove();
 
-        moveUnits(unitsReadyToMove);
+        moveUnits();
 
         spendMoneyAndMergeUnits();
 
@@ -55,7 +55,7 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
 
     protected boolean isHexDefendedBySomethingElse(Hex hex, Unit unit) {
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = hex.adjacentHex(i);
+            Hex adjHex = hex.getAdjacentHex(i);
             if (adjHex.active && adjHex.sameColor(hex)) {
                 if (adjHex.containsBuilding()) return true;
                 if (adjHex.containsUnit() && adjHex.unit != unit) return true;
@@ -68,7 +68,7 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
     protected boolean unitCanMoveSafely(Unit unit) {
         int leftBehindNumber = 0;
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = unit.currentHex.adjacentHex(i);
+            Hex adjHex = unit.currentHex.getAdjacentHex(i);
             if (    adjHex.active &&
                     adjHex.sameColor(unit.currentHex) &&
                     !isHexDefendedBySomethingElse(adjHex, unit) &&
@@ -88,7 +88,7 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
 
     boolean hexHasFriendlyBuildingNearby(Hex hex) {
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = hex.adjacentHex(i);
+            Hex adjHex = hex.getAdjacentHex(i);
             if (adjHex.active && adjHex.sameColor(hex) && adjHex.containsBuilding()) return true;
         }
         return false;
@@ -175,11 +175,10 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
     boolean needTowerOnHex(Hex hex) {
         if (!hex.active) return false;
         if (!hex.isFree()) return false;
-        int c = 0;
-        for (int i = 0; i < 6; i++) {
-            Hex adjHex = hex.adjacentHex(i);
-            if (adjHex.active && hex.sameColor(adjHex) && !adjHex.isDefendedByTower()) c++;
-        }
-        return c >= 4;
+
+        updateNearbyProvinces(hex);
+        if (nearbyProvinces.size() == 0) return false; // build towers only at front line
+
+        return getPredictedDefenseGainByNewTower(hex) >= 3;
     }
 }

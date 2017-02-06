@@ -15,8 +15,8 @@ public class RbBuildSolidObject extends ReactBehavior {
 
     public RbBuildSolidObject() {
         chain = new int[]{
-                SelectionController.TIP_INDEX_TOWER,
                 SelectionController.TIP_INDEX_FARM,
+                SelectionController.TIP_INDEX_TOWER,
                 SelectionController.TIP_INDEX_STRONG_TOWER
         };
     }

@@ -33,6 +33,9 @@ public abstract class Ruleset {
     public abstract int getHexTax(Hex hex);
 
 
+    public abstract int getUnitTax(int strength);
+
+
     public abstract boolean canBuildUnit(Province province, int strength);
 
 
@@ -49,7 +52,7 @@ public abstract class Ruleset {
         if (!hex.active) return 0;
         int c = 0;
         for (int i = 0; i < 6; i++)
-            if (hex.adjacentHex(i).containsTree()) c++;
+            if (hex.getAdjacentHex(i).containsTree()) c++;
         return c;
     }
 }

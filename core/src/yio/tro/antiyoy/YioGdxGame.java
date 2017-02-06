@@ -24,6 +24,7 @@ import static yio.tro.antiyoy.gameplay.rules.GameRules.slay_rules;
 public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
     final SplatController splatController;
+    private final OnKeyActions onKeyActions;
     public SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     public int w, h;
@@ -65,6 +66,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
     public YioGdxGame() {
         splatController = new SplatController(this);
+        onKeyActions = new OnKeyActions(this);
     }
 
 
@@ -650,7 +652,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     }
 
 
-    private void pressButtonIfVisible(int id) {
+    public void pressButtonIfVisible(int id) {
         ButtonYio button = menuControllerYio.getButtonById(id);
         if (button != null && button.isVisible() && button.factorModel.get() == 1) button.press();
     }
@@ -666,43 +668,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.BACK || keycode == Input.Keys.ESCAPE) {
-            if (!gamePaused) {
-                ButtonYio pauseButton = menuControllerYio.getButtonById(30);
-                if (pauseButton != null && pauseButton.isVisible()) pauseButton.press();
-                else menuControllerYio.getButtonById(140).press();
-            } else {
-                pressButtonIfVisible(42);
-                pressButtonIfVisible(1);
-
-                // back buttons
-                for (Integer integer : backButtonIds) {
-                    pressButtonIfVisible(integer);
-                }
-            }
-        }
-        if (keycode == Input.Keys.Q) {
-            if (!gamePaused) {
-                menuControllerYio.getButtonById(32).press(); // debug
-                pressButtonIfVisible(53); // skip tutorial tip
-            }
-        }
-        if (keycode == Input.Keys.SPACE) {
-            if (!gamePaused) {
-                menuControllerYio.getButtonById(31).press(); // end turn
-                pressButtonIfVisible(53); // close tip
-            }
-        }
-        if (keycode == Input.Keys.NUM_1) {
-            if (!gamePaused) pressButtonIfVisible(39);
-        }
-        if (keycode == Input.Keys.NUM_2) {
-            if (!gamePaused) pressButtonIfVisible(38);
-        }
-        if (keycode == Input.Keys.D) {
-            if (!gamePaused) gameController.debugActions();
-        }
-        return false;
+        return onKeyActions.onKeyPressed(keycode);
     }
 
 

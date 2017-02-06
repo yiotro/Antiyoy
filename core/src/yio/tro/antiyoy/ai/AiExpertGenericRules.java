@@ -5,6 +5,7 @@ import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.Unit;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 import java.util.ArrayList;
 
@@ -21,9 +22,9 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
 
     @Override
     public void makeMove() {
-        ArrayList<Unit> unitsReadyToMove = detectUnitsReadyToMove();
+        updateUnitsReadyToMove();
 
-        moveUnits(unitsReadyToMove);
+        moveUnits();
 
         spendMoneyAndMergeUnits();
 
@@ -52,7 +53,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
 
     protected boolean isHexDefendedBySomethingElse(Hex hex, Unit unit) {
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = hex.adjacentHex(i);
+            Hex adjHex = hex.getAdjacentHex(i);
             if (adjHex.active && adjHex.sameColor(hex)) {
                 if (adjHex.containsBuilding()) return true;
                 if (adjHex.containsUnit() && adjHex.unit != unit) return true;
@@ -65,7 +66,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
     protected boolean unitCanMoveSafely(Unit unit) {
         int leftBehindNumber = 0;
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = unit.currentHex.adjacentHex(i);
+            Hex adjHex = unit.currentHex.getAdjacentHex(i);
             if (adjHex.active && adjHex.sameColor(unit.currentHex) && !isHexDefendedBySomethingElse(adjHex, unit) && adjHex.isInPerimeter())
                 leftBehindNumber++;
         }
@@ -82,7 +83,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
 
     boolean hexHasFriendlyBuildingNearby(Hex hex) {
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = hex.adjacentHex(i);
+            Hex adjHex = hex.getAdjacentHex(i);
             if (adjHex.active && adjHex.sameColor(hex) && adjHex.containsBuilding()) return true;
         }
         return false;
@@ -167,16 +168,57 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
 
     @Override
     void tryToBuildTowers(Province province) {
+        // try to build normal towers
         while (province.hasMoneyForTower()) {
             Hex hex = findHexThatNeedsTower(province);
-            if (hex == null) return;
+            if (hex == null) break;
 
-            if (province.hasMoneyForStrongTower()) {
-                gameController.fieldController.buildStrongTower(province, hex);
-                continue;
-            }
             gameController.fieldController.buildTower(province, hex);
         }
+
+        // try to build strong towers
+        while (provinceCanAffordStrongTower(province)) {
+            Hex hex = findHexForStrongTower(province);
+            if (hex == null) break;
+
+            gameController.fieldController.buildStrongTower(province, hex);
+        }
+    }
+
+
+    protected Hex findHexForStrongTower(Province province) {
+        for (Hex hex : province.hexList) {
+            if (hex.objectInside != Hex.OBJECT_TOWER) continue;
+
+            if (needsStrongTowerOnHex(province, hex)) {
+                return hex;
+            }
+        }
+
+        return null;
+    }
+
+
+    protected boolean needsStrongTowerOnHex(Province province, Hex hex) {
+        updateNearbyProvinces(hex);
+
+        if (nearbyProvinces.size() == 0) return false;
+
+        for (Province nearbyProvince : nearbyProvinces) {
+            if (nearbyProvince.hexList.size() > province.hexList.size() / 2) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    protected boolean provinceCanAffordStrongTower(Province province) {
+        if (!province.hasMoneyForStrongTower()) return false;
+        if (province.getIncome() - GameRules.TAX_STRONG_TOWER < GameRules.PRICE_UNIT / 2) return false;
+
+        return true;
     }
 
 
@@ -184,11 +226,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
     boolean needTowerOnHex(Hex hex) {
         if (!hex.active) return false;
         if (!hex.isFree()) return false;
-        int c = 0;
-        for (int i = 0; i < 6; i++) {
-            Hex adjHex = hex.adjacentHex(i);
-            if (adjHex.active && hex.sameColor(adjHex) && !adjHex.isDefendedByTower()) c++;
-        }
-        return c >= 4;
+
+        return getPredictedDefenseGainByNewTower(hex) >= 4;
     }
 }

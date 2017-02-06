@@ -42,7 +42,7 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
                 pushUnitToBetterDefense(unit, province);
             }
 
-            checkToSwapUnitForTower(unit, moveZone, province);
+//            checkToSwapUnitForTower(unit, moveZone, province);
         }
     }
 
@@ -52,7 +52,7 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
         if (!unit.isReadyToMove()) return;
 
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = unit.currentHex.adjacentHex(i);
+            Hex adjHex = unit.currentHex.getAdjacentHex(i);
             if (!adjHex.active) continue;
             if (!adjHex.sameColor(unit.currentHex)) continue;
             if (!adjHex.isFree()) continue;
@@ -72,7 +72,7 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
         defenseGain += unit.strength;
 
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = unit.currentHex.adjacentHex(i);
+            Hex adjHex = unit.currentHex.getAdjacentHex(i);
             if (!adjHex.active) continue;
             if (!adjHex.sameColor(unit.currentHex)) continue;
 
@@ -133,7 +133,7 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
 
     protected Hex getNearbyHexWithColor(Hex src, int color) {
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = src.adjacentHex(i);
+            Hex adjHex = src.getAdjacentHex(i);
             if (!adjHex.active) continue;
             if (!adjHex.sameColor(color)) continue;
             if (adjHex.numberOfFriendlyHexesNearby() == 0) continue;
@@ -147,7 +147,7 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
     int getAttackAllure(Hex hex, int color) {
         int c = 0;
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = hex.adjacentHex(i);
+            Hex adjHex = hex.getAdjacentHex(i);
             if (adjHex.active && adjHex.sameColor(color)) c++;
             if (adjHex.active && adjHex.sameColor(color) && adjHex.objectInside == Hex.OBJECT_TOWN) c += 5;
         }
@@ -185,7 +185,7 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
         defenseLoss += unit.currentHex.getDefenseNumber() - unit.currentHex.getDefenseNumber(unit);
 
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = unit.currentHex.adjacentHex(i);
+            Hex adjHex = unit.currentHex.getAdjacentHex(i);
             if (!adjHex.active) continue;
             if (!adjHex.sameColor(unit.currentHex)) continue;
             defenseLoss += adjHex.getDefenseNumber() - adjHex.getDefenseNumber(unit);
@@ -210,7 +210,7 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
             propagationList.remove(hex);
             if (hex.objectInside == Hex.OBJECT_TOWN) return true;
             for (int i = 0; i < 6; i++) {
-                Hex adjHex = hex.adjacentHex(i);
+                Hex adjHex = hex.getAdjacentHex(i);
                 if (!adjHex.active) continue;
                 if (!adjHex.sameColor(startHex)) continue;
                 if (adjHex.flag) continue;
@@ -243,7 +243,7 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
         int c = 0;
 
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = hex.adjacentHex(i);
+            Hex adjHex = hex.getAdjacentHex(i);
             if (!adjHex.active) continue;
             if (!adjHex.sameColor(color)) continue;
             if (!adjHex.containsUnit() || !adjHex.containsTower()) continue;

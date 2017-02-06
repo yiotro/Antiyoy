@@ -178,7 +178,7 @@ public class SelectionController {
     void showDefenseTip(Hex hex) {
         gameController.fieldController.defenseTips = new ArrayList<Hex>();
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = hex.adjacentHex(i);
+            Hex adjHex = hex.getAdjacentHex(i);
             if (adjHex.active && adjHex.sameColor(hex)) {
                 gameController.fieldController.defenseTips.add(adjHex);
             }
@@ -329,7 +329,7 @@ public class SelectionController {
             case TIP_INDEX_UNIT_4:
                 return (GameRules.PRICE_UNIT * tipType);
             case TIP_INDEX_FARM:
-                return (GameRules.PRICE_FARM + gameController.fieldController.selectedProvince.getExtraFarmCost());
+                return gameController.fieldController.selectedProvince.getCurrentFarmPrice();
             case TIP_INDEX_STRONG_TOWER:
                 return GameRules.PRICE_STRONG_TOWER;
             case TIP_INDEX_TREE:

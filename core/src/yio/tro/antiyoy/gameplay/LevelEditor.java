@@ -19,6 +19,7 @@ public class LevelEditor {
 
     public static final String EDITOR_PREFS = "editor";
     public static final String SLOT_NAME = "slot";
+    public static final int TEMPORARY_SLOT_NUMBER = 1993; // to edit campaign levels
     private final GameController gameController;
     private int inputMode, inputColor, inputObject;
     private boolean randomColor, filteredByOnlyLand;
@@ -125,7 +126,7 @@ public class LevelEditor {
             Hex hex = tempList.get(0);
             tempList.remove(0);
             for (int i = 0; i < 6; i++) {
-                Hex adjacentHex = hex.adjacentHex(i);
+                Hex adjacentHex = hex.getAdjacentHex(i);
                 if (adjacentHex.active && adjacentHex.sameColor(hex) && !province.contains(adjacentHex)) {
                     tempList.add(adjacentHex);
                     province.add(adjacentHex);
@@ -435,7 +436,7 @@ public class LevelEditor {
     public void setInputColor(int inputColor) {
         this.inputColor = inputColor;
         setRandomColor(false);
-        if (inputColor >= GameRules.MAX_COLOR_NUMBER && inputColor != gameController.fieldController.neutralLandsIndex) setRandomColor(true);
+        if (inputColor >= GameRules.MAX_COLOR_NUMBER && inputColor != FieldController.NEUTRAL_LANDS_INDEX) setRandomColor(true);
     }
 
 
@@ -450,6 +451,16 @@ public class LevelEditor {
         } else {
             filterButton.setTextLine(getLangManager().getString("filter_no"));
         }
+    }
+
+
+    public void launchEditCampaignLevelMode() {
+        if (GameRules.inEditorMode) return;
+
+        GameRules.inEditorMode = true;
+        currentSlotNumber = TEMPORARY_SLOT_NUMBER;
+        saveSlot();
+        gameController.yioGdxGame.menuControllerYio.createEditorActionsMenu();
     }
 
 

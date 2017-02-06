@@ -27,6 +27,7 @@ public class GameController {
     public final SelectionController selectionController;
     public final FieldController fieldController;
     public final CameraController cameraController;
+    private final AiFactory aiFactory;
 
     public Random random, predictableRandom;
     private LanguagesManager languagesManager;
@@ -76,6 +77,7 @@ public class GameController {
         levelSnapshots = new ArrayList<LevelSnapshot>();
         mapGeneratorSlay = new MapGenerator(this);
         mapGeneratorGeneric = new MapGeneratorGeneric(this);
+        aiList = new ArrayList<ArtificialIntelligence>();
 
         fieldController = new FieldController(this);
         jumperUnit = new Unit(this, fieldController.emptyHex, 0);
@@ -84,6 +86,7 @@ public class GameController {
         gameSaver = new GameSaver(this);
         forefinger = new Forefinger(this);
         levelEditor = new LevelEditor(this);
+        aiFactory = new AiFactory(this);
     }
 
 
@@ -130,6 +133,7 @@ public class GameController {
 
     public void move() {
         currentTime = System.currentTimeMillis();
+        statistics.increaseTimeCount();
         checkForAiToMove();
         checkToEndTurn();
         checkToUpdateCacheByAnim();
@@ -502,7 +506,8 @@ public class GameController {
         cameraController.createCamera();
         yioGdxGame.gameView.updateCacheLevelTextures();
         fieldController.clearAnims();
-        createAiList(GameRules.difficulty);
+        aiFactory.createAiList(GameRules.difficulty);
+        yioGdxGame.menuControllerYio.removeButtonById(38); // build object button
         updateLevelInitialString();
         if (DebugFlags.CHECKING_BALANCE_MODE) {
             while (true) {
@@ -543,65 +548,7 @@ public class GameController {
 
 
     void createAiList() {
-        createAiList(GameRules.difficulty);
-    }
-
-
-    private void createAiList(int difficulty) {
-        aiList = new ArrayList<ArtificialIntelligence>();
-
-        boolean testingNewAi = false;
-        if (DebugFlags.CHECKING_BALANCE_MODE && testingNewAi && GameRules.colorNumber == 5) {
-//            aiList.add(new AiExpertSlayRules(this, 0));
-//            aiList.add(new AiExpertSlayRules(this, 1));
-//            aiList.add(new AiExpertSlayRules(this, 2));
-//            aiList.add(new AiBalancerSlayRules(this, 3));
-//            aiList.add(new AiBalancerSlayRules(this, 4));
-
-            aiList.add(new AiExpertGenericRules(this, 0));
-            aiList.add(new AiExpertGenericRules(this, 1));
-            aiList.add(new AiExpertGenericRules(this, 2));
-            aiList.add(new AiBalancerGenericRules(this, 3));
-            aiList.add(new AiBalancerGenericRules(this, 4));
-            return;
-        }
-
-        for (int i = 0; i < GameRules.colorNumber; i++) {
-            switch (difficulty) {
-                default:
-                case ArtificialIntelligence.DIFFICULTY_EASY:
-                    aiList.add(new AiEasy(this, i));
-                    break;
-                case ArtificialIntelligence.DIFFICULTY_NORMAL:
-                    if (GameRules.slay_rules) {
-                        aiList.add(new AiNormalSlayRules(this, i));
-                    } else {
-                        aiList.add(new AiNormalGenericRules(this, i));
-                    }
-                    break;
-                case ArtificialIntelligence.DIFFICULTY_HARD:
-                    if (GameRules.slay_rules) {
-                        aiList.add(new AiHardSlayRules(this, i));
-                    } else {
-                        aiList.add(new AiHardGenericRules(this, i));
-                    }
-                    break;
-                case ArtificialIntelligence.DIFFICULTY_EXPERT:
-                    if (GameRules.slay_rules) {
-                        aiList.add(new AiExpertSlayRules(this, i));
-                    } else {
-                        aiList.add(new AiExpertGenericRules(this, i));
-                    }
-                    break;
-                case ArtificialIntelligence.DIFFICULTY_BALANCER:
-                    if (GameRules.slay_rules) {
-                        aiList.add(new AiBalancerSlayRules(this, i));
-                    } else {
-                        aiList.add(new AiBalancerGenericRules(this, i));
-                    }
-                    break;
-            }
-        }
+        aiFactory.createAiList(GameRules.difficulty);
     }
 
 
@@ -1089,5 +1036,10 @@ public class GameController {
 
     public int getTurn() {
         return turn;
+    }
+
+
+    public ArrayList<ArtificialIntelligence> getAiList() {
+        return aiList;
     }
 }

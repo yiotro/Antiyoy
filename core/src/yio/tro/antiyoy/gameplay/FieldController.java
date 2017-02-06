@@ -11,8 +11,8 @@ import java.util.ListIterator;
 
 public class FieldController {
 
-    public static final int NEUTRAL_LANDS_DEFAULT_INDEX = 7;
     public final GameController gameController;
+    public static int NEUTRAL_LANDS_INDEX = 7;
     public static final int SIZE_SMALL = 1;
     public static final int SIZE_MEDIUM = 2;
     public static final int SIZE_BIG = 4;
@@ -44,7 +44,6 @@ public class FieldController {
     public ArrayList<Province> provinces;
     public Province selectedProvince;
     public int selectedProvinceMoney;
-    public int neutralLandsIndex;
     public long timeToCheckAnimHexes;
     public int[] playerHexCount;
 
@@ -91,7 +90,6 @@ public class FieldController {
     public void defaultValues() {
         selectedProvince = null;
         moveZoneFactor.setValues(0, 0);
-        neutralLandsIndex = NEUTRAL_LANDS_DEFAULT_INDEX;
     }
 
 
@@ -139,7 +137,7 @@ public class FieldController {
         for (Hex activeHex : activeHexes) {
             if (activeHex.genFlag) continue;
 
-            activeHex.setColorIndex(neutralLandsIndex);
+            activeHex.setColorIndex(NEUTRAL_LANDS_INDEX);
         }
     }
 
@@ -280,7 +278,7 @@ public class FieldController {
                     tempList.add(tempHex);
                     propagationList.remove(0);
                     for (int i = 0; i < 6; i++) {
-                        adjHex = tempHex.adjacentHex(i);
+                        adjHex = tempHex.getAdjacentHex(i);
                         if (adjHex.active && adjHex.sameColor(tempHex) && !adjHex.flag) {
                             propagationList.add(adjHex);
                             adjHex.flag = true;
@@ -661,8 +659,8 @@ public class FieldController {
         }
         if (province.hasMoneyForFarm()) {
             gameController.takeSnapshot();
-            province.money -= GameRules.PRICE_FARM + province.getExtraFarmCost();
-            gameController.getStatistics().moneyWereSpent(GameRules.PRICE_FARM + province.getExtraFarmCost());
+            province.money -= province.getCurrentFarmPrice();
+            gameController.getStatistics().moneyWereSpent(province.getCurrentFarmPrice());
             addSolidObject(hex, Hex.OBJECT_FARM);
             addAnimHex(hex);
             updateSelectedProvinceMoney();
@@ -734,7 +732,7 @@ public class FieldController {
 
     public boolean hexHasSelectedNearby(Hex hex) {
         for (int i = 0; i < 6; i++)
-            if (hex.adjacentHex(i).selected) return true;
+            if (hex.getAdjacentHex(i).selected) return true;
         return false;
     }
 
@@ -813,7 +811,7 @@ public class FieldController {
     public boolean hexHasNeighbourWithColor(Hex hex, int color) {
         Hex neighbour;
         for (int i = 0; i < 6; i++) {
-            neighbour = hex.adjacentHex(i);
+            neighbour = hex.getAdjacentHex(i);
             if (neighbour != null && neighbour.active && neighbour.sameColor(color)) return true;
         }
         return false;
@@ -874,7 +872,7 @@ public class FieldController {
         hex.flag = true;
         gameController.getPredictableRandom().setSeed(hex.index1 + hex.index2);
         for (int k = 0; k < 6; k++) {
-            startHex = hex.adjacentHex(k);
+            startHex = hex.getAdjacentHex(k);
             if (!startHex.active || startHex.colorIndex != color || startHex.flag) continue;
             tempList.clear();
             propagationList.clear();
@@ -885,7 +883,7 @@ public class FieldController {
                 tempList.add(tempHex);
                 propagationList.remove(0);
                 for (int i = 0; i < 6; i++) {
-                    adjHex = tempHex.adjacentHex(i);
+                    adjHex = tempHex.getAdjacentHex(i);
                     if (adjHex.active && adjHex.sameColor(tempHex) && !adjHex.flag) {
                         propagationList.add(adjHex);
                         adjHex.flag = true;
@@ -918,7 +916,7 @@ public class FieldController {
         ArrayList<Province> adjacentProvinces = new ArrayList<Province>();
         Province p;
         for (int i = 0; i < 6; i++) {
-            p = getProvinceByHex(hex.adjacentHex(i));
+            p = getProvinceByHex(hex.getAdjacentHex(i));
             if (p != null && hex.sameColor(p) && !adjacentProvinces.contains(p)) adjacentProvinces.add(p);
         }
         if (adjacentProvinces.size() >= 2) {
@@ -942,7 +940,7 @@ public class FieldController {
     public void joinHexToAdjacentProvince(Hex hex) {
         Province p;
         for (int i = 0; i < 6; i++) {
-            p = getProvinceByHex(hex.adjacentHex(i));
+            p = getProvinceByHex(hex.getAdjacentHex(i));
             if (p != null && hex.sameColor(p)) {
                 p.addHex(hex);
                 Hex h;
@@ -965,7 +963,7 @@ public class FieldController {
         joinHexToAdjacentProvince(hex);
         ListIterator animIterator = animHexes.listIterator();
         for (int i = 0; i < 6; i++) {
-            Hex h = hex.adjacentHex(i);
+            Hex h = hex.getAdjacentHex(i);
             if (h != null && h.active && h.sameColor(hex)) {
                 if (!animHexes.contains(h)) animIterator.add(h);
                 if (!h.changingColor) h.animFactor.setValues(1, 0);

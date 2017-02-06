@@ -3,11 +3,12 @@ package yio.tro.antiyoy.ai;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 public abstract class ArtificialIntelligenceGeneric extends ArtificialIntelligence{
 
 
-    public static final int MAX_EXTRA_FARM_COST = 50;
+    public static final int MAX_EXTRA_FARM_COST = 80;
 
 
     ArtificialIntelligenceGeneric(GameController gameController, int color) {
@@ -17,21 +18,42 @@ public abstract class ArtificialIntelligenceGeneric extends ArtificialIntelligen
 
     @Override
     protected void spendMoney(Province province) {
-        tryToBuildFarms(province);
         tryToBuildTowers(province);
+        tryToBuildFarms(province);
         tryToBuildUnits(province);
     }
 
 
     protected void tryToBuildFarms(Province province) {
-        if (province.getExtraFarmCost() > province.getIncome()) return;
+//        if (province.getExtraFarmCost() > province.getIncome()) return;
         if (province.getExtraFarmCost() > MAX_EXTRA_FARM_COST) return;
 
         while (province.hasMoneyForFarm()) {
+            if (!isOkToBuildNewFarm(province)) return;
             Hex hex = findGoodHexForFarm(province);
             if (hex == null) return;
             gameController.fieldController.buildFarm(province, hex);
         }
+    }
+
+
+    protected boolean isOkToBuildNewFarm(Province srcProvince) {
+        if (srcProvince.money > 2 * srcProvince.getCurrentFarmPrice()) return true;
+
+        if (findHexThatNeedsTower(srcProvince) != null) return false;
+
+        return true;
+    }
+
+
+    protected int getArmyStrength(Province province) {
+        int sum = 0;
+        for (Hex hex : province.hexList) {
+            if (hex.containsUnit()) {
+                sum += hex.unit.strength;
+            }
+        }
+        return sum;
     }
 
 

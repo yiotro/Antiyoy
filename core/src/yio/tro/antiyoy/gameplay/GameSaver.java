@@ -45,6 +45,7 @@ public class GameSaver {
         prefs.putInteger("save_stat_units_died", statistics.unitsDied);
         prefs.putInteger("save_stat_units_produced", statistics.unitsProduced);
         prefs.putInteger("save_stat_money_spent", statistics.moneySpent);
+        prefs.putInteger("save_stat_time_count", statistics.timeCount);
     }
 
 
@@ -211,6 +212,7 @@ public class GameSaver {
         statistics.unitsDied = prefs.getInteger("save_stat_units_died", statistics.unitsDied);
         statistics.unitsProduced = prefs.getInteger("save_stat_units_produced", statistics.unitsProduced);
         statistics.moneySpent = prefs.getInteger("save_stat_money_spent", statistics.moneySpent);
+        statistics.timeCount = prefs.getInteger("save_stat_time_count", statistics.timeCount);
     }
 
 
@@ -339,7 +341,7 @@ public class GameSaver {
         for (String hexString : hexStrings) {
             int[] hexSnapshotByString = getHexSnapshotByString(hexString);
             int color = hexSnapshotByString[2];
-            if (color == FieldController.NEUTRAL_LANDS_DEFAULT_INDEX) {
+            if (color == FieldController.NEUTRAL_LANDS_INDEX) {
                 GameRules.setSlayRules(false);
                 break;
             }
@@ -366,7 +368,7 @@ public class GameSaver {
     public void detectRules() {
         GameRules.setSlayRules(true);
         for (Hex activeHex : gameController.fieldController.activeHexes) {
-            if (activeHex.colorIndex == gameController.fieldController.neutralLandsIndex) {
+            if (activeHex.colorIndex == FieldController.NEUTRAL_LANDS_INDEX) {
                 GameRules.setSlayRules(false);
                 System.out.println("detected generic rules");
                 return;

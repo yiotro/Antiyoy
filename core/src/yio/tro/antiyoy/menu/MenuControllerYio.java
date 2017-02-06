@@ -1528,6 +1528,7 @@ public class MenuControllerYio {
         }
         loadUnitButtonTexture(unitButton);
         unitButton.setTouchable(true);
+        unitButton.setTouchOffset(0.05f * GraphicsYio.width);
         unitButton.factorModel.beginSpawning(3, 2);
 
         ButtonYio towerButton = getButtonById(38);
@@ -1537,8 +1538,9 @@ public class MenuControllerYio {
             towerButton.setAnimType(ButtonYio.ANIM_DOWN);
             towerButton.enableRectangularMask();
         }
-        loadTowerButtonTexture(towerButton);
+        loadBuildObjectButton(towerButton);
         towerButton.setTouchable(true);
+        towerButton.setTouchOffset(0.05f * GraphicsYio.width);
         towerButton.factorModel.beginSpawning(3, 2);
 
         ButtonYio coinButton = getButtonById(37);
@@ -1553,6 +1555,37 @@ public class MenuControllerYio {
         coinButton.factorModel.beginSpawning(3, 2);
         coinButton.setTouchable(true);
         coinButton.setReactBehavior(ReactBehavior.rbShowColorStats);
+    }
+
+
+    public void removeButtonById(int id) {
+        ListIterator<ButtonYio> iterator = buttons.listIterator();
+        while (iterator.hasNext()) {
+            ButtonYio button = iterator.next();
+            if (button.id == id) {
+                iterator.remove();
+                return;
+            }
+        }
+    }
+
+
+    private void loadBuildObjectButton(ButtonYio objectButton) {
+        if (GameRules.slay_rules) {
+            loadTowerButtonTexture(objectButton);
+        } else {
+            loadFarmButtonTexture(objectButton);
+        }
+    }
+
+
+    private void loadFarmButtonTexture(ButtonYio farmButton) {
+        if (Settings.isShroomArtsEnabled()) {
+            loadButtonOnce(farmButton, "skins/ant/field_elements/house.png");
+            return;
+        }
+
+        loadButtonOnce(farmButton, "field_elements/house.png");
     }
 
 
@@ -1921,6 +1954,7 @@ public class MenuControllerYio {
         textPanel.addTextLine(getString("units_died") + " " + statistics.unitsDied);
         textPanel.addTextLine(getString("units_produced") + " " + statistics.unitsProduced);
         textPanel.addTextLine(getString("money_spent") + " " + statistics.moneySpent);
+        textPanel.addTextLine(getString("time") + " " + statistics.getTimeString());
         for (int i = 0; i < 10; i++) {
             textPanel.addTextLine("");
         }

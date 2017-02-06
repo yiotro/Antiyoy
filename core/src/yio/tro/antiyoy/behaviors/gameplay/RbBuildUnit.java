@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.behaviors.gameplay;
 
+import yio.tro.antiyoy.gameplay.SelectionController;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.behaviors.ReactBehavior;
@@ -9,6 +10,19 @@ import yio.tro.antiyoy.behaviors.ReactBehavior;
  */
 public class RbBuildUnit extends ReactBehavior {
 
+    int chain[];
+
+
+    public RbBuildUnit() {
+        chain = new int[]{
+                SelectionController.TIP_INDEX_UNIT_1,
+                SelectionController.TIP_INDEX_UNIT_2,
+                SelectionController.TIP_INDEX_UNIT_3,
+                SelectionController.TIP_INDEX_UNIT_4
+        };
+    }
+
+
     @Override
     public void reactAction(ButtonYio buttonYio) {
         if (!getGameController(buttonYio).selectionController.isSomethingSelected()) {
@@ -16,11 +30,26 @@ public class RbBuildUnit extends ReactBehavior {
             return;
         }
 
-        int t = getGameController(buttonYio).selectionController.getTipType();
-        if (t < 0) t = 0;
-        t += 1;
-        if (t > 4) t = 1;
-        getGameController(buttonYio).selectionController.awakeTip(t);
-        getGameController(buttonYio).detectAndShowMoveZoneForBuildingUnit(t);
+        int tipType = getGameController(buttonYio).selectionController.getTipType();
+        int newTipType = -1;
+
+        for (int i = 0; i < chain.length; i++) {
+            if (tipType == chain[i]) {
+                if (i == chain.length - 1) {
+                    newTipType = chain[0];
+                } else {
+                    newTipType = chain[i + 1];
+                }
+            }
+        }
+
+        if (newTipType == -1) {
+            newTipType = chain[0]; // default
+        }
+
+        tipType = newTipType;
+
+        getGameController(buttonYio).selectionController.awakeTip(tipType);
+        getGameController(buttonYio).detectAndShowMoveZoneForBuildingUnit(tipType);
     }
 }

@@ -20,17 +20,21 @@ public abstract class ArtificialIntelligence {
     final GameController gameController;
     final Random random;
     protected final int color;
+    protected ArrayList<Province> nearbyProvinces;
+    protected ArrayList<Unit> unitsReadyToMove;
 
 
     ArtificialIntelligence(GameController gameController, int color) {
         this.gameController = gameController;
         this.color = color;
         random = gameController.random;
+        nearbyProvinces = new ArrayList<>();
+        unitsReadyToMove = new ArrayList<Unit>();
     }
 
 
-    ArrayList<Unit> detectUnitsReadyToMove() {
-        ArrayList<Unit> unitsReadyToMove = new ArrayList<Unit>();
+    void updateUnitsReadyToMove() {
+        unitsReadyToMove.clear();
         for (Province province : gameController.fieldController.provinces) {
             if (province.getColor() == color) {
                 for (int k = province.hexList.size() - 1; k >= 0; k--) {
@@ -40,11 +44,10 @@ public abstract class ArtificialIntelligence {
                 }
             }
         }
-        return unitsReadyToMove;
     }
 
 
-    void moveUnits(ArrayList<Unit> unitsReadyToMove) {
+    void moveUnits() {
         for (Unit unit : unitsReadyToMove) {
             ArrayList<Hex> moveZone = gameController.detectMoveZone(unit.currentHex, unit.strength, GameRules.UNIT_MOVE_LIMIT);
             excludeFriendlyBuildingsFromMoveZone(moveZone);
@@ -68,7 +71,8 @@ public abstract class ArtificialIntelligence {
 
 
     void moveAfkUnits() {
-        for (Unit unit : detectUnitsReadyToMove()) {
+        updateUnitsReadyToMove();
+        for (Unit unit : unitsReadyToMove) {
             Province province = gameController.getProvinceByHex(unit.currentHex);
             if (province.hexList.size() > 20) {
                 moveAfkUnit(province, unit);
@@ -138,12 +142,73 @@ public abstract class ArtificialIntelligence {
     boolean needTowerOnHex(Hex hex) {
         if (!hex.active) return false;
         if (!hex.isFree()) return false;
+
+        return getPredictedDefenseGainByNewTower(hex) >= 5;
+    }
+
+
+    protected int getPredictedDefenseGainByNewTower(Hex hex) {
         int c = 0;
+
+        if (hex.active && !hex.isDefendedByTower()) c++;
+
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = hex.adjacentHex(i);
+            Hex adjHex = hex.getAdjacentHex(i);
             if (adjHex.active && hex.sameColor(adjHex) && !adjHex.isDefendedByTower()) c++;
+            if (adjHex.containsTower()) c--;
         }
-        return c >= 5;
+
+        return c;
+    }
+
+
+    protected void updateNearbyProvinces(Province srcProvince) {
+        nearbyProvinces.clear();
+
+        for (Hex hex : srcProvince.hexList) {
+            for (int i = 0; i < 6; i++) {
+                Hex adjacentHex = hex.getAdjacentHex(i);
+                checkToAddNearbyProvince(hex, adjacentHex);
+            }
+        }
+    }
+
+
+    protected void updateNearbyProvinces(Hex srcHex) {
+        nearbyProvinces.clear();
+
+        int j;
+        for (int i = 0; i < 6; i++) {
+            Hex adjacentHex = srcHex.getAdjacentHex(i);
+            if (!adjacentHex.active) continue;
+
+            Hex adjacentHex2 = adjacentHex.getAdjacentHex(i);
+            j = i + 1;
+            if (j >= 6) j = 0;
+            Hex adjacentHex3 = adjacentHex.getAdjacentHex(j);
+
+            checkToAddNearbyProvince(srcHex, adjacentHex);
+            checkToAddNearbyProvince(srcHex, adjacentHex2);
+            checkToAddNearbyProvince(srcHex, adjacentHex3);
+        }
+    }
+
+
+    private void checkToAddNearbyProvince(Hex srcHex, Hex adjacentHex) {
+        if (!adjacentHex.active) return;
+        if (adjacentHex.isNeutral()) return;
+        if (adjacentHex.sameColor(srcHex)) return;
+
+        Province provinceByHex = gameController.fieldController.getProvinceByHex(adjacentHex);
+        addProvinceToNearbyProvines(provinceByHex);
+    }
+
+
+    private void addProvinceToNearbyProvines(Province province) {
+        if (province == null) return;
+        if (nearbyProvinces.contains(province)) return;
+
+        nearbyProvinces.listIterator().add(province);
     }
 
 
@@ -247,7 +312,7 @@ public abstract class ArtificialIntelligence {
 
     void pushUnitToBetterDefense(Unit unit, Province province) {
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = unit.currentHex.adjacentHex(i);
+            Hex adjHex = unit.currentHex.getAdjacentHex(i);
             if (adjHex.active && adjHex.sameColor(unit.currentHex) && adjHex.isFree() && adjHex.howManyEnemyHexesNear() == 0) {
                 gameController.moveUnit(unit, adjHex, province);
                 break;
@@ -259,7 +324,7 @@ public abstract class ArtificialIntelligence {
     int getAttackAllure(Hex hex, int color) {
         int c = 0;
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = hex.adjacentHex(i);
+            Hex adjHex = hex.getAdjacentHex(i);
             if (adjHex.active && adjHex.sameColor(color)) c++;
         }
         return c;

@@ -56,7 +56,7 @@ public class Hex {
     boolean isInProvince() { // can cause bugs if province not detected right
         Hex adjHex;
         for (int i = 0; i < 6; i++) {
-            adjHex = adjacentHex(i);
+            adjHex = getAdjacentHex(i);
             if (adjHex.active && adjHex.sameColor(this)) return true;
         }
         return false;
@@ -158,7 +158,7 @@ public class Hex {
     public boolean noProvincesNearby() {
         if (numberOfFriendlyHexesNearby() > 0) return false;
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = adjacentHex(i);
+            Hex adjHex = getAdjacentHex(i);
             if (adjHex.active && adjHex.numberOfFriendlyHexesNearby() > 0) return false;
         }
         return true;
@@ -168,8 +168,8 @@ public class Hex {
     public int numberOfFriendlyHexesNearby() {
         int c = 0;
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = adjacentHex(i);
-            if (adjHex.colorIndex == fieldController.neutralLandsIndex) continue;
+            Hex adjHex = getAdjacentHex(i);
+            if (adjHex.colorIndex == FieldController.NEUTRAL_LANDS_INDEX) continue;
             if (adjHex.active && adjHex.sameColor(this)) c++;
         }
         return c;
@@ -189,7 +189,7 @@ public class Hex {
         if (this.containsUnit() && unit != ignoreUnit) defenseNumber = Math.max(defenseNumber, this.unit.strength);
         Hex neighbour;
         for (int i = 0; i < 6; i++) {
-            neighbour = adjacentHex(i);
+            neighbour = getAdjacentHex(i);
             if (!(neighbour.active && neighbour.sameColor(this))) continue;
             if (neighbour.objectInside == Hex.OBJECT_TOWN) defenseNumber = Math.max(defenseNumber, 1);
             if (neighbour.objectInside == Hex.OBJECT_TOWER) defenseNumber = Math.max(defenseNumber, 2);
@@ -204,7 +204,7 @@ public class Hex {
     public boolean isNearHouse() {
         Hex adjHex;
         for (int i = 0; i < 6; i++) {
-            adjHex = adjacentHex(i);
+            adjHex = getAdjacentHex(i);
             if (adjHex.active && adjHex.sameColor(this) && adjHex.objectInside == OBJECT_TOWN) return true;
         }
         return false;
@@ -214,7 +214,7 @@ public class Hex {
     public void forAdjacentHexes(HexActionPerformer hexActionPerformer) {
         Hex adjHex;
         for (int i = 0; i < 6; i++) {
-            adjHex = adjacentHex(i);
+            adjHex = getAdjacentHex(i);
             hexActionPerformer.doAction(this, adjHex);
         }
     }
@@ -223,7 +223,7 @@ public class Hex {
     public boolean isInPerimeter() {
         Hex adjHex;
         for (int i = 0; i < 6; i++) {
-            adjHex = adjacentHex(i);
+            adjHex = getAdjacentHex(i);
             if (adjHex.active && !adjHex.sameColor(this) && adjHex.isInProvince()) return true;
         }
         return false;
@@ -233,7 +233,7 @@ public class Hex {
     public boolean hasThisObjectNearby(int objectIndex) {
         if (objectInside == objectIndex) return true;
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = adjacentHex(i);
+            Hex adjHex = getAdjacentHex(i);
             if (adjHex.colorIndex != colorIndex) continue;
             if (adjHex.active && adjHex.objectInside == objectIndex) {
                 return true;
@@ -245,7 +245,7 @@ public class Hex {
 
     public boolean hasPalmReadyToExpandNearby() {
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = adjacentHex(i);
+            Hex adjHex = getAdjacentHex(i);
             if (!adjHex.blockToTreeFromExpanding && adjHex.objectInside == Hex.OBJECT_PALM) return true;
         }
         return false;
@@ -254,7 +254,7 @@ public class Hex {
 
     public boolean hasPineReadyToExpandNearby() {
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = adjacentHex(i);
+            Hex adjHex = getAdjacentHex(i);
             if (!adjHex.blockToTreeFromExpanding && adjHex.objectInside == Hex.OBJECT_PINE) return true;
         }
         return false;
@@ -279,7 +279,7 @@ public class Hex {
     public int howManyEnemyHexesNear() {
         int c = 0;
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = adjacentHex(i);
+            Hex adjHex = getAdjacentHex(i);
             if (adjHex.active && !adjHex.sameColor(this)) c++;
         }
         return c;
@@ -299,14 +299,14 @@ public class Hex {
 
     public boolean isDefendedByTower() {
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = adjacentHex(i);
+            Hex adjHex = getAdjacentHex(i);
             if (adjHex.active && adjHex.sameColor(this) && adjHex.containsTower()) return true;
         }
         return false;
     }
 
 
-    public Hex adjacentHex(int neighbourNumber) {
+    public Hex getAdjacentHex(int neighbourNumber) {
         return gameController.fieldController.adjacentHex(this, neighbourNumber);
     }
 
@@ -342,7 +342,7 @@ public class Hex {
 
     public boolean isNeutral() {
         if (GameRules.slay_rules) return false;
-        return colorIndex == fieldController.neutralLandsIndex;
+        return colorIndex == FieldController.NEUTRAL_LANDS_INDEX;
     }
 
 

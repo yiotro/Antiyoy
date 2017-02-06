@@ -61,31 +61,6 @@ public class Unit {
     }
 
 
-    public int getTax() {
-        return getTax(strength);
-    }
-
-
-    static int getTax(int strength) {
-        switch (strength) {
-            default:
-            case 1:
-                return 2;
-            case 2:
-                return 6;
-            case 3:
-                return 18;
-            case 4:
-                return 54;
-        }
-    }
-
-
-    public Hex getCurrentHex() {
-        return currentHex;
-    }
-
-
     public int getColor() {
         return currentHex.colorIndex;
     }

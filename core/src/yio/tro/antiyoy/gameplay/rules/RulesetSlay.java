@@ -56,10 +56,26 @@ public class RulesetSlay extends Ruleset{
     @Override
     public int getHexTax(Hex hex) {
         if (hex.containsUnit()) {
-            return hex.unit.getTax();
+            return getUnitTax(hex.unit.strength);
         }
 
         return 0;
+    }
+
+
+    @Override
+    public int getUnitTax(int strength) {
+        switch (strength) {
+            default:
+            case 1:
+                return 2;
+            case 2:
+                return 6;
+            case 3:
+                return 18;
+            case 4:
+                return 54;
+        }
     }
 
 

@@ -400,7 +400,7 @@ public class GameView {
                 if (!isPosInCacheFrame(pos, hexViewSize)) continue;
             }
             for (int i = 0; i < 6; i++) {
-                Hex adjacentHex = hex.adjacentHex(i);
+                Hex adjacentHex = hex.getAdjacentHex(i);
                 if (adjacentHex != null && ((adjacentHex.active && !adjacentHex.sameColor(hex) && i >= 2 && i <= 4) || !adjacentHex.active)) {
                     if (i >= 2 && i <= 4) renderGradientShadow(hex, adjacentHex, spriteBatch);
                     renderLineBetweenHexes(adjacentHex, hex, spriteBatch, borderLineThickness, i);
@@ -558,7 +558,7 @@ public class GameView {
 
 
     private TextureRegion getHexTextureByColor(int colorIndex) {
-        if (gameController.colorIndexViewOffset > 0 && colorIndex != gameController.fieldController.neutralLandsIndex) {
+        if (gameController.colorIndexViewOffset > 0 && colorIndex != FieldController.NEUTRAL_LANDS_INDEX) {
             colorIndex = gameController.getColorIndexWithOffset(colorIndex);
         }
         switch (colorIndex) {
@@ -615,7 +615,7 @@ public class GameView {
             pos = hex.getPos();
             if (!isPosInViewFrame(pos, hexViewSize)) continue;
             for (int i = 0; i < 6; i++) {
-                Hex adjacentHex = hex.adjacentHex(i);
+                Hex adjacentHex = hex.getAdjacentHex(i);
                 if (adjacentHex != null && ((adjacentHex.active && !adjacentHex.sameColor(hex)) || !adjacentHex.active)) {
                     if (i >= 2 && i <= 4) renderGradientShadow(hex, adjacentHex, batchMovable);
                     renderLineBetweenHexes(adjacentHex, hex, batchMovable, borderLineThickness, i);
@@ -703,7 +703,7 @@ public class GameView {
         for (Hex hex : gameController.fieldController.selectedHexes) {
             if (hex.selectionFactor.get() < 0.01) continue;
             for (int i = 0; i < 6; i++) {
-                Hex h = hex.adjacentHex(i);
+                Hex h = hex.getAdjacentHex(i);
                 if (h != null && !h.isEmptyHex() && (!h.active || !h.sameColor(hex)))
                     renderLineBetweenHexesWithOffset(hex, h, batchMovable, hex.selectionFactor.get() * 0.01 * w, selectionBorder, -(1d - hex.selectionFactor.get()) * 0.01 * w, i, hex.selectionFactor.get());
             }
@@ -774,7 +774,7 @@ public class GameView {
             pos = hex.getPos();
             if (!isPosInViewFrame(pos, hexViewSize)) continue;
             for (int i = 0; i < 6; i++) {
-                Hex adjacentHex = hex.adjacentHex(i);
+                Hex adjacentHex = hex.getAdjacentHex(i);
                 if (adjacentHex != null && ((adjacentHex.active && !adjacentHex.sameColor(hex)) || !adjacentHex.active)) {
 //                    if (i >= 2 && i <= 4) renderGradientShadow(hex, adjacentHex, batchMovable); // this causes serious lag on tablet z
                     renderLineBetweenHexes(adjacentHex, hex, batchMovable, borderLineThickness, i);
@@ -792,7 +792,7 @@ public class GameView {
             for (int k = gameController.fieldController.moveZone.size() - 1; k >= 0; k--) {
                 hex = gameController.fieldController.moveZone.get(k);
                 for (int i = 0; i < 6; i++) {
-                    Hex h = hex.adjacentHex(i);
+                    Hex h = hex.getAdjacentHex(i);
                     if (h != null && !h.isEmptyHex() && (!h.active || h.inMoveZone != hex.inMoveZone))
                         renderLineBetweenHexesWithOffset(hex, h, batchMovable, gameController.fieldController.moveZoneFactor.get() * 0.02 * w, moveZonePixel, -(1d - gameController.fieldController.moveZoneFactor.get()) * 0.01 * w, i, gameController.fieldController.moveZoneFactor.get());
                 }
@@ -807,7 +807,7 @@ public class GameView {
             for (int k = gameController.fieldController.moveZone.size() - 1; k >= 0; k--) {
                 hex = gameController.fieldController.moveZone.get(k);
                 for (int i = 0; i < 6; i++) {
-                    Hex h = hex.adjacentHex(i);
+                    Hex h = hex.getAdjacentHex(i);
                     if (h != null && !h.isEmptyHex() && (!h.active || !h.sameColor(hex)))
                         renderLineBetweenHexesWithOffset(hex, h, batchMovable, hex.selectionFactor.get() * 0.01 * w, selectionBorder, -(1d - hex.selectionFactor.get()) * 0.01 * w, i, hex.selectionFactor.get());
                 }
@@ -1008,13 +1008,13 @@ public class GameView {
             case SelectionController.TIP_INDEX_TREE:
                 return pineTexture.getNormal();
             case SelectionController.TIP_INDEX_UNIT_1:
-                return manTextures[1].getNormal();
+                return manTextures[0].getNormal();
             case SelectionController.TIP_INDEX_UNIT_2:
-                return manTextures[2].getNormal();
+                return manTextures[1].getNormal();
             case SelectionController.TIP_INDEX_UNIT_3:
-                return manTextures[3].getNormal();
+                return manTextures[2].getNormal();
             case SelectionController.TIP_INDEX_UNIT_4:
-                return manTextures[4].getNormal();
+                return manTextures[3].getNormal();
         }
     }
 

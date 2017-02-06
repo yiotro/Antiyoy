@@ -4,12 +4,13 @@ import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.Unit;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class AiBalancerGenericRules extends AiExpertGenericRules implements Comparator<Hex>{
+public class AiBalancerGenericRules extends AiExpertGenericRules implements Comparator<Hex> {
 
     private int[] playerHexCount;
     private ArrayList<Hex> propagationList;
@@ -22,6 +23,99 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
 
     private void updateSortConditions() {
         playerHexCount = gameController.fieldController.getPlayerHexCount();
+    }
+
+
+    @Override
+    public void makeMove() {
+        updateUnitsReadyToMove();
+
+        moveUnits();
+
+        spendMoneyAndMergeUnits();
+
+        checkToKillRedundantUnits();
+        moveAfkUnits();
+    }
+
+
+    private void checkToKillRedundantUnits() {
+        for (Province province : gameController.fieldController.provinces) {
+            checkToKillRedundantUnits(province);
+        }
+    }
+
+
+    private void checkToKillRedundantUnits(Province province) {
+        boolean detectedStrong = false;
+        for (Hex hex : province.hexList) {
+            if (!hex.containsUnit()) continue;
+            if (!hex.unit.isReadyToMove()) return;
+            if (hex.unit.strength >= 3) detectedStrong = true;
+        }
+
+        if (!detectedStrong) return;
+
+        // so unita are not doing anything. Time to kill them
+        killRedundantUnits(province);
+    }
+
+
+    private void killRedundantUnits(Province province) {
+        while (province.money >= GameRules.PRICE_UNIT && province.getIncome() >= 0) {
+            Unit unitWithMaxStrengh = findUnitWithMaxStrenghExceptKnight(province);
+            if (unitWithMaxStrengh == null) break;
+            gameController.fieldController.buildUnit(province, unitWithMaxStrengh.currentHex, 1);
+        }
+
+        // attack something before dying
+        // this causes comodification exception
+//        unitsReadyToMove.clear();
+//        for (Hex hex : province.hexList) {
+//            if (hex.containsUnit() && hex.unit.isReadyToMove()) {
+//                unitsReadyToMove.add(hex.unit);
+//            }
+//        }
+//
+//        for (Unit unit : unitsReadyToMove) {
+//            ArrayList<Hex> moveZone = gameController.fieldController.detectMoveZone(unit.currentHex, unit.strength);
+//            ArrayList<Hex> attackableHexes = findAttackableHexes(province.getColor(), moveZone);
+//            tryToAttackSomething(unit, province, attackableHexes);
+//        }
+    }
+
+
+    @Override
+    protected boolean isOkToBuildNewFarm(Province srcProvince) {
+        if (srcProvince.money > 2 * srcProvince.getCurrentFarmPrice()) return true;
+
+        int srcArmyStrength = getArmyStrength(srcProvince);
+        updateNearbyProvinces(srcProvince);
+        for (Province province : nearbyProvinces) {
+            if (province == srcProvince) continue;
+            int armyStrength = getArmyStrength(province);
+            if (srcArmyStrength < armyStrength / 2) return false;
+        }
+
+        if (findHexThatNeedsTower(srcProvince) != null) return false;
+
+        return true;
+    }
+
+
+    private Unit findUnitWithMaxStrenghExceptKnight(Province province) {
+        Unit result = null;
+
+        for (Hex hex : province.hexList) {
+            if (!hex.containsUnit()) continue;
+            Unit unit = hex.unit;
+            if (unit.strength == 4) continue;
+            if (result == null || unit.strength > result.strength) {
+                result = unit;
+            }
+        }
+
+        return result;
     }
 
 
@@ -41,7 +135,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
                 pushUnitToBetterDefense(unit, province);
             }
 
-            checkToSwapUnitForTower(unit, moveZone, province);
+//            checkToSwapUnitForTower(unit, moveZone, province);
         }
     }
 
@@ -51,7 +145,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         if (!unit.isReadyToMove()) return;
 
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = unit.currentHex.adjacentHex(i);
+            Hex adjHex = unit.currentHex.getAdjacentHex(i);
             if (!adjHex.active) continue;
             if (!adjHex.sameColor(unit.currentHex)) continue;
             if (!adjHex.isFree()) continue;
@@ -71,7 +165,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         defenseGain += unit.strength;
 
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = unit.currentHex.adjacentHex(i);
+            Hex adjHex = unit.currentHex.getAdjacentHex(i);
             if (!adjHex.active) continue;
             if (!adjHex.sameColor(unit.currentHex)) continue;
 
@@ -83,6 +177,8 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
     }
 
 
+    // this is not really a good thing
+    // it places towers in bad places
     private void checkToSwapUnitForTower(Unit unit, ArrayList<Hex> moveZone, Province province) {
         if (!unit.isReadyToMove()) return;
         if (!province.hasMoneyForTower()) return;
@@ -132,7 +228,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
 
     protected Hex getNearbyHexWithColor(Hex src, int color) {
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = src.adjacentHex(i);
+            Hex adjHex = src.getAdjacentHex(i);
             if (!adjHex.active) continue;
             if (!adjHex.sameColor(color)) continue;
             if (adjHex.numberOfFriendlyHexesNearby() == 0) continue;
@@ -146,7 +242,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
     int getAttackAllure(Hex hex, int color) {
         int c = 0;
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = hex.adjacentHex(i);
+            Hex adjHex = hex.getAdjacentHex(i);
             if (adjHex.active && adjHex.sameColor(color)) c++;
             if (adjHex.active && adjHex.sameColor(color) && adjHex.objectInside == Hex.OBJECT_TOWN) c += 5;
         }
@@ -217,7 +313,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         defenseLoss += unit.currentHex.getDefenseNumber() - unit.currentHex.getDefenseNumber(unit);
 
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = unit.currentHex.adjacentHex(i);
+            Hex adjHex = unit.currentHex.getAdjacentHex(i);
             if (!adjHex.active) continue;
             if (!adjHex.sameColor(unit.currentHex)) continue;
             defenseLoss += adjHex.getDefenseNumber() - adjHex.getDefenseNumber(unit);
@@ -242,7 +338,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
             propagationList.remove(hex);
             if (hex.objectInside == Hex.OBJECT_TOWN) return true;
             for (int i = 0; i < 6; i++) {
-                Hex adjHex = hex.adjacentHex(i);
+                Hex adjHex = hex.getAdjacentHex(i);
                 if (!adjHex.active) continue;
                 if (!adjHex.sameColor(startHex)) continue;
                 if (adjHex.flag) continue;
@@ -275,7 +371,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         int c = 0;
 
         for (int i = 0; i < 6; i++) {
-            Hex adjHex = hex.adjacentHex(i);
+            Hex adjHex = hex.getAdjacentHex(i);
             if (!adjHex.active) continue;
             if (!adjHex.sameColor(color)) continue;
             if (!adjHex.containsUnit() || !adjHex.containsTower()) continue;
@@ -303,5 +399,17 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         if (index < 0) return 0;
         if (index >= playerHexCount.length) return 0;
         return playerHexCount[index];
+    }
+
+
+    @Override
+    boolean needTowerOnHex(Hex hex) {
+        if (!hex.active) return false;
+        if (!hex.isFree()) return false;
+
+        updateNearbyProvinces(hex);
+        if (nearbyProvinces.size() == 0) return false; // build towers only at front line
+
+        return getPredictedDefenseGainByNewTower(hex) >= 3;
     }
 }
