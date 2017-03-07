@@ -37,7 +37,7 @@
         #Гру зробив yiotro
 		"/>
     <string key="reset_campaign_data" value="Стерти дані"/>
-    <string key="special_thanks" value="Окреме дякую цим людям
+    <string key="special_thanks" value="Окремо дякую цим людям
         #
         #Rebecca Nöll:
         #Німецький переклад
@@ -72,7 +72,7 @@
     <string key="big" value="велика"/>
     <string key="ai_only" value="Битва роботів"/>
     <string key="single_player" value="один гравець"/>
-    <string key="multiplayer" value="мультиплеер"/>
+    <string key="multiplayer" value="мультиплеєр"/>
     <string key="colors" value="кольорів"/>
     <string key="color" value="кольори"/>
     <string key="difficulty" value="Складність"/>
@@ -142,12 +142,12 @@
 
     <!-- Tutorial tips -->
     <string key="tip_capture_with_units" value="Атакуй своїми юнітами#щоб захоплювати землі"/>
-    <string key="tip_about_money" value="Чим більше земель#тим більше грошей"/>
+    <string key="tip_about_money" value="Чим більша площа#тим більше грошей"/>
     <string key="tip_build_towers" value="Будуй вежі щоб захистити#сусідні клітини"/>
     <string key="tip_about_taxes" value="Сильні юніти потребують#більше грошей"/>
     <string key="tip_about_defense" value="Юніти та будівлі також#захищають сусідні клітини"/>
     <string key="tip_hold_to_march" value="Щоб швидко рухати армії#натисни і тримай"/>
-    <string key="tip_about_unit_death" value="Якщо грощі закінчатся,#то юніти помруть.#Тому будь обережним"/>
+    <string key="tip_about_unit_death" value="Якщо грощі закінчатся,#юніти помруть.#Тому будь обережним"/>
     <string key="tip_merging" value="Об'єднуй юнітів щоб#отримати сильніших"/>
     <string key="tip_trees" value="Дерева зменшують дохід.#Тому їх треба рубати"/>
     <string key="tip_help" value="Більше подробиць#у довідці"/>
@@ -156,25 +156,25 @@
     <string key="gen_greetings" value="Привіт. Цей туторіал розповість про основні правила гри."/>
     <string key="gen_select_province" value="Натисни на своє місто щоб вибрати його."/>
     <string key="gen_select_unit" value="Добре. В тебе є декілька юнітів. Натисни на одного з них."/>
-    <string key="gen_move_unit" value="Кожний юнит ходить один раз в хід. Захопи нічийну територію натиснувши на клітину біля вибраного юніта."/>
-    <string key="gen_income" value="Захопивши нову клітину ти збільшив прибуток свого міста. Більше клітин - більше прибуток."/>
+    <string key="gen_move_unit" value="Кожний юнит ходить один раз в хід. Захопи вільну територію натиснувши на клітину біля обраного юніта."/>
+    <string key="gen_income" value="Захопивши нову клітину ти збільшив прибуток свого міста. Більше клітин - більший прибуток."/>
     <string key="gen_lets_build_farm" value="Тепер давай побудуємо ферму щоб збільшити прибуток міста."/>
-    <string key="gen_press_button_twice" value="Натисни два рази на кнопку"/>
-    <string key="gen_build_farm" value="Ферми можна будувати тільки поряд с містом або іншими фермами."/>
-    <string key="gen_about_farms" value="Кожна ферма дає 3 монети в хід. Кожна нова ферма коштує більше ніж попередня."/>
+    <string key="gen_press_button_twice" value="Натисни на кнопку"/>
+    <string key="gen_build_farm" value="Ферми можна будувати тільки поряд з містом або іншими фермами."/>
+    <string key="gen_about_farms" value="Кожна ферма дає 4 монети за хід. Кожна нова ферма коштує більше ніж попередня."/>
     <string key="gen_lets_build_peasant" value="Давай побудуємо нового юніта і відразу захопимо нічийну клітину."/>
-    <string key="gen_press_button" value="Натисни на кнопку знизу"/>
+    <string key="gen_press_button" value="Натисни двічі на кнопку знизу"/>
     <string key="gen_build_peasant" value="Постав нового юніта на клітину поряд з межею міста."/>
-    <string key="gen_capture_peasant" value="Захопи нічийну клітину вібравши юніта та вказавши йому куди йти."/>
+    <string key="gen_capture_peasant" value="Щоб захопити вільну клітину, обери юніта та вкажи йому куди йти."/>
     <string key="gen_capture_hex" value="Захопи клітину"/>
-    <string key="gen_lets_build_tower" value="Свої землі треба захищати. Для цього добре підходять вежі."/>
+    <string key="gen_lets_build_tower" value="Свої землі треба захищати. Для цього будують вежі."/>
     <string key="gen_build_tower" value="Побудуй вежу натиснувши на вказану клітину."/>
     <string key="gen_about_towers" value="Вежі захищають прилеглі клітини від селян та воїнів."/>
     <string key="gen_lets_build_spearman" value="Воїн сильніший за будь-якого селянина. Давай побудуємо його."/>
     <string key="gen_build_spearman" value="Натисни на клітину щоб побудувати воїна."/>
     <string key="gen_units_consume_money" value="Юніти споживають гроші щоб жити. Чим сильніший юніт, тим більше грошей він потребує."/>
     <string key="gen_undo_spearman" value="Зараз прибуток міста рівний -1. Це погано, тому давай відмінимо побудову воїна."/>
-    <string key="gen_why_units_die" value="Якщо гроші у місті закінчатся, то юніти помруть. Тому треба слідкувати щоб прибуток був більше нуля."/>
+    <string key="gen_why_units_die" value="Якщо гроші у місті закінчатся, юніти помруть. Тому треба слідкувати щоб прибуток був більше нуля."/>
     <string key="gen_about_trees_one" value="Дерева теж становлять небезпеку. Клітини на яких росте дерево не приносять доходу."/>
     <string key="gen_about_trees_two" value="Дерева краще рубати відразу, поки їх мало."/>
     <string key="gen_end_turn" value="Щоб закінчити хід натисни на кнопку справа знизу."/>
