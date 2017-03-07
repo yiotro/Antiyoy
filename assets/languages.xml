@@ -732,7 +732,7 @@
         <string key="restart_app" value="Перезапустіть гру"/>
         <string key="city_name_one" value="ки, мос, ми, до, пе"/>
         <string key="city_name_two" value="X, X, X, X, те, га, ре"/>
-        <string key="city_name_three" value="рев, ров, нск, нск, ква, рево"/>
+        <string key="city_name_three" value="їв, рів, нськ, нськ, ква, рево"/>
 
         <!-- Info -->
         <string key="info_back" value="Назад"/>
@@ -776,7 +776,7 @@
         <string key="big" value="велика"/>
         <string key="ai_only" value="Битва роботiв"/>
         <string key="single_player" value="один гравець"/>
-        <string key="multiplayer" value="мультиплеер"/>
+        <string key="multiplayer" value="мультиплеєр"/>
         <string key="colors" value="кольорiв"/>
         <string key="color" value="кольори"/>
         <string key="difficulty" value="Складнiсть"/>
@@ -849,12 +849,12 @@
 
         <!-- Tutorial tips -->
         <string key="tip_capture_with_units" value="Атакуй своїми юнiтами#щоб захоплювати землi"/>
-        <string key="tip_about_money" value="Чим бiльше земель#тим бiльше грошей"/>
+        <string key="tip_about_money" value="Чим більша площа#тим бiльше грошей"/>
         <string key="tip_build_towers" value="Будуй вежi щоб захистити#сусiднi клiтини"/>
         <string key="tip_about_taxes" value="Сильнi юнiти потребують#бiльше грошей"/>
         <string key="tip_about_defense" value="Юнiти та будiвлi також#захищають сусiднi клiтини"/>
         <string key="tip_hold_to_march" value="Щоб швидко рухати армiї#натисни i тримай"/>
-        <string key="tip_about_unit_death" value="Якщо грощi закiнчатся,#то юнiти помруть.#Тому будь обережним"/>
+        <string key="tip_about_unit_death" value="Якщо грощi закiнчатся,#юнiти помруть.#Тому будь обережним"/>
         <string key="tip_merging" value="Об'єднуй юнiтiв щоб#отримати сильнiших"/>
         <string key="tip_trees" value="Дерева зменшують дохiд.#Тому їх треба рубати"/>
         <string key="tip_help" value="Бiльше подробиць#у довiдцi"/>
@@ -863,25 +863,25 @@
         <string key="gen_greetings" value="Привiт. Цей туторiал розповiсть про основнi правила гри."/>
         <string key="gen_select_province" value="Натисни на своє мiсто щоб вибрати його."/>
         <string key="gen_select_unit" value="Добре. В тебе є декiлька юнiтiв. Натисни на одного з них."/>
-        <string key="gen_move_unit" value="Кожний юнит ходить один раз в хiд. Захопи нiчийну територiю натиснувши на клiтину бiля вибраного юнiта."/>
-        <string key="gen_income" value="Захопивши нову клiтину ти збiльшив прибуток свого мiста. Бiльше клiтин - бiльше прибуток."/>
+        <string key="gen_move_unit" value="Кожний юнит ходить один раз в хiд. Захопи вільну територiю натиснувши на клiтину бiля вибраного юнiта."/>
+        <string key="gen_income" value="Захопивши нову клiтину ти збiльшив прибуток свого мiста. Бiльше клiтин - бiльший прибуток."/>
         <string key="gen_lets_build_farm" value="Тепер давай побудуємо ферму щоб збiльшити прибуток мiста."/>
-        <string key="gen_press_button_twice" value="Натисни два рази на кнопку"/>
-        <string key="gen_build_farm" value="Ферми можна будувати тiльки поряд с мiстом або iншими фермами."/>
-        <string key="gen_about_farms" value="Кожна ферма дає 4 монети в хiд. Кожна нова ферма коштує бiльше нiж попередня."/>
+        <string key="gen_press_button_twice" value="Натисни на кнопку"/>
+        <string key="gen_build_farm" value="Ферми можна будувати тiльки поряд з мiстом або iншими фермами."/>
+        <string key="gen_about_farms" value="Кожна ферма дає 4 монети за хiд. Кожна нова ферма коштує бiльше нiж попередня."/>
         <string key="gen_lets_build_peasant" value="Давай побудуємо нового юнiта i вiдразу захопимо нiчийну клiтину."/>
-        <string key="gen_press_button" value="Натисни на кнопку знизу"/>
+        <string key="gen_press_button" value="Натисни двічі на кнопку знизу"/>
         <string key="gen_build_peasant" value="Постав нового юнiта на клiтину поряд з межею мiста."/>
-        <string key="gen_capture_peasant" value="Захопи нiчийну клiтину вiбравши юнiта та вказавши йому куди йти."/>
+        <string key="gen_capture_peasant" value="Щоб захопити вільну клітину, обери юніта та вкажи йому куди йти."/>
         <string key="gen_capture_hex" value="Захопи клiтину"/>
-        <string key="gen_lets_build_tower" value="Свої землi треба захищати. Для цього добре пiдходять вежi."/>
+        <string key="gen_lets_build_tower" value="Свої землi треба захищати. Для цього будують вежi."/>
         <string key="gen_build_tower" value="Побудуй вежу натиснувши на вказану клiтину."/>
         <string key="gen_about_towers" value="Вежi захищають прилеглi клiтини вiд селян та воїнiв."/>
         <string key="gen_lets_build_spearman" value="Воїн сильнiший за будь-якого селянина. Давай побудуємо його."/>
         <string key="gen_build_spearman" value="Натисни на клiтину щоб побудувати воїна."/>
         <string key="gen_units_consume_money" value="Юнiти споживають грошi щоб жити. Чим сильнiший юнiт, тим бiльше грошей вiн потребує."/>
         <string key="gen_undo_spearman" value="Зараз прибуток мiста рiвний -1. Це погано, тому давай вiдмiнимо побудову воїна."/>
-        <string key="gen_why_units_die" value="Якщо грошi у мiстi закiнчатся, то юнiти помруть. Тому треба слiдкувати щоб прибуток був бiльше нуля."/>
+        <string key="gen_why_units_die" value="Якщо грошi у мiстi закiнчатся, юнiти помруть. Тому треба слiдкувати щоб прибуток був бiльше нуля."/>
         <string key="gen_about_trees_one" value="Дерева теж становлять небезпеку. Клiтини на яких росте дерево не приносять доходу."/>
         <string key="gen_about_trees_two" value="Дерева краще рубати вiдразу, поки їх мало."/>
         <string key="gen_end_turn" value="Щоб закiнчити хiд натисни на кнопку справа знизу."/>
