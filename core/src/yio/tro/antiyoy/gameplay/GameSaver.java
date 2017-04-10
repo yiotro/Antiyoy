@@ -32,7 +32,7 @@ public class GameSaver {
         prefs.putInteger("save_level_size", gameController.fieldController.levelSize);
         prefs.putInteger("save_player_number", gameController.playersNumber);
         prefs.putBoolean("save_campaign_mode", GameRules.campaignMode);
-        prefs.putInteger("save_current_level", CampaignController.getInstance().currentLevelIndex);
+        prefs.putInteger("save_current_level", CampaignProgressManager.getInstance().currentLevelIndex);
         prefs.putInteger("save_difficulty", GameRules.difficulty);
         prefs.putInteger("save_color_offset", gameController.colorIndexViewOffset);
         prefs.putBoolean("slay_rules", GameRules.slay_rules);
@@ -223,7 +223,7 @@ public class GameSaver {
                 prefs.getInteger("save_level_size"),
                 prefs.getInteger("save_difficulty"));
         GameRules.campaignMode = prefs.getBoolean("save_campaign_mode");
-        CampaignController.getInstance().setCurrentLevelIndex(prefs.getInteger("save_current_level"));
+        CampaignProgressManager.getInstance().setCurrentLevelIndex(prefs.getInteger("save_current_level"));
         gameController.colorIndexViewOffset = prefs.getInteger("save_color_offset", 0);
         GameRules.setSlayRules(prefs.getBoolean("slay_rules", true));
     }

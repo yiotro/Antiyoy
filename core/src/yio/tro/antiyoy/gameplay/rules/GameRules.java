@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.gameplay.rules;
 
+import yio.tro.antiyoy.Yio;
 import yio.tro.antiyoy.menu.SliderYio;
 
 public class GameRules {

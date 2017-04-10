@@ -9,10 +9,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Matrix4;
-import yio.tro.antiyoy.*;
+import yio.tro.antiyoy.Fonts;
+import yio.tro.antiyoy.FrameBufferYio;
+import yio.tro.antiyoy.GraphicsYio;
+import yio.tro.antiyoy.RectangleYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
-import yio.tro.antiyoy.gameplay.CampaignController;
 import yio.tro.antiyoy.gameplay.CampaignLevelFactory;
+import yio.tro.antiyoy.gameplay.CampaignProgressManager;
 
 
 public class LevelSelector extends InterfaceElement {
@@ -37,7 +40,7 @@ public class LevelSelector extends InterfaceElement {
     public LevelSelector(MenuControllerYio menuControllerYio, int id) {
         super(id);
         this.menuControllerYio = menuControllerYio;
-        levelNumber = CampaignController.INDEX_OF_LAST_LEVEL;
+        levelNumber = CampaignProgressManager.getIndexOfLastLevel();
         this.w = menuControllerYio.yioGdxGame.w;
         this.h = menuControllerYio.yioGdxGame.h;
         appearFactor = new FactorYio();
@@ -97,12 +100,12 @@ public class LevelSelector extends InterfaceElement {
         for (int i = 0; i < rowSize; i++) {
             for (int j = 0; j < columnSize; j++) {
                 int levelNumber = getLevelNumber(i, j, panelIndex);
-                if (levelNumber > CampaignController.INDEX_OF_LAST_LEVEL) continue;
+                if (levelNumber > CampaignProgressManager.getIndexOfLastLevel()) continue;
                 TextureRegion icon;
-                if (menuControllerYio.yioGdxGame.isLevelLocked(levelNumber)) {
+                if (CampaignProgressManager.getInstance().isLevelLocked(levelNumber)) {
                     int difficulty = CampaignLevelFactory.getDifficultyByIndex(levelNumber);
                     icon = lockIconTextures[difficulty];
-                } else if (menuControllerYio.yioGdxGame.isLevelComplete(levelNumber)) {
+                } else if (CampaignProgressManager.getInstance().isLevelComplete(levelNumber)) {
                     icon = completedIcon;
                 } else {
                     int difficulty = CampaignLevelFactory.getDifficultyByIndex(levelNumber);
@@ -225,7 +228,9 @@ public class LevelSelector extends InterfaceElement {
     public boolean checkToPerformAction() {
         if (selectionFactor.get() == 1) {
             int levelNumber = getLevelNumber(selIndexX, selIndexY, selectedPanelIndex);
-            boolean result = CampaignController.getInstance().loadCampaignLevel(levelNumber);
+            CampaignLevelFactory campaignLevelFactory = menuControllerYio.yioGdxGame.campaignLevelFactory;
+            boolean result = campaignLevelFactory.createCampaignLevel(levelNumber);
+            CampaignProgressManager.getInstance();
             if (result) { // level loaded
                 selectionFactor.setValues(0.99, 0);
                 selectionFactor.beginDestroying(0, 0);
@@ -298,7 +303,7 @@ public class LevelSelector extends InterfaceElement {
         float internalY = screenY - ((float)pos[panelIndex].y + verOffset);
         int selX = (int) (internalX / (2 * iconRadius));
         int selY = (int) (internalY / (2 * iconRadius));
-        if (getLevelNumber(selX, selY, panelIndex) > CampaignController.INDEX_OF_LAST_LEVEL) return false;
+        if (getLevelNumber(selX, selY, panelIndex) > CampaignProgressManager.getIndexOfLastLevel()) return false;
         if (selX >= 0 && selX < rowSize && selY >= 0 && selY < columnSize) {
             selIndexX = selX;
             selIndexY = selY;

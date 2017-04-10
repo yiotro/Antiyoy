@@ -192,7 +192,9 @@ public class SelectionController {
 
     public void focusedHexActions(Hex focusedHex) {
         // don't change order in this method
-//        YioGdxGame.say(focusedHex.index1 + " " + focusedHex.index2);
+
+        debug(focusedHex);
+
         if (focusedHex.ignoreTouch) return;
         if (GameRules.inEditorMode) return;
 
@@ -212,6 +214,21 @@ public class SelectionController {
         reactionSelectProvince(focusedHex);
 
         reactionSelectOrMovePeacefully(focusedHex);
+    }
+
+
+    private void debug(Hex focusedHex) {
+//        YioGdxGame.say(focusedHex.index1 + " " + focusedHex.index2);
+//        showDebugHexColors(focusedHex);
+    }
+
+
+    private void showDebugHexColors(Hex focusedHex) {
+        System.out.println();
+        System.out.println("focusedHex.colorIndex = " + focusedHex.colorIndex);
+        System.out.println("gameController.colorIndexViewOffset = " + gameController.colorIndexViewOffset);
+        int colorIndexWithOffset = gameController.ruleset.getColorIndexWithOffset(focusedHex.colorIndex);
+        System.out.println("colorIndexWithOffset = " + colorIndexWithOffset);
     }
 
 
@@ -280,7 +297,7 @@ public class SelectionController {
         }
 
         // check to show defense tip
-        if (    focusedHex.selected &&
+        if (focusedHex.selected &&
                 gameController.fieldController.moveZone.size() == 0 &&
                 focusedHex.containsBuilding() &&
                 focusedHex.objectInside != Hex.OBJECT_FARM) {

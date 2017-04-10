@@ -10,8 +10,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
-import yio.tro.antiyoy.gameplay.CampaignController;
 import yio.tro.antiyoy.gameplay.CampaignLevelFactory;
+import yio.tro.antiyoy.gameplay.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.GameView;
 
 import java.util.ArrayList;
@@ -228,7 +228,9 @@ public class ScrollerYio {
 
 
     private void limitSelection() {
-        if (selectionIndex > CampaignController.INDEX_OF_LAST_LEVEL) selectionIndex = CampaignController.INDEX_OF_LAST_LEVEL;
+        if (selectionIndex > CampaignProgressManager.getIndexOfLastLevel()) {
+            selectionIndex = CampaignProgressManager.getIndexOfLastLevel();
+        }
     }
 
 

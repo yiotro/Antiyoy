@@ -62,6 +62,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     static boolean screenVerySmall;
     boolean debugFactorModel;
     public int balanceIndicator[];
+    public CampaignLevelFactory campaignLevelFactory;
 
 
     public YioGdxGame() {
@@ -133,14 +134,15 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
         Preferences preferences = Gdx.app.getPreferences("main");
         selectedLevelIndex = preferences.getInteger("progress", 1); // 1 - default value;
-        if (selectedLevelIndex > CampaignController.INDEX_OF_LAST_LEVEL) { // completed campaign
-            selectedLevelIndex = CampaignController.INDEX_OF_LAST_LEVEL;
+        if (selectedLevelIndex > CampaignProgressManager.getIndexOfLastLevel()) { // completed campaign
+            selectedLevelIndex = CampaignProgressManager.getIndexOfLastLevel();
         }
         menuControllerYio = new MenuControllerYio(this);
         menuViewYio = new MenuViewYio(this);
         gameController = new GameController(this); // must be called after menu controller is created. because of languages manager and other stuff
         gameView = new GameView(this);
         gameView.factorModel.beginDestroying(1, 1);
+        campaignLevelFactory = new CampaignLevelFactory(gameController);
         currentBackgroundIndex = -1;
         currentBackground = gameView.blackPixel; // call this after game view is created
         beginBackgroundChange(0, true, false);
@@ -491,21 +493,6 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     }
 
 
-    public boolean isLevelLocked(int index) {
-        if (index == CampaignLevelFactory.NORMAL_LEVELS_START) return false;
-        if (index == CampaignLevelFactory.HARD_LEVELS_START) return false;
-        if (index == CampaignLevelFactory.EXPERT_LEVELS_START) return false;
-        if (gameController != null) return CampaignController.getInstance().progress < index;
-        return selectedLevelIndex < index;
-    }
-
-
-    public boolean isLevelComplete(int index) {
-        if (gameController != null) return CampaignController.getInstance().progress > index;
-        return selectedLevelIndex > index;
-    }
-
-
     public static String getDifficultyNameByPower(LanguagesManager languagesManager, int difficulty) {
         String diffString = null;
         switch (difficulty) {
@@ -586,7 +573,8 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
     public void restartGame() {
         if (GameRules.campaignMode) {
-            CampaignController.getInstance().loadCampaignLevel(CampaignController.getInstance().currentLevelIndex);
+            int currentLevelIndex = CampaignProgressManager.getInstance().currentLevelIndex;
+            campaignLevelFactory.createCampaignLevel(currentLevelIndex);
             return;
         }
         gameController.restartGame();
@@ -615,7 +603,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
     public void startGame(int index, boolean generateMap, boolean readParametersFromSliders) {
 //        if (selectedLevelIndex > gameController.progress) return;
-        if (selectedLevelIndex < 0 || selectedLevelIndex > CampaignController.INDEX_OF_LAST_LEVEL) return;
+        if (selectedLevelIndex < 0 || selectedLevelIndex > CampaignProgressManager.getIndexOfLastLevel()) return;
         gameController.prepareForNewGame(index, generateMap, readParametersFromSliders);
         gameView.beginSpawnProcess();
         menuControllerYio.createGameOverlay();
@@ -647,7 +635,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
 
     public void setSelectedLevelIndex(int selectedLevelIndex) {
-        if (selectedLevelIndex >= 0 && selectedLevelIndex <= CampaignController.INDEX_OF_LAST_LEVEL)
+        if (selectedLevelIndex >= 0 && selectedLevelIndex <= CampaignProgressManager.getIndexOfLastLevel())
             this.selectedLevelIndex = selectedLevelIndex;
     }
 

@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.behaviors;
 
-import yio.tro.antiyoy.gameplay.CampaignController;
+import yio.tro.antiyoy.gameplay.CampaignProgressManager;
 import yio.tro.antiyoy.menu.ButtonYio;
 
 /**
@@ -10,7 +10,9 @@ public class RbNextLevel extends ReactBehavior{
 
     @Override
     public void reactAction(ButtonYio buttonYio) {
-        CampaignController instance = CampaignController.getInstance();
-        instance.loadCampaignLevel(instance.getNextLevelIndex());
+        CampaignProgressManager instance = CampaignProgressManager.getInstance();
+
+        int nextLevelIndex = instance.getNextLevelIndex();
+        getYioGdxGame(buttonYio).campaignLevelFactory.createCampaignLevel(nextLevelIndex);
     }
 }

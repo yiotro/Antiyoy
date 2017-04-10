@@ -18,6 +18,7 @@ public class RbSetLanguage extends ReactBehavior{
             case 338: CustomLanguageLoader.setAndSaveLanguage("it_IT"); break; // Italian
             case 340: CustomLanguageLoader.setAndSaveLanguage("fr_FR"); break; // French
             case 341: CustomLanguageLoader.setAndSaveLanguage("es_MX"); break; // Spanish (Mexico)
+            case 342: CustomLanguageLoader.setAndSaveLanguage("sk_SK"); break; // Slovak
         }
         buttonYio.menuControllerYio.createMainMenu();
     }

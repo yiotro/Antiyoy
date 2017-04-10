@@ -323,19 +323,7 @@ public class MenuControllerYio {
         playButton.disableTouchAnimation();
         playButton.selectionFactor.setValues(1, 0);
 
-        checkToAddAboutSkinButton();
-
         endMenuCreation();
-    }
-
-
-    private void checkToAddAboutSkinButton() {
-        if (OneTimeInfo.getInstance().aboutShroomArts) return;
-
-        ButtonYio skinButton = buttonFactory.getButton(generateRectangle(0.1, 0.02, 0.8, 0.04), 4, getString("check_shroomarts"));
-        skinButton.setReactBehavior(ReactBehavior.rbForceEnableShroomArts);
-        skinButton.setAnimType(ButtonYio.ANIM_DOWN);
-        skinButton.setTouchOffset(0.1f * GraphicsYio.width);
     }
 
 
@@ -493,8 +481,8 @@ public class MenuControllerYio {
 
         spawnBackButton(330, ReactBehavior.rbMoreSettings);
 
-        double buttonHeight = 0.08;
-        int langNumber = 9;
+        double buttonHeight = 0.07;
+        int langNumber = 10;
         RectangleYio base = new RectangleYio(0.1, 0.5 * (0.9 - buttonHeight * langNumber), 0.8, buttonHeight * langNumber);
         double y = base.y + base.height;
 
@@ -556,6 +544,12 @@ public class MenuControllerYio {
         spButton.setReactBehavior(ReactBehavior.rbSetLanguage);
         spButton.setShadow(false);
         spButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+
+        y -= buttonHeight;
+        ButtonYio skButton = buttonFactory.getButton(generateRectangle(base.x, y, base.width, buttonHeight), 342, "Slovak");
+        skButton.setReactBehavior(ReactBehavior.rbSetLanguage);
+        skButton.setShadow(false);
+        skButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
 
         endMenuCreation();
     }
@@ -1168,6 +1162,41 @@ public class MenuControllerYio {
     }
 
 
+    public void createConfirmClearEditorLevel() {
+        hideEditorOptionsPanel();
+
+        yioGdxGame.beginBackgroundChange(3, true, true);
+
+        ButtonYio basePanel = buttonFactory.getButton(generateRectangle(0.025, 0.15, 0.95, 0.2), 360, null);
+        if (basePanel.notRendered()) {
+            basePanel.addTextLine(getString("confirm_clear_level"));
+            basePanel.addTextLine(" ");
+            basePanel.addTextLine(" ");
+            buttonRenderer.renderButton(basePanel);
+        }
+        basePanel.setTouchable(false);
+        basePanel.setAnimType(ButtonYio.ANIM_COLLAPSE_DOWN);
+
+        ButtonYio clearButton = buttonFactory.getButton(generateRectangle(0.5, 0.15, 0.475, 0.06), 361, getString("editor_clear"));
+        clearButton.setReactBehavior(ReactBehavior.rbClearEditorLevel);
+        clearButton.setShadow(false);
+        clearButton.setAnimType(ButtonYio.ANIM_COLLAPSE_DOWN);
+
+        ButtonYio cancelButton = buttonFactory.getButton(generateRectangle(0.025, 0.15, 0.475, 0.06), 362, getString("cancel"));
+        cancelButton.setReactBehavior(ReactBehavior.rbEditorHideConfirmClearLevelMenu);
+        cancelButton.setShadow(false);
+        cancelButton.setAnimType(ButtonYio.ANIM_COLLAPSE_DOWN);
+    }
+
+
+    public void hideEditorConfirmClearLevelMenu() {
+        for (int i = 360; i <= 362; i++) {
+            ButtonYio buttonById = getButtonById(i);
+            buttonById.destroy();
+        }
+    }
+
+
     public void createEditorActionsMenu() {
         beginMenuCreation();
 
@@ -1251,7 +1280,7 @@ public class MenuControllerYio {
         hideButton.setReactBehavior(ReactBehavior.rbHideOptionsPanel);
 
         ButtonYio clearLevelButton = buttonFactory.getButton(generateRectangle(0, 0.21, 0.8, 0.07), 173, getString("editor_clear"));
-        clearLevelButton.setReactBehavior(ReactBehavior.rbClearLevel);
+        clearLevelButton.setReactBehavior(ReactBehavior.rbEditorConfirmClearLevelMenu);
 
         ButtonYio changePlayerNumberButton = buttonFactory.getButton(generateRectangle(0, 0.14, 0.8, 0.07), 174, getString("player_number"));
         changePlayerNumberButton.setReactBehavior(ReactBehavior.rbEditorChangePlayersNumber);
@@ -1507,6 +1536,7 @@ public class MenuControllerYio {
         undoButton.setReactBehavior(ReactBehavior.rbUndo);
         undoButton.setAnimType(ButtonYio.ANIM_DOWN);
         undoButton.enableRectangularMask();
+        undoButton.setTouchOffset(0.08f * GraphicsYio.width);
         undoButton.disableTouchAnimation();
 
 //        ButtonYio debugButton = buttonFactory.getButton(generateSquare(0.72, 0, 0.07), 3128773, "Q");
@@ -1791,6 +1821,12 @@ public class MenuControllerYio {
     }
 
 
+    public void createProposeSurrenderDialog() {
+        createTutorialTip(getArrayListFromString(languagesManager.getString("win_or_continue")));
+        addWinButtonToTutorialTip();
+    }
+
+
     public void addWinButtonToTutorialTip() {
         ButtonYio winButton = buttonFactory.getButton(generateRectangle(0, 0.1, 0.5, 0.05), 54, null);
         winButton.setTextLine(getString("win_game"));
@@ -1891,7 +1927,7 @@ public class MenuControllerYio {
                     getString("ai") + " " +
                     getString("won") + ".";
         }
-        if (CampaignController.getInstance().completedCampaignLevel(whoWon))
+        if (CampaignProgressManager.getInstance().completedCampaignLevel(whoWon))
             message = getString("level_complete");
         if (DebugFlags.CHECKING_BALANCE_MODE && yioGdxGame.gamesPlayed() % 50 == 0) {
             YioGdxGame.say(yioGdxGame.gamesPlayed() + " : " + yioGdxGame.getBalanceIndicatorString());
@@ -1906,7 +1942,7 @@ public class MenuControllerYio {
         textPanel.setAnimType(ButtonYio.ANIM_FROM_CENTER);
 
         ButtonYio okButton = buttonFactory.getButton(generateRectangle(0.55, 0.4, 0.4, 0.07), 62, null);
-        if (CampaignController.getInstance().completedCampaignLevel(whoWon))
+        if (CampaignProgressManager.getInstance().completedCampaignLevel(whoWon))
             okButton.setTextLine(getString("next"));
         else {
             if (playerIsWinner) {
@@ -1918,7 +1954,7 @@ public class MenuControllerYio {
         buttonRenderer.renderButton(okButton);
         okButton.setShadow(false);
         okButton.setReactBehavior(ReactBehavior.rbChooseGameModeMenu);
-        if (CampaignController.getInstance().completedCampaignLevel(whoWon))
+        if (CampaignProgressManager.getInstance().completedCampaignLevel(whoWon))
             okButton.setReactBehavior(ReactBehavior.rbNextLevel);
         okButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
 
@@ -1985,10 +2021,10 @@ public class MenuControllerYio {
 
 
     private void updateScrollerLineTexture(int index) {
-        if (index < 0 || index > CampaignController.INDEX_OF_LAST_LEVEL) return;
+        if (index < 0 || index > CampaignProgressManager.getIndexOfLastLevel()) return;
         TextureRegion textureRegion;
-        if (yioGdxGame.isLevelComplete(index)) textureRegion = openedLevelIcon;
-        else if (yioGdxGame.isLevelLocked(index)) textureRegion = lockedLevelIcon;
+        if (CampaignProgressManager.getInstance().isLevelComplete(index)) textureRegion = openedLevelIcon;
+        else if (CampaignProgressManager.getInstance().isLevelLocked(index)) textureRegion = lockedLevelIcon;
         else textureRegion = unlockedLevelIcon;
 //        scrollerYio.icons.set(index, textureRegion);
 //        scrollerYio.updateCacheLine(index);

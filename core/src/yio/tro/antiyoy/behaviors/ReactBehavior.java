@@ -76,7 +76,7 @@ public abstract class ReactBehavior {
     public static final RbEditorImport rbEditorImport = new RbEditorImport();
     public static final RbEditorPlay rbEditorPlay = new RbEditorPlay();
     public static final RbEditorRandomize rbEditorRandomize = new RbEditorRandomize();
-    public static final RbClearLevel rbClearLevel = new RbClearLevel();
+    public static final RbClearLevel rbClearEditorLevel = new RbClearLevel();
     public static final RbSettingsMenu rbSettingsMenu = new RbSettingsMenu();
     public static final RbCloseSettingsMenu rbCloseSettingsMenu = new RbCloseSettingsMenu();
     public static final RbWinGame rbWinGame = new RbWinGame();
@@ -103,4 +103,7 @@ public abstract class ReactBehavior {
     public static final RbForceEnableShroomArts rbForceEnableShroomArts = new RbForceEnableShroomArts();
     public static final RbRefuseEarlyGameEnd rbRefuseEarlyGameEnd = new RbRefuseEarlyGameEnd();
     public static final RbSwitchFilterOnlyLand rbSwitchFilterOnlyLand = new RbSwitchFilterOnlyLand();
+    public static final RbEditorConfirmClearLevelMenu rbEditorConfirmClearLevelMenu = new RbEditorConfirmClearLevelMenu();
+    public static final RbEditorHideConfirmClearLevelMenu rbEditorHideConfirmClearLevelMenu = new RbEditorHideConfirmClearLevelMenu();
+
 }

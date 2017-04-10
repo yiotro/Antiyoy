@@ -69,7 +69,7 @@ public class GameController {
         random = new Random();
         predictableRandom = new Random(0);
         languagesManager = MenuControllerYio.languagesManager;
-        CampaignController.getInstance().init(this);
+        CampaignProgressManager.getInstance();
         selectionController = new SelectionController(this);
         marchDelay = 500;
         cameraController = new CameraController(this);
@@ -282,14 +282,14 @@ public class GameController {
         int winner = checkIfWeHaveWinner();
         if (winner >= 0) {
             endGame(winner);
+            return;
         }
 
         // propose surrender
         if (!proposedSurrender) {
             int possibleWinner = fieldController.possibleWinner();
             if (possibleWinner >= 0 && isPlayerTurn(possibleWinner)) {
-                yioGdxGame.menuControllerYio.createTutorialTip(yioGdxGame.menuControllerYio.getArrayListFromString(languagesManager.getString("win_or_continue")));
-                yioGdxGame.menuControllerYio.addWinButtonToTutorialTip();
+                yioGdxGame.menuControllerYio.createProposeSurrenderDialog();
                 proposedSurrender = true;
             }
         }
@@ -345,26 +345,26 @@ public class GameController {
 
 
     private void endGame(int winColor) {
-//        yioGdxGame.setGamePaused(true);
-        CampaignController campaignController = CampaignController.getInstance();
-        if (campaignController.completedCampaignLevel(winColor)) {
-            int ls = campaignController.currentLevelIndex;
-//            yioGdxGame.increaseLevelSelection();
-            if (campaignController.currentLevelIndex >= campaignController.progress) {
-                campaignController.progress = campaignController.currentLevelIndex;
-                if (ls == campaignController.progress) campaignController.progress++; // last level completed
-                Preferences preferences = Gdx.app.getPreferences("main");
-                preferences.putInteger("progress", campaignController.progress);
-                preferences.flush();
-//                yioGdxGame.menuControllerYio.updateScrollerLinesBeforeIndex(progress);
-                yioGdxGame.menuControllerYio.levelSelector.update();
-            }
+        CampaignProgressManager instance = CampaignProgressManager.getInstance();
+
+        if (instance.completedCampaignLevel(winColor)) {
+            instance.markLevelAsCompleted(instance.currentLevelIndex);
+            yioGdxGame.menuControllerYio.levelSelector.update();
         }
+
         yioGdxGame.menuControllerYio.createAfterGameMenu(winColor, isPlayerTurn(winColor));
+
         if (DebugFlags.CHECKING_BALANCE_MODE) {
             yioGdxGame.balanceIndicator[winColor]++;
             yioGdxGame.startGame(true, false);
         }
+    }
+
+
+    public void resetProgress() {
+        CampaignProgressManager.getInstance().resetProgress();
+
+        yioGdxGame.selectedLevelIndex = 1;
     }
 
 
@@ -489,7 +489,6 @@ public class GameController {
         yioGdxGame.beginBackgroundChange(4, false, true);
 
         predictableRandom = new Random(index); // used in map generation
-        fieldController.playerHexCount = new int[GameRules.colorNumber];
         if (readParametersFromSliders) {
             setLevelSize(getLevelSizeBySliderPos(yioGdxGame.menuControllerYio.sliders.get(0)));
             setPlayersNumberBySlider(yioGdxGame.menuControllerYio.sliders.get(1));
@@ -498,6 +497,7 @@ public class GameController {
             readColorOffsetFromSlider();
             GameRules.setSlayRules(yioGdxGame.menuControllerYio.getCheckButtonById(16).isChecked());
         }
+        fieldController.playerHexCount = new int[GameRules.colorNumber]; // has to be after GameRules.setColorNumberBySlider();
         fieldController.createField(generateMap); // generating map
 
 //        campaignLevelFactory.generateLevels();
@@ -602,14 +602,13 @@ public class GameController {
                 fieldController.setHexColor(activeHex, 0);
         }
 
-//        StringBuilder builder = new StringBuilder();
-//        for (Province province : provinces) {
-//            if (province.getColor() == 0) continue;
-//            String balance = province.getBalanceString();
-//            if (balance.equals("0")) balance = "+0";
-//            builder.append(province.money).append(balance).append("  ");
+//        System.out.println();
+//        System.out.println("FieldController.NEUTRAL_LANDS_INDEX = " + FieldController.NEUTRAL_LANDS_INDEX);
+//        System.out.println("colorIndexViewOffset = " + colorIndexViewOffset);
+//        for (int i = 0; i < GameRules.colorNumber; i++) {
+//            int colorIndexWithOffset = ruleset.getColorIndexWithOffset(i);
+//            System.out.println(i + " -> " + colorIndexWithOffset);
 //        }
-//        System.out.println(builder.toString());
     }
 
 

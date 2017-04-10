@@ -132,7 +132,9 @@ public class ColorStatsRenderer {
 
 
     private void beginRender(ButtonYio buttonYio, BitmapFont font) {
-        if (frameBuffer != null) frameBuffer.dispose();
+        if (frameBuffer != null) {
+            frameBuffer.dispose();
+        }
         frameBuffer = FrameBufferYio.getInstance(Pixmap.Format.RGB565, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 2, false);
         frameBuffer.begin();
         Gdx.gl.glClearColor(buttonYio.backColor.r, buttonYio.backColor.g, buttonYio.backColor.b, 1);

@@ -94,12 +94,31 @@ public class LevelEditor {
 
 
     private void addSolidObject(Hex focusedHex, int lastObject) {
+        if (!canAddObjectToHex(focusedHex)) return;
+
         if (lastObject == Hex.OBJECT_TOWER && inputObject == Hex.OBJECT_TOWER) {
             gameController.addSolidObject(focusedHex, Hex.OBJECT_STRONG_TOWER);
             return;
         }
 
         gameController.addSolidObject(focusedHex, inputObject);
+    }
+
+
+    private boolean canAddObjectToHex(Hex hex) {
+        if (hex.isNeutral()) {
+            switch (inputObject) {
+                default:
+                    return false;
+                case Hex.OBJECT_TOWER:
+                case Hex.OBJECT_PALM:
+                case Hex.OBJECT_PINE:
+                case Hex.OBJECT_STRONG_TOWER:
+                    return true;
+            }
+        }
+
+        return true;
     }
 
 
@@ -138,7 +157,18 @@ public class LevelEditor {
     }
 
 
+    private boolean canAddUnitToHex(Hex hex) {
+        if (hex.isNeutral()) {
+            return false;
+        }
+
+        return true;
+    }
+
+
     private void tryToAddUnitToFocusedHex(Hex focusedHex, int unitStrength) {
+        if (!canAddUnitToHex(focusedHex)) return;
+
         int defStr = inputObject - 4;
         int str = unitStrength + defStr;
         while (str > 4) {
@@ -172,6 +202,11 @@ public class LevelEditor {
             }
         }
         cn++;
+
+        if (cn > FieldController.NEUTRAL_LANDS_INDEX) {
+            cn = FieldController.NEUTRAL_LANDS_INDEX;
+        }
+
         return cn;
     }
 

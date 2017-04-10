@@ -15,6 +15,8 @@ import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.GameView;
 import yio.tro.antiyoy.menu.ButtonYio;
 
+import java.util.Arrays;
+
 /**
  * Created by ivan on 29.12.2015.
  */
@@ -25,7 +27,10 @@ public class RbShowColorStats extends ReactBehavior {
     @Override
     public void reactAction(ButtonYio buttonYio) {
         buttonYio.menuControllerYio.showColorStats();
+
         ColorStatsRenderer colorStatsRenderer = new ColorStatsRenderer(buttonYio.menuControllerYio);
-        colorStatsRenderer.renderStatButton(buttonYio.menuControllerYio.getButtonById(56321), getGameController(buttonYio).fieldController.getPlayerHexCount());
+        ButtonYio statButton = buttonYio.menuControllerYio.getButtonById(56321);
+        int[] playerHexCount = getGameController(buttonYio).fieldController.getPlayerHexCount();
+        colorStatsRenderer.renderStatButton(statButton, playerHexCount);
     }
 }

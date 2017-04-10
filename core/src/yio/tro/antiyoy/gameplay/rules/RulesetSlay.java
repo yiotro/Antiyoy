@@ -100,9 +100,11 @@ public class RulesetSlay extends Ruleset{
     @Override
     public int getColorIndexWithOffset(int srcIndex) {
         srcIndex += gameController.colorIndexViewOffset;
+
         if (srcIndex >= GameRules.colorNumber) {
             srcIndex -= GameRules.colorNumber;
         }
+
         return srcIndex;
     }
 
