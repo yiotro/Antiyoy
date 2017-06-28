@@ -12,9 +12,10 @@ import java.util.Random;
 /**
  * Created by ivan on 08.11.2015.
  */
-class MapGenerator {
+public class MapGenerator {
 
     protected final GameController gameController;
+    private final DetectorProvince detectorProvince;
     protected float boundWidth, boundHeight;
     protected int fWidth, fHeight, w, h;
     protected Hex[][] field;
@@ -26,6 +27,7 @@ class MapGenerator {
 
     public MapGenerator(GameController gameController) {
         this.gameController = gameController;
+        detectorProvince = new DetectorProvince();
     }
 
 
@@ -108,7 +110,7 @@ class MapGenerator {
         clearGenFlags();
         for (Hex activeHex : gameController.fieldController.activeHexes) {
             if (!activeHex.genFlag && activeHex.sameColor(index)) {
-                ArrayList<Hex> provinceList = detectProvince(activeHex);
+                ArrayList<Hex> provinceList = detectorProvince.detectProvince(activeHex);
                 tagProvince(provinceList);
                 decreaseProvince(provinceList, power);
             }
@@ -120,9 +122,9 @@ class MapGenerator {
         clearGenFlags();
         for (Hex activeHex : gameController.fieldController.activeHexes) {
             if (!activeHex.genFlag && activeHex.sameColor(index)) {
-                ArrayList<Hex> provinceList = detectProvince(activeHex);
+                ArrayList<Hex> provinceList = detectorProvince.detectProvince(activeHex);
                 increaseProvince(provinceList, power);
-                provinceList = detectProvince(activeHex); // detect again because province increased
+                provinceList = detectorProvince.detectProvince(activeHex); // detect again because province increased
                 tagProvince(provinceList);
             }
         }
@@ -173,29 +175,9 @@ class MapGenerator {
     }
 
 
-    protected ArrayList<Hex> detectProvince(Hex startHex) {
-        ArrayList<Hex> provinceList = new ArrayList<Hex>();
-        ArrayList<Hex> propagationList = new ArrayList<Hex>();
-        Hex tempHex, adjHex;
-        propagationList.add(startHex);
-        while (propagationList.size() > 0) {
-            tempHex = propagationList.get(0);
-            provinceList.add(tempHex);
-            propagationList.remove(0);
-            for (int i = 0; i < 6; i++) {
-                adjHex = tempHex.getAdjacentHex(i);
-                if (adjHex.active && adjHex.sameColor(tempHex) && !propagationList.contains(adjHex) && !provinceList.contains(adjHex)) {
-                    propagationList.add(adjHex);
-                }
-            }
-        }
-        return provinceList;
-    }
-
-
     protected boolean atLeastOneProvinceIsTooBig() {
         for (Hex activeHex : gameController.fieldController.activeHexes) {
-            if (detectProvince(activeHex).size() > SMALL_PROVINCE_SIZE) return true;
+            if (detectorProvince.detectProvince(activeHex).size() > SMALL_PROVINCE_SIZE) return true;
         }
         return false;
     }
@@ -205,7 +187,7 @@ class MapGenerator {
         int loopLimit = 100;
         while (atLeastOneProvinceIsTooBig() && loopLimit > 0) {
             for (Hex activeHex : gameController.fieldController.activeHexes) {
-                ArrayList<Hex> provinceList = detectProvince(activeHex);
+                ArrayList<Hex> provinceList = detectorProvince.detectProvince(activeHex);
                 if (provinceList.size() > SMALL_PROVINCE_SIZE)
                     reduceProvinceSize(provinceList);
             }
@@ -254,7 +236,7 @@ class MapGenerator {
         clearGenFlags();
         for (Hex activeHex : gameController.fieldController.activeHexes) {
             if (!activeHex.genFlag) {
-                ArrayList<Hex> provinceList = detectProvince(activeHex);
+                ArrayList<Hex> provinceList = detectorProvince.detectProvince(activeHex);
                 if (provinceList.size() > 1) {
                     numbers[provinceList.get(0).colorIndex]++;
                     for (Hex hex : provinceList) {
@@ -340,7 +322,7 @@ class MapGenerator {
         clearGenFlags();
         for (Hex activeHex : gameController.fieldController.activeHexes) {
             if (activeHex.sameColor(giverIndex) && !activeHex.genFlag) {
-                ArrayList<Hex> provinceList = detectProvince(activeHex);
+                ArrayList<Hex> provinceList = detectorProvince.detectProvince(activeHex);
                 if (provinceList.size() > 1) {
                     tagProvince(provinceList);
                     if (tryToGiveAwayProvince(provinceList)) return true;
@@ -639,7 +621,7 @@ class MapGenerator {
 
     protected void addTrees() {
         for (Hex activeHex : gameController.fieldController.activeHexes) {
-            if (random.nextDouble() < 0.1 && !activeHex.containsSolidObject()) {
+            if (random.nextDouble() < 0.1 && !activeHex.containsObject()) {
                 gameController.fieldController.spawnTree(activeHex);
             }
         }

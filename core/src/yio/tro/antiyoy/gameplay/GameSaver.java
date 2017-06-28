@@ -3,7 +3,11 @@ package yio.tro.antiyoy.gameplay;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
+import yio.tro.antiyoy.gameplay.loading.LoadingManager;
+import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -100,7 +104,7 @@ public class GameSaver {
         String dateString = dateFormat.format(date);
         prefs.putString("date", dateString);
         prefs.flush();
-        gameController.yioGdxGame.menuControllerYio.updateSaveSlotButton(slotIndex);
+        Scenes.sceneSaveSlots.updateSaveSlotButton(slotIndex);
     }
 
 
@@ -266,28 +270,11 @@ public class GameSaver {
     }
 
 
-    void beginRecreation() {
-        beginRecreation(true);
-    }
-
-
-    void beginRecreation(boolean readParametersFromSliders) {
-        gameController.yioGdxGame.startGame(false, readParametersFromSliders);
+    public void beginRecreation() {
         gameController.fieldController.createFieldMatrix();
         createHexStrings();
         if (YioGdxGame.isScreenVeryWide()) supportForWideScreens();
         recreateMap();
-    }
-
-
-    void endRecreation() {
-        gameController.createCamera();
-        gameController.yioGdxGame.gameView.updateCacheLevelTextures();
-        gameController.yioGdxGame.gameView.updateAnimationTexture();
-        gameController.createAiList();
-        gameController.updateLevelInitialString();
-        gameController.updateRuleset();
-        gameController.selectionController.deselectAll();
     }
 
 
@@ -305,74 +292,39 @@ public class GameSaver {
         prefs = Gdx.app.getPreferences(prefsName);
         activeHexesString = prefs.getString("save_active_hexes", "");
         if (activeHexesString.length() < 3) return;
-        loadBasicInfo(); // it's here twice for a reason
-        beginRecreation(false);
-        loadBasicInfo(); // it's here twice for a reason
+
+        LoadingParameters instance = LoadingParameters.getInstance();
+        instance.mode = LoadingParameters.MODE_LOAD_GAME;
+        instance.applyPrefs(prefs);
+        instance.activeHexes = activeHexesString;
+        LoadingManager.getInstance().startGame(instance);
         loadStatistics();
-        endRecreation();
-    }
 
-
-    public void recreateLevelFromString(String fullLevel, boolean editorMode, boolean resetColorOffset) {
-        GameRules.inEditorMode = editorMode;
-        String basicInfo, activeHexes;
-        int delimiterChar = fullLevel.indexOf("/");
-        if (delimiterChar < 0) { // empty slot
-            GameRules.setColorNumber(0); // to notify yio gdx game
-            gameController.yioGdxGame.startInEditorMode();
-            return;
-        }
-        basicInfo = fullLevel.substring(0, delimiterChar);
-        activeHexes = fullLevel.substring(delimiterChar + 1, fullLevel.length());
-        int basicInfoValues[] = new int[4];
-        StringTokenizer stringTokenizer = new StringTokenizer(basicInfo, " ");
-        int i = 0;
-        while (stringTokenizer.hasMoreTokens()) {
-            String token = stringTokenizer.nextToken();
-            basicInfoValues[i] = Integer.valueOf(token);
-            i++;
-        }
-
-        setActiveHexesString(activeHexes);
-
-        // this is special hack. Rules have to be detected before recreating map (detect provinces)
-        createHexStrings();
-        GameRules.setSlayRules(true);
-        for (String hexString : hexStrings) {
-            int[] hexSnapshotByString = getHexSnapshotByString(hexString);
-            int color = hexSnapshotByString[2];
-            if (color == FieldController.NEUTRAL_LANDS_INDEX) {
-                GameRules.setSlayRules(false);
-                break;
-            }
-        }
-
-        setBasicInfo(0, basicInfoValues[2], basicInfoValues[3], basicInfoValues[1], basicInfoValues[0]);
-        beginRecreation(false);
-        if (resetColorOffset) {
-            gameController.colorIndexViewOffset = 0;
-        } else {
-            gameController.readColorOffsetFromSlider();
-        }
-        detectRules();
-        endRecreation();
-
-        if (editorMode) {
-            for (Unit unit : gameController.unitList) {
-                unit.stopJumping();
-            }
-        }
+//        loadBasicInfo(); // it's here twice for a reason
+//        beginRecreation(false);
+//        loadBasicInfo(); // it's here twice for a reason
+//        loadStatistics();
+//        endRecreation();
     }
 
 
     public void detectRules() {
         GameRules.setSlayRules(true);
         for (Hex activeHex : gameController.fieldController.activeHexes) {
-            if (activeHex.colorIndex == FieldController.NEUTRAL_LANDS_INDEX) {
+            if (doesHexRequireGenericRules(activeHex)) {
                 GameRules.setSlayRules(false);
                 System.out.println("detected generic rules");
                 return;
             }
         }
+    }
+
+
+    private boolean doesHexRequireGenericRules(Hex activeHex) {
+        if (activeHex.colorIndex == FieldController.NEUTRAL_LANDS_INDEX) return true;
+        if (activeHex.objectInside == Hex.OBJECT_FARM) return true;
+        if (activeHex.objectInside == Hex.OBJECT_STRONG_TOWER) return true;
+
+        return false;
     }
 }

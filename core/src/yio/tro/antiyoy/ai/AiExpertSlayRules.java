@@ -14,11 +14,13 @@ import java.util.ArrayList;
 public class AiExpertSlayRules extends ArtificialIntelligence {
 
     private final Hex tempHex;
+    private ArrayList<Hex> hexesInPerimeter;
 
 
     public AiExpertSlayRules(GameController gameController, int color) {
         super(gameController, color);
         tempHex = new Hex(0, 0, new PointYio(), gameController.fieldController);
+        hexesInPerimeter = new ArrayList<Hex>();
     }
 
 
@@ -125,7 +127,7 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
 
 
     private Hex findRandomHexInPerimeter(Province province) {
-        ArrayList<Hex> hexesInPerimeter = new ArrayList<Hex>();
+        hexesInPerimeter.clear();
         for (Hex hex : province.hexList) {
             if (hex.isInPerimeter()) hexesInPerimeter.add(hex);
         }

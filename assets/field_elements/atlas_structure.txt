@@ -39,9 +39,9 @@ pine_lowest.png#682 416 32 32
 selection_pixel.png#0 576 10 10
 selection_pixel_low.png#10 576 5 5
 selection_pixel_lowest.png#15 576 2 2
-tower.png#17 576 128 128
-tower_low.png#145 576 64 64
-tower_lowest.png#209 576 32 32
-tower_strong.png#241 576 128 128
-tower_strong_low.png#369 576 64 64
-tower_strong_lowest.png#433 576 32 32
+strong_tower.png#17 576 128 128
+strong_tower_low.png#145 576 64 64
+strong_tower_lowest.png#209 576 32 32
+tower.png#241 576 128 128
+tower_low.png#369 576 64 64
+tower_lowest.png#433 576 32 32

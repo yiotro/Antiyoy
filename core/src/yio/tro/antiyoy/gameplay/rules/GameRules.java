@@ -37,18 +37,8 @@ public class GameRules {
     }
 
 
-    public static void setColorNumberBySlider(SliderYio slider) {
-        setColorNumber(slider.getCurrentRunnerIndex() + 2);
-    }
-
-
     public static void setDifficulty(int difficulty) {
         GameRules.difficulty = difficulty;
-    }
-
-
-    public static void setDifficultyBySlider(SliderYio slider) {
-        difficulty = slider.getCurrentRunnerIndex();
     }
 
 

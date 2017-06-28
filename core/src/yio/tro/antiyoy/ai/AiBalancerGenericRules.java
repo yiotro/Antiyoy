@@ -14,10 +14,12 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
 
     private int[] playerHexCount;
     private ArrayList<Hex> propagationList;
+    private ArrayList<Hex> result;
 
 
     public AiBalancerGenericRules(GameController gameController, int color) {
         super(gameController, color);
+        result = new ArrayList<Hex>();
     }
 
 
@@ -354,7 +356,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
 
     @Override
     ArrayList<Hex> findAttackableHexes(int attackerColor, ArrayList<Hex> moveZone) {
-        ArrayList<Hex> result = new ArrayList<Hex>();
+        result.clear();
         for (Hex hex : moveZone) {
             if (hex.colorIndex != attackerColor) result.add(hex);
         }

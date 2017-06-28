@@ -2,10 +2,8 @@ package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.Fonts;
 import yio.tro.antiyoy.LanguagesManager;
-import yio.tro.antiyoy.OneTimeInfo;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
-import yio.tro.antiyoy.menu.MenuControllerYio;
 
 import java.util.*;
 
@@ -205,7 +203,7 @@ public class Province {
 
     public void setName(String name) {
         this.name = name;
-        nameWidth = 0.5f * YioGdxGame.getTextWidth(Fonts.cityFont, name) + 0.1f * gameController.yioGdxGame.gameView.hexViewSize;
+        nameWidth = 0.5f * YioGdxGame.getTextWidth(Fonts.microFont, name) + 0.1f * gameController.yioGdxGame.gameView.hexViewSize;
     }
 
 

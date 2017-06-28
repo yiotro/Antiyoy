@@ -22,6 +22,8 @@ public abstract class ArtificialIntelligence {
     protected final int color;
     protected ArrayList<Province> nearbyProvinces;
     protected ArrayList<Unit> unitsReadyToMove;
+    private ArrayList<Hex> tempResultList;
+    private ArrayList<Hex> junkList;
 
 
     ArtificialIntelligence(GameController gameController, int color) {
@@ -30,6 +32,8 @@ public abstract class ArtificialIntelligence {
         random = gameController.random;
         nearbyProvinces = new ArrayList<>();
         unitsReadyToMove = new ArrayList<Unit>();
+        tempResultList = new ArrayList<Hex>();
+        junkList = new ArrayList<Hex>();
     }
 
 
@@ -107,12 +111,17 @@ public abstract class ArtificialIntelligence {
         ArrayList<Hex> moveZone = gameController.detectMoveZone(unit.currentHex, unit.strength, GameRules.UNIT_MOVE_LIMIT);
         if (moveZone.size() == 0) return;
         for (Hex hex : moveZone) {
-            if (hex.sameColor(unit.currentHex) && hex.containsUnit() && hex.unit.isReadyToMove() && unit != hex.unit &&
-                    province.hasEnoughIncomeToAffordUnit(gameController.mergedUnitStrength(unit, hex.unit))) {
+            if (mergeConditions(province, unit, hex)) {
 
                 gameController.mergeUnits(unit.currentHex, unit, hex.unit);
             }
         }
+    }
+
+
+    protected boolean mergeConditions(Province province, Unit unit, Hex hex) {
+        return hex.sameColor(unit.currentHex) && hex.containsUnit() && hex.unit.isReadyToMove() && unit != hex.unit &&
+                province.hasEnoughIncomeToAffordUnit(gameController.mergedUnitStrength(unit, hex.unit));
     }
 
 
@@ -363,16 +372,16 @@ public abstract class ArtificialIntelligence {
 
 
     ArrayList<Hex> findAttackableHexes(int attackerColor, ArrayList<Hex> moveZone) {
-        ArrayList<Hex> result = new ArrayList<Hex>();
+        tempResultList.clear();
         for (Hex hex : moveZone) {
-            if (hex.colorIndex != attackerColor) result.add(hex);
+            if (hex.colorIndex != attackerColor) tempResultList.add(hex);
         }
-        return result;
+        return tempResultList;
     }
 
 
     private void excludeFriendlyBuildingsFromMoveZone(ArrayList<Hex> moveZone) {
-        ArrayList<Hex> junkList = new ArrayList<Hex>();
+        junkList.clear();
         for (Hex hex : moveZone) {
             if (hex.sameColor(color)) {
                 if (hex.containsBuilding()) junkList.add(hex);
@@ -383,7 +392,7 @@ public abstract class ArtificialIntelligence {
 
 
     private void excludeFriendlyUnitsFromMoveZone(ArrayList<Hex> moveZone) {
-        ArrayList<Hex> junkList = new ArrayList<Hex>();
+        junkList.clear();
         for (Hex hex : moveZone) {
             if (hex.sameColor(color)) {
                 if (hex.containsUnit()) junkList.add(hex);

@@ -11,12 +11,12 @@ import java.util.ArrayList;
  */
 public class Unit {
     public Hex lastHex, currentHex;
-    final PointYio currentPos;
-    final FactorYio moveFactor;
+    public final PointYio currentPos;
+    public final FactorYio moveFactor;
     public int strength;
     final GameController gameController;
     boolean readyToMove;
-    float jumpPos, jumpGravity, jumpDy, jumpStartingImpulse;
+    public float jumpPos, jumpGravity, jumpDy, jumpStartingImpulse;
 
 
     public Unit(GameController gameController, Hex currentHex, int strength) {
@@ -43,7 +43,7 @@ public class Unit {
     boolean moveToHex(Hex destinationHex) {
         if (destinationHex.sameColor(currentHex) && destinationHex.containsBuilding()) return false;
         gameController.ruleset.onUnitMoveToHex(this, destinationHex);
-        if (destinationHex.containsSolidObject()) {
+        if (destinationHex.containsObject()) {
             gameController.cleanOutHex(destinationHex); // unit crushes object
             gameController.updateCacheOnceAfterSomeTime();
         }
@@ -116,7 +116,7 @@ public class Unit {
     }
 
 
-    void stopJumping() {
+    public void stopJumping() {
         jumpPos = 0;
         jumpDy = 0;
         jumpGravity = 0;

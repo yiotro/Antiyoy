@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.ai;
 
+import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
@@ -56,7 +57,16 @@ public class AiEasy extends ArtificialIntelligence {
 
 
     @Override
+    protected boolean mergeConditions(Province province, Unit unit, Hex hex) {
+        return super.mergeConditions(province, unit, hex) && unit.strength == 1 && hex.unit.strength == 1;
+    }
+
+
+    @Override
     void mergeUnits(Province province) {
-        return; // easy AI can't merge units
+        if (random.nextDouble() < 0.25) {
+            super.mergeUnits(province);
+            return;
+        }
     }
 }

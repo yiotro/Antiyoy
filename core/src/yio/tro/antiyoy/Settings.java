@@ -3,7 +3,7 @@ package yio.tro.antiyoy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.gameplay.GameController;
-import yio.tro.antiyoy.gameplay.GameView;
+import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.menu.CheckButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 
@@ -84,11 +84,6 @@ public class Settings {
         gameController.setCityNamesEnabled(cityNames);
         menuControllerYio.getCheckButtonById(4).setChecked(cityNames == 1);
 
-        // camera offset
-        int camOffsetIndex = prefs.getInteger("camera_offset", 2);
-        gameController.cameraController.cameraOffset = 0.05f * GraphicsYio.width * camOffsetIndex;
-        menuControllerYio.sliders.get(6).setRunnerValueByIndex(camOffsetIndex);
-
         // turns limit
         turns_limit = prefs.getBoolean("turns_limit", true);
         menuControllerYio.getCheckButtonById(6).setChecked(turns_limit);
@@ -109,7 +104,7 @@ public class Settings {
         }
 
         menuControllerYio.sliders.get(5).updateValueString();
-        menuControllerYio.sliders.get(6).updateValueString();
+//        menuControllerYio.sliders.get(6).updateValueString();
         menuControllerYio.sliders.get(9).updateValueString();
     }
 
@@ -125,7 +120,7 @@ public class Settings {
         prefs.putInteger("ask_to_end_turn", boolToInteger(menuControllerYio.getCheckButtonById(3).isChecked()));
         prefs.putInteger("sensitivity", menuControllerYio.sliders.get(9).getCurrentRunnerIndex());
         prefs.putInteger("city_names", boolToInteger(menuControllerYio.getCheckButtonById(4).isChecked()));
-        prefs.putInteger("camera_offset", menuControllerYio.sliders.get(6).getCurrentRunnerIndex());
+//        prefs.putInteger("camera_offset", menuControllerYio.sliders.get(6).getCurrentRunnerIndex());
         prefs.putBoolean("turns_limit", menuControllerYio.getCheckButtonById(6).isChecked());
         prefs.putBoolean("long_tap_to_move", menuControllerYio.getCheckButtonById(7).isChecked());
         saveWaterTexture(prefs);

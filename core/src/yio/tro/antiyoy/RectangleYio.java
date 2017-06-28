@@ -10,13 +10,18 @@ public class RectangleYio {
     public double height;
 
 
+    public RectangleYio() {
+        this(0, 0, 0, 0);
+    }
+
+
     public RectangleYio(double x, double y, double width, double height) {
         set(x, y, width, height);
     }
 
 
     public RectangleYio(RectangleYio src) {
-        set(src.x, src.y, src.width, src.height);
+        setBy(src);
     }
 
 
@@ -25,5 +30,10 @@ public class RectangleYio {
         this.y = y;
         this.width = width;
         this.height = height;
+    }
+
+
+    public void setBy(RectangleYio src) {
+        set(src.x, src.y, src.width, src.height);
     }
 }

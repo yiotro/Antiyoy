@@ -5,9 +5,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import yio.tro.antiyoy.GraphicsYio;
 import yio.tro.antiyoy.Masking;
 import yio.tro.antiyoy.RectangleYio;
-import yio.tro.antiyoy.menu.InterfaceElement;
-import yio.tro.antiyoy.menu.LevelSelector;
-import yio.tro.antiyoy.menu.MenuRender;
 
 public class RenderLevelSelector extends MenuRender {
 
@@ -16,7 +13,7 @@ public class RenderLevelSelector extends MenuRender {
 
     @Override
     public void loadTextures() {
-        blackPixel = GraphicsYio.loadTextureRegionByName("pixels/black_pixel.png", false);
+        blackPixel = GraphicsYio.loadTextureRegion("pixels/black_pixel.png", false);
     }
 
 

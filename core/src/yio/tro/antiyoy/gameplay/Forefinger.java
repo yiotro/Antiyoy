@@ -7,7 +7,7 @@ import yio.tro.antiyoy.factor_yio.FactorYio;
 /**
  * Created by ivan on 12.11.2015.
  */
-class Forefinger {
+public class Forefinger {
 
     private final GameController gameController;
     private final Unit jumpingUnit;
@@ -16,7 +16,7 @@ class Forefinger {
     public static final int POINTING_TO_HEX = 0;
     public static final int POINTING_TO_MENU = 1;
     private Hex pointedHex;
-    PointYio pointPos, animPos;
+    public PointYio pointPos, animPos;
     float w, h;
     private double rotation;
 
@@ -49,7 +49,7 @@ class Forefinger {
     }
 
 
-    float getAlpha() {
+    public float getAlpha() {
         if (sizeFactor.get() <= 1) return sizeFactor.get();
         return 1;
     }
@@ -60,7 +60,7 @@ class Forefinger {
     }
 
 
-    boolean isPointingToHex() {
+    public boolean isPointingToHex() {
         return pointingTo == POINTING_TO_HEX;
     }
 
@@ -70,7 +70,7 @@ class Forefinger {
     }
 
 
-    float getSize() {
+    public float getSize() {
         return 0.5f + 0.5f * sizeFactor.get();
     }
 

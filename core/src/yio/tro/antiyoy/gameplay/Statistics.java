@@ -58,7 +58,27 @@ public class Statistics {
     }
 
 
+    public void showInConsole() {
+        System.out.println();
+        System.out.println("Statistics:");
+        System.out.println("turnsMade: " + turnsMade);
+        System.out.println("unitsDied: " + unitsDied);
+        System.out.println("unitsProduced: " + unitsProduced);
+        System.out.println("moneySpent: " + moneySpent);
+        System.out.println();
+    }
+
+
     void increaseTimeCount() {
         timeCount++;
+    }
+
+
+    public void onUnitsMerged() {
+        // merging is done by killing 2 units and making new one
+        // it should be considered as production of new unit
+
+        unitsDied -= 2;
+        unitsProduced -= 1;
     }
 }

@@ -11,7 +11,7 @@ public class Hex {
 
     public boolean active, selected, changingColor, flag, inMoveZone, genFlag, ignoreTouch;
     public int index1, index2, moveZoneNumber, genPotential, viewDiversityIndex;
-    PointYio pos, fieldPos;
+    public PointYio pos, fieldPos;
     private GameController gameController;
     FieldController fieldController;
     float cos60, sin60;
@@ -25,7 +25,7 @@ public class Hex {
     public static final int OBJECT_GRAVE = 5;
     public static final int OBJECT_FARM = 6;
     public static final int OBJECT_STRONG_TOWER = 7;
-    FactorYio animFactor, selectionFactor;
+    public FactorYio animFactor, selectionFactor;
     public Unit unit;
 
 
@@ -42,7 +42,7 @@ public class Hex {
         animFactor = new FactorYio();
         selectionFactor = new FactorYio();
         unit = null;
-        viewDiversityIndex = (101 * index1 + 1001 * index2) % 3;
+        viewDiversityIndex = (101 * index1 * index2 + 7 * index2) % 3;
         updatePos();
     }
 
@@ -97,7 +97,7 @@ public class Hex {
 
 
     public boolean isFree() {
-        return !containsSolidObject() && !containsUnit();
+        return !containsObject() && !containsUnit();
     }
 
 
@@ -111,7 +111,7 @@ public class Hex {
     }
 
 
-    public boolean containsSolidObject() {
+    public boolean containsObject() {
         return objectInside > 0;
     }
 
@@ -306,8 +306,8 @@ public class Hex {
     }
 
 
-    public Hex getAdjacentHex(int neighbourNumber) {
-        return gameController.fieldController.adjacentHex(this, neighbourNumber);
+    public Hex getAdjacentHex(int direction) {
+        return gameController.fieldController.adjacentHex(this, direction);
     }
 
 
@@ -316,7 +316,7 @@ public class Hex {
     }
 
 
-    boolean isEmptyHex() {
+    public boolean isEmptyHex() {
         return index1 == -1 && index2 == -1;
     }
 
@@ -343,6 +343,11 @@ public class Hex {
     public boolean isNeutral() {
         if (GameRules.slay_rules) return false;
         return colorIndex == FieldController.NEUTRAL_LANDS_INDEX;
+    }
+
+
+    public boolean canBeAttackedBy(Unit unit) {
+        return gameController.ruleset.canUnitAttackHex(unit.strength, this);
     }
 
 

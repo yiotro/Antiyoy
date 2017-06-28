@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import yio.tro.antiyoy.*;
-import yio.tro.antiyoy.gameplay.GameView;
+import yio.tro.antiyoy.gameplay.game_view.GameView;
 
 import java.util.ArrayList;
 

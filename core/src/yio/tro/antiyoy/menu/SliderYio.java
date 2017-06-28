@@ -268,7 +268,7 @@ public class SliderYio {
 
 
     public void updateValueString() {
-        LanguagesManager languagesManager = menuControllerYio.languagesManager;
+        LanguagesManager languagesManager = LanguagesManager.getInstance();
         switch (configureType) {
             default:
             case CONFIGURE_HUMANS:

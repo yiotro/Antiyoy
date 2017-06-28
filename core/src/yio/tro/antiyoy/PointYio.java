@@ -23,7 +23,7 @@ public class PointYio {
     }
 
 
-    void setBy(PointYio p) {
+    public void setBy(PointYio p) {
         this.x = p.x;
         this.y = p.y;
     }
@@ -36,5 +36,11 @@ public class PointYio {
 
     public double angleTo(PointYio pointYio) {
         return Yio.angle(x, y, pointYio.x, pointYio.y);
+    }
+
+
+    @Override
+    public String toString() {
+        return "[Point: " + Yio.roundUp(x, 3) + ", " + Yio.roundUp(y, 3) + "]";
     }
 }

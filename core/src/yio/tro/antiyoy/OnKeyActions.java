@@ -2,6 +2,7 @@ package yio.tro.antiyoy;
 
 import com.badlogic.gdx.Input;
 import yio.tro.antiyoy.menu.ButtonYio;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 
 public class OnKeyActions {
 
@@ -18,10 +19,14 @@ public class OnKeyActions {
             onBackButtonPressed();
         }
 
+        if (keycode == Input.Keys.ENTER) {
+            onEnterPressed();
+        }
+
         // wtf is this? :)
         if (keycode == Input.Keys.Q) {
             if (!yioGdxGame.gamePaused) {
-                yioGdxGame.menuControllerYio.getButtonById(32).press(); // debug
+                yioGdxGame.pressButtonIfVisible(32);
                 yioGdxGame.pressButtonIfVisible(53); // skip tutorial tip
             }
         }
@@ -42,11 +47,43 @@ public class OnKeyActions {
             onDebugButtonPressed();
         }
 
+        if (keycode == Input.Keys.Z) {
+            yioGdxGame.gameController.cameraController.setTargetZoomLevel(0.9f);
+        }
+
         if (keycode == Input.Keys.NUM_0) {
             onEditLevelButtonPressed();
         }
 
+        if (keycode == Input.Keys.C) {
+            openCheatScreen();
+        }
+
         return false;
+    }
+
+
+    private void onEnterPressed() {
+        pressIfVisible(Scenes.sceneMainMenu.playButton);
+        pressIfVisible(Scenes.sceneChoodeGameModeMenu.skirmishButton);
+        pressIfVisible(Scenes.sceneSkirmishMenu.startButton);
+
+        pressIfVisible(Scenes.scenePauseMenu.resumeButton);
+    }
+
+
+    private void pressIfVisible(ButtonYio buttonYio) {
+        if (buttonYio == null) return;
+        if (!buttonYio.isVisible()) return;
+
+        buttonYio.press();
+    }
+
+
+    private void openCheatScreen() {
+        yioGdxGame.setGamePaused(true);
+
+        Scenes.sceneCheatScreen.create();
     }
 
 
@@ -72,7 +109,7 @@ public class OnKeyActions {
 
     private void onSpaceButtonPressed() {
         if (!yioGdxGame.gamePaused) {
-            yioGdxGame.menuControllerYio.getButtonById(31).press(); // end turn
+            yioGdxGame.pressButtonIfVisible(31);
             yioGdxGame.pressButtonIfVisible(53); // close tip
         }
     }

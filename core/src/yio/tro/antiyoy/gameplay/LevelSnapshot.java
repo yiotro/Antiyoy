@@ -81,7 +81,7 @@ class LevelSnapshot {
                     if (!currHex.selected) currHex.selectionFactor.setValues(0, 0);
                 }
 
-                if (fieldCopy[i][j].containsSolidObject()) {
+                if (fieldCopy[i][j].containsObject()) {
                     gameController.addSolidObject(currHex, fieldCopy[i][j].objectInside);
                 }
 

@@ -2,6 +2,7 @@ package yio.tro.antiyoy.menu;
 
 import yio.tro.antiyoy.GraphicsYio;
 import yio.tro.antiyoy.OneTimeInfo;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 
 public class SpecialActionController {
 
@@ -51,8 +52,8 @@ public class SpecialActionController {
 
 
     public void forceEnableShroomArts() {
-        menuControllerYio.createSettingsMenu();
-        menuControllerYio.createMoreSettingsMenu();
+        Scenes.sceneSettingsMenu.create();
+        Scenes.sceneMoreSettingsMenu.create();
 
         enabled = true;
         sliderYio = menuControllerYio.sliders.get(5);

@@ -14,8 +14,8 @@ import yio.tro.antiyoy.FrameBufferYio;
 import yio.tro.antiyoy.GraphicsYio;
 import yio.tro.antiyoy.RectangleYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
-import yio.tro.antiyoy.gameplay.CampaignLevelFactory;
-import yio.tro.antiyoy.gameplay.CampaignProgressManager;
+import yio.tro.antiyoy.gameplay.campaign.CampaignLevelFactory;
+import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 
 
 public class LevelSelector extends InterfaceElement {
@@ -70,21 +70,21 @@ public class LevelSelector extends InterfaceElement {
         textures = new TextureRegion[howManyPanels];
         pos = new RectangleYio[howManyPanels];
 
-        backgroundTexture = GraphicsYio.loadTextureRegionByName("pixels/level_selector_background.png", false);
+        backgroundTexture = GraphicsYio.loadTextureRegion("menu/level_selector/level_selector_background.png", false);
 
         lockIconTextures = new TextureRegion[4];
-        lockIconTextures[0] = GraphicsYio.loadTextureRegionByName("menu/easy_base.png", true);
-        lockIconTextures[1] = GraphicsYio.loadTextureRegionByName("menu/normal_base.png", true);
-        lockIconTextures[2] = GraphicsYio.loadTextureRegionByName("menu/hard_base.png", true);
-        lockIconTextures[3] = GraphicsYio.loadTextureRegionByName("menu/expert_base.png", true);
+        lockIconTextures[0] = GraphicsYio.loadTextureRegion("menu/level_selector/easy_base.png", true);
+        lockIconTextures[1] = GraphicsYio.loadTextureRegion("menu/level_selector/normal_base.png", true);
+        lockIconTextures[2] = GraphicsYio.loadTextureRegion("menu/level_selector/hard_base.png", true);
+        lockIconTextures[3] = GraphicsYio.loadTextureRegion("menu/level_selector/expert_base.png", true);
 
         unlockIconTextures = new TextureRegion[4];
-        unlockIconTextures[0] = GraphicsYio.loadTextureRegionByName("menu/unlocked_easy.png", false);
-        unlockIconTextures[1] = GraphicsYio.loadTextureRegionByName("menu/unlocked_normal.png", false);
-        unlockIconTextures[2] = GraphicsYio.loadTextureRegionByName("menu/unlocked_hard.png", false);
-        unlockIconTextures[3] = GraphicsYio.loadTextureRegionByName("menu/unlocked_expert.png", false);
+        unlockIconTextures[0] = GraphicsYio.loadTextureRegion("menu/level_selector/unlocked_easy.png", false);
+        unlockIconTextures[1] = GraphicsYio.loadTextureRegion("menu/level_selector/unlocked_normal.png", false);
+        unlockIconTextures[2] = GraphicsYio.loadTextureRegion("menu/level_selector/unlocked_hard.png", false);
+        unlockIconTextures[3] = GraphicsYio.loadTextureRegion("menu/level_selector/unlocked_expert.png", false);
 
-        completedIcon = GraphicsYio.loadTextureRegionByName("menu/completed_level_base.png", false);
+        completedIcon = GraphicsYio.loadTextureRegion("menu/level_selector/completed_level_base.png", false);
 
         for (int i = 0; i < howManyPanels; i++) {
             pos[i] = new RectangleYio((float)defPos.x + i * ((float)defPos.width + 0.1 * w), (float)defPos.y, (float)defPos.width, (float)defPos.height);

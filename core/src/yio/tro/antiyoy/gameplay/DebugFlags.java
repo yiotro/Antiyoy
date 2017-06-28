@@ -9,10 +9,10 @@ import yio.tro.antiyoy.menu.MenuControllerYio;
 
 public class DebugFlags {
 
-    public static final boolean CHECKING_BALANCE_MODE = false; // to measure balance
+    public static final boolean CHECKING_BALANCE_MODE = false; // to measure balance, may be broken
     public static boolean testingNewAi = false;
     public static boolean showFpsInfo = false;
-    public static final boolean unlockLevels = false;
+    public static boolean unlockLevels = false;
 
 
 }

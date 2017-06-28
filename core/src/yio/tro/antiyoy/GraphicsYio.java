@@ -14,7 +14,7 @@ public class GraphicsYio {
     public static final float borderThickness = 0.003f * Gdx.graphics.getHeight();
 
 
-    public static TextureRegion loadTextureRegionByName(String name, boolean antialias) {
+    public static TextureRegion loadTextureRegion(String name, boolean antialias) {
         Texture texture = new Texture(Gdx.files.internal(name));
         if (antialias) texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         TextureRegion region = new TextureRegion(texture);

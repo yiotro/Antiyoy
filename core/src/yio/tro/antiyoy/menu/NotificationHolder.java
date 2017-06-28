@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.menu;
 
-import yio.tro.antiyoy.menu.ButtonYio;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 
 /**
  * Created by ivan on 11.11.2015.
@@ -21,7 +21,7 @@ public class NotificationHolder {
     public void move() {
         if (button == null) return;
         if (autoHide && System.currentTimeMillis() > timeToHide) {
-            button.menuControllerYio.hideNotification();
+            Scenes.sceneNotification.hideNotification();
             autoHide = false;
         }
     }

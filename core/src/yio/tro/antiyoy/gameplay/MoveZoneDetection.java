@@ -32,13 +32,18 @@ public class MoveZoneDetection {
         unFlagAllHexesInArrayList(fieldController.activeHexes);
         result.clear();
         for (Hex hex : fieldController.selectedProvince.hexList) {
-            if (hex.hasThisObjectNearby(Hex.OBJECT_FARM) || hex.hasThisObjectNearby(Hex.OBJECT_TOWN)) {
+            if (canBuildFarmOnHex(hex)) {
                 hex.inMoveZone = true;
                 result.add(hex);
             }
         }
 
         return result;
+    }
+
+
+    public static boolean canBuildFarmOnHex(Hex hex) {
+        return hex.hasThisObjectNearby(Hex.OBJECT_FARM) || hex.hasThisObjectNearby(Hex.OBJECT_TOWN);
     }
 
 

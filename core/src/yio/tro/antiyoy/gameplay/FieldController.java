@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -102,22 +103,28 @@ public class FieldController {
     }
 
 
-    public void createField(boolean generateMap) {
+    public void createField() {
         clearField();
         fieldPos.y = -0.5f * GraphicsYio.height;
-        gameController.getLevelSnapshots().clear();
-        if (generateMap) {
-            if (GameRules.slay_rules) {
-                gameController.getMapGeneratorSlay().generateMap(gameController.getPredictableRandom(), field);
-            } else {
-                gameController.getMapGeneratorGeneric().generateMap(gameController.getPredictableRandom(), field);
-            }
-            detectProvinces();
-            gameController.selectionController.deselectAll();
-            detectNeutralLands();
-            gameController.takeAwaySomeMoneyToAchieveBalance();
+    }
+
+
+    public void generateMap() {
+        generateMap(GameRules.slay_rules);
+    }
+
+
+    public void generateMap(boolean slayRules) {
+        if (slayRules) {
+            gameController.getMapGeneratorSlay().generateMap(gameController.getPredictableRandom(), field);
+        } else {
+            gameController.getMapGeneratorGeneric().generateMap(gameController.getPredictableRandom(), field);
         }
-        gameController.prepareCertainUnitsToMove();
+
+        detectProvinces();
+        gameController.selectionController.deselectAll();
+        detectNeutralLands();
+        gameController.takeAwaySomeMoneyToAchieveBalance();
     }
 
 
@@ -287,7 +294,7 @@ public class FieldController {
                 }
                 if (tempList.size() >= 2) {
                     Province province = new Province(gameController, tempList);
-                    if (!province.hasCapital()) province.placeCapitalInRandomPlace(YioGdxGame.random);
+                    if (!province.hasCapital()) province.placeCapitalInRandomPlace(gameController.predictableRandom);
                     addProvince(province);
                 }
             }
@@ -340,6 +347,11 @@ public class FieldController {
             if (activeHex.containsTree() && activeHex.blockToTreeFromExpanding)
                 activeHex.blockToTreeFromExpanding = false;
         }
+    }
+
+
+    public void createPlayerHexCount() {
+        playerHexCount = new int[GameRules.colorNumber];
     }
 
 
@@ -460,8 +472,9 @@ public class FieldController {
             hex.select();
             if (!selectedHexes.contains(hex)) listIterator.add(hex);
         }
-        gameController.getYioGdxGame().menuControllerYio.showBuildButtons();
+        Scenes.sceneBuildButtons.create();
         gameController.updateBalanceString();
+
 //        ArrayList<Hex> tempList = new ArrayList<Hex>();
 //        Hex tempHex;
 //        tempList.add(startHex);
@@ -488,6 +501,11 @@ public class FieldController {
     }
 
 
+    public String getColorName(int colorIndex) {
+        return gameController.yioGdxGame.menuControllerYio.getColorNameByIndex(colorIndex, "_player");
+    }
+
+
     public Hex getHexByPos(double x, double y) {
         int j = (int) ((x - fieldPos.x) / (hexStep2 * sin60));
         int i = (int) ((y - fieldPos.y - hexStep2 * j * cos60) / hexStep1);
@@ -509,8 +527,8 @@ public class FieldController {
     }
 
 
-    public Hex adjacentHex(int i, int j, int neighbourNumber) {
-        switch (neighbourNumber) {
+    public Hex adjacentHex(int i, int j, int direction) {
+        switch (direction) {
             case 0:
                 if (i >= fWidth - 1) return emptyHex;
                 return field[i + 1][j];
@@ -592,6 +610,7 @@ public class FieldController {
                 if (hex.containsUnit()) { // merge units
                     Unit bUnit = new Unit(gameController, hex, strength);
                     bUnit.setReadyToMove(true);
+                    gameController.statistics.unitsDied++;
                     gameController.mergeUnits(hex, bUnit, hex.unit);
                 } else {
                     addUnit(hex, strength);
@@ -703,7 +722,7 @@ public class FieldController {
 
     public Unit addUnit(Hex hex, int strength) {
         if (hex == null) return null;
-        if (hex.containsSolidObject()) {
+        if (hex.containsObject()) {
             gameController.ruleset.onUnitAdd(hex);
             cleanOutHex(hex);
             gameController.updateCacheOnceAfterSomeTime();
@@ -725,8 +744,8 @@ public class FieldController {
     }
 
 
-    public Hex adjacentHex(Hex hex, int neighbourNumber) {
-        return adjacentHex(hex.index1, hex.index2, neighbourNumber);
+    public Hex adjacentHex(Hex hex, int direction) {
+        return adjacentHex(hex.index1, hex.index2, direction);
     }
 
 
@@ -820,11 +839,13 @@ public class FieldController {
 
     public void addAnimHex(Hex hex) {
         if (animHexes.contains(hex)) return;
-        ListIterator animIterator = animHexes.listIterator();
-        animIterator.add(hex);
+
+        animHexes.listIterator().add(hex);
+
         hex.animFactor.setValues(0, 0);
         hex.animFactor.beginSpawning(1, 1);
         hex.animStartTime = System.currentTimeMillis();
+
         gameController.updateCacheOnceAfterSomeTime();
     }
 
@@ -983,9 +1004,16 @@ public class FieldController {
 
 
     public void updateFocusedHex(int screenX, int screenY) {
-        OrthographicCamera orthoCam = gameController.getCameraController().orthoCam;
+        OrthographicCamera orthoCam = gameController.cameraController.orthoCam;
         gameController.selectionController.selectX = (screenX - 0.5f * GraphicsYio.width) * orthoCam.zoom + orthoCam.position.x;
         gameController.selectionController.selectY = (screenY - 0.5f * GraphicsYio.height) * orthoCam.zoom + orthoCam.position.y;
-        focusedHex = getHexByPos(gameController.selectionController.selectX + gameController.getYioGdxGame().gameView.hexViewSize, gameController.selectionController.selectY + gameController.getYioGdxGame().gameView.hexViewSize);
+
+        float x = gameController.selectionController.selectX + gameController.getYioGdxGame().gameView.hexViewSize;
+        float y = gameController.selectionController.selectY + gameController.getYioGdxGame().gameView.hexViewSize;
+        focusedHex = getHexByPos(x, y);
+
     }
+
+
+
 }

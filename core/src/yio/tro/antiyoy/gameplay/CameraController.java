@@ -2,297 +2,427 @@ package yio.tro.antiyoy.gameplay;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import yio.tro.antiyoy.GraphicsYio;
-import yio.tro.antiyoy.Settings;
-import yio.tro.antiyoy.Yio;
-import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.*;
 
 public class CameraController {
 
-    private final GameController gameController;
-    public int touchDownX;
-    public int touchDownY;
-    public int maxTouchCount, currentTouchCount, lastTouchCount;
-    public boolean multiTouchDetected;
-    public long lastTimeTouched;
-    public long lastTimeDragged;
-    public boolean blockMultiInput;
-    public float camDx;
-    public float camDy;
-    public float lastMultiTouchDistance;
-    public float camDZoom;
-    public float trackerZoom;
-    public float fieldX1;
-    public float fieldY1;
-    public float fieldX2;
-    public float fieldY2;
-    public float frameX1;
-    public float frameY1;
-    public float frameX2;
-    public float frameY2;
-    public long touchDownTime;
-    public boolean blockDragToRight;
-    public boolean blockDragToLeft;
-    public boolean blockDragToUp;
-    public boolean blockDragToDown;
-    public boolean backgroundVisible;
+    public static final double ZOOM_CATCH_DISTANCE = 0.002;
+    YioGdxGame yioGdxGame;
+    GameController gameController;
+    OrthographicCamera orthoCam;
+    boolean blockDragMovement, kineticsEnabled, touched;
+    int w, h;
+    float boundWidth, boundHeight, zoomMinimum, zoomMaximum;
+    public float camDx, camDy, camDz, viewZoomLevel, targetZoomLevel;
+    long touchDownTime, lastTapTime;
+    public RectangleYio field; // bounds of level
+    public RectangleYio frame; // what is visible
+    RectangleYio lastMultiTouch, currentMultiTouch;
+    double zoomValues[][], kineticsSpeed;
+    PointYio touchPos, position, viewPosition, defaultDragBounds, backVisBounds;
+    PointYio delta, kinetics, actualDragBounds;
+    private PointYio initialTouch;
     int compensationOffsetY;
-    public double currentCamSpeed;
-    public double zoomUpperLimit;
-    public double cameraOffset;
-    public OrthographicCamera orthoCam;
-    float deltaMovementFactor;
+    private float sensitivityModifier;
 
 
     public CameraController(GameController gameController) {
         this.gameController = gameController;
+        yioGdxGame = gameController.yioGdxGame;
+        w = (int) GraphicsYio.width;
+        h = (int) GraphicsYio.height;
 
-        cameraOffset = 0.1 * GraphicsYio.width;
-        deltaMovementFactor = 48;
+        touchPos = new PointYio();
+        position = new PointYio();
+        initialTouch = new PointYio();
+        viewPosition = new PointYio();
+        field = new RectangleYio();
+        frame = new RectangleYio();
+        currentMultiTouch = new RectangleYio();
+        lastMultiTouch = new RectangleYio();
+        defaultDragBounds = new PointYio();
+        backVisBounds = new PointYio();
+        delta = new PointYio();
+        kinetics = new PointYio();
+        actualDragBounds = new PointYio();
+
+        zoomMinimum = 0.5f;
+        kineticsSpeed = 0.01 * w;
+        kineticsEnabled = false;
     }
 
 
-    public void move() {
-//        if (GameRules.inEditorMode && !gameController.getLevelEditor().isCameraMovementAllowed()) return;
+    public void initLevels(int levelSize) {
+        zoomValues = new double[][]{
+                {0.8, 1.3, 1.1},
+                {0.8, 1.3, 2.0},
+                {0.8, 1.3, 2.1}
+        };
 
-        float k = Settings.sensitivity * deltaMovementFactor * 0.025f;
-        gameController.yioGdxGame.gameView.orthoCam.translate(k * camDx, k * camDy);
-        gameController.yioGdxGame.gameView.updateCam();
-        if ((currentTouchCount == 0 && gameController.currentTime > lastTimeTouched + 10) || (currentTouchCount == 1 && gameController.currentTime > lastTimeDragged + 10)) {
-            camDx *= 0.8;
-            camDy *= 0.8;
+        updateUpperZoomLimit(levelSize);
+    }
+
+
+    public void updateUpperZoomLimit(int levelSize) {
+        int zIndex = 0;
+        switch (levelSize) {
+            case 1:
+                zIndex = 0;
+                break;
+            case 2:
+                zIndex = 1;
+                break;
+            case 4:
+                zIndex = 2;
+                break;
         }
-        currentCamSpeed = Yio.distance(0, 0, camDx, camDy);
-        if (Math.abs(camDZoom) > 0.01) {
-            if (trackerZoom > zoomUpperLimit && camDZoom > 0) {
-                camDZoom = -0.1f;
-                blockMultiInputForSomeTime(50);
-            }
-            if (trackerZoom < 0.5 && camDZoom < 0) {
-                camDZoom = 0.1f;
-                blockMultiInputForSomeTime(50);
-            }
-            gameController.yioGdxGame.gameView.orthoCam.zoom += 0.2 * camDZoom;
-            trackerZoom += 0.2 * camDZoom;
-            gameController.yioGdxGame.gameView.updateCam();
-            if ((currentTouchCount == 0 && gameController.currentTime > lastTimeTouched + 10) || (currentTouchCount == 1 && gameController.currentTime > lastTimeDragged + 10)) {
-                camDZoom *= 0.75;
-            } else if (currentTouchCount > 1) {
-                camDZoom *= 0.95;
-            }
+
+        setZoomMaximum(zoomValues[zIndex][2]);
+    }
+
+
+    public void init(int levelSize) {
+        initLevels(levelSize);
+
+        if (orthoCam != null) {
+            forceCameraMovementToRealPosition();
         }
-        fieldX1 = 0.5f * GraphicsYio.width - orthoCam.position.x / orthoCam.zoom;
-        fieldX2 = fieldX1 + gameController.boundWidth / orthoCam.zoom;
-        fieldY1 = 0.5f * GraphicsYio.height - orthoCam.position.y / orthoCam.zoom;
-        fieldY2 = fieldY1 + gameController.boundHeight / orthoCam.zoom;
+    }
+
+
+    private void forceCameraMovementToRealPosition() {
+        for (int i = 0; i < 20; i++) {
+            move();
+        }
+    }
+
+
+    private void updateCurrentMultiTouch() {
+        currentMultiTouch.set(0, 0, Gdx.input.getX(1) - Gdx.input.getX(0), Gdx.input.getY(1) - Gdx.input.getY(0));
+    }
+
+
+    private void updateLastMultiTouch() {
+        lastMultiTouch.setBy(currentMultiTouch);
+    }
+
+
+    void touchDown(int x, int y) {
+        touched = gameController.currentTouchCount > 0;
+
+        // initial touch with one finger
+        if (gameController.currentTouchCount == 1) {
+            touchDownTime = gameController.currentTime;
+            blockDragMovement = false;
+            initialTouch.set(x, y);
+            touchPos.set(x, y);
+            delta.set(0, 0);
+        }
+
+        // multi touch
+        if (gameController.currentTouchCount >= 2) {
+            blockDragMovement = true;
+            updateCurrentMultiTouch();
+            updateLastMultiTouch();
+        }
+    }
+
+
+    void touchDrag(int x, int y) {
+        sensitivityModifier = 1.4f * Settings.sensitivity;
+        delta.x = sensitivityModifier * (touchPos.x - x) * viewZoomLevel;
+        delta.y = sensitivityModifier * (touchPos.y - y) * viewZoomLevel;
+
+        if (!blockDragMovement) {
+            position.x += delta.x;
+            position.y += delta.y;
+
+            applyBoundsToPosition();
+        }
+
+        touchPos.set(x, y);
+
+        // pinch to zoom
+        if (gameController.currentTouchCount == 2) {
+            updateCurrentMultiTouch();
+
+            double currentDistance = Yio.distance(0, 0, currentMultiTouch.width, currentMultiTouch.height);
+            double lastDistance = Yio.distance(0, 0, lastMultiTouch.width, lastMultiTouch.height);
+            double zoomDelta = 0.004 * (lastDistance - currentDistance);
+
+            changeZoomLevel(zoomDelta);
+
+            updateLastMultiTouch();
+        }
+    }
+
+
+    public void setTargetZoomLevel(float targetZoomLevel) {
+        this.targetZoomLevel = targetZoomLevel;
+    }
+
+
+    public void setTargetZoomToMax() {
+        setTargetZoomLevel(0.9f * zoomMaximum);
+    }
+
+
+    public void changeZoomLevel(double zoomDelta) {
+        targetZoomLevel += zoomDelta;
+        if (targetZoomLevel < zoomMinimum) targetZoomLevel = zoomMinimum;
+        if (targetZoomLevel > zoomMaximum) targetZoomLevel = zoomMaximum;
+    }
+
+
+    private void applyBoundsToPosition() {
+        if (position.x > actualDragBounds.x) position.x = actualDragBounds.x;
+        if (position.x < -actualDragBounds.x) position.x = -actualDragBounds.x;
+        if (position.y > actualDragBounds.y) position.y = actualDragBounds.y;
+        if (position.y < -actualDragBounds.y) position.y = -actualDragBounds.y;
+    }
+
+
+    void touchUp(int x, int y) {
+        if (!touched) return;
+        touched = gameController.currentTouchCount > 0;
+
+        double speed = Yio.distance(0, 0, delta.x, delta.y);
+
+        if (!blockDragMovement && (speed > kineticsSpeed || touchWasQuick())) {
+            kineticsEnabled = true;
+            kinetics.x = delta.x;
+            kinetics.y = delta.y;
+        }
+
+        touchPos.set(x, y);
+
+        if (touchWasQuick() && gameController.currentTouchCount == 0 && speed < kineticsSpeed) {
+            tapReaction(x, y);
+        }
+    }
+
+
+    private void tapReaction(int x, int y) {
+        long currentTapTime = System.currentTimeMillis();
+
+        gameController.onClick();
+
+//        if (currentTapTime - lastTapTime < 300) {
+//            doubleTapReaction(x, y);
+//        }
+
+        lastTapTime = currentTapTime;
+    }
+
+
+    private boolean touchWasQuick() {
+        return System.currentTimeMillis() - touchDownTime < 200;
+    }
+
+
+    void move() {
+        updateDragBounds();
+        updateField();
         updateFrame();
-        if (blockDragToLeft) blockDragToLeft = false;
-        if (blockDragToRight) blockDragToRight = false;
-        if (blockDragToUp) blockDragToUp = false;
-        if (blockDragToDown) blockDragToDown = false;
-        backgroundVisible = false;
-        if (fieldX2 - fieldX1 < 1.1f * GraphicsYio.width) { //center
-            float deltaX = 0.2f * (0.5f * gameController.boundWidth / orthoCam.zoom - orthoCam.position.x / orthoCam.zoom);
-            gameController.yioGdxGame.gameView.orthoCam.translate(deltaX, 0);
-            backgroundVisible = true;
-        } else {
-            if (fieldX1 > 0 || fieldX2 < GraphicsYio.width) {
-                backgroundVisible = true;
-            }
-            if (fieldX1 > 0 + cameraOffset) {
-                camDx = boundPower();
-            }
-            if (fieldX1 > -0.1 * GraphicsYio.width + cameraOffset) blockDragToLeft = true;
-            if (fieldX2 < GraphicsYio.width - cameraOffset) {
-                camDx = -boundPower();
-            }
-            if (fieldX2 < 1.1 * GraphicsYio.width - cameraOffset) blockDragToRight = true;
+
+        moveKinetics();
+        moveDrag();
+        moveZoom();
+
+        updateBackgroundVisibility();
+    }
+
+
+    private void updateDragBounds() {
+        actualDragBounds.setBy(defaultDragBounds);
+        actualDragBounds.x -= 0.4 * w * viewZoomLevel;
+        actualDragBounds.y -= 0.45 * h * viewZoomLevel;
+
+        if (actualDragBounds.x < 0) {
+            actualDragBounds.x = 0;
         }
-        if (fieldY2 - fieldY1 < 1.1f * GraphicsYio.height) {
-            float deltaY = 0.2f * (0.5f * gameController.boundHeight / orthoCam.zoom - orthoCam.position.y / orthoCam.zoom);
-            gameController.yioGdxGame.gameView.orthoCam.translate(0, deltaY);
-            backgroundVisible = true;
-        } else {
-            if (fieldY1 > 0 || fieldY2 < GraphicsYio.height) {
-                backgroundVisible = true;
-            }
-            if (fieldY1 > 0 + cameraOffset) {
-                camDy = boundPower();
-            }
-            if (fieldY1 > -0.1 * GraphicsYio.width + cameraOffset) blockDragToDown = true;
-            if (fieldY2 < GraphicsYio.height - cameraOffset) {
-                camDy = -boundPower();
-            }
-            if (fieldY2 < 1.1 * GraphicsYio.height - cameraOffset) blockDragToUp = true;
+
+        if (actualDragBounds.y < 0) {
+            actualDragBounds.y = 0;
         }
     }
 
 
-    public void onEndTurnButtonPressed() {
+    private void moveKinetics() {
+        if (!kineticsEnabled) return;
+
+        if (Yio.distance(0, 0, kinetics.x, kinetics.y) < 0.5 * kineticsSpeed) {
+            kineticsEnabled = false;
+        }
+
+        position.x += kinetics.x;
+        position.y += kinetics.y;
+
+        applyBoundsToPosition();
+
+        kinetics.x *= 0.85;
+        kinetics.y *= 0.85;
+    }
+
+
+    private void updateBackgroundVisibility() {
+        backVisBounds.setBy(defaultDragBounds);
+        backVisBounds.x -= 0.5 * w * viewZoomLevel;
+        backVisBounds.y -= 0.5 * h * viewZoomLevel;
+
+        if (Math.abs(position.x) > backVisBounds.x || Math.abs(position.y) > backVisBounds.y) {
+            gameController.setBackgroundVisible(true);
+        } else {
+            gameController.setBackgroundVisible(false);
+        }
+    }
+
+
+    private void updateField() {
+        field.x = 0.5f * w - orthoCam.position.x / orthoCam.zoom;
+        field.y = 0.5f * h - orthoCam.position.y / orthoCam.zoom;
+        field.width = boundWidth / orthoCam.zoom;
+        field.height = boundHeight / orthoCam.zoom;
+    }
+
+
+    private void moveZoom() {
+        camDz = 0.2f * (targetZoomLevel - viewZoomLevel);
+        if (Math.abs(targetZoomLevel - viewZoomLevel) < ZOOM_CATCH_DISTANCE) return;
+
+        yioGdxGame.gameView.orthoCam.zoom += camDz;
+        viewZoomLevel += camDz;
+        yioGdxGame.gameView.updateCam();
+        applyBoundsToPosition(); // bounds may change on zoom
+    }
+
+
+    public boolean isPosInViewFrame(PointYio pos, float offset) {
+        if (pos.x < frame.x - offset) return false;
+        if (pos.x > frame.x + frame.width + offset) return false;
+        if (pos.y < frame.y - offset) return false;
+        if (pos.y > frame.y + frame.height + offset) return false;
+        return true;
+    }
+
+
+    public void stop() {
+        position.setBy(viewPosition);
+
         camDx = 0;
         camDy = 0;
-        resetCurrentTouchCount();
+
+        kinetics.set(0, 0);
     }
 
 
-    boolean checkConditionsToMarch() {
-        if (currentTouchCount != 1) return false;
-        if (gameController.currentTime - touchDownTime <= gameController.marchDelay) return false;
-        if (!touchedAsClick()) return false;
+    void moveDrag() {
+        camDx = 0.5f * (position.x - viewPosition.x);
+        camDy = 0.5f * (position.y - viewPosition.y);
 
-        return true;
+        viewPosition.x += camDx;
+        viewPosition.y += camDy;
+
+        yioGdxGame.gameView.orthoCam.translate(camDx, camDy);
+        yioGdxGame.gameView.updateCam();
+    }
+
+
+    public void setBounds(float width, float height) {
+        boundWidth = width;
+        boundHeight = height;
+        defaultDragBounds.set(boundWidth / 2, boundHeight / 2);
+    }
+
+
+    public void setZoomMaximum(double zoomMaximum) {
+        this.zoomMaximum = (float) zoomMaximum;
+    }
+
+
+    void createCamera() {
+        gameController.yioGdxGame.gameView.createOrthoCam();
+        orthoCam = gameController.yioGdxGame.gameView.orthoCam;
+        orthoCam.translate((gameController.boundWidth - GraphicsYio.width) / 2, (gameController.boundHeight - GraphicsYio.height) / 2); // focus camera of center
+        gameController.yioGdxGame.gameView.updateCam();
+        updateFrame();
+
+
+//        orthoCam = yioGdxGame.gameView.orthoCam;
+//        orthoCam.translate((boundWidth - w) / 2, (boundHeight - h) / 2); // focus camera of center
+//        targetZoomLevel = orthoCam.zoom;
+//        updateFrame();
+
+        forceCameraMovementToRealPosition();
+    }
+
+
+    void defaultValues() {
+        viewZoomLevel = 1;
+        targetZoomLevel = 1;
+        compensationOffsetY = 0;
+        position.set(0, 0);
+        viewPosition.setBy(position);
+    }
+
+
+    void updateFrame() {
+        frame.x = (0 - 0.5f * w) * orthoCam.zoom + orthoCam.position.x;
+        frame.y = (0 - 0.5f * h) * orthoCam.zoom + orthoCam.position.y;
+        frame.width = w * orthoCam.zoom;
+        frame.height = h * orthoCam.zoom;
+    }
+
+
+    public double[][] getZoomValues() {
+        return zoomValues;
+    }
+
+
+    public void forgetAboutLastTap() {
+        lastTapTime = 0;
+    }
+
+
+    public float getTargetZoomLevel() {
+        return targetZoomLevel;
+    }
+
+
+    public void focusOnPoint(PointYio position) {
+        focusOnPoint(position.x, position.y);
     }
 
 
     boolean checkConditionsToEndTurn() {
-        if (currentCamSpeed > 0.01) return false;
-        if (Math.abs(camDZoom) > 0.01) return false;
+        if (camDx > 0.01) return false;
+        if (camDy > 0.01) return false;
+
+        if (Math.abs(targetZoomLevel - viewZoomLevel) > ZOOM_CATCH_DISTANCE) {
+            return false;
+        }
 
         return true;
     }
 
 
-    public void resetCurrentTouchCount() {
-        currentTouchCount = 0;
-    }
-
-
-    public float boundPower() {
-        return 0.002f * GraphicsYio.width * trackerZoom * (1 + trackerZoom);
-    }
-
-
-    public void updateFrame() {
-        frameX1 = (0 - 0.5f * GraphicsYio.width) * orthoCam.zoom + orthoCam.position.x;
-        frameX2 = (GraphicsYio.width - 0.5f * GraphicsYio.width) * orthoCam.zoom + orthoCam.position.x;
-        frameY1 = (0 - 0.5f * GraphicsYio.height) * orthoCam.zoom + orthoCam.position.y;
-        frameY2 = (GraphicsYio.height - 0.5f * GraphicsYio.height) * orthoCam.zoom + orthoCam.position.y;
-    }
-
-
-    public void defaultCameraValues() {
-        maxTouchCount = 0;
-        resetCurrentTouchCount();
-        compensationOffsetY = 0;
-        trackerZoom = 1;
-    }
-
-
-    void updateZoomUpperLimit(int levelSize) {
-        switch (levelSize) {
-            case FieldController.SIZE_SMALL:
-                zoomUpperLimit = 1.1;
-                break;
-            case FieldController.SIZE_MEDIUM:
-                zoomUpperLimit = 1.7;
-                break;
-            case FieldController.SIZE_BIG:
-                zoomUpperLimit = 2.1;
-                break;
-        }
-    }
-
-
-    public void createCamera() {
-        gameController.yioGdxGame.gameView.createOrthoCam();
-        this.orthoCam = gameController.yioGdxGame.gameView.orthoCam;
-        orthoCam.translate((gameController.boundWidth - GraphicsYio.width) / 2, (gameController.boundHeight - GraphicsYio.height) / 2); // focus camera of center
-        gameController.yioGdxGame.gameView.updateCam();
-        updateFrame();
-    }
-
-
-    public void touchDown(int screenX, int screenY) {
-        currentTouchCount++;
-        touchDownX = screenX;
-        touchDownY = screenY;
-        if (blockMultiInput) blockMultiInput = false;
-        if (blockMultiInput) return;
-        if (currentTouchCount == 1) { // initial touch
-            maxTouchCount = 1;
-            multiTouchDetected = false;
-            touchDownTime = System.currentTimeMillis();
-            gameController.setCheckToMarch(true);
-        } else { // second finger or more
-            multiTouchDetected = true;
-            lastMultiTouchDistance = (float) Yio.distance(Gdx.input.getX(0), Gdx.input.getY(0), Gdx.input.getX(1), Gdx.input.getY(1));
-        }
-
-        if (currentTouchCount > maxTouchCount) maxTouchCount = currentTouchCount;
-        lastTouchCount = currentTouchCount;
-    }
-
-
-    public void touchUp() {
-        lastTimeTouched = System.currentTimeMillis();
-        currentTouchCount--;
-        if (currentTouchCount < 0) currentTouchCount = 0;
-        if (blockMultiInput) return;
-        if (currentTouchCount == maxTouchCount - 1) {
-
-        }
-        if (currentTouchCount == 0) {
-            if (touchedAsClick()) {
-                gameController.onClick();
-            }
-            multiTouchDetected = false;
-        }
-        lastTouchCount = currentTouchCount;
+    public void onEndTurnButtonPressed() {
+        stop();
+        gameController.resetCurrentTouchCount();
     }
 
 
     public boolean touchedAsClick() {
-        return !multiTouchDetected &&
-                Yio.distance(gameController.screenX, gameController.screenY, touchDownX, touchDownY) < 0.03 * GraphicsYio.width &&
+        return Yio.distance(gameController.screenX, gameController.screenY, initialTouch.x, initialTouch.y) < 0.03 * GraphicsYio.width &&
                 Math.abs(camDx) < 0.01 * GraphicsYio.width &&
                 Math.abs(camDy) < 0.01 * GraphicsYio.width;
     }
 
 
-    public void touchDrag(int screenX, int screenY) {
-        lastTimeDragged = System.currentTimeMillis();
-        if (multiTouchDetected) {
-            if (blockMultiInput) return;
-            float currentMultiTouchDistance = (float) Yio.distance(Gdx.input.getX(0), Gdx.input.getY(0), Gdx.input.getX(1), Gdx.input.getY(1));
-            camDZoom = lastMultiTouchDistance / currentMultiTouchDistance - 1;
-            if (camDZoom < 0) camDZoom *= 0.3;
-        } else {
-            if (GameRules.inEditorMode && !gameController.getLevelEditor().isCameraMovementAllowed()) return;
-            float currX, currY;
-            currX = (gameController.screenX - screenX) * trackerZoom;
-            currY = (gameController.screenY - screenY) * trackerZoom;
-            gameController.screenX = screenX;
-            gameController.screenY = screenY;
-            if (blockDragToLeft && currX < 0) currX = 0;
-            if (blockDragToRight && currX > 0) currX = 0;
-            if (blockDragToUp && currY > 0) currY = 0;
-            if (blockDragToDown && currY < 0) currY = 0;
-            if (notTooSlow(currX, camDx)) {
-                camDx = currX;
-            }
-            if (notTooSlow(currY, camDy)) {
-                camDy = currY;
-            }
-        }
+    public void focusOnPoint(double x, double y) {
+        position.x = (float) (x - gameController.boundWidth / 2);
+        position.y = (float) (y - gameController.boundHeight / 2);
     }
 
 
-    private void blockMultiInputForSomeTime(int time) {
-        blockMultiInput = true;
-//        timeToUnblockMultiInput = System.currentTimeMillis() + time;
-    }
-
-
-    public boolean notTooSlow(float curr, float cam) {
-        return Math.abs(curr) > 0.5 * Math.abs(cam);
-    }
-
-
-    public void scrolled(int amount) {
-        if (amount == 1) {
-            camDZoom += 0.15f;
-        } else if (amount == -1) {
-            camDZoom -= 0.2f;
-        }
-    }
 }

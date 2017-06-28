@@ -13,11 +13,13 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
 
     private int[] playerHexCount;
     private ArrayList<Hex> propagationList;
+    private ArrayList<Hex> result;
 
 
     public AiBalancerSlayRules(GameController gameController, int color) {
         super(gameController, color);
         propagationList = new ArrayList<>();
+        result = new ArrayList<Hex>();
     }
 
 
@@ -226,7 +228,7 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
 
     @Override
     ArrayList<Hex> findAttackableHexes(int attackerColor, ArrayList<Hex> moveZone) {
-        ArrayList<Hex> result = new ArrayList<Hex>();
+        result.clear();
         for (Hex hex : moveZone) {
             if (hex.colorIndex != attackerColor) result.add(hex);
         }

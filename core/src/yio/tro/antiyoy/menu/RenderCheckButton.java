@@ -2,9 +2,6 @@ package yio.tro.antiyoy.menu;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.GraphicsYio;
-import yio.tro.antiyoy.menu.CheckButtonYio;
-import yio.tro.antiyoy.menu.InterfaceElement;
-import yio.tro.antiyoy.menu.MenuRender;
 
 public class RenderCheckButton extends MenuRender {
 
@@ -14,10 +11,10 @@ public class RenderCheckButton extends MenuRender {
     @Override
     public void loadTextures() {
         // background texture IS NOT USED currently!!!
-        backgroundTexture = GraphicsYio.loadTextureRegionByName("menu/check_button/chk_bck.png", false);
+        backgroundTexture = GraphicsYio.loadTextureRegion("menu/check_button/chk_bck.png", false);
 
-        activeTexture = GraphicsYio.loadTextureRegionByName("menu/check_button/chk_active.png", true);
-        blackPixel = GraphicsYio.loadTextureRegionByName("pixels/black_pixel.png", false);
+        activeTexture = GraphicsYio.loadTextureRegion("menu/check_button/chk_active.png", true);
+        blackPixel = GraphicsYio.loadTextureRegion("pixels/black_pixel.png", false);
     }
 
 

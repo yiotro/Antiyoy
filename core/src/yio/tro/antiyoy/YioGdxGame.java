@@ -11,8 +11,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import yio.tro.antiyoy.ai.ArtificialIntelligence;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.*;
+import yio.tro.antiyoy.gameplay.campaign.CampaignLevelFactory;
+import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
+import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.*;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -170,6 +174,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             Preferences tempPrefs = Gdx.app.getPreferences("settings");
             setSlayRules(tempPrefs.getBoolean("slay_rules", false));
             menuControllerYio.getCheckButtonById(16).setChecked(slay_rules);
+            menuControllerYio.getCheckButtonById(17).setChecked(slay_rules);
             menuControllerYio.saveMoreSkirmishOptions();
             menuControllerYio.saveMoreCampaignOptions();
             prefs.putBoolean("check_slay_rules", true);
@@ -270,7 +275,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         if (readyToUnPause && System.currentTimeMillis() > timeToUnPause && gameView.coversAllScreen()) {
             gamePaused = false;
             readyToUnPause = false;
-            gameController.cameraController.resetCurrentTouchCount();
+            gameController.resetCurrentTouchCount();
         }
         if (!gamePaused) {
             gameView.moveInsideStuff();
@@ -386,7 +391,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
 
     private void renderMenuWhenGameViewNotVisible() {
-        if (transitionFactor.get() == 1 && !menuControllerYio.notificationIsDestroying()) {
+        if (transitionFactor.get() == 1 && !Scenes.sceneNotification.notificationIsDestroying()) {
             renderMenuLayersWhenNothingIsMoving();
             return;
         }
@@ -471,7 +476,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             if (!alreadyShownErrorMessageOnce) {
                 exception.printStackTrace();
                 alreadyShownErrorMessageOnce = true;
-                menuControllerYio.createExceptionReport(exception);
+                Scenes.sceneExceptionReport.create(exception);
             }
         }
 
@@ -581,38 +586,6 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     }
 
 
-    public void startInEditorMode() {
-        GameRules.inEditorMode = true;
-        if (GameRules.colorNumber == 0) { // default
-            gameController.setLevelSize(FieldController.SIZE_BIG);
-            gameController.setPlayersNumber(1);
-            GameRules.setColorNumber(5);
-            startGame(false, false);
-            gameController.fieldController.createFieldMatrix();
-            gameController.fieldController.clearField();
-        } else {
-            startGame(false, false);
-        }
-    }
-
-
-    public void startGame(boolean generateMap, boolean readParametersFromSliders) {
-        startGame(random.nextInt(), generateMap, readParametersFromSliders);
-    }
-
-
-    public void startGame(int index, boolean generateMap, boolean readParametersFromSliders) {
-//        if (selectedLevelIndex > gameController.progress) return;
-        if (selectedLevelIndex < 0 || selectedLevelIndex > CampaignProgressManager.getIndexOfLastLevel()) return;
-        gameController.prepareForNewGame(index, generateMap, readParametersFromSliders);
-        gameView.beginSpawnProcess();
-        menuControllerYio.createGameOverlay();
-        gameController.updateRuleset();
-//        menuControllerLighty.scrollerYio.factorModel.setValues(0, 0);
-        setGamePaused(false);
-    }
-
-
     void increaseLevelSelection() {
 //        menuControllerYio.scrollerYio.increaseSelection();
         setSelectedLevelIndex(selectedLevelIndex + 1);
@@ -635,8 +608,9 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
 
     public void setSelectedLevelIndex(int selectedLevelIndex) {
-        if (selectedLevelIndex >= 0 && selectedLevelIndex <= CampaignProgressManager.getIndexOfLastLevel())
+        if (selectedLevelIndex >= 0 && selectedLevelIndex <= CampaignProgressManager.getIndexOfLastLevel()) {
             this.selectedLevelIndex = selectedLevelIndex;
+        }
     }
 
 
@@ -651,6 +625,14 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             if (integer == id) return;
         }
         backButtonIds.add(id);
+    }
+
+
+    public void onEndCreation() {
+        gameView.updateCacheLevelTextures();
+        menuControllerYio.removeButtonById(38); // build object button
+        gameView.beginSpawnProcess();
+        setGamePaused(false);
     }
 
 
@@ -689,7 +671,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             if (!alreadyShownErrorMessageOnce) {
                 exception.printStackTrace();
                 alreadyShownErrorMessageOnce = true;
-                menuControllerYio.createExceptionReport(exception);
+                Scenes.sceneExceptionReport.create(exception);
             }
         }
         return false;
@@ -707,7 +689,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             if (!alreadyShownErrorMessageOnce) {
                 exception.printStackTrace();
                 alreadyShownErrorMessageOnce = true;
-                menuControllerYio.createExceptionReport(exception);
+                Scenes.sceneExceptionReport.create(exception);
             }
         }
         return false;

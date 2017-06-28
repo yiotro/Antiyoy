@@ -41,32 +41,6 @@ public class MapGeneratorGeneric extends MapGenerator {
     }
 
 
-    @Override
-    protected ArrayList<Hex> detectProvince(Hex startHex) {
-        ArrayList<Hex> provinceList = new ArrayList<Hex>();
-        ArrayList<Hex> propagationList = new ArrayList<Hex>();
-        Hex tempHex, adjHex;
-        propagationList.add(startHex);
-        if (startHex.colorIndex == FieldController.NEUTRAL_LANDS_INDEX) {
-            provinceList.add(startHex);
-            return provinceList;
-        }
-        while (propagationList.size() > 0) {
-            tempHex = propagationList.get(0);
-            provinceList.add(tempHex);
-            propagationList.remove(0);
-            for (int i = 0; i < 6; i++) {
-                adjHex = tempHex.getAdjacentHex(i);
-                if (adjHex.active && adjHex.sameColor(tempHex) && !propagationList.contains(adjHex) && !provinceList.contains(adjHex)) {
-                    propagationList.add(adjHex);
-                }
-            }
-        }
-        return provinceList;
-
-    }
-
-
     private void genericBalance() {
         // default field
         for (Hex activeHex : gameController.fieldController.activeHexes) {

@@ -1,10 +1,11 @@
 package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.LanguagesManager;
-import yio.tro.antiyoy.behaviors.ReactBehavior;
-import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.gameplay.loading.LoadingManager;
+import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
+import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
 import yio.tro.antiyoy.menu.ButtonYio;
-import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 
 public class TutorialScriptGenericRules extends TutorialScript{
 
@@ -50,17 +51,27 @@ public class TutorialScriptGenericRules extends TutorialScript{
 
     @Override
     public void createTutorialGame() {
-        GameSaver gameSaver = gameController.gameSaver;
-        gameSaver.setActiveHexesString(map);
-        gameSaver.beginRecreation();
-        gameSaver.setBasicInfo(0, 1, 5, 1, 0);
-        gameController.colorIndexViewOffset = 0;
-        GameRules.setSlayRules(false);
-        gameSaver.endRecreation();
+        LoadingParameters instance = LoadingParameters.getInstance();
+        instance.mode = LoadingParameters.MODE_TUTORIAL;
+        instance.activeHexes = map;
+        instance.playersNumber = 1;
+        instance.colorNumber = 5;
+        instance.levelSize = 1;
+        instance.difficulty = 0;
+        instance.colorOffset = 0;
+        instance.slayRules = false;
+        LoadingManager.getInstance().startGame(instance);
 
+//        GameSaver gameSaver = gameController.gameSaver;
+//        gameSaver.setActiveHexesString(map);
+//        gameSaver.beginRecreation();
+//        gameSaver.setBasicInfo(0, 1, 5, 1, 0);
+//        gameController.colorIndexViewOffset = 0;
+//        GameRules.setSlayRules(false);
+//        gameSaver.endRecreation();
 
         menuControllerYio = gameController.yioGdxGame.menuControllerYio;
-        languagesManager = MenuControllerYio.languagesManager;
+        languagesManager = LanguagesManager.getInstance();
         currentStep = -1;
         waitingBeforeNextStep = true;
         ignoreAll();
@@ -85,12 +96,12 @@ public class TutorialScriptGenericRules extends TutorialScript{
 
 
     private void showMessage(String key) {
-        menuControllerYio.showNotification(languagesManager.getString(key), false);
+        Scenes.sceneNotification.showNotification(languagesManager.getString(key), false);
     }
 
 
     private void showTutorialTip(String key) {
-        menuControllerYio.createTutorialTipWithFixedHeight(menuControllerYio.getArrayListFromString(languagesManager.getString(key)), 6);
+        Scenes.sceneTutorialTip.createTutorialTipWithFixedHeight(menuControllerYio.getArrayListFromString(languagesManager.getString(key)), 6);
         tipIsCurrentlyShown = true;
     }
 
@@ -190,7 +201,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
                 break;
             case STEP_GOODBYE:
                 resetIgnores();
-                menuControllerYio.getButtonById(30).setReactBehavior(ReactBehavior.rbInGameMenu);
+                menuControllerYio.getButtonById(30).setReactBehavior(ReactBehavior.rbPauseMenu);
                 break;
         }
     }
@@ -450,7 +461,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
                     allButtonsIgnoreTouches();
                     waitingBeforeNextStep = true;
                     timeForNextStep = gameController.currentTime + 500;
-                    menuControllerYio.hideNotification();
+                    Scenes.sceneNotification.hideNotification();
                     gameController.forefinger.hide();
                     checkToShowTip();
                 }

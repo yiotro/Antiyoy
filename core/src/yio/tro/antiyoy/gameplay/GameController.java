@@ -1,16 +1,19 @@
 package yio.tro.antiyoy.gameplay;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.ai.*;
+import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
+import yio.tro.antiyoy.gameplay.editor.LevelEditor;
+import yio.tro.antiyoy.gameplay.loading.LoadingManager;
+import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.gameplay.rules.Ruleset;
 import yio.tro.antiyoy.gameplay.rules.RulesetGeneric;
 import yio.tro.antiyoy.gameplay.rules.RulesetSlay;
 import yio.tro.antiyoy.menu.ButtonYio;
-import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.SliderYio;
+import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,55 +23,58 @@ import java.util.Random;
  */
 public class GameController {
 
+    private final DebugActionsManager debugActionsManager;
     public YioGdxGame yioGdxGame;
     int screenX;
     int screenY;
 
     public final SelectionController selectionController;
     public final FieldController fieldController;
-    public final CameraController cameraController;
-    private final AiFactory aiFactory;
+    public CameraController cameraController;
+    public final AiFactory aiFactory;
 
     public Random random, predictableRandom;
     private LanguagesManager languagesManager;
     public boolean letsUpdateCacheByAnim;
     public boolean updateWholeCache;
-    long currentTime;
+    public long currentTime;
     public boolean checkToMarch;
     public boolean ignoreMarch;
-    int turn;
+    public int turn;
     private long timeToUpdateCache;
-    float boundWidth;
-    float boundHeight;
+    public float boundWidth;
+    public float boundHeight;
     boolean readyToEndTurn;
     private boolean proposedSurrender;
     private boolean cityNamesEnabled;
+    public boolean backgroundVisible;
     private ArrayList<ArtificialIntelligence> aiList;
     public ArrayList<Unit> unitList;
     public int marchDelay;
     public int playersNumber;
     public int colorIndexViewOffset;
-    String balanceString;
-    String currentPriceString;
-    String levelInitialString;
+    public String balanceString;
+    public String currentPriceString;
+    LoadingParameters initialParameters;
     private ArrayList<LevelSnapshot> levelSnapshots;
-    float priceStringWidth;
-    MapGenerator mapGeneratorSlay;
-    MapGenerator mapGeneratorGeneric;
-    Unit jumperUnit;
+    public float priceStringWidth;
+    public MapGenerator mapGeneratorSlay;
+    public MapGenerator mapGeneratorGeneric;
+    public Unit jumperUnit;
     public Statistics statistics;
-    GameSaver gameSaver;
-    Forefinger forefinger;
+    public GameSaver gameSaver;
+    public Forefinger forefinger;
     public TutorialScript tutorialScript;
     private LevelEditor levelEditor;
-    Ruleset ruleset;
+    public int currentTouchCount;
+    public Ruleset ruleset;
 
 
     public GameController(YioGdxGame yioGdxGame) {
         this.yioGdxGame = yioGdxGame;
         random = new Random();
         predictableRandom = new Random(0);
-        languagesManager = MenuControllerYio.languagesManager;
+        languagesManager = LanguagesManager.getInstance();
         CampaignProgressManager.getInstance();
         selectionController = new SelectionController(this);
         marchDelay = 500;
@@ -78,6 +84,7 @@ public class GameController {
         mapGeneratorSlay = new MapGenerator(this);
         mapGeneratorGeneric = new MapGeneratorGeneric(this);
         aiList = new ArrayList<ArtificialIntelligence>();
+        initialParameters = new LoadingParameters();
 
         fieldController = new FieldController(this);
         jumperUnit = new Unit(this, fieldController.emptyHex, 0);
@@ -87,6 +94,9 @@ public class GameController {
         forefinger = new Forefinger(this);
         levelEditor = new LevelEditor(this);
         aiFactory = new AiFactory(this);
+        debugActionsManager = new DebugActionsManager(this);
+
+        LoadingManager.getInstance().setGameController(this);
     }
 
 
@@ -134,12 +144,15 @@ public class GameController {
     public void move() {
         currentTime = System.currentTimeMillis();
         statistics.increaseTimeCount();
+        cameraController.move();
+
         checkForAiToMove();
         checkToEndTurn();
         checkToUpdateCacheByAnim();
 
-        if (fieldController.letsCheckAnimHexes && currentTime > fieldController.timeToCheckAnimHexes && (isPlayerTurn() || isCurrentTurn(0)))
+        if (fieldController.letsCheckAnimHexes && currentTime > fieldController.timeToCheckAnimHexes && (isPlayerTurn() || isCurrentTurn(0))) {
             fieldController.checkAnimHexes();
+        }
 
         moveCheckToMarch();
         moveUnits();
@@ -151,12 +164,12 @@ public class GameController {
         selectionController.getBlackoutFactor().move();
         selectionController.moveDefenseTips();
 
-        if (fieldController.moveZone.size() > 0 && fieldController.moveZoneFactor.get() < 0.01)
+        if (fieldController.moveZone.size() > 0 && fieldController.moveZoneFactor.get() < 0.01) {
             fieldController.clearMoveZone();
+        }
         selectionController.tipFactor.move();
 
         fieldController.moveResponseAnimHex();
-        cameraController.move();
         moveTutorialStuff();
     }
 
@@ -195,7 +208,7 @@ public class GameController {
         if (!Settings.long_tap_to_move) return;
         if (ignoreMarch) return;
         if (!checkToMarch) return;
-        if (!cameraController.checkConditionsToMarch()) return;
+        if (!checkConditionsToMarch()) return;
 
         checkToMarch = false;
         fieldController.updateFocusedHex();
@@ -203,6 +216,15 @@ public class GameController {
         if (fieldController.focusedHex != null && fieldController.focusedHex.active) {
             fieldController.marchUnitsToHex(fieldController.focusedHex);
         }
+    }
+
+
+    boolean checkConditionsToMarch() {
+        if (currentTouchCount != 1) return false;
+        if (currentTime - cameraController.touchDownTime <= marchDelay) return false;
+        if (!cameraController.touchedAsClick()) return false;
+
+        return true;
     }
 
 
@@ -221,6 +243,7 @@ public class GameController {
         if (isInEditorMode()) return false;
         if (!readyToEndTurn) return false;
         if (!cameraController.checkConditionsToEndTurn()) return false;
+
         if (isPlayerTurn() || isCurrentTurn(0)) {
             return fieldController.animHexes.size() == 0;
         } else {
@@ -289,7 +312,7 @@ public class GameController {
         if (!proposedSurrender) {
             int possibleWinner = fieldController.possibleWinner();
             if (possibleWinner >= 0 && isPlayerTurn(possibleWinner)) {
-                yioGdxGame.menuControllerYio.createProposeSurrenderDialog();
+                Scenes.sceneSurrenderDialog.create();
                 proposedSurrender = true;
             }
         }
@@ -352,12 +375,17 @@ public class GameController {
             yioGdxGame.menuControllerYio.levelSelector.update();
         }
 
-        yioGdxGame.menuControllerYio.createAfterGameMenu(winColor, isPlayerTurn(winColor));
+        Scenes.sceneAfterGameMenu.create(winColor, isPlayerTurn(winColor));
 
         if (DebugFlags.CHECKING_BALANCE_MODE) {
             yioGdxGame.balanceIndicator[winColor]++;
-            yioGdxGame.startGame(true, false);
+            ReactBehavior.rbStartSkirmishGame.reactAction(Scenes.sceneSkirmishMenu.startButton);
         }
+    }
+
+
+    public void resetCurrentTouchCount() {
+        currentTouchCount = 0;
     }
 
 
@@ -394,7 +422,7 @@ public class GameController {
         checkForAloneUnits();
         if (isCurrentTurn(0)) yioGdxGame.gameView.updateCacheLevelTextures();
         if (isPlayerTurn()) {
-            cameraController.resetCurrentTouchCount();
+            resetCurrentTouchCount();
             levelSnapshots.clear();
             jumperUnit.startJumping();
             if (fieldController.numberOfProvincesWithColor(turn) == 0) {
@@ -432,8 +460,8 @@ public class GameController {
     }
 
 
-    private void defaultValues() {
-        cameraController.defaultCameraValues();
+    public void defaultValues() {
+        cameraController.defaultValues();
         ignoreMarch = false;
         readyToEndTurn = false;
         fieldController.defaultValues();
@@ -444,21 +472,10 @@ public class GameController {
 //        ReactBehavior.rbShowColorStats.loadTexturesIfNotLoaded();
         GameRules.tutorialMode = false;
         GameRules.campaignMode = false;
+        GameRules.inEditorMode = false;
         proposedSurrender = false;
+        backgroundVisible = true;
         colorIndexViewOffset = 0;
-    }
-
-
-    private int getLevelSizeBySliderPos(SliderYio sliderYio) {
-        switch (sliderYio.getCurrentRunnerIndex()) {
-            default:
-            case 0:
-                return FieldController.SIZE_SMALL;
-            case 1:
-                return FieldController.SIZE_MEDIUM;
-            case 2:
-                return FieldController.SIZE_BIG;
-        }
     }
 
 
@@ -484,31 +501,27 @@ public class GameController {
     }
 
 
-    public void prepareForNewGame(int index, boolean generateMap, boolean readParametersFromSliders) {
-        defaultValues();
-        yioGdxGame.beginBackgroundChange(4, false, true);
+    public int getColorOffsetBySlider(SliderYio sliderYio, int colorNumber) {
+        int colorOffsetSliderIndex = sliderYio.getCurrentRunnerIndex();
 
-        predictableRandom = new Random(index); // used in map generation
-        if (readParametersFromSliders) {
-            setLevelSize(getLevelSizeBySliderPos(yioGdxGame.menuControllerYio.sliders.get(0)));
-            setPlayersNumberBySlider(yioGdxGame.menuControllerYio.sliders.get(1));
-            GameRules.setColorNumberBySlider(yioGdxGame.menuControllerYio.sliders.get(2));
-            GameRules.setDifficultyBySlider(yioGdxGame.menuControllerYio.sliders.get(3));
-            readColorOffsetFromSlider();
-            GameRules.setSlayRules(yioGdxGame.menuControllerYio.getCheckButtonById(16).isChecked());
+        if (colorOffsetSliderIndex == 0) { // random
+            return predictableRandom.nextInt(colorNumber);
+        } else {
+            return colorOffsetSliderIndex - 1;
         }
-        fieldController.playerHexCount = new int[GameRules.colorNumber]; // has to be after GameRules.setColorNumberBySlider();
-        fieldController.createField(generateMap); // generating map
+    }
 
-//        campaignLevelFactory.generateLevels();
 
-        // finishing
-        cameraController.createCamera();
-        yioGdxGame.gameView.updateCacheLevelTextures();
+    public void onEndCreation() {
+        getLevelSnapshots().clear();
+        prepareCertainUnitsToMove();
+        fieldController.createPlayerHexCount();
+        updateRuleset();
+        createCamera();
         fieldController.clearAnims();
         aiFactory.createAiList(GameRules.difficulty);
-        yioGdxGame.menuControllerYio.removeButtonById(38); // build object button
-        updateLevelInitialString();
+        selectionController.deselectAll();
+
         if (DebugFlags.CHECKING_BALANCE_MODE) {
             while (true) {
                 move();
@@ -519,7 +532,15 @@ public class GameController {
 
 
     public void readColorOffsetFromSlider() {
-        int sliderIndex = yioGdxGame.menuControllerYio.sliders.get(4).getCurrentRunnerIndex();
+        SliderYio sliderYio;
+
+        if (GameRules.campaignMode) {
+            sliderYio = yioGdxGame.menuControllerYio.sliders.get(6);
+        } else {
+            sliderYio = yioGdxGame.menuControllerYio.sliders.get(4);
+        }
+
+        int sliderIndex = sliderYio.getCurrentRunnerIndex();
         if (sliderIndex == 0) { // random
             colorIndexViewOffset = predictableRandom.nextInt(GameRules.colorNumber);
             return;
@@ -528,8 +549,8 @@ public class GameController {
     }
 
 
-    void updateLevelInitialString() {
-        levelInitialString = gameSaver.getActiveHexesString();
+    public void updateInitialParameters(LoadingParameters parameters) {
+        initialParameters.copyFrom(parameters);
     }
 
 
@@ -566,7 +587,7 @@ public class GameController {
 
 
     public void setLevelSize(int size) {
-        cameraController.updateZoomUpperLimit(size);
+        cameraController.init(size);
         switch (size) {
             case FieldController.SIZE_SMALL:
                 boundWidth = GraphicsYio.width;
@@ -584,6 +605,7 @@ public class GameController {
                 // to avoid some bugs maybe?
                 return;
         }
+        cameraController.setBounds(boundWidth, boundHeight);
         fieldController.levelSize = size;
         yioGdxGame.gameView.createLevelCacheTextures();
     }
@@ -595,20 +617,7 @@ public class GameController {
 
 
     public void debugActions() {
-//        System.out.println("" + gameSaver.getActiveHexesString());
-
-        for (Hex activeHex : fieldController.activeHexes) {
-            if (random.nextDouble() > 0.5)
-                fieldController.setHexColor(activeHex, 0);
-        }
-
-//        System.out.println();
-//        System.out.println("FieldController.NEUTRAL_LANDS_INDEX = " + FieldController.NEUTRAL_LANDS_INDEX);
-//        System.out.println("colorIndexViewOffset = " + colorIndexViewOffset);
-//        for (int i = 0; i < GameRules.colorNumber; i++) {
-//            int colorIndexWithOffset = ruleset.getColorIndexWithOffset(i);
-//            System.out.println(i + " -> " + colorIndexWithOffset);
-//        }
+        debugActionsManager.debugActions();
     }
 
 
@@ -714,6 +723,7 @@ public class GameController {
             fieldController.cleanOutHex(unit1.currentHex);
             fieldController.cleanOutHex(unit2.currentHex);
             Unit mergedUnit = fieldController.addUnit(hex, mergedUnitStrength(unit1, unit2));
+            statistics.onUnitsMerged();
             mergedUnit.setReadyToMove(true);
             if (!unit1.isReadyToMove() || !unit2.isReadyToMove()) {
                 mergedUnit.setReadyToMove(false);
@@ -733,19 +743,21 @@ public class GameController {
 
 
     public void restartGame() {
-        int currentColorOffset = colorIndexViewOffset;
+//        int currentColorOffset = colorIndexViewOffset;
 
-        gameSaver.setActiveHexesString(levelInitialString);
-        gameSaver.beginRecreation(false);
-        colorIndexViewOffset = currentColorOffset;
-        gameSaver.endRecreation();
+        LoadingManager.getInstance().startGame(initialParameters);
+
+//        gameSaver.setActiveHexesString(levelInitialString);
+//        gameSaver.beginRecreation(false);
+//        colorIndexViewOffset = currentColorOffset;
+//        gameSaver.endRecreation();
     }
 
 
     public void undoAction() {
         int lastIndex = levelSnapshots.size() - 1;
         if (lastIndex < 0) return;
-        cameraController.resetCurrentTouchCount();
+        resetCurrentTouchCount();
         LevelSnapshot lastSnapshot = levelSnapshots.get(lastIndex);
         lastSnapshot.recreateSnapshot();
         levelSnapshots.remove(lastIndex);
@@ -790,7 +802,18 @@ public class GameController {
 
 
     public void touchDown(int screenX, int screenY, int pointer, int button) {
-        if (GameRules.inEditorMode) levelEditor.touchDown(screenX, screenY);
+        currentTouchCount++;
+
+        if (GameRules.inEditorMode) {
+            if (levelEditor.touchDown(screenX, screenY)) {
+                return;
+            }
+        }
+
+        if (currentTouchCount == 1) {
+            setCheckToMarch(true);
+        }
+
         this.screenX = screenX;
         this.screenY = screenY;
         cameraController.touchDown(screenX, screenY);
@@ -821,7 +844,7 @@ public class GameController {
     }
 
 
-    void addAnimHex(Hex hex) {
+    public void addAnimHex(Hex hex) {
         fieldController.addAnimHex(hex);
     }
 
@@ -843,17 +866,17 @@ public class GameController {
     }
 
 
-    boolean isPlayerTurn(int turn) {
+    public boolean isPlayerTurn(int turn) {
         return turn < playersNumber;
     }
 
 
-    boolean isPlayerTurn() {
+    public boolean isPlayerTurn() {
         return isPlayerTurn(turn);
     }
 
 
-    boolean isCurrentTurn(int turn) {
+    public boolean isCurrentTurn(int turn) {
         return this.turn == turn;
     }
 
@@ -878,13 +901,19 @@ public class GameController {
     }
 
 
-    private void moveUnitWithAttack(Unit unit, Hex toWhere, Province unitProvince) {
-        fieldController.setHexColor(toWhere, turn); // must be called before object in hex destroyed
-        fieldController.cleanOutHex(toWhere);
-        unit.moveToHex(toWhere);
-        unitProvince.addHex(toWhere);
+    private void moveUnitWithAttack(Unit unit, Hex destination, Province unitProvince) {
+        if (!destination.canBeAttackedBy(unit)) {
+            System.out.println("Problem in GameController.moveUnitWithAttack");
+            Yio.printStackTrace();
+            return;
+        }
+
+        fieldController.setHexColor(destination, turn); // must be called before object in hex destroyed
+        fieldController.cleanOutHex(destination);
+        unit.moveToHex(destination);
+        unitProvince.addHex(destination);
         if (isPlayerTurn()) {
-            fieldController.selectedHexes.add(toWhere);
+            fieldController.selectedHexes.add(destination);
             updateCacheOnceAfterSomeTime();
         }
     }
@@ -922,15 +951,29 @@ public class GameController {
 
 
     public void touchUp(int screenX, int screenY, int pointer, int button) {
-        if (GameRules.inEditorMode) levelEditor.touchUp(screenX, screenY);
+        currentTouchCount--;
+        if (currentTouchCount < 0) {
+            currentTouchCount = 0;
+        }
+
+        if (GameRules.inEditorMode) {
+            if (levelEditor.touchUp(screenX, screenY)) {
+                return;
+            }
+        }
+
         this.screenX = screenX;
         this.screenY = screenY;
-        cameraController.touchUp();
+        cameraController.touchUp(screenX, screenY);
     }
 
 
     public void touchDragged(int screenX, int screenY, int pointer) {
-        if (GameRules.inEditorMode) levelEditor.touchDrag(screenX, screenY);
+        if (GameRules.inEditorMode) {
+            if (levelEditor.touchDrag(screenX, screenY)) {
+                return;
+            }
+        }
 
         cameraController.touchDrag(screenX, screenY);
     }
@@ -946,7 +989,11 @@ public class GameController {
 
 
     public void scrolled(int amount) {
-        cameraController.scrolled(amount);
+        if (amount == 1) {
+            cameraController.changeZoomLevel(0.5);
+        } else if (amount == -1) {
+            cameraController.changeZoomLevel(-0.6);
+        }
     }
 
 
@@ -1028,11 +1075,6 @@ public class GameController {
     }
 
 
-    public CameraController getCameraController() {
-        return cameraController;
-    }
-
-
     public int getTurn() {
         return turn;
     }
@@ -1040,5 +1082,10 @@ public class GameController {
 
     public ArrayList<ArtificialIntelligence> getAiList() {
         return aiList;
+    }
+
+
+    public void setBackgroundVisible(boolean backgroundVisible) {
+        this.backgroundVisible = backgroundVisible;
     }
 }

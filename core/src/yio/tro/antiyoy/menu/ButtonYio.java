@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.RectangleYio;
 import yio.tro.antiyoy.SoundControllerYio;
-import yio.tro.antiyoy.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 
 import java.util.ArrayList;

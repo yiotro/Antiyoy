@@ -2,8 +2,10 @@ package yio.tro.antiyoy.gameplay;
 
 import com.badlogic.gdx.Gdx;
 import yio.tro.antiyoy.SoundControllerYio;
+import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -22,7 +24,7 @@ public class SelectionController {
     float defaultBubbleRadius;
     float selectX;
     float selectY;
-    Unit selectedUnit;
+    public Unit selectedUnit;
     public FactorYio selUnitFactor;
     public FactorYio selMoneyFactor;
     public FactorYio tipFactor;
@@ -145,7 +147,7 @@ public class SelectionController {
         tipFactor.setValues(0, 0);
         tipFactor.beginDestroying(1, 1);
         gameController.fieldController.hideMoveZone();
-        gameController.getYioGdxGame().menuControllerYio.hideBuildButtons();
+        Scenes.sceneBuildButtons.hide();
         resetTipType();
     }
 
@@ -220,6 +222,20 @@ public class SelectionController {
     private void debug(Hex focusedHex) {
 //        YioGdxGame.say(focusedHex.index1 + " " + focusedHex.index2);
 //        showDebugHexColors(focusedHex);
+//        showProvinceHexListInConsole(focusedHex);
+    }
+
+
+    private void showProvinceHexListInConsole(Hex focusedHex) {
+        System.out.println();
+        System.out.println("Province:");
+
+        Province provinceByHex = gameController.fieldController.getProvinceByHex(focusedHex);
+        for (Hex hex : provinceByHex.hexList) {
+            System.out.println(" - " + hex);
+        }
+
+        System.out.println();
     }
 
 
@@ -401,7 +417,7 @@ public class SelectionController {
     }
 
 
-    void updateFocusedHex(int screenX, int screenY) {
+    public void updateFocusedHex(int screenX, int screenY) {
         gameController.fieldController.updateFocusedHex(screenX, screenY);
     }
 

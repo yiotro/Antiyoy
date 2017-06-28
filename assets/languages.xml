@@ -44,7 +44,7 @@
         #Made by yiotro
 		"/>
         <string key="reset_campaign_data" value="Reset data"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Skirmish"/>
@@ -185,6 +185,7 @@
         <string key="help_about_towers" value="Towers"/>
         <string key="help_about_money" value="Money"/>
         <string key="help_about_tactics" value="Tactics"/>
+        <string key="help_about_rules" value="Rules"/>
 
         <string key="help_units_article" value="There are 4 unit types.
         #They differ only by strength.
@@ -286,6 +287,14 @@
         #(press coin button)
         "/>
 
+        <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
+        #
+        #Initially game had only slay rules. That's why help describes them instead of normal rules.
+        #
+        #To change rules in skirmish you have to tap 'more' before starting new game.
+        #
+        #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Turns made:"/>
         <string key="units_died" value="Units died in game:"/>
@@ -310,6 +319,8 @@
         <string key="confirm_import" value="Confirm import"/>
         <string key="filter_no" value="No filter"/>
         <string key="filter_only_land" value="Only land"/>
+        <string key="confirm_clear_level" value="Clear map?"/>
+        <string key="confirm_randomize" value="Generate random map?"/>
 
         <!-- Settings -->
         <string key="main_label" value=" # Autosave
@@ -317,9 +328,9 @@
             # # Ask turn end
             # # City names
             # # Sound
-            # # Limited turns
-            # # Long tap to move
             # # "/>
+        <string key="limited_turns" value="Limited turns"/>
+        <string key="hold_to_march" value="Long tap to move"/>
         <string key="skin" value="Skin"/>
         <string key="original" value="original"/>
         <string key="points" value="points"/>
@@ -331,6 +342,8 @@
         <string key="slay_rules" value="Slay rules"/>
         <string key="language" value="Language"/>
         <string key="more_settings_checks" value="# #Water texture # # "/>
+        <string key="water_texture" value="Water texture "/>
+        <string key="confirm_reset" value="Clear progress?"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
@@ -399,7 +412,7 @@
         #Игру сделал yiotro
 		"/>
         <string key="reset_campaign_data" value="Стереть данные"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Сражение"/>
@@ -540,6 +553,7 @@
         <string key="help_about_towers" value="Башни"/>
         <string key="help_about_money" value="Деньги"/>
         <string key="help_about_tactics" value="Тактика"/>
+        <string key="help_about_rules" value="Правила"/>
 
         <string key="help_units_article" value="Есть 4 типа юнитов.
         #Отличаются они только силой.
@@ -644,6 +658,14 @@
         #(нажмите кнопку 'монета')
         "/>
 
+        <string key="article_rules" value="В игре есть 2 набора правил: Обычные правила и правила slay. По умолчанию включены обычные правила.
+        #
+        #Изначально в игре были только правила slay, поэтому справка описывает именно их.
+        #
+        #Чтобы поменять правила в режиме 'сражение' надо перед началом игры нажать 'еще'.
+        #
+        #Чтобы поменять правила в кампании надо на экране выбора уровня нажать '...' в правом вехнем углу."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Ходов сделано:"/>
         <string key="units_died" value="Юнитов умерло:"/>
@@ -668,6 +690,8 @@
         <string key="confirm_import" value="Подтвердите импорт"/>
         <string key="filter_no" value="Без фильтра"/>
         <string key="filter_only_land" value="Только земля"/>
+        <string key="confirm_clear_level" value="Очистить карту?"/>
+        <string key="confirm_randomize" value="Сгенерировать случайную карту?"/>
 
         <!-- Settings -->
         <string key="main_label" value=" # Автосохранение
@@ -675,9 +699,9 @@
             # # Спраш. конец хода
             # # Имена городов
             # # Звук
-            # # Лимит ходов
-            # # Быстрое перемещение
             # # "/>
+        <string key="limited_turns" value="Лимит ходов"/>
+        <string key="hold_to_march" value="Быстрое перемещение"/>
         <string key="skin" value="Скин"/>
         <string key="original" value="обычный"/>
         <string key="points" value="точки"/>
@@ -689,6 +713,8 @@
         <string key="slay_rules" value="Правила Slay"/>
         <string key="language" value="Язык"/>
         <string key="more_settings_checks" value="# #Текстура воды # # "/>
+        <string key="water_texture" value="Текстура воды "/>
+        <string key="confirm_reset" value="Очистить прогресс?"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="Новый скин от ShroomArts"/>
@@ -756,7 +782,7 @@
         #Гру зробив yiotro
 		"/>
         <string key="reset_campaign_data" value="Стерти данi"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Швидкий бiй"/>
@@ -897,6 +923,7 @@
         <string key="help_about_towers" value="Вежi"/>
         <string key="help_about_money" value="Грошi"/>
         <string key="help_about_tactics" value="Тактика"/>
+        <string key="help_about_rules" value="Правила"/>
 
         <string key="help_units_article" value="У грi 4 типи юнiтiв.
         #Вони вiдрiзняются силою.
@@ -1001,6 +1028,14 @@
         #(натисн. кнопку 'монета')
         "/>
 
+        <string key="article_rules" value="У грі є 2 набори правил: Звичайні правила ті правила slay. По замовчуванню обрані звичайні правила.
+        #
+        #Спочатку у грі були лише правила slay, тому довідка описує саме їх.
+        #
+        #Щоб змінити правила у режимі 'швидкий бій' треба перед початком гри натиснути 'ще'.
+        #
+        #Щоб змінити правила у кампанії треба на екрані вибору рівня натиснути'...' у правому верхньому кутку."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Крокiв зроблено:"/>
         <string key="units_died" value="Юнiтiв померло:"/>
@@ -1025,6 +1060,8 @@
         <string key="confirm_import" value="Підтвердіть імпорт"/>
         <string key="filter_no" value="Без фільтру"/>
         <string key="filter_only_land" value="Тільки земля"/>
+        <string key="confirm_clear_level" value="Очистити карту?"/>
+        <string key="confirm_randomize" value="Сгенерувати карту?"/>
 
         <!-- Settings -->
         <string key="main_label" value=" # Автозбереження
@@ -1032,9 +1069,9 @@
             # # Кiнець ходу
             # # Назви мiст
             # # Звук
-            # # Limited turns
-            # # Long tap to move
             # # "/>
+        <string key="limited_turns" value="Limited turns"/>
+        <string key="hold_to_march" value="Long tap to move"/>
         <string key="skin" value="Скiн"/>
         <string key="original" value="звичайний"/>
         <string key="points" value="точки"/>
@@ -1046,6 +1083,8 @@
         <string key="slay_rules" value="Правила Slay"/>
         <string key="language" value="Мова"/>
         <string key="more_settings_checks" value="# #Текстура води # # "/>
+        <string key="water_texture" value="Текстура води "/>
+        <string key="confirm_reset" value="Очистити прогрес?"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="Новий скін від ShroomArts"/>
@@ -1115,7 +1154,7 @@
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Daten zurücksetzen"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Gefecht"/>
@@ -1256,6 +1295,7 @@
         <string key="help_about_towers" value="Türme"/>
         <string key="help_about_money" value="Geld"/>
         <string key="help_about_tactics" value="Taktik"/>
+        <string key="help_about_rules" value="Rules"/>
 
         <string key="help_units_article" value="Es gibt 4 Arten von Einheiten,
         #die sich nur durch ihre
@@ -1363,6 +1403,14 @@
         #(Auf den Münzen-Kopf drücken)
         "/>
 
+        <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
+        #
+        #Initially game had only slay rules. That's why help describes them instead of normal rules.
+        #
+        #To change rules in skirmish you have to tap 'more' before starting new game.
+        #
+        #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Gemachte Züge:"/>
         <string key="units_died" value="Im Spiel gestorbene Einheiten:"/>
@@ -1387,6 +1435,8 @@
         <string key="confirm_import" value="Import bestätigen"/>
         <string key="filter_no" value="No filter"/>
         <string key="filter_only_land" value="Only land"/>
+        <string key="confirm_clear_level" value="Clear map?"/>
+        <string key="confirm_randomize" value="Generate random map?"/>
 
         <!-- Settings -->
         <string key="main_label" value=" # Autosave
@@ -1394,9 +1444,9 @@
             # # Vor Zugende fragen
             # # Städtenamen
             # # Ton
-            # # Begrenzte Züge
-            # # Zum Bewegen gedrückt halten
             # # "/>
+        <string key="limited_turns" value="Begrenzte Züge"/>
+        <string key="hold_to_march" value="Zum Bewegen gedrückt halten"/>
         <string key="skin" value="Darstellung"/>
         <string key="original" value="Original"/>
         <string key="points" value="Punkte"/>
@@ -1408,6 +1458,8 @@
         <string key="slay_rules" value="Slay Regeln"/>
         <string key="language" value="Sprache"/>
         <string key="more_settings_checks" value="# #Wasser-Textur # # "/>
+        <string key="water_texture" value="Wasser-Textur "/>
+        <string key="confirm_reset" value="Clear progress?"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
@@ -1472,7 +1524,7 @@
         #Vytvořil yiotro
         "/>
         <string key="reset_campaign_data" value="Resetovat data"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Rychlá hra"/>
@@ -1613,6 +1665,7 @@
         <string key="help_about_towers" value="Věže"/>
         <string key="help_about_money" value="Peníze"/>
         <string key="help_about_tactics" value="Taktiky"/>
+        <string key="help_about_rules" value="Rules"/>
 
         <string key="help_units_article" value="Jsou čtyři typy jednotek
         #Liší se pouze silou.
@@ -1709,6 +1762,14 @@
         #(zmáčkni tlačítko s mincí)
         "/>
 
+        <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
+        #
+        #Initially game had only slay rules. That's why help describes them instead of normal rules.
+        #
+        #To change rules in skirmish you have to tap 'more' before starting new game.
+        #
+        #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Provedeno tahů:"/>
         <string key="units_died" value="Zabito jednotek:"/>
@@ -1733,6 +1794,8 @@
         <string key="confirm_import" value="Potvrdit import"/>
         <string key="filter_no" value="No filter"/>
         <string key="filter_only_land" value="Only land"/>
+        <string key="confirm_clear_level" value="Clear map?"/>
+        <string key="confirm_randomize" value="Generate random map?"/>
 
         <!-- Settings -->
         <string key="main_label" value=" # Auto ukládání
@@ -1740,9 +1803,9 @@
             # # Potvrď konec tahu
             # # Jména měst
             # # Zvuky
-            # # Limitovaný počet tahů
-            # # Dlouze tapni pro pohyb
             # # "/>
+        <string key="limited_turns" value="Limitovaný počet tahů"/>
+        <string key="hold_to_march" value="Dlouze tapni pro pohyb"/>
         <string key="skin" value="Skin"/>  <!-- Same as english -->
         <string key="original" value="originální"/>
         <string key="points" value="body"/>
@@ -1754,6 +1817,8 @@
         <string key="slay_rules" value="Slay pravidla"/>
         <string key="language" value="Jazyk"/>
         <string key="more_settings_checks" value="# #Textura vody # # "/>
+        <string key="water_texture" value="Textura vody "/>
+        <string key="confirm_reset" value="Clear progress?"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
@@ -1783,7 +1848,7 @@
 
     <language name="fr_FR">
         <!-- All characters -->
-        <string key="lang_characters" value="ABCDEFGHIJKLMNOPQRSTUVWXYZÀÂÄÇÉÈÊËÎÏÔÖÙÛÜŸàâäçéèêëîïôöùûüÿÆŒæœ"/>
+        <string key="lang_characters" value="öéè'àùïô"/>
 
         <!-- Main menu -->
         <string key="main_menu_info" value="Infos"/>
@@ -1793,11 +1858,12 @@
         <!-- Random stuff -->
         <string key="menu_level" value="Niveau"/>
         <string key="menu_reset" value="Réinitialiser"/>
+
         <string key="game_saved" value="Partie sauvegardée"/>
-        <string key="restart_app" value="Restart app"/>
-        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
-        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
-        <string key="city_name_three" value="nsk, rra, ko, rry"/>
+        <string key="restart_app" value="Redémarrer appli"/>
+        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>  <!-- Same as english -->
+        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>  <!-- Same as english -->
+        <string key="city_name_three" value="nsk, rra, ko, rry"/>  <!-- Same as english -->
 
         <!-- Info -->
         <string key="info_back" value="Précédent"/>
@@ -1819,9 +1885,9 @@
         #
         #Courriel : yiotro93@gmail.com
         #Auteur : yiotro
-        "/>
+		"/>
         <string key="reset_campaign_data" value="Effacer données"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Affrontement"/>
@@ -1846,10 +1912,10 @@
         <string key="color" value="couleurs"/>
         <string key="difficulty" value="Niveau difficulté"/>
         <string key="easy" value="facile"/>
-        <string key="normal" value="normal"/>
+        <string key="normal" value="normal"/>  <!-- Same as english -->
         <string key="hard" value="difficile"/>
-        <string key="expert" value="expert"/>
-        <string key="balancer" value="balancer"/>
+        <string key="expert" value="expert"/>  <!-- Same as english -->
+        <string key="balancer" value="niveleur"/>
         <string key="player_color" value="Couleur du joueur"/>
 
         <!-- In game menu -->
@@ -1864,8 +1930,8 @@
         <string key="yes" value="Oui"/>
 
         <!-- End game menu -->
-        <string key="end_game_ok" value="Ok"/>
-        <string key="end_game_okay" value="Okay..."/>
+        <string key="end_game_ok" value="Ok"/>  <!-- Same as english -->
+        <string key="end_game_okay" value="Ok..."/>
         <string key="player" value="joueur"/>
         <string key="ai" value="IA"/>
         <string key="won" value="victoire"/>
@@ -1874,32 +1940,32 @@
         <string key="level_complete" value="Niveau terminé"/>
         <string key="win_game" value="Gagner"/>
         <string key="win_or_continue" value="Gagner maintenant#ou poursuivre?"/>
-        <string key="continue" value="Continue"/>
+        <string key="continue" value="Poursuivre"/>
 
         <!-- Colors -->
         <string key="green_player" value="Vert"/>
         <string key="red_player" value="Rouge"/>
-        <string key="magenta_player" value="Magenta"/>
-        <string key="cyan_player" value="Cyan"/>
+        <string key="magenta_player" value="Magenta"/>  <!-- Same as english -->
+        <string key="cyan_player" value="Cyan"/>  <!-- Same as english -->
         <string key="yellow_player" value="Jaune"/>
         <string key="gray_player" value="Gris"/>
         <string key="green_ai" value="Vert"/>
         <string key="red_ai" value="Rouge"/>
-        <string key="magenta_ai" value="Magenta"/>
-        <string key="cyan_ai" value="Cyan"/>
+        <string key="magenta_ai" value="Magenta"/>  <!-- Same as english -->
+        <string key="cyan_ai" value="Cyan"/>  <!-- Same as english -->
         <string key="yellow_ai" value="Jaune"/>
         <string key="gray_ai" value="Gris"/>
         <string key="green_menu" value="Vert"/>
         <string key="red_menu" value="Rouge"/>
-        <string key="magenta_menu" value="Magenta"/>
-        <string key="cyan_menu" value="Cyan"/>
+        <string key="magenta_menu" value="Magenta"/>  <!-- Same as english -->
+        <string key="cyan_menu" value="Cyan"/>  <!-- Same as english -->
         <string key="yellow_menu" value="Jaune"/>
         <string key="gray_menu" value="Gris"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Règles normales"/>
         <string key="how_to_play" value="Instructions"/>
-        <string key="tutorial_ok" value="Ok"/>
+        <string key="tutorial_ok" value="Ok"/>  <!-- Same as english -->
         <string key="tut_select_unit" value="Sélectionner l’unité"/>
         <string key="tut_tap_on_hex" value="Taper sur l’hexagone"/>
         <string key="tut_press_button" value="Appuyer sur le bouton"/>
@@ -1962,6 +2028,7 @@
         <string key="help_about_towers" value="Tours"/>
         <string key="help_about_money" value="Argent"/>
         <string key="help_about_tactics" value="Tactiques"/>
+        <string key="help_about_rules" value="Rules"/>
 
         <string key="help_units_article" value="Il existe 4 types d’unités.
         #Elles diffèrent uniquement au plan de leur force.
@@ -2062,12 +2129,20 @@
         #(appuyer sur le bouton de pièce)
         "/>
 
+        <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
+        #
+        #Initially game had only slay rules. That's why help describes them instead of normal rules.
+        #
+        #To change rules in skirmish you have to tap 'more' before starting new game.
+        #
+        #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Tours joués :"/>
         <string key="units_died" value="Unités mortes durant la partie :"/>
         <string key="units_produced" value="Unités produits durant la partie :"/>
         <string key="money_spent" value="Argent dépensé :"/>
-        <string key="time" value="Time:"/>
+        <string key="time" value="Time:"/>  <!-- Same as english -->
 
         <!-- Editor -->
         <string key="editor" value="Éditeur"/>
@@ -2081,36 +2156,40 @@
         <string key="random" value="Aléatoire"/>
         <string key="exported" value="Copie de la carte"/>
         <string key="editor_clear" value="Vider"/>
-        <string key="no" value="No"/>
-        <string key="yes" value="Yes"/>
-        <string key="confirm_import" value="Confirm import"/>
-        <string key="filter_no" value="No filter"/>
-        <string key="filter_only_land" value="Only land"/>
+        <string key="no" value="Non"/>
+        <string key="yes" value="Oui"/>
+        <string key="confirm_import" value="Confirmer l’importation"/>
+        <string key="filter_no" value="No filter"/>  <!-- Same as english -->
+        <string key="filter_only_land" value="Only land"/>  <!-- Same as english -->
+        <string key="confirm_clear_level" value="Clear map?"/>
+        <string key="confirm_randomize" value="Generate random map?"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" # Sauvegarde automatique
-            # # Emplacements multiples
-            # # Confirmation tour suivant
-            # # Noms de villes
+        <string key="main_label" value=" # Sauvegarde auto
+            # # Plusieurs emplacements
+            # # Confirmer fin du tour
+            # # Nom des villes
             # # Son
-            # # Limited turns
-            # # Long tap to move
             # # "/>
+        <string key="limited_turns" value="Nb. fixe de tours"/>
+        <string key="hold_to_march" value="Long tap to move"/>
         <string key="skin" value="Habillage"/>
-        <string key="original" value="original"/>
-        <string key="points" value="points"/>
+        <string key="original" value="original"/>  <!-- Same as english -->
+        <string key="points" value="points"/>  <!-- Same as english -->
         <string key="grid" value="grille"/>
         <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
-        <string key="anim_style" value="Sensibilité"/>
+        <string key="anim_style" value="sensibilité"/>
         <string key="more" value="Plus"/>
         <string key="camera_offset" value="Cadrage"/>
         <string key="slay_rules" value="Règles de Slay"/>
-        <string key="language" value="Language"/>
-        <string key="more_settings_checks" value="# #Water texture # # "/>
+        <string key="language" value="Langue"/>
+        <string key="more_settings_checks" value="# #Texture aquatique # # "/>
+        <string key="water_texture" value="Texture aquatique "/>
+        <string key="confirm_reset" value="Clear progress?"/>
 
         <!-- Single messages -->
-        <string key="check_shroomarts" value="New skin by ShroomArts"/>
-        <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+        <string key="check_shroomarts" value="Nouvel habillage signé ShroomArts"/>
+        <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>  <!-- Same as english -->
     </language>
 
 
@@ -2173,7 +2252,7 @@
     #Wykonane przez yiotro
     "/>
         <string key="reset_campaign_data" value="Resetuj kampanie"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
 
 
         <!-- Choose game mode menu-->
@@ -2315,6 +2394,7 @@
         <string key="help_about_towers" value="Wieże"/>
         <string key="help_about_money" value="Pieniądze"/>
         <string key="help_about_tactics" value="Taktyki"/>
+        <string key="help_about_rules" value="Rules"/>
 
         <string key="help_units_article" value="Są 4 rodzaje jednostek.
     #Różnią się one tylko siłą.
@@ -2418,6 +2498,14 @@
     #(wystarczy nacisnąć guzik monety)
     "/>
 
+        <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
+        #
+        #Initially game had only slay rules. That's why help describes them instead of normal rules.
+        #
+        #To change rules in skirmish you have to tap 'more' before starting new game.
+        #
+        #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Wykonane ruchy:"/>
         <string key="units_died" value="Zginęło jednostek:"/>
@@ -2442,6 +2530,8 @@
         <string key="confirm_import" value="Czy chcesz importować?"/>
         <string key="filter_no" value="No filter"/>
         <string key="filter_only_land" value="Only land"/>
+        <string key="confirm_clear_level" value="Clear map?"/>
+        <string key="confirm_randomize" value="Generate random map?"/>
 
         <!-- Settings -->
         <string key="main_label" value=" #Autozapis
@@ -2449,9 +2539,9 @@
         # #Zapytaj czy zakończyć
         # #Nazwy miast
         # #Dźwięki
-        # #Limitowane tury
-        # #Przytrzymaj by ruszyć
 				# # "/>
+        <string key="limited_turns" value="Limitowane tury"/>
+        <string key="hold_to_march" value="Przytrzymaj by ruszyć"/>
         <string key="skin" value="Skórka"/>
         <string key="original" value="originalna"/>
         <string key="points" value="punkty"/>
@@ -2463,6 +2553,8 @@
         <string key="slay_rules" value="Reguły Slaya"/>
         <string key="language" value="Język"/>
         <string key="more_settings_checks" value="# #Tekstura wody # # "/>
+        <string key="water_texture" value="Tekstura wody "/>
+        <string key="confirm_reset" value="Clear progress?"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
@@ -2528,7 +2620,7 @@
         "/>
 
         <string key="reset_campaign_data" value="Resetta campagna"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Schermaglia"/>
@@ -2669,6 +2761,7 @@
         <string key="help_about_towers" value="Torri"/>
         <string key="help_about_money" value="Denaro"/>
         <string key="help_about_tactics" value="Tattiche"/>
+        <string key="help_about_rules" value="Rules"/>
 
         <string key="help_units_article" value="Ci sono 4 tipi di unità.
         #Si differenziano solo per la loro forza.
@@ -2770,6 +2863,14 @@
         #(clicca sul simbolo del denaro)
         "/>
 
+        <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
+        #
+        #Initially game had only slay rules. That's why help describes them instead of normal rules.
+        #
+        #To change rules in skirmish you have to tap 'more' before starting new game.
+        #
+        #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Numero di turni:"/>
         <string key="units_died" value="Unità uccise:"/>
@@ -2794,6 +2895,8 @@
         <string key="confirm_import" value="Confirm import"/>
         <string key="filter_no" value="No filter"/>
         <string key="filter_only_land" value="Only land"/>
+        <string key="confirm_clear_level" value="Clear map?"/>
+        <string key="confirm_randomize" value="Generate random map?"/>
 
         <!-- Settings -->
         <string key="main_label" value=" # Autosalvataggio
@@ -2801,9 +2904,9 @@
             # # Conferma a fine turno
             # # Nome città
             # # Audio
-            # # Limited turns
-            # # Long tap to move
             # # "/>
+        <string key="limited_turns" value="Limited turns"/>
+        <string key="hold_to_march" value="Long tap to move"/>
         <string key="skin" value="Colore"/>
         <string key="original" value="originale"/>
         <string key="points" value="punti"/>
@@ -2815,6 +2918,8 @@
         <string key="slay_rules" value="Slay regole"/>
         <string key="language" value="Language"/>
         <string key="more_settings_checks" value="# #Water texture # # "/>
+        <string key="water_texture" value="Water texture "/>
+        <string key="confirm_reset" value="Clear progress?"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
@@ -2877,7 +2982,7 @@
        #
        #E-mail: yiotro93@gmail.com #Creado por yiotro"/>
         <string key="reset_campaign_data" value="Borrar datos"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #Skin: ShroomArts#"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu -->
         <string key="choose_game_mode_skirmish" value="Escaramuza"/>
@@ -2921,6 +3026,8 @@
         <string key="confirm_import" value="Confirm import"/>
         <string key="filter_no" value="No filter"/>
         <string key="filter_only_land" value="Only land"/>
+        <string key="confirm_clear_level" value="Clear map?"/>
+        <string key="confirm_randomize" value="Generate random map?"/>
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Ok"/>
@@ -3022,6 +3129,7 @@
         <string key="help_about_towers" value="Torres"/>
         <string key="help_about_money" value="Dinero"/>
         <string key="help_about_tactics" value="Estrategias"/>
+        <string key="help_about_rules" value="Rules"/>
 
         <string key="help_units_article" value="Existen 4 tipo de unidades.
         #Sólo difieren en la fuerza.
@@ -3117,6 +3225,14 @@
        #- Mostrar estadísticas por colores
        #(presione el botón de moneda)"/>
 
+        <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
+        #
+        #Initially game had only slay rules. That's why help describes them instead of normal rules.
+        #
+        #To change rules in skirmish you have to tap 'more' before starting new game.
+        #
+        #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Turnos jugados:"/>
         <string key="units_died" value="Unidades muertas en la partida:"/>
@@ -3145,9 +3261,9 @@
        # # Ask to end turn
        # # Nombres de ciudades
        # # Sonido
-       # # Turnos limitados
-       # # Long tap to move
        # # "/>
+        <string key="limited_turns" value="Turnos limitados"/>
+        <string key="hold_to_march" value="Long tap to move"/>
         <string key="skin" value="Apariencia"/>
         <string key="original" value="original"/>
         <string key="points" value="puntos"/>
@@ -3159,11 +3275,769 @@
         <string key="slay_rules" value="Combate total"/>
         <string key="language" value="Idioma"/>
         <string key="more_settings_checks" value="# #Textura acuática # # "/>
+        <string key="water_texture" value="Textura acuática "/>
+        <string key="confirm_reset" value="Clear progress?"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
     </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <language name="sk_SK">
+        <!-- All characters -->
+        <string key="lang_characters" value="ľťäöěščřžýáíéůúňťďóĚŠČŘŽÝÁÍÉŮÚŇŤĎÓ"/>
+
+        <!-- Main menu -->
+        <string key="main_menu_info" value="Info"/> <!-- Same as english -->
+        <string key="main_menu_exit" value="Koniec"/>
+        <string key="main_menu_something" value="Prázdny text o ničom"/>
+
+        <!-- Random stuff -->
+        <string key="menu_level" value="Level"/> <!-- Same as english -->
+        <string key="menu_reset" value="Reset"/> <!-- Same as english -->
+        <string key="game_saved" value="Hra uložená"/>
+        <string key="restart_app" value="Reštart app"/>
+        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/> <!-- Same as english -->
+        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/> <!-- Same as english -->
+        <string key="city_name_three" value="nsk, rra, ko, rry"/> <!-- Same as english -->
+
+        <!-- Info -->
+        <string key="info_back" value="Späť"/>
+        <string key="info_array" value="Toto je jednoduchá
+        #strategická hra v
+        #minimalistickom štýle.
+        #Je zadarmo a bez reklám
+        #a príspevkov.
+        #Ak ste v tejto hre noví,
+        #skúste tutoriál alebo
+        #nápovedu.
+        #
+        #Táto hra je inšpirovaná hrou
+        #Slay ktorú napísal
+        #Sean O'Connor
+        #
+        #
+        #
+        #E-mail: yiotro93@gmail.com
+        #Vytvořil yiotro
+        "/>
+        <string key="reset_campaign_data" value="Resetovať údaje"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
+
+        <!-- Choose game mode menu-->
+        <string key="choose_game_mode_skirmish" value="Rýchla hra"/>
+        <string key="choose_game_mode_tutorial" value="Tutoriál"/>
+        <string key="choose_game_mode_campaign" value="Kampaň"/>
+        <string key="choose_game_mode_load" value="Načítať hru"/>
+
+        <!-- Skirmish menu -->
+        <string key="game_settings_main_menu" value="Hlavné menu"/>
+        <string key="game_settings_tutorial" value="Tutoriál"/>
+        <string key="game_settings_start" value="Štart"/> <!-- Same as english -->
+        <string key="map_size" value="Velkosť mapy"/>
+        <string key="color_number" value="Farby"/>
+        <string key="player_number" value="Hráči"/>
+        <string key="small" value="malá"/>
+        <string key="medium" value="stredná"/>
+        <string key="big" value="velká"/>
+        <string key="ai_only" value="iba počítač"/>
+        <string key="single_player" value="sólová hra"/>
+        <string key="multiplayer" value="viac hráčov"/>
+        <string key="colors" value="farieb"/>
+        <string key="color" value="farby"/>
+        <string key="difficulty" value="Obtiažnosť"/>
+        <string key="easy" value="ľahká"/>
+        <string key="normal" value="normálna"/>
+        <string key="hard" value="ťažká"/>
+        <string key="expert" value="expert"/> <!-- Same as english -->
+        <string key="balancer" value="balancer"/> <!-- Same as english -->
+        <string key="player_color" value="Farba hráča"/>
+
+        <!-- In game menu -->
+        <string key="in_game_menu_resume" value="Pokračovať"/>
+        <string key="in_game_menu_save" value="Uložiť hru"/>
+        <string key="in_game_menu_surrender" value="Vzdať sa"/>
+        <string key="in_game_menu_main_menu" value="Hlavné menu"/>
+        <string key="in_game_menu_restart" value="Reštart"/> <!-- Same as english -->
+        <string key="confirm_restart" value="Reštartovať hru?"/>
+        <string key="cancel" value="Zrušiť"/>
+        <string key="confirm_end_turn" value="Koniec ťahu?"/>
+        <string key="yes" value="Áno"/>
+
+        <!-- End game menu -->
+        <string key="end_game_ok" value="Ok"/> <!-- Same as english -->
+        <string key="end_game_okay" value="Okej..."/>
+        <string key="player" value="hráč"/>
+        <string key="ai" value="počítač"/>
+        <string key="won" value="vyhral"/>
+        <string key="statistics" value="Štatistiky"/>
+        <string key="next" value="Ďalší"/>
+        <string key="level_complete" value="Level kompletný"/>
+        <string key="win_game" value="Víťazstvo"/>
+        <string key="win_or_continue" value="Vyhrať teraz#alebo pokračovať?"/>
+        <string key="continue" value="pokračovať"/>
+
+        <!-- Colors -->
+        <string key="green_player" value="Zelený"/>
+        <string key="red_player" value="Červený"/>
+        <string key="magenta_player" value="Purpurový"/>
+        <string key="cyan_player" value="Azúrový"/>
+        <string key="yellow_player" value="Žlutý"/>
+        <string key="gray_player" value="Šedý"/>
+        <string key="green_ai" value="Zelený"/>
+        <string key="red_ai" value="Červený"/>
+        <string key="magenta_ai" value="Purpurový"/>
+        <string key="cyan_ai" value="Azúrový"/>
+        <string key="yellow_ai" value="Žlutý"/>
+        <string key="gray_ai" value="Šedý"/>
+        <string key="green_menu" value="Zelená"/>
+        <string key="red_menu" value="Červená"/>
+        <string key="magenta_menu" value="Purpurová"/>
+        <string key="cyan_menu" value="Azúrová"/>
+        <string key="yellow_menu" value="Žlutá"/>
+        <string key="gray_menu" value="Šedá"/>
+
+        <!-- Tutorial -->
+        <string key="normal_rules" value="Normálne pravidlá"/>
+        <string key="how_to_play" value="Ako hrať?"/>
+        <string key="tutorial_ok" value="Ok"/> <!-- Same as english -->
+        <string key="tut_select_unit" value="Vyber jednotku"/>
+        <string key="tut_tap_on_hex" value="Ťukni na hex"/>
+        <string key="tut_press_button" value="Zmačkni tlačítko"/>
+        <string key="tut_build_tower" value="Postav vežu"/>
+        <string key="tut_again" value="Znovu"/>
+        <string key="tut_build_spearman" value="Postav kopijníka"/>
+        <string key="tut_tap_to_undo" value="Ťukni na 'späť'"/>
+        <string key="tut_tap_to_end_turn" value="Ťukni pre koniec ťahu"/>
+        <string key="tut_hold_hex" value="Ťukni a drž"/>
+        <string key="tut_merge_units" value="Spoj jednotky"/>
+        <string key="tut_good_luck" value="Veľa štastia!"/>
+
+        <!-- Tutorial tips -->
+        <string key="tip_capture_with_units" value="Zaútoč so svojimi jednotkami#pre obsadenie teritórií"/>
+        <string key="tip_about_money" value="Čím väčšie je tvoje územie#tým viac dostávaš peňazí"/>
+        <string key="tip_build_towers" value="Postav veže k ochrane#okolitých hexov"/>
+        <string key="tip_about_taxes" value="Silnejšie jednotky spotrebujú#viac peňazí"/>
+        <string key="tip_about_defense" value="Jednotky a domy tiež#ochraňujú okolité hexy"/>
+        <string key="tip_hold_to_march" value="Pre rýchly presun armád#použi 'drž pre presun'"/>
+        <string key="tip_about_unit_death" value="Ak sa minú peniaze#jednotky umrú.#Hraj obozretne"/>
+        <string key="tip_merging" value="Spoj jednotky pre#zvýšenie sily"/>
+        <string key="tip_trees" value="Zarastené hexy nedávajú peniaze#stromy je potrebné vyrúbať"/>
+        <string key="tip_help" value="Viac podrobností#v nápovede"/>
+
+        <!-- Generic Tutorial -->
+        <string key="gen_greetings" value="Ahoj, tento tutoriál ti vysvetlí pravidlá hry."/>
+        <string key="gen_select_province" value="Ťuknutím vyber svoje mesto."/>
+        <string key="gen_select_unit" value="Dobre. Máš niekoľko jednotek. Ťukni na jednu z nich."/>
+        <string key="gen_move_unit" value="Každý panáčik sa pohybuje jednou za ťah. Teraz obsaď neutrálny hex pri vybranej jednotke ťuknutím naň."/>
+        <string key="gen_income" value="Obsadzovaním nových hexov zvyšuješ príjem svojho mesta. Viac hexov = viac peňazí."/>
+        <string key="gen_lets_build_farm" value="Teraz postavíme farmu pre ďalšie zvýšenie príjmov."/>
+        <string key="gen_press_button_twice" value="Zmačkni dvakrát tlačítko."/>
+        <string key="gen_build_farm" value="Farmy môžu byť stavané len neďaleko miest, alebo iných fariem."/>
+        <string key="gen_about_farms" value="Každá farma dáva 4 mince za ťah. Každá nová farma stojí viac než farma predošlá."/>
+        <string key="gen_lets_build_peasant" value="Teraz postavíme novú jednotku a obsadíme neutrálny hex."/>
+        <string key="gen_press_button" value="Zmačkni tlačítko naspodu."/>
+        <string key="gen_build_peasant" value="Postav svoju jednotku na hex pri hranici mesta."/>
+        <string key="gen_capture_peasant" value="Teraz ťukni na svoju novú jednotku a obsaď neutrálny hex."/>
+        <string key="gen_capture_hex" value="Obsaď neutrálny hex."/>
+        <string key="gen_lets_build_tower" value="Svoje územie musíš chrániť. Na to sú dobré veže."/>
+        <string key="gen_build_tower" value="Postav vežu ťuknutím na zvýraznený hex."/>
+        <string key="gen_about_towers" value="Veže ochránia okolité hexy proti roľníkom a kopytníkom."/>
+        <string key="gen_lets_build_spearman" value="Kopitník je silnejší než roľník. Postavíme ho."/>
+        <string key="gen_build_spearman" value="Ťukni na hex a postav kopijníka."/>
+        <string key="gen_units_consume_money" value="Jednotky potrebujú peniaze na jedlo. Silnejšie jednotky ich potrebujú viac."/>
+        <string key="gen_undo_spearman" value="Teraz je tvoj príjem -1. To je zlé, klikni na ľavé dolné tlačítko a vráť kopijníka."/>
+        <string key="gen_why_units_die" value="Jednotky zomrú ak sa mestu minú peniaze. Svoj príjem musíš sledovať."/>
+        <string key="gen_about_trees_one" value="Stromy sú tiež problém. Hexy na ktorých sú stromy nedávajú peniaze."/>
+        <string key="gen_about_trees_two" value="Vyrúbaj stromy čo najskôr, pokým ich nie je priveľa."/>
+        <string key="gen_end_turn" value="Pro ukončení ťahu zmačkni tlačítko v pravom dolnom rohu."/>
+        <string key="gen_choose_to_merge" value="Jednotky môžeš spájať. Vyber roľníka na dolnom hexe."/>
+        <string key="gen_merge_units" value="Teraz, keď je vybraný, ťukni na druhého roľníka a spoj ich."/>
+        <string key="gen_long_tap" value="Ak máš viac jednotiek, môžeš ich všetkých presunúť dlhým ťuknutím."/>
+        <string key="gen_several_provinces" value="Môžeš mať viacej miest. Každé s vlastnou ekonomikou."/>
+
+        <!-- Tutorial help -->
+        <string key="help" value="Nápoveda"/>
+        <string key="help_about_units" value="Jednotky"/>
+        <string key="help_about_trees" value="Stromy"/>
+        <string key="help_about_towers" value="Veže"/>
+        <string key="help_about_money" value="Peniaze"/>
+        <string key="help_about_tactics" value="Taktiky"/>
+        <string key="help_about_rules" value="Rules"/>
+
+        <string key="help_units_article" value="Sú štyri typy jednotiek
+        #Líšia se iba silou.
+        #Vzostupne podľa sily:
+        #[1] roľník
+        #[2] kopijník
+        #[3] barón
+        #[4] rytier
+        #
+        #Jednotky dávajú okolitým
+        #hexom ochranu rovnú ich
+        #sile.
+        #
+        #Pre obsadenie hexu musí byť
+        #sila útočnej jednotky väčšia
+        #než obrana hexu.
+        #
+        #Každá jednotka spotrebuje
+        #2, 6, 18 respektíve 54
+        #mincí za jeden ťah.
+        "/>
+
+        <string key="help_trees_article" value="Stromy vyrastú tam,
+        #kde zomrie jednotka.
+        #
+        #Hexy so stromami nedávajú žiadny
+        #príjem. Takže stromy poškodzujú
+        #ekonomiku.
+        #
+        #Musíš ich vyrúbať, inak sa
+        #rozrastú a vyhladujú ťa.
+        #
+        #Palmy sa objevujú v rohoch
+        #a rastú veľmi rýchlo.
+        #Musia býť teda aj veľmi rýchlo
+        #vyrúbané.
+        "/>
+
+        <string key="help_towers_article" value="Veže ochraňujú okolité hexy.
+        #
+        #Veže dávajú ochranu [2].
+        #Teda len baróni a rytieri
+        #ich môžu poraziť.
+        #
+        #Domy dávajú ochranu [1].
+        #
+        #Na začiatku hry je toto
+        #najlepší spôsob, ako
+        #ochrániť svoje teritórium.
+        #Cena veží je nízka
+        #a nespotrebovávajú žiadne
+        #peniaze.
+        "/>
+
+        <string key="help_money_article" value="Príjem závisí na počte
+        #hexov. Väčšie územie má väčší
+        #príjem.
+        #
+        #Stromy príjem omedzujú.
+        #
+        #Jednotky spotrebovávajú
+        #peniaze. Silnejšie jednotky
+        #ich potrebujú viac.
+        #
+        #Keď sa minú peniaze,
+        #jednotky zomrú.
+        #
+        #Príjem sa ukazuje
+        #hore uprostred.
+        "/>
+
+        <string key="help_tactics_article" value="Na začiatku hry obsaď
+        #neutrálne hexy.
+        #Potom ochraňuj svoje územie.
+        #
+        #Uisti sa, že tvoj príjem
+        #je dostatečne veľký,
+        #než postavíš nové jednotky.
+        #
+        #Rozkúskuj územie nepriateľa
+        #pre zničenie jeho ekonomiky.
+        "/>
+
+        <string key="about_complicated_mode_article" value="Pokročilý mód znamená
+        #členitejšie menu.
+        #Odlišnosti od jednoduchého:
+        #
+        #- Niekoľko ukladacích slotov
+        #
+        #- Potvrdenie reštartu levelu
+        #
+        #- Ukazuje štatistiky farieb
+        #(stlač tlačítko s mincou)
+        "/>
+
+        <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
+        #
+        #Initially game had only slay rules. That's why help describes them instead of normal rules.
+        #
+        #To change rules in skirmish you have to tap 'more' before starting new game.
+        #
+        #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
+
+        <!-- Statistics -->
+        <string key="turns_made" value="Uskutočnených ťahov:"/>
+        <string key="units_died" value="Zabitých jednotiek:"/>
+        <string key="units_produced" value="Postavených jednotiek:"/>
+        <string key="money_spent" value="Utratených peňazí:"/>
+        <string key="time" value="Time:"/>
+
+        <!-- Editor -->
+        <string key="editor" value="Editor"/> <!-- Same as english -->
+        <string key="slot" value="Ukladací Slot"/>
+        <string key="slots" value="Ukladacie sloty"/>
+        <string key="import" value="Importuj"/>
+        <string key="export" value="Exportuj"/>
+        <string key="empty" value="prázdny"/>
+        <string key="play" value="Hraj"/>
+        <string key="edit" value="Edituj"/>
+        <string key="random" value="Náhodne"/>
+        <string key="exported" value="Mapa je v schránke"/>
+        <string key="editor_clear" value="Vymaž"/>
+        <string key="no" value="Nie"/>
+        <string key="yes" value="Áno"/>
+        <string key="confirm_import" value="Potvrdiť import"/>
+        <string key="filter_no" value="Žiadny filter"/>
+        <string key="filter_only_land" value="len krajina"/>
+        <string key="confirm_clear_level" value="Clear map?"/>
+        <string key="confirm_randomize" value="Generate random map?"/>
+
+        <!-- Settings -->
+        <string key="main_label" value=" # Auto ukladanie
+            # # Niekoľko slotov
+            # # Potvrď koniec ťahu
+            # # Mená miest
+            # # Zvuky
+            # # "/>
+        <string key="limited_turns" value="Limitovaný počet ťahov"/>
+        <string key="hold_to_march" value="Dlhšie ťukni pre pohyb"/>
+        <string key="skin" value="Skin"/> <!-- Same as english -->
+        <string key="original" value="originálny"/>
+        <string key="points" value="body"/>
+        <string key="grid" value="mriežka"/>
+        <string key="skin_shroomarts" value="ShroomArts"/> <!-- Same as english -->
+        <string key="anim_style" value="Citlivosť"/>
+        <string key="more" value="Viac"/>
+        <string key="camera_offset" value="Offset kamery"/>
+        <string key="slay_rules" value="Slay pravidla"/>
+        <string key="language" value="Jazyk"/>
+        <string key="more_settings_checks" value="# #Textúra vody # # "/>
+        <string key="water_texture" value="Textúra vody "/>
+        <string key="confirm_reset" value="Clear progress?"/>
+
+        <!-- Single messages -->
+        <string key="achikaps_release" value="Ahoj. # #Dokončil som novú hru, ktorá se volá 'Achikaps'.#Je to jednoduchý ekonomický simulátor bez dotácií a reklám. Snáď si ho užijete :)"/>
+        <string key="one_time_only_one_knight" value="Pre každého hráča musí byť iba jeden rytier. Nemôžeš vytvoriť dvoch rytierov naraz."/> <!-- Same as english -->
+        <string key="one_time_knight_penalty" value="Rytier sa musí pohnúť každé kolo. Inak bude za lenivosť degradovaný na kopijníka."/> <!-- Same as english -->
+        <string key="one_time_strong_tower_demote" value="Ak provincia nemá peniaze na podporu silnej veže, táto sa zmení na obyčajnú vežu."/>
+        <string key="check_shroomarts" value="New skin by ShroomArts"/>
+        <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+    </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <language name="cn_CN">
+        <!-- All characters -->
+        <string key="lang_characters" value="ö"/>
+
+        <!-- Main menu -->
+        <string key="main_menu_info" value="信息"/>
+        <string key="main_menu_exit" value="退出"/>
+        <string key="main_menu_something" value="没有东西"/>
+
+        <!-- Random stuff -->
+        <string key="menu_level" value="等级"/>
+        <string key="menu_reset" value="重设"/>
+
+        <string key="game_saved" value="已保存"/>
+        <string key="restart_app" value="重启游戏"/>
+        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
+        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
+        <string key="city_name_three" value="nsk, rra, ko, rry"/>
+
+        <!-- Info -->
+        <string key="info_back" value="返回"/>
+        <string key="info_array" value="这是一个简单极简风格游戏的策略游戏
+        #免费， 没有广告， 无需打赏
+        #如果你第一次玩这个游戏
+        #如果你是新手
+        #
+        #记得看教程或者‘帮助’
+        #
+        #
+        #本游戏受Sean O'Connor的Slay的启发
+        #
+        #
+        #
+        #
+        #
+        #
+        #
+        #邮箱: yiotro93@gmail.com
+        #yiotro出品
+		"/>
+        <string key="reset_campaign_data" value="重置数据"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
+
+        <!-- Choose game mode menu-->
+        <string key="choose_game_mode_skirmish" value="遭遇战"/>
+        <string key="choose_game_mode_tutorial" value="教程"/>
+        <string key="choose_game_mode_campaign" value="战役"/>
+        <string key="choose_game_mode_load" value="载入游戏"/>
+
+        <!-- Skirmish menu -->
+        <string key="game_settings_main_menu" value="主菜单"/>
+        <string key="game_settings_tutorial" value="教程"/>
+        <string key="game_settings_start" value="开始"/>
+        <string key="map_size" value="地图大小"/>
+        <string key="color_number" value="颜色"/>
+        <string key="player_number" value="玩家"/>
+        <string key="small" value="小型"/>
+        <string key="medium" value="中型"/>
+        <string key="big" value="大型"/>
+        <string key="ai_only" value="只有AI"/>
+        <string key="single_player" value="单人游戏"/>
+        <string key="multiplayer" value="多人游戏"/>
+        <string key="colors" value="颜色"/>
+        <string key="color" value="颜色"/>
+        <string key="difficulty" value="难度"/>
+        <string key="easy" value="简单"/>
+        <string key="normal" value="正常"/>
+        <string key="hard" value="困难"/>
+        <string key="expert" value="专家"/>
+        <string key="balancer" value="平衡"/>
+        <string key="player_color" value="玩家颜色"/>
+
+        <!-- In game menu -->
+        <string key="in_game_menu_resume" value="返回游戏"/>
+        <string key="in_game_menu_save" value="保存游戏"/>
+        <string key="in_game_menu_surrender" value="投降"/>
+        <string key="in_game_menu_main_menu" value="主菜单"/>
+        <string key="in_game_menu_restart" value="重新开始"/>
+        <string key="confirm_restart" value="重新开始游戏?"/>
+        <string key="cancel" value="取消"/>
+        <string key="confirm_end_turn" value="结束本轮?"/>
+        <string key="yes" value="是"/>
+
+        <!-- End game menu -->
+        <string key="end_game_ok" value="Ok"/>
+        <string key="end_game_okay" value="Okay..."/>
+        <string key="player" value="玩家"/>
+        <string key="ai" value="AI"/>
+        <string key="won" value="赢了"/>
+        <string key="statistics" value="记分牌"/>
+        <string key="next" value="下一个"/>
+        <string key="level_complete" value="关卡完成"/>
+        <string key="win_game" value="你赢了"/>
+        <string key="win_or_continue" value="结束#还是继续?"/>
+        <string key="continue" value="继续"/>
+
+        <!-- Colors -->
+        <string key="green_player" value="绿色"/>
+        <string key="red_player" value="红色"/>
+        <string key="magenta_player" value="品红色"/>
+        <string key="cyan_player" value="青色"/>
+        <string key="yellow_player" value="黄色"/>
+        <string key="gray_player" value="灰色"/>
+        <string key="green_ai" value="绿色"/>
+        <string key="red_ai" value="红色"/>
+        <string key="magenta_ai" value="品红色"/>
+        <string key="cyan_ai" value="青色"/>
+        <string key="yellow_ai" value="黄色"/>
+        <string key="gray_ai" value="灰色"/>
+        <string key="green_menu" value="绿色"/>
+        <string key="red_menu" value="红色"/>
+        <string key="magenta_menu" value="品红色"/>
+        <string key="cyan_menu" value="青色"/>
+        <string key="yellow_menu" value="黄色"/>
+        <string key="gray_menu" value="灰色"/>
+
+        <!-- Tutorial -->
+        <string key="normal_rules" value="普通规则"/>
+        <string key="how_to_play" value="怎么玩?"/>
+        <string key="tutorial_ok" value="好"/>
+        <string key="tut_select_unit" value="选择单位"/>
+        <string key="tut_tap_on_hex" value="点击六边形"/>
+        <string key="tut_press_button" value="点击按钮"/>
+        <string key="tut_build_tower" value="建造防御塔"/>
+        <string key="tut_again" value="再来一次"/>
+        <string key="tut_build_spearman" value="建造长枪兵"/>
+        <string key="tut_tap_to_undo" value="点击 '上一步'"/>
+        <string key="tut_tap_to_end_turn" value="点击结束本轮"/>
+        <string key="tut_hold_hex" value="保持按住"/>
+        <string key="tut_merge_units" value="单位合体"/>
+        <string key="tut_good_luck" value="祝你好运!"/>
+
+        <!-- Tutorial tips -->
+        <string key="tip_capture_with_units" value="派你的士兵去#侵占地方领土吧"/>
+        <string key="tip_about_money" value="你的领土越大#你的钱越多"/>
+        <string key="tip_build_towers" value="建造防御塔#来保护临近单位"/>
+        <string key="tip_about_taxes" value="强大的单位#消耗更多钱"/>
+        <string key="tip_about_defense" value="单位和房子#也能保护临近单位哦"/>
+        <string key="tip_hold_to_march" value="按住并拖动#即刻移动大量单位"/>
+        <string key="tip_about_unit_death" value="如果钱用光了#所有单位都会死亡#投资需谨慎"/>
+        <string key="tip_merging" value="合并单位#即刻升级"/>
+        <string key="tip_trees" value="树林不会产出#所以砍光他们吧"/>
+        <string key="tip_help" value="更多信息#请前往 '帮助'"/>
+
+        <!-- Generic Tutorial -->
+        <string key="gen_greetings" value="哈咯. 本教程会讲解游戏规则."/>
+        <string key="gen_select_province" value="点击你的主城以选中它Tap on your city to select it."/>
+        <string key="gen_select_unit" value="很好. 你有几个单位. 点击其中一个."/>
+        <string key="gen_move_unit" value="每个单位每回合移动一格。现在，点击相邻的地块以占领它。"/>
+        <string key="gen_income" value="你的领地能给你每回合一块金币， 占领越多，收入越多"/>
+        <string key="gen_lets_build_farm" value="让我们建造农场，获得更高的收入."/>
+        <string key="gen_press_button_twice" value="点击按钮两次"/>
+        <string key="gen_build_farm" value="农场只能建在主城和其他农场附近。"/>
+        <string key="gen_about_farms" value="每座农场每轮产生4块金币， 但每座农场的造价都会比前一座高。"/>
+        <string key="gen_lets_build_peasant" value="让我们建造一个新的单位，然后占领无人区吧！"/>
+        <string key="gen_press_button" value="点击底部的按钮"/>
+        <string key="gen_build_peasant" value="把你的单位放置在领土边缘外。"/>
+        <string key="gen_capture_peasant" value="现在，选中单位然后指挥他们占领无人区吧！"/>
+        <string key="gen_capture_hex" value="占领无人区"/>
+        <string key="gen_lets_build_tower" value="你需要保卫你的领土，防御塔是个不错的选择。"/>
+        <string key="gen_build_tower" value="点击高光的地块以建立防御塔。"/>
+        <string key="gen_about_towers" value="防御塔会保护临近的土地，免受农民和长枪兵的入侵。"/>
+        <string key="gen_lets_build_spearman" value="长枪兵比农民更加强壮，让我们建一个。"/>
+        <string key="gen_build_spearman" value="点击地块以建立长枪兵"/>
+        <string key="gen_units_consume_money" value="单位每回合会消耗金币，越强壮消耗越多。"/>
+        <string key="gen_undo_spearman" value="现在你的收入为-1，这样可不妙，还是取消建立长枪兵吧。"/>
+        <string key="gen_why_units_die" value="如果钱用光了，所有单位都会死亡，投资需谨慎"/>
+        <string key="gen_about_trees_one" value="树木也是一个大问题，有树木的地块不会产出金币！"/>
+        <string key="gen_about_trees_two" value="在树木泛滥之前赶紧砍光他们吧。"/>
+        <string key="gen_end_turn" value="点击右下角的按钮即可结束本回合。"/>
+        <string key="gen_choose_to_merge" value="你也可以合并单位， 选择下面的农民。"/>
+        <string key="gen_merge_units" value="当你选择了一个农民的时候，点击另一个农民即可合并他们。"/>
+        <string key="gen_long_tap" value="如果你有太多单位的话，你可以用长点击一次性移动他们。"/>
+        <string key="gen_several_provinces" value="你可以用若干个主城（领地），每个主城的金币是独立计算的。"/>
+
+        <!-- Tutorial help -->
+        <string key="help" value="帮助"/>
+        <string key="help_about_units" value="单位"/>
+        <string key="help_about_trees" value="树木"/>
+        <string key="help_about_towers" value="防御塔"/>
+        <string key="help_about_money" value="金币"/>
+        <string key="help_about_tactics" value="策略"/>
+        <string key="help_about_rules" value="Rules"/>
+
+        <string key="help_units_article" value="游戏有四种单位。
+        #他们的战斗力各不相同
+        #战斗力从弱到强分别为：
+        #[1] 农民
+        #[2] 长枪兵
+        #[3] 男爵
+        #[4] 骑士
+        #
+        #单位能保护临近地块
+        #不受同等单位的入侵
+        #
+        #如果想占领敌方土地
+        #己方战斗力必须比
+        #敌方受到的保护更高
+        #
+        #每个单位每回合分别消耗
+        #2, 6, 18 和  54 块金币
+        "/>
+
+        <string key="help_trees_article" value="树木生长在
+        #死亡的单位之上
+        #
+        #有树木的地块没有产出
+        #这意味着
+        #树木在游戏里不是好东西
+        #
+        #你必须清除树木
+        #否则，树木会占领的你的领地
+        #击败你！
+        #
+        #棕榈树生长在海边
+        #并且生长的更快
+        #你最好迅速消灭他们
+        #
+        "/>
+
+        <string key="help_towers_article" value="防御塔用来
+        #保护临近地块
+        #
+        #防御塔的战斗力为2
+        #所以，只有男爵和骑士
+        #能占领他们
+        #
+        #农场的战斗力为1
+        #
+        #在游戏初期
+        #这是保护你的土地的
+        #最好的选择
+        #防御塔造价很低
+        #也不会消耗金币
+        "/>
+
+        <string key="help_money_article" value="收入取决于
+        #占领区块的数量
+        #领地越大
+        #收入越高
+        #但树木会制止地块产出金币
+        #
+        #单位会不断消耗金币
+        #特别是强大的单位
+        #消耗更多
+        #
+        #
+        #
+        #当你的钱花光了
+        #你的军队会毁于一旦
+        #
+        #收入将会显示
+        #在顶部中间
+        "/>
+
+        <string key="help_tactics_article" value="在游戏初期尽量
+        #占领更多无人区
+        #然后保护好你的领地
+        #
+        #
+        #在建造单位前，
+        #确保你有足够的收入
+        #去养活他们。
+        #
+        #
+        #
+        #把敌人的领土
+        #分割成一块块
+        #从而破坏敌人的经济。
+        "/>
+
+        <string key="about_complicated_mode_article" value="复杂模式比
+        #简单模式
+        #有更多选项：
+        #
+        #- 多个保存槽位
+        #
+        #- 确认关卡重启
+        #
+        #- 显示颜色状态
+        #(点击金币)
+        "/>
+
+        <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
+        #
+        #Initially game had only slay rules. That's why help describes them instead of normal rules.
+        #
+        #To change rules in skirmish you have to tap 'more' before starting new game.
+        #
+        #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
+
+        <!-- Statistics -->
+        <string key="turns_made" value="回合数:"/>
+        <string key="units_died" value="单位死亡数:"/>
+        <string key="units_produced" value="单位生产数:"/>
+        <string key="money_spent" value="金币支出:"/>
+        <string key="time" value="用时:"/>
+
+        <!-- Editor -->
+        <string key="editor" value="编辑器"/>
+        <string key="slot" value="插槽"/>
+        <string key="slots" value="保存插槽"/>
+        <string key="import" value="导入"/>
+        <string key="export" value="导出"/>
+        <string key="empty" value="空白"/>
+        <string key="play" value="开始"/>
+        <string key="edit" value="编辑"/>
+        <string key="random" value="随机"/>
+        <string key="exported" value="地图已复制"/>
+        <string key="editor_clear" value="清空"/>
+        <string key="no" value="取消"/>
+        <string key="yes" value="确认"/>
+        <string key="confirm_import" value="确认导入"/>
+        <string key="filter_no" value="无过滤"/>
+        <string key="filter_only_land" value="只有土地"/>
+
+        <!-- Settings -->
+        <string key="main_label" value=" # 自动保存
+            # # 若干槽位
+            # # 询问结束回合
+            # # 城市名字
+            # # 音效
+            # # "/>
+        <string key="limited_turns" value="有限回合"/>
+        <string key="hold_to_march" value="长按移动"/>
+        <string key="skin" value="皮肤"/>
+        <string key="original" value="原版"/>
+        <string key="points" value="点"/>
+        <string key="grid" value="网格"/>
+        <string key="skin_shroomarts" value="像素风格"/>  <!-- Same as english -->
+        <string key="anim_style" value="灵敏度"/>
+        <string key="more" value="更多"/>
+        <string key="camera_offset" value="相机调整"/>
+        <string key="slay_rules" value="Slay（原作） 模式"/>
+        <string key="language" value="语言"/>
+        <string key="more_settings_checks" value="# #水纹理 # # "/>
+        <string key="water_texture" value="水纹理 "/>
+
+        <!-- Single messages -->
+        <string key="check_shroomarts" value="ShroomArts的新皮肤"/>
+        <string key="level_24" value="这是第一个'困难' 关卡。 注意防守！"/>
+    </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
