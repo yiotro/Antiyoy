@@ -127,7 +127,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
                 ignoreAll();
                 break;
             case STEP_CHOOSE_FARM:
-                buttonYio = setOnlyButtonToRespond(38, "gen_press_button_twice"); // tower
+                buttonYio = setOnlyButtonToRespond(38, "gen_press_button");
                 pointToMenu(buttonYio.x1, buttonYio.y2, -0.75 * Math.PI);
                 break;
             case STEP_BUILD_FARM:
@@ -151,7 +151,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
                 showMessage("gen_capture_hex");
                 break;
             case STEP_CHOOSE_TOWER:
-                buttonYio = setOnlyButtonToRespond(38, "gen_press_button"); // tower
+                buttonYio = setOnlyButtonToRespond(38, "gen_press_button_twice"); // tower
                 pointToMenu(buttonYio.x1, buttonYio.y2, -0.75 * Math.PI);
                 break;
             case STEP_BUILD_TOWER:

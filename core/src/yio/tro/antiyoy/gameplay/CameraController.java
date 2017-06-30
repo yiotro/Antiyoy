@@ -195,23 +195,6 @@ public class CameraController {
         }
 
         touchPos.set(x, y);
-
-        if (touchWasQuick() && gameController.currentTouchCount == 0 && speed < kineticsSpeed) {
-            tapReaction(x, y);
-        }
-    }
-
-
-    private void tapReaction(int x, int y) {
-        long currentTapTime = System.currentTimeMillis();
-
-        gameController.onClick();
-
-//        if (currentTapTime - lastTapTime < 300) {
-//            doubleTapReaction(x, y);
-//        }
-
-        lastTapTime = currentTapTime;
     }
 
 
@@ -413,7 +396,7 @@ public class CameraController {
 
 
     public boolean touchedAsClick() {
-        return Yio.distance(gameController.screenX, gameController.screenY, initialTouch.x, initialTouch.y) < 0.03 * GraphicsYio.width &&
+        return gameController.touchPoint.distanceTo(initialTouch) < 0.03 * GraphicsYio.width &&
                 Math.abs(camDx) < 0.01 * GraphicsYio.width &&
                 Math.abs(camDy) < 0.01 * GraphicsYio.width;
     }

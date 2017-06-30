@@ -999,11 +999,11 @@ public class FieldController {
 
 
     public void updateFocusedHex() {
-        updateFocusedHex(gameController.getScreenX(), gameController.getScreenY());
+        updateFocusedHex(gameController.touchPoint.x, gameController.touchPoint.y);
     }
 
 
-    public void updateFocusedHex(int screenX, int screenY) {
+    public void updateFocusedHex(float screenX, float screenY) {
         OrthographicCamera orthoCam = gameController.cameraController.orthoCam;
         gameController.selectionController.selectX = (screenX - 0.5f * GraphicsYio.width) * orthoCam.zoom + orthoCam.position.x;
         gameController.selectionController.selectY = (screenY - 0.5f * GraphicsYio.height) * orthoCam.zoom + orthoCam.position.y;

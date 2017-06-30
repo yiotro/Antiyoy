@@ -25,8 +25,6 @@ public class GameController {
 
     private final DebugActionsManager debugActionsManager;
     public YioGdxGame yioGdxGame;
-    int screenX;
-    int screenY;
 
     public final SelectionController selectionController;
     public final FieldController fieldController;
@@ -68,6 +66,8 @@ public class GameController {
     private LevelEditor levelEditor;
     public int currentTouchCount;
     public Ruleset ruleset;
+    ClickDetector clickDetector;
+    public PointYio touchPoint;
 
 
     public GameController(YioGdxGame yioGdxGame) {
@@ -85,6 +85,7 @@ public class GameController {
         mapGeneratorGeneric = new MapGeneratorGeneric(this);
         aiList = new ArrayList<ArtificialIntelligence>();
         initialParameters = new LoadingParameters();
+        touchPoint = new PointYio();
 
         fieldController = new FieldController(this);
         jumperUnit = new Unit(this, fieldController.emptyHex, 0);
@@ -95,6 +96,7 @@ public class GameController {
         levelEditor = new LevelEditor(this);
         aiFactory = new AiFactory(this);
         debugActionsManager = new DebugActionsManager(this);
+        clickDetector = new ClickDetector();
 
         LoadingManager.getInstance().setGameController(this);
     }
@@ -803,6 +805,7 @@ public class GameController {
 
     public void touchDown(int screenX, int screenY, int pointer, int button) {
         currentTouchCount++;
+        touchPoint.set(screenX, screenY);
 
         if (GameRules.inEditorMode) {
             if (levelEditor.touchDown(screenX, screenY)) {
@@ -814,8 +817,7 @@ public class GameController {
             setCheckToMarch(true);
         }
 
-        this.screenX = screenX;
-        this.screenY = screenY;
+        clickDetector.touchDown(touchPoint);
         cameraController.touchDown(screenX, screenY);
     }
 
@@ -934,6 +936,7 @@ public class GameController {
 
     public void onClick() {
         fieldController.updateFocusedHex();
+
         if (fieldController.focusedHex != null && isPlayerTurn()) {
             focusedHexActions(fieldController.focusedHex);
         }
@@ -952,6 +955,8 @@ public class GameController {
 
     public void touchUp(int screenX, int screenY, int pointer, int button) {
         currentTouchCount--;
+        touchPoint.set(screenX, screenY);
+
         if (currentTouchCount < 0) {
             currentTouchCount = 0;
         }
@@ -962,19 +967,25 @@ public class GameController {
             }
         }
 
-        this.screenX = screenX;
-        this.screenY = screenY;
+        clickDetector.touchUp(touchPoint);
         cameraController.touchUp(screenX, screenY);
+
+        if (clickDetector.isClicked()) {
+            onClick();
+        }
     }
 
 
     public void touchDragged(int screenX, int screenY, int pointer) {
+        touchPoint.set(screenX, screenY);
+
         if (GameRules.inEditorMode) {
             if (levelEditor.touchDrag(screenX, screenY)) {
                 return;
             }
         }
 
+        clickDetector.touchDrag(touchPoint);
         cameraController.touchDrag(screenX, screenY);
     }
 
@@ -1062,16 +1073,6 @@ public class GameController {
 
     public Statistics getStatistics() {
         return statistics;
-    }
-
-
-    public int getScreenX() {
-        return screenX;
-    }
-
-
-    public int getScreenY() {
-        return screenY;
     }
 
 
