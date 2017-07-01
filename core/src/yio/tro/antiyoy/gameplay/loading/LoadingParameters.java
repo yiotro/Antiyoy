@@ -2,6 +2,7 @@ package yio.tro.antiyoy.gameplay.loading;
 
 import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.gameplay.FieldController;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 import java.util.Random;
@@ -118,7 +119,10 @@ public class LoadingParameters {
     public void applyPrefs(Preferences prefs) {
         turn = prefs.getInteger("save_turn");
         playersNumber = prefs.getInteger("save_player_number");
-        colorNumber = prefs.getInteger("save_color_number") - 1;
+        colorNumber = prefs.getInteger("save_color_number");
+        if (colorNumber > FieldController.NEUTRAL_LANDS_INDEX) {
+            colorNumber = FieldController.NEUTRAL_LANDS_INDEX;
+        }
         levelSize = prefs.getInteger("save_level_size");
         difficulty = prefs.getInteger("save_difficulty");
         GameRules.campaignMode = prefs.getBoolean("save_campaign_mode");

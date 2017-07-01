@@ -80,6 +80,7 @@ public class GameSaver {
         } else {
             stringBuffer.append(" " + 10);
         }
+
         return stringBuffer.toString();
     }
 
@@ -201,15 +202,6 @@ public class GameSaver {
     }
 
 
-    void setBasicInfo(int turn, int playerNumber, int colorNumber, int levelSize, int difficulty) {
-        gameController.turn = turn;
-        gameController.setPlayersNumber(playerNumber);
-        GameRules.setColorNumber(colorNumber);
-        gameController.setLevelSize(levelSize);
-        GameRules.setDifficulty(difficulty);
-    }
-
-
     private void loadStatistics() {
         Statistics statistics = gameController.statistics;
         statistics.turnsMade = prefs.getInteger("save_stat_turns_made", statistics.turnsMade);
@@ -217,19 +209,6 @@ public class GameSaver {
         statistics.unitsProduced = prefs.getInteger("save_stat_units_produced", statistics.unitsProduced);
         statistics.moneySpent = prefs.getInteger("save_stat_money_spent", statistics.moneySpent);
         statistics.timeCount = prefs.getInteger("save_stat_time_count", statistics.timeCount);
-    }
-
-
-    private void loadBasicInfo() {
-        setBasicInfo(prefs.getInteger("save_turn"),
-                prefs.getInteger("save_player_number"),
-                prefs.getInteger("save_color_number"),
-                prefs.getInteger("save_level_size"),
-                prefs.getInteger("save_difficulty"));
-        GameRules.campaignMode = prefs.getBoolean("save_campaign_mode");
-        CampaignProgressManager.getInstance().setCurrentLevelIndex(prefs.getInteger("save_current_level"));
-        gameController.colorIndexViewOffset = prefs.getInteger("save_color_offset", 0);
-        GameRules.setSlayRules(prefs.getBoolean("slay_rules", true));
     }
 
 

@@ -516,7 +516,7 @@ public class GameController {
 
     public void onEndCreation() {
         getLevelSnapshots().clear();
-        prepareCertainUnitsToMove();
+//        prepareCertainUnitsToMove();
         fieldController.createPlayerHexCount();
         updateRuleset();
         createCamera();

@@ -59,7 +59,7 @@ public class Settings {
         menuControllerYio.sliders.get(5).setRunnerValueByIndex(skinIndex);
 
         // interface. Number of save slots
-        interface_type = prefs.getInteger("interface", 0);
+        interface_type = prefs.getInteger("interface", 1);
         menuControllerYio.getCheckButtonById(2).setChecked(interface_type == 1);
 
         // autosave

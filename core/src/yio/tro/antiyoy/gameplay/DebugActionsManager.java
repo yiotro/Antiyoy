@@ -17,7 +17,7 @@ public class DebugActionsManager {
 //        doShowActiveHexesString();
 //        doCaptureRandomHexes();
         //
-
+        doShowColorStuff();
     }
 
 
