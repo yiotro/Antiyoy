@@ -86,39 +86,3 @@ https://developers.google.com/games/services/android/turnbasedMultiplayer
 AI players should still be an option, as described in:
 http://stackoverflow.com/questions/26125273/how-to-create-a-computer-opponent-in-turn-based-google-play-game?rq=1
 
-### Ideas from the GIT repository
-Translated with Google Translate from [origin](https://translate.google.co.il/translate?sl=ru&u=https%3A%2F%2Fraw.githubusercontent.com%2Fyiotro%2FAntiyoy%2Fmaster%2Fcore%2Fsrc%2Fyio%2Ftro%2Fantiyoy%2Fideas.txt)
-
-TODO - rewrite these sentences in proper english
-* Make that the AI built a peasant, not a farm on the first turn.
-* Ability to turn off movement limit
-* Ability to switch language.
-* Button to switch between units that are ready to move. Disabled by default. Show below the center when a unit is selected.
-* When a loss is not "good" and "okay"
-* Ask if to end the turn only when there are units that are ready to move
-* In the proposal to replace the winning "continue" to "collapse".
-* Difficulty "misanthrope" and "balancer"
-* Ability to disable the fast moving units.
-* Above the unused units put an exclamation mark
-* Add setting to water on the background was black instead. (Just replace teksturku)
-* Confirmation of import in the editor
-* Textures on the cells to people with color blindness can play
-* The separation of the province to give money to that province which was a house.
-* Add a "huge" size card
-* The campaign at the start of the level to simulate the first few turns.
-* Fix the "new" button
-* Confirm unit merge
-* Option "Advanced course". Each AI goes separately, that is, by turns.
-* Try all the same to make long-range units.
-* Make a normal AI a little bit more to smooth the transition to the campaign.
-* Make that the units can be set up just beside the farm and the capital.
-* Add a monk who turns enemy units in their.
-* AI on Expert remove "risk" when AI creates too steep units and they die.
-* Reset campaign progress
-* Achievements (achivki)
-* Minimize button in the dialog of victory (to look back at the map)
-* Add the ability to somehow kill the foreign units for money to fixed a stalemate. There is another way to solve this problem: the activation of empty cells for the money
-* In the editor:
-   * Cancel button
-   * 0 players
-   * Scrolling with two fingers
