@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.menu;
 
-import yio.tro.antiyoy.GraphicsYio;
+import yio.tro.antiyoy.menu.speed_panel.SpeedPanel;
+import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.OneTimeInfo;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
@@ -9,7 +10,6 @@ public class SpecialActionController {
     MenuControllerYio menuControllerYio;
     boolean enabled;
     int countDown;
-    private SliderYio sliderYio;
 
 
     public SpecialActionController(MenuControllerYio menuControllerYio) {
@@ -24,43 +24,34 @@ public class SpecialActionController {
 
         if (countDown > 0) {
             countDown--;
-
-            if (countDown == 0) {
-                touchDownSlider();
-            }
-
-            return;
-        }
-
-        float x = sliderYio.getViewX() + sliderYio.runnerValue * sliderYio.getViewWidth();
-        x += 0.07f * GraphicsYio.width;
-        float y = sliderYio.currentVerticalPos;
-        sliderYio.touchDrag(x, y);
-
-        if (sliderYio.runnerValue == 1) {
-            sliderYio.touchUp(x, y);
+        } else {
             enabled = false;
+            finish();
         }
     }
 
 
-    private void touchDownSlider() {
-        float x = sliderYio.getViewX() + sliderYio.runnerValue * sliderYio.getViewWidth();
-        float y = sliderYio.currentVerticalPos;
-        sliderYio.touchDown(x, y);
+    private void start() {
+        pressPlayPauseButton();
     }
 
 
-    public void forceEnableShroomArts() {
-        Scenes.sceneSettingsMenu.create();
-        Scenes.sceneMoreSettingsMenu.create();
+    private void finish() {
+        pressPlayPauseButton();
+    }
 
+
+    private void pressPlayPauseButton() {
+        SpeedPanel speedPanel = Scenes.sceneReplayOverlay.speedPanel;
+        if (speedPanel == null) return;
+        speedPanel.onPlayPauseButtonPressed(menuControllerYio.getYioGdxGame().gameController.speedManager);
+    }
+
+
+    public void perform() {
         enabled = true;
-        sliderYio = menuControllerYio.sliders.get(5);
-        countDown = 40;
+        countDown = 5;
 
-        OneTimeInfo instance = OneTimeInfo.getInstance();
-        instance.aboutShroomArts = true;
-        instance.save();
+        start();
     }
 }

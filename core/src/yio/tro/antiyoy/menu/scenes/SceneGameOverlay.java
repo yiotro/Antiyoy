@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.GraphicsYio;
+import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.SoundControllerYio;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
@@ -20,6 +20,11 @@ public class SceneGameOverlay extends AbstractScene{
     public void create() {
         if (GameRules.inEditorMode) {
             Scenes.sceneEditorInstruments.create();
+            return;
+        }
+
+        if (GameRules.aiOnlyMode) {
+            Scenes.sceneReplayOverlay.create();
             return;
         }
 
@@ -47,11 +52,6 @@ public class SceneGameOverlay extends AbstractScene{
         undoButton.enableRectangularMask();
         undoButton.setTouchOffset(0.08f * GraphicsYio.width);
         undoButton.disableTouchAnimation();
-
-//        ButtonYio debugButton = buttonFactory.getButton(menuControllerYio.generateSquare(0.72, 0, 0.07), 3128773, "Q");
-//        debugButton.setReactBehavior(ReactBehavior.rbDebugActions);
-//        debugButton.setAnimType(ButtonYio.ANIM_DOWN);
-//        debugButton.disableTouchAnimation();
 
         menuControllerYio.endMenuCreation();
     }

@@ -6,6 +6,7 @@ import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.editor.LevelEditor;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
+import yio.tro.antiyoy.gameplay.replays.ReplayManager;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.gameplay.rules.Ruleset;
 import yio.tro.antiyoy.gameplay.rules.RulesetGeneric;
@@ -14,6 +15,7 @@ import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.SliderYio;
 import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
 import yio.tro.antiyoy.menu.scenes.Scenes;
+import yio.tro.antiyoy.stuff.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -32,7 +34,6 @@ public class GameController {
     public final AiFactory aiFactory;
 
     public Random random, predictableRandom;
-    private LanguagesManager languagesManager;
     public boolean letsUpdateCacheByAnim;
     public boolean updateWholeCache;
     public long currentTime;
@@ -54,12 +55,11 @@ public class GameController {
     public String balanceString;
     public String currentPriceString;
     LoadingParameters initialParameters;
-    private ArrayList<LevelSnapshot> levelSnapshots;
     public float priceStringWidth;
     public MapGenerator mapGeneratorSlay;
     public MapGenerator mapGeneratorGeneric;
     public Unit jumperUnit;
-    public Statistics statistics;
+    public MatchStatistics matchStatistics;
     public GameSaver gameSaver;
     public Forefinger forefinger;
     public TutorialScript tutorialScript;
@@ -68,29 +68,33 @@ public class GameController {
     public Ruleset ruleset;
     ClickDetector clickDetector;
     public PointYio touchPoint;
+    public SnapshotManager snapshotManager;
+    public SpeedManager speedManager;
+    public ReplayManager replayManager;
 
 
     public GameController(YioGdxGame yioGdxGame) {
         this.yioGdxGame = yioGdxGame;
         random = new Random();
         predictableRandom = new Random(0);
-        languagesManager = LanguagesManager.getInstance();
         CampaignProgressManager.getInstance();
         selectionController = new SelectionController(this);
         marchDelay = 500;
         cameraController = new CameraController(this);
         unitList = new ArrayList<Unit>();
-        levelSnapshots = new ArrayList<LevelSnapshot>();
+
         mapGeneratorSlay = new MapGenerator(this);
         mapGeneratorGeneric = new MapGeneratorGeneric(this);
         aiList = new ArrayList<ArtificialIntelligence>();
         initialParameters = new LoadingParameters();
         touchPoint = new PointYio();
-
+        snapshotManager = new SnapshotManager(this);
         fieldController = new FieldController(this);
         jumperUnit = new Unit(this, fieldController.emptyHex, 0);
+        speedManager = new SpeedManager(this);
+        replayManager = new ReplayManager(this);
 
-        statistics = new Statistics(this);
+        matchStatistics = new MatchStatistics();
         gameSaver = new GameSaver(this);
         forefinger = new Forefinger(this);
         levelEditor = new LevelEditor(this);
@@ -124,7 +128,7 @@ public class GameController {
         for (int i = 0; i < unitList.size(); i++) {
             Unit unit = unitList.get(i);
             if (isCurrentTurn(unit.getColor()) && unit.currentHex.numberOfFriendlyHexesNearby() == 0) {
-                fieldController.killUnitOnHex(unit.currentHex);
+                fieldController.killUnitByStarvation(unit.currentHex);
                 i--;
             }
         }
@@ -136,7 +140,7 @@ public class GameController {
             if (isCurrentTurn(province.getColor())) {
                 if (province.money < 0) {
                     province.money = 0;
-                    fieldController.killEveryoneInProvince(province);
+                    fieldController.killEveryoneByStarvation(province);
                 }
             }
         }
@@ -145,14 +149,14 @@ public class GameController {
 
     public void move() {
         currentTime = System.currentTimeMillis();
-        statistics.increaseTimeCount();
+        matchStatistics.increaseTimeCount();
         cameraController.move();
 
         checkForAiToMove();
         checkToEndTurn();
         checkToUpdateCacheByAnim();
 
-        if (fieldController.letsCheckAnimHexes && currentTime > fieldController.timeToCheckAnimHexes && (isPlayerTurn() || isCurrentTurn(0))) {
+        if (fieldController.letsCheckAnimHexes && currentTime > fieldController.timeToCheckAnimHexes && (doesCurrentTurnEndDependOnAnimHexes())) {
             fieldController.checkAnimHexes();
         }
 
@@ -185,11 +189,30 @@ public class GameController {
 
 
     private void checkForAiToMove() {
-        if (!isPlayerTurn() && !readyToEndTurn) {
+        if (readyToEndTurn) return;
+
+        if (GameRules.replayMode) {
+            replayManager.performStep();
+            return; // AI can't do anything by itself in replays
+        }
+
+        if (!isPlayerTurn()) {
             aiList.get(turn).makeMove();
             updateCacheOnceAfterSomeTime();
-            readyToEndTurn = true;
+            applyReadyToEndTurn();
         }
+    }
+
+
+    public void applyReadyToEndTurn() {
+        readyToEndTurn = true;
+    }
+
+
+    public void onInitialSnapshotRecreated() {
+        turn = 0;
+        readyToEndTurn = false;
+        prepareCertainUnitsToMove();
     }
 
 
@@ -231,7 +254,7 @@ public class GameController {
 
 
     private void checkToUpdateCacheByAnim() {
-        if (letsUpdateCacheByAnim && currentTime > timeToUpdateCache && (isPlayerTurn() || isCurrentTurn(0)) && !isSomethingMoving()) {
+        if (letsUpdateCacheByAnim && currentTime > timeToUpdateCache && (doesCurrentTurnEndDependOnAnimHexes()) && !isSomethingMoving()) {
             letsUpdateCacheByAnim = false;
             if (updateWholeCache) yioGdxGame.gameView.updateCacheLevelTextures();
             else yioGdxGame.gameView.updateCacheNearAnimHexes();
@@ -245,12 +268,24 @@ public class GameController {
         if (isInEditorMode()) return false;
         if (!readyToEndTurn) return false;
         if (!cameraController.checkConditionsToEndTurn()) return false;
+        if (speedManager.getSpeed() == SpeedManager.SPEED_PAUSED) return false;
 
-        if (isPlayerTurn() || isCurrentTurn(0)) {
+        if (doesCurrentTurnEndDependOnAnimHexes()) {
             return fieldController.animHexes.size() == 0;
         } else {
             return true;
         }
+    }
+
+
+    private boolean doesCurrentTurnEndDependOnAnimHexes() {
+        if (isPlayerTurn()) return true;
+
+        if (speedManager.getSpeed() == SpeedManager.SPEED_FAST_FORWARD) {
+            return isCurrentTurn(0);
+        }
+
+        return true;
     }
 
 
@@ -264,12 +299,20 @@ public class GameController {
     }
 
 
-    void prepareCertainUnitsToMove() {
+    public void prepareCertainUnitsToMove() {
         for (Unit unit : unitList) {
             if (isCurrentTurn(unit.getColor())) {
                 unit.setReadyToMove(true);
                 unit.startJumping();
             }
+        }
+    }
+
+
+    public void stopAllUnitsFromJumping() {
+        for (Unit unit : unitList) {
+//            unit.setReadyToMove(false);
+            unit.stopJumping();
         }
     }
 
@@ -303,6 +346,8 @@ public class GameController {
 
 
     private void checkToEndGame() {
+        if (GameRules.replayMode) return;
+
         // captured everything
         int winner = checkIfWeHaveWinner();
         if (winner >= 0) {
@@ -320,7 +365,7 @@ public class GameController {
         }
 
         // too long game
-        if (Settings.turns_limit && statistics.turnsMade == 299) {
+        if (Settings.turns_limit && matchStatistics.turnsMade == GameRules.TURNS_LIMIT - 1) {
             int playerHexCount[] = fieldController.getPlayerHexCount();
             endGame(indexOfNumberInArray(playerHexCount, maxNumberFromArray(playerHexCount)));
         }
@@ -374,7 +419,8 @@ public class GameController {
 
         if (instance.completedCampaignLevel(winColor)) {
             instance.markLevelAsCompleted(instance.currentLevelIndex);
-            yioGdxGame.menuControllerYio.levelSelector.update();
+//            yioGdxGame.menuControllerYio.levelSelectorOld.update();
+            Scenes.sceneCampaignMenu.updateLevelSelector();
         }
 
         Scenes.sceneAfterGameMenu.create(winColor, isPlayerTurn(winColor));
@@ -401,10 +447,13 @@ public class GameController {
     private void endTurnActions() {
         checkToEndGame();
         ruleset.onTurnEnd();
+        replayManager.onTurnEnded();
+
         for (Unit unit : unitList) {
             unit.setReadyToMove(false);
             unit.stopJumping();
         }
+
         if (!isPlayerTurn()) {
 
         }
@@ -413,19 +462,24 @@ public class GameController {
 
     private void turnStartActions() {
         selectionController.deselectAll();
+
         if (isCurrentTurn(0)) {
-            statistics.turnWasMade();
+            matchStatistics.turnWasMade();
             fieldController.expandTrees();
         }
+
         prepareCertainUnitsToMove();
         fieldController.transformGraves(); // this must be called before 'check for bankrupts' and after 'expand trees'
         collectTributesAndPayTaxes();
-        checkForBankrupts();
-        checkForAloneUnits();
-        if (isCurrentTurn(0)) yioGdxGame.gameView.updateCacheLevelTextures();
+        checkForStarvation();
+
+        if (isCurrentTurn(0)) {
+            yioGdxGame.gameView.updateCacheLevelTextures();
+        }
+
         if (isPlayerTurn()) {
             resetCurrentTouchCount();
-            levelSnapshots.clear();
+            snapshotManager.onTurnStart();
             jumperUnit.startJumping();
             if (fieldController.numberOfProvincesWithColor(turn) == 0) {
                 endTurnButtonPressed();
@@ -435,7 +489,25 @@ public class GameController {
                 animHex.animFactor.setValues(1, 0);
             }
         }
-        if (Settings.autosave && turn == 0 && playersNumber > 0) autoSave();
+
+        checkToAutoSave();
+    }
+
+
+    private void checkForStarvation() {
+        if (GameRules.replayMode) return;
+
+        checkForBankrupts();
+        checkForAloneUnits();
+    }
+
+
+    private void checkToAutoSave() {
+        if (!Settings.autosave) return;
+        if (turn != 0) return;
+        if (playersNumber <= 0) return;
+
+        autoSave();
     }
 
 
@@ -458,7 +530,7 @@ public class GameController {
     public void endTurnButtonPressed() {
         cameraController.onEndTurnButtonPressed();
         if (!isPlayerTurn()) return;
-        readyToEndTurn = true;
+        applyReadyToEndTurn();
     }
 
 
@@ -470,11 +542,12 @@ public class GameController {
         selectionController.setSelectedUnit(null);
         turn = 0;
         jumperUnit.startJumping();
-        statistics.defaultValues();
-//        ReactBehavior.rbShowColorStats.loadTexturesIfNotLoaded();
-        GameRules.tutorialMode = false;
-        GameRules.campaignMode = false;
-        GameRules.inEditorMode = false;
+
+        matchStatistics.defaultValues();
+        speedManager.defaultValues();
+        replayManager.defaultValues();
+        GameRules.defaultValues();
+
         proposedSurrender = false;
         backgroundVisible = true;
         colorIndexViewOffset = 0;
@@ -493,7 +566,7 @@ public class GameController {
 
 
     public void initTutorial() {
-        if (GameRules.slay_rules) {
+        if (GameRules.slayRules) {
             tutorialScript = new TutorialScriptSlayRules(this);
         } else {
             tutorialScript = new TutorialScriptGenericRules(this);
@@ -515,7 +588,7 @@ public class GameController {
 
 
     public void onEndCreation() {
-        getLevelSnapshots().clear();
+        snapshotManager.clear();
 //        prepareCertainUnitsToMove();
         fieldController.createPlayerHexCount();
         updateRuleset();
@@ -523,6 +596,7 @@ public class GameController {
         fieldController.clearAnims();
         aiFactory.createAiList(GameRules.difficulty);
         selectionController.deselectAll();
+        replayManager.onEndCreation();
 
         if (DebugFlags.CHECKING_BALANCE_MODE) {
             while (true) {
@@ -533,21 +607,10 @@ public class GameController {
     }
 
 
-    public void readColorOffsetFromSlider() {
-        SliderYio sliderYio;
-
-        if (GameRules.campaignMode) {
-            sliderYio = yioGdxGame.menuControllerYio.sliders.get(6);
-        } else {
-            sliderYio = yioGdxGame.menuControllerYio.sliders.get(4);
+    public void checkToEnableAiOnlyMode() {
+        if (playersNumber == 0) {
+            GameRules.aiOnlyMode = true;
         }
-
-        int sliderIndex = sliderYio.getCurrentRunnerIndex();
-        if (sliderIndex == 0) { // random
-            colorIndexViewOffset = predictableRandom.nextInt(GameRules.colorNumber);
-            return;
-        }
-        colorIndexViewOffset = sliderIndex - 1;
     }
 
 
@@ -693,10 +756,7 @@ public class GameController {
 
 
     void takeSnapshot() {
-        if (!isPlayerTurn()) return;
-        LevelSnapshot snapshot = new LevelSnapshot(this);
-        snapshot.takeSnapshot();
-        levelSnapshots.add(snapshot);
+        snapshotManager.takeSnapshot();
     }
 
 
@@ -725,7 +785,7 @@ public class GameController {
             fieldController.cleanOutHex(unit1.currentHex);
             fieldController.cleanOutHex(unit2.currentHex);
             Unit mergedUnit = fieldController.addUnit(hex, mergedUnitStrength(unit1, unit2));
-            statistics.onUnitsMerged();
+            matchStatistics.onUnitsMerged();
             mergedUnit.setReadyToMove(true);
             if (!unit1.isReadyToMove() || !unit2.isReadyToMove()) {
                 mergedUnit.setReadyToMove(false);
@@ -738,9 +798,14 @@ public class GameController {
 
 
     void tickleMoneySign() {
-        ButtonYio coinButton = yioGdxGame.menuControllerYio.getButtonById(37);
-        coinButton.factorModel.setValues(1, 0.13);
-        coinButton.factorModel.beginSpawning(4, 1);
+        ButtonYio coinButton;
+        if (Settings.fastConstruction) {
+            coinButton = yioGdxGame.menuControllerYio.getButtonById(610);
+        } else {
+            coinButton = yioGdxGame.menuControllerYio.getButtonById(37);
+        }
+        coinButton.appearFactor.setValues(1, 0.13);
+        coinButton.appearFactor.beginSpawning(4, 1);
     }
 
 
@@ -757,12 +822,11 @@ public class GameController {
 
 
     public void undoAction() {
-        int lastIndex = levelSnapshots.size() - 1;
-        if (lastIndex < 0) return;
-        resetCurrentTouchCount();
-        LevelSnapshot lastSnapshot = levelSnapshots.get(lastIndex);
-        lastSnapshot.recreateSnapshot();
-        levelSnapshots.remove(lastIndex);
+        boolean success = snapshotManager.undoAction();
+
+        if (success) {
+            resetCurrentTouchCount();
+        }
     }
 
 
@@ -862,9 +926,9 @@ public class GameController {
 
 
     private int getNextTurnIndex() {
-        int res = turn + 1;
-        if (res >= GameRules.colorNumber) res = 0;
-        return res;
+        int next = turn + 1;
+        if (next >= GameRules.colorNumber) next = 0;
+        return next;
     }
 
 
@@ -885,11 +949,14 @@ public class GameController {
 
     public void moveUnit(Unit unit, Hex toWhere, Province unitProvince) {
         if (!unit.isReadyToMove()) {
-            System.out.println("AI tried to move unit that is not ready to move");
-            Yio.printStackTrace();
-            return;
+            System.out.println("Someone tried to move unit that is not ready to move: " + unit);
+//            Yio.printStackTrace();
+            if (!GameRules.replayMode) {
+                return;
+            }
         }
 
+        replayManager.onUnitMoved(unit.currentHex, toWhere);
         if (unit.currentHex.sameColor(toWhere)) { // move peacefully
             moveUnitPeacefully(unit, toWhere);
         } else {
@@ -936,10 +1003,16 @@ public class GameController {
 
     public void onClick() {
         fieldController.updateFocusedHex();
+//        showFocusedHexInConsole();
 
         if (fieldController.focusedHex != null && isPlayerTurn()) {
             focusedHexActions(fieldController.focusedHex);
         }
+    }
+
+
+    private void showFocusedHexInConsole() {
+        YioGdxGame.say(fieldController.focusedHex.index1 + " " + fieldController.focusedHex.index2);
     }
 
 
@@ -991,7 +1064,7 @@ public class GameController {
 
 
     public void updateRuleset() {
-        if (GameRules.slay_rules) {
+        if (GameRules.slayRules) {
             ruleset = new RulesetSlay(this);
         } else {
             ruleset = new RulesetGeneric(this);
@@ -1031,11 +1104,6 @@ public class GameController {
     }
 
 
-    public ArrayList<LevelSnapshot> getLevelSnapshots() {
-        return levelSnapshots;
-    }
-
-
     public MapGenerator getMapGeneratorSlay() {
         return mapGeneratorSlay;
     }
@@ -1071,8 +1139,8 @@ public class GameController {
     }
 
 
-    public Statistics getStatistics() {
-        return statistics;
+    public MatchStatistics getMatchStatistics() {
+        return matchStatistics;
     }
 
 

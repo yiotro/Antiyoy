@@ -36,7 +36,7 @@ public class SceneInfoMenu extends AbstractScene{
 
         infoPanel.setTouchable(false);
         infoPanel.setAnimType(ButtonYio.ANIM_FROM_CENTER);
-        infoPanel.factorModel.beginSpawning(2, 1.5);
+        infoPanel.appearFactor.beginSpawning(2, 1.5);
 //        infoPanel.factorModel.setValues(-0.3, 0);
 //        infoPanel.factorModel.beginSpawning(1, 0.3);
 //        infoPanelFactor.setValues(-0.3, 0);

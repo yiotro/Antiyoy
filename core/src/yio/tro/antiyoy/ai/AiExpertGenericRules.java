@@ -1,11 +1,8 @@
 package yio.tro.antiyoy.ai;
 
-import yio.tro.antiyoy.*;
-import yio.tro.antiyoy.gameplay.GameController;
-import yio.tro.antiyoy.gameplay.Hex;
-import yio.tro.antiyoy.gameplay.Province;
-import yio.tro.antiyoy.gameplay.Unit;
+import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.stuff.PointYio;
 
 import java.util.ArrayList;
 
@@ -24,8 +21,6 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
 
     @Override
     public void makeMove() {
-        updateUnitsReadyToMove();
-
         moveUnits();
 
         spendMoneyAndMergeUnits();
@@ -190,7 +185,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
 
     protected Hex findHexForStrongTower(Province province) {
         for (Hex hex : province.hexList) {
-            if (hex.objectInside != Hex.OBJECT_TOWER) continue;
+            if (hex.objectInside != Obj.TOWER) continue;
 
             if (needsStrongTowerOnHex(province, hex)) {
                 return hex;

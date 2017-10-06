@@ -13,6 +13,10 @@ import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.campaign.CampaignLevelFactory;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
+import yio.tro.antiyoy.stuff.Fonts;
+import yio.tro.antiyoy.stuff.FrameBufferYio;
+import yio.tro.antiyoy.stuff.LanguagesManager;
+import yio.tro.antiyoy.stuff.RectangleYio;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -51,8 +55,8 @@ public class ScrollerYio {
         cache = new ArrayList<TextureRegion>();
         icons = new ArrayList<TextureRegion>();
         strings = new ArrayList<String>();
-        bg1 = GameView.loadTextureRegionByName("scroller_bg1.png", false);
-        bg2 = GameView.loadTextureRegionByName("scroller_bg2.png", false);
+        bg1 = GameView.loadTextureRegion("scroller_bg1.png", false);
+        bg2 = GameView.loadTextureRegion("scroller_bg2.png", false);
         factorModel = new FactorYio();
         selectionFactor = new FactorYio();
         selAlphaFactor = new FactorYio();

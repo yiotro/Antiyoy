@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.gameplay;
 
-import yio.tro.antiyoy.GraphicsYio;
-import yio.tro.antiyoy.PointYio;
+import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 
 /**

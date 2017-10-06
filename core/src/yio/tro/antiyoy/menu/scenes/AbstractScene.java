@@ -1,9 +1,8 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.LanguagesManager;
-import yio.tro.antiyoy.RectangleYio;
+import yio.tro.antiyoy.stuff.LanguagesManager;
+import yio.tro.antiyoy.stuff.RectangleYio;
 import yio.tro.antiyoy.menu.ButtonFactory;
-import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 
 public abstract class AbstractScene {

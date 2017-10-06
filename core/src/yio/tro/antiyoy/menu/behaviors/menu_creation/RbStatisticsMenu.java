@@ -11,6 +11,6 @@ public class RbStatisticsMenu extends ReactBehavior {
 
     @Override
     public void reactAction(ButtonYio buttonYio) {
-        Scenes.sceneStatisticsMenu.create(getGameController(buttonYio).statistics);
+        Scenes.sceneStatisticsMenu.create(getGameController(buttonYio).matchStatistics);
     }
 }

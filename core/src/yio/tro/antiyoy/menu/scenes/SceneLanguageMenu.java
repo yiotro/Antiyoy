@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.CustomLanguageLoader;
-import yio.tro.antiyoy.RectangleYio;
+import yio.tro.antiyoy.stuff.RectangleYio;
 import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -36,6 +36,7 @@ public class SceneLanguageMenu extends AbstractScene{
         addItem(342, "sk_SK", "Slovak");
         addItem(343, "cn_CN", "Chinese");
         addItem(344, "tr_TR", "Turkish");
+        addItem(345, "bg_BG", "Bulgarian");
     }
 
 

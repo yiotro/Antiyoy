@@ -2,7 +2,7 @@ package yio.tro.antiyoy.menu.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import yio.tro.antiyoy.LanguagesManager;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
 import yio.tro.antiyoy.menu.ButtonYio;
@@ -57,7 +57,7 @@ public class SceneSaveSlots extends AbstractScene{
         basePanel.setTouchable(false);
 //        basePanel.onlyShadow = true;
         basePanel.setAnimType(ButtonYio.ANIM_FROM_CENTER);
-        basePanel.factorModel.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
+        basePanel.appearFactor.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
 
         for (int i = 0; i < 5; i++) {
             ButtonYio slotButton = buttonFactory.getButton(generateRectangle(0.05, 0.6 - 0.1 * (double) i, 0.9, 0.1), 212 + i, null);
@@ -68,7 +68,7 @@ public class SceneSaveSlots extends AbstractScene{
             slotButton.setReactBehavior(ReactBehavior.rbSaveGameToSlot);
             slotButton.disableTouchAnimation();
             if (load) slotButton.setReactBehavior(ReactBehavior.rbLoadGameFromSlot);
-            slotButton.factorModel.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
+            slotButton.appearFactor.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
         }
 
         menuControllerYio.endMenuCreation();

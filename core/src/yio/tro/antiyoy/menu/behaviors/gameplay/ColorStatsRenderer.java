@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Matrix4;
-import yio.tro.antiyoy.Fonts;
-import yio.tro.antiyoy.FrameBufferYio;
+import yio.tro.antiyoy.stuff.Fonts;
+import yio.tro.antiyoy.stuff.FrameBufferYio;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
@@ -32,16 +32,16 @@ public class ColorStatsRenderer {
         gameController = menuControllerYio.yioGdxGame.gameController;
 
         batch = new SpriteBatch();
-        buttonBackground = GameView.loadTextureRegionByName("pixels/pixel_dark_gray.png", true);
-        greenPixel = GameView.loadTextureRegionByName("pixels/pixel_green.png", false);
-        redPixel = GameView.loadTextureRegionByName("pixels/pixel_red.png", false);
-        bluePixel = GameView.loadTextureRegionByName("pixels/pixel_blue.png", false);
-        cyanPixel = GameView.loadTextureRegionByName("pixels/pixel_cyan.png", false);
-        yellowPixel = GameView.loadTextureRegionByName("pixels/pixel_yellow.png", false);
-        pixelColor1 = GameView.loadTextureRegionByName("pixels/pixel_color1.png", false);
-        pixelColor2 = GameView.loadTextureRegionByName("pixels/pixel_color2.png", false);
-        pixelColor3 = GameView.loadTextureRegionByName("pixels/pixel_color3.png", false);
-        blackPixel = GameView.loadTextureRegionByName("black_pixel.png", false);
+        buttonBackground = GameView.loadTextureRegion("pixels/pixel_dark_gray.png", true);
+        greenPixel = GameView.loadTextureRegion("pixels/pixel_green.png", false);
+        redPixel = GameView.loadTextureRegion("pixels/pixel_red.png", false);
+        bluePixel = GameView.loadTextureRegion("pixels/pixel_blue.png", false);
+        cyanPixel = GameView.loadTextureRegion("pixels/pixel_cyan.png", false);
+        yellowPixel = GameView.loadTextureRegion("pixels/pixel_yellow.png", false);
+        pixelColor1 = GameView.loadTextureRegion("pixels/pixel_color1.png", false);
+        pixelColor2 = GameView.loadTextureRegion("pixels/pixel_color2.png", false);
+        pixelColor3 = GameView.loadTextureRegion("pixels/pixel_color3.png", false);
+        blackPixel = GameView.loadTextureRegion("black_pixel.png", false);
     }
 
 

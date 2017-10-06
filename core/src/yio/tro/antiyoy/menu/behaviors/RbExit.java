@@ -11,6 +11,7 @@ public class RbExit extends ReactBehavior {
     @Override
     public void reactAction(ButtonYio buttonYio) {
         getYioGdxGame(buttonYio).close();
+        buttonYio.menuControllerYio.yioGdxGame.startedExitProcess = true;
         Gdx.app.exit();
     }
 }

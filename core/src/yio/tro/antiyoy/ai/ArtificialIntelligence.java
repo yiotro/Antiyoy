@@ -41,18 +41,30 @@ public abstract class ArtificialIntelligence {
         unitsReadyToMove.clear();
         for (Province province : gameController.fieldController.provinces) {
             if (province.getColor() == color) {
-                for (int k = province.hexList.size() - 1; k >= 0; k--) {
-                    Hex hex = province.hexList.get(k);
-                    if (hex.containsUnit() && hex.unit.isReadyToMove())
-                        unitsReadyToMove.add(hex.unit);
-                }
+                searchForUnitsReadyToMoveInProvince(province);
+            }
+        }
+    }
+
+
+    private void searchForUnitsReadyToMoveInProvince(Province province) {
+        for (int k = province.hexList.size() - 1; k >= 0; k--) {
+            Hex hex = province.hexList.get(k);
+            if (hex.containsUnit() && hex.unit.isReadyToMove()) {
+                unitsReadyToMove.add(hex.unit);
             }
         }
     }
 
 
     void moveUnits() {
+        updateUnitsReadyToMove();
         for (Unit unit : unitsReadyToMove) {
+            if (!unit.isReadyToMove()) {
+                System.out.println("Problem in ArtificialIntelligence.moveUnits()");
+                continue;
+            }
+
             ArrayList<Hex> moveZone = gameController.detectMoveZone(unit.currentHex, unit.strength, GameRules.UNIT_MOVE_LIMIT);
             excludeFriendlyBuildingsFromMoveZone(moveZone);
             excludeFriendlyUnitsFromMoveZone(moveZone);
@@ -77,6 +89,8 @@ public abstract class ArtificialIntelligence {
     void moveAfkUnits() {
         updateUnitsReadyToMove();
         for (Unit unit : unitsReadyToMove) {
+            if (!unit.isReadyToMove()) continue;
+
             Province province = gameController.getProvinceByHex(unit.currentHex);
             if (province.hexList.size() > 20) {
                 moveAfkUnit(province, unit);
@@ -112,8 +126,8 @@ public abstract class ArtificialIntelligence {
         if (moveZone.size() == 0) return;
         for (Hex hex : moveZone) {
             if (mergeConditions(province, unit, hex)) {
-
-                gameController.mergeUnits(unit.currentHex, unit, hex.unit);
+                gameController.moveUnit(unit, hex, province); // should not call mergeUnits() directly
+                break;
             }
         }
     }
@@ -248,7 +262,7 @@ public abstract class ArtificialIntelligence {
             ArrayList<Hex> moveZone = gameController.detectMoveZone(province.getCapital(), 1);
             boolean killedPalm = false;
             for (Hex hex : moveZone) {
-                if (hex.objectInside == Hex.OBJECT_PALM && hex.sameColor(province)) {
+                if (hex.objectInside == Obj.PALM && hex.sameColor(province)) {
                     gameController.fieldController.buildUnit(province, hex, 1);
                     killedPalm = true;
                 }
@@ -287,7 +301,7 @@ public abstract class ArtificialIntelligence {
 
     boolean checkToCleanSomePalms(Unit unit, ArrayList<Hex> moveZone, Province province) {
         for (Hex hex : moveZone) {
-            if (hex.objectInside == Hex.OBJECT_PALM && hex.sameColor(unit.currentHex)) {
+            if (hex.objectInside == Obj.PALM && hex.sameColor(unit.currentHex)) {
                 gameController.moveUnit(unit, hex, province);
                 return true;
             }
@@ -342,8 +356,8 @@ public abstract class ArtificialIntelligence {
 
     Hex findHexAttractiveToBaron(ArrayList<Hex> attackableHexes, int strength) {
         for (Hex attackableHex : attackableHexes) {
-            if (attackableHex.objectInside == Hex.OBJECT_TOWER) return attackableHex;
-            if (strength == 4 && attackableHex.objectInside == Hex.OBJECT_STRONG_TOWER) return attackableHex;
+            if (attackableHex.objectInside == Obj.TOWER) return attackableHex;
+            if (strength == 4 && attackableHex.objectInside == Obj.STRONG_TOWER) return attackableHex;
         }
         for (Hex attackableHex : attackableHexes) {
             if (attackableHex.isDefendedByTower()) return attackableHex;

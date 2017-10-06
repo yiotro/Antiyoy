@@ -1,9 +1,8 @@
 package yio.tro.antiyoy.gameplay.game_view;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import yio.tro.antiyoy.Fonts;
+import yio.tro.antiyoy.stuff.Fonts;
 import yio.tro.antiyoy.gameplay.GameController;
-import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.editor.LevelEditor;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 

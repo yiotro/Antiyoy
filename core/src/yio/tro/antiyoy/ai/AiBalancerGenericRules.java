@@ -1,9 +1,6 @@
 package yio.tro.antiyoy.ai;
 
-import yio.tro.antiyoy.gameplay.GameController;
-import yio.tro.antiyoy.gameplay.Hex;
-import yio.tro.antiyoy.gameplay.Province;
-import yio.tro.antiyoy.gameplay.Unit;
+import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 import java.util.ArrayList;
@@ -30,8 +27,6 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
 
     @Override
     public void makeMove() {
-        updateUnitsReadyToMove();
-
         moveUnits();
 
         spendMoneyAndMergeUnits();
@@ -123,6 +118,11 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
 
     @Override
     void decideAboutUnit(Unit unit, ArrayList<Hex> moveZone, Province province) {
+        if (!unit.isReadyToMove()) {
+            System.out.println("AiBalancerGenericRules.decideAboutUnit: received unit that is not ready to move");
+            return;
+        }
+
         // cleaning palms has highest priority
         if (unit.strength <= 2 && checkToCleanSomePalms(unit, moveZone, province)) return;
 
@@ -184,7 +184,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
     private void checkToSwapUnitForTower(Unit unit, ArrayList<Hex> moveZone, Province province) {
         if (!unit.isReadyToMove()) return;
         if (!province.hasMoneyForTower()) return;
-        if (unit.currentHex.hasThisObjectNearby(Hex.OBJECT_TOWER)) return;
+        if (unit.currentHex.hasThisObjectNearby(Obj.TOWER)) return;
 
         // remember that hex
         int x = unit.currentHex.index1;
@@ -246,7 +246,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.getAdjacentHex(i);
             if (adjHex.active && adjHex.sameColor(color)) c++;
-            if (adjHex.active && adjHex.sameColor(color) && adjHex.objectInside == Hex.OBJECT_TOWN) c += 5;
+            if (adjHex.active && adjHex.sameColor(color) && adjHex.objectInside == Obj.TOWN) c += 5;
         }
         return c;
     }
@@ -338,7 +338,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         while (propagationList.size() > 0) {
             Hex hex = propagationList.get(0);
             propagationList.remove(hex);
-            if (hex.objectInside == Hex.OBJECT_TOWN) return true;
+            if (hex.objectInside == Obj.TOWN) return true;
             for (int i = 0; i < 6; i++) {
                 Hex adjHex = hex.getAdjacentHex(i);
                 if (!adjHex.active) continue;

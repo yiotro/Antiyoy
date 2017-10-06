@@ -55,7 +55,7 @@ public class RulesetGeneric extends Ruleset{
             return 0;
         }
 
-        if (hex.objectInside == Hex.OBJECT_FARM) {
+        if (hex.objectInside == Obj.FARM) {
             return GameRules.FARM_INCOME + 1;
         }
 
@@ -69,8 +69,8 @@ public class RulesetGeneric extends Ruleset{
             return getUnitTax(hex.unit.strength);
         }
 
-        if (hex.objectInside == Hex.OBJECT_TOWER) return GameRules.TAX_TOWER;
-        if (hex.objectInside == Hex.OBJECT_STRONG_TOWER) return GameRules.TAX_STRONG_TOWER;
+        if (hex.objectInside == Obj.TOWER) return GameRules.TAX_TOWER;
+        if (hex.objectInside == Obj.STRONG_TOWER) return GameRules.TAX_STRONG_TOWER;
 
         return 0;
 
@@ -122,8 +122,8 @@ public class RulesetGeneric extends Ruleset{
         srcIndex += gameController.colorIndexViewOffset;
 
         // notice that last color index is for neutral lands
-        if (srcIndex >= GameRules.colorNumber || srcIndex == FieldController.NEUTRAL_LANDS_INDEX) {
-            srcIndex -= GameRules.colorNumber;
+        if (srcIndex >= FieldController.NEUTRAL_LANDS_INDEX) {
+            srcIndex -= FieldController.NEUTRAL_LANDS_INDEX;
         }
 
         return srcIndex;

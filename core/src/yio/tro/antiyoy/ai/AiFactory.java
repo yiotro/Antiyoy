@@ -1,6 +1,5 @@
 package yio.tro.antiyoy.ai;
 
-import yio.tro.antiyoy.ai.*;
 import yio.tro.antiyoy.gameplay.DebugFlags;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
@@ -53,7 +52,7 @@ public class AiFactory {
 
 
     private ArtificialIntelligence getBalancerAi(int i) {
-        if (GameRules.slay_rules) {
+        if (GameRules.slayRules) {
             return new AiBalancerSlayRules(gameController, i);
         }
 
@@ -62,7 +61,7 @@ public class AiFactory {
 
 
     private ArtificialIntelligence getExpertAi(int i) {
-        if (GameRules.slay_rules) {
+        if (GameRules.slayRules) {
             return new AiExpertSlayRules(gameController, i);
         }
 
@@ -71,7 +70,7 @@ public class AiFactory {
 
 
     private ArtificialIntelligence getHardAi(int i) {
-        if (GameRules.slay_rules) {
+        if (GameRules.slayRules) {
             return new AiHardSlayRules(gameController, i);
         }
 
@@ -80,7 +79,7 @@ public class AiFactory {
 
 
     private ArtificialIntelligence getNormalAi(int i) {
-        if (GameRules.slay_rules) {
+        if (GameRules.slayRules) {
             return new AiNormalSlayRules(gameController, i);
         }
 

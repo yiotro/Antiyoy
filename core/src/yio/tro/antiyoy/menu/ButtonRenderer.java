@@ -12,6 +12,10 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.StringBuilder;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
+import yio.tro.antiyoy.stuff.Fonts;
+import yio.tro.antiyoy.stuff.FrameBufferYio;
+import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.RectangleYio;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -30,13 +34,13 @@ public class ButtonRenderer {
 
     public ButtonRenderer() {
         batch = new SpriteBatch();
-        buttonBackground1 = GameView.loadTextureRegionByName("button_background_1.png", true);
+        buttonBackground1 = GameView.loadTextureRegion("button_background_1.png", true);
         buttonBackground1.flip(false, true);
-        buttonBackground2 = GameView.loadTextureRegionByName("button_background_2.png", true);
+        buttonBackground2 = GameView.loadTextureRegion("button_background_2.png", true);
         buttonBackground2.flip(false, true);
-        buttonBackground3 = GameView.loadTextureRegionByName("button_background_3.png", true);
+        buttonBackground3 = GameView.loadTextureRegion("button_background_3.png", true);
         buttonBackground3.flip(false, true);
-        bigButtonBackground = GameView.loadTextureRegionByName("big_button_background.png", true);
+        bigButtonBackground = GameView.loadTextureRegion("big_button_background.png", true);
         bigButtonBackground.flip(false, true);
     }
 

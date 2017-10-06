@@ -36,7 +36,7 @@ public class SoundControllerYio {
 
 
     public static void playSound(Sound sound) {
-        if (!Settings.SOUND) return;
+        if (!Settings.sound) return;
 
         sound.play();
     }

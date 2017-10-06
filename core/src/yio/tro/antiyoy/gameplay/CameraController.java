@@ -3,6 +3,10 @@ package yio.tro.antiyoy.gameplay;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import yio.tro.antiyoy.*;
+import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.PointYio;
+import yio.tro.antiyoy.stuff.RectangleYio;
+import yio.tro.antiyoy.stuff.Yio;
 
 public class CameraController {
 
@@ -22,7 +26,6 @@ public class CameraController {
     PointYio touchPos, position, viewPosition, defaultDragBounds, backVisBounds;
     PointYio delta, kinetics, actualDragBounds;
     private PointYio initialTouch;
-    int compensationOffsetY;
     private float sensitivityModifier;
 
 
@@ -206,12 +209,12 @@ public class CameraController {
     void move() {
         updateDragBounds();
         updateField();
-        updateFrame();
 
         moveKinetics();
         moveDrag();
         moveZoom();
 
+        updateFrame();
         updateBackgroundVisibility();
     }
 
@@ -343,7 +346,6 @@ public class CameraController {
     void defaultValues() {
         viewZoomLevel = 1;
         targetZoomLevel = 1;
-        compensationOffsetY = 0;
         position.set(0, 0);
         viewPosition.setBy(position);
     }

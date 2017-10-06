@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.gameplay;
 
 import com.badlogic.gdx.Gdx;
+import yio.tro.antiyoy.Settings;
 import yio.tro.antiyoy.SoundControllerYio;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.factor_yio.FactorYio;
@@ -127,7 +128,7 @@ public class SelectionController {
 
 
     public boolean isSomethingSelected() {
-        return gameController.fieldController.selectedHexes.size() > 0;
+        return gameController.fieldController.isSomethingSelected();
     }
 
 
@@ -147,8 +148,17 @@ public class SelectionController {
         tipFactor.setValues(0, 0);
         tipFactor.beginDestroying(1, 1);
         gameController.fieldController.hideMoveZone();
-        Scenes.sceneBuildButtons.hide();
+        hideBuildOverlay();
         resetTipType();
+    }
+
+
+    private void hideBuildOverlay() {
+        if (Settings.fastConstruction) {
+            Scenes.sceneFastConstructionPanel.hide();
+        } else {
+            Scenes.sceneBuildButtons.hide();
+        }
     }
 
 
@@ -220,7 +230,6 @@ public class SelectionController {
 
 
     private void debug(Hex focusedHex) {
-//        YioGdxGame.say(focusedHex.index1 + " " + focusedHex.index2);
 //        showDebugHexColors(focusedHex);
 //        showProvinceHexListInConsole(focusedHex);
     }
@@ -316,7 +325,7 @@ public class SelectionController {
         if (focusedHex.selected &&
                 gameController.fieldController.moveZone.size() == 0 &&
                 focusedHex.containsBuilding() &&
-                focusedHex.objectInside != Hex.OBJECT_FARM) {
+                focusedHex.objectInside != Obj.FARM) {
             showDefenseTip(focusedHex);
         }
     }
@@ -340,6 +349,7 @@ public class SelectionController {
         }
 
         hideTip();
+        Scenes.sceneFastConstructionPanel.checkToReappear();
         gameController.fieldController.hideMoveZone();
         return true;
     }
@@ -410,7 +420,7 @@ public class SelectionController {
 
     private boolean canBuildOnHex(Hex focusedHex, int tipType) {
         if (tipType == TIP_INDEX_STRONG_TOWER) { // strong tower
-            return focusedHex.selected && (!focusedHex.containsBuilding() || focusedHex.objectInside == Hex.OBJECT_TOWER);
+            return focusedHex.selected && (!focusedHex.containsBuilding() || focusedHex.objectInside == Obj.TOWER);
         }
 
         return focusedHex.selected && !focusedHex.containsBuilding();

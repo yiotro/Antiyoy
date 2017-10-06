@@ -1,12 +1,10 @@
 package yio.tro.antiyoy.gameplay.rules;
 
-import yio.tro.antiyoy.Yio;
-import yio.tro.antiyoy.menu.SliderYio;
-
 public class GameRules {
 
     public static final int MAX_COLOR_NUMBER = 7;
     public static final int UNIT_MOVE_LIMIT = 4;
+    public static final int TURNS_LIMIT = 300;
 
     public static final int PRICE_UNIT = 10;
     public static final int PRICE_TOWER = 15;
@@ -25,14 +23,29 @@ public class GameRules {
     public static final int TAX_UNIT_GENERIC_4 = 36;
 
     public static int colorNumber = 5;
-    public static boolean slay_rules = false;
+    public static boolean slayRules = false;
     public static boolean tutorialMode;
     public static boolean campaignMode;
     public static boolean inEditorMode;
     public static int difficulty;
+    public static boolean aiOnlyMode;
+    public static boolean replayMode;
+
+
+    public static void defaultValues() {
+        tutorialMode = false;
+        campaignMode = false;
+        inEditorMode = false;
+        aiOnlyMode = false;
+        replayMode = false;
+    }
 
 
     public static void setColorNumber(int colorNumber) {
+        if (colorNumber < 0) {
+            colorNumber = 0;
+        }
+
         GameRules.colorNumber = colorNumber;
     }
 
@@ -43,6 +56,6 @@ public class GameRules {
 
 
     public static void setSlayRules(boolean slay_rules) {
-        GameRules.slay_rules = slay_rules;
+        GameRules.slayRules = slay_rules;
     }
 }

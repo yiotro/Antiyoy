@@ -1,12 +1,17 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.GraphicsYio;
+import yio.tro.antiyoy.menu.SliderYio;
+import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.CheckButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 
 public class SceneMoreSkirmishOptions extends AbstractScene{
+
+
+    private SliderYio colorOffsetSlider;
+
 
     public SceneMoreSkirmishOptions(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
@@ -21,8 +26,9 @@ public class SceneMoreSkirmishOptions extends AbstractScene{
 
         menuControllerYio.spawnBackButton(231, ReactBehavior.rbSaveMoreSkirmishOptions);
 
-        menuControllerYio.getSliders().get(4).appear();
-        menuControllerYio.getSliders().get(4).setPos(0.15, 0.73, 0.7, 0);
+        colorOffsetSlider = menuControllerYio.getSliders().get(4);
+        colorOffsetSlider.appear();
+        colorOffsetSlider.setPos(0.15, 0.73, 0.7, 0);
 
         ButtonYio shadow = buttonFactory.getButton(generateRectangle(0.05, 0.45, 0.9, 0.42), 233, null);
         shadow.onlyShadow = true;

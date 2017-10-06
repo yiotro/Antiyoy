@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.gameplay;
 
-import yio.tro.antiyoy.LanguagesManager;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
@@ -81,7 +81,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
 
 
     private Hex getHex(int x, int y) {
-        return gameController.fieldController.field[x + gameController.cameraController.compensationOffsetY][y];
+        return gameController.fieldController.field[x][y];
     }
 
 
@@ -320,7 +320,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
                 if (gameController.selectionController.getTipType() == SelectionController.TIP_INDEX_FARM) return true;
                 return false;
             case STEP_BUILD_FARM:
-                if (getHex(18, 11).objectInside == Hex.OBJECT_FARM) return true;
+                if (getHex(18, 11).objectInside == Obj.FARM) return true;
                 return false;
             case STEP_ABOUT_FARM:
                 return true;
@@ -337,7 +337,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
                 if (gameController.selectionController.getTipType() == SelectionController.TIP_INDEX_TOWER) return true;
                 return false;
             case STEP_BUILD_TOWER:
-                if (getHex(18, 10).objectInside == Hex.OBJECT_TOWER) return true;
+                if (getHex(18, 10).objectInside == Obj.TOWER) return true;
                 return false;
             case STEP_ABOUT_TOWERS:
                 return true;

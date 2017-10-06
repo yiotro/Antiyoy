@@ -18,6 +18,12 @@ public class LoadingManager {
     YioGdxGame yioGdxGame;
     LoadingParameters parameters;
     private GameSaver gameSaver;
+    private WideScreenCompensationManager compensationManager;
+
+
+    public LoadingManager() {
+        compensationManager = new WideScreenCompensationManager();
+    }
 
 
     public static LoadingManager getInstance() {
@@ -32,6 +38,8 @@ public class LoadingManager {
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
         yioGdxGame = gameController.yioGdxGame;
+
+        compensationManager.setGameController(gameController);
     }
 
 
@@ -64,9 +72,25 @@ public class LoadingManager {
             case LoadingParameters.MODE_EDITOR_NEW:
                 createEditorNew();
                 break;
+            case LoadingParameters.MODE_LOAD_REPLAY:
+                createLoadedReplay();
+                break;
         }
 
         endCreation();
+    }
+
+
+    private void createLoadedReplay() {
+        recreateActiveHexesFromParameter();
+
+        GameRules.replayMode = true;
+        GameRules.campaignMode = (parameters.campaignLevelIndex != -1);
+
+        gameController.checkToEnableAiOnlyMode();
+        gameController.replayManager.setReplay(parameters.replay);
+        gameController.replayManager.onLoadingFromSlotFinished(gameController.fieldController);
+        gameController.stopAllUnitsFromJumping();
     }
 
 
@@ -76,7 +100,7 @@ public class LoadingManager {
         recreateActiveHexesFromParameter();
         gameSaver.detectRules();
         GameRules.inEditorMode = true;
-        GameRules.slay_rules = false;
+        GameRules.slayRules = false;
     }
 
 
@@ -90,6 +114,7 @@ public class LoadingManager {
     private void createEditorPlay() {
         recreateActiveHexesFromParameter();
         gameSaver.detectRules();
+        gameController.checkToEnableAiOnlyMode();
     }
 
 
@@ -104,6 +129,8 @@ public class LoadingManager {
 
             CampaignProgressManager.getInstance().setCurrentLevelIndex(parameters.campaignLevelIndex);
         }
+
+        gameController.checkToEnableAiOnlyMode();
     }
 
 
@@ -170,13 +197,18 @@ public class LoadingManager {
 
     private void createSkirmish() {
         gameController.fieldController.generateMap();
+        gameController.checkToEnableAiOnlyMode();
     }
 
 
     private void endCreation() {
+        compensationManager.setGameController(gameController);
+        compensationManager.perform();
+
         gameController.onEndCreation();
         gameController.updateInitialParameters(parameters);
         yioGdxGame.onEndCreation();
+
         if (GameRules.inEditorMode) {
             gameController.getLevelEditor().onEndCreation();
         }
@@ -186,6 +218,9 @@ public class LoadingManager {
 
 
     private void beginCreation() {
+        System.out.println();
+        System.out.println("Loading level...");
+
         gameSaver = gameController.gameSaver;
         gameController.defaultValues();
         yioGdxGame.beginBackgroundChange(4, false, true);

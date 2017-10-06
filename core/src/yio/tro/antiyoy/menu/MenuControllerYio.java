@@ -8,6 +8,8 @@ import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.menu.scenes.*;
+import yio.tro.antiyoy.stuff.LanguagesManager;
+import yio.tro.antiyoy.stuff.RectangleYio;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -20,18 +22,19 @@ public class MenuControllerYio {
 
     public static int SPAWN_ANIM = 2, DESTROY_ANIM = 2;
     public static double SPAWN_SPEED = 1.5, DESTROY_SPEED = 1.5;
-    public final YioGdxGame yioGdxGame;
-    public final ArrayList<ButtonYio> buttons;
-    private final ButtonFactory buttonFactory;
 
+    public final YioGdxGame yioGdxGame;
+    private final ButtonFactory buttonFactory;
     public ButtonRenderer buttonRenderer;
     TextureRegion unlockedLevelIcon, lockedLevelIcon, openedLevelIcon;
     public LevelSelector levelSelector;
     public FactorYio infoPanelFactor;
+    public final ArrayList<ButtonYio> buttons;
     public ArrayList<SliderYio> sliders;
     public ArrayList<CheckButtonYio> checkButtons;
     public NotificationHolder notificationHolder;
     public SpecialActionController specialActionController;
+    public ArrayList<InterfaceElement> interfaceElements;
 
 
     public MenuControllerYio(YioGdxGame yioGdxGame) {
@@ -41,9 +44,10 @@ public class MenuControllerYio {
         buttonRenderer = new ButtonRenderer();
         infoPanelFactor = new FactorYio();
         specialActionController = new SpecialActionController(this);
-        unlockedLevelIcon = GameView.loadTextureRegionByName("unlocked_level_icon.png", true);
-        lockedLevelIcon = GameView.loadTextureRegionByName("locked_level_icon.png", true);
-        openedLevelIcon = GameView.loadTextureRegionByName("opened_level_icon.png", true);
+        unlockedLevelIcon = GameView.loadTextureRegion("unlocked_level_icon.png", true);
+        lockedLevelIcon = GameView.loadTextureRegion("locked_level_icon.png", true);
+        openedLevelIcon = GameView.loadTextureRegion("opened_level_icon.png", true);
+        interfaceElements = new ArrayList<>();
         initCheckButtons();
         initLevelSelector();
         initSliders();
@@ -80,6 +84,7 @@ public class MenuControllerYio {
 
 
     private void initLevelSelector() {
+//        levelSelectorOld = new LevelSelectorOld(this, 175);
         levelSelector = new LevelSelector(this, 175);
     }
 
@@ -104,7 +109,7 @@ public class MenuControllerYio {
         sliders.get(6).setValues(0, 0, 6, true, SliderYio.CONFIGURE_COLOR_OFFSET_CAMPAIGN);
 //        sliders.get(7).setValues(0, 0, 1, false, SliderYio.CONFIGURE_COLOR_OFFSET_SKIRMISH); // autosave
 //        sliders.get(8).setValues(0, 0, 1, true, SliderYio.CONFIGURE_ASK_END_TURN); // ask to end turn
-        sliders.get(9).setValues(0.5, 0, 6, false, SliderYio.CONFIGURE_SENSITIVITY);
+        sliders.get(9).setValues(0.5, 0, 9, false, SliderYio.CONFIGURE_SENSITIVITY);
 //        sliders.get(10).setValues(0, 0, 1, false, SliderYio.CONFIGURE_COLOR_OFFSET_SKIRMISH); // city names
     }
 
@@ -136,15 +141,39 @@ public class MenuControllerYio {
         levelSelector.move();
         notificationHolder.move();
         specialActionController.move();
+
+        for (InterfaceElement interfaceElement : interfaceElements) {
+            if (interfaceElement.isVisible()) {
+                interfaceElement.move();
+            }
+        }
+
         for (CheckButtonYio checkButton : checkButtons) {
             checkButton.move();
         }
-        for (SliderYio sliderYio : sliders) sliderYio.move();
+
+        for (SliderYio sliderYio : sliders) {
+            sliderYio.move();
+        }
+
         for (ButtonYio buttonYio : buttons) {
             buttonYio.move();
         }
+
+        checkToPerformAction();
+    }
+
+
+    private void checkToPerformAction() {
+        for (int i = interfaceElements.size() - 1; i >= 0; i--) {
+            InterfaceElement interfaceElement = interfaceElements.get(i);
+            if (!interfaceElement.isVisible()) continue;
+
+            if (interfaceElement.checkToPerformAction()) return;
+        }
+
         for (int i = buttons.size() - 1; i >= 0; i--) {
-            if (buttons.get(i).checkToPerformAction()) break;
+            if (buttons.get(i).checkToPerformAction()) return;
         }
     }
 
@@ -180,12 +209,24 @@ public class MenuControllerYio {
     }
 
 
+    public void onPause() {
+        for (ButtonYio button : buttons) {
+            button.onPause();
+        }
+
+        for (InterfaceElement interfaceElement : interfaceElements) {
+            interfaceElement.onPause();
+        }
+    }
+
+
     public void onResume() {
-        ListIterator iterator = buttons.listIterator();
-        while (iterator.hasNext()) {
-            ButtonYio buttonYio = (ButtonYio) iterator.next();
-            if (buttonYio.isVisible()) continue;
-            iterator.remove();
+        for (ButtonYio button : buttons) {
+            button.onResume();
+        }
+
+        for (InterfaceElement interfaceElement : interfaceElements) {
+            interfaceElement.onResume();
         }
     }
 
@@ -198,34 +239,63 @@ public class MenuControllerYio {
 
 
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        for (SliderYio sliderYio : sliders)
+        for (SliderYio sliderYio : sliders) {
             if (sliderYio.touchDown(screenX, screenY)) return true;
+        }
+
         if (levelSelector.touchDown(screenX, screenY, pointer, button)) return true;
+
+        for (InterfaceElement interfaceElement : interfaceElements) {
+            if (interfaceElement.isTouchable() && interfaceElement.isVisible()) {
+                if (interfaceElement.touchDown(screenX, screenY, pointer, button)) return true;
+            }
+        }
+
         for (CheckButtonYio checkButton : checkButtons) {
             if (checkButton.isTouchable()) {
                 if (checkButton.checkTouch(screenX, screenY, pointer, button)) return true;
             }
         }
+
         for (ButtonYio buttonYio : buttons) {
             if (buttonYio.isTouchable()) {
                 if (buttonYio.checkTouch(screenX, screenY, pointer, button)) return true;
             }
         }
+
         return false;
     }
 
 
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        for (SliderYio sliderYio : sliders)
+        for (SliderYio sliderYio : sliders) {
             if (sliderYio.touchUp(screenX, screenY)) return true;
+        }
+
         if (levelSelector.touchUp(screenX, screenY, pointer, button)) return true;
+
+        for (InterfaceElement interfaceElement : interfaceElements) {
+            if (interfaceElement.isTouchable() && interfaceElement.isVisible()) {
+                if (interfaceElement.touchUp(screenX, screenY, pointer, button)) return true;
+            }
+        }
+
         return false;
     }
 
 
     public void touchDragged(int screenX, int screenY, int pointer) {
-        for (SliderYio sliderYio : sliders) sliderYio.touchDrag(screenX, screenY);
+        for (SliderYio sliderYio : sliders) {
+            sliderYio.touchDrag(screenX, screenY);
+        }
+
         levelSelector.touchDrag(screenX, screenY, pointer);
+
+        for (InterfaceElement interfaceElement : interfaceElements) {
+            if (interfaceElement.isTouchable() && interfaceElement.isVisible()) {
+                interfaceElement.touchDrag(screenX, screenY, pointer);
+            }
+        }
     }
 
 
@@ -233,26 +303,32 @@ public class MenuControllerYio {
         infoPanelFactor.setValues(1, 0);
         infoPanelFactor.beginDestroying(1, 3);
         levelSelector.destroy();
+
+        for (InterfaceElement interfaceElement : interfaceElements) {
+            interfaceElement.destroy();
+        }
+
         for (CheckButtonYio checkButton : checkButtons) {
             checkButton.destroy();
         }
-        for (SliderYio sliderYio : sliders) sliderYio.appearFactor.beginDestroying(2, 2);
+
+        for (SliderYio sliderYio : sliders) {
+            sliderYio.appearFactor.beginDestroying(2, 2);
+        }
+
         for (ButtonYio buttonYio : buttons) {
             buttonYio.destroy();
-//            if (buttonLighty.id == 11 && buttonLighty.isVisible()) {
-//                buttonLighty.factorModel.stopMoving();
-//                buttonLighty.factorModel.beginDestroying(0, 1);
-//            }
+
             if (buttonYio.id == 3 && buttonYio.isVisible()) {
-                buttonYio.factorModel.setValues(1, 0);
-                buttonYio.factorModel.beginDestroying(1, 2);
+                buttonYio.appearFactor.setValues(1, 0);
+                buttonYio.appearFactor.beginDestroying(1, 2);
             }
             if (buttonYio.id >= 22 && buttonYio.id <= 29 && buttonYio.isVisible()) {
-                buttonYio.factorModel.beginDestroying(1, 2.1);
+                buttonYio.appearFactor.beginDestroying(1, 2.1);
             }
-            if (buttonYio.id == 30 && buttonYio.factorModel.get() > 0) {
-                buttonYio.factorModel.setValues(1, 0);
-                buttonYio.factorModel.beginDestroying(1, 1);
+            if (buttonYio.id == 30 && buttonYio.appearFactor.get() > 0) {
+                buttonYio.appearFactor.setValues(1, 0);
+                buttonYio.appearFactor.beginDestroying(1, 1);
             }
         }
         if (yioGdxGame.gameView != null) yioGdxGame.gameView.beginDestroyProcess();
@@ -266,8 +342,8 @@ public class MenuControllerYio {
 
     void forceSpawningButtonsToTheEnd() {
         for (ButtonYio buttonYio : buttons) {
-            if (buttonYio.factorModel.getGravity() > 0) {
-                buttonYio.factorModel.setValues(1, 0);
+            if (buttonYio.appearFactor.getGravity() > 0) {
+                buttonYio.appearFactor.setValues(1, 0);
             }
         }
     }
@@ -340,8 +416,11 @@ public class MenuControllerYio {
 
     public void loadMoreCampaignOptions() {
         Preferences prefs = Gdx.app.getPreferences("campaign_options");
-        sliders.get(6).setRunnerValueByIndex(prefs.getInteger("color_offset", 1));
-        sliders.get(6).setConfigureType(SliderYio.CONFIGURE_COLOR_OFFSET_CAMPAIGN);
+
+        SliderYio colorOffsetSlider = sliders.get(6);
+        colorOffsetSlider.setRunnerValueByIndex(prefs.getInteger("color_offset", 1));
+        colorOffsetSlider.setConfigureType(SliderYio.CONFIGURE_COLOR_OFFSET_CAMPAIGN);
+
         getCheckButtonById(17).setChecked(prefs.getBoolean("slay_rules", false));
     }
 
@@ -379,7 +458,7 @@ public class MenuControllerYio {
         helpButton.setShadow(false);
         helpButton.setReactBehavior(ReactBehavior.rbHelpIndex);
         helpButton.setAnimType(ButtonYio.ANIM_COLLAPSE_DOWN);
-        helpButton.factorModel.beginSpawning(3, 1);
+        helpButton.appearFactor.beginSpawning(3, 1);
     }
 
 
@@ -407,8 +486,8 @@ public class MenuControllerYio {
 
     public void forceDyingButtonsToEnd() {
         for (ButtonYio button : buttons) {
-            if (button.factorModel.getGravity() < 0) {
-                button.factorModel.setValues(0, 0);
+            if (button.appearFactor.getGravity() < 0) {
+                button.appearFactor.setValues(0, 0);
             }
         }
     }
@@ -457,6 +536,29 @@ public class MenuControllerYio {
     }
 
 
+    public void addElementToScene(InterfaceElement interfaceElement) {
+        // considered that menu block is not in array at this moment
+        ListIterator iterator = interfaceElements.listIterator();
+        while (iterator.hasNext()) {
+            iterator.next();
+        }
+        iterator.add(interfaceElement);
+    }
+
+
+    public void removeElementFromScene(InterfaceElement interfaceElement) {
+        ListIterator iterator = interfaceElements.listIterator();
+        InterfaceElement currentElement;
+        while (iterator.hasNext()) {
+            currentElement = (InterfaceElement) iterator.next();
+            if (currentElement == interfaceElement) {
+                iterator.remove();
+                return;
+            }
+        }
+    }
+
+
     public YioGdxGame getYioGdxGame() {
         return yioGdxGame;
     }
@@ -469,11 +571,6 @@ public class MenuControllerYio {
 
     public ArrayList<SliderYio> getSliders() {
         return sliders;
-    }
-
-
-    public LevelSelector getLevelSelector() {
-        return levelSelector;
     }
 
 

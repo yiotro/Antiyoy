@@ -19,8 +19,6 @@ public class AiNormalSlayRules extends ArtificialIntelligence {
 
     @Override
     public void makeMove() {
-        updateUnitsReadyToMove();
-
         moveUnits();
 
         spendMoneyAndMergeUnits();

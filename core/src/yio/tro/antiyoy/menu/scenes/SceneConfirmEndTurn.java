@@ -16,7 +16,7 @@ public class SceneConfirmEndTurn extends AbstractScene {
         for (int i = 320; i <= 322; i++) {
             ButtonYio b = menuControllerYio.getButtonById(i);
             b.destroy();
-            b.factorModel.setValues(0, 0);
+            b.appearFactor.setValues(0, 0);
         }
 
         for (int i = 30; i <= 32; i++) {

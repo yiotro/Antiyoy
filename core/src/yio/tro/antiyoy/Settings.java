@@ -6,6 +6,7 @@ import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.menu.CheckButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 
 public class Settings {
 
@@ -18,13 +19,15 @@ public class Settings {
     public static boolean autosave;
     public static boolean turns_limit;
     public static boolean long_tap_to_move;
-    public static boolean SOUND = true;
+    public static boolean sound = true;
     public static float sensitivity;
     public static boolean waterTexture;
     private MenuControllerYio menuControllerYio;
     private GameView gameView;
     private GameController gameController;
     public static int skinIndex;
+    public static boolean replaysEnabled;
+    public static boolean fastConstruction;
 
 
     public static Settings getInstance() {
@@ -49,9 +52,9 @@ public class Settings {
 
         // sound
         int soundIndex = prefs.getInteger("sound", 0);
-        if (soundIndex == 0) SOUND = false;
-        else SOUND = true;
-        menuControllerYio.getCheckButtonById(5).setChecked(SOUND);
+        if (soundIndex == 0) sound = false;
+        else sound = true;
+        menuControllerYio.getCheckButtonById(5).setChecked(sound);
 
         // skin
         skinIndex = prefs.getInteger("skin", 0);
@@ -71,7 +74,7 @@ public class Settings {
         // sensitivity
         sensitivity = prefs.getInteger("sensitivity", 6);
         menuControllerYio.sliders.get(9).setRunnerValueByIndex((int) sensitivity);
-        sensitivity = Math.max(0.1f, menuControllerYio.sliders.get(9).runnerValue);
+        sensitivity = Math.max(0.1f, menuControllerYio.sliders.get(9).getCurrentRunnerIndex() / 6f);
 
         // ask to end turn
         int ATET = prefs.getInteger("ask_to_end_turn", 0);
@@ -103,6 +106,18 @@ public class Settings {
             chkWaterTexture.setChecked(waterTexture);
         }
 
+        replaysEnabled = prefs.getBoolean("replays_enabled", true);
+        CheckButtonYio chkReplays = menuControllerYio.getCheckButtonById(8);
+        if (chkReplays != null) {
+            chkReplays.setChecked(replaysEnabled);
+        }
+
+        fastConstruction = prefs.getBoolean("fast_construction", false);
+        CheckButtonYio chkFastConstruction = menuControllerYio.getCheckButtonById(9);
+        if (chkFastConstruction != null) {
+            chkFastConstruction.setChecked(fastConstruction);
+        }
+
         menuControllerYio.sliders.get(5).updateValueString();
 //        menuControllerYio.sliders.get(6).updateValueString();
         menuControllerYio.sliders.get(9).updateValueString();
@@ -123,6 +138,8 @@ public class Settings {
 //        prefs.putInteger("camera_offset", menuControllerYio.sliders.get(6).getCurrentRunnerIndex());
         prefs.putBoolean("turns_limit", menuControllerYio.getCheckButtonById(6).isChecked());
         prefs.putBoolean("long_tap_to_move", menuControllerYio.getCheckButtonById(7).isChecked());
+        prefs.putBoolean("replays_enabled", Scenes.sceneMoreSettingsMenu.chkReplays.isChecked());
+        prefs.putBoolean("fast_construction", Scenes.sceneMoreSettingsMenu.chkFastConstruction.isChecked());
         saveWaterTexture(prefs);
 
         prefs.flush();

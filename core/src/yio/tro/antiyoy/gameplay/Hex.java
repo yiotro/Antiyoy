@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.gameplay;
 
-import yio.tro.antiyoy.PointYio;
+import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 
@@ -18,13 +18,6 @@ public class Hex {
     public int colorIndex, lastColorIndex, objectInside;
     long animStartTime;
     boolean blockToTreeFromExpanding;
-    public static final int OBJECT_PINE = 1;
-    public static final int OBJECT_PALM = 2;
-    public static final int OBJECT_TOWN = 3;
-    public static final int OBJECT_TOWER = 4;
-    public static final int OBJECT_GRAVE = 5;
-    public static final int OBJECT_FARM = 6;
-    public static final int OBJECT_STRONG_TOWER = 7;
     public FactorYio animFactor, selectionFactor;
     public Unit unit;
 
@@ -47,7 +40,7 @@ public class Hex {
     }
 
 
-    private void updatePos() {
+    void updatePos() {
         pos.x = fieldPos.x + fieldController.hexStep2 * index2 * sin60;
         pos.y = fieldPos.y + fieldController.hexStep1 * index1 + fieldController.hexStep2 * index2 * cos60;
     }
@@ -92,7 +85,7 @@ public class Hex {
     void addUnit(int strength) {
         unit = new Unit(gameController, this, strength);
         gameController.unitList.add(unit);
-        gameController.statistics.unitWasProduced();
+        gameController.matchStatistics.unitWasProduced();
     }
 
 
@@ -107,7 +100,7 @@ public class Hex {
 
 
     public boolean containsTree() {
-        return objectInside == OBJECT_PALM || objectInside == OBJECT_PINE;
+        return objectInside == Obj.PALM || objectInside == Obj.PINE;
     }
 
 
@@ -117,15 +110,15 @@ public class Hex {
 
 
     public boolean containsTower() {
-        return objectInside == OBJECT_TOWER || objectInside == OBJECT_STRONG_TOWER;
+        return objectInside == Obj.TOWER || objectInside == Obj.STRONG_TOWER;
     }
 
 
     public boolean containsBuilding() {
-        return objectInside == OBJECT_TOWN
-                || objectInside == OBJECT_TOWER
-                || objectInside == OBJECT_FARM
-                || objectInside == OBJECT_STRONG_TOWER;
+        return objectInside == Obj.TOWN
+                || objectInside == Obj.TOWER
+                || objectInside == Obj.FARM
+                || objectInside == Obj.STRONG_TOWER;
     }
 
 
@@ -183,17 +176,17 @@ public class Hex {
 
     public int getDefenseNumber(Unit ignoreUnit) {
         int defenseNumber = 0;
-        if (this.objectInside == Hex.OBJECT_TOWN) defenseNumber = Math.max(defenseNumber, 1);
-        if (this.objectInside == Hex.OBJECT_TOWER) defenseNumber = Math.max(defenseNumber, 2);
-        if (this.objectInside == Hex.OBJECT_STRONG_TOWER) defenseNumber = Math.max(defenseNumber, 3);
+        if (this.objectInside == Obj.TOWN) defenseNumber = Math.max(defenseNumber, 1);
+        if (this.objectInside == Obj.TOWER) defenseNumber = Math.max(defenseNumber, 2);
+        if (this.objectInside == Obj.STRONG_TOWER) defenseNumber = Math.max(defenseNumber, 3);
         if (this.containsUnit() && unit != ignoreUnit) defenseNumber = Math.max(defenseNumber, this.unit.strength);
         Hex neighbour;
         for (int i = 0; i < 6; i++) {
             neighbour = getAdjacentHex(i);
             if (!(neighbour.active && neighbour.sameColor(this))) continue;
-            if (neighbour.objectInside == Hex.OBJECT_TOWN) defenseNumber = Math.max(defenseNumber, 1);
-            if (neighbour.objectInside == Hex.OBJECT_TOWER) defenseNumber = Math.max(defenseNumber, 2);
-            if (neighbour.objectInside == Hex.OBJECT_STRONG_TOWER) defenseNumber = Math.max(defenseNumber, 3);
+            if (neighbour.objectInside == Obj.TOWN) defenseNumber = Math.max(defenseNumber, 1);
+            if (neighbour.objectInside == Obj.TOWER) defenseNumber = Math.max(defenseNumber, 2);
+            if (neighbour.objectInside == Obj.STRONG_TOWER) defenseNumber = Math.max(defenseNumber, 3);
             if (neighbour.containsUnit() && neighbour.unit != ignoreUnit)
                 defenseNumber = Math.max(defenseNumber, neighbour.unit.strength);
         }
@@ -205,7 +198,7 @@ public class Hex {
         Hex adjHex;
         for (int i = 0; i < 6; i++) {
             adjHex = getAdjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(this) && adjHex.objectInside == OBJECT_TOWN) return true;
+            if (adjHex.active && adjHex.sameColor(this) && adjHex.objectInside == Obj.TOWN) return true;
         }
         return false;
     }
@@ -246,7 +239,7 @@ public class Hex {
     public boolean hasPalmReadyToExpandNearby() {
         for (int i = 0; i < 6; i++) {
             Hex adjHex = getAdjacentHex(i);
-            if (!adjHex.blockToTreeFromExpanding && adjHex.objectInside == Hex.OBJECT_PALM) return true;
+            if (!adjHex.blockToTreeFromExpanding && adjHex.objectInside == Obj.PALM) return true;
         }
         return false;
     }
@@ -255,7 +248,7 @@ public class Hex {
     public boolean hasPineReadyToExpandNearby() {
         for (int i = 0; i < 6; i++) {
             Hex adjHex = getAdjacentHex(i);
-            if (!adjHex.blockToTreeFromExpanding && adjHex.objectInside == Hex.OBJECT_PINE) return true;
+            if (!adjHex.blockToTreeFromExpanding && adjHex.objectInside == Obj.PINE) return true;
         }
         return false;
     }
@@ -341,13 +334,23 @@ public class Hex {
 
 
     public boolean isNeutral() {
-        if (GameRules.slay_rules) return false;
+        if (GameRules.slayRules) return false;
+
         return colorIndex == FieldController.NEUTRAL_LANDS_INDEX;
     }
 
 
     public boolean canBeAttackedBy(Unit unit) {
-        return gameController.ruleset.canUnitAttackHex(unit.strength, this);
+        boolean canUnitAttackHex = gameController.ruleset.canUnitAttackHex(unit.strength, this);
+
+        if (GameRules.replayMode) {
+            if (!canUnitAttackHex) {
+                System.out.println("Problem in Hex.canBeAttackedBy(): " + this);
+            }
+            return true;
+        }
+
+        return canUnitAttackHex;
     }
 
 

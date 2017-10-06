@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.menu;
 
-import yio.tro.antiyoy.RectangleYio;
+import yio.tro.antiyoy.stuff.RectangleYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 
 public class CheckButtonYio extends ButtonYio {
@@ -15,6 +15,8 @@ public class CheckButtonYio extends ButtonYio {
         checked = false;
         touchPosition = new RectangleYio(0, 0, 0, 0);
         viewFactor = new FactorYio();
+        reactBehavior = null;
+        lockAction = true;
     }
 
 
@@ -34,13 +36,13 @@ public class CheckButtonYio extends ButtonYio {
 
 
     public FactorYio getFactor() {
-        return factorModel;
+        return appearFactor;
     }
 
 
     public void appear() {
-        factorModel.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
-        factorModel.setValues(0, 0.001);
+        appearFactor.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
+        appearFactor.setValues(0, 0.001);
     }
 
 
@@ -80,6 +82,10 @@ public class CheckButtonYio extends ButtonYio {
             checked = true;
             selectionFactor.setValues(0, 0);
             selectionFactor.beginSpawning(1, 2);
+        }
+
+        if (reactBehavior != null) {
+            reactBehavior.reactAction(this);
         }
     }
 

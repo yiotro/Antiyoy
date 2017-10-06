@@ -14,16 +14,22 @@ import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.campaign.CampaignLevelFactory;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
+import yio.tro.antiyoy.gameplay.replays.ReplaySaveSystem;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.*;
+import yio.tro.antiyoy.menu.render.MenuRender;
 import yio.tro.antiyoy.menu.scenes.Scenes;
+import yio.tro.antiyoy.stuff.Fonts;
+import yio.tro.antiyoy.stuff.FrameBufferYio;
+import yio.tro.antiyoy.stuff.LanguagesManager;
+import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.StringTokenizer;
 
 import static yio.tro.antiyoy.gameplay.rules.GameRules.setSlayRules;
-import static yio.tro.antiyoy.gameplay.rules.GameRules.slay_rules;
+import static yio.tro.antiyoy.gameplay.rules.GameRules.slayRules;
 
 public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
@@ -42,7 +48,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     public static float screenRatio;
     public GameController gameController;
     public GameView gameView;
-    public boolean gamePaused, readyToUnPause;
+    public boolean gamePaused, readyToUnPause, startedExitProcess;
     private long timeToUnPause;
     private int frameSkipCount;
     private FrameBuffer frameBuffer;
@@ -81,11 +87,12 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         splashCount = 0;
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
-        splash = GameView.loadTextureRegionByName("splash.png", true);
+        splash = GameView.loadTextureRegion("splash.png", true);
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
         pressX = 0.5f * w;
         pressY = 0.5f * h;
+        frameSkipCount = 50; // >= 2
         screenRatio = (float) w / (float) h;
         frameBuffer = FrameBufferYio.getInstance(Pixmap.Format.RGB565, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         balanceIndicator = new int[GameRules.colorNumber];
@@ -116,12 +123,13 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     private void loadResourcesAndInitEverything() {
         long time1 = System.currentTimeMillis();
         loadedResources = true;
+        startedExitProcess = false;
         screenVerySmall = Gdx.graphics.getDensity() < 1.2;
-        mainBackground = GameView.loadTextureRegionByName("main_menu_background.png", true);
-        infoBackground = GameView.loadTextureRegionByName("info_background.png", true);
-        settingsBackground = GameView.loadTextureRegionByName("settings_background.png", true);
-        pauseBackground = GameView.loadTextureRegionByName("pause_background.png", true);
-        splatController.splatTexture = GameView.loadTextureRegionByName("splat.png", true);
+        mainBackground = GameView.loadTextureRegion("main_menu_background.png", true);
+        infoBackground = GameView.loadTextureRegion("info_background.png", true);
+        settingsBackground = GameView.loadTextureRegion("settings_background.png", true);
+        pauseBackground = GameView.loadTextureRegion("pause_background.png", true);
+        splatController.splatTexture = GameView.loadTextureRegion("splat.png", true);
         SoundControllerYio.loadAllSounds();
         Province.decodeCityNameParts();
         transitionFactor = new FactorYio();
@@ -160,6 +168,9 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         Settings.getInstance().loadSettings();
         checkTemporaryFlags();
 
+        ReplaySaveSystem.resetInstance();
+        ReplaySaveSystem.getInstance().setGameController(gameController);
+
         YioGdxGame.say("full loading time: " + (System.currentTimeMillis() - time1));
     }
 
@@ -173,8 +184,8 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             menuControllerYio.loadMoreSkirmishOptions();
             Preferences tempPrefs = Gdx.app.getPreferences("settings");
             setSlayRules(tempPrefs.getBoolean("slay_rules", false));
-            menuControllerYio.getCheckButtonById(16).setChecked(slay_rules);
-            menuControllerYio.getCheckButtonById(17).setChecked(slay_rules);
+            menuControllerYio.getCheckButtonById(16).setChecked(slayRules);
+            menuControllerYio.getCheckButtonById(17).setChecked(slayRules);
             menuControllerYio.saveMoreSkirmishOptions();
             menuControllerYio.saveMoreCampaignOptions();
             prefs.putBoolean("check_slay_rules", true);
@@ -272,11 +283,8 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 //        }
         transitionFactor.move();
         gameController.selectionController.getSelMoneyFactor().move();
-        if (readyToUnPause && System.currentTimeMillis() > timeToUnPause && gameView.coversAllScreen()) {
-            gamePaused = false;
-            readyToUnPause = false;
-            gameController.resetCurrentTouchCount();
-        }
+        checkToUnPause();
+
         if (!gamePaused) {
             gameView.moveInsideStuff();
             gameController.move();
@@ -288,6 +296,16 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         checkToUseMenuMasks();
 
         splatController.moveSplats();
+    }
+
+
+    private void checkToUnPause() {
+        if (readyToUnPause && System.currentTimeMillis() > timeToUnPause && gameView.coversAllScreen()) {
+            gamePaused = false;
+            readyToUnPause = false;
+            gameController.resetCurrentTouchCount();
+            frameSkipCount = 10; // >= 2
+        }
     }
 
 
@@ -414,8 +432,9 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         if (!gameView.coversAllScreen()) {
             renderMenuWhenGameViewNotVisible();
         }
-//        menuViewYio.renderScroller();
+
         MenuRender.renderLevelSelector.renderLevelSelector(menuControllerYio.levelSelector);
+
         gameView.render();
         if (gamePaused) {
             menuViewYio.render(true, false);
@@ -616,7 +635,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
     public void pressButtonIfVisible(int id) {
         ButtonYio button = menuControllerYio.getButtonById(id);
-        if (button != null && button.isVisible() && button.factorModel.get() == 1) button.press();
+        if (button != null && button.isVisible() && button.appearFactor.get() == 1) button.press();
     }
 
 
@@ -772,15 +791,39 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
 
     @Override
+    public void pause() {
+        super.pause();
+
+        if (startedExitProcess) return;
+
+        if (menuControllerYio != null) {
+            menuControllerYio.onPause();
+        }
+
+        if (gameView != null) {
+            gameView.onPause();
+        }
+    }
+
+
+    @Override
     public void resume() {
         super.resume();
-        menuControllerYio.onResume();
-        gameView.onResume();
-        System.out.println("Yio -> On resume.");
+
+        if (startedExitProcess) return;
+
+        if (menuControllerYio != null) {
+            menuControllerYio.onResume();
+        }
+
+        if (gameView != null) {
+            gameView.onResume();
+        }
     }
 
 
     public void close() {
+        // this is not working properly, so it's disabled for now
         if (true) return;
         loadedResources = false;
         gameController.close();

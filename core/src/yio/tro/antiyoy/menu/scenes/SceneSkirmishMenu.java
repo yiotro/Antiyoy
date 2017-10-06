@@ -5,8 +5,9 @@ import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 
-public class SceneSkirmishMenu extends AbstractScene{
+public class SceneSkirmishMenu extends AbstractScene {
 
 
     public ButtonYio startButton;
@@ -82,10 +83,10 @@ public class SceneSkirmishMenu extends AbstractScene{
         colorsLabel.setTouchable(false);
         colorsLabel.setAnimType(ButtonYio.ANIM_DOWN);
 
-        menuControllerYio.getButtonById(88).factorModel.beginSpawning(2, 1.5);
-        menuControllerYio.getButtonById(81).factorModel.beginSpawning(2, 1.5);
-        menuControllerYio.getButtonById(84).factorModel.beginSpawning(2, 1.5);
-        menuControllerYio.getButtonById(87).factorModel.beginSpawning(2, 1.5);
+        menuControllerYio.getButtonById(88).appearFactor.beginSpawning(2, 1.5);
+        menuControllerYio.getButtonById(81).appearFactor.beginSpawning(2, 1.5);
+        menuControllerYio.getButtonById(84).appearFactor.beginSpawning(2, 1.5);
+        menuControllerYio.getButtonById(87).appearFactor.beginSpawning(2, 1.5);
 
         menuControllerYio.spawnBackButton(80, ReactBehavior.rbBackFromSkirmish);
         menuControllerYio.getButtonById(80).setTouchable(true);
@@ -103,5 +104,18 @@ public class SceneSkirmishMenu extends AbstractScene{
         loadSkirmishSettings();
 
         menuControllerYio.endMenuCreation();
+    }
+
+
+    public static String getHumansString(int n) {
+        LanguagesManager instance = LanguagesManager.getInstance();
+
+        if (n == 0) {
+            return instance.getString("ai_only");
+        } else if (n == 1) {
+            return instance.getString("single_player");
+        } else {
+            return instance.getString("multiplayer") + " " + (n) + "x";
+        }
     }
 }

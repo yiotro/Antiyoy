@@ -4,6 +4,7 @@ import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.FieldController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.MoveZoneDetection;
+import yio.tro.antiyoy.gameplay.Obj;
 
 import java.util.ArrayList;
 
@@ -73,7 +74,7 @@ public class EditorAutomationManager {
     void removeAllCapitalsExceptOne(ArrayList<Hex> hices) {
         boolean foundCapital = false;
         for (Hex hice : hices) {
-            if (hice.objectInside != Hex.OBJECT_TOWN) continue;
+            if (hice.objectInside != Obj.TOWN) continue;
 
             if (!foundCapital) {
                 foundCapital = true;
@@ -88,7 +89,7 @@ public class EditorAutomationManager {
     int howManyCapitalsInProvince(ArrayList<Hex> hices) {
         int c = 0;
         for (Hex hice : hices) {
-            if (hice.objectInside == Hex.OBJECT_TOWN) {
+            if (hice.objectInside == Obj.TOWN) {
                 c++;
             }
         }
@@ -135,7 +136,7 @@ public class EditorAutomationManager {
             if (!MoveZoneDetection.canBuildFarmOnHex(hex)) continue;
             if (YioGdxGame.random.nextDouble() > 0.2) continue;
 
-            levelEditor.placeObject(hex, Hex.OBJECT_FARM);
+            levelEditor.placeObject(hex, Obj.FARM);
         }
     }
 
@@ -145,13 +146,13 @@ public class EditorAutomationManager {
         int index = YioGdxGame.random.nextInt(size);
         Hex hex = hices.get(index);
 
-        levelEditor.placeObject(hex, Hex.OBJECT_TOWN);
+        levelEditor.placeObject(hex, Obj.TOWN);
     }
 
 
     boolean provinceHasCapital(ArrayList<Hex> hices) {
         for (Hex hice : hices) {
-            if (hice.objectInside == Hex.OBJECT_TOWN) {
+            if (hice.objectInside == Obj.TOWN) {
                 return true;
             }
         }
@@ -163,7 +164,7 @@ public class EditorAutomationManager {
     public void placeRandomTowers() {
         for (Hex activeHex : getFieldController().activeHexes) {
             if (isHexGoodForRandomTower(activeHex)) {
-                levelEditor.placeObject(activeHex, Hex.OBJECT_TOWER);
+                levelEditor.placeObject(activeHex, Obj.TOWER);
             }
         }
     }
@@ -219,7 +220,7 @@ public class EditorAutomationManager {
                 continue;
             }
 
-            if (activeHex.objectInside == Hex.OBJECT_FARM) {
+            if (activeHex.objectInside == Obj.FARM) {
                 checkToCutExcessFarm(activeHex);
                 continue;
             }

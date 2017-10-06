@@ -1,56 +1,142 @@
 package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.gameplay.replays.Replay;
+import yio.tro.antiyoy.gameplay.replays.ReplayManager;
+import yio.tro.antiyoy.gameplay.replays.actions.RepAction;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
+
 import java.util.ArrayList;
 import java.util.ListIterator;
 
 /**
  * Created by ivan on 06.11.2015.
  */
-class LevelSnapshot {
+public class LevelSnapshot {
 
     private final GameController gameController;
     private Hex[][] fieldCopy;
     private ArrayList<Province> provincesCopy;
     private ArrayList<Hex> activeHexesCopy;
     private Hex selectionHex;
+    private int fWidth;
+    private int fHeight;
+    private MatchStatistics matchStatistics;
+    private ArrayList<RepAction> replayBuffer;
+    boolean used;
 
 
     public LevelSnapshot(GameController gameController) {
         this.gameController = gameController;
+
+        fieldCopy = null;
+        provincesCopy = new ArrayList<Province>();
+        activeHexesCopy = new ArrayList<Hex>();
+        matchStatistics = new MatchStatistics();
+        if (Settings.replaysEnabled) {
+            replayBuffer = new ArrayList<>();
+        }
+
+        used = false;
     }
 
 
-    void takeSnapshot() {
-        if (gameController.selectionController.isSomethingSelected()) {
-            selectionHex = gameController.fieldController.selectedProvince.hexList.get(0);
-        } else selectionHex = null;
-
-        fieldCopy = new Hex[gameController.fieldController.fWidth][gameController.fieldController.fHeight];
-        for (int i = 0; i < gameController.fieldController.fWidth; i++) {
-            for (int j = 0; j < gameController.fieldController.fHeight; j++) {
-                fieldCopy[i][j] = gameController.fieldController.field[i][j].getSnapshotCopy();
+    void defaultValues() {
+        for (int i = 0; i < fWidth; i++) {
+            for (int j = 0; j < fHeight; j++) {
+                fieldCopy[i][j] = null;
             }
         }
 
-        provincesCopy = new ArrayList<Province>();
-        for (Province province : gameController.fieldController.provinces) {
-            provincesCopy.add(province.getSnapshotCopy());
-        }
+        provincesCopy.clear();
+        activeHexesCopy.clear();
+        selectionHex = null;
+        matchStatistics.defaultValues();
+        replayBuffer.clear();
 
-        activeHexesCopy = new ArrayList<Hex>();
+        fWidth = -1;
+        fHeight = -1;
+    }
+
+
+    public void take() {
+        used = true;
+        updateSelectionHex();
+
+        updateMetrics();
+        updateFieldCopy();
+        updateProvincesCopy();
+        updateActiveHexesCopy();
+        updateMatchStatistics();
+        updateReplayBuffer();
+    }
+
+
+    private void updateReplayBuffer() {
+        if (!Settings.replaysEnabled) return;
+
+        replayBuffer.clear();
+        ReplayManager replayManager = gameController.replayManager;
+        Replay replay = replayManager.getReplay();
+        for (RepAction repAction : replay.buffer) {
+            replayBuffer.add(repAction);
+        }
+    }
+
+
+    private void updateMatchStatistics() {
+        matchStatistics.copyFrom(gameController.matchStatistics);
+    }
+
+
+    private void updateActiveHexesCopy() {
         for (Hex activeHex : gameController.fieldController.activeHexes) {
             activeHexesCopy.add(activeHex.getSnapshotCopy());
         }
     }
 
 
-    private void cleanOutEveryHexInField() {
-        for (int i = 0; i < gameController.fieldController.fWidth; i++) {
-            for (int j = 0; j < gameController.fieldController.fHeight; j++) {
-                if (!gameController.fieldController.field[i][j].active) continue;
-                gameController.cleanOutHex(gameController.fieldController.field[i][j]);
+    private void updateProvincesCopy() {
+        for (Province province : gameController.fieldController.provinces) {
+            provincesCopy.add(province.getSnapshotCopy());
+        }
+    }
+
+
+    private void updateFieldCopy() {
+        checkToCreateFieldCopyMatrix();
+        for (int i = 0; i < fWidth; i++) {
+            for (int j = 0; j < fHeight; j++) {
+                fieldCopy[i][j] = gameController.fieldController.field[i][j].getSnapshotCopy();
             }
         }
+    }
+
+
+    private void checkToCreateFieldCopyMatrix() {
+        if (fieldCopy != null) return;
+
+        fieldCopy = new Hex[fWidth][fHeight];
+    }
+
+
+    private void updateMetrics() {
+        fWidth = gameController.fieldController.fWidth;
+        fHeight = gameController.fieldController.fHeight;
+    }
+
+
+    private void updateSelectionHex() {
+        if (gameController.selectionController.isSomethingSelected()) {
+            selectionHex = gameController.fieldController.selectedProvince.hexList.get(0);
+        } else {
+            selectionHex = null;
+        }
+    }
+
+
+    private void cleanOutEveryHexInField() {
+        gameController.fieldController.cleanOutAllHexesInField();
     }
 
 
@@ -59,14 +145,77 @@ class LevelSnapshot {
     }
 
 
-    void recreateSnapshot() {
+    public void recreate() {
         gameController.fieldController.clearField();
         cleanOutEveryHexInField();
         gameController.fieldController.clearAnims();
 
+        recreateField();
+        recreateActiveHexes();
+
+        gameController.fieldController.detectProvinces();
+        recreateProvinces();
+
+        recreateSelection();
+        recreateStatistics();
+        recreateReplayBuffer();
+
+        gameController.addAnimHex(gameController.fieldController.field[0][0]);
+        gameController.updateWholeCache = true;
+    }
+
+
+    private void recreateReplayBuffer() {
+        if (!Settings.replaysEnabled) return;
+        if (GameRules.replayMode) return;
+
+        gameController.replayManager.getReplay().recreateBufferFromSnapshot(replayBuffer);
+    }
+
+
+    private void recreateStatistics() {
+        gameController.matchStatistics.copyFrom(matchStatistics);
+    }
+
+
+    private void recreateSelection() {
+        gameController.selectionController.deselectAll();
+        if (selectionHex != null) {
+            gameController.selectAdjacentHexes(selectionHex);
+        }
+    }
+
+
+    private void recreateProvinces() {
+        for (Province copy : provincesCopy) {
+            Province province = gameController.findProvinceCopy(copy);
+            if (province == null) {
+//                province.money = 999;
+//                province.name = "Bugged province";
+                System.out.println();
+                System.out.println("Problem in level snapshot.");
+                System.out.println("Wasn't been able to find province by hex. Color = " + copy.getColor());
+                System.out.println("copy.getCapital() = " + copy.getCapital());
+            } else {
+                province.money = copy.money;
+                province.updateName();
+            }
+        }
+    }
+
+
+    private void recreateActiveHexes() {
+        ListIterator iterator = gameController.fieldController.activeHexes.listIterator();
+        for (Hex hex : activeHexesCopy) {
+            iterator.add(getHexByCopy(hex));
+        }
+    }
+
+
+    private void recreateField() {
         Hex currHex;
-        for (int i = 0; i < gameController.fieldController.fWidth; i++) {
-            for (int j = 0; j < gameController.fieldController.fHeight; j++) {
+        for (int i = 0; i < fWidth; i++) {
+            for (int j = 0; j < fHeight; j++) {
 
                 currHex = gameController.fieldController.field[i][j];
                 if (!currHex.active) continue;
@@ -97,42 +246,12 @@ class LevelSnapshot {
                 }
             }
         }
+    }
 
-        ListIterator iterator = gameController.fieldController.activeHexes.listIterator();
-        for (Hex hex : activeHexesCopy) {
-            iterator.add(getHexByCopy(hex));
-        }
 
-        gameController.fieldController.detectProvinces();
+    public void reset() {
+        used = false;
 
-        // gameController.provinces have to be exactly in the same order as provincesCopy
-//        ComparatorProvince comparatorProvince = new ComparatorProvince();
-//        Collections.sort(provincesCopy, comparatorProvince);
-//        Collections.sort(gameController.provinces, comparatorProvince);
-//        for (int i = 0; i < provincesCopy.size(); i++) {
-//            gameController.provinces.get(i).money = provincesCopy.get(i).money;
-//            if (gameController.provinces.get(i).hexList.size() != provincesCopy.get(i).hexList.size()) YioGdxGame.say("dasdgah");
-//        }
-
-        for (Province copy : provincesCopy) {
-            Province province = gameController.findProvinceCopy(copy);
-            if (province == null) {
-//                province.money = 999;
-//                province.name = "Bugged province";
-                System.out.println("Problem in level snapshot.");
-                System.out.println("Wasn't been able to find province by hex. Color = " + copy.getColor());
-            } else {
-                province.money = copy.money;
-                province.updateName();
-            }
-        }
-
-        gameController.selectionController.deselectAll();
-        if (selectionHex != null) {
-            gameController.selectAdjacentHexes(selectionHex);
-        }
-
-        gameController.addAnimHex(gameController.fieldController.field[0][0]);
-        gameController.updateWholeCache = true;
+        defaultValues();
     }
 }

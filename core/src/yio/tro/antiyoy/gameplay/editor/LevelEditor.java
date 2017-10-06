@@ -3,7 +3,7 @@ package yio.tro.antiyoy.gameplay.editor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Clipboard;
-import yio.tro.antiyoy.LanguagesManager;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.ai.ArtificialIntelligence;
 import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
@@ -107,8 +107,8 @@ public class LevelEditor {
     private void addSolidObject(Hex focusedHex, int lastObject) {
         if (!canAddObjectToHex(focusedHex)) return;
 
-        if (lastObject == Hex.OBJECT_TOWER && inputObject == Hex.OBJECT_TOWER) {
-            gameController.addSolidObject(focusedHex, Hex.OBJECT_STRONG_TOWER);
+        if (lastObject == Obj.TOWER && inputObject == Obj.TOWER) {
+            gameController.addSolidObject(focusedHex, Obj.STRONG_TOWER);
             return;
         }
 
@@ -121,10 +121,10 @@ public class LevelEditor {
             switch (inputObject) {
                 default:
                     return false;
-                case Hex.OBJECT_TOWER:
-                case Hex.OBJECT_PALM:
-                case Hex.OBJECT_PINE:
-                case Hex.OBJECT_STRONG_TOWER:
+                case Obj.TOWER:
+                case Obj.PALM:
+                case Obj.PINE:
+                case Obj.STRONG_TOWER:
                     return true;
             }
         }
@@ -134,12 +134,12 @@ public class LevelEditor {
 
 
     private void checkToTurnIntoFarm(Hex srcHex) {
-        if (inputObject != Hex.OBJECT_TOWN) return;
+        if (inputObject != Obj.TOWN) return;
 
         ArrayList<Hex> province = detectProvince(srcHex);
         for (Hex hex : province) {
-            if (hex.objectInside == Hex.OBJECT_TOWN && hex != srcHex) {
-                srcHex.objectInside = Hex.OBJECT_FARM;
+            if (hex.objectInside == Obj.TOWN && hex != srcHex) {
+                srcHex.objectInside = Obj.FARM;
                 return;
             }
         }
@@ -195,16 +195,6 @@ public class LevelEditor {
     }
 
 
-    private String getBasicInfoString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(GameRules.difficulty).append(" ");
-        builder.append(gameController.fieldController.levelSize).append(" ");
-        builder.append(gameController.playersNumber).append(" ");
-        builder.append(countUpColorNumber()).append("");
-        return builder.toString();
-    }
-
-
     private int countUpColorNumber() {
         int cn = 0;
         for (Hex activeHex : gameController.fieldController.activeHexes) {
@@ -223,12 +213,8 @@ public class LevelEditor {
 
 
     public String getFullLevelString() {
-        gameController.fieldController.detectProvinces();
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(getBasicInfoString());
-        stringBuffer.append("/");
-        stringBuffer.append(gameController.gameSaver.getActiveHexesString());
-        return stringBuffer.toString();
+        GameRules.colorNumber = countUpColorNumber();
+        return gameController.fieldController.getFullLevelString();
     }
 
 
@@ -277,6 +263,7 @@ public class LevelEditor {
 
 
     private boolean isValidLevelString(String fullLevel) {
+        if (fullLevel == null) return false;
         if (!fullLevel.contains("/")) return false;
         if (!fullLevel.contains("#")) return false;
         if (fullLevel.length() < 10) return false;
@@ -328,7 +315,7 @@ public class LevelEditor {
         System.out.println("fullLevel = " + fullLevel);
         Clipboard clipboard = Gdx.app.getClipboard();
         clipboard.setContents(fullLevel);
-        Scenes.sceneNotification.showNotification(LanguagesManager.getInstance().getString("exported"), true);
+        Scenes.sceneNotification.showNotification("exported", true);
     }
 
 
@@ -540,10 +527,10 @@ public class LevelEditor {
 
     public void randomize() {
         gameSaver.detectRules();
-        GameRules.colorNumber = countUpColorNumber();
+        GameRules.setColorNumber(countUpColorNumber());
         gameController.fieldController.clearField();
         gameController.fieldController.createFieldMatrix();
-        if (GameRules.slay_rules) {
+        if (GameRules.slayRules) {
             gameController.mapGeneratorSlay.generateMap(gameController.random, gameController.fieldController.field);
         } else {
             gameController.mapGeneratorGeneric.generateMap(gameController.random, gameController.fieldController.field);

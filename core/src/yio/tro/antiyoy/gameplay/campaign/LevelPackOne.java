@@ -14,21 +14,20 @@ public class LevelPackOne {
     }
 
 
-    boolean checkForLevelPackOne(int index) {
-        if (index > 70 && index <= 80) {
-//            GameRules.setSlayRules(false); // for detectProvinces()
-//            campaignLevelFactory.gameController.gameSaver.recreateLevelFromString(getLevelFromPackOne(), false, true);
-//            GameRules.campaignMode = true;
+    boolean checkForLevelPackOne() {
+        int index = campaignLevelFactory.index;
 
+        if (index > 70 && index <= 80) {
             LoadingParameters instance = LoadingParameters.getInstance();
             instance.mode = LoadingParameters.MODE_CAMPAIGN_CUSTOM;
             instance.applyFullLevel(getLevelFromPackOne());
             instance.campaignLevelIndex = index;
-            instance.slayRules = GameRules.slay_rules;
+            instance.slayRules = false; // these levels are forcing normal rules
             instance.colorOffset = campaignLevelFactory.readColorOffsetFromSlider(instance.colorNumber);
             LoadingManager.getInstance().startGame(instance);
             return true;
         }
+
         return false;
     }
 

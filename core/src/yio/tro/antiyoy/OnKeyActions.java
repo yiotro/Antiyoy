@@ -59,6 +59,10 @@ public class OnKeyActions {
             openCheatScreen();
         }
 
+        if (keycode == Input.Keys.S) {
+            yioGdxGame.menuControllerYio.specialActionController.perform();
+        }
+
         return false;
     }
 
@@ -93,7 +97,7 @@ public class OnKeyActions {
 
 
     private void onDebugButtonPressed() {
-        if (!yioGdxGame.gamePaused) yioGdxGame.gameController.debugActions();
+        yioGdxGame.gameController.debugActions();
     }
 
 
@@ -116,10 +120,20 @@ public class OnKeyActions {
 
 
     private void onBackButtonPressed() {
+        if (yioGdxGame == null) return;
+        if (yioGdxGame.menuControllerYio == null) return;
+
         if (!yioGdxGame.gamePaused) {
+            pressIfVisible(Scenes.sceneReplayOverlay.inGameMenuButton);
             ButtonYio pauseButton = yioGdxGame.menuControllerYio.getButtonById(30);
-            if (pauseButton != null && pauseButton.isVisible()) pauseButton.press();
-            else yioGdxGame.menuControllerYio.getButtonById(140).press();
+            if (pauseButton != null && pauseButton.isVisible()) {
+                pauseButton.press();
+            } else {
+                ButtonYio buttonById = yioGdxGame.menuControllerYio.getButtonById(140);
+                if (buttonById != null) {
+                    buttonById.press();
+                }
+            }
         } else {
             yioGdxGame.pressButtonIfVisible(42);
             yioGdxGame.pressButtonIfVisible(1);

@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.gameplay;
 
-import yio.tro.antiyoy.Yio;
+import yio.tro.antiyoy.stuff.Yio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 import java.util.ArrayList;

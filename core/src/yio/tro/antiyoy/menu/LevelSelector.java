@@ -9,32 +9,34 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Matrix4;
-import yio.tro.antiyoy.Fonts;
-import yio.tro.antiyoy.FrameBufferYio;
-import yio.tro.antiyoy.GraphicsYio;
-import yio.tro.antiyoy.RectangleYio;
-import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.campaign.CampaignLevelFactory;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
-
+import yio.tro.antiyoy.menu.render.MenuRender;
+import yio.tro.antiyoy.stuff.*;
+import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.gameplay.ClickDetector;
+import yio.tro.antiyoy.stuff.tabs_engine.TabsEngineYio;
 
 public class LevelSelector extends InterfaceElement {
 
     MenuControllerYio menuControllerYio;
 
-    public int selectedPanelIndex, selIndexX, selIndexY;
+    public int selectedPanelIndex, selIndexX, selIndexY, touchDownPanelIndex;
     int levelNumber, rowSize, columnSize, w, h;
     long touchDownTime;
     public float iconRadius, iconDiameter, horOffset, verOffset, offsetBetweenPanels;
-    float leftX, minSpeed, lastTouchX, touchDownLeftX, approxStart, approxEnd, lastHorDelta;
+    float lastTouchX;
     float touchDownY;
 
     public RectangleYio pos[], defPos;
-    public FactorYio appearFactor, approxFactor, selectionFactor;
+    public FactorYio appearFactor, selectionFactor;
     public TextureRegion textures[], backgroundTexture, completedIcon, lockIconTextures[], unlockIconTextures[];
     FrameBuffer frameBuffer;
+    TabsEngineYio tabsEngineYio;
+    ClickDetector clickDetector;
+    PointYio currentTouch;
     SpriteBatch batch;
-    private int touchDownPanelIndex;
+    private int levelsOnOnePanel;
 
 
     public LevelSelector(MenuControllerYio menuControllerYio, int id) {
@@ -44,25 +46,30 @@ public class LevelSelector extends InterfaceElement {
         this.w = menuControllerYio.yioGdxGame.w;
         this.h = menuControllerYio.yioGdxGame.h;
         appearFactor = new FactorYio();
-        approxFactor = new FactorYio();
-        approxFactor.setValues(1, 0);
         selectionFactor = new FactorYio();
         batch = new SpriteBatch();
         defPos = new RectangleYio(0.075 * w, 0.05 * h, 0.85 * w, 0.8 * h);
-        iconRadius = ((float)defPos.width / 5 - 0.01f * w) / 2;
+        iconRadius = (float) ((defPos.width / 5 - 0.01f * w) / 2);
         iconDiameter = 2 * iconRadius;
-        leftX = 0;
-        offsetBetweenPanels = (float)defPos.width + 0.05f * w;
-        minSpeed = 0.05f * w;
+        offsetBetweenPanels = (float) (defPos.width + 0.05f * w);
+
+        tabsEngineYio = new TabsEngineYio();
+        tabsEngineYio.setFriction(0);
+        tabsEngineYio.setSoftLimitOffset(0.06 * GraphicsYio.width);
+        tabsEngineYio.setMagnetMaxPower(0.01 * GraphicsYio.width);
+
+        clickDetector = new ClickDetector();
+        currentTouch = new PointYio();
+
         initTextures();
     }
 
 
     void initTextures() {
-        rowSize = (int) (((float)defPos.width) / (iconDiameter));
-        columnSize = (int) (((float)defPos.height) / (iconDiameter));
-        horOffset = ((float)defPos.width - rowSize * iconDiameter) / 2;
-        verOffset = ((float)defPos.height - columnSize * iconDiameter) / 2;
+        rowSize = (int) (((float) defPos.width) / (iconDiameter));
+        columnSize = (int) (((float) defPos.height) / (iconDiameter));
+        horOffset = ((float) defPos.width - rowSize * iconDiameter) / 2;
+        verOffset = ((float) defPos.height - columnSize * iconDiameter) / 2;
         selIndexY = columnSize - 1;
 
         int levelsOnOnePanel = rowSize * columnSize;
@@ -87,7 +94,14 @@ public class LevelSelector extends InterfaceElement {
         completedIcon = GraphicsYio.loadTextureRegion("menu/level_selector/completed_level_base.png", false);
 
         for (int i = 0; i < howManyPanels; i++) {
-            pos[i] = new RectangleYio((float)defPos.x + i * ((float)defPos.width + 0.1 * w), (float)defPos.y, (float)defPos.width, (float)defPos.height);
+            pos[i] = new RectangleYio((float) defPos.x + i * ((float) defPos.width + 0.1 * w), (float) defPos.y, (float) defPos.width, (float) defPos.height);
+            renderPanel(i);
+        }
+    }
+
+
+    public void renderAllPanels() {
+        for (int i = 0; i < pos.length; i++) {
             renderPanel(i);
         }
     }
@@ -95,6 +109,9 @@ public class LevelSelector extends InterfaceElement {
 
     void renderPanel(int panelIndex) {
         beginRender(panelIndex, Fonts.gameFont);
+
+        Color color = Fonts.gameFont.getColor();
+        Fonts.gameFont.setColor(Color.BLACK);
 
         batch.begin();
         for (int i = 0; i < rowSize; i++) {
@@ -119,14 +136,18 @@ public class LevelSelector extends InterfaceElement {
         }
         batch.end();
 
+        Fonts.gameFont.setColor(color);
+
         endRender(panelIndex);
     }
 
 
-    public void update() {
-        for (int i = 0; i < textures.length; i++) {
-            renderPanel(i);
-        }
+    public void updateTextures(int levelIndex) {
+        int panelIndex = levelIndex / (rowSize * columnSize);
+        renderPanel(panelIndex);
+
+        int secondPanelIndex = (levelIndex + 1) / (rowSize * columnSize);
+        if (secondPanelIndex != panelIndex) renderPanel(secondPanelIndex);
     }
 
 
@@ -153,14 +174,13 @@ public class LevelSelector extends InterfaceElement {
         batch.begin();
         batch.draw(backgroundTexture, 0, 0, orthoWidth, orthoHeight);
         batch.end();
-        Fonts.gameFont.setColor(Color.BLACK);
     }
 
 
     void endRender(int panelIndex) {
         frameBuffer.end();
         Texture texture = frameBuffer.getColorBufferTexture();
-        textures[panelIndex] = new TextureRegion(texture, (int) pos[panelIndex].width, (int) pos[panelIndex].height);
+        textures[panelIndex] = new TextureRegion(texture, (int) defPos.width, (int) defPos.height);
         textures[panelIndex].flip(false, true);
     }
 
@@ -173,24 +193,53 @@ public class LevelSelector extends InterfaceElement {
     @Override
     public void move() {
         appearFactor.move();
-        approxFactor.move();
+        tabsEngineYio.move();
+        applyTabEngine();
+        applyTransitionAnimation();
+
         if (appearFactor.get() == 1) {
             selectionFactor.move();
         }
 
-        updatePos();
         checkToPerformAction();
     }
 
 
-    private void updatePos() {
-        leftX = approxStart + approxFactor.get() * (approxEnd - approxStart);
+    private void applyTransitionAnimation() {
+        if (appearFactor.get() == 1 || appearFactor.get() == 0) return;
+
+        float delta = (float) (0.3f * defPos.height * (1 - appearFactor.get()));
+        for (int i = 0; i < pos.length; i++) {
+            pos[i].y -= delta;
+            pos[i].width -= delta;
+            pos[i].x += delta / 2;
+        }
+    }
+
+
+    private void jumpToTab(int tabIndex) {
+        int currentTabIndex = tabsEngineYio.getCurrentTabIndex();
+
+        int jumpDelta = tabIndex - currentTabIndex;
+        if (jumpDelta == 0) return;
+
+        if (Math.abs(jumpDelta) == 1) {
+            tabsEngineYio.swipeTab(jumpDelta);
+        }
+
+        if (Math.abs(jumpDelta) == 2) {
+            tabsEngineYio.swipeTab(jumpDelta);
+        }
+    }
+
+
+    private void applyTabEngine() {
+        float delta = (float) (-tabsEngineYio.getSlider().a);
 
         for (int i = 0; i < pos.length; i++) {
-            float delta = (float)defPos.height * (1 - appearFactor.get());
-            pos[i].y = (float)defPos.y - delta;
-            pos[i].height = defPos.height;
-            pos[i].x = leftX + (float)defPos.x + i * offsetBetweenPanels;
+            pos[i].setBy(defPos);
+            pos[i].x += GraphicsYio.width * i;
+            pos[i].x += delta;
         }
     }
 
@@ -198,6 +247,11 @@ public class LevelSelector extends InterfaceElement {
     @Override
     public FactorYio getFactor() {
         return appearFactor;
+    }
+
+
+    public RectangleYio getPosition() {
+        return defPos;
     }
 
 
@@ -212,15 +266,28 @@ public class LevelSelector extends InterfaceElement {
     public void appear() {
         appearFactor.setValues(0.03, 0);
         appearFactor.beginSpawning(InterfaceElement.SPAWN_TYPE, 0.7 * InterfaceElement.SPAWN_SPEED);
+
         selectionFactor.setValues(0, 0);
-        selectionFactor.beginDestroying(3, 0);
-        startApproximation();
+        selectionFactor.beginDestroying(1, 1);
+    }
+
+
+    public void updateTabsMetrics() {
+        tabsEngineYio.setLimits(0, GraphicsYio.width * pos.length);
+        tabsEngineYio.setSlider(0, GraphicsYio.width);
+        tabsEngineYio.setNumberOfTabs(pos.length);
     }
 
 
     @Override
     public boolean isVisible() {
         return appearFactor.get() > 0;
+    }
+
+
+    @Override
+    public MenuRender getRenderSystem() {
+        return MenuRender.renderLevelSelector;
     }
 
 
@@ -241,6 +308,7 @@ public class LevelSelector extends InterfaceElement {
             }
             return true;
         }
+
         return false;
     }
 
@@ -258,12 +326,21 @@ public class LevelSelector extends InterfaceElement {
     }
 
 
+    private void updateCurrentTouch(int screenX, int screenY) {
+        currentTouch.set(screenX, screenY);
+    }
+
+
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (appearFactor.get() < 1) return false;
+        updateCurrentTouch(screenX, screenY);
         touchDownY = screenY;
         if (!checkTouchableConditions()) return false;
-        touchDownLeftX = leftX;
+
+        clickDetector.touchDown(currentTouch);
+        tabsEngineYio.onTouchDown();
+
         lastTouchX = screenX;
         touchDownPanelIndex = -indexOfPanelThatContainsPoint(screenX, screenY); // minus is here for reason
         touchDownTime = System.currentTimeMillis();
@@ -274,10 +351,12 @@ public class LevelSelector extends InterfaceElement {
     @Override
     public boolean touchDrag(int screenX, int screenY, int pointer) {
         if (appearFactor.get() < 1) return false;
+        updateCurrentTouch(screenX, screenY);
         if (!checkTouchableConditions()) return false;
-        lastHorDelta = screenX - lastTouchX;
-        approxEnd += lastHorDelta;
-        leftX = approxEnd;
+
+        tabsEngineYio.setSpeed(lastTouchX - screenX);
+        clickDetector.touchDrag(currentTouch);
+
         lastTouchX = screenX;
         return true;
     }
@@ -286,37 +365,57 @@ public class LevelSelector extends InterfaceElement {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if (appearFactor.get() < 1) return false;
+        updateCurrentTouch(screenX, screenY);
         if (!checkTouchableConditions()) return false;
-        if (touchedAsClick()) {
-            menuControllerYio.getButtonById(20).setTouchable(false);
-            return select(screenX, screenY);
+
+        clickDetector.touchUp(currentTouch);
+        tabsEngineYio.onTouchUp();
+
+        if (clickDetector.isClicked()) {
+            onClick();
+
+            return true;
         }
-        startApproximation();
+
         return true;
     }
 
 
-    boolean select(int screenX, int screenY) {
-        int panelIndex = indexOfPanelThatContainsPoint(screenX, screenY);
-        if (panelIndex == -1) return false;
-        float internalX = screenX - ((float)pos[panelIndex].x + horOffset);
-        float internalY = screenY - ((float)pos[panelIndex].y + verOffset);
+    @Override
+    public void onMouseWheelScrolled(int amount) {
+        if (amount == 1) {
+            tabsEngineYio.swipeTab(1);
+        } else if (amount == -1) {
+            tabsEngineYio.swipeTab(-1);
+        }
+    }
+
+
+    void onClick() {
+        tabsEngineYio.setSpeed(0);
+
+        int panelIndex = indexOfPanelThatContainsPoint(currentTouch.x, currentTouch.y);
+        if (panelIndex == -1) return;
+
+        float internalX = currentTouch.x - ((float) pos[panelIndex].x + horOffset);
+        float internalY = currentTouch.y - ((float) pos[panelIndex].y + verOffset);
+
         int selX = (int) (internalX / (2 * iconRadius));
         int selY = (int) (internalY / (2 * iconRadius));
-        if (getLevelNumber(selX, selY, panelIndex) > CampaignProgressManager.getIndexOfLastLevel()) return false;
+
+        if (getLevelNumber(selX, selY, panelIndex) > CampaignProgressManager.getIndexOfLastLevel()) return;
+
         if (selX >= 0 && selX < rowSize && selY >= 0 && selY < columnSize) {
             selIndexX = selX;
             selIndexY = selY;
             selectedPanelIndex = panelIndex;
             selectionFactor.setValues(0, 0);
             selectionFactor.beginSpawning(3, 3);
-            return true;
         }
-        return false;
     }
 
 
-    int indexOfPanelThatContainsPoint(int x, int y) {
+    int indexOfPanelThatContainsPoint(float x, float y) {
         for (int i = 0; i < pos.length; i++) {
             if (isPointInsideRectangle(pos[i], x, y)) return i;
         }
@@ -329,52 +428,16 @@ public class LevelSelector extends InterfaceElement {
     }
 
 
-    boolean touchedAsClick() {
-        if (System.currentTimeMillis() - touchDownTime > 300) return false;
-        if (Math.abs(leftX - touchDownLeftX) > 0.01f * w) return false;
-        return true;
-    }
+    public void focusOnRelevantLevel() {
+        int indexOfRelevantLevel;
+        indexOfRelevantLevel = CampaignProgressManager.getInstance().getIndexOfRelevantLevel();
+//        indexOfRelevantLevel = 0;
 
+        int panelIndex = indexOfRelevantLevel / levelsOnOnePanel;
+        if (panelIndex == 0) return;
 
-    public float getCircleX() {
-        return (float)(defPos.x + defPos.width / 2);
-    }
-
-
-    public float getCircleY() {
-        return (float)(defPos.y + appearFactor.get() * defPos.height / 2);
-    }
-
-    public float getCircleR() {
-        return (float)(appearFactor.get() * appearFactor.get() * defPos.height * 0.6);
-    }
-
-
-    void startApproximation() {
-        approxFactor.setValues(0, 0);
-        approxFactor.beginSpawning(3, 1);
-        approxStart = leftX;
-        approxEnd = getApproxEnd();
-    }
-
-
-    private float getApproxEnd() {
-        int index = (int) ((leftX - offsetBetweenPanels / 2) / offsetBetweenPanels);
-
-        if (    System.currentTimeMillis() - touchDownTime < 200 &&
-                Math.abs(touchDownLeftX - leftX) < 0.5 * w) { // fast slide
-            if ((leftX - touchDownLeftX) > 0) index++;
-            else index--;
-        }
-
-        if (index > 0) index = 0;
-        if (index < -textures.length + 1) index = -textures.length + 1;
-
-        // fix for double scrolling bug
-        if (index > touchDownPanelIndex + 1) index = touchDownPanelIndex + 1;
-        if (index < touchDownPanelIndex - 1) index = touchDownPanelIndex - 1;
-
-        return index * offsetBetweenPanels;
+//        jumpToTab(panelIndex);
+        tabsEngineYio.teleportToTab(panelIndex);
     }
 
 
@@ -387,5 +450,47 @@ public class LevelSelector extends InterfaceElement {
     @Override
     public boolean isButton() {
         return false;
+    }
+
+
+    public float getCircleX() {
+        return (float) (defPos.x + defPos.width / 2);
+    }
+
+
+    public float getCircleY() {
+        return (float) (defPos.y + appearFactor.get() * defPos.height / 2);
+    }
+
+
+    public float getCircleR() {
+        return (float) (appearFactor.get() * appearFactor.get() * defPos.height * 0.6);
+    }
+
+
+    @Override
+    public void onPause() {
+        for (int i = 0; i < textures.length; i++) {
+            if (textures[i] != null) {
+                textures[i].getTexture().dispose();
+            }
+        }
+    }
+
+
+    @Override
+    public void onResume() {
+        renderAllPanels();
+    }
+
+
+    @Override
+    public void setPosition(RectangleYio position) {
+
+    }
+
+
+    public void resetToBottom() {
+        tabsEngineYio.resetToBottom();
     }
 }

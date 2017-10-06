@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.menu.behaviors;
 
-import yio.tro.antiyoy.LanguagesManager;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.Settings;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.scenes.Scenes;

@@ -24,7 +24,7 @@ public class RbBuildSolidObject extends ReactBehavior {
 
     @Override
     public void reactAction(ButtonYio buttonYio) {
-        if (GameRules.slay_rules) {
+        if (GameRules.slayRules) {
             getGameController(buttonYio).selectionController.awakeTip(SelectionController.TIP_INDEX_TOWER);
         } else {
             int tipType = getGameController(buttonYio).selectionController.getTipType();

@@ -43,7 +43,7 @@ public class SceneEditorInstruments extends AbstractScene{
             ButtonYio buttonYio = menuControllerYio.getButtonById(i);
             if (buttonYio == null) continue;
 
-            buttonYio.factorModel.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
+            buttonYio.appearFactor.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
             buttonYio.enableRectangularMask();
             buttonYio.disableTouchAnimation();
             buttonYio.setAnimType(ButtonYio.ANIM_DOWN);

@@ -4,7 +4,6 @@ import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
-import yio.tro.antiyoy.menu.behaviors.editor.EditorReactions;
 import yio.tro.antiyoy.menu.scenes.AbstractScene;
 
 public class SceneEditorMoneyPanel extends AbstractScene{
@@ -46,7 +45,7 @@ public class SceneEditorMoneyPanel extends AbstractScene{
             ButtonYio buttonYio = menuControllerYio.getButtonById(i);
             if (buttonYio == null) continue;
 
-            buttonYio.factorModel.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
+            buttonYio.appearFactor.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
             buttonYio.enableRectangularMask();
             buttonYio.disableTouchAnimation();
             buttonYio.setAnimType(ButtonYio.ANIM_DOWN);

@@ -4,8 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.scenes.Scenes;
+import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.PointYio;
+import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -47,6 +51,7 @@ public class FieldController {
     public int selectedProvinceMoney;
     public long timeToCheckAnimHexes;
     public int[] playerHexCount;
+    public float compensatoryOffset; // fix for widescreen
 
 
     public FieldController(GameController gameController) {
@@ -55,7 +60,8 @@ public class FieldController {
         cos60 = (float) Math.cos(Math.PI / 3d);
         sin60 = (float) Math.sin(Math.PI / 3d);
         fieldPos = new PointYio();
-        fieldPos.y = -0.5f * GraphicsYio.height;
+        compensatoryOffset = 0;
+        updateFieldPos();
         hexSize = 0.05f * Gdx.graphics.getWidth();
         hexStep1 = (float) Math.sqrt(3) * hexSize;
         hexStep2 = (float) Yio.distance(0, 0, 1.5 * hexSize, 0.5 * hexStep1);
@@ -78,19 +84,40 @@ public class FieldController {
     }
 
 
+    private void updateFieldPos() {
+        fieldPos.y = -0.5f * GraphicsYio.height + compensatoryOffset;
+    }
+
+
     public void clearField() {
         gameController.selectionController.setSelectedUnit(null);
         solidObjects.clear();
         gameController.getUnitList().clear();
-        provinces.clear();
+        clearProvincesList();
         moveZone.clear();
         clearActiveHexesList();
+    }
+
+
+    public void cleanOutAllHexesInField() {
+        for (int i = 0; i < fWidth; i++) {
+            for (int j = 0; j < fHeight; j++) {
+                if (!gameController.fieldController.field[i][j].active) continue;
+                gameController.cleanOutHex(gameController.fieldController.field[i][j]);
+            }
+        }
+    }
+
+
+    public void clearProvincesList() {
+        provinces.clear();
     }
 
 
     public void defaultValues() {
         selectedProvince = null;
         moveZoneFactor.setValues(0, 0);
+        compensatoryOffset = 0;
     }
 
 
@@ -105,12 +132,12 @@ public class FieldController {
 
     public void createField() {
         clearField();
-        fieldPos.y = -0.5f * GraphicsYio.height;
+        updateFieldPos();
     }
 
 
     public void generateMap() {
-        generateMap(GameRules.slay_rules);
+        generateMap(GameRules.slayRules);
     }
 
 
@@ -129,7 +156,7 @@ public class FieldController {
 
 
     public void detectNeutralLands() {
-        if (GameRules.slay_rules) return;
+        if (GameRules.slayRules) return;
 
         for (Hex activeHex : activeHexes) {
             activeHex.genFlag = false;
@@ -149,17 +176,19 @@ public class FieldController {
     }
 
 
-    public void killUnitOnHex(Hex hex) {
+    public void killUnitByStarvation(Hex hex) {
         cleanOutHex(hex);
-        addSolidObject(hex, Hex.OBJECT_GRAVE);
+        addSolidObject(hex, Obj.GRAVE);
         hex.animFactor.beginSpawning(1, 2);
+
+        gameController.replayManager.onUnitDiedFromStarvation(hex);
     }
 
 
-    public void killEveryoneInProvince(Province province) {
+    public void killEveryoneByStarvation(Province province) {
         for (Hex hex : province.hexList) {
             if (hex.containsUnit()) {
-                killUnitOnHex(hex);
+                killUnitByStarvation(hex);
             }
         }
     }
@@ -212,6 +241,26 @@ public class FieldController {
     }
 
 
+    public String getFullLevelString() {
+        detectProvinces();
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(getBasicInfoString());
+        stringBuffer.append("/");
+        stringBuffer.append(gameController.gameSaver.getActiveHexesString());
+        return stringBuffer.toString();
+    }
+
+
+    private String getBasicInfoString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(GameRules.difficulty).append(" ");
+        builder.append(levelSize).append(" ");
+        builder.append(gameController.playersNumber).append(" ");
+        builder.append(GameRules.colorNumber).append("");
+        return builder.toString();
+    }
+
+
     private boolean checkRefuseStatistics() {
         RefuseStatistics instance = RefuseStatistics.getInstance();
 
@@ -259,7 +308,7 @@ public class FieldController {
 
     public void transformGraves() {
         for (Hex hex : activeHexes) {
-            if (gameController.isCurrentTurn(hex.colorIndex) && hex.objectInside == Hex.OBJECT_GRAVE) {
+            if (gameController.isCurrentTurn(hex.colorIndex) && hex.objectInside == Obj.GRAVE) {
                 spawnTree(hex);
                 hex.blockToTreeFromExpanding = true;
             }
@@ -269,33 +318,47 @@ public class FieldController {
 
     public void detectProvinces() {
         if (gameController.isInEditorMode()) return;
+
+        clearProvincesList();
         MoveZoneDetection.unFlagAllHexesInArrayList(activeHexes);
-        ArrayList<Hex> tempList = new ArrayList<Hex>();
-        ArrayList<Hex> propagationList = new ArrayList<Hex>();
-        Hex tempHex, adjHex;
+        ArrayList<Hex> tempList = new ArrayList<>();
+        ArrayList<Hex> propagationList = new ArrayList<>();
+
         for (Hex hex : activeHexes) {
             if (hex.isNeutral()) continue;
-            if (!hex.flag) {
-                tempList.clear();
-                propagationList.clear();
-                propagationList.add(hex);
-                hex.flag = true;
-                while (propagationList.size() > 0) {
-                    tempHex = propagationList.get(0);
-                    tempList.add(tempHex);
-                    propagationList.remove(0);
-                    for (int i = 0; i < 6; i++) {
-                        adjHex = tempHex.getAdjacentHex(i);
-                        if (adjHex.active && adjHex.sameColor(tempHex) && !adjHex.flag) {
-                            propagationList.add(adjHex);
-                            adjHex.flag = true;
-                        }
-                    }
-                }
-                if (tempList.size() >= 2) {
-                    Province province = new Province(gameController, tempList);
-                    if (!province.hasCapital()) province.placeCapitalInRandomPlace(gameController.predictableRandom);
-                    addProvince(province);
+            if (hex.flag) continue;
+
+            tempList.clear();
+            propagationList.clear();
+            propagationList.add(hex);
+            hex.flag = true;
+            propagateHex(tempList, propagationList);
+            if (tempList.size() >= 2) {
+                Province province = new Province(gameController, tempList);
+                addProvince(province);
+            }
+        }
+
+        for (Province province : provinces) {
+            if (!province.hasCapital()) {
+                province.placeCapitalInRandomPlace(gameController.predictableRandom);
+            }
+        }
+    }
+
+
+    private void propagateHex(ArrayList<Hex> tempList, ArrayList<Hex> propagationList) {
+        Hex tempHex;
+        Hex adjHex;
+        while (propagationList.size() > 0) {
+            tempHex = propagationList.get(0);
+            tempList.add(tempHex);
+            propagationList.remove(0);
+            for (int i = 0; i < 6; i++) {
+                adjHex = tempHex.getAdjacentHex(i);
+                if (adjHex.active && adjHex.sameColor(tempHex) && !adjHex.flag) {
+                    propagationList.add(adjHex);
+                    adjHex.flag = true;
                 }
             }
         }
@@ -310,43 +373,73 @@ public class FieldController {
     public int howManyPalms() {
         int c = 0;
         for (Hex activeHex : activeHexes) {
-            if (activeHex.objectInside == Hex.OBJECT_PALM) c++;
+            if (activeHex.objectInside == Obj.PALM) c++;
         }
         return c;
     }
 
 
     public void expandTrees() {
-        ArrayList<Hex> newPalmsList = new ArrayList<Hex>();
-        for (Hex hex : activeHexes) {
-            if (gameController.ruleset.canSpawnPalmOnHex(hex)) {
-                newPalmsList.add(hex);
-            }
+        if (GameRules.replayMode) return;
+
+        ArrayList<Hex> newPalmsList = getNewPalmsList();
+        ArrayList<Hex> newPinesList = getNewPinesList();
+
+        for (int i = newPalmsList.size() - 1; i >= 0; i--) {
+            spawnPalm(newPalmsList.get(i));
         }
 
+        for (int i = newPinesList.size() - 1; i >= 0; i--) {
+            spawnPine(newPinesList.get(i));
+        }
+
+        for (Hex activeHex : activeHexes) {
+            if (activeHex.containsTree() && activeHex.blockToTreeFromExpanding) {
+                activeHex.blockToTreeFromExpanding = false;
+            }
+        }
+    }
+
+
+    private ArrayList<Hex> getNewPinesList() {
         ArrayList<Hex> newPinesList = new ArrayList<Hex>();
+
         for (Hex hex : activeHexes) {
             if (gameController.ruleset.canSpawnPineOnHex(hex)) {
                 newPinesList.add(hex);
             }
         }
 
-        for (int i = newPalmsList.size() - 1; i >= 0; i--) {
-            addSolidObject(newPalmsList.get(i), Hex.OBJECT_PALM);
-            addAnimHex(newPalmsList.get(i));
-            newPalmsList.get(i).animFactor.setValues(1, 0);
+        return newPinesList;
+    }
+
+
+    private ArrayList<Hex> getNewPalmsList() {
+        ArrayList<Hex> newPalmsList = new ArrayList<Hex>();
+
+        for (Hex hex : activeHexes) {
+            if (gameController.ruleset.canSpawnPalmOnHex(hex)) {
+                newPalmsList.add(hex);
+            }
         }
 
-        for (int i = newPinesList.size() - 1; i >= 0; i--) {
-            addSolidObject(newPinesList.get(i), Hex.OBJECT_PINE);
-            addAnimHex(newPinesList.get(i));
-            newPinesList.get(i).animFactor.setValues(1, 0);
-        }
+        return newPalmsList;
+    }
 
-        for (Hex activeHex : activeHexes) {
-            if (activeHex.containsTree() && activeHex.blockToTreeFromExpanding)
-                activeHex.blockToTreeFromExpanding = false;
-        }
+
+    private void spawnPine(Hex hex) {
+        addSolidObject(hex, Obj.PINE);
+        addAnimHex(hex);
+        hex.animFactor.setValues(1, 0);
+        gameController.replayManager.onPineSpawned(hex);
+    }
+
+
+    private void spawnPalm(Hex hex) {
+        addSolidObject(hex, Obj.PALM);
+        addAnimHex(hex);
+        hex.animFactor.setValues(1, 0);
+        gameController.replayManager.onPalmSpawned(hex);
     }
 
 
@@ -472,24 +565,17 @@ public class FieldController {
             hex.select();
             if (!selectedHexes.contains(hex)) listIterator.add(hex);
         }
-        Scenes.sceneBuildButtons.create();
+        showBuildOverlay();
         gameController.updateBalanceString();
+    }
 
-//        ArrayList<Hex> tempList = new ArrayList<Hex>();
-//        Hex tempHex;
-//        tempList.add(startHex);
-//        while (tempList.size() > 0) {
-//            tempHex = tempList.get(0);
-//            tempHex.select();
-//            if (!selectedHexes.contains(tempHex)) listIterator.add(tempHex);
-//            for (int i=0; i<6; i++) {
-//                Hex h = tempHex.adjacentHex(i);
-//                if (h != null && h.active && !h.selected && h.colorIndex == tempHex.colorIndex && !tempList.contains(h)) {
-//                    tempList.add(h);
-//                }
-//            }
-//            tempList.remove(tempHex);
-//        }
+
+    private void showBuildOverlay() {
+        if (Settings.fastConstruction) {
+            Scenes.sceneFastConstructionPanel.create();
+        } else {
+            Scenes.sceneBuildButtons.create();
+        }
     }
 
 
@@ -506,13 +592,31 @@ public class FieldController {
     }
 
 
+    public void updateHexPositions() {
+        updateFieldPos();
+
+        for (int i = 0; i < fWidth; i++) {
+            for (int j = 0; j < fHeight; j++) {
+                Hex hex = field[i][j];
+
+                hex.updatePos();
+                if (hex.containsUnit()) {
+                    hex.unit.updateCurrentPos();
+                }
+            }
+        }
+    }
+
+
     public Hex getHexByPos(double x, double y) {
         int j = (int) ((x - fieldPos.x) / (hexStep2 * sin60));
         int i = (int) ((y - fieldPos.y - hexStep2 * j * cos60) / hexStep1);
         if (i < 0 || i > fWidth - 1 || j < 0 || j > fHeight - 1) return null;
+
         Hex adjHex, resHex = field[i][j];
         x -= gameController.getYioGdxGame().gameView.hexViewSize;
         y -= gameController.getYioGdxGame().gameView.hexViewSize;
+
         double currentDistance, minDistance = Yio.distance(resHex.pos.x, resHex.pos.y, x, y);
         for (int k = 0; k < 6; k++) {
             adjHex = adjacentHex(field[i][j], k);
@@ -523,6 +627,7 @@ public class FieldController {
                 resHex = adjHex;
             }
         }
+
         return resHex;
     }
 
@@ -555,14 +660,19 @@ public class FieldController {
 
     public void spawnTree(Hex hex) {
         if (!hex.active) return;
-        if (hex.isNearWater()) addSolidObject(hex, Hex.OBJECT_PALM);
-        else addSolidObject(hex, Hex.OBJECT_PINE);
+        if (hex.isNearWater()) addSolidObject(hex, Obj.PALM);
+        else addSolidObject(hex, Obj.PINE);
     }
 
 
     public void addSolidObject(Hex hex, int type) {
         if (hex == null || !hex.active) return;
-        if (solidObjects.contains(hex)) cleanOutHex(hex);
+        if (hex.objectInside == type) return;
+
+        if (solidObjects.contains(hex)) {
+            cleanOutHex(hex);
+        }
+
         hex.setObjectInside(type);
         solidObjects.listIterator().add(hex);
     }
@@ -570,7 +680,7 @@ public class FieldController {
 
     public void cleanOutHex(Hex hex) {
         if (hex.containsUnit()) {
-            gameController.getStatistics().unitWasKilled();
+            gameController.getMatchStatistics().unitWasKilled();
             gameController.getUnitList().remove(hex.unit);
             hex.unit = null;
         }
@@ -587,7 +697,7 @@ public class FieldController {
 
 
     public void destroyBuildingsOnHex(Hex hex) {
-        boolean hadHouse = (hex.objectInside == Hex.OBJECT_TOWN);
+        boolean hadHouse = (hex.objectInside == Obj.TOWN);
         if (hex.containsBuilding()) cleanOutHex(hex);
 //        if (hex.containsUnit()) killUnitOnHex(hex);
         if (hadHouse) {
@@ -598,19 +708,23 @@ public class FieldController {
 
     public boolean buildUnit(Province province, Hex hex, int strength) {
         if (province == null || hex == null) return false;
+
         if (province.canBuildUnit(strength)) {
             // check if can build unit
             if (hex.sameColor(province) && hex.containsUnit() && !gameController.canMergeUnits(strength, hex.unit.strength))
                 return false;
+
             gameController.takeSnapshot();
             province.money -= GameRules.PRICE_UNIT * strength;
-            gameController.getStatistics().moneyWereSpent(GameRules.PRICE_UNIT * strength);
+            gameController.getMatchStatistics().moneyWereSpent(GameRules.PRICE_UNIT * strength);
+            gameController.replayManager.onUnitBuilt(province, hex, strength);
             updateSelectedProvinceMoney();
+
             if (hex.sameColor(province)) { // build unit peacefully inside province
                 if (hex.containsUnit()) { // merge units
                     Unit bUnit = new Unit(gameController, hex, strength);
                     bUnit.setReadyToMove(true);
-                    gameController.statistics.unitsDied++;
+                    gameController.matchStatistics.unitsDied++;
                     gameController.mergeUnits(hex, bUnit, hex.unit);
                 } else {
                     addUnit(hex, strength);
@@ -627,8 +741,12 @@ public class FieldController {
             gameController.updateBalanceString();
             return true;
         }
+
         // can't build unit
-        if (gameController.isPlayerTurn()) gameController.tickleMoneySign();
+        if (gameController.isPlayerTurn()) {
+            gameController.tickleMoneySign();
+        }
+
         return false;
     }
 
@@ -637,10 +755,11 @@ public class FieldController {
         if (province == null) return false;
         if (province.hasMoneyForTower()) {
             gameController.takeSnapshot();
-            addSolidObject(hex, Hex.OBJECT_TOWER);
+            gameController.replayManager.onTowerBuilt(hex, false);
+            addSolidObject(hex, Obj.TOWER);
             addAnimHex(hex);
             province.money -= GameRules.PRICE_TOWER;
-            gameController.getStatistics().moneyWereSpent(GameRules.PRICE_TOWER);
+            gameController.getMatchStatistics().moneyWereSpent(GameRules.PRICE_TOWER);
             updateSelectedProvinceMoney();
             gameController.updateCacheOnceAfterSomeTime();
             return true;
@@ -654,12 +773,14 @@ public class FieldController {
 
     public boolean buildStrongTower(Province province, Hex hex) {
         if (province == null) return false;
+
         if (province.hasMoneyForStrongTower()) {
             gameController.takeSnapshot();
-            addSolidObject(hex, Hex.OBJECT_STRONG_TOWER);
+            gameController.replayManager.onTowerBuilt(hex, true);
+            addSolidObject(hex, Obj.STRONG_TOWER);
             addAnimHex(hex);
             province.money -= GameRules.PRICE_STRONG_TOWER;
-            gameController.getStatistics().moneyWereSpent(GameRules.PRICE_STRONG_TOWER);
+            gameController.getMatchStatistics().moneyWereSpent(GameRules.PRICE_STRONG_TOWER);
             updateSelectedProvinceMoney();
             gameController.updateCacheOnceAfterSomeTime();
             return true;
@@ -673,14 +794,16 @@ public class FieldController {
 
     public boolean buildFarm(Province province, Hex hex) {
         if (province == null) return false;
-        if (!hex.hasThisObjectNearby(Hex.OBJECT_TOWN) && !hex.hasThisObjectNearby(Hex.OBJECT_FARM)) {
+        if (!hex.hasThisObjectNearby(Obj.TOWN) && !hex.hasThisObjectNearby(Obj.FARM)) {
             return false;
         }
+
         if (province.hasMoneyForFarm()) {
             gameController.takeSnapshot();
+            gameController.replayManager.onFarmBuilt(hex);
             province.money -= province.getCurrentFarmPrice();
-            gameController.getStatistics().moneyWereSpent(province.getCurrentFarmPrice());
-            addSolidObject(hex, Hex.OBJECT_FARM);
+            gameController.getMatchStatistics().moneyWereSpent(province.getCurrentFarmPrice());
+            addSolidObject(hex, Obj.FARM);
             addAnimHex(hex);
             updateSelectedProvinceMoney();
             gameController.updateCacheOnceAfterSomeTime();
@@ -700,7 +823,7 @@ public class FieldController {
             spawnTree(hex);
             addAnimHex(hex);
             province.money -= GameRules.PRICE_TREE;
-            gameController.getStatistics().moneyWereSpent(GameRules.PRICE_TREE);
+            gameController.getMatchStatistics().moneyWereSpent(GameRules.PRICE_TREE);
             updateSelectedProvinceMoney();
             gameController.updateCacheOnceAfterSomeTime();
             return true;
@@ -740,7 +863,24 @@ public class FieldController {
 
     public void addProvince(Province province) {
         if (provinces.contains(province)) return;
+        if (containsEqualProvince(province)) {
+            System.out.println("Problem in FieldController.addProvince()");
+            Yio.printStackTrace();
+            return;
+        }
+
         provinces.add(province);
+    }
+
+
+    public boolean containsEqualProvince(Province province) {
+        for (Province p : provinces) {
+            if (p.equals(province)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 
@@ -769,6 +909,11 @@ public class FieldController {
 //            return;
 //        }
         detectAndShowMoveZone(selectedHexes.get(0), strength);
+    }
+
+
+    public boolean isSomethingSelected() {
+        return selectedHexes.size() > 0;
     }
 
 
@@ -863,9 +1008,11 @@ public class FieldController {
 
     public Province getProvinceByHex(Hex hex) {
         for (Province province : provinces) {
-            if (province.containsHex(hex))
+            if (province.containsHex(hex)) {
                 return province;
+            }
         }
+
         return null;
     }
 
@@ -916,18 +1063,15 @@ public class FieldController {
                 province.money = 0;
                 if (!province.hasCapital()) {
                     province.placeCapitalInRandomPlace(gameController.getPredictableRandom());
-//                    YioGdxGame.say("placed capital of " + province.getColor() + ", variants = " + province.hexList.size());
                 }
                 addProvince(province);
                 provincesAdded.add(province);
-//                YioGdxGame.say("added province with size " + province.hexList.size() + ", color = " + province.getColor());
             } else {
                 destroyBuildingsOnHex(startHex);
             }
         }
-        if (provincesAdded.size() > 0 && !(hex.objectInside == Hex.OBJECT_TOWN)) {
+        if (provincesAdded.size() > 0 && !(hex.objectInside == Obj.TOWN)) {
             getMaxProvinceFromList(provincesAdded).money = oldProvince.money;
-//            YioGdxGame.say("transferring money: " + oldProvince.money + ", color = " + getMaxProvinceFromList(provincesAdded).getColor());
         }
         provinces.remove(oldProvince);
     }
@@ -1005,11 +1149,15 @@ public class FieldController {
 
     public void updateFocusedHex(float screenX, float screenY) {
         OrthographicCamera orthoCam = gameController.cameraController.orthoCam;
-        gameController.selectionController.selectX = (screenX - 0.5f * GraphicsYio.width) * orthoCam.zoom + orthoCam.position.x;
-        gameController.selectionController.selectY = (screenY - 0.5f * GraphicsYio.height) * orthoCam.zoom + orthoCam.position.y;
+        SelectionController selectionController = gameController.selectionController;
 
-        float x = gameController.selectionController.selectX + gameController.getYioGdxGame().gameView.hexViewSize;
-        float y = gameController.selectionController.selectY + gameController.getYioGdxGame().gameView.hexViewSize;
+        selectionController.selectX = (screenX - 0.5f * GraphicsYio.width) * orthoCam.zoom + orthoCam.position.x;
+        selectionController.selectY = (screenY - 0.5f * GraphicsYio.height) * orthoCam.zoom + orthoCam.position.y;
+
+        GameView gameView = gameController.getYioGdxGame().gameView;
+        float x = selectionController.selectX + gameView.hexViewSize;
+        float y = selectionController.selectY + gameView.hexViewSize;
+
         focusedHex = getHexByPos(x, y);
 
     }

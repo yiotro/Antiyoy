@@ -33,7 +33,7 @@ public class SceneEditorHexPanel extends AbstractScene{
         for (int i = 12350; i < 12359; i++) {
             ButtonYio buttonYio = menuControllerYio.getButtonById(i);
             if (buttonYio == null) continue;
-            buttonYio.factorModel.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
+            buttonYio.appearFactor.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
             buttonYio.enableRectangularMask();
             buttonYio.disableTouchAnimation();
             buttonYio.setAnimType(ButtonYio.ANIM_DOWN);
@@ -41,7 +41,7 @@ public class SceneEditorHexPanel extends AbstractScene{
 
         for (int i = 150; i <= 158; i++) {
             ButtonYio buttonYio = menuControllerYio.getButtonById(i);
-            buttonYio.factorModel.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
+            buttonYio.appearFactor.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
             buttonYio.enableRectangularMask();
             buttonYio.disableTouchAnimation();
             buttonYio.setAnimType(ButtonYio.ANIM_DOWN);

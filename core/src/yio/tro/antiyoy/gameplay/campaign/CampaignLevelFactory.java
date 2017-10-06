@@ -1,12 +1,10 @@
 package yio.tro.antiyoy.gameplay.campaign;
 
-import yio.tro.antiyoy.LanguagesManager;
-import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.menu.SliderYio;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.ai.ArtificialIntelligence;
 import yio.tro.antiyoy.gameplay.FieldController;
 import yio.tro.antiyoy.gameplay.GameController;
-import yio.tro.antiyoy.gameplay.GameSaver;
-import yio.tro.antiyoy.gameplay.MapGenerator;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
@@ -24,46 +22,38 @@ public class CampaignLevelFactory {
     public static final int NORMAL_LEVELS_START = 9;
     public static final int HARD_LEVELS_START = 24;
     public static final int EXPERT_LEVELS_START = 60;
-    private final String[] levels;
     private final LevelPackOne levelPackOne;
     private final LevelPackTwo levelPackTwo;
+    private final LevelPackThree levelPackThree;
+    int index;
 
 
     public CampaignLevelFactory(GameController gameController) {
         this.gameController = gameController;
-        levels = new String[CampaignProgressManager.getIndexOfLastLevel() + 1];
-//        setLevels();
 
         levelPackOne = new LevelPackOne(this);
         levelPackTwo = new LevelPackTwo(this);
+        levelPackThree = new LevelPackThree(this);
+        index = -1;
     }
 
 
     public boolean createCampaignLevel(int index) {
+        this.index = index;
+
         CampaignProgressManager.getInstance().setCurrentLevelIndex(index);
         gameController.getYioGdxGame().setSelectedLevelIndex(index);
         updateRules(); // used for pack two
 
-        if (checkForTutorial(index)) return true;
+        if (checkForTutorial()) return true;
         if (CampaignProgressManager.getInstance().isLevelLocked(index)) return false;
-        if (levelPackOne.checkForLevelPackOne(index)) return true;
-        if (levelPackTwo.checkForlevelPackTwo(index)) return true;
+        if (levelPackOne.checkForLevelPackOne()) return true;
+        if (levelPackTwo.checkForlevelPack()) return true;
+        if (levelPackThree.checkForlevelPack()) return true;
 
-        createLevelWithPredictableRandom(index);
+        createLevelWithPredictableRandom();
 
-//        GameRules.campaignMode = true;
         return true;
-
-//        if (YioGdxGame.isScreenVeryWide()) {
-//            createLevelWithPredictableRandom(index);
-//            return;
-//        }
-//        GameSaver gameSaver = gameController.gameSaver;
-//        gameSaver.setActiveHexesString(levels[index]);
-//        gameSaver.beginRecreation();
-//        gameSaver.setBasicInfo(0, 1, getColorNumberByIndex(index), getLevelSizeByIndex(index), getDifficultyByIndex(index));
-//        gameController.colorIndexViewOffset = (new Random(index)).nextInt(getColorNumberByIndex(index));
-//        gameSaver.endRecreation();
     }
 
 
@@ -72,7 +62,7 @@ public class CampaignLevelFactory {
     }
 
 
-    private boolean checkForTutorial(int index) {
+    private boolean checkForTutorial() {
         if (index == 0) { // tutorial level
 //            GameRules.setSlayRules(false);
             gameController.initTutorial();
@@ -83,7 +73,7 @@ public class CampaignLevelFactory {
     }
 
 
-    private void createLevelWithPredictableRandom(int index) {
+    private void createLevelWithPredictableRandom() {
         LoadingParameters instance = LoadingParameters.getInstance();
         instance.mode = LoadingParameters.MODE_CAMPAIGN_RANDOM;
         instance.levelSize = getLevelSizeByIndex(index);
@@ -91,33 +81,21 @@ public class CampaignLevelFactory {
         instance.colorNumber = getColorNumberByIndex(index);
         instance.difficulty = getDifficultyByIndex(index);
         instance.colorOffset = readColorOffsetFromSlider(instance.colorNumber);
-        instance.slayRules = GameRules.slay_rules;
+        instance.slayRules = GameRules.slayRules;
         instance.campaignLevelIndex = index;
         LoadingManager.getInstance().startGame(instance);
-
-//        gameController.setLevelSize(getLevelSizeByIndex(index));
-//        gameController.setPlayersNumber(1);
-//        GameRules.setColorNumber(getColorNumberByIndex(index));
-//        GameRules.setDifficulty(getDifficultyByIndex(index));
-//        gameController.yioGdxGame.startGame(index, false, false);
-
-//        finishCreatingLevelWithPredictableRandom();
 
         checkForHelloMessage(index);
     }
 
 
     public int readColorOffsetFromSlider(int colorNumber) {
-        return gameController.getColorOffsetBySlider(gameController.yioGdxGame.menuControllerYio.sliders.get(6), colorNumber);
+        return gameController.getColorOffsetBySlider(getColorOffsetSlider(), colorNumber);
     }
 
 
-    private void finishCreatingLevelWithPredictableRandom() {
-        GameRules.campaignMode = true;
-        gameController.readColorOffsetFromSlider();
-        gameController.yioGdxGame.gameView.updateCacheLevelTextures();
-        gameController.yioGdxGame.gameView.beginSpawnProcess();
-        gameController.selectionController.deselectAll();
+    private SliderYio getColorOffsetSlider() {
+        return gameController.yioGdxGame.menuControllerYio.sliders.get(6);
     }
 
 

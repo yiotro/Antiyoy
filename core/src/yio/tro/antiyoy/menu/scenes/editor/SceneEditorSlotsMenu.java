@@ -38,7 +38,7 @@ public class SceneEditorSlotsMenu extends AbstractScene{
         basePanel.setTouchable(false);
         basePanel.onlyShadow = true;
         basePanel.setAnimType(ButtonYio.ANIM_FROM_CENTER);
-        basePanel.factorModel.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
+        basePanel.appearFactor.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
 
         for (int i = 0; i < 8; i++) {
             ButtonYio slotButton = buttonFactory.getButton(generateRectangle(0.05, 0.75 - 0.1 * (double) i, 0.9, 0.1), 131 + i, null);
@@ -50,7 +50,7 @@ public class SceneEditorSlotsMenu extends AbstractScene{
             slotButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
             slotButton.setShadow(false);
             slotButton.setReactBehavior(EditorReactions.rbEditorActionsMenu);
-            slotButton.factorModel.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
+            slotButton.appearFactor.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
         }
 
         menuControllerYio.spawnBackButton(130, ReactBehavior.rbChooseGameModeMenu);

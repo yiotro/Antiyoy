@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.gameplay;
 
-import yio.tro.antiyoy.Fonts;
-import yio.tro.antiyoy.LanguagesManager;
+import yio.tro.antiyoy.stuff.Fonts;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 
@@ -66,11 +66,15 @@ public class Province {
 
 
     void placeCapitalInRandomPlace(Random random) {
+        if (GameRules.replayMode) return;
+
         Hex randomPlace = getFreeHex(random);
         if (randomPlace == null) randomPlace = getAnyHexExceptTowers();
         if (randomPlace == null) randomPlace = getRandomHex();
+
         gameController.cleanOutHex(randomPlace);
-        gameController.addSolidObject(randomPlace, Hex.OBJECT_TOWN);
+        gameController.addSolidObject(randomPlace, Obj.TOWN);
+        gameController.replayManager.onCitySpawned(randomPlace);
         gameController.addAnimHex(randomPlace);
         gameController.updateCacheOnceAfterSomeTime();
         randomPlace.lastColorIndex = randomPlace.colorIndex;
@@ -81,16 +85,18 @@ public class Province {
 
 
     boolean hasCapital() {
-        for (Hex hex : hexList)
-            if (hex.objectInside == Hex.OBJECT_TOWN)
+        for (Hex hex : hexList) {
+            if (hex.objectInside == Obj.TOWN) {
                 return true;
+            }
+        }
         return false;
     }
 
 
     public Hex getStrongTower() {
         for (Hex hex : hexList) {
-            if (hex.objectInside == Hex.OBJECT_STRONG_TOWER) {
+            if (hex.objectInside == Obj.STRONG_TOWER) {
                 return hex;
             }
         }
@@ -100,7 +106,7 @@ public class Province {
 
     public Hex getCapital() {
         for (Hex hex : hexList)
-            if (hex.objectInside == Hex.OBJECT_TOWN)
+            if (hex.objectInside == Obj.TOWN)
                 return hex;
         return hexList.get(0);
     }
@@ -168,7 +174,7 @@ public class Province {
 
     private void clearFromHouses() {
         for (Hex hex : hexList)
-            if (hex.objectInside == Hex.OBJECT_TOWN)
+            if (hex.objectInside == Obj.TOWN)
                 gameController.cleanOutHex(hex);
     }
 
@@ -209,7 +215,7 @@ public class Province {
 
     void setCapital(Hex hex) {
         clearFromHouses();
-        gameController.addSolidObject(hex, Hex.OBJECT_TOWN);
+        gameController.addSolidObject(hex, Obj.TOWN);
         updateName();
     }
 
@@ -235,6 +241,8 @@ public class Province {
 
 
     public boolean canBuildUnit(int strength) {
+        if (GameRules.replayMode) return true;
+
         return gameController.ruleset.canBuildUnit(this, strength);
     }
 
@@ -268,12 +276,25 @@ public class Province {
         int c = 0;
 
         for (Hex hex : hexList) {
-            if (hex.objectInside == Hex.OBJECT_FARM) {
+            if (hex.objectInside == Obj.FARM) {
                 c += 2;
             }
         }
 
         return c;
+    }
+
+
+    public boolean equals(Province province) {
+        for (Hex hex : hexList) {
+            if (!province.containsHex(hex)) return false;
+        }
+
+        for (Hex hex : province.hexList) {
+            if (!containsHex(hex)) return false;
+        }
+
+        return true;
     }
 
 
@@ -302,5 +323,18 @@ public class Province {
 
     void close() {
         gameController = null;
+    }
+
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("[Province:");
+        for (Hex hex : hexList) {
+            builder.append(" ").append(hex);
+        }
+        builder.append("]");
+
+        return builder.toString();
     }
 }

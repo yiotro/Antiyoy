@@ -26,13 +26,13 @@ public class SceneTutorialTip extends AbstractScene{
         menuControllerYio.getButtonRenderer().renderButton(textPanel);
         textPanel.setTouchable(false);
         textPanel.setAnimType(ButtonYio.ANIM_COLLAPSE_DOWN);
-        textPanel.factorModel.beginSpawning(3, 1);
+        textPanel.appearFactor.beginSpawning(3, 1);
 
         ButtonYio okButton = buttonFactory.getButton(generateRectangle(0.6, 0.1, 0.4, 0.07), 53, getString("end_game_ok"));
         okButton.setShadow(false);
         okButton.setReactBehavior(ReactBehavior.rbCloseTutorialTip);
         okButton.setAnimType(ButtonYio.ANIM_COLLAPSE_DOWN);
-        okButton.factorModel.beginSpawning(3, 1);
+        okButton.appearFactor.beginSpawning(3, 1);
     }
 
 
@@ -51,25 +51,25 @@ public class SceneTutorialTip extends AbstractScene{
         menuControllerYio.getButtonRenderer().renderButton(textPanel);
         textPanel.setTouchable(false);
         textPanel.setAnimType(ButtonYio.ANIM_COLLAPSE_DOWN);
-        textPanel.factorModel.beginSpawning(3, 1);
+        textPanel.appearFactor.beginSpawning(3, 1);
 
         ButtonYio okButton = buttonFactory.getButton(generateRectangle(0.6, 0.1, 0.4, 0.07), 53, getString("end_game_ok"));
         okButton.setShadow(false);
         okButton.setReactBehavior(ReactBehavior.rbCloseTutorialTip);
         okButton.setAnimType(ButtonYio.ANIM_COLLAPSE_DOWN);
-        okButton.factorModel.beginSpawning(3, 1);
+        okButton.appearFactor.beginSpawning(3, 1);
     }
 
 
     public void closeTutorialTip() {
         menuControllerYio.getButtonById(50).destroy();
         menuControllerYio.getButtonById(53).destroy();
-        menuControllerYio.getButtonById(50).factorModel.beginDestroying(1, 3);
-        menuControllerYio.getButtonById(53).factorModel.beginDestroying(1, 3);
+        menuControllerYio.getButtonById(50).appearFactor.beginDestroying(1, 3);
+        menuControllerYio.getButtonById(53).appearFactor.beginDestroying(1, 3);
 
         if (menuControllerYio.getButtonById(54) != null) { // help index button
             menuControllerYio.getButtonById(54).destroy();
-            menuControllerYio.getButtonById(54).factorModel.beginDestroying(1, 3);
+            menuControllerYio.getButtonById(54).appearFactor.beginDestroying(1, 3);
         }
 
         menuControllerYio.getButtonById(30).setTouchable(true);

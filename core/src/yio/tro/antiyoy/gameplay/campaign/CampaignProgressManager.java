@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
 public class CampaignProgressManager {
 
     public static final String PROGRESS_PREFS = "antiyoy.progress";
-    public static final int INDEX_OF_LAST_LEVEL = 90;
+    public static final int INDEX_OF_LAST_LEVEL = 95;
 
     private static CampaignProgressManager instance;
     public int currentLevelIndex;
@@ -145,8 +145,31 @@ public class CampaignProgressManager {
     }
 
 
+    public int getIndexOfRelevantLevel() {
+        int index = 0;
+
+        for (int i = 0; i < progress.length; i++) {
+            if (progress[i]) {
+                index = i;
+            }
+        }
+
+        index++;
+        if (index >= progress.length) {
+            index--;
+        }
+
+        return index;
+    }
+
+
     public void setCurrentLevelIndex(int currentLevelIndex) {
         this.currentLevelIndex = currentLevelIndex;
+    }
+
+
+    public int getCurrentLevelIndex() {
+        return currentLevelIndex;
     }
 
 

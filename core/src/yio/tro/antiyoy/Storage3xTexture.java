@@ -1,6 +1,7 @@
 package yio.tro.antiyoy;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import yio.tro.antiyoy.stuff.AtlasLoader;
 
 /**
  * Created by ivan on 25.09.2015.

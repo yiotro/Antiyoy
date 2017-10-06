@@ -78,12 +78,13 @@ public abstract class ReactBehavior {
     public static final RbSetLanguage rbSetLanguage = new RbSetLanguage();
     public static final RbResetProgress rbResetProgress = new RbResetProgress();
     public static final RbConfirmReset rbConfirmReset = new RbConfirmReset();
-    public static final RbForceEnableShroomArts rbForceEnableShroomArts = new RbForceEnableShroomArts();
     public static final RbRefuseEarlyGameEnd rbRefuseEarlyGameEnd = new RbRefuseEarlyGameEnd();
     public static final RbSwitchFilterOnlyLand rbSwitchFilterOnlyLand = new RbSwitchFilterOnlyLand();
     public static final RbArticleRules rbArticleRules = new RbArticleRules();
     public static final RbUnlockLevels rbUnlockLevels = new RbUnlockLevels();
     public static final RbShowFps rbShowFps = new RbShowFps();
     public static final RbShowCheatSceen rbShowCheatSceen = new RbShowCheatSceen();
+    public static final RbReplaysMenu rbReplaysMenu = new RbReplaysMenu();
+    public static final RbStartInstantReplay rbStartInstantReplay = new RbStartInstantReplay();
 
 }

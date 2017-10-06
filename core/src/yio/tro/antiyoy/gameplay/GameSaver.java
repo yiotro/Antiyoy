@@ -2,12 +2,12 @@ package yio.tro.antiyoy.gameplay;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.scenes.Scenes;
+import yio.tro.antiyoy.stuff.Yio;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -39,17 +39,17 @@ public class GameSaver {
         prefs.putInteger("save_current_level", CampaignProgressManager.getInstance().currentLevelIndex);
         prefs.putInteger("save_difficulty", GameRules.difficulty);
         prefs.putInteger("save_color_offset", gameController.colorIndexViewOffset);
-        prefs.putBoolean("slay_rules", GameRules.slay_rules);
+        prefs.putBoolean("slay_rules", GameRules.slayRules);
     }
 
 
     private void saveStatistics() {
-        Statistics statistics = gameController.statistics;
-        prefs.putInteger("save_stat_turns_made", statistics.turnsMade);
-        prefs.putInteger("save_stat_units_died", statistics.unitsDied);
-        prefs.putInteger("save_stat_units_produced", statistics.unitsProduced);
-        prefs.putInteger("save_stat_money_spent", statistics.moneySpent);
-        prefs.putInteger("save_stat_time_count", statistics.timeCount);
+        MatchStatistics matchStatistics = gameController.matchStatistics;
+        prefs.putInteger("save_stat_turns_made", matchStatistics.turnsMade);
+        prefs.putInteger("save_stat_units_died", matchStatistics.unitsDied);
+        prefs.putInteger("save_stat_units_produced", matchStatistics.unitsProduced);
+        prefs.putInteger("save_stat_money_spent", matchStatistics.moneySpent);
+        prefs.putInteger("save_stat_time_count", matchStatistics.timeCount);
     }
 
 
@@ -100,9 +100,7 @@ public class GameSaver {
 
     public void saveGameToSlot(int slotIndex) {
         saveGame("save_slot" + slotIndex);
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy  HH:mm");
-        Date date = new Date();
-        String dateString = dateFormat.format(date);
+        String dateString = Yio.getDate();
         prefs.putString("date", dateString);
         prefs.flush();
         Scenes.sceneSaveSlots.updateSaveSlotButton(slotIndex);
@@ -179,7 +177,7 @@ public class GameSaver {
     }
 
 
-    private void createHexStrings() {
+    public void createHexStrings() {
         StringTokenizer tokenizer = new StringTokenizer(activeHexesString, tokenSeparator);
         hexStrings = new ArrayList<String>();
         while (tokenizer.hasMoreTokens()) {
@@ -189,7 +187,7 @@ public class GameSaver {
     }
 
 
-    private void recreateMap() {
+    public void recreateMap() {
         for (String hexString : hexStrings) {
             activateHexByString(hexString);
         }
@@ -203,56 +201,18 @@ public class GameSaver {
 
 
     private void loadStatistics() {
-        Statistics statistics = gameController.statistics;
-        statistics.turnsMade = prefs.getInteger("save_stat_turns_made", statistics.turnsMade);
-        statistics.unitsDied = prefs.getInteger("save_stat_units_died", statistics.unitsDied);
-        statistics.unitsProduced = prefs.getInteger("save_stat_units_produced", statistics.unitsProduced);
-        statistics.moneySpent = prefs.getInteger("save_stat_money_spent", statistics.moneySpent);
-        statistics.timeCount = prefs.getInteger("save_stat_time_count", statistics.timeCount);
-    }
-
-
-    private boolean isOverTheTop() {
-        for (String hexString : hexStrings) {
-            int snapshot[] = getHexSnapshotByString(hexString);
-            float posY = gameController.fieldController.fieldPos.y + gameController.fieldController.hexStep1 * snapshot[0] + gameController.fieldController.hexStep2 * snapshot[1] * gameController.fieldController.cos60;
-            if (posY > gameController.boundHeight - gameController.fieldController.hexSize) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    private boolean canMoveDown() {
-        for (String hexString : hexStrings) {
-            int snapshot[] = getHexSnapshotByString(hexString);
-            float posY = gameController.fieldController.fieldPos.y + gameController.fieldController.hexStep1 * snapshot[0] + gameController.fieldController.hexStep2 * snapshot[1] * gameController.fieldController.cos60;
-            if (posY < gameController.fieldController.hexSize) return false;
-            if (snapshot[0] < 1) return false;
-        }
-        return true;
-    }
-
-
-    private void supportForWideScreens() {
-        while (isOverTheTop() && canMoveDown()) {
-            ArrayList<String> copy = new ArrayList<String>(hexStrings);
-            hexStrings = new ArrayList<String>();
-            for (String oldHexString : copy) {
-                int snapshot[] = getHexSnapshotByString(oldHexString);
-                snapshot[0]--;
-                hexStrings.add(getHexStringBySnapshot(snapshot));
-            }
-            gameController.cameraController.compensationOffsetY--;
-        }
+        MatchStatistics matchStatistics = gameController.matchStatistics;
+        matchStatistics.turnsMade = prefs.getInteger("save_stat_turns_made", matchStatistics.turnsMade);
+        matchStatistics.unitsDied = prefs.getInteger("save_stat_units_died", matchStatistics.unitsDied);
+        matchStatistics.unitsProduced = prefs.getInteger("save_stat_units_produced", matchStatistics.unitsProduced);
+        matchStatistics.moneySpent = prefs.getInteger("save_stat_money_spent", matchStatistics.moneySpent);
+        matchStatistics.timeCount = prefs.getInteger("save_stat_time_count", matchStatistics.timeCount);
     }
 
 
     public void beginRecreation() {
         gameController.fieldController.createFieldMatrix();
         createHexStrings();
-        if (YioGdxGame.isScreenVeryWide()) supportForWideScreens();
         recreateMap();
     }
 
@@ -278,12 +238,6 @@ public class GameSaver {
         instance.activeHexes = activeHexesString;
         LoadingManager.getInstance().startGame(instance);
         loadStatistics();
-
-//        loadBasicInfo(); // it's here twice for a reason
-//        beginRecreation(false);
-//        loadBasicInfo(); // it's here twice for a reason
-//        loadStatistics();
-//        endRecreation();
     }
 
 
@@ -301,8 +255,8 @@ public class GameSaver {
 
     private boolean doesHexRequireGenericRules(Hex activeHex) {
         if (activeHex.colorIndex == FieldController.NEUTRAL_LANDS_INDEX) return true;
-        if (activeHex.objectInside == Hex.OBJECT_FARM) return true;
-        if (activeHex.objectInside == Hex.OBJECT_STRONG_TOWER) return true;
+        if (activeHex.objectInside == Obj.FARM) return true;
+        if (activeHex.objectInside == Obj.STRONG_TOWER) return true;
 
         return false;
     }

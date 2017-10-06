@@ -1,7 +1,8 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import com.badlogic.gdx.Gdx;
-import yio.tro.antiyoy.GraphicsYio;
+import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
 import yio.tro.antiyoy.menu.ButtonYio;
@@ -15,10 +16,19 @@ public class SceneSettingsMenu extends AbstractScene{
 
     private double labelHeight;
     private double labelTopY;
+    ReactBehavior soundChkReaction;
+    private CheckButtonYio chkSound;
 
 
     public SceneSettingsMenu(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
+
+        soundChkReaction = new ReactBehavior() {
+            @Override
+            public void reactAction(ButtonYio buttonYio) {
+                Settings.sound = chkSound.isChecked();
+            }
+        };
     }
 
 
@@ -72,7 +82,8 @@ public class SceneSettingsMenu extends AbstractScene{
         chkCityNames.setTouchPosition(generateRectangle(0.04, chkY - hSize * 1.5, 0.92, hSize * 3));
 
         chkY -= 0.086;
-        CheckButtonYio chkSound = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 5);
+        chkSound = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 5);
+        chkSound.setReactBehavior(soundChkReaction);
         chkSound.setTouchPosition(generateRectangle(0.04, chkY - hSize * 1.5, 0.92, hSize * 3));
 
         for (int i = 1; i <= 5; i++) {

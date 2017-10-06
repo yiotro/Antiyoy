@@ -2,6 +2,8 @@ package yio.tro.antiyoy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import yio.tro.antiyoy.stuff.Fonts;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 
 public class CustomLanguageLoader {
 

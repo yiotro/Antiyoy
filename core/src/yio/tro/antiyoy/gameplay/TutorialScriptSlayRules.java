@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.gameplay;
 
-import yio.tro.antiyoy.LanguagesManager;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.Settings;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
@@ -83,7 +83,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
 
 
     private Hex getHex(int x, int y) {
-        return gameController.fieldController.field[x + gameController.cameraController.compensationOffsetY][y];
+        return gameController.fieldController.field[x][y];
     }
 
 
@@ -274,7 +274,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
                 if (gameController.selectionController.tipFactor.get() > 0) return true;
                 return false;
             case STEP_BUILD_TOWER:
-                if (getHex(21, 5).objectInside == Hex.OBJECT_TOWER) return true;
+                if (getHex(21, 5).objectInside == Obj.TOWER) return true;
                 return false;
             case STEP_PRESS_BUILD_UNIT_BUTTON_FIRST_TIME:
                 if (gameController.selectionController.tipFactor.get() > 0) return true;

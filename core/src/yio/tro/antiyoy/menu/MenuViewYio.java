@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
+import yio.tro.antiyoy.menu.render.MenuRender;
+import yio.tro.antiyoy.stuff.Fonts;
+import yio.tro.antiyoy.stuff.RectangleYio;
+import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.ArrayList;
 
@@ -33,12 +37,12 @@ public class MenuViewYio {
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
         cornerSize = (int) (0.02 * Gdx.graphics.getHeight());
-        buttonPixel = GameView.loadTextureRegionByName("button_pixel.png", false);
-        shadowCorner = GameView.loadTextureRegionByName("corner_shadow.png", true);
-        shadowSide = GameView.loadTextureRegionByName("side_shadow.png", true);
-        blackCircle = GameView.loadTextureRegionByName("anim_circle_high_res.png", false);
-        scrollerCircle = GameView.loadTextureRegionByName("scroller_circle.png", false);
-        grayTransCircle = GameView.loadTextureRegionByName("gray_transition_circle.png", false);
+        buttonPixel = GameView.loadTextureRegion("button_pixel.png", false);
+        shadowCorner = GameView.loadTextureRegion("corner_shadow.png", true);
+        shadowSide = GameView.loadTextureRegion("side_shadow.png", true);
+        blackCircle = GameView.loadTextureRegion("anim_circle_high_res.png", false);
+        scrollerCircle = GameView.loadTextureRegion("scroller_circle.png", false);
+        grayTransCircle = GameView.loadTextureRegion("gray_transition_circle.png", false);
 
         batch = yioGdxGame.batch;
         if (batch == null) {
@@ -49,6 +53,11 @@ public class MenuViewYio {
 
 
     public void drawRoundRect(RectangleYio pos) {
+        drawRoundRect(pos, cornerSize);
+    }
+
+
+    public void drawRoundRect(RectangleYio pos, int cornerSize) {
         shapeRenderer.rect((float) pos.x + cornerSize, (float) pos.y, (float) pos.width - 2 * cornerSize, (float) pos.height);
         shapeRenderer.rect((float) pos.x, (float) pos.y + cornerSize, (float) pos.width, (float) pos.height - 2 * cornerSize);
         shapeRenderer.circle((float) pos.x + cornerSize, (float) pos.y + cornerSize, cornerSize, 16);
@@ -73,8 +82,8 @@ public class MenuViewYio {
         x2 = buttonYio.x2;
         y1 = buttonYio.y1;
         y2 = buttonYio.y2;
-        if (buttonYio.factorModel.get() <= 1)
-            batch.setColor(c.r, c.g, c.b, buttonYio.factorModel.get());
+        if (buttonYio.appearFactor.get() <= 1)
+            batch.setColor(c.r, c.g, c.b, buttonYio.appearFactor.get());
         else batch.setColor(c.r, c.g, c.b, 1);
         batch.draw(shadowSide, x1 + cornerSize, y2 - cornerSize, 2 * (buttonYio.hor - cornerSize), 2 * cornerSize);
         batch.draw(shadowSide, x1 + cornerSize, y1 + cornerSize, 0, 0, 2 * (buttonYio.ver - cornerSize), 2 * cornerSize, 1, 1, 90);
@@ -96,9 +105,13 @@ public class MenuViewYio {
         x2 = cx + hor;
         y1 = cy - ver;
         y2 = cy + ver;
-        if (factor <= 1)
+
+        if (factor <= 1) {
             batch.setColor(c.r, c.g, c.b, factor);
-        else batch.setColor(c.r, c.g, c.b, 1);
+        } else {
+            batch.setColor(c.r, c.g, c.b, 1);
+        }
+
         batch.draw(shadowSide, x1 + cornerSize, y2 - cornerSize, 2 * (hor - cornerSize), 2 * cornerSize);
         batch.draw(shadowSide, x1 + cornerSize, y1 + cornerSize, 0, 0, 2 * (ver - cornerSize), 2 * cornerSize, 1, 1, 90);
         batch.draw(shadowSide, x2 - cornerSize, y1 + cornerSize, 0, 0, 2 * (hor - cornerSize), 2 * cornerSize, 1, 1, 180);
@@ -113,7 +126,7 @@ public class MenuViewYio {
     private boolean checkForSpecialMask(ButtonYio buttonYio) {
         switch (buttonYio.id) {
             case 3:
-                if (buttonYio.factorModel.get() > 0.1)
+                if (buttonYio.appearFactor.get() > 0.1)
                     shapeRenderer.circle(buttonYio.cx, buttonYio.cy, (float) (0.8 + 0.2 * buttonYio.selectionFactor.get()) * buttonYio.hor);
                 return true;
 //            case 84:
@@ -177,8 +190,35 @@ public class MenuViewYio {
         renderSelection(renderAliveButtons, renderDyingButtons, buttons);
 
         renderSliders();
-
         renderCheckButtons();
+        renderInterfaceElements();
+    }
+
+
+    private void renderInterfaceElements() {
+        ArrayList<InterfaceElement> interfaceElements = menuControllerYio.interfaceElements;
+
+        batch.begin();
+
+        // first layer
+        for (InterfaceElement element : interfaceElements) {
+            if (!element.isVisible()) continue;
+            element.getRenderSystem().renderFirstLayer(element);
+        }
+
+        // second layer
+        for (InterfaceElement element : interfaceElements) {
+            if (!element.isVisible()) continue;
+            element.getRenderSystem().renderSecondLayer(element);
+        }
+
+        // third layer
+        for (InterfaceElement element : interfaceElements) {
+            if (!element.isVisible()) continue;
+            element.getRenderSystem().renderThirdLayer(element);
+        }
+
+        batch.end();
     }
 
 
@@ -204,7 +244,7 @@ public class MenuViewYio {
                     buttonYio.isCurrentlyTouched() &&
                     buttonYio.touchAnimation &&
                     buttonYio.selectionFactor.get() < 1 &&
-                    ((renderAliveButtons && buttonYio.factorModel.getDy() >= 0) || (renderDyingButtons && buttonYio.factorModel.getDy() < 0) || buttonYio.selectionFactor.needsToMove())) {
+                    ((renderAliveButtons && buttonYio.appearFactor.getDy() >= 0) || (renderDyingButtons && buttonYio.appearFactor.getDy() < 0) || buttonYio.selectionFactor.needsToMove())) {
                 YioGdxGame.maskingBegin();
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
                 checkForSpecialAnimationMask(buttonYio);
@@ -231,11 +271,11 @@ public class MenuViewYio {
         for (ButtonYio buttonYio : buttons) {
             if (buttonYio.isVisible() &&
                     !buttonYio.onlyShadow &&
-                    ((renderAliveButtons && buttonYio.factorModel.getGravity() >= 0) || (renderDyingButtons && buttonYio.factorModel.getGravity() <= 0))) {
+                    ((renderAliveButtons && buttonYio.appearFactor.getGravity() >= 0) || (renderDyingButtons && buttonYio.appearFactor.getGravity() <= 0))) {
                 if (buttonYio.mandatoryShadow) renderShadow(buttonYio, batch);
                 if (!checkForSpecialAlpha(buttonYio)) {
-                    if (buttonYio.factorModel.get() <= 1)
-                        batch.setColor(c.r, c.g, c.b, buttonYio.factorModel.get());
+                    if (buttonYio.appearFactor.get() <= 1)
+                        batch.setColor(c.r, c.g, c.b, buttonYio.appearFactor.get());
                     else batch.setColor(c.r, c.g, c.b, 1);
                 }
                 ap = buttonYio.animPos;
@@ -261,7 +301,7 @@ public class MenuViewYio {
                     if (checkForSpecialMask(buttonYio)) continue;
                     if (buttonYio.rectangularMask &&
                             !buttonYio.currentlyTouched &&
-                            ((renderAliveButtons && buttonYio.factorModel.getGravity() >= 0) || (renderDyingButtons && buttonYio.factorModel.getGravity() <= 0))) {
+                            ((renderAliveButtons && buttonYio.appearFactor.getGravity() >= 0) || (renderDyingButtons && buttonYio.appearFactor.getGravity() <= 0))) {
                         drawRect(buttonYio.animPos);
                         continue;
                     }
@@ -280,8 +320,8 @@ public class MenuViewYio {
 //                    !buttonLighty.currentlyTouched &&
                     buttonYio.hasShadow &&
                     !buttonYio.mandatoryShadow &&
-                    buttonYio.factorModel.get() > 0.1 &&
-                    ((renderAliveButtons && buttonYio.factorModel.getGravity() >= 0) || (renderDyingButtons && buttonYio.factorModel.getGravity() <= 0))) {
+                    buttonYio.appearFactor.get() > 0.1 &&
+                    ((renderAliveButtons && buttonYio.appearFactor.getGravity() >= 0) || (renderDyingButtons && buttonYio.appearFactor.getGravity() <= 0))) {
                 renderShadow(buttonYio, batch);
             }
         }
@@ -301,8 +341,8 @@ public class MenuViewYio {
                     menuControllerYio.infoPanelFactor.get() * menuControllerYio.infoPanelFactor.get(),
                     infoPanel.animPos,
                     batch,
-                    (infoPanel.factorModel.get() * 0.5f + 0.5f) * yioGdxGame.w / 2,
-                    (float) (infoPanel.animPos.y + 0.95 * infoPanel.animPos.height - 0.65 * Math.sqrt(infoPanel.factorModel.get()) * infoPanel.animPos.height));
+                    (infoPanel.appearFactor.get() * 0.5f + 0.5f) * yioGdxGame.w / 2,
+                    (float) (infoPanel.animPos.y + 0.95 * infoPanel.animPos.height - 0.65 * Math.sqrt(infoPanel.appearFactor.get()) * infoPanel.animPos.height));
             YioGdxGame.maskingEnd();
         }
     }
@@ -432,5 +472,10 @@ public class MenuViewYio {
         batch.draw(circleTexture, x - r, y - r, 2 * r, 2 * r);
         batch.end();
         batch.setColor(c.r, c.g, c.b, 1);
+    }
+
+
+    public int getCornerSize() {
+        return cornerSize;
     }
 }

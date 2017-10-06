@@ -12,6 +12,7 @@ import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.ButtonYio;
+import yio.tro.antiyoy.stuff.*;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,9 @@ public class GameView {
     PointYio pos;
     double camBlurSpeed, zoomLevelOne, zoomLevelTwo;
     GrManager grManager;
+    private AtlasLoader atlasLoader;
+    private float smFactor;
+    private float smDelta;
 
 
     public GameView(YioGdxGame yioGdxGame) { //must be called after creation of GameController and MenuView
@@ -95,43 +99,67 @@ public class GameView {
 
     private void loadTextures() {
         loadBackgroundTexture();
-        blackCircleTexture = loadTextureRegionByName("black_circle.png", true);
-        shadowHexTexture = loadTextureRegionByName("shadow_hex.png", true);
-        gradientShadow = loadTextureRegionByName("gradient_shadow.png", false);
-        blackPixel = loadTextureRegionByName("black_pixel.png", false);
-        transCircle1 = loadTextureRegionByName("transition_circle_1.png", false);
-        transCircle2 = loadTextureRegionByName("transition_circle_2.png", false);
+        blackCircleTexture = loadTextureRegion("black_circle.png", true);
+        shadowHexTexture = loadTextureRegion("shadow_hex.png", true);
+        gradientShadow = loadTextureRegion("gradient_shadow.png", false);
+        blackPixel = loadTextureRegion("black_pixel.png", false);
+        transCircle1 = loadTextureRegion("transition_circle_1.png", false);
+        transCircle2 = loadTextureRegion("transition_circle_2.png", false);
         loadFieldTextures();
-        selUnitShadow = loadTextureRegionByName("sel_shadow.png", true);
-        sideShadow = loadTextureRegionByName("money_shadow.png", true);
-        moveZonePixel = loadTextureRegionByName("move_zone_pixel.png", false);
-        responseAnimHexTexture = loadTextureRegionByName("response_anim_hex.png", false);
-        selectionBorder = loadTextureRegionByName("selection_border.png", false);
+        selUnitShadow = loadTextureRegion("sel_shadow.png", true);
+        sideShadow = loadTextureRegion("money_shadow.png", true);
+        moveZonePixel = loadTextureRegion("move_zone_pixel.png", false);
+        responseAnimHexTexture = loadTextureRegion("response_anim_hex.png", false);
+        selectionBorder = loadTextureRegion("selection_border.png", false);
         loadExclamationMark();
-        forefingerTexture = loadTextureRegionByName("forefinger.png", true);
-        defenseIcon = loadTextureRegionByName("defense_icon.png", true);
-        blackBorderTexture = loadTextureRegionByName("pixels/black_border.png", true);
-        blackTriangle = loadTextureRegionByName("triangle.png", false);
-        greenPixel = loadTextureRegionByName("pixels/pixel_green.png", false);
-        grayPixel = blackPixel;
+        forefingerTexture = loadTextureRegion("forefinger.png", true);
+        defenseIcon = loadTextureRegion("defense_icon.png", true);
+        blackBorderTexture = loadTextureRegion("pixels/black_border.png", true);
+        blackTriangle = loadTextureRegion("triangle.png", false);
+        greenPixel = loadTextureRegion("pixels/pixel_green.png", false);
+        grayPixel = loadTextureRegion("pixels/gray_pixel.png", false);
+    }
+
+
+    void disposeTextures() {
+        backgroundRegion.getTexture().dispose();
+
+        blackCircleTexture.getTexture().dispose();
+        shadowHexTexture.getTexture().dispose();
+        gradientShadow.getTexture().dispose();
+        blackPixel.getTexture().dispose();
+        transCircle1.getTexture().dispose();
+        transCircle2.getTexture().dispose();
+        selUnitShadow.getTexture().dispose();
+        sideShadow.getTexture().dispose();
+        moveZonePixel.getTexture().dispose();
+        responseAnimHexTexture.getTexture().dispose();
+        selectionBorder.getTexture().dispose();
+        forefingerTexture.getTexture().dispose();
+        defenseIcon.getTexture().dispose();
+        blackBorderTexture.getTexture().dispose();
+        blackTriangle.getTexture().dispose();
+        greenPixel.getTexture().dispose();
+
+        atlasLoader.disposeAtlasRegion();
     }
 
 
     private void loadExclamationMark() {
         if (Settings.isShroomArtsEnabled()) {
-            exclamationMarkTexture = loadTextureRegionByName("skins/ant/exclamation_mark.png", true);
+            exclamationMarkTexture = loadTextureRegion("skins/ant/exclamation_mark.png", true);
             return;
         }
 
-        exclamationMarkTexture = loadTextureRegionByName("exclamation_mark.png", true);
+        exclamationMarkTexture = loadTextureRegion("exclamation_mark.png", true);
     }
 
 
     public void loadBackgroundTexture() {
         if (Settings.waterTexture) {
-            backgroundRegion = loadTextureRegionByName("game_background_water.png", true);
+            backgroundRegion = loadTextureRegion("game_background_water.png", true);
         } else {
-            backgroundRegion = loadTextureRegionByName("game_background.png", true);
+            backgroundRegion = loadTextureRegion("game_background.png", true);
         }
     }
 
@@ -172,43 +200,42 @@ public class GameView {
 
 
     private void loadOriginalSkin() {
-        hexGreen = loadTextureRegionByName("hex_green.png", false);
-        hexRed = loadTextureRegionByName("hex_red.png", false);
-        hexBlue = loadTextureRegionByName("hex_blue.png", false);
-        hexCyan = loadTextureRegionByName("hex_cyan.png", false);
-        hexYellow = loadTextureRegionByName("hex_yellow.png", false);
-        hexColor1 = loadTextureRegionByName("hex_color1.png", false);
-        hexColor2 = loadTextureRegionByName("hex_color2.png", false);
-        hexColor3 = loadTextureRegionByName("hex_color3.png", false);
+        hexGreen = loadTextureRegion("hex_green.png", false);
+        hexRed = loadTextureRegion("hex_red.png", false);
+        hexBlue = loadTextureRegion("hex_blue.png", false);
+        hexCyan = loadTextureRegion("hex_cyan.png", false);
+        hexYellow = loadTextureRegion("hex_yellow.png", false);
+        hexColor1 = loadTextureRegion("hex_color1.png", false);
+        hexColor2 = loadTextureRegion("hex_color2.png", false);
+        hexColor3 = loadTextureRegion("hex_color3.png", false);
     }
 
 
     private void loadPointsSkin() {
-        hexGreen = loadTextureRegionByName("skins/points_hex_green.png", false);
-        hexRed = loadTextureRegionByName("skins/points_hex_red.png", false);
-        hexBlue = loadTextureRegionByName("skins/points_hex_blue.png", false);
-        hexCyan = loadTextureRegionByName("skins/points_hex_cyan.png", false);
-        hexYellow = loadTextureRegionByName("skins/points_hex_yellow.png", false);
-        hexColor1 = loadTextureRegionByName("skins/points_hex_color1.png", false);
-        hexColor2 = loadTextureRegionByName("skins/points_hex_color2.png", false);
-        hexColor3 = loadTextureRegionByName("skins/points_hex_color3.png", false);
+        hexGreen = loadTextureRegion("skins/points_hex_green.png", false);
+        hexRed = loadTextureRegion("skins/points_hex_red.png", false);
+        hexBlue = loadTextureRegion("skins/points_hex_blue.png", false);
+        hexCyan = loadTextureRegion("skins/points_hex_cyan.png", false);
+        hexYellow = loadTextureRegion("skins/points_hex_yellow.png", false);
+        hexColor1 = loadTextureRegion("skins/points_hex_color1.png", false);
+        hexColor2 = loadTextureRegion("skins/points_hex_color2.png", false);
+        hexColor3 = loadTextureRegion("skins/points_hex_color3.png", false);
     }
 
 
     private void loadGridSkin() {
-        hexGreen = loadTextureRegionByName("skins/hex_green_grid.png", false);
-        hexRed = loadTextureRegionByName("skins/hex_red_grid.png", false);
-        hexBlue = loadTextureRegionByName("skins/hex_blue_grid.png", false);
-        hexCyan = loadTextureRegionByName("skins/hex_cyan_grid.png", false);
-        hexYellow = loadTextureRegionByName("skins/hex_yellow_grid.png", false);
-        hexColor1 = loadTextureRegionByName("skins/hex_color1_grid.png", false);
-        hexColor2 = loadTextureRegionByName("skins/hex_color2_grid.png", false);
-        hexColor3 = loadTextureRegionByName("skins/hex_color3_grid.png", false);
+        hexGreen = loadTextureRegion("skins/hex_green_grid.png", false);
+        hexRed = loadTextureRegion("skins/hex_red_grid.png", false);
+        hexBlue = loadTextureRegion("skins/hex_blue_grid.png", false);
+        hexCyan = loadTextureRegion("skins/hex_cyan_grid.png", false);
+        hexYellow = loadTextureRegion("skins/hex_yellow_grid.png", false);
+        hexColor1 = loadTextureRegion("skins/hex_color1_grid.png", false);
+        hexColor2 = loadTextureRegion("skins/hex_color2_grid.png", false);
+        hexColor3 = loadTextureRegion("skins/hex_color3_grid.png", false);
     }
 
 
     private void loadFieldTextures() {
-        AtlasLoader atlasLoader;
         atlasLoader = createAtlasLoader();
         selectionPixel = atlasLoader.getTexture("selection_pixel_lowest.png");
         manTextures = new Storage3xTexture[4];
@@ -239,7 +266,7 @@ public class GameView {
     }
 
 
-    public static TextureRegion loadTextureRegionByName(String name, boolean antialias) {
+    public static TextureRegion loadTextureRegion(String name, boolean antialias) {
         Texture texture = new Texture(Gdx.files.internal(name));
         if (antialias) texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         return new TextureRegion(texture);
@@ -248,6 +275,7 @@ public class GameView {
 
     public void updateCacheLevelTextures() {
         if (DebugFlags.CHECKING_BALANCE_MODE) return;
+
         gameController.letsUpdateCacheByAnim = false;
         for (int i = 0; i < cacheLevelTextures.length; i++) {
             FrameBuffer cacheLevelFrameBuffer = frameBufferList[i];
@@ -443,20 +471,20 @@ public class GameView {
 
     private TextureRegion getSolidObjectTexture(Hex hex, int quality) {
         switch (hex.objectInside) {
-            case Hex.OBJECT_GRAVE:
+            case Obj.GRAVE:
                 return graveTexture.getTexture(quality);
-            case Hex.OBJECT_TOWN:
-                if (GameRules.slay_rules) return houseTexture.getTexture(quality);
+            case Obj.TOWN:
+                if (GameRules.slayRules) return houseTexture.getTexture(quality);
                 return castleTexture.getTexture(quality);
-            case Hex.OBJECT_PALM:
+            case Obj.PALM:
                 return palmTexture.getTexture(quality);
-            case Hex.OBJECT_PINE:
+            case Obj.PINE:
                 return pineTexture.getTexture(quality);
-            case Hex.OBJECT_TOWER:
+            case Obj.TOWER:
                 return towerTexture.getTexture(quality);
-            case Hex.OBJECT_FARM:
+            case Obj.FARM:
                 return farmTexture[hex.viewDiversityIndex].getTexture(quality);
-            case Hex.OBJECT_STRONG_TOWER:
+            case Obj.STRONG_TOWER:
                 return strongTowerTexture.getTexture(quality);
             default:
                 return selectionPixel;
@@ -704,6 +732,11 @@ public class GameView {
     }
 
 
+    public void onPause() {
+        disposeTextures();
+    }
+
+
     private void renderSelectedHexes() {
         for (Hex hex : gameController.fieldController.selectedHexes) {
             if (hex.selectionFactor.get() < 0.01) continue;
@@ -785,7 +818,7 @@ public class GameView {
                     renderLineBetweenHexes(adjacentHex, hex, batchMovable, borderLineThickness, i);
                 }
             }
-            if (hex.containsBuilding() || hex.objectInside == Hex.OBJECT_GRAVE)
+            if (hex.containsBuilding() || hex.objectInside == Obj.GRAVE)
                 renderSolidObject(batchMovable, pos, hex);
         }
 
@@ -957,12 +990,14 @@ public class GameView {
         }
 
         // render money
-        if (gameController.selectionController.getSelMoneyFactor().get() > 0) {
+        smFactor = gameController.selectionController.getSelMoneyFactor().get();
+        smDelta = 0.1f * h * (1 - smFactor);
+        if (smFactor > 0) {
             batchSolid.begin();
-            batchSolid.draw(sideShadow, w, h, 0, 0, w, 0.1f * h * gameController.selectionController.getSelMoneyFactor().get(), 1, 1, 180);
-            batchSolid.draw(sideShadow, 0, 0, w, 0.1f * h * gameController.selectionController.getSelMoneyFactor().get());
-            Fonts.gameFont.draw(batchSolid, "" + gameController.fieldController.selectedProvinceMoney, 0.12f * w, (1.08f - 0.1f * gameController.selectionController.getSelMoneyFactor().get()) * h);
-            Fonts.gameFont.draw(batchSolid, gameController.balanceString, 0.47f * w, (1.08f - 0.1f * gameController.selectionController.getSelMoneyFactor().get()) * h);
+            batchSolid.draw(sideShadow, w, h + smDelta, 0, 0, w, 0.1f * h, 1, 1, 180);
+            batchSolid.draw(sideShadow, 0, -smDelta + 0, w, 0.1f * h);
+            Fonts.gameFont.draw(batchSolid, "" + gameController.fieldController.selectedProvinceMoney, 0.12f * w, (1.08f - 0.1f * smFactor) * h);
+            Fonts.gameFont.draw(batchSolid, gameController.balanceString, 0.47f * w, (1.08f - 0.1f * smFactor) * h);
             batchSolid.end();
         }
 
@@ -978,9 +1013,18 @@ public class GameView {
         float fw = factorModel.get() * cx;
         float fh = factorModel.get() * cy;
         batchSolid.setColor(c.r, c.g, c.b, factorModel.get());
-        batchSolid.draw(animationTextureRegion, cx - fw, cy - fh, 2 * fw, 2 * fh);
+        batchSolid.draw(getTransitionTexture(), cx - fw, cy - fh, 2 * fw, 2 * fh);
         batchSolid.setColor(c.r, c.g, c.b, c.a);
         batchSolid.end();
+    }
+
+
+    private TextureRegion getTransitionTexture() {
+        if (animationTextureRegion != null) {
+            return animationTextureRegion;
+        } else {
+            return backgroundRegion;
+        }
     }
 
 

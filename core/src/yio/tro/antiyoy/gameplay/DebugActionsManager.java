@@ -1,7 +1,10 @@
 package yio.tro.antiyoy.gameplay;
 
-import yio.tro.antiyoy.ai.ArtificialIntelligence;
+import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.gameplay.replays.ReplaySaveSystem;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+
+import java.util.ArrayList;
 
 public class DebugActionsManager {
 
@@ -17,12 +20,54 @@ public class DebugActionsManager {
 //        doShowActiveHexesString();
 //        doCaptureRandomHexes();
         //
-        doShowColorStuff();
+        doShowReplayManager();
+    }
+
+
+    private void doShowRuleset() {
+        System.out.println();
+        System.out.println("DebugActionsManager.doShowRuleset");
+        System.out.println("GameRules.slayRules = " + GameRules.slayRules);
+        String simpleName = gameController.ruleset.getClass().getSimpleName();
+        System.out.println("simpleName = " + simpleName);
+    }
+
+
+    private void checkIfSomeProvincesAreDoubledInList() {
+        ArrayList<Province> provinces = gameController.fieldController.provinces;
+        for (int i = 0; i < provinces.size(); i++) {
+            for (int j = 0; j < provinces.size(); j++) {
+                Province A = provinces.get(i);
+                Province B = provinces.get(j);
+                if (i != j && A.equals(B)) {
+                    System.out.println("found shit!");
+                }
+            }
+        }
+    }
+
+
+    private void doReplaySystemStuff() {
+        ReplaySaveSystem instance = ReplaySaveSystem.getInstance();
+        instance.clearKeys();
+
+        instance.saveReplay(gameController.replayManager.getReplay());
+    }
+
+
+    private void doShowReplayManager() {
+        gameController.replayManager.showInConsole();
+    }
+
+
+    private void doShowSnapshots() {
+        SnapshotManager snapshotManager = gameController.snapshotManager;
+        snapshotManager.showInConsole();
     }
 
 
     private void doShowStatistics() {
-        gameController.statistics.showInConsole();
+        gameController.matchStatistics.showInConsole();
     }
 
 

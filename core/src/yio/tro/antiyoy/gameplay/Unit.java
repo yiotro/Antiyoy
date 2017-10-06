@@ -1,8 +1,9 @@
 package yio.tro.antiyoy.gameplay;
 
-import yio.tro.antiyoy.PointYio;
+import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,7 @@ public class Unit {
 
     boolean moveToHex(Hex destinationHex) {
         if (destinationHex.sameColor(currentHex) && destinationHex.containsBuilding()) return false;
+
         gameController.ruleset.onUnitMoveToHex(this, destinationHex);
         if (destinationHex.containsObject()) {
             gameController.cleanOutHex(destinationHex); // unit crushes object
@@ -57,6 +59,7 @@ public class Unit {
         destinationHex.unit = this;
 //        YioGdxGame.say("anim hexes: " + gameController.animHexes.size() + "        selected hexes: " + gameController.selectedHexes.size());
 //        this was wonderful bug. Hexes were added to list several times which caused method move() to be called to many times
+
         return true;
     }
 
@@ -66,7 +69,7 @@ public class Unit {
     }
 
 
-    private void updateCurrentPos() {
+    void updateCurrentPos() {
         currentPos.x = lastHex.pos.x + moveFactor.get() * (currentHex.pos.x - lastHex.pos.x);
         currentPos.y = lastHex.pos.y + moveFactor.get() * (currentHex.pos.y - lastHex.pos.y);
     }
@@ -105,11 +108,16 @@ public class Unit {
                 }
             }
         }
-        if (closestHex != null && closestHex != currentHex) gameController.moveUnit(this, closestHex, province);
+
+        if (closestHex != null && closestHex != currentHex) {
+            gameController.moveUnit(this, closestHex, province);
+        }
     }
 
 
     void startJumping() {
+        if (GameRules.replayMode) return;
+
         jumpPos = 0;
         jumpDy = jumpStartingImpulse;
         jumpGravity = 0.001f;

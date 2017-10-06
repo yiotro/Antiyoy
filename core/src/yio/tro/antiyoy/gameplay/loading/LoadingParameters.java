@@ -3,6 +3,8 @@ package yio.tro.antiyoy.gameplay.loading;
 import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.replays.RepSlot;
+import yio.tro.antiyoy.gameplay.replays.Replay;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 import java.util.Random;
@@ -20,6 +22,7 @@ public class LoadingParameters {
     public static final int MODE_EDITOR_PLAY = 5;
     public static final int MODE_CAMPAIGN_RANDOM = 6;
     public static final int MODE_EDITOR_NEW = 7;
+    public static final int MODE_LOAD_REPLAY = 8;
 
     public int mode;
     public int levelSize;
@@ -31,6 +34,7 @@ public class LoadingParameters {
     public int campaignLevelIndex;
     public String activeHexes;
     public int turn;
+    public Replay replay;
 
 
     void defaultValues() {
@@ -44,6 +48,7 @@ public class LoadingParameters {
         campaignLevelIndex = YioGdxGame.random.nextInt();
         activeHexes = "";
         turn = -1;
+        replay = null;
     }
 
 
@@ -58,6 +63,7 @@ public class LoadingParameters {
         campaignLevelIndex = src.campaignLevelIndex;
         activeHexes = src.activeHexes;
         turn = src.turn;
+        replay = src.replay;
     }
 
 
@@ -84,6 +90,7 @@ public class LoadingParameters {
         System.out.println("campaignLevelIndex = " + campaignLevelIndex);
         System.out.println("activeHexes = " + activeHexes);
         System.out.println("turn = " + turn);
+        System.out.println("replay = " + replay);
 
         System.out.println();
     }

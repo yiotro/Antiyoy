@@ -15,7 +15,6 @@
         <!-- Random stuff -->
         <string key="menu_level" value="Level"/>
         <string key="menu_reset" value="Reset"/>
-
         <string key="game_saved" value="Game saved"/>
         <string key="restart_app" value="Restart app"/>
         <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
@@ -24,27 +23,23 @@
 
         <!-- Info -->
         <string key="info_back" value="Back"/>
-        <string key="info_array" value="This is a simple strategy
-        #game in minimalistic style.
-        #It's free and has no ads or donate.
-        #If this is your first run
-        #If you are new to game
-        #check tutorial or 'help'.
+        <string key="info_array" value="This is a simple strategy game in minimalistic style.
+        #It's free and has no ads or donations.
+        #If you are new to the game please check the tutorial or the 'help' menu.
         #
-        #This game was inspired by
-        #Slay from Sean O'Connor
+        #This game was inspired by Slay by Sean O'Connor.
         #
         #
         #
         #
         #
         #
-        #
+        #Reddit: /r/yiotro_games
         #E-mail: yiotro93@gmail.com
         #Made by yiotro
-		"/>
+        "/>
         <string key="reset_campaign_data" value="Reset data"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Skirmish"/>
@@ -85,6 +80,11 @@
         <string key="cancel" value="Cancel"/>
         <string key="confirm_end_turn" value="End turn?"/>
         <string key="yes" value="Yes"/>
+        <string key="confirm_import" value="Confirm import"/>
+        <string key="filter_no" value="No filter"/>
+        <string key="filter_only_land" value="Only land"/>
+        <string key="confirm_clear_level" value="Clear map?"/>
+        <string key="confirm_randomize" value="Generate random map?"/>
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Ok"/>
@@ -123,12 +123,12 @@
         <string key="normal_rules" value="Normal rules"/>
         <string key="how_to_play" value="How to play?"/>
         <string key="tutorial_ok" value="Ok"/>
-        <string key="tut_select_unit" value="Select unit"/>
+        <string key="tut_select_unit" value="Select a unit"/>
         <string key="tut_tap_on_hex" value="Tap on hex"/>
-        <string key="tut_press_button" value="Press button"/>
-        <string key="tut_build_tower" value="Build tower"/>
+        <string key="tut_press_button" value="Press button twice"/>
+        <string key="tut_build_tower" value="Build a tower"/>
         <string key="tut_again" value="Again"/>
-        <string key="tut_build_spearman" value="Build spearman"/>
+        <string key="tut_build_spearman" value="Build a spearman"/>
         <string key="tut_tap_to_undo" value="Tap 'undo'"/>
         <string key="tut_tap_to_end_turn" value="Tap to end turn"/>
         <string key="tut_hold_hex" value="Tap and hold"/>
@@ -139,44 +139,44 @@
         <string key="tip_capture_with_units" value="Attack with your units#to capture territories"/>
         <string key="tip_about_money" value="The bigger your territory#the more money you get"/>
         <string key="tip_build_towers" value="Build towers to protect#nearby cells"/>
-        <string key="tip_about_taxes" value="Stronger units eat#more money"/>
+        <string key="tip_about_taxes" value="Stronger units consume#more money"/>
         <string key="tip_about_defense" value="Units and house also#defend nearby cells"/>
         <string key="tip_hold_to_march" value="To quickly move armies#use 'hold to march'"/>
-        <string key="tip_about_unit_death" value="If money runs out then#units will die.#So be careful"/>
-        <string key="tip_merging" value="Merge units to get#more powerful"/>
+        <string key="tip_about_unit_death" value="If money runs out then#all units will die.#So be careful"/>
+        <string key="tip_merging" value="Merge units to get#a more powerful unit"/>
         <string key="tip_trees" value="Trees decrease income#So it's better to cut them"/>
-        <string key="tip_help" value="More details#in 'help'"/>
+        <string key="tip_help" value="More details#in the 'help' menu"/>
 
         <!-- Generic Tutorial -->
-        <string key="gen_greetings" value="Hi. This tutorial will explain rules of this game."/>
+        <string key="gen_greetings" value="Hi. This tutorial will explain the rules of this game."/>
         <string key="gen_select_province" value="Tap on your city to select it."/>
-        <string key="gen_select_unit" value="Nice. You have several units. Tap on one of them."/>
-        <string key="gen_move_unit" value="Every unit moves once per turn. Now, capture neutral hex near selected unit by tapping there."/>
+        <string key="gen_select_unit" value="Good job. You have several units. Tap on one of them."/>
+        <string key="gen_move_unit" value="Every unit moves once per turn. Now, capture a neutral hex near the selected unit by tapping there."/>
         <string key="gen_income" value="By capturing new hexes you enlarge your city income. More hexes - more income."/>
         <string key="gen_lets_build_farm" value="Let's build a farm to get even higher income."/>
-        <string key="gen_press_button_twice" value="Press button twice"/>
-        <string key="gen_build_farm" value="Farms can only be built near capital or other farms."/>
-        <string key="gen_about_farms" value="Every farm gives 4 coins per turn. Every new farm costs more than previous."/>
-        <string key="gen_lets_build_peasant" value="Let's build a new unit and capture neutral hex."/>
+        <string key="gen_press_button_twice" value="Press the button twice"/>
+        <string key="gen_build_farm" value="Farms can only be built near the capital or other farms."/>
+        <string key="gen_about_farms" value="Every farm gives 3 coins per turn. Every new farm costs 2 more than the previous one."/>
+        <string key="gen_lets_build_peasant" value="Let's build a new unit and capture a neutral hex."/>
         <string key="gen_press_button" value="Press button at the bottom"/>
-        <string key="gen_build_peasant" value="Place your unit on hex near city borders."/>
-        <string key="gen_capture_peasant" value="Now, capture neutral hex by selecting unit and pointing him where to go."/>
+        <string key="gen_build_peasant" value="Place your unit a on hex near city borders."/>
+        <string key="gen_capture_peasant" value="Now, capture a neutral hex by selecting unit and pointing him where to go."/>
         <string key="gen_capture_hex" value="Capture neutral hex"/>
         <string key="gen_lets_build_tower" value="You need to defend your lands. Towers are good for this."/>
         <string key="gen_build_tower" value="Build a tower by tapping on highlighted hex."/>
-        <string key="gen_about_towers" value="Towers defend adjacent hexes from peasants and spearmen."/>
+        <string key="gen_about_towers" value="Towers defend adjacent hexes from peasants and spearmen if these hexes are under your control."/>
         <string key="gen_lets_build_spearman" value="Spearman is stronger than any peasant. Let's build him."/>
         <string key="gen_build_spearman" value="Tap on hex to build spearman."/>
         <string key="gen_units_consume_money" value="Units consume money to live. Stronger units need more money."/>
         <string key="gen_undo_spearman" value="Now your income equals to -1. This is bad, so let's undo a spearman."/>
-        <string key="gen_why_units_die" value="Units die when city runs out of money. So you have to be careful with your income."/>
+        <string key="gen_why_units_die" value="All units die when your city runs out of money. So you have to be careful with your income."/>
         <string key="gen_about_trees_one" value="Trees are also a problem. Hexes with trees don't produce any money."/>
         <string key="gen_about_trees_two" value="Cut trees as soon as possible when they are in low numbers."/>
         <string key="gen_end_turn" value="To end turn press button in lower right corner."/>
-        <string key="gen_choose_to_merge" value="You can also merge units. Select lower peasant."/>
-        <string key="gen_merge_units" value="Now, when peasant is selected, press on other peasant to merge them."/>
+        <string key="gen_choose_to_merge" value="You can also merge units. Select the lower peasant."/>
+        <string key="gen_merge_units" value="Now, when the peasant is selected, press on other peasant to merge them."/>
         <string key="gen_long_tap" value="If you have too many units you can move them all at once with long tap."/>
-        <string key="gen_several_provinces" value="You can have multiple cities, every one them of with it's own economy."/>
+        <string key="gen_several_provinces" value="You can have multiple cities, each with it's own economy."/>
 
         <!-- Tutorial help -->
         <string key="help" value="Help"/>
@@ -190,93 +190,57 @@
         <string key="help_units_article" value="There are 4 unit types.
         #They differ only by strength.
         #In ascending order of strength:
-        #[1] peasants
+        #[1] peasant
         #[2] spearman
         #[3] baron
         #[4] knight
         #
-        #Unit gives adjacent cells
-        #protection equal to strength.
+        #Units give adjacent cells under your control protection equal to strength.
         #
-        #To capture a cell
-        #unit strength must be
-        #bigger than protection.
+        #To capture a cell the unit strength must be bigger than protection.
         #
-        #Every units eats
-        #2, 6, 18 or 54 coins
-        #in 1 turn.
+        #Every unit consumes 2, 6, 18 or 54 coins per turn.
         "/>
 
-        <string key="help_trees_article" value="Trees spawn after
-        #dead units.
+        <string key="help_trees_article" value="Trees spawn after dead units.
         #
-        #Cell with tree gives no
-        #income. It means that
-        #trees harm economy.
+        #A cell with a tree gives no income. It means that trees harm economy.
         #
-        #You have to fight them.
-        #Otherwise they will grow
-        #and kill economy.
+        #You have to cut them. Otherwise they will grow and kill your economy.
         #
-        #Palms spawn at edges
-        #and grow very fast.
-        #They have to be killed
-        #very fast.
+        #Palms spawn at edges and grow very quickly. They have to be cut very quickly.
         "/>
 
-        <string key="help_towers_article" value="Towers are used to
-        #protect neighbour cells.
+        <string key="help_towers_article" value="Towers are used to protect adjacent cells.
         #
-        #Towers give protection [2].
-        #Therefore, only barons
-        #and knights can fight it.
+        #Towers give protection [2]. Therefore, only barons and knights can fight it.
         #
         #Huts give protection [1].
         #
-        #At the beginning of game
-        #this is the best way to
-        #protect you territory.
-        #Tower price is low and they
-        #don't eat money.
+        #At the beginning of game this is the best way to protect you territory.
+        #Tower price is low and they don't eat money.
         "/>
 
-        <string key="help_money_article" value="Income depends on
-        #number of cells.
-        #Bigger territory has
-        #bigger income.
+        <string key="help_money_article" value="Income depends on number of cells.
+        #Bigger territory has bigger income.
         #Trees decrease income.
         #
-        #Units consume money.
-        #Powerful units
-        #eat more money.
+        #Units consume money. Powerful units consume more money.
         #
+        #When money runs out, all units die.
         #
-        #
-        #When money runs out,
-        #units die.
-        #
-        #Income is shown
-        #in the top center.
+        #Income is shown in the top center.
         "/>
 
-        <string key="help_tactics_article" value="At the beginning of game
-        #capture neutral cells.
-        #After that defend
-        #all your cells.
+        <string key="help_tactics_article" value="At the beginning of game capture neutral cells.
+        #After that defend all your cells.
         #
-        #Make sure that your income
-        #is good enough before
-        #building units.
+        #Make sure that your income is good enough before building units.
         #
-        #
-        #
-        #Cut enemy territories
-        #to pieces in order
-        #to destroy their economy.
+        #Cut enemy territories to pieces in order to destroy their economy.
         "/>
 
-        <string key="about_complicated_mode_article" value="Complicated mode means
-        #more menus.
+        <string key="about_complicated_mode_article" value="Complicated mode means more menus.
         #Difference from simple:
         #
         #- Multiple save slots
@@ -297,8 +261,8 @@
 
         <!-- Statistics -->
         <string key="turns_made" value="Turns made:"/>
-        <string key="units_died" value="Units died in game:"/>
-        <string key="units_produced" value="Units produced in game:"/>
+        <string key="units_died" value="Units died:"/>
+        <string key="units_produced" value="Units produced:"/>
         <string key="money_spent" value="Money spent:"/>
         <string key="time" value="Time:"/>
 
@@ -323,11 +287,11 @@
         <string key="confirm_randomize" value="Generate random map?"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" # Autosave
-            # # Several slots
-            # # Ask turn end
-            # # City names
-            # # Sound
+        <string key="main_label" value=" #Autosave
+            # #Several slots
+            # #Ask turn end
+            # #City names
+            # #Sound
             # # "/>
         <string key="limited_turns" value="Limited turns"/>
         <string key="hold_to_march" value="Long tap to move"/>
@@ -344,10 +308,16 @@
         <string key="more_settings_checks" value="# #Water texture # # "/>
         <string key="water_texture" value="Water texture "/>
         <string key="confirm_reset" value="Clear progress?"/>
+        <string key="replays" value="Replays"/>
+        <string key="save_replay" value="Save replay"/>
+        <string key="replay" value="Replay"/>
+        <string key="replay_saved" value="Replay saved"/>
+        <string key="fast_construction" value="Fast construction"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+
     </language>
 
 
@@ -407,12 +377,12 @@
         #
         #
         #
-        #
+        #Reddit: /r/yiotro_games
         #E-mail: yiotro93@gmail.com
         #Игру сделал yiotro
 		"/>
         <string key="reset_campaign_data" value="Стереть данные"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Сражение"/>
@@ -715,6 +685,11 @@
         <string key="more_settings_checks" value="# #Текстура воды # # "/>
         <string key="water_texture" value="Текстура воды "/>
         <string key="confirm_reset" value="Очистить прогресс?"/>
+        <string key="replays" value="Повторы"/>
+        <string key="save_replay" value="Сохранить повтор"/>
+        <string key="replay" value="Повтор"/>
+        <string key="replay_saved" value="Повтор сохранен"/>
+        <string key="fast_construction" value="Быстрая постройка"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="Новый скин от ShroomArts"/>
@@ -777,12 +752,12 @@
         #
         #
         #
-        #
+        #Reddit: /r/yiotro_games
         #E-mail: yiotro93@gmail.com
         #Гру зробив yiotro
 		"/>
         <string key="reset_campaign_data" value="Стерти данi"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Швидкий бiй"/>
@@ -1070,8 +1045,8 @@
             # # Назви мiст
             # # Звук
             # # "/>
-        <string key="limited_turns" value="Limited turns"/>
-        <string key="hold_to_march" value="Long tap to move"/>
+        <string key="limited_turns" value="Обмеження ходів"/>
+        <string key="hold_to_march" value="Довгий тап"/>
         <string key="skin" value="Скiн"/>
         <string key="original" value="звичайний"/>
         <string key="points" value="точки"/>
@@ -1085,6 +1060,11 @@
         <string key="more_settings_checks" value="# #Текстура води # # "/>
         <string key="water_texture" value="Текстура води "/>
         <string key="confirm_reset" value="Очистити прогрес?"/>
+        <string key="replays" value="Повтори"/>
+        <string key="save_replay" value="Зберегти повтор"/>
+        <string key="replay" value="Повтор"/>
+        <string key="replay_saved" value="Повтор збережено"/>
+        <string key="fast_construction" value="Швидке будівництво"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="Новий скін від ShroomArts"/>
@@ -1149,12 +1129,12 @@
         #
         #
         #
-        #
+        #Reddit: /r/yiotro_games
         #E-Mail: yiotro93@gmail.com
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Daten zurücksetzen"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Gefecht"/>
@@ -1460,6 +1440,11 @@
         <string key="more_settings_checks" value="# #Wasser-Textur # # "/>
         <string key="water_texture" value="Wasser-Textur "/>
         <string key="confirm_reset" value="Clear progress?"/>
+        <string key="replays" value="Replays"/>
+        <string key="save_replay" value="Save replay"/>
+        <string key="replay" value="Replay"/>
+        <string key="replay_saved" value="Replay saved"/>
+        <string key="fast_construction" value="Fast construction"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
@@ -1519,12 +1504,12 @@
         #Sean O'Connor
         #
         #
-        #
+        #Reddit: /r/yiotro_games
         #E-mail: yiotro93@gmail.com
         #Vytvořil yiotro
         "/>
         <string key="reset_campaign_data" value="Resetovat data"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Rychlá hra"/>
@@ -1819,6 +1804,11 @@
         <string key="more_settings_checks" value="# #Textura vody # # "/>
         <string key="water_texture" value="Textura vody "/>
         <string key="confirm_reset" value="Clear progress?"/>
+        <string key="replays" value="Replays"/>
+        <string key="save_replay" value="Save replay"/>
+        <string key="replay" value="Replay"/>
+        <string key="replay_saved" value="Replay saved"/>
+        <string key="fast_construction" value="Fast construction"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
@@ -1848,7 +1838,7 @@
 
     <language name="fr_FR">
         <!-- All characters -->
-        <string key="lang_characters" value="öéè'àùïô"/>
+        <string key="lang_characters" value="öéè'àùïôû"/>
 
         <!-- Main menu -->
         <string key="main_menu_info" value="Infos"/>
@@ -1867,27 +1857,27 @@
 
         <!-- Info -->
         <string key="info_back" value="Précédent"/>
-        <string key="info_array" value="Il s’agit d’un simple jeu de
-        #stratégie d’un style minimaliste.
+        <string key="info_array" value="Il s'agit d'un simple jeu de
+        #stratégie d'un style minimaliste.
         #Il est gratuit, sans publicité et sans demande de don.
         #Si vous jouez pour la première fois
         #Si ce jeu est nouveau pour vous
         #Suivez le didacticiel ou lisez « Aide ».
         #
         #Ce jeu est inspiré de
-        #Slay, de Sean O’Connor
+        #Slay, de Sean O'Connor
         #
         #
         #
         #
         #
         #
-        #
+        #Reddit: /r/yiotro_games
         #Courriel : yiotro93@gmail.com
         #Auteur : yiotro
 		"/>
         <string key="reset_campaign_data" value="Effacer données"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Affrontement"/>
@@ -1966,8 +1956,8 @@
         <string key="normal_rules" value="Règles normales"/>
         <string key="how_to_play" value="Instructions"/>
         <string key="tutorial_ok" value="Ok"/>  <!-- Same as english -->
-        <string key="tut_select_unit" value="Sélectionner l’unité"/>
-        <string key="tut_tap_on_hex" value="Taper sur l’hexagone"/>
+        <string key="tut_select_unit" value="Sélectionner l'unité"/>
+        <string key="tut_tap_on_hex" value="Taper sur l'hexagone"/>
         <string key="tut_press_button" value="Appuyer sur le bouton"/>
         <string key="tut_build_tower" value="Construire une tour"/>
         <string key="tut_again" value="Encore"/>
@@ -1980,7 +1970,7 @@
 
         <!-- Tutorial tips -->
         <string key="tip_capture_with_units" value="Attaquez avec vos unités pour#conquérir des territoires"/>
-        <string key="tip_about_money" value="Plus vaste est votre territoire,#plus vous empocherez d’argent"/>
+        <string key="tip_about_money" value="Plus vaste est votre territoire,#plus vous empocherez d'argent"/>
         <string key="tip_build_towers" value="Construire des tours protège les#cellules adjacentes"/>
         <string key="tip_about_taxes" value="Des unités plus puissantes#impliquent un entretien plus coûteux"/>
         <string key="tip_about_defense" value="Les unités et la maison#défendent aussi les cellules proches"/>
@@ -1993,32 +1983,32 @@
         <!-- Generic Tutorial -->
         <string key="gen_greetings" value="Bonjour. Ce didacticiel vous expliquera les règles du jeu."/>
         <string key="gen_select_province" value="Tapez sur votre cité pour la sélectionner."/>
-        <string key="gen_select_unit" value="Bien joué! Vous disposez de quelques unités. Tapez sur l’une d’entre elles."/>
-        <string key="gen_move_unit" value="Chaque unité peut se déplacer une fois par tour. Maintenant, conquérez une cellule neutre près de l’unité sélectionnée en tapant là."/>
+        <string key="gen_select_unit" value="Bien joué! Vous disposez de quelques unités. Tapez sur l'une d'entre elles."/>
+        <string key="gen_move_unit" value="Chaque unité peut se déplacer une fois par tour. Maintenant, conquérez une cellule neutre près de l'unité sélectionnée en tapant là."/>
         <string key="gen_income" value="Vous augmenterez les revenus de votre cité en conquérant des cellules. Plus de cellules = de meilleurs revenus."/>
         <string key="gen_lets_build_farm" value="Construisez une ferme pour gonfler vos revenus."/>
         <string key="gen_press_button_twice" value="Appuyez deux fois sur le bouton"/>
-        <string key="gen_build_farm" value="Une ferme ne peut être construire qu’à proximité d’une capitale ou d’une autre ferme."/>
+        <string key="gen_build_farm" value="Une ferme ne peut être construire qu'à proximité d'une capitale ou d'une autre ferme."/>
         <string key="gen_about_farms" value="Une ferme produit 4 pièces par tour. Chaque ferme supplémentaire est plus coûteuse que la précédente."/>
         <string key="gen_lets_build_peasant" value="Construisez une nouvelle unité, puis conquérez une cellule neutre."/>
         <string key="gen_press_button" value="Appuyez sur le bouton dans le bas"/>
-        <string key="gen_build_peasant" value="Placez l’unité sur une cellule aux frontières de la cité."/>
-        <string key="gen_capture_peasant" value="Maintenant, conquérez une cellule neutre en sélectionnant l’unité, puis en pointant sa destination."/>
+        <string key="gen_build_peasant" value="Placez l'unité sur une cellule aux frontières de la cité."/>
+        <string key="gen_capture_peasant" value="Maintenant, conquérez une cellule neutre en sélectionnant l'unité, puis en pointant sa destination."/>
         <string key="gen_capture_hex" value="Conquérez une cellule neutre."/>
         <string key="gen_lets_build_tower" value="Vous devez défendre votre territoire. Les tours le font bien."/>
         <string key="gen_build_tower" value="Construisez une tour en tapant sur la cellule en surbrillance."/>
         <string key="gen_about_towers" value="Les tours protègent les cellules adjacentes des attaques des paysans et des lanciers."/>
         <string key="gen_lets_build_spearman" value="Le lancier est plus puissant que le paysan. Construisons-en un."/>
         <string key="gen_build_spearman" value="Tapez sur une cellule pour construire un lancier."/>
-        <string key="gen_units_consume_money" value="L’entretien des unités coûte de l’argent. Plus puissante une unité, plus coûteux est son entretien."/>
+        <string key="gen_units_consume_money" value="L'entretien des unités coûte de l'argent. Plus puissante une unité, plus coûteux est son entretien."/>
         <string key="gen_undo_spearman" value="Vos revenus viennent de passer à -1. Ça regarde mal... Renvoyons un lancier."/>
-        <string key="gen_why_units_die" value="Lorsqu’une cité n’a plus d’argent, ses unités meurent. Vous devez donc gérer vos revenus avec prudence."/>
+        <string key="gen_why_units_die" value="Lorsqu'une cité n'a plus d'argent, ses unités meurent. Vous devez donc gérer vos revenus avec prudence."/>
         <string key="gen_about_trees_one" value="Les arbres sont aussi problématiques. Une cellule où se trouve un arbre ne produit aucun argent."/>
-        <string key="gen_about_trees_two" value="Abattez les arbres aussitôt que possible, tant qu’ils sont peu nombreux."/>
+        <string key="gen_about_trees_two" value="Abattez les arbres aussitôt que possible, tant qu'ils sont peu nombreux."/>
         <string key="gen_end_turn" value="Pour mettre fin au tour, appuyez sur le bouton situé dans le coin inférieur droit."/>
         <string key="gen_choose_to_merge" value="Vous pouvez également fusionner des unités. Sélectionnez le paysan en-dessous."/>
-        <string key="gen_merge_units" value="Une fois le paysan sélectionné, appuyez sur l’autre paysan : vous les fusionnerez."/>
-        <string key="gen_long_tap" value="Si vous disposez de trop d’unités, vous pouvez toutes les déplacer d’un coup en appuyant longuement."/>
+        <string key="gen_merge_units" value="Une fois le paysan sélectionné, appuyez sur l'autre paysan : vous les fusionnerez."/>
+        <string key="gen_long_tap" value="Si vous disposez de trop d'unités, vous pouvez toutes les déplacer d'un coup en appuyant longuement."/>
         <string key="gen_several_provinces" value="Vous pouvez posséder plusieurs villes dont les économies sont autonomes."/>
 
         <!-- Tutorial help -->
@@ -2030,7 +2020,7 @@
         <string key="help_about_tactics" value="Tactiques"/>
         <string key="help_about_rules" value="Rules"/>
 
-        <string key="help_units_article" value="Il existe 4 types d’unités.
+        <string key="help_units_article" value="Il existe 4 types d'unités.
         #Elles diffèrent uniquement au plan de leur force.
         #De la plus faible à la plus puissante :
         #[1] paysans
@@ -2038,11 +2028,11 @@
         #[3] barons
         #[4] chevaliers
         #
-        #L’unité accorde aux cellules adjacentes
+        #L'unité accorde aux cellules adjacentes
         #une protection égale à sa force.
         #
         #Pour conquérir une cellule
-        #la force d’une unité doit
+        #la force d'une unité doit
         #surpasser celle de la protection.
         #
         #Chaque unité coûte
@@ -2051,11 +2041,11 @@
         "/>
 
         <string key="help_trees_article" value="Des arbres poussent après
-        #la mort d’unités.
+        #la mort d'unités.
         #
         #Une cellule occupée par un
         #arbre ne produit aucun revenu. Bref, les arbres
-        #ralentissent l’économie.
+        #ralentissent l'économie.
         #
         #Vous devez vous mesurer à eux.
         #Sinon, ils pousseront
@@ -2072,12 +2062,12 @@
         #
         #Les tours accordent une protection de [2].
         #Donc, seuls les barons
-        #et les chevaliers peuvent s’y attaquer.
+        #et les chevaliers peuvent s'y attaquer.
         #
         #Les maisons accordent une protection de [1].
         #
         #En début de partie,
-        #c’est le meilleur moyen de
+        #c'est le meilleur moyen de
         #protéger votre territoire.
         #Les tours sont abordables et
         #les entretenir ne coûte rien.
@@ -2089,17 +2079,17 @@
         #apporte des revenus plus élevés.
         #Les arbres diminuent le revenu.
         #
-        #Entretenir des unités coûte de l’argent.
-        #Plus puissante l’unité,
+        #Entretenir des unités coûte de l'argent.
+        #Plus puissante l'unité,
         #plus son entretien est coûteux.
         #
         #
         #
-        #Lorsqu’il n’y a plus d’argent,
+        #Lorsqu'il n'y a plus d'argent,
         #les unités meurent.
         #
         #Le revenu est affiché
-        #au centre dans le haut de l’écran.
+        #au centre dans le haut de l'écran.
         "/>
 
         <string key="help_tactics_article" value="En début de partie,
@@ -2158,7 +2148,7 @@
         <string key="editor_clear" value="Vider"/>
         <string key="no" value="Non"/>
         <string key="yes" value="Oui"/>
-        <string key="confirm_import" value="Confirmer l’importation"/>
+        <string key="confirm_import" value="Confirmer l'importation"/>
         <string key="filter_no" value="No filter"/>  <!-- Same as english -->
         <string key="filter_only_land" value="Only land"/>  <!-- Same as english -->
         <string key="confirm_clear_level" value="Clear map?"/>
@@ -2186,6 +2176,11 @@
         <string key="more_settings_checks" value="# #Texture aquatique # # "/>
         <string key="water_texture" value="Texture aquatique "/>
         <string key="confirm_reset" value="Clear progress?"/>
+        <string key="replays" value="Replays"/>
+        <string key="save_replay" value="Save replay"/>
+        <string key="replay" value="Replay"/>
+        <string key="replay_saved" value="Replay saved"/>
+        <string key="fast_construction" value="Fast construction"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="Nouvel habillage signé ShroomArts"/>
@@ -2247,12 +2242,12 @@
     #
     #
     #
-    #
+    #Reddit: /r/yiotro_games
     #E-mail: yiotro93@gmail.com
     #Wykonane przez yiotro
     "/>
         <string key="reset_campaign_data" value="Resetuj kampanie"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
 
 
         <!-- Choose game mode menu-->
@@ -2555,6 +2550,11 @@
         <string key="more_settings_checks" value="# #Tekstura wody # # "/>
         <string key="water_texture" value="Tekstura wody "/>
         <string key="confirm_reset" value="Clear progress?"/>
+        <string key="replays" value="Replays"/>
+        <string key="save_replay" value="Save replay"/>
+        <string key="replay" value="Replay"/>
+        <string key="replay_saved" value="Replay saved"/>
+        <string key="fast_construction" value="Fast construction"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
@@ -2614,13 +2614,13 @@
         #
         #
         #
-        #
+        #Reddit: /r/yiotro_games
         #E-mail: yiotro93@gmail.com
         #Made by yiotro
         "/>
 
         <string key="reset_campaign_data" value="Resetta campagna"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Schermaglia"/>
@@ -2920,6 +2920,11 @@
         <string key="more_settings_checks" value="# #Water texture # # "/>
         <string key="water_texture" value="Water texture "/>
         <string key="confirm_reset" value="Clear progress?"/>
+        <string key="replays" value="Replays"/>
+        <string key="save_replay" value="Save replay"/>
+        <string key="replay" value="Replay"/>
+        <string key="replay_saved" value="Replay saved"/>
+        <string key="fast_construction" value="Fast construction"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
@@ -2979,10 +2984,10 @@
        #
        #
        #
-       #
+       #Reddit: /r/yiotro_games
        #E-mail: yiotro93@gmail.com #Creado por yiotro"/>
         <string key="reset_campaign_data" value="Borrar datos"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu -->
         <string key="choose_game_mode_skirmish" value="Escaramuza"/>
@@ -3277,6 +3282,11 @@
         <string key="more_settings_checks" value="# #Textura acuática # # "/>
         <string key="water_texture" value="Textura acuática "/>
         <string key="confirm_reset" value="Clear progress?"/>
+        <string key="replays" value="Replays"/>
+        <string key="save_replay" value="Save replay"/>
+        <string key="replay" value="Replay"/>
+        <string key="replay_saved" value="Replay saved"/>
+        <string key="fast_construction" value="Fast construction"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
@@ -3336,12 +3346,12 @@
         #Sean O'Connor
         #
         #
-        #
+        #Reddit: /r/yiotro_games
         #E-mail: yiotro93@gmail.com
         #Vytvořil yiotro
         "/>
         <string key="reset_campaign_data" value="Resetovať údaje"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Rýchla hra"/>
@@ -3635,12 +3645,13 @@
         <string key="more_settings_checks" value="# #Textúra vody # # "/>
         <string key="water_texture" value="Textúra vody "/>
         <string key="confirm_reset" value="Clear progress?"/>
+        <string key="replays" value="Replays"/>
+        <string key="save_replay" value="Save replay"/>
+        <string key="replay" value="Replay"/>
+        <string key="replay_saved" value="Replay saved"/>
+        <string key="fast_construction" value="Fast construction"/>
 
         <!-- Single messages -->
-        <string key="achikaps_release" value="Ahoj. # #Dokončil som novú hru, ktorá se volá 'Achikaps'.#Je to jednoduchý ekonomický simulátor bez dotácií a reklám. Snáď si ho užijete :)"/>
-        <string key="one_time_only_one_knight" value="Pre každého hráča musí byť iba jeden rytier. Nemôžeš vytvoriť dvoch rytierov naraz."/> <!-- Same as english -->
-        <string key="one_time_knight_penalty" value="Rytier sa musí pohnúť každé kolo. Inak bude za lenivosť degradovaný na kopijníka."/> <!-- Same as english -->
-        <string key="one_time_strong_tower_demote" value="Ak provincia nemá peniaze na podporu silnej veže, táto sa zmení na obyčajnú vežu."/>
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
     </language>
@@ -3703,7 +3714,7 @@
         #如果你第一次玩这个游戏
         #如果你是新手
         #
-        #记得看教程或者‘帮助’
+        #记得看教程或者‘帮助'
         #
         #
         #本游戏受Sean O'Connor的Slay的启发
@@ -3713,12 +3724,12 @@
         #
         #
         #
-        #
+        #Reddit: /r/yiotro_games
         #邮箱: yiotro93@gmail.com
         #yiotro出品
 		"/>
         <string key="reset_campaign_data" value="重置数据"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="遭遇战"/>
@@ -3992,6 +4003,8 @@
         <string key="confirm_import" value="确认导入"/>
         <string key="filter_no" value="无过滤"/>
         <string key="filter_only_land" value="只有土地"/>
+        <string key="confirm_clear_level" value="Clear map?"/>
+        <string key="confirm_randomize" value="Generate random map?"/>
 
         <!-- Settings -->
         <string key="main_label" value=" # 自动保存
@@ -4014,11 +4027,789 @@
         <string key="language" value="语言"/>
         <string key="more_settings_checks" value="# #水纹理 # # "/>
         <string key="water_texture" value="水纹理 "/>
+        <string key="confirm_reset" value="Clear progress?"/>
+        <string key="replays" value="Replays"/>
+        <string key="save_replay" value="Save replay"/>
+        <string key="replay" value="Replay"/>
+        <string key="replay_saved" value="Replay saved"/>
+        <string key="fast_construction" value="Fast construction"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="ShroomArts的新皮肤"/>
         <string key="level_24" value="这是第一个'困难' 关卡。 注意防守！"/>
     </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <language name="tr_TR">
+        <!-- All characters -->
+        <string key="lang_characters" value="ğĞıüÜşŞİöÖçÇ"/>
+
+        <!-- Main menu -->
+        <string key="main_menu_info" value="Hakkında"/>
+        <string key="main_menu_exit" value="Çıkış"/>
+        <string key="main_menu_something" value="Hiçbir şeyle ilgili olmayan beyaz bir yazı"/>
+
+        <!-- Random stuff -->
+        <string key="menu_level" value="Seviye"/>
+        <string key="menu_reset" value="Sıfırla"/>
+
+        <string key="game_saved" value="Oyun kaydedildi"/>
+        <string key="restart_app" value="Uygulamayı yeniden başlat"/>
+        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
+        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
+        <string key="city_name_three" value="nsk, rra, ko, rry"/>
+
+        <!-- Info -->
+        <string key="info_back" value="Geri Dön"/>
+        <string key="info_array" value="Bu oyun minimalistik tarzda
+        #bir strateji oyunudur.
+        #Bedavadır. Reklam içermez ve bağış almaz.
+        #Eğer bu oyunu ilk açışınsa ya da oyunda yeniysen
+        #rehbere veya 'yardım'a göz at.
+        #
+        #Bu oyun Sean O'Connor'ın
+        #Slay adlı oyunundan esinlenilmiştir.
+        #
+        #
+        #
+        #
+        #
+        #
+        #Reddit: /r/yiotro_games
+        #E-posta: yiotro93@gmail.com
+        #Yiotro tarafından yapıldı.
+		"/>
+        <string key="reset_campaign_data" value="Verileri sıfırla"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
+
+        <!-- Choose game mode menu-->
+        <string key="choose_game_mode_skirmish" value="Savaş"/>
+        <string key="choose_game_mode_tutorial" value="Rehber"/>
+        <string key="choose_game_mode_campaign" value="Mücadele"/>
+        <string key="choose_game_mode_load" value="Oyunu yükle"/>
+
+        <!-- Skirmish menu -->
+        <string key="game_settings_main_menu" value="Ana menü"/>
+        <string key="game_settings_tutorial" value="Rehber"/>
+        <string key="game_settings_start" value="Başlat"/>
+        <string key="map_size" value="Harita büyüklüğü"/>
+        <string key="color_number" value="Renkler"/>
+        <string key="player_number" value="Oyuncular"/>
+        <string key="small" value="küçük"/>
+        <string key="medium" value="orta"/>
+        <string key="big" value="büyük"/>
+        <string key="ai_only" value="sadece yapay zeka"/>
+        <string key="single_player" value="tek oyunculu"/>
+        <string key="multiplayer" value="çok oyunculu"/>
+        <string key="colors" value="renk"/>
+        <string key="color" value="renk"/>
+        <string key="difficulty" value="Zorluk"/>
+        <string key="easy" value="kolay"/>
+        <string key="normal" value="normal"/>
+        <string key="hard" value="zor"/>
+        <string key="expert" value="uzman"/>
+        <string key="balancer" value="dengeleyici"/>
+        <string key="player_color" value="Oyuncu rengi"/>
+
+        <!-- In game menu -->
+        <string key="in_game_menu_resume" value="Devam et"/>
+        <string key="in_game_menu_save" value="Oyunu kaydet"/>
+        <string key="in_game_menu_surrender" value="Teslim ol"/>
+        <string key="in_game_menu_main_menu" value="Ana menü"/>
+        <string key="in_game_menu_restart" value="Yeniden başlat"/>
+        <string key="confirm_restart" value="Onaylıyor musunuz?"/>
+        <string key="cancel" value="İptal et"/>
+        <string key="confirm_end_turn" value="Sıra bitirilsin mi?"/>
+        <string key="yes" value="Evet"/>
+
+        <!-- End game menu -->
+        <string key="end_game_ok" value="Tamam"/>
+        <string key="end_game_okay" value="Tamam..."/>
+        <string key="player" value="oyuncu"/>
+        <string key="ai" value="Yapay Zeka"/>
+        <string key="won" value="kazandı"/>
+        <string key="statistics" value="İstatistikler"/>
+        <string key="next" value="Sonraki"/>
+        <string key="level_complete" value="Seviye tamamlandı"/>
+        <string key="win_game" value="Kazan"/>
+        <string key="win_or_continue" value="Şimdi kazan#ya da oyuna devam et?"/>
+        <string key="continue" value="Devam et"/>
+
+        <!-- Colors -->
+        <string key="green_player" value="Yeşil"/>
+        <string key="red_player" value="Kırmızı"/>
+        <string key="magenta_player" value="Eflatun"/>
+        <string key="cyan_player" value="Turkuaz"/>
+        <string key="yellow_player" value="Sarı"/>
+        <string key="gray_player" value="Gri"/>
+        <string key="green_ai" value="Yeşil"/>
+        <string key="red_ai" value="Kırmızı"/>
+        <string key="magenta_ai" value="Eflatun"/>
+        <string key="cyan_ai" value="Turkuaz"/>
+        <string key="yellow_ai" value="Sarı"/>
+        <string key="gray_ai" value="Gri"/>
+        <string key="green_menu" value="Yeşil"/>
+        <string key="red_menu" value="Kırmızı"/>
+        <string key="magenta_menu" value="Eflatun"/>
+        <string key="cyan_menu" value="Turkuaz"/>
+        <string key="yellow_menu" value="Sarı"/>
+        <string key="gray_menu" value="Gri"/>
+
+        <!-- Tutorial -->
+        <string key="normal_rules" value="Standart kurallar"/>
+        <string key="how_to_play" value="Nasıl oynanır?"/>
+        <string key="tutorial_ok" value="Tamam"/>
+        <string key="tut_select_unit" value="Birliği seç"/>
+        <string key="tut_tap_on_hex" value="Hücreye tıkla"/>
+        <string key="tut_press_button" value="Butona bas"/>
+        <string key="tut_build_tower" value="Kule inşa et"/>
+        <string key="tut_again" value="Tekrar"/>
+        <string key="tut_build_spearman" value="Mızrakçı yap"/>
+        <string key="tut_tap_to_undo" value="'Geri al'a dokun'"/>
+        <string key="tut_tap_to_end_turn" value="Sıranı bitirmek için dokun"/>
+        <string key="tut_hold_hex" value="Dokun ve basılı tut"/>
+        <string key="tut_merge_units" value="Birliklerini birleştir"/>
+        <string key="tut_good_luck" value="İyi şanslar!"/>
+
+        <!-- Tutorial tips -->
+        <string key="tip_capture_with_units" value="Birliklerinle saldırarak#bölgeleri ele geçir"/>
+        <string key="tip_about_money" value="Daha fazla bölge ele geçirerek#daha çok para kazanırsın"/>
+        <string key="tip_build_towers" value="Kuleler inşa ederek#etrafındaki hücreleri koru"/>
+        <string key="tip_about_taxes" value="Daha güçlü birlikler#daha çok harcama yaparlar"/>
+        <string key="tip_about_defense" value="Ayrıca evler ve birlikler de#etraflarındaki hücreleri korurlar"/>
+        <string key="tip_hold_to_march" value="Birliklerini daha hızlı ilerletmek için#'toplu ilerleme için basılı tut'u kullan"/>
+        <string key="tip_about_unit_death" value="Eğer paran biterse#birliklerin ölür.#Buna dikkat et"/>
+        <string key="tip_merging" value="Birliklerini birleştirerek#daha güçlü birlikler elde et"/>
+        <string key="tip_trees" value="Ağaçlar gelirini düşürecektir#Bu yüzden onları kesmen iyi olur"/>
+        <string key="tip_help" value="Daha fazla detayı#'yardım'da bulabilirsin"/>
+
+        <!-- Generic Tutorial -->
+        <string key="gen_greetings" value="Merhaba. Bu rehber oyunun kurallarını anlatacak."/>
+        <string key="gen_select_province" value="Şehrini seçmek için üstüne dokun."/>
+        <string key="gen_select_unit" value="Güzel. Birkaç birliğin var. Gösterilen birliğe dokun."/>
+        <string key="gen_move_unit" value="Birlikler her elde bir kez hareket eder. Şimdi, seçtiğin birliğin yakınındaki boş hücreye dokunarak o hücreyi ele geçir."/>
+        <string key="gen_income" value="Hücre ele geçirerek şehrinin kazancını artırırsın. Kısaca: Çok hücre - çok kazanç."/>
+        <string key="gen_lets_build_farm" value="Hadi daha fazla kazanç için çiftlik inşa edelim."/>
+        <string key="gen_press_button_twice" value="Butona iki kez dokun."/>
+        <string key="gen_build_farm" value="Çiftlikler sadece şehir merkezinin ya da diğer çiftliklerin yanına yapılabilir."/>
+        <string key="gen_about_farms" value="Her bir çiftlik tur başına 4 lira verir. Her yeni çiftlik öncekinden daha pahalı olur."/>
+        <string key="gen_lets_build_peasant" value="Hadi yeni bir birlik alıp boş bir hücreyi ele geçirelim."/>
+        <string key="gen_press_button" value="Aşağıdaki butona bas."/>
+        <string key="gen_build_peasant" value="Birliğini şehrin kenarındaki gösterilen hücreye yerleştir."/>
+        <string key="gen_capture_peasant" value="Şimdi, birliğini seç ve gitmesini istediğin yere dokunarak boş bir hücre ele geçir."/>
+        <string key="gen_capture_hex" value="Boş bir hücre ele geçir."/>
+        <string key="gen_lets_build_tower" value="Topraklarını korumalısın. Bunun için kuleleri kullanabilirsin."/>
+        <string key="gen_build_tower" value="Gösterilen hücreye tıklayarak bir kule inşa et."/>
+        <string key="gen_about_towers" value="Kuleler etrafındaki hücreleri köylü ve mızrakçılardan korur."/>
+        <string key="gen_lets_build_spearman" value="Mızrakçı köylüden daha güçlüdür. Hadi mızrakçı yapalım."/>
+        <string key="gen_build_spearman" value="Mızrakçı yapmak için hücreye dokun."/>
+        <string key="gen_units_consume_money" value="Birlikler hayatta kalmak için para tüketirler. Daha güçlü birlikler daha çok para tüketirler."/>
+        <string key="gen_undo_spearman" value="Eyvah, gelirin -1 oldu. Bu iyi değil, bu yüzden işlemi geri alalım."/>
+        <string key="gen_why_units_die" value="Eğer şehrinin parası biterse birliklerin ölür. Bu yüzden gelirine dikkat et."/>
+        <string key="gen_about_trees_one" value="Bir başka önemli konu ise ağaçlar. Üstünde ağaç olan hücreler gelir getirmezler."/>
+        <string key="gen_about_trees_two" value="Ağaçları, sayıları artmadan önce kesmeye çalış."/>
+        <string key="gen_end_turn" value="Sıranı bitirmek için sağ alttaki butona bas."/>
+        <string key="gen_choose_to_merge" value="Ayrıca, birliklerini birleştirebilirsin. Alttaki köylüyü seç."/>
+        <string key="gen_merge_units" value="Bir köylü seçildi, diğer köylüye basarak onları birleştir."/>
+        <string key="gen_long_tap" value="Eğer çok fazla birliğin varsa, bir hücreye uzun dokunarak hepsini oraya doğru hareket ettirebilirsin."/>
+        <string key="gen_several_provinces" value="Birden fazla şehrin olabilir. Şehirlerinin her birinin kendi ekonomisi olur."/>
+
+        <!-- Tutorial help -->
+        <string key="help" value="Yardım"/>
+        <string key="help_about_units" value="Birlikler"/>
+        <string key="help_about_trees" value="Ağaçlar"/>
+        <string key="help_about_towers" value="Kuleler"/>
+        <string key="help_about_money" value="Ekonomi"/>
+        <string key="help_about_tactics" value="Taktikler"/>
+        <string key="help_about_rules" value="Kurallar"/>
+
+        <string key="help_units_article" value="4 tane birlik türü vardır.
+        #Tek farkları güçleridir.
+        #Güçsüzden güçlüye sıralamaları:
+        #[1] köylüler
+        #[2] mızrakçılar
+        #[3] baronlar
+        #[4] şövalyeler
+        #
+        #Birlikler bitişiklerindeki hücrelere
+        #güçleri kadar koruma verirler.
+        #
+        #Bir hücreyi ele geçirmek için
+        #birliğin gücü hücrenin
+        #korumasından büyük olmalıdır.
+        #
+        #Birlikler her tur
+        #güçsüzden güçlüye sırayla
+        #2, 6, 18 ve 54 lira kullanırlar.
+        "/>
+
+        <string key="help_trees_article" value="Ağaçlar ölen birliklerin
+        #mezarlarından ortaya çıkarlar.
+        #
+        #Ağaçlı bir hücre gelir getirmez.
+        # Bu sebeple ağaçlar
+        #ekonomiye zarar verirler.
+        #
+        #Ağaçları yok etmelisin.
+        #Yoksa büyürler ve
+        #ekonomini alt üst ederler.
+        #
+        #Palmiye ağaçları kıyılarda
+        #doğarlar ve çok hızlı büyürler.
+        #Bir an önce yok edilmelidirler.
+        #
+        "/>
+
+        <string key="help_towers_article" value="Kuleler bitişiğindeki hücreleri
+        #korumak için kullanılırlar.
+        #
+        #Kuleler koruma [2] verirler.
+        #Bu nedenle, onları sadece
+        #şövalye ve baronlar yok edebilir.
+        #
+        #Kulübeler ise koruma [1] verirler.
+        #
+        #Oyunun başında
+        #bölgeni korumanın
+        #en iyi yolu kulelerdir
+        #Kulelerin fiyatı düşüktür ve
+        #para tüketmezler.
+        "/>
+
+        <string key="help_money_article" value="Gelirin hücre sayına bağlıdır.
+        #
+        #Daha fazla toprak demek
+        #daha fazla kazanç demektir.
+        #Ağaçlar gelirini düşürür.
+        #
+        #Birlikler para tüketirler.
+        #Daha güçlü birlikler
+        #daha fazla para tüketirler.
+        #
+        #
+        #
+        #Eğer paran biterse
+        #birliklerin ölür.
+        #
+        #Gelirini üst ortada
+        #görebilirsin.
+        "/>
+
+        <string key="help_tactics_article" value="Oyunun başında
+        #boş hücreleri ele geçir.
+        #Sonra bütün hücrelerini
+        #korumaya çalış.
+        #
+        #Birlik üretmeden önce
+        #gelirinin iyi olduğundan
+        #emin ol.
+        #
+        #
+        #
+        #Düşman ülkelerini
+        #parçalara bölerek
+        #ekonomilerini yok et.
+        "/>
+
+        <string key="about_complicated_mode_article" value="Karmaşık mod daha fazla
+        #menü içerir.
+        #Basit moddan farkları:
+        #
+        #- Birden fazla kayıt yeri
+        #
+        #- Bölümü yeniden başlatma onayı
+        #
+        #- Renklerin istatistiklerini görebilme
+        #(para butonuna basın)
+        "/>
+
+        <string key="article_rules" value="Oyunda 2 kural seti vardır: Standart kurallar ve Slay kuralları. Standart kurallar varsayılan olarak etkindir.
+        #
+        #İlk zamanlarda oyunda sadece Slay kuralları vardı. 'Yardım' bu yüzden 'Slay kurallarını' 'Normal kurallar' olarak anlatıyor.
+        #
+        #Savaş modunda kuralları değiştirmek için yeni oyuna başlamadan önce 'daha fazla'ya dokun.
+        #
+        #Mücadele modunda ise kuralları değiştirmek için level seçme ekranından sağ köşedeki '...' butonuna dokun."/>
+
+        <!-- Statistics -->
+        <string key="turns_made" value="Yapılan hamle sayısı:"/>
+        <string key="units_died" value="Ölen birlik sayısı:"/>
+        <string key="units_produced" value="Üretilen birlik sayısı:"/>
+        <string key="money_spent" value="Harcanan para:"/>
+        <string key="time" value="Süre:"/>
+
+        <!-- Editor -->
+        <string key="editor" value="Düzenleyici"/>
+        <string key="slot" value="Kayıt Yeri"/>
+        <string key="slots" value="Kayıt yerleri"/>
+        <string key="import" value="İçeri aktar"/>
+        <string key="export" value="Dışarı aktar"/>
+        <string key="empty" value="boş"/>
+        <string key="play" value="Oyna"/>
+        <string key="edit" value="Düzenle"/>
+        <string key="random" value="Rastgele"/>
+        <string key="exported" value="Harita kopyalandı"/>
+        <string key="editor_clear" value="Temizle"/>
+        <string key="no" value="Hayır"/>
+        <string key="yes" value="Evet"/>
+        <string key="confirm_import" value="İçeri aktar?"/>
+        <string key="filter_no" value="Filtre yok"/>
+        <string key="filter_only_land" value="Sadece kara"/>
+        <string key="confirm_clear_level" value="Haritayı temizle?"/>
+        <string key="confirm_randomize" value="Rastgele harita oluştur?"/>
+
+        <!-- Settings -->
+        <string key="main_label" value=" # Otomatik Kayıt
+            # # Birden fazla kayıt yeri
+            # # Sırayı bitirmeyi onaylat
+            # # Şehir isimleri
+            # # Ses
+            # # "/>
+        <string key="limited_turns" value="Sınırlı tur sayısı"/>
+        <string key="hold_to_march" value="Toplu ilerleme için uzun bas"/>
+        <string key="skin" value="Kaplama"/>
+        <string key="original" value="orijinal"/>
+        <string key="points" value="noktalar"/>
+        <string key="grid" value="ızgara"/>
+        <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
+        <string key="anim_style" value="Hassaslık"/>
+        <string key="more" value="Daha fazla"/>
+        <string key="camera_offset" value="Kamera ayarı"/>
+        <string key="slay_rules" value="Slay kuralları"/>
+        <string key="language" value="Dil"/>
+        <string key="more_settings_checks" value="# #Su grafiği # # "/>
+        <string key="water_texture" value="Su grafiği "/>
+        <string key="confirm_reset" value="İlerlemeyi sıfırla?"/>
+        <string key="replays" value="Replays"/>
+        <string key="save_replay" value="Save replay"/>
+        <string key="replay" value="Replay"/>
+        <string key="replay_saved" value="Replay saved"/>
+        <string key="fast_construction" value="Fast construction"/>
+
+        <!-- Single messages -->
+        <string key="check_shroomarts" value="ShroomArts'tan yeni kaplama"/>
+        <string key="level_24" value="Bu ilk 'zor' seviye. Savunmaya daha fazla önem ver."/>
+    </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <language name="bg_BG">
+        <!-- All characters -->
+        <string key="lang_characters" value="йцукенгшщзхъёфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮö"/>
+
+        <!-- Main menu -->
+        <string key="main_menu_info" value="Информация"/>
+        <string key="main_menu_exit" value="Изход"/>
+        <string key="main_menu_something" value="Белият текст не върши нищо"/>
+
+        <!-- Random stuff -->
+        <string key="menu_level" value="Ниво"/>
+        <string key="menu_reset" value="Рестарт"/>
+        <string key="game_saved" value="Игра запазена"/>
+        <string key="restart_app" value="Restart app"/>
+        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
+        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
+        <string key="city_name_three" value="nsk, rra, ko, rry"/>
+
+        <!-- Info -->
+        <string key="info_back" value="Назад"/>
+        <string key="info_array" value="Това е проста стратегическа
+        #игра с минималистичен стил.
+        #Безплатна е и няма реклами или дарения.
+        #Ако играете за пръв път
+        #Ако не сте запознат/а с играта
+        #разгледайте упътването или менюто 'Помощ'.
+        #
+        #Играта е вдъхновена от
+        #Slay от Sean O'Connor
+        #
+        #
+        #
+        #
+        #
+        #
+        #Reddit: /r/yiotro_games
+        #E-mail: yiotro93@gmail.com
+        #Направена от yiotro
+		"/>
+        <string key="reset_campaign_data" value="Рестартирай всички данни"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
+
+        <!-- Choose game mode menu-->
+        <string key="choose_game_mode_skirmish" value="Сражение"/>
+        <string key="choose_game_mode_tutorial" value="Упътване"/>
+        <string key="choose_game_mode_campaign" value="Кампания"/>
+        <string key="choose_game_mode_load" value="Зареди игра"/>
+
+        <!-- Skirmish menu -->
+        <string key="game_settings_main_menu" value="Главно меню"/>
+        <string key="game_settings_tutorial" value="Упътване"/>
+        <string key="game_settings_start" value="Старт"/>
+        <string key="map_size" value="Размер на терена"/>
+        <string key="color_number" value="Цветове"/>
+        <string key="player_number" value="Играчи"/>
+        <string key="small" value="малък"/>
+        <string key="medium" value="среден"/>
+        <string key="big" value="голям"/>
+        <string key="ai_only" value="само AI"/>
+        <string key="single_player" value="единствен играч"/>
+        <string key="multiplayer" value="няколко играча"/>
+        <string key="colors" value="цветове"/>
+        <string key="color" value="цветове"/>
+        <string key="difficulty" value="Трудност"/>
+        <string key="easy" value="лесно"/>
+        <string key="normal" value="нормално"/>
+        <string key="hard" value="трудно"/>
+        <string key="expert" value="експерт"/>
+        <string key="balancer" value="balancer"/>
+        <string key="player_color" value="Цвят на играча"/>
+
+        <!-- In game menu -->
+        <string key="in_game_menu_resume" value="Продължи"/>
+        <string key="in_game_menu_save" value="Запази игра"/>
+        <string key="in_game_menu_surrender" value="Предавам се"/>
+        <string key="in_game_menu_main_menu" value="Главно меню"/>
+        <string key="in_game_menu_restart" value="Рестарт"/>
+        <string key="confirm_restart" value="Рестарт на играта?"/>
+        <string key="cancel" value="Анулирай"/>
+        <string key="confirm_end_turn" value="Приключване на хода?"/>
+        <string key="yes" value="Да"/>
+        <string key="confirm_import" value="Confirm import"/>
+        <string key="filter_no" value="No filter"/>
+        <string key="filter_only_land" value="Only land"/>
+        <string key="confirm_clear_level" value="Clear map?"/>
+        <string key="confirm_randomize" value="Generate random map?"/>
+
+        <!-- End game menu -->
+        <string key="end_game_ok" value="Ок"/>
+        <string key="end_game_okay" value="Okay..."/>
+        <string key="player" value="играч"/>
+        <string key="ai" value="AI"/>
+        <string key="won" value="печели"/>
+        <string key="statistics" value="Статистика"/>
+        <string key="next" value="Следващ"/>
+        <string key="level_complete" value="Ниво завършено"/>
+        <string key="win_game" value="Печели"/>
+        <string key="win_or_continue" value="Спечели сега#или продължи?"/>
+        <string key="continue" value="Continue"/>
+
+        <!-- Colors -->
+        <string key="green_player" value="Зелен"/>
+        <string key="red_player" value="Червен"/>
+        <string key="magenta_player" value="Магента"/>
+        <string key="cyan_player" value="Циан"/>
+        <string key="yellow_player" value="Жълт"/>
+        <string key="gray_player" value="Сив"/>
+        <string key="green_ai" value="Зелен"/>
+        <string key="red_ai" value="Червен"/>
+        <string key="magenta_ai" value="Магента"/>
+        <string key="cyan_ai" value="Циан"/>
+        <string key="yellow_ai" value="Жълт"/>
+        <string key="gray_ai" value="Сив"/>
+        <string key="green_menu" value="Зелен"/>
+        <string key="red_menu" value="Червен"/>
+        <string key="magenta_menu" value="Магента"/>
+        <string key="cyan_menu" value="Циан"/>
+        <string key="yellow_menu" value="Жълт"/>
+        <string key="gray_menu" value="Сив"/>
+
+        <!-- Tutorial -->
+        <string key="normal_rules" value="Нормални правила"/>
+        <string key="how_to_play" value="Как се играе?"/>
+        <string key="tutorial_ok" value="Ок"/>
+        <string key="tut_select_unit" value="Избери единица"/>
+        <string key="tut_tap_on_hex" value="Натисни някой шестоъгълник"/>
+        <string key="tut_press_button" value="Натисни бутона"/>
+        <string key="tut_build_tower" value="Построй кула"/>
+        <string key="tut_again" value="Отново"/>
+        <string key="tut_build_spearman" value="Създай копиеносец"/>
+        <string key="tut_tap_to_undo" value="Натисни 'Анулирай'"/>
+        <string key="tut_tap_to_end_turn" value="Натисни, за да приключиш хода си"/>
+        <string key="tut_hold_hex" value="Натисни и задръж"/>
+        <string key="tut_merge_units" value="Слей единиците"/>
+        <string key="tut_good_luck" value="Късмет!"/>
+
+        <!-- Tutorial tips -->
+        <string key="tip_capture_with_units" value="Атакувай с е диниците си,#за да превземеш територии"/>
+        <string key="tip_about_money" value="Колкото повече територия,#толкова повече приход"/>
+        <string key="tip_build_towers" value="Построявай кули, за да защитаваш#клетките си."/>
+        <string key="tip_about_taxes" value="По-силните единици изискват#повече пари"/>
+        <string key="tip_about_defense" value="Единиците и столицата също#защитават съседните им клетки"/>
+        <string key="tip_hold_to_march" value="За да местиш бързо армията си#използвай 'задръж за марш'"/>
+        <string key="tip_about_unit_death" value="Ако парите свършат#всички единици умират.#Бъди внимателен"/>
+        <string key="tip_merging" value="Слей две единици#за по-силна единица"/>
+        <string key="tip_trees" value="Дърветата намаляват прихода#Затова е по-добре да ги отсичаш"/>
+        <string key="tip_help" value="Още детайли#в менюто 'Помощ'"/>
+
+        <!-- Generic Tutorial -->
+        <string key="gen_greetings" value="Здравейте. Това упътване ще ви обясни правилата на играта."/>
+        <string key="gen_select_province" value="Натисни своят град, за да го селектираш."/>
+        <string key="gen_select_unit" value="Добра работа. Имаш няколко единици. Натисни една от тях."/>
+        <string key="gen_move_unit" value="Всяка единица се движи веднъж всеки ход. Сега превземи неутрална територия край избраната единица като я натиснеш."/>
+        <string key="gen_income" value="Колкото повече територии си превзел, толкова по-голям ти е приходът."/>
+        <string key="gen_lets_build_farm" value="Нека построим ферма, за да увеличим прихода."/>
+        <string key="gen_press_button_twice" value="Натисни бутона"/>
+        <string key="gen_build_farm" value="Ферми могат да се строят само до столицата или до други ферми."/>
+        <string key="gen_about_farms" value="Всяка ферма струва 2 повече от предишната и дава +3 приход."/>
+        <string key="gen_lets_build_peasant" value="Нека създадем нова единица и да превземем неутрална територия."/>
+        <string key="gen_press_button" value="Натисни бутона най-долу."/>
+        <string key="gen_build_peasant" value="Сложи своята единица близо да границата на своята територия."/>
+        <string key="gen_capture_peasant" value="Сега превземи неутрална територия като селектираш единицата си и я упътиш къде да отиде."/>
+        <string key="gen_capture_hex" value="Превземи нетрална територия"/>
+        <string key="gen_lets_build_tower" value="Трябва да защитаваш земите си. Кулите са полезни за това."/>
+        <string key="gen_build_tower" value="Построй кула като натиснеш някоя от своите територии."/>
+        <string key="gen_about_towers" value="Кулите защитават клетките до тях от селяни и копиеносци ако тези клетки са под твой контрол."/>
+        <string key="gen_lets_build_spearman" value="Копиеносците са по-силни от селяните. Нека създадем един."/>
+        <string key="gen_build_spearman" value="Натисни клетката, за да построиш копиеносец."/>
+        <string key="gen_units_consume_money" value="Единиците изискват пари, за да живеят. По-силните искат повече пари."/>
+        <string key="gen_undo_spearman" value="Сега приходът ти е -1. Това не е добре, затова нека премахнем копиеносецът."/>
+        <string key="gen_why_units_die" value="Всички единици умират ако парите свършат. Затова трябва да внимаваш с приходите си."/>
+        <string key="gen_about_trees_one" value="Дърветата също са проблем. Клетките с дървета не дават приход."/>
+        <string key="gen_about_trees_two" value="Отсечи дърветата възможно най-скоро, докато са малко."/>
+        <string key="gen_end_turn" value="За да приключиш хода си, натисни бутона долу в дясно."/>
+        <string key="gen_choose_to_merge" value="Можеш и да сливаш единици. Избери селянина, който е по-ниско."/>
+        <string key="gen_merge_units" value="Когато си избрал селянина, натисни другия, за да ги слееш."/>
+        <string key="gen_long_tap" value="За да преместиш всички свои единици към едно място, задръж желаното място."/>
+        <string key="gen_several_provinces" value="Можеш да имаш няколко града, всеки със своя икономика."/>
+
+        <!-- Tutorial help -->
+        <string key="help" value="Помощ"/>
+        <string key="help_about_units" value="Единици"/>
+        <string key="help_about_trees" value="Дървета"/>
+        <string key="help_about_towers" value="Кули"/>
+        <string key="help_about_money" value="Пари"/>
+        <string key="help_about_tactics" value="Стратегии"/>
+        <string key="help_about_rules" value="Rules"/>
+
+        <string key="help_units_article" value="Има 4 вида единици.
+        #Различават се само по сила.
+        #Във възходящ ред по сила:
+        #[1] селянин
+        #[2] копиеносец
+        #[3] барон
+        #[4] рицар
+        #
+        #Единиците дават защита на съседни клетки под твой контрол
+        #защита, равна на тяхната сила.
+        #
+        #За да превземеш клетка
+        #силата на превземащата единица
+        #трябва да бъде по-голяма от защитата на клетката
+        #
+        #Всяка единица изисква
+        #2, 6, 18 или 54 жълтици
+        #всеки ход.
+        "/>
+
+        <string key="help_trees_article" value="Дървета се създават
+        #от останките на умрели единици.
+        #
+        #Клетка с дърво на нея
+        #не дава приход. Това значи,
+        #че дърветата пречат на прихода.
+        #
+        #Трябва да ги отсечеш.
+        #Иначе ще се разрастнат
+        #и ще унищожат икономиката ти.
+        #
+        #Палмите се създават по краищата
+        #и растат много бързо.
+        #Трябва да бъдат отсечени
+        #много бързо.
+        "/>
+
+        <string key="help_towers_article" value="Кулите се използват
+        #за защитата на съседните им клетки.
+        #
+        #Кулите дават защита [2].
+        #Следователно само барони и рицари
+        #могат да я превземат.
+        #
+        #Столиците дават защита [1].
+        #
+        #В началото на играта
+        #това е на-добрият начин
+        #да защитиш територията си.
+        #Кулите са евтини и
+        #те не изискват пари всеки ход.
+        "/>
+
+        <string key="help_money_article" value="Приходът зависи от
+        #броят клетки.
+        #По-голяма територия
+        #дава повече приход.
+        #Дърветата намаляват прихода.
+        #
+        #Единиците консумират пари.
+        #По-силните
+        #искат повече пари.
+        #
+        #
+        #
+        #Ако парите свършат,
+        #всички единици умират.
+        #
+        #Приходът е показан
+        #горе в средата.
+        "/>
+
+        <string key="help_tactics_article" value="В началото на играта
+        #превземи неутрални клетки.
+        #След това защитавай
+        #всичките си клетки.
+        #
+        #Увери се, че приходът ти
+        #е достатъчно добър
+        #преди да създаваш единици.
+        #
+        #
+        #
+        #Разрежи вражеските територии
+        #на парчета, за да
+        #унищожиш икономиката им.
+        "/>
+
+        <string key="about_complicated_mode_article" value="Сложен режим значи, че
+        #има повече менюта.
+        #Разлики между него и Прост режим:
+        #
+        #- Няколко слота за запазване на игра
+        #
+        #- Потвърждение за рестарт на игра
+        #
+        #- Покажи статистика по цветове
+        #(натисни жълтицата)
+        "/>
+
+        <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
+        #
+        #Initially game had only slay rules. That's why help describes them instead of normal rules.
+        #
+        #To change rules in skirmish you have to tap 'more' before starting new game.
+        #
+        #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
+
+        <!-- Statistics -->
+        <string key="turns_made" value="Изиграни ходове:"/>
+        <string key="units_died" value="Умрели единици:"/>
+        <string key="units_produced" value="Създадени единици:"/>
+        <string key="money_spent" value="Изхарчени пари:"/>
+        <string key="time" value="Time:"/>
+
+        <!-- Editor -->
+        <string key="editor" value="Редактор"/>
+        <string key="slot" value="Слот"/>
+        <string key="slots" value="Слотове за запазване"/>
+        <string key="import" value="Внеси"/>
+        <string key="export" value="Изнеси"/>
+        <string key="empty" value="празен"/>
+        <string key="play" value="Играй"/>
+        <string key="no" value="No"/>
+        <string key="yes" value="Yes"/>
+        <string key="edit" value="Редкатирай"/>
+        <string key="random" value="Случаен"/>
+        <string key="exported" value="Теренът е в клипборда ви"/>
+        <string key="editor_clear" value="Изчисти"/>
+
+        <!-- Settings -->
+        <string key="main_label" value=" # Автоматично запазване
+            # # Няколко слота
+            # # Питай за край на ходове
+            # # Имена на градовете
+            # # Звук
+            # # "/>
+        <string key="limited_turns" value="Limited turns"/>
+        <string key="hold_to_march" value="Long tap to move"/>
+        <string key="skin" value="Графика"/>
+        <string key="original" value="класически"/>
+        <string key="points" value="точки"/>
+        <string key="grid" value="мрежа"/>
+        <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
+        <string key="anim_style" value="Чувствителност"/>
+        <string key="more" value="Още"/>
+        <string key="camera_offset" value="Позиция на изглед"/>
+        <string key="slay_rules" value="Правила Slay"/>
+        <string key="language" value="Language"/>
+        <string key="more_settings_checks" value="# #Water texture # # "/>
+        <string key="water_texture" value="Water texture "/>
+        <string key="confirm_reset" value="Clear progress?"/>
+        <string key="replays" value="Replays"/>
+        <string key="save_replay" value="Save replay"/>
+        <string key="replay" value="Replay"/>
+        <string key="replay_saved" value="Replay saved"/>
+        <string key="fast_construction" value="Fast construction"/>
+
+        <!-- Single messages -->
+        <string key="check_shroomarts" value="New skin by ShroomArts"/>
+        <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+
+    </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

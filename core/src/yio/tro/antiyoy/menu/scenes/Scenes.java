@@ -45,6 +45,9 @@ public class Scenes {
     public static SceneCheatScreen sceneCheatScreen;
     public static SceneEditorMoneyPanel sceneEditorMoneyPanel;
     public static SceneMoreCampaignOptions sceneMoreCampaignOptions;
+    public static SceneAiOnlyOverlay sceneReplayOverlay;
+    public static SceneReplays sceneReplays;
+    public static SceneFastConstructionPanel sceneFastConstructionPanel;
 
 
     public static void createScenes(MenuControllerYio menuController) {
@@ -88,5 +91,8 @@ public class Scenes {
         sceneCheatScreen = new SceneCheatScreen(menuController);
         sceneEditorMoneyPanel = new SceneEditorMoneyPanel(menuController);
         sceneMoreCampaignOptions = new SceneMoreCampaignOptions(menuController);
+        sceneReplayOverlay = new SceneAiOnlyOverlay(menuController);
+        sceneReplays = new SceneReplays(menuController);
+        sceneFastConstructionPanel = new SceneFastConstructionPanel(menuController);
     }
 }

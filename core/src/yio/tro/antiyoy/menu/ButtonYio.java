@@ -5,7 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import yio.tro.antiyoy.RectangleYio;
+import yio.tro.antiyoy.stuff.RectangleYio;
 import yio.tro.antiyoy.SoundControllerYio;
 import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
 import yio.tro.antiyoy.factor_yio.FactorYio;
@@ -22,7 +22,7 @@ public class ButtonYio {
     public final MenuControllerYio menuControllerYio;
     public RectangleYio position, animPos;
     public TextureRegion textureRegion;
-    public FactorYio factorModel, selectionFactor, selAlphaFactor;
+    public FactorYio appearFactor, selectionFactor, selAlphaFactor;
     public final int id; // must be unique for every menu button
     protected boolean touchable;
     private boolean visible;
@@ -33,7 +33,7 @@ public class ButtonYio {
     public static final int ANIM_SOLID = 4;
     public static final int ANIM_FROM_CENTER = 5;
     public static final int ANIM_COLLAPSE_DOWN = 6;
-    private ReactBehavior reactBehavior;
+    protected ReactBehavior reactBehavior;
     private long lastTimeTouched;
     public boolean currentlyTouched;
     private int touchDelay, animType;
@@ -45,6 +45,7 @@ public class ButtonYio {
     public float x1, x2, y1, y2;
     private float deltaSizeArgument, deltaSize, touchOffset;
     Sound pressSound;
+    String texturePath;
     public boolean hasShadow, mandatoryShadow, rectangularMask, onlyShadow, touchAnimation, lockAction, deltaAnimationEnabled; // mandatory shadow - draw shadow right before button
 
 
@@ -56,13 +57,14 @@ public class ButtonYio {
         visible = false;
         touchDelay = DEFAULT_TOUCH_DELAY;
         timeToPerformAction = 0;
-        factorModel = new FactorYio();
+        appearFactor = new FactorYio();
         selectionFactor = new FactorYio();
         selAlphaFactor = new FactorYio();
         text = new ArrayList<String>();
         backColor = new Color(0.5f, 0.5f, 0.5f, 1);
         hasShadow = true;
         mandatoryShadow = false;
+        texturePath = null;
         animPos = new RectangleYio(0, 0, 0, 0);
         deltaAnimationEnabled = false;
         pressSound = null;
@@ -70,7 +72,7 @@ public class ButtonYio {
 
 
     public void move() {
-        if (factorModel.needsToMove()) factorModel.move();
+        if (appearFactor.needsToMove()) appearFactor.move();
         if (selectionFactor.needsToMove()) {
             selectionFactor.move();
             if (lockAction && selectionFactor.get() == 1) lockAction = false;
@@ -83,7 +85,7 @@ public class ButtonYio {
         if (currentlyTouched && System.currentTimeMillis() - lastTimeTouched > touchDelay && selAlphaFactor.get() == 0) {
             currentlyTouched = false;
         }
-        float factor = factorModel.get();
+        float factor = appearFactor.get();
         switch (animType) {
             case ANIM_DEFAULT:
                 hor = (float) (0.5 * factor * position.width);
@@ -235,6 +237,7 @@ public class ButtonYio {
         Texture texture = new Texture(Gdx.files.internal(path));
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         textureRegion = new TextureRegion(texture);
+        texturePath = path;
         hasShadow = false;
     }
 
@@ -246,8 +249,8 @@ public class ButtonYio {
 
     public void destroy() {
         setTouchable(false);
-        factorModel.setDy(0);
-        factorModel.beginDestroying(MenuControllerYio.DESTROY_ANIM, MenuControllerYio.DESTROY_SPEED);
+        appearFactor.setDy(0);
+        appearFactor.beginDestroying(MenuControllerYio.DESTROY_ANIM, MenuControllerYio.DESTROY_SPEED);
     }
 
 
@@ -298,7 +301,7 @@ public class ButtonYio {
 
 
     public boolean isVisible() {
-        if (factorModel.get() > 0 && visible) return true;
+        if (appearFactor.get() > 0 && visible) return true;
         return false;
     }
 
@@ -355,6 +358,33 @@ public class ButtonYio {
 
     public void setMandatoryShadow(boolean mandatoryShadow) {
         this.mandatoryShadow = mandatoryShadow;
+    }
+
+
+    public void onPause() {
+        if (textureRegion != null) {
+            textureRegion.getTexture().dispose();
+        }
+    }
+
+
+    public void onResume() {
+        if (hasText()) {
+            menuControllerYio.buttonRenderer.renderButton(this);
+        } else {
+            reloadTexture();
+        }
+    }
+
+
+    private void reloadTexture() {
+        resetTexture();
+        loadTexture(texturePath);
+    }
+
+
+    private boolean hasText() {
+        return texturePath == null;
     }
 
 

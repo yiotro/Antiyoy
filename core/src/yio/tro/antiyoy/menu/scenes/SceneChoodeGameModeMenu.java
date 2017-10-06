@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.GraphicsYio;
+import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;

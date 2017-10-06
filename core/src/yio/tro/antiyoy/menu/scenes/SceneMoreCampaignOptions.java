@@ -1,12 +1,18 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.GraphicsYio;
+import yio.tro.antiyoy.menu.SliderYio;
+import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.CheckButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
 
 public class SceneMoreCampaignOptions extends AbstractScene{
+
+
+    private SliderYio colorOffsetSlider;
+    private CheckButtonYio chkSlayRules;
+
 
     public SceneMoreCampaignOptions(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
@@ -21,8 +27,9 @@ public class SceneMoreCampaignOptions extends AbstractScene{
 
         menuControllerYio.spawnBackButton(551, ReactBehavior.rbExitToCampaign);
 
-        menuControllerYio.getSliders().get(6).appear();
-        menuControllerYio.getSliders().get(6).setPos(0.15, 0.73, 0.7, 0);
+        colorOffsetSlider = menuControllerYio.getSliders().get(6);
+        colorOffsetSlider.appear();
+        colorOffsetSlider.setPos(0.15, 0.73, 0.7, 0);
 
         ButtonYio shadow = buttonFactory.getButton(generateRectangle(0.05, 0.45, 0.9, 0.42), 553, null);
         shadow.onlyShadow = true;
@@ -54,7 +61,7 @@ public class SceneMoreCampaignOptions extends AbstractScene{
         double chkX = 0.88 - checkButtonSize;
         double chkY = 0.53;
 
-        CheckButtonYio chkSlayRules = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 17);
+        chkSlayRules = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 17);
         chkSlayRules.setTouchPosition(generateRectangle(0.05, chkY - hSize * 1.5, 0.9, hSize * 3));
         chkSlayRules.setAnimType(ButtonYio.ANIM_UP);
 

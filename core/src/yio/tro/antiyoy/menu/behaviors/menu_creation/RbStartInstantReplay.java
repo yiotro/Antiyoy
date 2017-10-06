@@ -1,0 +1,16 @@
+package yio.tro.antiyoy.menu.behaviors.menu_creation;
+
+import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.replays.ReplayManager;
+import yio.tro.antiyoy.menu.ButtonYio;
+import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
+
+public class RbStartInstantReplay extends ReactBehavior{
+
+    @Override
+    public void reactAction(ButtonYio buttonYio) {
+        GameController gameController = buttonYio.getMenuControllerYio().yioGdxGame.gameController;
+        ReplayManager replayManager = gameController.replayManager;
+        replayManager.startInstantReplay();
+    }
+}

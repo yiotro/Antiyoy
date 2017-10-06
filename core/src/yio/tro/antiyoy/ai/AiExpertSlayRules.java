@@ -1,10 +1,10 @@
 package yio.tro.antiyoy.ai;
 
-import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.Unit;
+import yio.tro.antiyoy.stuff.PointYio;
 
 import java.util.ArrayList;
 
@@ -26,8 +26,6 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
 
     @Override
     public void makeMove() {
-        updateUnitsReadyToMove();
-
         moveUnits();
 
         spendMoneyAndMergeUnits();

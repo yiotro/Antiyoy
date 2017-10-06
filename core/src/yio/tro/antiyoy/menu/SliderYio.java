@@ -4,6 +4,12 @@ import com.badlogic.gdx.Gdx;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.menu.scenes.SceneSkirmishMenu;
+import yio.tro.antiyoy.menu.scenes.Scenes;
+import yio.tro.antiyoy.stuff.Fonts;
+import yio.tro.antiyoy.stuff.LanguagesManager;
+import yio.tro.antiyoy.stuff.Rect;
+import yio.tro.antiyoy.stuff.RectangleYio;
 
 import java.util.ArrayList;
 
@@ -272,7 +278,7 @@ public class SliderYio {
         switch (configureType) {
             default:
             case CONFIGURE_HUMANS:
-                configureHumans(languagesManager);
+                configureHumans();
                 break;
             case CONFIGURE_COLORS:
                 configureColors(languagesManager);
@@ -437,13 +443,8 @@ public class SliderYio {
     }
 
 
-    private void configureHumans(LanguagesManager languagesManager) {
-        if (getCurrentRunnerIndex() + minNumber == 0)
-            valueString = languagesManager.getString("ai_only");
-        else if (getCurrentRunnerIndex() + minNumber == 1)
-            valueString = languagesManager.getString("single_player");
-        else
-            valueString = languagesManager.getString("multiplayer") + " " + (getCurrentRunnerIndex() + minNumber) + "x";
+    private void configureHumans() {
+        valueString = SceneSkirmishMenu.getHumansString(getCurrentRunnerIndex() - minNumber);
     }
 
 

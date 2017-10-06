@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.GraphicsYio;
+import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.Settings;
 import yio.tro.antiyoy.SoundControllerYio;
 import yio.tro.antiyoy.YioGdxGame;
@@ -29,7 +29,7 @@ public class SceneBuildButtons extends AbstractScene{
         loadUnitButtonTexture(unitButton);
         unitButton.setTouchable(true);
         unitButton.setTouchOffset(0.05f * GraphicsYio.width);
-        unitButton.factorModel.beginSpawning(3, 2);
+        unitButton.appearFactor.beginSpawning(3, 2);
 
         ButtonYio towerButton = menuControllerYio.getButtonById(38);
         if (towerButton == null) { // init
@@ -41,7 +41,7 @@ public class SceneBuildButtons extends AbstractScene{
         loadBuildObjectButton(towerButton);
         towerButton.setTouchable(true);
         towerButton.setTouchOffset(0.05f * GraphicsYio.width);
-        towerButton.factorModel.beginSpawning(3, 2);
+        towerButton.appearFactor.beginSpawning(3, 2);
 
         ButtonYio coinButton = menuControllerYio.getButtonById(37);
         if (coinButton == null) { // init
@@ -52,14 +52,14 @@ public class SceneBuildButtons extends AbstractScene{
             coinButton.disableTouchAnimation();
         }
         loadCoinButtonTexture(coinButton);
-        coinButton.factorModel.beginSpawning(3, 2);
+        coinButton.appearFactor.beginSpawning(3, 2);
         coinButton.setTouchable(true);
         coinButton.setReactBehavior(ReactBehavior.rbShowColorStats);
     }
 
 
     void loadBuildObjectButton(ButtonYio objectButton) {
-        if (GameRules.slay_rules) {
+        if (GameRules.slayRules) {
             loadTowerButtonTexture(objectButton);
         } else {
             loadFarmButtonTexture(objectButton);

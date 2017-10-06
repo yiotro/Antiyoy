@@ -1,8 +1,8 @@
 package yio.tro.antiyoy.gameplay;
 
-import yio.tro.antiyoy.GraphicsYio;
-import yio.tro.antiyoy.PointYio;
-import yio.tro.antiyoy.Yio;
+import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.PointYio;
+import yio.tro.antiyoy.stuff.Yio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 import java.util.ArrayList;
@@ -68,11 +68,48 @@ public class MapGenerator {
 
 
     protected void balanceMap() {
-        if (GameRules.colorNumber < 4) return; // to prevent infinite loop
+        checkToFixNoPlayerProblem();
+
+        if (GameRules.colorNumber < 4) {
+            return; // to prevent infinite loop
+        }
+
         spawnManySmallProvinces();
         cutProvincesToSmallSizes();
         achieveFairNumberOfProvincesForEveryPlayer();
         giveLastPlayersSlightAdvantage();
+    }
+
+
+    private void checkToFixNoPlayerProblem() {
+        if (mapHasAtLeastOnePlayerProvince()) return;
+
+        for (Hex activeHex : gameController.fieldController.activeHexes) {
+            if (activeHex.colorIndex != 0) continue;
+
+            for (int i = 0; i < 6; i++) {
+                Hex adjacentHex = activeHex.getAdjacentHex(i);
+                if (!adjacentHex.active) continue;
+
+                adjacentHex.colorIndex = 0;
+                break;
+            }
+
+            break;
+        }
+    }
+
+
+    private boolean mapHasAtLeastOnePlayerProvince() {
+        for (Hex activeHex : gameController.fieldController.activeHexes) {
+            if (activeHex.colorIndex != 0) continue;
+
+            if (activeHex.numberOfFriendlyHexesNearby() > 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 

@@ -6,9 +6,13 @@ import yio.tro.antiyoy.menu.MenuControllerYio;
 
 public class SceneCampaignMenu extends AbstractScene{
 
+    boolean updatedSelectorMetrics;
+
 
     public SceneCampaignMenu(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
+
+        updatedSelectorMetrics = false;
     }
 
 
@@ -26,8 +30,26 @@ public class SceneCampaignMenu extends AbstractScene{
         moreOptionsButton.setAnimType(ButtonYio.ANIM_UP);
         moreOptionsButton.disableTouchAnimation();
 
-        menuControllerYio.getLevelSelector().appear();
+//        menuControllerYio.getLevelSelectorOld().appear();
+        menuControllerYio.levelSelector.appear();
+        checkToUpdateSelectorMetrics();
 
         menuControllerYio.endMenuCreation();
+    }
+
+
+    private void checkToUpdateSelectorMetrics() {
+        if (updatedSelectorMetrics) return;
+        if (menuControllerYio.levelSelector == null) return;
+        updatedSelectorMetrics = true;
+
+        menuControllerYio.levelSelector.updateTabsMetrics();
+    }
+
+
+    public void updateLevelSelector() {
+        if (menuControllerYio.levelSelector == null) return;
+
+        menuControllerYio.levelSelector.renderAllPanels();
     }
 }

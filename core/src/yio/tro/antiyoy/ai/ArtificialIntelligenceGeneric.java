@@ -2,8 +2,8 @@ package yio.tro.antiyoy.ai;
 
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
+import yio.tro.antiyoy.gameplay.Obj;
 import yio.tro.antiyoy.gameplay.Province;
-import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 public abstract class ArtificialIntelligenceGeneric extends ArtificialIntelligence{
 
@@ -78,7 +78,7 @@ public abstract class ArtificialIntelligenceGeneric extends ArtificialIntelligen
 
     protected boolean isHexGoodForFarm(Hex hex) {
         if (!hex.isFree()) return false;
-        if (!hex.hasThisObjectNearby(Hex.OBJECT_TOWN) && !hex.hasThisObjectNearby(Hex.OBJECT_FARM)) return false;
+        if (!hex.hasThisObjectNearby(Obj.TOWN) && !hex.hasThisObjectNearby(Obj.FARM)) return false;
         return true;
     }
 }

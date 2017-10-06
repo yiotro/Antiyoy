@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.LanguagesManager;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -27,7 +27,7 @@ public class SceneSurrenderDialog extends AbstractScene{
         winButton.setShadow(false);
         winButton.setReactBehavior(ReactBehavior.rbWinGame);
         winButton.setAnimType(ButtonYio.ANIM_COLLAPSE_DOWN);
-        winButton.factorModel.beginSpawning(3, 1);
+        winButton.appearFactor.beginSpawning(3, 1);
 
         ButtonYio okButton = menuControllerYio.getButtonById(53);
         okButton.setPosition(generateRectangle(0.5, 0.1, 0.5, 0.05));
