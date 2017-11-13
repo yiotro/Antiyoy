@@ -1,3 +1,6 @@
+# Google Play
+
+The source code of this game: https://play.google.com/store/apps/details?id=yio.tro.antiyoy.android&hl=en
 
 # Setting up
 
