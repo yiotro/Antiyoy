@@ -2,9 +2,7 @@ package yio.tro.antiyoy;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-/**
- * Created by ivan on 10.08.2014.
- */
+
 class Bubble {
 
     private float x, y, dx, dy, r, dr, diam;

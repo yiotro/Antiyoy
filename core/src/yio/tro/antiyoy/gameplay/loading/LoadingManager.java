@@ -4,15 +4,18 @@ import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.FieldController;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.GameSaver;
+import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class LoadingManager {
 
 
+    public static final int MAX_LOADING_DELAY = 4000;
     private static LoadingManager instance = null;
     GameController gameController;
     YioGdxGame yioGdxGame;
@@ -114,7 +117,24 @@ public class LoadingManager {
     private void createEditorPlay() {
         recreateActiveHexesFromParameter();
         gameSaver.detectRules();
+        applyEditorChosenColorFix();
         gameController.checkToEnableAiOnlyMode();
+    }
+
+
+    private void applyEditorChosenColorFix() {
+        if (gameController.colorIndexViewOffset == 0) return;
+
+        gameController.updateRuleset();
+
+        ArrayList<Hex> activeHexes = gameController.fieldController.activeHexes;
+        for (Hex activeHex : activeHexes) {
+            if (!GameRules.slayRules && activeHex.isNeutral()) continue;
+
+            activeHex.colorIndex = gameController.getInvertedColor(activeHex.colorIndex);
+        }
+
+        gameController.fieldController.detectProvinces();
     }
 
 
@@ -124,7 +144,6 @@ public class LoadingManager {
         gameController.turn = parameters.turn;
 
         if (parameters.campaignLevelIndex > 0) {
-            yioGdxGame.menuControllerYio.loadMoreCampaignOptions();
             GameRules.campaignMode = true;
 
             CampaignProgressManager.getInstance().setCurrentLevelIndex(parameters.campaignLevelIndex);
@@ -149,7 +168,8 @@ public class LoadingManager {
     private void generateMapForSlayRules() {
         int c = 0;
         FieldController fieldController = gameController.fieldController;
-        while (c < 6) {
+        long startTime = System.currentTimeMillis();
+        while (c < 6 && System.currentTimeMillis() - startTime < MAX_LOADING_DELAY) {
             fieldController.clearAnims();
             fieldController.createField();
             fieldController.generateMap(true);
@@ -162,7 +182,8 @@ public class LoadingManager {
     private void generateMapForGenericRules() {
         int c = 0;
         FieldController fieldController = gameController.fieldController;
-        while (c < 6) {
+        long startTime = System.currentTimeMillis();
+        while (c < 6 && System.currentTimeMillis() - startTime < MAX_LOADING_DELAY) {
             fieldController.clearAnims();
             fieldController.createField();
             fieldController.generateMap(false);
@@ -186,6 +207,7 @@ public class LoadingManager {
         recreateActiveHexesFromParameter();
 
         GameRules.campaignMode = true;
+        gameController.fieldController.giveMoneyToPlayerProvinces(90);
     }
 
 
@@ -214,6 +236,10 @@ public class LoadingManager {
         }
 
         Scenes.sceneGameOverlay.create();
+
+        if (GameRules.diplomacyEnabled) {
+            gameController.fieldController.diplomacyManager.checkForSingleMessage();
+        }
     }
 
 
@@ -240,5 +266,7 @@ public class LoadingManager {
         GameRules.setDifficulty(parameters.difficulty);
         gameController.colorIndexViewOffset = parameters.colorOffset;
         GameRules.setSlayRules(parameters.slayRules);
+        GameRules.setFogOfWarEnabled(parameters.fogOfWar);
+        GameRules.setDiplomacyEnabled(parameters.diplomacy);
     }
 }

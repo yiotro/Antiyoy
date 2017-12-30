@@ -3,19 +3,17 @@ package yio.tro.antiyoy.gameplay;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyInfoCondensed;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.Yio;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * Created by ivan on 11.11.2015.
- */
+
 public class GameSaver {
 
     private GameController gameController;
@@ -40,6 +38,9 @@ public class GameSaver {
         prefs.putInteger("save_difficulty", GameRules.difficulty);
         prefs.putInteger("save_color_offset", gameController.colorIndexViewOffset);
         prefs.putBoolean("slay_rules", GameRules.slayRules);
+        prefs.putString("date", Yio.getDate());
+        prefs.putBoolean("fog_of_war", GameRules.fogOfWarEnabled);
+        prefs.putBoolean("diplomacy", GameRules.diplomacyEnabled);
     }
 
 
@@ -92,18 +93,21 @@ public class GameSaver {
             stringBuffer.append(hexString);
             stringBuffer.append(tokenSeparator);
         }
-        if (stringBuffer.length() > 0)
+        if (stringBuffer.length() > 0) {
             stringBuffer.delete(stringBuffer.length() - 1, stringBuffer.length());
+        }
         return stringBuffer.toString();
     }
 
 
     public void saveGameToSlot(int slotIndex) {
-        saveGame("save_slot" + slotIndex);
-        String dateString = Yio.getDate();
-        prefs.putString("date", dateString);
-        prefs.flush();
-        Scenes.sceneSaveSlots.updateSaveSlotButton(slotIndex);
+        // this is for old save slots menu
+
+//        saveGame("save_slot" + slotIndex);
+//        String dateString = Yio.getDate();
+//        prefs.putString("date", dateString);
+//        prefs.flush();
+//        Scenes.sceneSaveSlotsOld.updateSaveSlotButton(slotIndex);
     }
 
 
@@ -112,12 +116,24 @@ public class GameSaver {
     }
 
 
-    private void saveGame(String prefsName) {
+    public void saveGame(String prefsName) {
         prefs = Gdx.app.getPreferences(prefsName);
         saveBasicInfo();
         saveStatistics();
+        saveDiplomacy();
         prefs.putString("save_active_hexes", getActiveHexesString());
         prefs.flush();
+    }
+
+
+    private void saveDiplomacy() {
+        if (!GameRules.diplomacyEnabled) return;
+
+        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomacyInfoCondensed instance = DiplomacyInfoCondensed.getInstance();
+        instance.update(diplomacyManager);
+
+        prefs.putString("diplomacy_info", instance.getFull());
     }
 
 
@@ -217,17 +233,7 @@ public class GameSaver {
     }
 
 
-    public void loadGameFromSlot(int slotIndex) {
-        loadGame("save_slot" + slotIndex);
-    }
-
-
-    void loadGame() {
-        loadGame("save"); // default save prefs
-    }
-
-
-    private void loadGame(String prefsName) {
+    public void loadGame(String prefsName) {
         prefs = Gdx.app.getPreferences(prefsName);
         activeHexesString = prefs.getString("save_active_hexes", "");
         if (activeHexesString.length() < 3) return;
@@ -238,6 +244,17 @@ public class GameSaver {
         instance.activeHexes = activeHexesString;
         LoadingManager.getInstance().startGame(instance);
         loadStatistics();
+        loadDiplomacy();
+    }
+
+
+    private void loadDiplomacy() {
+        if (!GameRules.diplomacyEnabled) return;
+
+        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomacyInfoCondensed instance = DiplomacyInfoCondensed.getInstance();
+        instance.setFull(prefs.getString("diplomacy_info", "-"));
+        instance.apply(diplomacyManager);
     }
 
 

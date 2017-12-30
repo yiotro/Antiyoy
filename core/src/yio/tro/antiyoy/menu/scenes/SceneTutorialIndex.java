@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.Animation;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 
@@ -20,21 +21,21 @@ public class SceneTutorialIndex extends AbstractScene{
 
         createBasePanel();
 
-        createTopicButton(202, 0.53, "help", ReactBehavior.rbHelpIndex);
-        createTopicButton(203, 0.45, "normal_rules", ReactBehavior.rbTutorialGeneric);
-        createTopicButton(204, 0.37, "slay_rules", ReactBehavior.rbTutorialSlay);
+        createTopicButton(202, 0.53, "help", Reaction.rbHelpIndex);
+        createTopicButton(203, 0.45, "normal_rules", Reaction.rbTutorialGeneric);
+        createTopicButton(204, 0.37, "slay_rules", Reaction.rbTutorialSlay);
 
-        menuControllerYio.spawnBackButton(209, ReactBehavior.rbChooseGameModeMenu);
+        menuControllerYio.spawnBackButton(209, Reaction.rbChooseGameModeMenu);
 
         menuControllerYio.endMenuCreation();
     }
 
 
-    private void createTopicButton(int id, double y, String key, ReactBehavior reactBehavior) {
+    private void createTopicButton(int id, double y, String key, Reaction reaction) {
         ButtonYio topicButton = buttonFactory.getButton(generateRectangle(0.05, y, 0.9, 0.08), id, getString(key));
-        topicButton.setReactBehavior(reactBehavior);
+        topicButton.setReaction(reaction);
         topicButton.setShadow(false);
-        topicButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+        topicButton.setAnimation(Animation.FROM_CENTER);
     }
 
 
@@ -48,6 +49,6 @@ public class SceneTutorialIndex extends AbstractScene{
             menuControllerYio.getButtonRenderer().renderButton(basePanel);
         }
         basePanel.setTouchable(false);
-        basePanel.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+        basePanel.setAnimation(Animation.FROM_CENTER);
     }
 }

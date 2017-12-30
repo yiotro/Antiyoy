@@ -2,6 +2,7 @@ package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.scenes.editor.*;
+import yio.tro.antiyoy.menu.scenes.gameplay.*;
 
 public class Scenes {
 
@@ -13,7 +14,6 @@ public class Scenes {
     public static SceneMoreSkirmishOptions sceneMoreSkirmishOptions;
     public static SceneSkirmishMenu sceneSkirmishMenu;
     public static SceneTestMenu sceneTestMenu;
-    public static SceneSaveSlots sceneSaveSlots;
     public static SceneEditorSlotsMenu sceneEditorSlotsMenu;
     public static SceneChoodeGameModeMenu sceneChoodeGameModeMenu;
     public static SceneTutorialIndex sceneTutorialIndex;
@@ -25,7 +25,6 @@ public class Scenes {
     public static SceneEditorConfirmClear sceneEditorConfirmClear;
     public static SceneEditorActions sceneEditorActions;
     public static SceneEditorConfirmImport sceneEditorConfirmImport;
-    public static SceneEditorOptionsPanel sceneEditorOptionsPanel;
     public static SceneEditorObjectPanel sceneEditorObjectPanel;
     public static SceneEditorHexPanel sceneEditorHexPanel;
     public static SceneEditorInstruments sceneEditorInstruments;
@@ -42,12 +41,22 @@ public class Scenes {
     public static SceneExceptionReport sceneExceptionReport;
     public static SceneEditorAutomationPanel sceneEditorAutomationPanel;
     public static SceneEditorConfirmRandomize sceneEditorConfirmRandomize;
-    public static SceneCheatScreen sceneCheatScreen;
+    public static SceneSecretScreen sceneSecretScreen;
     public static SceneEditorMoneyPanel sceneEditorMoneyPanel;
     public static SceneMoreCampaignOptions sceneMoreCampaignOptions;
     public static SceneAiOnlyOverlay sceneReplayOverlay;
     public static SceneReplays sceneReplays;
     public static SceneFastConstructionPanel sceneFastConstructionPanel;
+    public static SceneFireworks sceneFireworks;
+    public static SceneSaveLoad sceneSaveLoad;
+    public static SceneEditorParams sceneEditorParams;
+    public static SceneDiplomacy sceneDiplomacy;
+    public static SceneDipInfoDialog sceneDipInfoDialog;
+    public static SceneFriendshipDialog sceneFriendshipDialog;
+    public static SceneConfirmDislike sceneConfirmDislike;
+    public static SceneDipMessage sceneDipMessage;
+    public static SceneStopWarDialog sceneStopWarDialog;
+    public static SceneConfirmBlackMarkDialog sceneConfirmBlackMarkDialog;
 
 
     public static void createScenes(MenuControllerYio menuController) {
@@ -59,7 +68,6 @@ public class Scenes {
         sceneMoreSkirmishOptions = new SceneMoreSkirmishOptions(menuController);
         sceneSkirmishMenu = new SceneSkirmishMenu(menuController);
         sceneTestMenu = new SceneTestMenu(menuController);
-        sceneSaveSlots = new SceneSaveSlots(menuController);
         sceneEditorSlotsMenu = new SceneEditorSlotsMenu(menuController);
         sceneChoodeGameModeMenu = new SceneChoodeGameModeMenu(menuController);
         sceneTutorialIndex = new SceneTutorialIndex(menuController);
@@ -71,7 +79,6 @@ public class Scenes {
         sceneEditorConfirmClear = new SceneEditorConfirmClear(menuController);
         sceneEditorActions = new SceneEditorActions(menuController);
         sceneEditorConfirmImport = new SceneEditorConfirmImport(menuController);
-        sceneEditorOptionsPanel = new SceneEditorOptionsPanel(menuController);
         sceneEditorObjectPanel = new SceneEditorObjectPanel(menuController);
         sceneEditorHexPanel = new SceneEditorHexPanel(menuController);
         sceneEditorInstruments = new SceneEditorInstruments(menuController);
@@ -88,11 +95,21 @@ public class Scenes {
         sceneExceptionReport = new SceneExceptionReport(menuController);
         sceneEditorAutomationPanel = new SceneEditorAutomationPanel(menuController);
         sceneEditorConfirmRandomize = new SceneEditorConfirmRandomize(menuController);
-        sceneCheatScreen = new SceneCheatScreen(menuController);
+        sceneSecretScreen = new SceneSecretScreen(menuController);
         sceneEditorMoneyPanel = new SceneEditorMoneyPanel(menuController);
         sceneMoreCampaignOptions = new SceneMoreCampaignOptions(menuController);
         sceneReplayOverlay = new SceneAiOnlyOverlay(menuController);
         sceneReplays = new SceneReplays(menuController);
         sceneFastConstructionPanel = new SceneFastConstructionPanel(menuController);
+        sceneFireworks = new SceneFireworks(menuController);
+        sceneSaveLoad = new SceneSaveLoad(menuController);
+        sceneEditorParams = new SceneEditorParams(menuController);
+        sceneDiplomacy = new SceneDiplomacy(menuController);
+        sceneDipInfoDialog = new SceneDipInfoDialog(menuController);
+        sceneFriendshipDialog = new SceneFriendshipDialog(menuController);
+        sceneConfirmDislike = new SceneConfirmDislike(menuController);
+        sceneDipMessage = new SceneDipMessage(menuController);
+        sceneStopWarDialog = new SceneStopWarDialog(menuController);
+        sceneConfirmBlackMarkDialog = new SceneConfirmBlackMarkDialog(menuController);
     }
 }

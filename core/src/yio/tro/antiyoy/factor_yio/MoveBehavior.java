@@ -1,8 +1,6 @@
 package yio.tro.antiyoy.factor_yio;
 
-/**
- * Created by ivan on 21.04.2015.
- */
+
 abstract class MoveBehavior {
 
     static final MoveBehavior moveBehaviorSimple = new MoveBehaviorSimple();

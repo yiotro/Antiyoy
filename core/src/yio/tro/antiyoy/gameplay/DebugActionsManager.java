@@ -1,8 +1,13 @@
 package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
 import yio.tro.antiyoy.gameplay.replays.ReplaySaveSystem;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.scenes.SceneNotification;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 
 import java.util.ArrayList;
 
@@ -20,7 +25,64 @@ public class DebugActionsManager {
 //        doShowActiveHexesString();
 //        doCaptureRandomHexes();
         //
-        doShowReplayManager();
+        gameController.fieldController.diplomacyManager.performAiToHumanFriendshipProposal();
+    }
+
+
+    private void doShowDiplomaticMessage() {
+        Scenes.sceneDipMessage.create();
+        Scenes.sceneDipMessage.dialog.setMessage("Message", "HJdas hjashdk ahsdkj aha hsdja hkjas hkash jkdah kjash dkjsahd kah kjah dkjah dkjhaskjd hsk hhsdk asda");
+    }
+
+
+    private void doShowDiplomaticContracts() {
+        gameController.fieldController.diplomacyManager.showContractsInConsole(0);
+    }
+
+
+    private void doGenerateMultipleCityNames() {
+        System.out.println();
+        System.out.println("DebugActionsManager.generateMultipleCityNames");
+
+        CityNameGenerator instance = CityNameGenerator.getInstance();
+        FieldController fieldController = gameController.fieldController;
+        ArrayList<Hex> activeHexes = fieldController.activeHexes;
+        for (int i = 0; i < 10; i++) {
+            Hex randomHex = activeHexes.get(YioGdxGame.random.nextInt(activeHexes.size()));
+            String name = instance.generateName(randomHex);
+            System.out.println("- " + name);
+        }
+
+        ArrayList<String> allNames = new ArrayList<>();
+        for (Hex activeHex : activeHexes) {
+            allNames.add(instance.generateName(activeHex));
+        }
+
+        int duplicates = 0;
+        boolean hasDuplicates = false;
+        for (int i = 0; i < allNames.size(); i++) {
+            for (int j = i + 1; j < allNames.size(); j++) {
+                if (allNames.get(i).equals(allNames.get(j))) {
+                    duplicates++;
+                }
+            }
+        }
+        hasDuplicates = (duplicates > 0);
+
+        System.out.println("hasDuplicates = " + hasDuplicates);
+        if (hasDuplicates) {
+            System.out.println("duplicates = " + duplicates);
+        }
+    }
+
+
+    private void doShowNotification() {
+        Scenes.sceneNotification.showNotification("debug notification");
+    }
+
+
+    private void doShowSnapshotsInConsole() {
+        gameController.snapshotManager.showInConsole();
     }
 
 
@@ -82,7 +144,7 @@ public class DebugActionsManager {
         System.out.println("DebugActionsManager.doShowAllProvincesMoney:");
         for (Province province : gameController.fieldController.provinces) {
             String colorName = gameController.fieldController.getColorName(province.getColor());
-            System.out.println(colorName + ": " + province.money + " + " + province.getIncome());
+            System.out.println(colorName + ": " + province.money + " + " + province.getBalance());
         }
         System.out.println();
     }

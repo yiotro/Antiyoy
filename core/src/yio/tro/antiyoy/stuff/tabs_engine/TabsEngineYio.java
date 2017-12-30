@@ -189,7 +189,7 @@ public class TabsEngineYio {
 
     public void swipeTab(int direction) {
         ignoreFactor.setValues(1, 0);
-        ignoreFactor.beginDestroying(1, 5);
+        ignoreFactor.destroy(1, 5);
 
         giveImpulse(direction * 7 * magnetMaxPower);
         setSpeed(direction * 11 * magnetMaxPower);

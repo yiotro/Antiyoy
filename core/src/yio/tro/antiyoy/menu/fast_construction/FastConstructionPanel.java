@@ -1,5 +1,7 @@
 package yio.tro.antiyoy.menu.fast_construction;
 
+import com.badlogic.gdx.Input;
+import yio.tro.antiyoy.Settings;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Obj;
@@ -8,6 +10,7 @@ import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.render.MenuRender;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
@@ -51,6 +54,9 @@ public class FastConstructionPanel extends InterfaceElement{
         addItem(FcpItem.ACTION_FARM);
         addItem(FcpItem.ACTION_TOWER);
         addItem(FcpItem.ACTION_STRONG_TOWER);
+        addItem(FcpItem.ACTION_UNDO);
+        addItem(FcpItem.ACTION_END_TURN);
+        addItem(FcpItem.ACTION_DIPLOMACY);
 
         for (FcpItem spItem : items) {
             spItem.setRadius(0.37f * height);
@@ -124,16 +130,19 @@ public class FastConstructionPanel extends InterfaceElement{
 
     @Override
     public void destroy() {
-        appearFactor.beginDestroying(2, 2);
+        appearFactor.destroy(2, 2);
     }
 
 
     @Override
     public void appear() {
-        if (appearFactor.get() == 1) return;
+        if (appearFactor.get() == 1) {
+            appearFactor.appear(3, 2);
+            return;
+        }
 
         appearFactor.setValues(0.01, 0);
-        appearFactor.beginSpawning(3, 2);
+        appearFactor.appear(3, 2);
 
         onAppear();
     }
@@ -154,6 +163,47 @@ public class FastConstructionPanel extends InterfaceElement{
             rearrangeBySlayRules();
         } else {
             rearrangeByNormalRules();
+        }
+
+        rearrangeSpecialItems();
+    }
+
+
+    private void rearrangeSpecialItems() {
+        FcpItem undoItem = getItemByAction(FcpItem.ACTION_UNDO);
+        undoItem.visible = true;
+        undoItem.delta.x = getSpecialItemHorPos();
+        undoItem.delta.y = 2.2f * height;
+        undoItem.animDelta.set(getSpecialItemAnimDelta(), height);
+
+        FcpItem endTurnItem = getItemByAction(FcpItem.ACTION_END_TURN);
+        endTurnItem.visible = true;
+        endTurnItem.delta.x = getSpecialItemHorPos();
+        endTurnItem.delta.y = 3.5f * height;
+        endTurnItem.animDelta.set(getSpecialItemAnimDelta(), height);
+
+        FcpItem diplomacyItem = getItemByAction(FcpItem.ACTION_DIPLOMACY);
+        diplomacyItem.visible = GameRules.diplomacyEnabled;
+        diplomacyItem.delta.x = getSpecialItemHorPos();
+        diplomacyItem.delta.y = 4.8f * height;
+        diplomacyItem.animDelta.set(getSpecialItemAnimDelta(), height);
+    }
+
+
+    private float getSpecialItemAnimDelta() {
+        if (Settings.leftHandMode) {
+            return itemTouchOffset;
+        } else {
+            return -itemTouchOffset;
+        }
+    }
+
+
+    private float getSpecialItemHorPos() {
+        if (Settings.leftHandMode) {
+            return GraphicsYio.width - itemTouchOffset;
+        } else {
+            return itemTouchOffset;
         }
     }
 
@@ -271,9 +321,32 @@ public class FastConstructionPanel extends InterfaceElement{
             case FcpItem.ACTION_STRONG_TOWER:
                 applyBuildSolidObject(Obj.STRONG_TOWER);
                 break;
+            case FcpItem.ACTION_UNDO:
+                applyUndoAction();
+                break;
+            case FcpItem.ACTION_END_TURN:
+                applyEndTurn();
+                break;
+            case FcpItem.ACTION_DIPLOMACY:
+                applyOpenDiplomacy();
+                break;
         }
+    }
 
-        destroy();
+
+    private void applyOpenDiplomacy() {
+        menuControllerYio.yioGdxGame.gameController.selectionController.deselectAll();
+        Scenes.sceneDiplomacy.create();
+    }
+
+
+    private void applyEndTurn() {
+        menuControllerYio.yioGdxGame.gameController.onEndTurnButtonPressed();
+    }
+
+
+    private void applyUndoAction() {
+        menuControllerYio.yioGdxGame.gameController.undoAction();
     }
 
 
@@ -320,6 +393,18 @@ public class FastConstructionPanel extends InterfaceElement{
         gameController.selectionController.awakeTip(tipType);
         if (tipType == SelectionController.TIP_INDEX_FARM) {
             gameController.detectAndShowMoveZoneForFarm();
+        }
+    }
+
+
+    public void onKeyPressed(int keycode) {
+        switch (keycode) {
+            case Input.Keys.NUM_1:
+                applyBuildUnit(1);
+                break;
+            case Input.Keys.NUM_2:
+                applyBuildSolidObject(Obj.FARM);
+                break;
         }
     }
 

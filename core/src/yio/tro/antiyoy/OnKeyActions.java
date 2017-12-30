@@ -2,6 +2,7 @@ package yio.tro.antiyoy;
 
 import com.badlogic.gdx.Input;
 import yio.tro.antiyoy.menu.ButtonYio;
+import yio.tro.antiyoy.menu.fast_construction.FastConstructionPanel;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
 public class OnKeyActions {
@@ -63,7 +64,21 @@ public class OnKeyActions {
             yioGdxGame.menuControllerYio.specialActionController.perform();
         }
 
+        if (keycode == Input.Keys.L) {
+            yioGdxGame.saveSystem.loadTopSlot();
+        }
+
+        checkFastConstructionPanel(keycode);
+
         return false;
+    }
+
+
+    private void checkFastConstructionPanel(int keycode) {
+        FastConstructionPanel fastConstructionPanel = Scenes.sceneFastConstructionPanel.fastConstructionPanel;
+        if (fastConstructionPanel == null) return;
+
+        fastConstructionPanel.onKeyPressed(keycode);
     }
 
 
@@ -87,7 +102,7 @@ public class OnKeyActions {
     private void openCheatScreen() {
         yioGdxGame.setGamePaused(true);
 
-        Scenes.sceneCheatScreen.create();
+        Scenes.sceneSecretScreen.create();
     }
 
 

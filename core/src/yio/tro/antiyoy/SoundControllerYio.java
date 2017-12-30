@@ -3,9 +3,7 @@ package yio.tro.antiyoy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
-/**
- * Created by ivan on 14.04.2016.
- */
+
 public class SoundControllerYio {
 
     public static Sound soundPressButton;
@@ -36,7 +34,7 @@ public class SoundControllerYio {
 
 
     public static void playSound(Sound sound) {
-        if (!Settings.sound) return;
+        if (!Settings.soundEnabled) return;
 
         sound.play();
     }

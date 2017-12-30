@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
+import yio.tro.antiyoy.gameplay.fog_of_war.FogOfWarManager;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.scenes.Scenes;
@@ -52,6 +54,8 @@ public class FieldController {
     public long timeToCheckAnimHexes;
     public int[] playerHexCount;
     public float compensatoryOffset; // fix for widescreen
+    public FogOfWarManager fogOfWarManager;
+    public DiplomacyManager diplomacyManager;
 
 
     public FieldController(GameController gameController) {
@@ -81,11 +85,22 @@ public class FieldController {
         defenseTipFactor = new FactorYio();
         defenseTips = new ArrayList<Hex>();
         moveZoneDetection = new MoveZoneDetection(this);
+        fogOfWarManager = new FogOfWarManager(this);
+        diplomacyManager = new DiplomacyManager(this);
     }
 
 
     private void updateFieldPos() {
         fieldPos.y = -0.5f * GraphicsYio.height + compensatoryOffset;
+    }
+
+
+    public void updateHexInsideLevelStatuses() {
+        for (int i = 0; i < fWidth; i++) {
+            for (int j = 0; j < fHeight; j++) {
+                field[i][j].updateCanContainsObjects();
+            }
+        }
     }
 
 
@@ -179,7 +194,7 @@ public class FieldController {
     public void killUnitByStarvation(Hex hex) {
         cleanOutHex(hex);
         addSolidObject(hex, Obj.GRAVE);
-        hex.animFactor.beginSpawning(1, 2);
+        hex.animFactor.appear(1, 2);
 
         gameController.replayManager.onUnitDiedFromStarvation(hex);
     }
@@ -242,7 +257,7 @@ public class FieldController {
 
 
     public String getFullLevelString() {
-        detectProvinces();
+//        detectProvinces();
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append(getBasicInfoString());
         stringBuffer.append("/");
@@ -428,6 +443,8 @@ public class FieldController {
 
 
     private void spawnPine(Hex hex) {
+        if (!hex.canContainObjects) return;
+
         addSolidObject(hex, Obj.PINE);
         addAnimHex(hex);
         hex.animFactor.setValues(1, 0);
@@ -436,6 +453,8 @@ public class FieldController {
 
 
     private void spawnPalm(Hex hex) {
+        if (!hex.canContainObjects) return;
+
         addSolidObject(hex, Obj.PALM);
         addAnimHex(hex);
         hex.animFactor.setValues(1, 0);
@@ -509,6 +528,15 @@ public class FieldController {
     }
 
 
+    public void onEndCreation() {
+        clearAnims();
+        updateHexInsideLevelStatuses();
+
+        fogOfWarManager.onEndCreation();
+        diplomacyManager.onEndCreation();
+    }
+
+
     public void clearAnims() {
         ListIterator iterator = animHexes.listIterator();
         while (iterator.hasNext()) {
@@ -548,13 +576,13 @@ public class FieldController {
     public void setResponseAnimHex(Hex hex) {
         responseAnimHex = hex;
         responseAnimFactor.setValues(1, 0.07);
-        responseAnimFactor.beginDestroying(1, 2);
+        responseAnimFactor.destroy(1, 2);
     }
 
 
     public void hideMoveZone() {
-        moveZoneFactor.beginDestroying(1, 5);
-        gameController.selectionController.getBlackoutFactor().beginDestroying(1, 5);
+        moveZoneFactor.destroy(1, 5);
+        gameController.selectionController.getBlackoutFactor().destroy(1, 5);
     }
 
 
@@ -583,7 +611,7 @@ public class FieldController {
         selectedProvince = getProvinceByHex(hex);
         selectedProvinceMoney = selectedProvince.money;
         gameController.selectionController.getSelMoneyFactor().setDy(0);
-        gameController.selectionController.getSelMoneyFactor().beginSpawning(3, 2);
+        gameController.selectionController.getSelMoneyFactor().appear(3, 2);
     }
 
 
@@ -632,6 +660,34 @@ public class FieldController {
     }
 
 
+    public Hex getHex(int i, int j) {
+        if (i < 0 || i > fWidth - 1 || j < 0 || j > fHeight - 1) return null;
+
+        return field[i][j];
+    }
+
+
+    public boolean isPointInsideLevelBoundsHorizontally(PointYio pointYio) {
+        if (pointYio.x < fieldPos.x + hexSize / 2) return false;
+        if (pointYio.x > fieldPos.x + gameController.boundWidth) return false;
+//        if (pointYio.y < fieldPos.y) return false;
+//        if (pointYio.y > fieldPos.y + gameController.boundHeight) return false;
+
+        return true;
+    }
+
+
+    public boolean isPointInsideLevelBoundsWithOffset(PointYio pointYio, float offset) {
+        // bigger offset -> bigger bounds
+        if (pointYio.x < fieldPos.x + hexSize / 2 - offset) return false;
+        if (pointYio.x > fieldPos.x + gameController.boundWidth + offset) return false;
+        if (pointYio.y < hexSize / 2 - offset) return false;
+        if (pointYio.y > gameController.boundHeight + offset) return false;
+
+        return true;
+    }
+
+
     public Hex adjacentHex(int i, int j, int direction) {
         switch (direction) {
             case 0:
@@ -668,6 +724,7 @@ public class FieldController {
     public void addSolidObject(Hex hex, int type) {
         if (hex == null || !hex.active) return;
         if (hex.objectInside == type) return;
+        if (!hex.canContainObjects) return;
 
         if (solidObjects.contains(hex)) {
             cleanOutHex(hex);
@@ -917,12 +974,21 @@ public class FieldController {
     }
 
 
+    public void giveMoneyToPlayerProvinces(int amount) {
+        for (Province province : provinces) {
+            if (province.getColor() == 0) {
+                province.money += amount;
+            }
+        }
+    }
+
+
     public void detectAndShowMoveZoneForFarm() {
         moveZone = moveZoneDetection.detectMoveZoneForFarm();
         checkToForceMoveZoneAnims();
         moveZoneFactor.setValues(0, 0);
-        moveZoneFactor.beginSpawning(3, 1.5);
-        gameController.selectionController.getBlackoutFactor().beginSpawning(3, 1.5);
+        moveZoneFactor.appear(3, 1.5);
+        gameController.selectionController.getBlackoutFactor().appear(3, 1.5);
     }
 
 
@@ -951,8 +1017,8 @@ public class FieldController {
         moveZone = moveZoneDetection.detectMoveZone(startHex, strength, moveLimit);
         checkToForceMoveZoneAnims();
         moveZoneFactor.setValues(0, 0);
-        moveZoneFactor.beginSpawning(3, 1.5);
-        gameController.selectionController.getBlackoutFactor().beginSpawning(3, 1.5);
+        moveZoneFactor.appear(3, 1.5);
+        gameController.selectionController.getBlackoutFactor().appear(3, 1.5);
     }
 
 
@@ -988,7 +1054,7 @@ public class FieldController {
         animHexes.listIterator().add(hex);
 
         hex.animFactor.setValues(0, 0);
-        hex.animFactor.beginSpawning(1, 1);
+        hex.animFactor.appear(1, 1);
         hex.animStartTime = System.currentTimeMillis();
 
         gameController.updateCacheOnceAfterSomeTime();
@@ -1074,6 +1140,7 @@ public class FieldController {
             getMaxProvinceFromList(provincesAdded).money = oldProvince.money;
         }
         provinces.remove(oldProvince);
+        diplomacyManager.updateEntityAliveStatus(color);
     }
 
 
@@ -1119,6 +1186,17 @@ public class FieldController {
     }
 
 
+    public void setLevelSize(int levelSize) {
+        this.levelSize = levelSize;
+    }
+
+
+    public void updatePointByHexIndexes(PointYio pointYio, int index1, int index2) {
+        pointYio.x = fieldPos.x + hexStep2 * index2 * sin60;
+        pointYio.y = fieldPos.y + hexStep1 * index1 + hexStep2 * index2 * cos60;
+    }
+
+
     public void setHexColor(Hex hex, int color) {
         cleanOutHex(hex);
         int oldColor = hex.colorIndex;
@@ -1137,7 +1215,7 @@ public class FieldController {
         hex.changingColor = true;
         if (!animHexes.contains(hex)) animIterator.add(hex);
         hex.animFactor.setValues(0, 0);
-        hex.animFactor.beginSpawning(1, 1);
+        hex.animFactor.appear(1, 1);
         if (!gameController.isPlayerTurn()) forceAnimEndInHex(hex);
     }
 
@@ -1161,7 +1239,6 @@ public class FieldController {
         focusedHex = getHexByPos(x, y);
 
     }
-
 
 
 }

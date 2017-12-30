@@ -1,6 +1,5 @@
 package yio.tro.antiyoy.ai;
 
-import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
@@ -8,9 +7,7 @@ import yio.tro.antiyoy.gameplay.Unit;
 
 import java.util.ArrayList;
 
-/**
- * Created by ivan on 24.11.2015.
- */
+
 public class AiEasy extends ArtificialIntelligence {
 
     public AiEasy(GameController gameController, int color) {
@@ -36,7 +33,7 @@ public class AiEasy extends ArtificialIntelligence {
     @Override
     void tryToBuildUnits(Province province) {
         for (int i = 1; i <= 4; i++) {
-            if (!province.hasEnoughIncomeToAffordUnit(i)) break;
+            if (!province.canAiAffordUnit(i)) break;
             while (province.canBuildUnit(i)) {
                 if (!tryToBuiltUnitInsideProvince(province, i)) break;
             }

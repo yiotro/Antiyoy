@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.gameplay.game_view;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import yio.tro.antiyoy.stuff.Fonts;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.editor.LevelEditor;
@@ -9,14 +10,12 @@ import yio.tro.antiyoy.gameplay.rules.GameRules;
 public class RenderLevelEditorStuff extends GameRender{
 
     LevelEditor levelEditor;
-    private final GameController gameController;
     BitmapFont moneyFont;
 
 
-    public RenderLevelEditorStuff(GameView gameView) {
-        super(gameView);
+    public RenderLevelEditorStuff(GrManager grManager) {
+        super(grManager);
 
-        gameController = gameView.gameController;
         levelEditor = gameController.getLevelEditor();
         moneyFont = Fonts.microFont;
     }
@@ -39,6 +38,12 @@ public class RenderLevelEditorStuff extends GameRender{
 
 
     private void renderMoney() {
+
+    }
+
+
+    @Override
+    public void disposeTextures() {
 
     }
 }

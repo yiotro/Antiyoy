@@ -8,9 +8,7 @@ import yio.tro.antiyoy.stuff.PointYio;
 
 import java.util.ArrayList;
 
-/**
- * Created by ivan on 21.12.2015.
- */
+
 public class AiExpertSlayRules extends ArtificialIntelligence {
 
     private final Hex tempHex;
@@ -148,7 +146,7 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
 //        int newIncome = province.getIncome() - province.getTaxes() - Unit.getTax(strength);
 //        if (newIncome >= -2) return true;
 //        return false;
-        return province.hasEnoughIncomeToAffordUnit(strength);
+        return province.canAiAffordUnit(strength);
     }
 
 

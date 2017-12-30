@@ -7,9 +7,7 @@ import yio.tro.antiyoy.gameplay.Unit;
 
 import java.util.ArrayList;
 
-/**
- * Created by ivan on 24.11.2015.
- */
+
 public class AiNormalSlayRules extends ArtificialIntelligence {
 
     public AiNormalSlayRules(GameController gameController, int color) {
@@ -37,7 +35,7 @@ public class AiNormalSlayRules extends ArtificialIntelligence {
         tryToBuildUnitsOnPalms(province);
 
         for (int i = 1; i <= 4; i++) {
-            if (!province.hasEnoughIncomeToAffordUnit(i)) break;
+            if (!province.canAiAffordUnit(i)) break;
             while (province.canBuildUnit(i)) {
                 if (!tryToBuiltUnitInsideProvince(province, i)) break;
             }

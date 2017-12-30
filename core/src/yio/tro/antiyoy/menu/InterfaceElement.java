@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.menu;
 
+import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.menu.render.MenuRender;
 import yio.tro.antiyoy.stuff.RectangleYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
@@ -54,8 +55,8 @@ public abstract class InterfaceElement {
     public abstract boolean isButton();
 
 
-    public void onMouseWheelScrolled(int amount) {
-
+    public boolean onMouseWheelScrolled(int amount) {
+        return false;
     }
 
 
@@ -76,7 +77,7 @@ public abstract class InterfaceElement {
 
 
     public boolean isTouchInsideRectangle(float touchX, float touchY, RectangleYio rectangleYio, float offset) {
-        return isTouchInsideRectangle(touchX, touchY, (float)rectangleYio.x, (float)rectangleYio.y, (float)rectangleYio.width, (float)rectangleYio.height, offset);
+        return isTouchInsideRectangle(touchX, touchY, (float) rectangleYio.x, (float) rectangleYio.y, (float) rectangleYio.width, (float) rectangleYio.height, offset);
     }
 
 

@@ -1,5 +1,8 @@
 package yio.tro.antiyoy.gameplay.campaign;
 
+import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.Hex;
+import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
@@ -8,6 +11,7 @@ public abstract class AbstractLevelPack {
 
 
     protected final CampaignLevelFactory campaignLevelFactory;
+    protected int index;
 
 
     public AbstractLevelPack(CampaignLevelFactory campaignLevelFactory) {
@@ -16,9 +20,9 @@ public abstract class AbstractLevelPack {
 
 
     boolean checkForlevelPack() {
-        int index = campaignLevelFactory.index;
+        index = campaignLevelFactory.index;
 
-        String levelFromPackTwo = getLevelFromPack(index);
+        String levelFromPackTwo = getLevelFromPack();
         if (levelFromPackTwo.equals("-")) return false;
         if (GameRules.slayRules) return false;
 
@@ -28,13 +32,33 @@ public abstract class AbstractLevelPack {
         instance.campaignLevelIndex = index;
         instance.slayRules = GameRules.slayRules;
         instance.colorOffset = campaignLevelFactory.readColorOffsetFromSlider(instance.colorNumber);
+        applySpecialParameters(instance);
         LoadingManager.getInstance().startGame(instance);
 
+        onLevelLoaded();
         campaignLevelFactory.checkForHelloMessage(index);
 
         return true;
     }
 
 
-    abstract String getLevelFromPack(int index);
+    protected void applySpecialParameters(LoadingParameters instance) {
+
+    }
+
+
+    protected void onLevelLoaded() {
+
+    }
+
+
+    protected void setProvinceMoney(int i, int j, int money) {
+        FieldController fieldController = campaignLevelFactory.gameController.fieldController;
+        Hex hex = fieldController.field[i][j];
+        Province provinceByHex = fieldController.getProvinceByHex(hex);
+        provinceByHex.money = money;
+    }
+
+
+    abstract String getLevelFromPack();
 }

@@ -1,13 +1,21 @@
 package yio.tro.antiyoy.stuff;
 
+import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
+
 /**
  * Created by ivan on 28.08.2014.
  */
-public class PointYio {
+public class PointYio implements ReusableYio{
     public float x, y;
 
 
     public PointYio() {
+        reset();
+    }
+
+
+    @Override
+    public void reset() {
         set(0, 0);
     }
 
@@ -41,6 +49,12 @@ public class PointYio {
 
     public double angleTo(PointYio pointYio) {
         return Yio.angle(x, y, pointYio.x, pointYio.y);
+    }
+
+
+    public void relocateRadial(double distance, double angle) {
+        x += distance * Math.cos(angle);
+        y += distance * Math.sin(angle);
     }
 
 

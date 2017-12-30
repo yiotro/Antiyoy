@@ -1,7 +1,9 @@
 package yio.tro.antiyoy.gameplay;
 
-import yio.tro.antiyoy.*;
-import yio.tro.antiyoy.ai.*;
+import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.ai.AiFactory;
+import yio.tro.antiyoy.ai.ArtificialIntelligence;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.editor.LevelEditor;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
@@ -12,17 +14,17 @@ import yio.tro.antiyoy.gameplay.rules.Ruleset;
 import yio.tro.antiyoy.gameplay.rules.RulesetGeneric;
 import yio.tro.antiyoy.gameplay.rules.RulesetSlay;
 import yio.tro.antiyoy.menu.ButtonYio;
-import yio.tro.antiyoy.menu.SliderYio;
-import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
-import yio.tro.antiyoy.stuff.*;
+import yio.tro.antiyoy.stuff.Fonts;
+import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.PointYio;
+import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by ivan on 05.08.14.
- */
+
 public class GameController {
 
     private final DebugActionsManager debugActionsManager;
@@ -256,15 +258,32 @@ public class GameController {
     private void checkToUpdateCacheByAnim() {
         if (letsUpdateCacheByAnim && currentTime > timeToUpdateCache && (doesCurrentTurnEndDependOnAnimHexes()) && !isSomethingMoving()) {
             letsUpdateCacheByAnim = false;
-            if (updateWholeCache) yioGdxGame.gameView.updateCacheLevelTextures();
-            else yioGdxGame.gameView.updateCacheNearAnimHexes();
+
+            updateCache();
+            updateFogOfWar();
+
             updateWholeCache = false;
         }
     }
 
 
+    private void updateFogOfWar() {
+        if (!GameRules.fogOfWarEnabled) return;
+
+        fieldController.fogOfWarManager.updateFog();
+    }
+
+
+    private void updateCache() {
+        if (updateWholeCache) {
+            yioGdxGame.gameView.updateCacheLevelTextures();
+        } else {
+            yioGdxGame.gameView.updateCacheNearAnimHexes();
+        }
+    }
+
+
     private boolean canEndTurn() {
-        if (DebugFlags.CHECKING_BALANCE_MODE) return true; // fast forward when measuring balance
         if (isInEditorMode()) return false;
         if (!readyToEndTurn) return false;
         if (!cameraController.checkConditionsToEndTurn()) return false;
@@ -286,6 +305,13 @@ public class GameController {
         }
 
         return true;
+    }
+
+
+    public boolean haveToAskToEndTurn() {
+        if (GameRules.tutorialMode) return false;
+
+        return Settings.ask_to_end_turn && fieldController.atLeastOneUnitIsReadyToMove();
     }
 
 
@@ -319,20 +345,16 @@ public class GameController {
 
     private int checkIfWeHaveWinner() {
         if (fieldController.activeHexes.size() == 0) return -1;
+        if (GameRules.diplomacyEnabled) return fieldController.diplomacyManager.getDiplomaticWinner();
         if (fieldController.numberOfActiveProvinces() != 1) return -1;
 
         for (Province province : fieldController.provinces) {
             if (province.hexList.get(0).isNeutral()) continue;
             return province.getColor();
         }
-        System.out.println("wtf?"); // this detects a possible bug
-        return -1;
 
-//        color = activeHexes.get(0).colorIndex;
-//        for (Hex activeHex : activeHexes) {
-//            if (activeHex.colorIndex != color) return -1;
-//        }
-//        return color;
+        System.out.println("Problem in GameController.checkIfWeHaveWinner()");
+        return -1;
     }
 
 
@@ -348,26 +370,23 @@ public class GameController {
     private void checkToEndGame() {
         if (GameRules.replayMode) return;
 
-        // captured everything
         int winner = checkIfWeHaveWinner();
         if (winner >= 0) {
             endGame(winner);
             return;
         }
 
-        // propose surrender
+        checkToProposeSurrender();
+    }
+
+
+    private void checkToProposeSurrender() {
         if (!proposedSurrender) {
             int possibleWinner = fieldController.possibleWinner();
             if (possibleWinner >= 0 && isPlayerTurn(possibleWinner)) {
                 Scenes.sceneSurrenderDialog.create();
                 proposedSurrender = true;
             }
-        }
-
-        // too long game
-        if (Settings.turns_limit && matchStatistics.turnsMade == GameRules.TURNS_LIMIT - 1) {
-            int playerHexCount[] = fieldController.getPlayerHexCount();
-            endGame(indexOfNumberInArray(playerHexCount, maxNumberFromArray(playerHexCount)));
         }
     }
 
@@ -419,16 +438,10 @@ public class GameController {
 
         if (instance.completedCampaignLevel(winColor)) {
             instance.markLevelAsCompleted(instance.currentLevelIndex);
-//            yioGdxGame.menuControllerYio.levelSelectorOld.update();
             Scenes.sceneCampaignMenu.updateLevelSelector();
         }
 
         Scenes.sceneAfterGameMenu.create(winColor, isPlayerTurn(winColor));
-
-        if (DebugFlags.CHECKING_BALANCE_MODE) {
-            yioGdxGame.balanceIndicator[winColor]++;
-            ReactBehavior.rbStartSkirmishGame.reactAction(Scenes.sceneSkirmishMenu.startButton);
-        }
     }
 
 
@@ -448,14 +461,15 @@ public class GameController {
         checkToEndGame();
         ruleset.onTurnEnd();
         replayManager.onTurnEnded();
+        fieldController.diplomacyManager.onTurnEnded();
 
         for (Unit unit : unitList) {
             unit.setReadyToMove(false);
             unit.stopJumping();
         }
 
-        if (!isPlayerTurn()) {
-
+        if (isPlayerTurn()) {
+            fieldController.fogOfWarManager.updateFog();
         }
     }
 
@@ -482,13 +496,15 @@ public class GameController {
             snapshotManager.onTurnStart();
             jumperUnit.startJumping();
             if (fieldController.numberOfProvincesWithColor(turn) == 0) {
-                endTurnButtonPressed();
+                onEndTurnButtonPressed();
             }
         } else {
             for (Hex animHex : fieldController.animHexes) {
                 animHex.animFactor.setValues(1, 0);
             }
         }
+
+        fieldController.diplomacyManager.onTurnStarted();
 
         checkToAutoSave();
     }
@@ -507,15 +523,14 @@ public class GameController {
         if (turn != 0) return;
         if (playersNumber <= 0) return;
 
-        autoSave();
+        performAutosave();
     }
 
 
     private void collectTributesAndPayTaxes() {
         for (Province province : fieldController.provinces) {
             if (isCurrentTurn(province.getColor())) {
-                province.money += province.getIncome();
-                province.money -= province.getTaxes();
+                province.money += province.getBalance();
             }
         }
     }
@@ -527,7 +542,7 @@ public class GameController {
     }
 
 
-    public void endTurnButtonPressed() {
+    public void onEndTurnButtonPressed() {
         cameraController.onEndTurnButtonPressed();
         if (!isPlayerTurn()) return;
         applyReadyToEndTurn();
@@ -556,12 +571,6 @@ public class GameController {
 
     public void setPlayersNumber(int playersNumber) {
         this.playersNumber = playersNumber;
-        if (DebugFlags.CHECKING_BALANCE_MODE) this.playersNumber = 0;
-    }
-
-
-    private void setPlayersNumberBySlider(SliderYio slider) {
-        setPlayersNumber(slider.getCurrentRunnerIndex());
     }
 
 
@@ -576,9 +585,7 @@ public class GameController {
     }
 
 
-    public int getColorOffsetBySlider(SliderYio sliderYio, int colorNumber) {
-        int colorOffsetSliderIndex = sliderYio.getCurrentRunnerIndex();
-
+    public int getColorOffsetBySliderIndex(int colorOffsetSliderIndex, int colorNumber) {
         if (colorOffsetSliderIndex == 0) { // random
             return predictableRandom.nextInt(colorNumber);
         } else {
@@ -589,21 +596,13 @@ public class GameController {
 
     public void onEndCreation() {
         snapshotManager.clear();
-//        prepareCertainUnitsToMove();
         fieldController.createPlayerHexCount();
         updateRuleset();
         createCamera();
-        fieldController.clearAnims();
+        fieldController.onEndCreation();
         aiFactory.createAiList(GameRules.difficulty);
         selectionController.deselectAll();
         replayManager.onEndCreation();
-
-        if (DebugFlags.CHECKING_BALANCE_MODE) {
-            while (true) {
-                move();
-                checkToEndGame();
-            }
-        }
     }
 
 
@@ -671,7 +670,7 @@ public class GameController {
                 return;
         }
         cameraController.setBounds(boundWidth, boundHeight);
-        fieldController.levelSize = size;
+        fieldController.setLevelSize(size);
         yioGdxGame.gameView.createLevelCacheTextures();
     }
 
@@ -701,21 +700,6 @@ public class GameController {
 
 
     void selectAdjacentHexes(Hex startHex) {
-        //        ArrayList<Hex> tempList = new ArrayList<Hex>();
-//        Hex tempHex;
-//        tempList.add(startHex);
-//        while (tempList.size() > 0) {
-//            tempHex = tempList.get(0);
-//            tempHex.select();
-//            if (!selectedHexes.contains(tempHex)) listIterator.add(tempHex);
-//            for (int i=0; i<6; i++) {
-//                Hex h = tempHex.adjacentHex(i);
-//                if (h != null && h.active && !h.selected && h.colorIndex == tempHex.colorIndex && !tempList.contains(h)) {
-//                    tempList.add(h);
-//                }
-//            }
-//            tempList.remove(tempHex);
-//        }
         selectionController.selectAdjacentHexes(startHex);
     }
 
@@ -736,22 +720,19 @@ public class GameController {
     }
 
 
-    private void autoSave() {
-        if (Settings.interface_type == Settings.INTERFACE_SIMPLE) {
-            gameSaver.saveGame();
-        } else if (Settings.interface_type == Settings.INTERFACE_COMPLICATED) {
-            gameSaver.saveGameToSlot(0);
+    public int getInvertedColor(int srcColor) {
+        for (int color = 0; color < GameRules.MAX_COLOR_NUMBER; color++) {
+            if (ruleset.getColorIndexWithOffset(color) == srcColor) {
+                return color;
+            }
         }
+
+        return -1;
     }
 
 
-    public void saveGame() {
-        gameSaver.saveGame();
-    }
-
-
-    public void loadGame() {
-        gameSaver.loadGame();
+    private void performAutosave() {
+        yioGdxGame.saveSystem.performAutosave();
     }
 
 
@@ -772,6 +753,15 @@ public class GameController {
             }
         }
         return false;
+    }
+
+
+    public boolean canUnitAttackHex(int unitStrength, int unitColor, Hex hex) {
+        if (!GameRules.diplomacyEnabled) {
+            return ruleset.canUnitAttackHex(unitStrength, hex);
+        }
+
+        return ruleset.canUnitAttackHex(unitStrength, hex) && fieldController.diplomacyManager.canUnitAttackHex(unitStrength, unitColor, hex);
     }
 
 
@@ -805,7 +795,7 @@ public class GameController {
             coinButton = yioGdxGame.menuControllerYio.getButtonById(37);
         }
         coinButton.appearFactor.setValues(1, 0.13);
-        coinButton.appearFactor.beginSpawning(4, 1);
+        coinButton.appearFactor.appear(4, 1);
     }
 
 
@@ -1003,7 +993,7 @@ public class GameController {
 
     public void onClick() {
         fieldController.updateFocusedHex();
-//        showFocusedHexInConsole();
+        showFocusedHexInConsole();
 
         if (fieldController.focusedHex != null && isPlayerTurn()) {
             focusedHexActions(fieldController.focusedHex);
@@ -1012,6 +1002,8 @@ public class GameController {
 
 
     private void showFocusedHexInConsole() {
+        if (!DebugFlags.showFocusedHexInConsole) return;
+
         YioGdxGame.say(fieldController.focusedHex.index1 + " " + fieldController.focusedHex.index2);
     }
 

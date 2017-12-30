@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
 import yio.tro.antiyoy.stuff.Fonts;
-import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 
@@ -12,56 +12,19 @@ import java.util.*;
  */
 public class Province {
 
+    public static final int DEFAULT_MONEY = 10;
     public int money;
     public ArrayList<Hex> hexList, tempList;
     private GameController gameController;
     public String name;
     public float nameWidth;
-    private static String partA[], partB[], partC[];
 
 
     public Province(GameController gameController, ArrayList<Hex> hexList) {
         this.gameController = gameController;
-        this.hexList = new ArrayList<Hex>(hexList);
-        tempList = new ArrayList<Hex>();
-        money = 10;
-    }
-
-
-    public static void decodeCityNameParts() {
-        LanguagesManager languagesManager = LanguagesManager.getInstance();
-
-        ArrayList<String> tokensA = decodeCityNamePart(languagesManager.getString("city_name_one"));
-        partA = new String[tokensA.size()];
-        for (int i = 0; i < tokensA.size(); i++) {
-            partA[i] = tokensA.get(i);
-        }
-
-        ArrayList<String> tokensB = decodeCityNamePart(languagesManager.getString("city_name_two"));
-        partB = new String[tokensB.size()];
-        for (int i = 0; i < tokensB.size(); i++) {
-            partB[i] = tokensB.get(i);
-        }
-
-        ArrayList<String> tokensC = decodeCityNamePart(languagesManager.getString("city_name_three"));
-        partC = new String[tokensC.size()];
-        for (int i = 0; i < tokensC.size(); i++) {
-            partC[i] = tokensC.get(i);
-        }
-    }
-
-
-    private static ArrayList<String> decodeCityNamePart(String src) {
-        StringTokenizer tokenizer = new StringTokenizer(src, ", ");
-
-        ArrayList<String> tokens = new ArrayList<>();
-        while (tokenizer.hasMoreTokens()) {
-            String token = tokenizer.nextToken();
-            if (token.equals("X")) continue;
-            tokens.add(token);
-        }
-
-        return tokens;
+        this.hexList = new ArrayList<>(hexList);
+        tempList = new ArrayList<>();
+        money = DEFAULT_MONEY;
     }
 
 
@@ -79,7 +42,7 @@ public class Province {
         gameController.updateCacheOnceAfterSomeTime();
         randomPlace.lastColorIndex = randomPlace.colorIndex;
         randomPlace.animFactor.setValues(0, 0);
-        randomPlace.animFactor.beginSpawning(1, 2);
+        randomPlace.animFactor.appear(1, 2);
         updateName();
     }
 
@@ -147,8 +110,13 @@ public class Province {
     }
 
 
+    public int getBalance() {
+        return getIncome() - getTaxes() + getDotations();
+    }
+
+
     String getBalanceString() {
-        int balance = getIncome() - getTaxes();
+        int balance = getBalance();
         if (balance > 0) return "+" + balance;
         return "" + balance;
     }
@@ -156,19 +124,44 @@ public class Province {
 
     public int getIncome() {
         int income = 0;
+
         for (Hex hex : hexList) {
             income += gameController.ruleset.getHexIncome(hex);
         }
+
         return income;
     }
 
 
     int getTaxes() {
         int taxes = 0;
+
         for (Hex hex : hexList) {
             taxes += gameController.ruleset.getHexTax(hex);
         }
+
         return taxes;
+    }
+
+
+    public int getDotations() {
+        if (!GameRules.diplomacyEnabled) return 0;
+
+        return gameController.fieldController.diplomacyManager.getProvinceDotations(this);
+    }
+
+
+    public float getIncomeCoefficient() {
+        int n = 0;
+        int color = getColor();
+
+        for (Province province : gameController.fieldController.provinces) {
+            if (province.getColor() != color) continue;
+
+            n++;
+        }
+
+        return 1f / (float) n;
     }
 
 
@@ -194,16 +187,7 @@ public class Province {
 
 
     public void updateName() {
-        StringBuffer stringBuffer = new StringBuffer();
-        Hex capitalHex = getCapital();
-        Random random = new Random(capitalHex.index1 * capitalHex.index2);
-
-        stringBuffer.append(partA[random.nextInt(partA.length)]);
-        stringBuffer.append(partB[random.nextInt(partB.length)]);
-        stringBuffer.append(partC[random.nextInt(partC.length)]);
-        stringBuffer.setCharAt(0, Character.toUpperCase(stringBuffer.charAt(0)));
-
-        setName(stringBuffer.toString());
+        setName(CityNameGenerator.getInstance().generateName(getCapital()));
     }
 
 
@@ -228,13 +212,19 @@ public class Province {
     }
 
 
-    public boolean hasEnoughIncomeToAffordUnit(int strength) {
-        return hasEnoughIncomeToAffordUnit(strength, 2);
+    public boolean canAiAffordUnit(int strength) {
+        return canAiAffordUnit(strength, 2);
     }
 
 
-    public boolean hasEnoughIncomeToAffordUnit(int strength, int turnsToSurvive) {
-        int newIncome = getIncome() - getTaxes() - gameController.ruleset.getUnitTax(strength);
+    public boolean canAiAffordUnit(int strength, int turnsToSurvive) {
+        if (GameRules.diplomacyEnabled) {
+            if (!gameController.fieldController.diplomacyManager.isProvinceAllowedToBuildUnit(this, strength)) {
+                return false;
+            }
+        }
+
+        int newIncome = getBalance() - gameController.ruleset.getUnitTax(strength);
         if (money + turnsToSurvive * newIncome >= 0) return true;
         return false;
     }

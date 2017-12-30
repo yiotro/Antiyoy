@@ -1,9 +1,7 @@
 package yio.tro.antiyoy.menu.speed_panel;
 
 import yio.tro.antiyoy.factor_yio.FactorYio;
-import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.stuff.PointYio;
-import yio.tro.antiyoy.stuff.Yio;
 
 public class SpItem {
 
@@ -35,7 +33,7 @@ public class SpItem {
 
     public void defaultAppearFactorState() {
         appearFactor.setValues(1, 0);
-        appearFactor.beginSpawning(1, 1);
+        appearFactor.appear(1, 1);
     }
 
 
@@ -61,7 +59,7 @@ public class SpItem {
 
     void select() {
         selectionFactor.setValues(1, 0);
-        selectionFactor.beginDestroying(1, 2.5);
+        selectionFactor.destroy(1, 2.5);
     }
 
 
@@ -80,7 +78,7 @@ public class SpItem {
 
 
     void destroy() {
-        appearFactor.beginDestroying(1, 0.5);
+        appearFactor.destroy(1, 0.5);
     }
 
 

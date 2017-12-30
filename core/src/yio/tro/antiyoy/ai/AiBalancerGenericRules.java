@@ -53,13 +53,13 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
 
         if (!detectedStrong) return;
 
-        // so unita are not doing anything. Time to kill them
+        // so units are not doing anything. Time to kill them
         killRedundantUnits(province);
     }
 
 
     private void killRedundantUnits(Province province) {
-        while (province.money >= GameRules.PRICE_UNIT && province.getIncome() >= 0) {
+        while (province.money >= GameRules.PRICE_UNIT && province.getBalance() >= 0) {
             Unit unitWithMaxStrengh = findUnitWithMaxStrenghExceptKnight(province);
             if (unitWithMaxStrengh == null) break;
             gameController.fieldController.buildUnit(province, unitWithMaxStrengh.currentHex, 1);
@@ -258,7 +258,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         tryToReinforceUnits(province);
 
         for (int i = 1; i <= 4; i++) {
-            if (!province.hasEnoughIncomeToAffordUnit(i, 5)) break;
+            if (!province.canAiAffordUnit(i, 5)) break;
             while (province.canBuildUnit(i)) {
                 if (!tryToAttackWithStrength(province, i)) break;
             }
@@ -274,7 +274,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         for (Hex hex : province.hexList) {
             if (!hex.containsUnit()) continue;
             Unit unit = hex.unit;
-            if (unitHasToBeReinforced(unit) && province.hasEnoughIncomeToAffordUnit(unit.strength + 1)) {
+            if (unitHasToBeReinforced(unit) && province.canAiAffordUnit(unit.strength + 1)) {
                 gameController.fieldController.buildUnit(province, hex, 1);
             }
         }

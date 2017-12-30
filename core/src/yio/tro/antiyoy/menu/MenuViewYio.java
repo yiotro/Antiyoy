@@ -2,6 +2,7 @@ package yio.tro.antiyoy.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -9,31 +10,31 @@ import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.menu.render.MenuRender;
 import yio.tro.antiyoy.stuff.Fonts;
+import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
 import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.ArrayList;
 
-/**
- * Created by ivan on 22.07.14.
- */
 public class MenuViewYio {
 
     public final YioGdxGame yioGdxGame;
     private final MenuControllerYio menuControllerYio;
-    TextureRegion buttonPixel, shadowCorner, shadowSide, blackCircle, scrollerCircle, grayTransCircle;
+    TextureRegion buttonPixel, blackCircle, scrollerCircle, grayTransCircle;
+    public TextureRegion shadowCorner, shadowSide;
     public ShapeRenderer shapeRenderer;
     public SpriteBatch batch;
     private int cornerSize;
     public float w, h;
     private float x1, y1, x2, y2; // local variables for rendering
     private Color c; // local variable for rendering
+    public OrthographicCamera orthoCam;
 
 
     public MenuViewYio(YioGdxGame yioGdxGame) {
         this.yioGdxGame = yioGdxGame;
         menuControllerYio = yioGdxGame.menuControllerYio;
-        shapeRenderer = new ShapeRenderer();
+        shapeRenderer = yioGdxGame.shapeRenderer;
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
         cornerSize = (int) (0.02 * Gdx.graphics.getHeight());
@@ -43,12 +44,20 @@ public class MenuViewYio {
         blackCircle = GameView.loadTextureRegion("anim_circle_high_res.png", false);
         scrollerCircle = GameView.loadTextureRegion("scroller_circle.png", false);
         grayTransCircle = GameView.loadTextureRegion("gray_transition_circle.png", false);
+        createOrthoCam();
 
         batch = yioGdxGame.batch;
         if (batch == null) {
             System.out.println("fuck....");
         }
         MenuRender.updateRenderSystems(this);
+    }
+
+
+    private void createOrthoCam() {
+        orthoCam = new OrthographicCamera(yioGdxGame.w, yioGdxGame.h);
+        orthoCam.position.set(orthoCam.viewportWidth / 2f, orthoCam.viewportHeight / 2f, 0);
+        orthoCam.update();
     }
 
 
@@ -82,9 +91,13 @@ public class MenuViewYio {
         x2 = buttonYio.x2;
         y1 = buttonYio.y1;
         y2 = buttonYio.y2;
-        if (buttonYio.appearFactor.get() <= 1)
+
+        if (buttonYio.appearFactor.get() <= 1) {
             batch.setColor(c.r, c.g, c.b, buttonYio.appearFactor.get());
-        else batch.setColor(c.r, c.g, c.b, 1);
+        } else {
+            batch.setColor(c.r, c.g, c.b, 1);
+        }
+
         batch.draw(shadowSide, x1 + cornerSize, y2 - cornerSize, 2 * (buttonYio.hor - cornerSize), 2 * cornerSize);
         batch.draw(shadowSide, x1 + cornerSize, y1 + cornerSize, 0, 0, 2 * (buttonYio.ver - cornerSize), 2 * cornerSize, 1, 1, 90);
         batch.draw(shadowSide, x2 - cornerSize, y1 + cornerSize, 0, 0, 2 * (buttonYio.hor - cornerSize), 2 * cornerSize, 1, 1, 180);
@@ -106,11 +119,7 @@ public class MenuViewYio {
         y1 = cy - ver;
         y2 = cy + ver;
 
-        if (factor <= 1) {
-            batch.setColor(c.r, c.g, c.b, factor);
-        } else {
-            batch.setColor(c.r, c.g, c.b, 1);
-        }
+        GraphicsYio.setBatchAlpha(batch, factor);
 
         batch.draw(shadowSide, x1 + cornerSize, y2 - cornerSize, 2 * (hor - cornerSize), 2 * cornerSize);
         batch.draw(shadowSide, x1 + cornerSize, y1 + cornerSize, 0, 0, 2 * (ver - cornerSize), 2 * cornerSize, 1, 1, 90);
@@ -120,6 +129,8 @@ public class MenuViewYio {
         batch.draw(shadowCorner, x1 + cornerSize, y1 - cornerSize, 0, 0, 2 * cornerSize, 2 * cornerSize, 1, 1, 90);
         batch.draw(shadowCorner, x2 + cornerSize, y1 + cornerSize, 0, 0, 2 * cornerSize, 2 * cornerSize, 1, 1, 180);
         batch.draw(shadowCorner, x2 - cornerSize, y2 + cornerSize, 0, 0, 2 * cornerSize, 2 * cornerSize, 1, 1, 270);
+
+        GraphicsYio.setBatchAlpha(batch, 1);
     }
 
 
@@ -129,10 +140,6 @@ public class MenuViewYio {
                 if (buttonYio.appearFactor.get() > 0.1)
                     shapeRenderer.circle(buttonYio.cx, buttonYio.cy, (float) (0.8 + 0.2 * buttonYio.selectionFactor.get()) * buttonYio.hor);
                 return true;
-//            case 84:
-//            case 81:
-//                shapeRenderer.rect(buttonLighty.x1, buttonLighty.y1 - 0.2f * buttonLighty.ver, 2 * buttonLighty.hor, 2.4f * buttonLighty.ver);
-//                return true;
         }
         return false;
     }
@@ -189,7 +196,6 @@ public class MenuViewYio {
         // render selection
         renderSelection(renderAliveButtons, renderDyingButtons, buttons);
 
-        renderSliders();
         renderCheckButtons();
         renderInterfaceElements();
     }
@@ -231,20 +237,13 @@ public class MenuViewYio {
     }
 
 
-    private void renderSliders() {
-        for (SliderYio sliderYio : menuControllerYio.sliders) {
-            if (sliderYio.isVisible()) renderSlider(sliderYio);
-        }
-    }
-
-
     private void renderSelection(boolean renderAliveButtons, boolean renderDyingButtons, ArrayList<ButtonYio> buttons) {
         for (ButtonYio buttonYio : buttons) {
             if (buttonYio.isVisible() &&
                     buttonYio.isCurrentlyTouched() &&
                     buttonYio.touchAnimation &&
                     buttonYio.selectionFactor.get() < 1 &&
-                    ((renderAliveButtons && buttonYio.appearFactor.getDy() >= 0) || (renderDyingButtons && buttonYio.appearFactor.getDy() < 0) || buttonYio.selectionFactor.needsToMove())) {
+                    ((renderAliveButtons && buttonYio.appearFactor.getDy() >= 0) || (renderDyingButtons && buttonYio.appearFactor.getDy() < 0) || buttonYio.selectionFactor.hasToMove())) {
                 YioGdxGame.maskingBegin();
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
                 checkForSpecialAnimationMask(buttonYio);
@@ -266,50 +265,74 @@ public class MenuViewYio {
 
     private void renderButtons(boolean renderAliveButtons, boolean renderDyingButtons, ArrayList<ButtonYio> buttons) {
         batch.begin();
-        if (yioGdxGame.useMenuMasks) YioGdxGame.maskingContinue();
-        RectangleYio ap;
-        for (ButtonYio buttonYio : buttons) {
-            if (buttonYio.isVisible() &&
-                    !buttonYio.onlyShadow &&
-                    ((renderAliveButtons && buttonYio.appearFactor.getGravity() >= 0) || (renderDyingButtons && buttonYio.appearFactor.getGravity() <= 0))) {
-                if (buttonYio.mandatoryShadow) renderShadow(buttonYio, batch);
-                if (!checkForSpecialAlpha(buttonYio)) {
-                    if (buttonYio.appearFactor.get() <= 1)
-                        batch.setColor(c.r, c.g, c.b, buttonYio.appearFactor.get());
-                    else batch.setColor(c.r, c.g, c.b, 1);
-                }
-                ap = buttonYio.animPos;
-                batch.draw(buttonYio.textureRegion, (float) ap.x, (float) ap.y, (float) ap.width, (float) ap.height);
-                if (buttonYio.isCurrentlyTouched() && (!buttonYio.touchAnimation || buttonYio.selectionFactor.get() > 0.99)) {
-                    batch.setColor(c.r, c.g, c.b, 0.7f * buttonYio.selAlphaFactor.get());
-                    batch.draw(buttonPixel, (float) ap.x, (float) ap.y, (float) ap.width, (float) ap.height);
-                }
-            }
+        if (yioGdxGame.useMenuMasks) {
+            YioGdxGame.maskingContinue();
         }
+
+        for (ButtonYio buttonYio : buttons) {
+            renderSingleButton(renderAliveButtons, renderDyingButtons, buttonYio);
+        }
+
         batch.setColor(c.r, c.g, c.b, 1);
         batch.end();
-        if (yioGdxGame.useMenuMasks) YioGdxGame.maskingEnd();
+
+        if (yioGdxGame.useMenuMasks) {
+            YioGdxGame.maskingEnd();
+        }
+    }
+
+
+    private void renderSingleButton(boolean renderAliveButtons, boolean renderDyingButtons, ButtonYio buttonYio) {
+        RectangleYio ap;
+
+        if (!buttonYio.isVisible() || buttonYio.onlyShadow ||
+                ((!renderAliveButtons || buttonYio.appearFactor.getGravity() < 0) && (!renderDyingButtons || buttonYio.appearFactor.getGravity() > 0))) {
+            return;
+        }
+
+        if (buttonYio.mandatoryShadow) {
+            renderShadow(buttonYio, batch);
+        }
+
+        if (!checkForSpecialAlpha(buttonYio)) {
+            if (buttonYio.appearFactor.get() <= 1) {
+                batch.setColor(c.r, c.g, c.b, buttonYio.appearFactor.get());
+            } else {
+                batch.setColor(c.r, c.g, c.b, 1);
+            }
+        }
+
+        ap = buttonYio.animPos;
+        batch.draw(buttonYio.textureRegion, (float) ap.x, (float) ap.y, (float) ap.width, (float) ap.height);
+
+        if (buttonYio.isCurrentlyTouched() && (!buttonYio.touchAnimation || buttonYio.selectionFactor.get() > 0.99)) {
+            batch.setColor(c.r, c.g, c.b, 0.7f * buttonYio.selAlphaFactor.get());
+            batch.draw(buttonPixel, (float) ap.x, (float) ap.y, (float) ap.width, (float) ap.height);
+        }
     }
 
 
     private void drawMasks(boolean renderAliveButtons, boolean renderDyingButtons, ArrayList<ButtonYio> buttons) {
-        if (yioGdxGame.useMenuMasks) {
-            YioGdxGame.maskingBegin();
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            for (ButtonYio buttonYio : buttons) {
-                if (buttonYio.isVisible()) {
-                    if (checkForSpecialMask(buttonYio)) continue;
-                    if (buttonYio.rectangularMask &&
-                            !buttonYio.currentlyTouched &&
-                            ((renderAliveButtons && buttonYio.appearFactor.getGravity() >= 0) || (renderDyingButtons && buttonYio.appearFactor.getGravity() <= 0))) {
-                        drawRect(buttonYio.animPos);
-                        continue;
-                    }
-                    drawRoundRect(buttonYio.animPos);
+        if (!yioGdxGame.useMenuMasks) return;
+
+        YioGdxGame.maskingBegin();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        for (ButtonYio buttonYio : buttons) {
+            if (buttonYio.isVisible()) {
+                if (checkForSpecialMask(buttonYio)) continue;
+
+                if (buttonYio.rectangularMask &&
+//                        !buttonYio.currentlyTouched &&
+                        ((renderAliveButtons && buttonYio.appearFactor.getGravity() >= 0) || (renderDyingButtons && buttonYio.appearFactor.getGravity() <= 0))) {
+                    drawRect(buttonYio.animPos);
+                    continue;
                 }
+
+                drawRoundRect(buttonYio.animPos);
             }
-            shapeRenderer.end();
         }
+        shapeRenderer.end();
     }
 
 
@@ -345,103 +368,6 @@ public class MenuViewYio {
                     (float) (infoPanel.animPos.y + 0.95 * infoPanel.animPos.height - 0.65 * Math.sqrt(infoPanel.appearFactor.get()) * infoPanel.animPos.height));
             YioGdxGame.maskingEnd();
         }
-    }
-
-
-    public void renderScroller() {
-//        if (menuControllerYio.scrollerYio != null && menuControllerYio.scrollerYio.isVisible())
-//            renderScroller(menuControllerYio.scrollerYio);
-    }
-
-
-    private void renderScroller(ScrollerYio scrollerYio) {
-        batch = yioGdxGame.batch;
-        c = batch.getColor();
-        batch.begin();
-        if (scrollerYio.factorModel.get() > 0.9) renderShadow(scrollerYio.frame, scrollerYio.factorModel.get(), batch);
-        batch.end();
-        if (scrollerYio.factorModel.get() > 0.5) {
-            Color c = batch.getColor();
-            batch.setColor(c.r, c.g, c.b, (scrollerYio.factorModel.get() - 0.5f) * 2);
-            YioGdxGame.maskingBegin();
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            drawRoundRect(scrollerYio.animFrame);
-            shapeRenderer.end();
-            batch.begin();
-            YioGdxGame.maskingContinue();
-            batch.draw(scrollerYio.bg1, (float) scrollerYio.animFrame.x, (float) scrollerYio.animFrame.y, (float) scrollerYio.animFrame.width, (float) scrollerYio.animFrame.height);
-            float y = (float) scrollerYio.animFrame.y + (float) scrollerYio.animFrame.height + scrollerYio.pos;
-            int index = 0;
-            for (TextureRegion textureRegion : scrollerYio.cache) {
-                if (y <= scrollerYio.animFrame.y + scrollerYio.animFrame.height + scrollerYio.lineHeight && y >= scrollerYio.animFrame.y) {
-                    batch.draw(textureRegion, (float) scrollerYio.frame.x, y - scrollerYio.lineHeight, (float) scrollerYio.frame.width, scrollerYio.lineHeight);
-                    if (index == scrollerYio.selectionIndex && scrollerYio.selectionFactor.get() > 0.99) {
-                        batch.setColor(c.r, c.g, c.b, 0.4f + 0.5f * scrollerYio.selAlphaFactor.get());
-                        batch.draw(buttonPixel, (float) scrollerYio.frame.x, y - scrollerYio.lineHeight, (float) scrollerYio.frame.width, scrollerYio.lineHeight);
-                        batch.setColor(c.r, c.g, c.b, 1);
-                    }
-                }
-                y -= scrollerYio.lineHeight;
-                index++;
-            }
-            batch.end();
-            batch.setColor(c.r, c.g, c.b, 1);
-            if (scrollerYio.selectionFactor.get() <= 0.99) {
-                y = (float) scrollerYio.animFrame.y + (float) scrollerYio.animFrame.height + scrollerYio.pos - scrollerYio.selectionIndex * scrollerYio.lineHeight;
-                if (y > scrollerYio.animFrame.y + scrollerYio.animFrame.height + scrollerYio.lineHeight && y < scrollerYio.animFrame.y)
-                    return;
-                YioGdxGame.maskingBegin();
-                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-                float ay = y - scrollerYio.lineHeight;
-                float ah = scrollerYio.lineHeight;
-                if (ay < scrollerYio.frame.y) {
-                    float d = (float) scrollerYio.frame.y - ay;
-                    ay += d;
-                    ah -= d;
-                } else if (ay + ah > scrollerYio.frame.y + scrollerYio.frame.height) {
-                    float d = (float) (y + scrollerYio.lineHeight - scrollerYio.frame.y - scrollerYio.frame.height);
-                    ah -= d - scrollerYio.lineHeight;
-                }
-                shapeRenderer.rect((float) scrollerYio.frame.x, ay, (float) scrollerYio.frame.width, ah);
-                shapeRenderer.end();
-                batch.begin();
-                batch.setColor(c.r, c.g, c.b, 0.4f + 0.5f * scrollerYio.selAlphaFactor.get());
-                YioGdxGame.maskingContinue();
-                float cx = scrollerYio.selectX;
-                float cy = (float) (y - 0.5 * scrollerYio.lineHeight);
-                float dw = 1.1f * scrollerYio.selectionFactor.get() * scrollerYio.animRadius;
-                batch.draw(blackCircle, cx - dw, cy - dw, 2 * dw, 2 * dw);
-                batch.end();
-                batch.setColor(c.r, c.g, c.b, 1);
-            }
-            YioGdxGame.maskingEnd();
-            batch.setColor(c.r, c.g, c.b, 1);
-        } else {
-
-        }
-        if (scrollerYio.factorModel.get() < 0.99) {
-            YioGdxGame.maskingBegin();
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            drawRoundRect(scrollerYio.animFrame);
-            shapeRenderer.end();
-            YioGdxGame.maskingContinue();
-            renderTransitionCircle(scrollerCircle, scrollerYio.factorModel.get(), scrollerYio.animFrame, batch, yioGdxGame.pressX, yioGdxGame.pressY);
-            YioGdxGame.maskingEnd();
-        }
-    }
-
-
-    private void renderSlider(SliderYio slider) {
-        batch.begin();
-        batch.draw(yioGdxGame.gameView.blackPixel, slider.getViewX(), slider.currentVerticalPos - 0.0025f * h, slider.getViewWidth(), 0.005f * h);
-        for (int i = 0; i < slider.numberOfSegments + 1; i++) {
-            GameView.drawFromCenter(batch, yioGdxGame.gameView.blackCircleTexture, slider.getSegmentLeftSidePos(i), slider.currentVerticalPos, slider.getSegmentCenterSize(i));
-        }
-        GameView.drawFromCenter(batch, yioGdxGame.gameView.blackCircleTexture, slider.getViewX() + slider.runnerValue * slider.getViewWidth(), slider.currentVerticalPos, slider.circleSize);
-        if (slider.textVisible())
-            Fonts.gameFont.draw(batch, slider.getValueString(), slider.getViewX() + slider.getViewWidth() - slider.textWidth, slider.currentVerticalPos + 0.05f * h);
-//        GraphicsYio.renderBorder(slider.getTouchRectangle(), batch, yioGdxGame.gameView.blackPixel);
-        batch.end();
     }
 
 

@@ -9,9 +9,7 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Random;
 
-/**
- * Created by ivan on 08.11.2015.
- */
+
 public class MapGenerator {
 
     protected final GameController gameController;

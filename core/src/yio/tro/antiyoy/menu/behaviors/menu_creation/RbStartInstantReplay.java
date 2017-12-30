@@ -3,9 +3,9 @@ package yio.tro.antiyoy.menu.behaviors.menu_creation;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.replays.ReplayManager;
 import yio.tro.antiyoy.menu.ButtonYio;
-import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 
-public class RbStartInstantReplay extends ReactBehavior{
+public class RbStartInstantReplay extends Reaction {
 
     @Override
     public void reactAction(ButtonYio buttonYio) {

@@ -140,7 +140,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
 //        int newIncome = province.getIncome() - province.getTaxes() - Unit.getTax(strength);
 //        if (newIncome >= -2) return true;
 //        return false;
-        return province.hasEnoughIncomeToAffordUnit(strength);
+        return province.canAiAffordUnit(strength);
     }
 
 
@@ -213,7 +213,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
 
     protected boolean provinceCanAffordStrongTower(Province province) {
         if (!province.hasMoneyForStrongTower()) return false;
-        if (province.getIncome() - GameRules.TAX_STRONG_TOWER < GameRules.PRICE_UNIT / 2) return false;
+        if (province.getBalance() - GameRules.TAX_STRONG_TOWER < GameRules.PRICE_UNIT / 2) return false;
 
         return true;
     }

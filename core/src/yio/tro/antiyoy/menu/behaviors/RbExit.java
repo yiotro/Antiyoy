@@ -6,7 +6,7 @@ import yio.tro.antiyoy.menu.ButtonYio;
 /**
  * Created by ivan on 05.08.14.
  */
-public class RbExit extends ReactBehavior {
+public class RbExit extends Reaction {
 
     @Override
     public void reactAction(ButtonYio buttonYio) {

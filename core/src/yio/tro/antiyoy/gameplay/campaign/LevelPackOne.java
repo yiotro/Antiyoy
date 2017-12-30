@@ -17,6 +17,8 @@ public class LevelPackOne {
     boolean checkForLevelPackOne() {
         int index = campaignLevelFactory.index;
 
+        if (GameRules.slayRules) return false;
+
         if (index > 70 && index <= 80) {
             LoadingParameters instance = LoadingParameters.getInstance();
             instance.mode = LoadingParameters.MODE_CAMPAIGN_CUSTOM;

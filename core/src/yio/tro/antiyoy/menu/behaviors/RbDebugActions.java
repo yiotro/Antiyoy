@@ -5,7 +5,7 @@ import yio.tro.antiyoy.menu.ButtonYio;
 /**
  * Created by ivan on 10.07.2015.
  */
-public class RbDebugActions extends ReactBehavior {
+public class RbDebugActions extends Reaction {
 
     @Override
     public void reactAction(ButtonYio buttonYio) {

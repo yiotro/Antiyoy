@@ -1,8 +1,10 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.CustomLanguageLoader;
+import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.stuff.RectangleYio;
-import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 
@@ -46,7 +48,7 @@ public class SceneLanguageMenu extends AbstractScene{
 
         menuControllerYio.getYioGdxGame().beginBackgroundChange(1, false, true);
 
-        menuControllerYio.spawnBackButton(330, ReactBehavior.rbMoreSettings);
+        menuControllerYio.spawnBackButton(330, Reaction.rbMoreSettings);
 
         double buttonHeight = 0.06;
         int langNumber = langItems.size();
@@ -56,14 +58,14 @@ public class SceneLanguageMenu extends AbstractScene{
         ButtonYio basePanel = buttonFactory.getButton(generateRectangle(base.x, base.y, base.width, base.height), 331, " ");
         basePanel.setTouchable(false);
         basePanel.onlyShadow = true;
-        basePanel.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+        basePanel.setAnimation(Animation.FROM_CENTER);
 
         for (LangItem langItem : langItems) {
             y -= buttonHeight;
             ButtonYio langButton = buttonFactory.getButton(generateRectangle(base.x, y, base.width, buttonHeight), langItem.id, langItem.name);
-            langButton.setReactBehavior(ReactBehavior.rbSetLanguage);
+            langButton.setReaction(Reaction.rbSetLanguage);
             langButton.setShadow(false);
-            langButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+            langButton.setAnimation(Animation.FROM_CENTER);
         }
 
         menuControllerYio.endMenuCreation();
@@ -80,6 +82,8 @@ public class SceneLanguageMenu extends AbstractScene{
             }
         }
 
+        Settings.getInstance().loadSettings();
+        Scenes.createScenes(menuControllerYio);
         Scenes.sceneMainMenu.create();
     }
 

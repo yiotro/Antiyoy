@@ -3,7 +3,6 @@ package yio.tro.antiyoy.gameplay;
 import com.badlogic.gdx.Gdx;
 import yio.tro.antiyoy.Settings;
 import yio.tro.antiyoy.SoundControllerYio;
-import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.scenes.Scenes;
@@ -51,7 +50,7 @@ public class SelectionController {
 
     void moveSelections() {
         for (Hex hex : gameController.fieldController.selectedHexes) hex.move();
-        if (selectedUnit != null && selUnitFactor.needsToMove()) {
+        if (selectedUnit != null && selUnitFactor.hasToMove()) {
             selUnitFactor.move();
         }
     }
@@ -61,7 +60,7 @@ public class SelectionController {
         gameController.fieldController.defenseTipFactor.move();
         if (gameController.getCurrentTime() > defTipSpawnTime + defTipDelay) {
             if (gameController.fieldController.defenseTipFactor.getDy() >= 0)
-                gameController.fieldController.defenseTipFactor.beginDestroying(1, 1);
+                gameController.fieldController.defenseTipFactor.destroy(1, 1);
             if (gameController.fieldController.defenseTipFactor.get() == 0 && gameController.fieldController.defenseTips.size() > 0) {
                 ListIterator iterator = gameController.fieldController.defenseTips.listIterator();
                 while (iterator.hasNext()) {
@@ -75,7 +74,7 @@ public class SelectionController {
 
     public void awakeTip(int type) {
         tipFactor.setValues(0.01, 0); // should be 0.01 to avoid blinking
-        tipFactor.beginSpawning(3, 2);
+        tipFactor.appear(3, 2);
         tipType = type;
         tipShowType = type;
         selectedUnit = null;
@@ -112,7 +111,7 @@ public class SelectionController {
 
 
     void hideTip() {
-        tipFactor.beginDestroying(1, 2);
+        tipFactor.destroy(1, 2);
         resetTipType();
     }
 
@@ -144,9 +143,9 @@ public class SelectionController {
         }
 //        if (selectedUnit != null) selectedUnit.selected = false;
         selectedUnit = null;
-        selMoneyFactor.beginDestroying(3, 2);
+        selMoneyFactor.destroy(3, 2);
         tipFactor.setValues(0, 0);
-        tipFactor.beginDestroying(1, 1);
+        tipFactor.destroy(1, 1);
         gameController.fieldController.hideMoveZone();
         hideBuildOverlay();
         resetTipType();
@@ -163,21 +162,6 @@ public class SelectionController {
 
 
     void selectAdjacentHexes(Hex startHex) {
-        //        ArrayList<Hex> tempList = new ArrayList<Hex>();
-//        Hex tempHex;
-//        tempList.add(startHex);
-//        while (tempList.size() > 0) {
-//            tempHex = tempList.get(0);
-//            tempHex.select();
-//            if (!selectedHexes.contains(tempHex)) listIterator.add(tempHex);
-//            for (int i=0; i<6; i++) {
-//                Hex h = tempHex.adjacentHex(i);
-//                if (h != null && h.active && !h.selected && h.colorIndex == tempHex.colorIndex && !tempList.contains(h)) {
-//                    tempList.add(h);
-//                }
-//            }
-//            tempList.remove(tempHex);
-//        }
         gameController.fieldController.selectAdjacentHexes(startHex);
     }
 
@@ -196,7 +180,7 @@ public class SelectionController {
             }
         }
         gameController.fieldController.defenseTipFactor.setValues(0, 0);
-        gameController.fieldController.defenseTipFactor.beginSpawning(3, 1);
+        gameController.fieldController.defenseTipFactor.appear(3, 1);
         defTipSpawnTime = System.currentTimeMillis();
         gameController.fieldController.defTipHex = hex;
     }
@@ -284,7 +268,7 @@ public class SelectionController {
         SoundControllerYio.playSound(SoundControllerYio.soundSelectUnit);
         gameController.fieldController.detectAndShowMoveZone(selectedUnit.currentHex, selectedUnit.strength, GameRules.UNIT_MOVE_LIMIT);
         selUnitFactor.setValues(0, 0);
-        selUnitFactor.beginSpawning(3, 2);
+        selUnitFactor.appear(3, 2);
         hideTip();
         return true;
     }

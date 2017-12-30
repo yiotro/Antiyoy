@@ -1,10 +1,10 @@
 package yio.tro.antiyoy.menu.scenes.editor;
 
+import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.editor.EditorReactions;
 import yio.tro.antiyoy.menu.scenes.AbstractScene;
-import yio.tro.antiyoy.menu.scenes.Scenes;
 
 public class SceneEditorConfirmRandomize extends AbstractScene {
 
@@ -15,7 +15,7 @@ public class SceneEditorConfirmRandomize extends AbstractScene {
 
     @Override
     public void create() {
-        Scenes.sceneEditorOptionsPanel.hide();
+        menuControllerYio.hideAllEditorPanels();
 
         menuControllerYio.getYioGdxGame().beginBackgroundChange(3, true, true);
 
@@ -28,17 +28,17 @@ public class SceneEditorConfirmRandomize extends AbstractScene {
             menuControllerYio.getButtonRenderer().renderButton(basePanel);
         }
         basePanel.setTouchable(false);
-        basePanel.setAnimType(ButtonYio.ANIM_COLLAPSE_DOWN);
+        basePanel.setAnimation(Animation.FIXED_DOWN);
 
         ButtonYio clearButton = buttonFactory.getButton(generateRectangle(0.5, 0.15, 0.475, 0.06), 521, getString("yes"));
-        clearButton.setReactBehavior(EditorReactions.rbEditorRandomize);
+        clearButton.setReaction(EditorReactions.rbEditorRandomize);
         clearButton.setShadow(false);
-        clearButton.setAnimType(ButtonYio.ANIM_COLLAPSE_DOWN);
+        clearButton.setAnimation(Animation.FIXED_DOWN);
 
         ButtonYio cancelButton = buttonFactory.getButton(generateRectangle(0.025, 0.15, 0.475, 0.06), 522, getString("cancel"));
-        cancelButton.setReactBehavior(EditorReactions.rbEditorHideConfirmRandomize);
+        cancelButton.setReaction(EditorReactions.rbEditorHideConfirmRandomize);
         cancelButton.setShadow(false);
-        cancelButton.setAnimType(ButtonYio.ANIM_COLLAPSE_DOWN);
+        cancelButton.setAnimation(Animation.FIXED_DOWN);
     }
 
 

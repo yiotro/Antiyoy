@@ -113,13 +113,13 @@ public class SplatController {
         needToHideSplats = true;
         timeToHideSplats = System.currentTimeMillis() + 350;
         splatTransparencyFactor.setDy(0);
-        splatTransparencyFactor.beginDestroying(0, 1);
+        splatTransparencyFactor.destroy(0, 1);
     }
 
 
     void revealSplats() {
         needToHideSplats = false;
         splatTransparencyFactor.setDy(0);
-        splatTransparencyFactor.beginSpawning(0, 0.5);
+        splatTransparencyFactor.appear(0, 0.5);
     }
 }

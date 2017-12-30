@@ -3,6 +3,7 @@ package yio.tro.antiyoy.gameplay.loading;
 import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyInfoCondensed;
 import yio.tro.antiyoy.gameplay.replays.RepSlot;
 import yio.tro.antiyoy.gameplay.replays.Replay;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
@@ -35,6 +36,9 @@ public class LoadingParameters {
     public String activeHexes;
     public int turn;
     public Replay replay;
+    public boolean fogOfWar;
+    public boolean diplomacy;
+    public DiplomacyInfoCondensed diplomacyInfo;
 
 
     void defaultValues() {
@@ -49,6 +53,9 @@ public class LoadingParameters {
         activeHexes = "";
         turn = -1;
         replay = null;
+        diplomacyInfo = null;
+        fogOfWar = false;
+        diplomacy = false;
     }
 
 
@@ -64,6 +71,9 @@ public class LoadingParameters {
         activeHexes = src.activeHexes;
         turn = src.turn;
         replay = src.replay;
+        fogOfWar = src.fogOfWar;
+        diplomacy = src.diplomacy;
+        diplomacyInfo = src.diplomacyInfo;
     }
 
 
@@ -91,6 +101,8 @@ public class LoadingParameters {
         System.out.println("activeHexes = " + activeHexes);
         System.out.println("turn = " + turn);
         System.out.println("replay = " + replay);
+        System.out.println("fogOfWar = " + fogOfWar);
+        System.out.println("diplomacy = " + diplomacy);
 
         System.out.println();
     }
@@ -136,5 +148,7 @@ public class LoadingParameters {
         campaignLevelIndex = prefs.getInteger("save_current_level");
         colorOffset = prefs.getInteger("save_color_offset", 0);
         slayRules = prefs.getBoolean("slay_rules", true);
+        fogOfWar = prefs.getBoolean("fog_of_war", false);
+        diplomacy = prefs.getBoolean("diplomacy", false);
     }
 }

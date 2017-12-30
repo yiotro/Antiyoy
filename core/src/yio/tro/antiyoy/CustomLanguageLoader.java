@@ -2,6 +2,7 @@ package yio.tro.antiyoy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
 import yio.tro.antiyoy.stuff.Fonts;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 
@@ -32,6 +33,7 @@ public class CustomLanguageLoader {
 
         preferences.flush();
 
-        Fonts.initFonts();
+        Fonts.initFonts(); // calls loadLanguage()
+        CityNameGenerator.getInstance().load();
     }
 }

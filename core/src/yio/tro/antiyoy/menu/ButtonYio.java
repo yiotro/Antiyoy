@@ -5,16 +5,15 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
 import yio.tro.antiyoy.SoundControllerYio;
-import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 
 import java.util.ArrayList;
 
-/**
- * Created by ivan on 22.07.14.
- */
+
 public class ButtonYio {
 
     public static final int ACTION_DELAY = 50;
@@ -26,14 +25,7 @@ public class ButtonYio {
     public final int id; // must be unique for every menu button
     protected boolean touchable;
     private boolean visible;
-    public static final int ANIM_DEFAULT = 0;
-    public static final int ANIM_UP = 1;
-    public static final int ANIM_DOWN = 2;
-    public static final int ANIM_COLLAPSE_UP = 3;
-    public static final int ANIM_SOLID = 4;
-    public static final int ANIM_FROM_CENTER = 5;
-    public static final int ANIM_COLLAPSE_DOWN = 6;
-    protected ReactBehavior reactBehavior;
+    protected Reaction reaction;
     private long lastTimeTouched;
     public boolean currentlyTouched;
     private int touchDelay, animType;
@@ -43,10 +35,11 @@ public class ButtonYio {
     private long timeToPerformAction;
     public float hor, ver, cx, cy, touchX, touchY, animR;
     public float x1, x2, y1, y2;
-    private float deltaSizeArgument, deltaSize, touchOffset;
+    private float deltaSizeArgument, deltaSize, touchOffset, textOffset;
     Sound pressSound;
     String texturePath;
-    public boolean hasShadow, mandatoryShadow, rectangularMask, onlyShadow, touchAnimation, lockAction, deltaAnimationEnabled; // mandatory shadow - draw shadow right before button
+    public boolean hasShadow, mandatoryShadow, rectangularMask,
+            onlyShadow, touchAnimation, lockAction, deltaAnimationEnabled; // mandatory shadow - draw shadow right before button
 
 
     public ButtonYio(RectangleYio position, int id, MenuControllerYio menuControllerYio) {
@@ -68,12 +61,13 @@ public class ButtonYio {
         animPos = new RectangleYio(0, 0, 0, 0);
         deltaAnimationEnabled = false;
         pressSound = null;
+        textOffset = 0;
     }
 
 
     public void move() {
-        if (appearFactor.needsToMove()) appearFactor.move();
-        if (selectionFactor.needsToMove()) {
+        if (appearFactor.hasToMove()) appearFactor.move();
+        if (selectionFactor.hasToMove()) {
             selectionFactor.move();
             if (lockAction && selectionFactor.get() == 1) lockAction = false;
         }
@@ -87,7 +81,7 @@ public class ButtonYio {
         }
         float factor = appearFactor.get();
         switch (animType) {
-            case ANIM_DEFAULT:
+            case Animation.DEFAULT:
                 hor = (float) (0.5 * factor * position.width);
                 ver = (float) (0.5 * factor * position.height);
                 cx = (float) position.x + 0.5f * (float) position.width;
@@ -97,7 +91,7 @@ public class ButtonYio {
                 y1 = cy - ver;
                 y2 = cy + ver;
                 break;
-            case ANIM_UP:
+            case Animation.UP:
                 x1 = (float) position.x;
                 x2 = x1 + (float) position.width;
                 hor = 0.5f * (float) position.width;
@@ -105,7 +99,7 @@ public class ButtonYio {
                 y1 = (float) position.y + (float) ((1 - factor) * (menuControllerYio.yioGdxGame.h - position.y));
                 y2 = y1 + (float) position.height;
                 break;
-            case ANIM_DOWN:
+            case Animation.DOWN:
                 x1 = (float) position.x;
                 x2 = x1 + (float) position.width;
                 hor = 0.5f * (float) position.width;
@@ -113,15 +107,7 @@ public class ButtonYio {
                 y1 = (float) (factor * (position.y + position.height)) - (float) position.height;
                 y2 = y1 + (float) position.height;
                 break;
-            case ANIM_COLLAPSE_UP:
-                x1 = (float) position.x;
-                x2 = x1 + (float) position.width;
-                hor = 0.5f * (float) position.width;
-                ver = 0.5f * (float) (factor * position.height);
-                y1 = (float) position.y + (float) ((1 - factor) * (menuControllerYio.yioGdxGame.h - position.y));
-                y2 = y1 + (float) (factor * position.height);
-                break;
-            case ANIM_SOLID:
+            case Animation.SOLID:
                 x1 = (float) position.x;
                 x2 = x1 + (float) position.width;
                 hor = 0.5f * (float) position.width;
@@ -129,7 +115,7 @@ public class ButtonYio {
                 y1 = (float) position.y;
                 y2 = y1 + (float) position.height;
                 break;
-            case ANIM_FROM_CENTER:
+            case Animation.FROM_CENTER:
                 hor = (float) (0.5 * factor * position.width);
                 ver = (float) (0.5 * factor * position.height);
                 cx = (float) position.x + 0.5f * (float) position.width;
@@ -141,15 +127,32 @@ public class ButtonYio {
                 y1 = cy - ver;
                 y2 = cy + ver;
                 break;
-            case ANIM_COLLAPSE_DOWN:
+            case Animation.FIXED_DOWN:
                 x1 = (float) position.x;
                 x2 = x1 + (float) position.width;
                 hor = 0.5f * (float) position.width;
-                ver = 0.5f * (float) (factor * position.height);
-                y1 = (float) position.y + (float) ((1 - factor) * (-position.height - position.y));
-                y2 = y1 + (float) (factor * position.height);
+                ver = 0.5f * (float) position.height;
+                y1 = (float) (position.y - (1 - factor) * 0.6 * GraphicsYio.height);
+                y2 = y1 + (float) position.height;
+                break;
+            case Animation.FIXED_UP:
+                x1 = (float) position.x;
+                x2 = x1 + (float) position.width;
+                hor = 0.5f * (float) position.width;
+                ver = 0.5f * (float) position.height;
+                y1 = (float) (position.y + (1 - factor) * 0.6 * GraphicsYio.height);
+                y2 = y1 + (float) position.height;
+                break;
+            case Animation.LEFT:
+                x1 = (float) (position.x - (1 - factor) * (position.width));
+                x2 = x1 + (float) position.width;
+                hor = 0.5f * (float) position.width;
+                ver = 0.5f * (float) position.height;
+                y1 = (float) position.y;
+                y2 = y1 + (float) position.height;
                 break;
         }
+
         if (deltaAnimationEnabled) {
             cx = x1 + hor;
             cy = y1 + ver;
@@ -163,7 +166,7 @@ public class ButtonYio {
     public boolean checkToPerformAction() {
         if (needToPerformAction && System.currentTimeMillis() > timeToPerformAction && !lockAction) {
             needToPerformAction = false;
-            reactBehavior.reactAction(this);
+            reaction.reactAction(this);
             return true;
         }
         return false;
@@ -175,7 +178,7 @@ public class ButtonYio {
     }
 
 
-    public void setAnimType(int animType) {
+    public void setAnimation(int animType) {
         this.animType = animType;
     }
 
@@ -204,16 +207,16 @@ public class ButtonYio {
         lastTimeTouched = System.currentTimeMillis();
         playPressSound();
         selectionFactor.setValues(0.2, 0.02);
-        selectionFactor.beginSpawning(0, 1);
+        selectionFactor.appear(0, 1);
         selAlphaFactor.setValues(1, 0);
-        selAlphaFactor.beginDestroying(1, 0.5);
+        selAlphaFactor.destroy(1, 0.5);
         touchX = screenX;
         touchY = screenY;
         animR = Math.max(touchX - (float) animPos.x, (float) (animPos.x + animPos.width - touchX));
 //        if (touchAnimation) lockAction = true;
         lockAction = true;
         menuControllerYio.yioGdxGame.render();
-        if (reactBehavior != null && System.currentTimeMillis() - timeToPerformAction > ACTION_DELAY) {
+        if (reaction != null && System.currentTimeMillis() - timeToPerformAction > ACTION_DELAY) {
             needToPerformAction = true;
             timeToPerformAction = System.currentTimeMillis() + 100;
         }
@@ -250,7 +253,7 @@ public class ButtonYio {
     public void destroy() {
         setTouchable(false);
         appearFactor.setDy(0);
-        appearFactor.beginDestroying(MenuControllerYio.DESTROY_ANIM, MenuControllerYio.DESTROY_SPEED);
+        appearFactor.destroy(MenuControllerYio.DESTROY_ANIM, MenuControllerYio.DESTROY_SPEED);
     }
 
 
@@ -295,8 +298,8 @@ public class ButtonYio {
     }
 
 
-    public void setReactBehavior(ReactBehavior reactBehavior) {
-        this.reactBehavior = reactBehavior;
+    public void setReaction(Reaction reaction) {
+        this.reaction = reaction;
     }
 
 
@@ -390,5 +393,15 @@ public class ButtonYio {
 
     public void setPosition(RectangleYio position) {
         this.position = position;
+    }
+
+
+    public float getTextOffset() {
+        return textOffset;
+    }
+
+
+    public void setTextOffset(float textOffset) {
+        this.textOffset = textOffset;
     }
 }

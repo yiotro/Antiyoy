@@ -17,9 +17,8 @@
         <string key="menu_reset" value="Reset"/>
         <string key="game_saved" value="Game saved"/>
         <string key="restart_app" value="Restart app"/>
-        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
-        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
-        <string key="city_name_three" value="nsk, rra, ko, rry"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
         <string key="info_back" value="Back"/>
@@ -39,7 +38,7 @@
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Reset data"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Skirmish"/>
@@ -69,6 +68,8 @@
         <string key="expert" value="expert"/>
         <string key="balancer" value="balancer"/>
         <string key="player_color" value="Player color"/>
+        <string key="fog_of_war" value="Fog of war"/>
+        <string key="diplomacy" value="Diplomacy"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Resume"/>
@@ -83,8 +84,6 @@
         <string key="confirm_import" value="Confirm import"/>
         <string key="filter_no" value="No filter"/>
         <string key="filter_only_land" value="Only land"/>
-        <string key="confirm_clear_level" value="Clear map?"/>
-        <string key="confirm_randomize" value="Generate random map?"/>
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Ok"/>
@@ -240,17 +239,6 @@
         #Cut enemy territories to pieces in order to destroy their economy.
         "/>
 
-        <string key="about_complicated_mode_article" value="Complicated mode means more menus.
-        #Difference from simple:
-        #
-        #- Multiple save slots
-        #
-        #- confirm level restart
-        #
-        #- Show color stats
-        #(press coin button)
-        "/>
-
         <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
         #
         #Initially game had only slay rules. That's why help describes them instead of normal rules.
@@ -285,14 +273,13 @@
         <string key="filter_only_land" value="Only land"/>
         <string key="confirm_clear_level" value="Clear map?"/>
         <string key="confirm_randomize" value="Generate random map?"/>
+        <string key="randomize" value="Randomize"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" #Autosave
-            # #Several slots
-            # #Ask turn end
-            # #City names
-            # #Sound
-            # # "/>
+        <string key="autosave" value="Autosave"/>
+        <string key="ask_to_end_turn" value="Ask turn end"/>
+        <string key="city_names" value="City names"/>
+        <string key="sound" value="Sound"/>
         <string key="limited_turns" value="Limited turns"/>
         <string key="hold_to_march" value="Long tap to move"/>
         <string key="skin" value="Skin"/>
@@ -313,10 +300,36 @@
         <string key="replay" value="Replay"/>
         <string key="replay_saved" value="Replay saved"/>
         <string key="fast_construction" value="Fast construction"/>
+        <string key="music" value="Music"/>
+        <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="Friends"/>
+        <string key="mutual_friends" value="Mutual"/>
+        <string key="dotations" value="Dotations"/>
+        <string key="treaty_of_friendship" value="Treaty of friendship"/>
+        <string key="state" value="State"/>
+        <string key="duration" value="Duration"/>
+        <string key="refuse_friendship" value="Sorry, I can't accept your friendship proposition."/>
+        <string key="friend" value="friend"/>
+        <string key="enemy" value="enemy"/>
+        <string key="neutral" value="neutral"/>
+        <string key="dead" value="dead"/>
+        <string key="confirm_cancel_friendship" value="Cancel friendship?"/>
+        <string key="confirm_start_war" value="Start war?"/>
+        <string key="peace_treaty" value="Peace treaty"/>
+        <string key="pay" value="Pay"/>
+        <string key="reparations" value="Reparations"/>
+        <string key="refuse_stop_war" value="I will fight to the end!"/>
+        <string key="win_conditions" value="Conditions of victory"/>
+        <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
+        <string key="confirm_black_mark" value="Put black mark?"/>
+        <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
+
 
     </language>
 
@@ -356,9 +369,8 @@
         <string key="menu_reset" value="Сбросить"/>
         <string key="game_saved" value="Игра сохранена"/>
         <string key="restart_app" value="Перезапустите игру"/>
-        <string key="city_name_one" value="ки, мос, ми, до, пе"/>
-        <string key="city_name_two" value="X, X, X, X, те, га, ре"/>
-        <string key="city_name_three" value="рев, ров, нск, нск, ква, рево"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_groups" value="k: р т п с д к б н м #m: рб кр тр бр бн ко рт #a: о а аи е ой о е #o: во ва мск ск нск ов рг ро"/>
 
         <!-- Info -->
         <string key="info_back" value="Назад"/>
@@ -382,7 +394,7 @@
         #Игру сделал yiotro
 		"/>
         <string key="reset_campaign_data" value="Стереть данные"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Сражение"/>
@@ -412,6 +424,8 @@
         <string key="expert" value="эксперт"/>
         <string key="balancer" value="балансировщик"/>
         <string key="player_color" value="Цвет игрока"/>
+        <string key="fog_of_war" value="Туман войны"/>
+        <string key="diplomacy" value="Дипломатия"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Продолжить"/>
@@ -613,21 +627,6 @@
         #экономику.
         "/>
 
-        <string key="about_complicated_mode_article" value="В расширенном режиме
-        #больше всяких меню.
-        #Отличия от простого:
-        #
-        #- Несколько слотов
-        #сохранения
-        #
-        #- Подтверждение рестарта
-        #уровня
-        #
-        #- Показ количества
-        #цветов на карте
-        #(нажмите кнопку 'монета')
-        "/>
-
         <string key="article_rules" value="В игре есть 2 набора правил: Обычные правила и правила slay. По умолчанию включены обычные правила.
         #
         #Изначально в игре были только правила slay, поэтому справка описывает именно их.
@@ -662,14 +661,13 @@
         <string key="filter_only_land" value="Только земля"/>
         <string key="confirm_clear_level" value="Очистить карту?"/>
         <string key="confirm_randomize" value="Сгенерировать случайную карту?"/>
+        <string key="randomize" value="Случайная карта"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" # Автосохранение
-            # # Несколько слотов
-            # # Спраш. конец хода
-            # # Имена городов
-            # # Звук
-            # # "/>
+        <string key="autosave" value="Автосохранение"/>
+        <string key="ask_to_end_turn" value="Спраш. конец хода"/>
+        <string key="city_names" value="Имена городов"/>
+        <string key="sound" value="Звук"/>
         <string key="limited_turns" value="Лимит ходов"/>
         <string key="hold_to_march" value="Быстрое перемещение"/>
         <string key="skin" value="Скин"/>
@@ -690,10 +688,35 @@
         <string key="replay" value="Повтор"/>
         <string key="replay_saved" value="Повтор сохранен"/>
         <string key="fast_construction" value="Быстрая постройка"/>
+        <string key="music" value="Музыка"/>
+        <string key="left_handed" value="Леворукий режим"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="Новый скин от ShroomArts"/>
         <string key="level_24" value="Это первый 'сложный' уровень. Уделяй больше внимания защите."/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="Друзья"/>
+        <string key="mutual_friends" value="Общие"/>
+        <string key="dotations" value="Дотации"/>
+        <string key="treaty_of_friendship" value="Договор о дружбе"/>
+        <string key="state" value="Государство"/>
+        <string key="duration" value="Срок действия"/>
+        <string key="refuse_friendship" value="Извините, я не могу принять ваше предложение дружбы."/>
+        <string key="friend" value="друг"/>
+        <string key="enemy" value="враг"/>
+        <string key="neutral" value="нейтрал"/>
+        <string key="dead" value="мертв"/>
+        <string key="confirm_cancel_friendship" value="Отменить дружбу?"/>
+        <string key="confirm_start_war" value="Начать войну?"/>
+        <string key="peace_treaty" value="Мирный договор"/>
+        <string key="pay" value="Выплата"/>
+        <string key="reparations" value="Репарации"/>
+        <string key="refuse_stop_war" value="Я буду драться до конца!"/>
+        <string key="win_conditions" value="Условия победы"/>
+        <string key="diplomatic_win_conditions" value="Чтобы победить с помощью дипломатии нужно дружить со всеми."/>
+        <string key="confirm_black_mark" value="Поставить черную метку?"/>
+        <string key="black_mark_description" value="Поставив черную метку на игрока вы запрещаете остальным дружить с вами обоими одновременно. На уже заключенные договора не действует."/>
     </language>
 
 
@@ -719,10 +742,10 @@
 
     <language name="uk_UA">
         <!-- All characters -->
-        <string key="lang_characters" value="йцукенгшщзхъёфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮiІїЇєЄö"/>
+        <string key="lang_characters" value="йцукенгшщзхъёфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮїЇєЄöІіІ"/>
 
         <!-- Main menu -->
-        <string key="main_menu_info" value="Інфо"/>
+        <string key="main_menu_info" value="Iнфо"/>
         <string key="main_menu_exit" value="Вихiд"/>
         <string key="main_menu_something" value="Бiлий текст в кутку"/>
 
@@ -731,9 +754,8 @@
         <string key="menu_reset" value="Скинути"/>
         <string key="game_saved" value="Гра збережена"/>
         <string key="restart_app" value="Перезапустіть гру"/>
-        <string key="city_name_one" value="ки, мос, ми, до, пе"/>
-        <string key="city_name_two" value="X, X, X, X, те, га, ре"/>
-        <string key="city_name_three" value="рев, ров, нск, нск, ква, рево"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_groups" value="k: р т п с д к б н м #m: рб кр тр бр бн ко рт #a: о а аі е ой о е #o: во ва мск ск нск ов рг ро"/>
 
         <!-- Info -->
         <string key="info_back" value="Назад"/>
@@ -757,7 +779,7 @@
         #Гру зробив yiotro
 		"/>
         <string key="reset_campaign_data" value="Стерти данi"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Швидкий бiй"/>
@@ -787,6 +809,8 @@
         <string key="expert" value="експерт"/>
         <string key="balancer" value="балансувальник"/>
         <string key="player_color" value="Колiр гравця"/>
+        <string key="fog_of_war" value="Туман войни"/>
+        <string key="diplomacy" value="Дипломатія"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Продовжити"/>
@@ -928,7 +952,7 @@
         #дерева наносять шкоду.
         #
         #З ними треба боротися.
-        #Інакше вони розростутся
+        #Iнакше вони розростутся
         #i призведуть до
         #економiчної кризи
         #
@@ -989,20 +1013,6 @@
         #їхню економiку.
         "/>
 
-        <string key="about_complicated_mode_article" value="У розширеному режимi
-        #бiльше меню.
-        #Вiдмiнностi вiд простого:
-        #
-        #- Декiлька слотiв
-        #збереження
-        #
-        #- Пiдтвердження рестарту
-        #
-        #- Показ кiлькостi
-        #кольорiв на рiвнi
-        #(натисн. кнопку 'монета')
-        "/>
-
         <string key="article_rules" value="У грі є 2 набори правил: Звичайні правила ті правила slay. По замовчуванню обрані звичайні правила.
         #
         #Спочатку у грі були лише правила slay, тому довідка описує саме їх.
@@ -1022,7 +1032,7 @@
         <string key="editor" value="Редактор"/>
         <string key="slot" value="Слот"/>
         <string key="slots" value="Збер. слоти"/>
-        <string key="import" value="Імпорт"/>
+        <string key="import" value="Iмпорт"/>
         <string key="export" value="Экспорт"/>
         <string key="empty" value="пусто"/>
         <string key="play" value="Грати"/>
@@ -1037,14 +1047,13 @@
         <string key="filter_only_land" value="Тільки земля"/>
         <string key="confirm_clear_level" value="Очистити карту?"/>
         <string key="confirm_randomize" value="Сгенерувати карту?"/>
+        <string key="randomize" value="Сгенерувати"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" # Автозбереження
-            # # Декiлька слотiв
-            # # Кiнець ходу
-            # # Назви мiст
-            # # Звук
-            # # "/>
+        <string key="autosave" value="Автозбереження"/>
+        <string key="ask_to_end_turn" value="Кiнець ходу"/>
+        <string key="city_names" value="Назви мiст"/>
+        <string key="sound" value="Звук"/>
         <string key="limited_turns" value="Обмеження ходів"/>
         <string key="hold_to_march" value="Довгий тап"/>
         <string key="skin" value="Скiн"/>
@@ -1065,10 +1074,36 @@
         <string key="replay" value="Повтор"/>
         <string key="replay_saved" value="Повтор збережено"/>
         <string key="fast_construction" value="Швидке будівництво"/>
+        <string key="music" value="Музика"/>
+        <string key="left_handed" value="Режим лівої руки"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="Новий скін від ShroomArts"/>
         <string key="level_24" value="Це перший 'складний' рівень. Приділяй більше уваги захисту."/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="Друзі"/>
+        <string key="mutual_friends" value="Спільні"/>
+        <string key="dotations" value="Дотації"/>
+        <string key="treaty_of_friendship" value="Договір про дружбу"/>
+        <string key="state" value="Держава"/>
+        <string key="duration" value="Термін дії"/>
+        <string key="refuse_friendship" value="Вибачте, я не можу прийняти вашу пропозицію дружби."/>
+        <string key="friend" value="друг"/>
+        <string key="enemy" value="ворог"/>
+        <string key="neutral" value="нейтрал"/>
+        <string key="dead" value="мертвий"/>
+        <string key="confirm_cancel_friendship" value="Відмінити дружбу?"/>
+        <string key="confirm_start_war" value="Почати війну?"/>
+        <string key="peace_treaty" value="Мирний договір"/>
+        <string key="pay" value="Виплата"/>
+        <string key="reparations" value="Репарації"/>
+        <string key="refuse_stop_war" value="Я буду боротися до кінця!"/>
+        <string key="win_conditions" value="Умови перемоги"/>
+        <string key="diplomatic_win_conditions" value="Щоб перемогти дипломатично треба дружити зі всіма."/>
+        <string key="confirm_black_mark" value="Поставити чорну мітку?"/>
+        <string key="black_mark_description" value="Поставивши на гравця чорну мітку ви забороняєте решті гравців дружити з вами обома. На вже укладені договори не діє."/>
+
     </language>
 
 
@@ -1107,9 +1142,8 @@
         <string key="menu_reset" value="Reset"/>  <!-- Same as english -->
         <string key="game_saved" value="Spiel gespeichert"/>
         <string key="restart_app" value="Restart app"/>
-        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>  <!-- Same as english -->
-        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>  <!-- Same as english -->
-        <string key="city_name_three" value="nsk, rra, ko, rry"/>  <!-- Same as english -->
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
         <string key="info_back" value="Zurück"/>
@@ -1134,7 +1168,7 @@
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Daten zurücksetzen"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Gefecht"/>
@@ -1164,6 +1198,8 @@
         <string key="expert" value="Experte"/>
         <string key="balancer" value="angleichen"/>
         <string key="player_color" value="Spielerfarbe"/>
+        <string key="fog_of_war" value="Fog of war"/>
+        <string key="diplomacy" value="Diplomacy"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Fortfahren"/>
@@ -1371,18 +1407,6 @@
         #ihre Wirtschaft zu zerstören.
         "/>
 
-        <string key="about_complicated_mode_article" value="Im komplizierten Modus
-        #gibt es mehr Optionen.
-        #Der Unterschied zum einfachen Modus ist:
-        #
-        #- Mehrere Speicherplätze
-        #
-        #- Level Restart bestätigen
-        #
-        #- Farb-Statistiken anzeigen
-        #(Auf den Münzen-Kopf drücken)
-        "/>
-
         <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
         #
         #Initially game had only slay rules. That's why help describes them instead of normal rules.
@@ -1417,14 +1441,13 @@
         <string key="filter_only_land" value="Only land"/>
         <string key="confirm_clear_level" value="Clear map?"/>
         <string key="confirm_randomize" value="Generate random map?"/>
+        <string key="randomize" value="Randomize"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" # Autosave
-            # # Mehrere Speicherplätze
-            # # Vor Zugende fragen
-            # # Städtenamen
-            # # Ton
-            # # "/>
+        <string key="autosave" value="Autosave"/>
+        <string key="ask_to_end_turn" value="Vor Zugende fragen"/>
+        <string key="city_names" value="Städtenamen"/>
+        <string key="sound" value="Ton"/>
         <string key="limited_turns" value="Begrenzte Züge"/>
         <string key="hold_to_march" value="Zum Bewegen gedrückt halten"/>
         <string key="skin" value="Darstellung"/>
@@ -1445,10 +1468,35 @@
         <string key="replay" value="Replay"/>
         <string key="replay_saved" value="Replay saved"/>
         <string key="fast_construction" value="Fast construction"/>
+        <string key="music" value="Music"/>
+        <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="Friends"/>
+        <string key="mutual_friends" value="Mutual"/>
+        <string key="dotations" value="Dotations"/>
+        <string key="treaty_of_friendship" value="Treaty of friendship"/>
+        <string key="state" value="State"/>
+        <string key="duration" value="Duration"/>
+        <string key="refuse_friendship" value="Sorry, I can't accept your friendship proposition."/>
+        <string key="friend" value="friend"/>
+        <string key="enemy" value="enemy"/>
+        <string key="neutral" value="neutral"/>
+        <string key="dead" value="dead"/>
+        <string key="confirm_cancel_friendship" value="Cancel friendship?"/>
+        <string key="confirm_start_war" value="Start war?"/>
+        <string key="peace_treaty" value="Peace treaty"/>
+        <string key="pay" value="Pay"/>
+        <string key="reparations" value="Reparations"/>
+        <string key="refuse_stop_war" value="I will fight to the end!"/>
+        <string key="win_conditions" value="Conditions of victory"/>
+        <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
+        <string key="confirm_black_mark" value="Put black mark?"/>
+        <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
     </language>
 
 
@@ -1484,9 +1532,8 @@
         <string key="menu_reset" value="Reset"/>  <!-- Same as english -->
         <string key="game_saved" value="Hra uložena"/>
         <string key="restart_app" value="Restart app"/>
-        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>  <!-- Same as english -->
-        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>  <!-- Same as english -->
-        <string key="city_name_three" value="nsk, rra, ko, rry"/>  <!-- Same as english -->
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
         <string key="info_back" value="Zpět"/>
@@ -1509,7 +1556,7 @@
         #Vytvořil yiotro
         "/>
         <string key="reset_campaign_data" value="Resetovat data"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Rychlá hra"/>
@@ -1539,6 +1586,8 @@
         <string key="expert" value="expert"/>  <!-- Same as english -->
         <string key="balancer" value="balancer"/>  <!-- Same as english -->
         <string key="player_color" value="Barva hráče"/>
+        <string key="fog_of_war" value="Fog of war"/>
+        <string key="diplomacy" value="Diplomacy"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Pokračovat"/>
@@ -1734,19 +1783,6 @@
         #pro zničení jeho ekonomiky.
         "/>
 
-        <string key="about_complicated_mode_article" value="Pokročilý mód znamená
-        #členitější menu.
-        #Odlišnosti od jednoduchého:
-        #Difference from simple:
-        #
-        #- Několik ukládacích slotů
-        #
-        #- Potvrzení restartu levelu
-        #
-        #- Ukazuje statistiky barev
-        #(zmáčkni tlačítko s mincí)
-        "/>
-
         <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
         #
         #Initially game had only slay rules. That's why help describes them instead of normal rules.
@@ -1781,14 +1817,13 @@
         <string key="filter_only_land" value="Only land"/>
         <string key="confirm_clear_level" value="Clear map?"/>
         <string key="confirm_randomize" value="Generate random map?"/>
+        <string key="randomize" value="Randomize"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" # Auto ukládání
-            # # Několik slotů
-            # # Potvrď konec tahu
-            # # Jména měst
-            # # Zvuky
-            # # "/>
+        <string key="autosave" value="Auto ukládání"/>
+        <string key="ask_to_end_turn" value="Potvrď konec tahu"/>
+        <string key="city_names" value="Jména měst"/>
+        <string key="sound" value="Zvuky"/>
         <string key="limited_turns" value="Limitovaný počet tahů"/>
         <string key="hold_to_march" value="Dlouze tapni pro pohyb"/>
         <string key="skin" value="Skin"/>  <!-- Same as english -->
@@ -1809,10 +1844,35 @@
         <string key="replay" value="Replay"/>
         <string key="replay_saved" value="Replay saved"/>
         <string key="fast_construction" value="Fast construction"/>
+        <string key="music" value="Music"/>
+        <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="Friends"/>
+        <string key="mutual_friends" value="Mutual"/>
+        <string key="dotations" value="Dotations"/>
+        <string key="treaty_of_friendship" value="Treaty of friendship"/>
+        <string key="state" value="State"/>
+        <string key="duration" value="Duration"/>
+        <string key="refuse_friendship" value="Sorry, I can't accept your friendship proposition."/>
+        <string key="friend" value="friend"/>
+        <string key="enemy" value="enemy"/>
+        <string key="neutral" value="neutral"/>
+        <string key="dead" value="dead"/>
+        <string key="confirm_cancel_friendship" value="Cancel friendship?"/>
+        <string key="confirm_start_war" value="Start war?"/>
+        <string key="peace_treaty" value="Peace treaty"/>
+        <string key="pay" value="Pay"/>
+        <string key="reparations" value="Reparations"/>
+        <string key="refuse_stop_war" value="I will fight to the end!"/>
+        <string key="win_conditions" value="Conditions of victory"/>
+        <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
+        <string key="confirm_black_mark" value="Put black mark?"/>
+        <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
     </language>
 
 
@@ -1851,9 +1911,8 @@
 
         <string key="game_saved" value="Partie sauvegardée"/>
         <string key="restart_app" value="Redémarrer appli"/>
-        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>  <!-- Same as english -->
-        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>  <!-- Same as english -->
-        <string key="city_name_three" value="nsk, rra, ko, rry"/>  <!-- Same as english -->
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
         <string key="info_back" value="Précédent"/>
@@ -1877,7 +1936,7 @@
         #Auteur : yiotro
 		"/>
         <string key="reset_campaign_data" value="Effacer données"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Affrontement"/>
@@ -1907,6 +1966,8 @@
         <string key="expert" value="expert"/>  <!-- Same as english -->
         <string key="balancer" value="niveleur"/>
         <string key="player_color" value="Couleur du joueur"/>
+        <string key="fog_of_war" value="Fog of war"/>
+        <string key="diplomacy" value="Diplomacy"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Reprendre"/>
@@ -2107,18 +2168,6 @@
         #pour abattre leur économie.
         "/>
 
-        <string key="about_complicated_mode_article" value="Le mode complexe se traduit par
-        #des menus plus nombreux.
-        #Différence par rapport au mode simple :
-        #
-        #- Sauvegardes multiples
-        #
-        #- Confirmer avant de recommencer un niveau
-        #
-        #- Afficher les statistiques selon les couleurs
-        #(appuyer sur le bouton de pièce)
-        "/>
-
         <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
         #
         #Initially game had only slay rules. That's why help describes them instead of normal rules.
@@ -2153,14 +2202,13 @@
         <string key="filter_only_land" value="Only land"/>  <!-- Same as english -->
         <string key="confirm_clear_level" value="Clear map?"/>
         <string key="confirm_randomize" value="Generate random map?"/>
+        <string key="randomize" value="Randomize"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" # Sauvegarde auto
-            # # Plusieurs emplacements
-            # # Confirmer fin du tour
-            # # Nom des villes
-            # # Son
-            # # "/>
+        <string key="autosave" value="Sauvegarde auto"/>
+        <string key="ask_to_end_turn" value="Confirmer fin du tour"/>
+        <string key="city_names" value="Nom des villes"/>
+        <string key="sound" value="Son"/>
         <string key="limited_turns" value="Nb. fixe de tours"/>
         <string key="hold_to_march" value="Long tap to move"/>
         <string key="skin" value="Habillage"/>
@@ -2181,10 +2229,35 @@
         <string key="replay" value="Replay"/>
         <string key="replay_saved" value="Replay saved"/>
         <string key="fast_construction" value="Fast construction"/>
+        <string key="music" value="Music"/>
+        <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="Nouvel habillage signé ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>  <!-- Same as english -->
+
+        <!-- Gameplay -->
+        <string key="friends" value="Friends"/>
+        <string key="mutual_friends" value="Mutual"/>
+        <string key="dotations" value="Dotations"/>
+        <string key="treaty_of_friendship" value="Treaty of friendship"/>
+        <string key="state" value="State"/>
+        <string key="duration" value="Duration"/>
+        <string key="refuse_friendship" value="Sorry, I can't accept your friendship proposition."/>
+        <string key="friend" value="friend"/>
+        <string key="enemy" value="enemy"/>
+        <string key="neutral" value="neutral"/>
+        <string key="dead" value="dead"/>
+        <string key="confirm_cancel_friendship" value="Cancel friendship?"/>
+        <string key="confirm_start_war" value="Start war?"/>
+        <string key="peace_treaty" value="Peace treaty"/>
+        <string key="pay" value="Pay"/>
+        <string key="reparations" value="Reparations"/>
+        <string key="refuse_stop_war" value="I will fight to the end!"/>
+        <string key="win_conditions" value="Conditions of victory"/>
+        <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
+        <string key="confirm_black_mark" value="Put black mark?"/>
+        <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
     </language>
 
 
@@ -2219,9 +2292,8 @@
         <string key="menu_reset" value="Resetuj"/>
         <string key="game_saved" value="Gra zapisana"/>
         <string key="restart_app" value="Restart app"/>
-        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>  <!-- Same as english -->
-        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>  <!-- Same as english -->
-        <string key="city_name_three" value="nsk, rra, ko, rry"/>  <!-- Same as english -->
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
         <string key="info_back" value="Cofnij"/>
@@ -2247,7 +2319,7 @@
     #Wykonane przez yiotro
     "/>
         <string key="reset_campaign_data" value="Resetuj kampanie"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
 
 
         <!-- Choose game mode menu-->
@@ -2278,6 +2350,8 @@
         <string key="expert" value="ekspert"/>
         <string key="balancer" value="stabilizujący"/>
         <string key="player_color" value="Kolor gracza"/>
+        <string key="fog_of_war" value="Fog of war"/>
+        <string key="diplomacy" value="Diplomacy"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Wznów"/>
@@ -2480,18 +2554,6 @@
     #by zniszczyć ich ekonomię.
     "/>
 
-        <string key="about_complicated_mode_article" value="Włączenie trybu
-    #skomplikowanego dodaje więcej menu.
-    #W odróżnieniu od prostego
-    #dostępne jest:
-    #
-    #- więcej slotów na zapisy
-    #
-    #- potwierdzenie rastartu poziomu
-    #
-    #- statystyki kolorów
-    #(wystarczy nacisnąć guzik monety)
-    "/>
 
         <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
         #
@@ -2527,14 +2589,13 @@
         <string key="filter_only_land" value="Only land"/>
         <string key="confirm_clear_level" value="Clear map?"/>
         <string key="confirm_randomize" value="Generate random map?"/>
+        <string key="randomize" value="Randomize"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" #Autozapis
-        # #Więcej slotów zapisu
-        # #Zapytaj czy zakończyć
-        # #Nazwy miast
-        # #Dźwięki
-				# # "/>
+        <string key="autosave" value="utozapis"/>
+        <string key="ask_to_end_turn" value="Zapytaj czy zakończyć"/>
+        <string key="city_names" value="Nazwy miast"/>
+        <string key="sound" value="Dźwięki"/>
         <string key="limited_turns" value="Limitowane tury"/>
         <string key="hold_to_march" value="Przytrzymaj by ruszyć"/>
         <string key="skin" value="Skórka"/>
@@ -2555,10 +2616,35 @@
         <string key="replay" value="Replay"/>
         <string key="replay_saved" value="Replay saved"/>
         <string key="fast_construction" value="Fast construction"/>
+        <string key="music" value="Music"/>
+        <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="Friends"/>
+        <string key="mutual_friends" value="Mutual"/>
+        <string key="dotations" value="Dotations"/>
+        <string key="treaty_of_friendship" value="Treaty of friendship"/>
+        <string key="state" value="State"/>
+        <string key="duration" value="Duration"/>
+        <string key="refuse_friendship" value="Sorry, I can't accept your friendship proposition."/>
+        <string key="friend" value="friend"/>
+        <string key="enemy" value="enemy"/>
+        <string key="neutral" value="neutral"/>
+        <string key="dead" value="dead"/>
+        <string key="confirm_cancel_friendship" value="Cancel friendship?"/>
+        <string key="confirm_start_war" value="Start war?"/>
+        <string key="peace_treaty" value="Peace treaty"/>
+        <string key="pay" value="Pay"/>
+        <string key="reparations" value="Reparations"/>
+        <string key="refuse_stop_war" value="I will fight to the end!"/>
+        <string key="win_conditions" value="Conditions of victory"/>
+        <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
+        <string key="confirm_black_mark" value="Put black mark?"/>
+        <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
     </language>
 
 
@@ -2595,9 +2681,8 @@
         <string key="menu_reset" value="Reset"/>
         <string key="game_saved" value="Gioco salvato"/>
         <string key="restart_app" value="Restart app"/>
-        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
-        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
-        <string key="city_name_three" value="nsk, rra, ko, rry"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
         <string key="info_back" value="Indietro"/>
@@ -2620,7 +2705,7 @@
         "/>
 
         <string key="reset_campaign_data" value="Resetta campagna"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Schermaglia"/>
@@ -2650,6 +2735,8 @@
         <string key="expert" value="Esperto"/>
         <string key="balancer" value="balancer"/>
         <string key="player_color" value="Colore giocatore"/>
+        <string key="fog_of_war" value="Fog of war"/>
+        <string key="diplomacy" value="Diplomacy"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Continua"/>
@@ -2763,105 +2850,59 @@
         <string key="help_about_tactics" value="Tattiche"/>
         <string key="help_about_rules" value="Rules"/>
 
-        <string key="help_units_article" value="Ci sono 4 tipi di unità.
-        #Si differenziano solo per la loro forza.
+        <string key="help_units_article" value="Ci sono 4 tipi di unità. Si differenziano solo per la loro forza.
         #In ordine di forza:
         #[1] Contadino
         #[2] Lanciere
         #[3] Barone
         #[4] Cavaliere
         #
-        #Le unità donano agli slot vicini
-        #protezione pari alla loro forza.
+        #Le unità donano agli slot vicini protezione pari alla loro forza.
         #
-        #Per catturare uno slot
-        #l'unità attaccante deve essere
-        #più forte di quella che protegge.
+        #Per catturare uno slot l'unità attaccante deve essere più forte di quella che protegge.
         #
-        #Ogni unità fa spendere rispettivamente
-        #2, 6, 18 e 54 soldi
-        #ogni turno.
+        #Ogni unità fa spendere rispettivamente 2, 6, 18 e 54 soldi ogni turno.
         "/>
 
-        <string key="help_trees_article" value="Gli alberi crescono dopo
-        #aver eliminato un'unità.
+        <string key="help_trees_article" value="Gli alberi crescono dopo aver eliminato un'unità.
         #
-        #Uno slot con un albero non
-        #produce denaro. Questo significa che
-        #gli alberi arrestano la crescita economica.
+        #Uno slot con un albero non produce denaro. Questo significa che gli alberi arrestano la crescita economica.
         #
-        #Devi abbatterli,
-        #altrimenti cresceranno
-        #e diminuiranno le tue entrate.
+        #Devi abbatterli, altrimenti cresceranno e diminuiranno le tue entrate.
         #
-        #Le palme crescono sui bordi
-        #e crescono velocemente,
-        #quindi devi abbatterle
-        #velocemente.
+        #Le palme crescono sui bordi e crescono velocemente, quindi devi abbatterle velocemente.
         "/>
 
-        <string key="help_towers_article" value="Le torri sono usate
-        #per proteggere gli slot vicini.
+        <string key="help_towers_article" value="Le torri sono usate per proteggere gli slot vicini.
         #
-        #Le torri danno protezione [2].
-        #Perciò soltanto i baroni e i
-        #cavalieri possono sconfiggerla.
+        #Le torri danno protezione [2]. Perciò soltanto i baroni e i cavalieri possono sconfiggerla.
         #
         #I rifugi danno protezione [1].
         #
-        #All'inizio del gioco
-        #questo è il miglior modo
-        #per proteggere i tuoi territori.
-        #Il prezzo delle torri è basso,
-        #inoltre non consumano denaro.
+        #All'inizio del gioco questo è il miglior modo per proteggere i tuoi territori.
+        #Il prezzo delle torri è basso, inoltre non consumano denaro.
         "/>
 
-        <string key="help_money_article" value="I guadagni dipendono dalla
-        #grandezza del tuo territorio.
-        #Più grande è il territorio
-        #maggiori saranno le entrate.
+        <string key="help_money_article" value="I guadagni dipendono dalla grandezza del tuo territorio.
+        #Più grande è il territorio maggiori saranno le entrate.
         #Gli alberi diminuiscono le entrate.
         #
-        #Le unità consumano
-        #soldi ad ogni turno.
-        #Più forte è l'unità
-        #più soldi spenderà.
+        #Le unità consumano soldi ad ogni turno. Più forte è l'unità più soldi spenderà.
         #
         #
-        #Quando termini il denaro,
-        #le unità moriranno.
+        #Quando termini il denaro, le unità moriranno.
         #
-        #Il denaro posseduto è mostrato
-        #sulla barra superiore al centro.
+        #Il denaro posseduto è mostrato sulla barra superiore al centro.
         "/>
 
-        <string key="help_tactics_article" value="All'inizio del gioco
-        #cattura le celle neutrali.
-        #Dopo di che difendi
-        #i territori conquistati.
+        <string key="help_tactics_article" value="All'inizio del gioco cattura le celle neutrali.
+        #Dopo di che difendi i territori conquistati.
         #
-        #Fa attenzione che i tuoi guadagni
-        #siano sufficienti prima di
-        #addestrare altre unità.
+        #Fa attenzione che i tuoi guadagni siano sufficienti prima di addestrare altre unità.
         #
-        #
-        #
-        #Taglia i territori nemici
-        #i pezzi più piccoli
-        #per diminuire le loro entrate.
+        #Taglia i territori nemici i pezzi più piccoli per diminuire le loro entrate.
         "/>
 
-        <string key="about_complicated_mode_article" value="In modalità difficile
-        #più menù.
-        #Differenze tra facile e difficile:
-        #
-        #- Slot di salvataggio multipli
-        #
-        #- Conferma di voler riniziare
-        #
-        #- Mostra la quantità di denaro
-        #(clicca sul simbolo del denaro)
-        "/>
 
         <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
         #
@@ -2897,14 +2938,13 @@
         <string key="filter_only_land" value="Only land"/>
         <string key="confirm_clear_level" value="Clear map?"/>
         <string key="confirm_randomize" value="Generate random map?"/>
+        <string key="randomize" value="Randomize"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" # Autosalvataggio
-            # # Più slot
-            # # Conferma a fine turno
-            # # Nome città
-            # # Audio
-            # # "/>
+        <string key="autosave" value="Autosalvataggio"/>
+        <string key="ask_to_end_turn" value="Conferma a fine turno"/>
+        <string key="city_names" value="Nome città"/>
+        <string key="sound" value="Audio"/>
         <string key="limited_turns" value="Limited turns"/>
         <string key="hold_to_march" value="Long tap to move"/>
         <string key="skin" value="Colore"/>
@@ -2925,10 +2965,35 @@
         <string key="replay" value="Replay"/>
         <string key="replay_saved" value="Replay saved"/>
         <string key="fast_construction" value="Fast construction"/>
+        <string key="music" value="Music"/>
+        <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="Friends"/>
+        <string key="mutual_friends" value="Mutual"/>
+        <string key="dotations" value="Dotations"/>
+        <string key="treaty_of_friendship" value="Treaty of friendship"/>
+        <string key="state" value="State"/>
+        <string key="duration" value="Duration"/>
+        <string key="refuse_friendship" value="Sorry, I can't accept your friendship proposition."/>
+        <string key="friend" value="friend"/>
+        <string key="enemy" value="enemy"/>
+        <string key="neutral" value="neutral"/>
+        <string key="dead" value="dead"/>
+        <string key="confirm_cancel_friendship" value="Cancel friendship?"/>
+        <string key="confirm_start_war" value="Start war?"/>
+        <string key="peace_treaty" value="Peace treaty"/>
+        <string key="pay" value="Pay"/>
+        <string key="reparations" value="Reparations"/>
+        <string key="refuse_stop_war" value="I will fight to the end!"/>
+        <string key="win_conditions" value="Conditions of victory"/>
+        <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
+        <string key="confirm_black_mark" value="Put black mark?"/>
+        <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
     </language>
 
 
@@ -2963,9 +3028,8 @@
         <string key="menu_reset" value="Reiniciar"/>
         <string key="game_saved" value="Juego guardado"/>
         <string key="restart_app" value="Restart app"/>
-        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
-        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
-        <string key="city_name_three" value="nsk, rra, ko, rry"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
         <string key="info_back" value="Volver"/>
@@ -2987,7 +3051,7 @@
        #Reddit: /r/yiotro_games
        #E-mail: yiotro93@gmail.com #Creado por yiotro"/>
         <string key="reset_campaign_data" value="Borrar datos"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu -->
         <string key="choose_game_mode_skirmish" value="Escaramuza"/>
@@ -3017,6 +3081,8 @@
         <string key="expert" value="experto"/>
         <string key="balancer" value="balanceado"/>
         <string key="player_color" value="Color del jugador"/>
+        <string key="fog_of_war" value="Fog of war"/>
+        <string key="diplomacy" value="Diplomacy"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Continuar"/>
@@ -3031,8 +3097,6 @@
         <string key="confirm_import" value="Confirm import"/>
         <string key="filter_no" value="No filter"/>
         <string key="filter_only_land" value="Only land"/>
-        <string key="confirm_clear_level" value="Clear map?"/>
-        <string key="confirm_randomize" value="Generate random map?"/>
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Ok"/>
@@ -3219,16 +3283,6 @@
        #Divide el territorio enemigo
        #para destruir su economia."/>
 
-        <string key="about_complicated_mode_article" value="El modo complicado significa
-       #más menús.
-       #Diferencias con el simple:
-       #
-       #- Múltiples archivos de guardado
-       #
-       #- confirmar el nivel de inicio
-       #
-       #- Mostrar estadísticas por colores
-       #(presione el botón de moneda)"/>
 
         <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
         #
@@ -3261,12 +3315,10 @@
 
 
         <!-- Settings -->
-        <string key="main_label" value=" # Autoguardado
-       # # Múltiples archivos
-       # # Ask to end turn
-       # # Nombres de ciudades
-       # # Sonido
-       # # "/>
+        <string key="autosave" value="Autoguardado"/>
+        <string key="ask_to_end_turn" value="Ask to end turn"/>
+        <string key="city_names" value="Nombres de ciudades"/>
+        <string key="sound" value="Sonido"/>
         <string key="limited_turns" value="Turnos limitados"/>
         <string key="hold_to_march" value="Long tap to move"/>
         <string key="skin" value="Apariencia"/>
@@ -3287,10 +3339,35 @@
         <string key="replay" value="Replay"/>
         <string key="replay_saved" value="Replay saved"/>
         <string key="fast_construction" value="Fast construction"/>
+        <string key="music" value="Music"/>
+        <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="Friends"/>
+        <string key="mutual_friends" value="Mutual"/>
+        <string key="dotations" value="Dotations"/>
+        <string key="treaty_of_friendship" value="Treaty of friendship"/>
+        <string key="state" value="State"/>
+        <string key="duration" value="Duration"/>
+        <string key="refuse_friendship" value="Sorry, I can't accept your friendship proposition."/>
+        <string key="friend" value="friend"/>
+        <string key="enemy" value="enemy"/>
+        <string key="neutral" value="neutral"/>
+        <string key="dead" value="dead"/>
+        <string key="confirm_cancel_friendship" value="Cancel friendship?"/>
+        <string key="confirm_start_war" value="Start war?"/>
+        <string key="peace_treaty" value="Peace treaty"/>
+        <string key="pay" value="Pay"/>
+        <string key="reparations" value="Reparations"/>
+        <string key="refuse_stop_war" value="I will fight to the end!"/>
+        <string key="win_conditions" value="Conditions of victory"/>
+        <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
+        <string key="confirm_black_mark" value="Put black mark?"/>
+        <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
     </language>
 
 
@@ -3326,9 +3403,8 @@
         <string key="menu_reset" value="Reset"/> <!-- Same as english -->
         <string key="game_saved" value="Hra uložená"/>
         <string key="restart_app" value="Reštart app"/>
-        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/> <!-- Same as english -->
-        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/> <!-- Same as english -->
-        <string key="city_name_three" value="nsk, rra, ko, rry"/> <!-- Same as english -->
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
         <string key="info_back" value="Späť"/>
@@ -3351,7 +3427,7 @@
         #Vytvořil yiotro
         "/>
         <string key="reset_campaign_data" value="Resetovať údaje"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Rýchla hra"/>
@@ -3381,6 +3457,8 @@
         <string key="expert" value="expert"/> <!-- Same as english -->
         <string key="balancer" value="balancer"/> <!-- Same as english -->
         <string key="player_color" value="Farba hráča"/>
+        <string key="fog_of_war" value="Fog of war"/>
+        <string key="diplomacy" value="Diplomacy"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Pokračovať"/>
@@ -3576,17 +3654,6 @@
         #pre zničenie jeho ekonomiky.
         "/>
 
-        <string key="about_complicated_mode_article" value="Pokročilý mód znamená
-        #členitejšie menu.
-        #Odlišnosti od jednoduchého:
-        #
-        #- Niekoľko ukladacích slotov
-        #
-        #- Potvrdenie reštartu levelu
-        #
-        #- Ukazuje štatistiky farieb
-        #(stlač tlačítko s mincou)
-        "/>
 
         <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
         #
@@ -3622,14 +3689,13 @@
         <string key="filter_only_land" value="len krajina"/>
         <string key="confirm_clear_level" value="Clear map?"/>
         <string key="confirm_randomize" value="Generate random map?"/>
+        <string key="randomize" value="Randomize"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" # Auto ukladanie
-            # # Niekoľko slotov
-            # # Potvrď koniec ťahu
-            # # Mená miest
-            # # Zvuky
-            # # "/>
+        <string key="autosave" value="Auto ukladanie"/>
+        <string key="ask_to_end_turn" value="Potvrď koniec ťahu"/>
+        <string key="city_names" value="Mená miest"/>
+        <string key="sound" value="Zvuky"/>
         <string key="limited_turns" value="Limitovaný počet ťahov"/>
         <string key="hold_to_march" value="Dlhšie ťukni pre pohyb"/>
         <string key="skin" value="Skin"/> <!-- Same as english -->
@@ -3650,10 +3716,35 @@
         <string key="replay" value="Replay"/>
         <string key="replay_saved" value="Replay saved"/>
         <string key="fast_construction" value="Fast construction"/>
+        <string key="music" value="Music"/>
+        <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="Friends"/>
+        <string key="mutual_friends" value="Mutual"/>
+        <string key="dotations" value="Dotations"/>
+        <string key="treaty_of_friendship" value="Treaty of friendship"/>
+        <string key="state" value="State"/>
+        <string key="duration" value="Duration"/>
+        <string key="refuse_friendship" value="Sorry, I can't accept your friendship proposition."/>
+        <string key="friend" value="friend"/>
+        <string key="enemy" value="enemy"/>
+        <string key="neutral" value="neutral"/>
+        <string key="dead" value="dead"/>
+        <string key="confirm_cancel_friendship" value="Cancel friendship?"/>
+        <string key="confirm_start_war" value="Start war?"/>
+        <string key="peace_treaty" value="Peace treaty"/>
+        <string key="pay" value="Pay"/>
+        <string key="reparations" value="Reparations"/>
+        <string key="refuse_stop_war" value="I will fight to the end!"/>
+        <string key="win_conditions" value="Conditions of victory"/>
+        <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
+        <string key="confirm_black_mark" value="Put black mark?"/>
+        <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
     </language>
 
 
@@ -3703,9 +3794,8 @@
 
         <string key="game_saved" value="已保存"/>
         <string key="restart_app" value="重启游戏"/>
-        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
-        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
-        <string key="city_name_three" value="nsk, rra, ko, rry"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
         <string key="info_back" value="返回"/>
@@ -3729,7 +3819,7 @@
         #yiotro出品
 		"/>
         <string key="reset_campaign_data" value="重置数据"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="遭遇战"/>
@@ -3759,6 +3849,8 @@
         <string key="expert" value="专家"/>
         <string key="balancer" value="平衡"/>
         <string key="player_color" value="玩家颜色"/>
+        <string key="fog_of_war" value="Fog of war"/>
+        <string key="diplomacy" value="Diplomacy"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="返回游戏"/>
@@ -3959,18 +4051,6 @@
         #从而破坏敌人的经济。
         "/>
 
-        <string key="about_complicated_mode_article" value="复杂模式比
-        #简单模式
-        #有更多选项：
-        #
-        #- 多个保存槽位
-        #
-        #- 确认关卡重启
-        #
-        #- 显示颜色状态
-        #(点击金币)
-        "/>
-
         <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
         #
         #Initially game had only slay rules. That's why help describes them instead of normal rules.
@@ -4005,14 +4085,13 @@
         <string key="filter_only_land" value="只有土地"/>
         <string key="confirm_clear_level" value="Clear map?"/>
         <string key="confirm_randomize" value="Generate random map?"/>
+        <string key="randomize" value="Randomize"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" # 自动保存
-            # # 若干槽位
-            # # 询问结束回合
-            # # 城市名字
-            # # 音效
-            # # "/>
+        <string key="autosave" value="自动保存"/>
+        <string key="ask_to_end_turn" value="询问结束回合"/>
+        <string key="city_names" value="城市名字"/>
+        <string key="sound" value="音效"/>
         <string key="limited_turns" value="有限回合"/>
         <string key="hold_to_march" value="长按移动"/>
         <string key="skin" value="皮肤"/>
@@ -4033,10 +4112,35 @@
         <string key="replay" value="Replay"/>
         <string key="replay_saved" value="Replay saved"/>
         <string key="fast_construction" value="Fast construction"/>
+        <string key="music" value="Music"/>
+        <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="ShroomArts的新皮肤"/>
         <string key="level_24" value="这是第一个'困难' 关卡。 注意防守！"/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="Friends"/>
+        <string key="mutual_friends" value="Mutual"/>
+        <string key="dotations" value="Dotations"/>
+        <string key="treaty_of_friendship" value="Treaty of friendship"/>
+        <string key="state" value="State"/>
+        <string key="duration" value="Duration"/>
+        <string key="refuse_friendship" value="Sorry, I can't accept your friendship proposition."/>
+        <string key="friend" value="friend"/>
+        <string key="enemy" value="enemy"/>
+        <string key="neutral" value="neutral"/>
+        <string key="dead" value="dead"/>
+        <string key="confirm_cancel_friendship" value="Cancel friendship?"/>
+        <string key="confirm_start_war" value="Start war?"/>
+        <string key="peace_treaty" value="Peace treaty"/>
+        <string key="pay" value="Pay"/>
+        <string key="reparations" value="Reparations"/>
+        <string key="refuse_stop_war" value="I will fight to the end!"/>
+        <string key="win_conditions" value="Conditions of victory"/>
+        <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
+        <string key="confirm_black_mark" value="Put black mark?"/>
+        <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
     </language>
 
 
@@ -4078,9 +4182,8 @@
 
         <string key="game_saved" value="Oyun kaydedildi"/>
         <string key="restart_app" value="Uygulamayı yeniden başlat"/>
-        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
-        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
-        <string key="city_name_three" value="nsk, rra, ko, rry"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
         <string key="info_back" value="Geri Dön"/>
@@ -4103,7 +4206,7 @@
         #Yiotro tarafından yapıldı.
 		"/>
         <string key="reset_campaign_data" value="Verileri sıfırla"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Savaş"/>
@@ -4133,6 +4236,8 @@
         <string key="expert" value="uzman"/>
         <string key="balancer" value="dengeleyici"/>
         <string key="player_color" value="Oyuncu rengi"/>
+        <string key="fog_of_war" value="Fog of war"/>
+        <string key="diplomacy" value="Diplomacy"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Devam et"/>
@@ -4334,18 +4439,6 @@
         #ekonomilerini yok et.
         "/>
 
-        <string key="about_complicated_mode_article" value="Karmaşık mod daha fazla
-        #menü içerir.
-        #Basit moddan farkları:
-        #
-        #- Birden fazla kayıt yeri
-        #
-        #- Bölümü yeniden başlatma onayı
-        #
-        #- Renklerin istatistiklerini görebilme
-        #(para butonuna basın)
-        "/>
-
         <string key="article_rules" value="Oyunda 2 kural seti vardır: Standart kurallar ve Slay kuralları. Standart kurallar varsayılan olarak etkindir.
         #
         #İlk zamanlarda oyunda sadece Slay kuralları vardı. 'Yardım' bu yüzden 'Slay kurallarını' 'Normal kurallar' olarak anlatıyor.
@@ -4380,14 +4473,13 @@
         <string key="filter_only_land" value="Sadece kara"/>
         <string key="confirm_clear_level" value="Haritayı temizle?"/>
         <string key="confirm_randomize" value="Rastgele harita oluştur?"/>
+        <string key="randomize" value="Randomize"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" # Otomatik Kayıt
-            # # Birden fazla kayıt yeri
-            # # Sırayı bitirmeyi onaylat
-            # # Şehir isimleri
-            # # Ses
-            # # "/>
+        <string key="autosave" value="Otomatik Kayıt"/>
+        <string key="ask_to_end_turn" value="Sırayı bitirmeyi onaylat"/>
+        <string key="city_names" value="Şehir isimleri"/>
+        <string key="sound" value="Ses"/>
         <string key="limited_turns" value="Sınırlı tur sayısı"/>
         <string key="hold_to_march" value="Toplu ilerleme için uzun bas"/>
         <string key="skin" value="Kaplama"/>
@@ -4408,10 +4500,35 @@
         <string key="replay" value="Replay"/>
         <string key="replay_saved" value="Replay saved"/>
         <string key="fast_construction" value="Fast construction"/>
+        <string key="music" value="Music"/>
+        <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="ShroomArts'tan yeni kaplama"/>
         <string key="level_24" value="Bu ilk 'zor' seviye. Savunmaya daha fazla önem ver."/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="Friends"/>
+        <string key="mutual_friends" value="Mutual"/>
+        <string key="dotations" value="Dotations"/>
+        <string key="treaty_of_friendship" value="Treaty of friendship"/>
+        <string key="state" value="State"/>
+        <string key="duration" value="Duration"/>
+        <string key="refuse_friendship" value="Sorry, I can't accept your friendship proposition."/>
+        <string key="friend" value="friend"/>
+        <string key="enemy" value="enemy"/>
+        <string key="neutral" value="neutral"/>
+        <string key="dead" value="dead"/>
+        <string key="confirm_cancel_friendship" value="Cancel friendship?"/>
+        <string key="confirm_start_war" value="Start war?"/>
+        <string key="peace_treaty" value="Peace treaty"/>
+        <string key="pay" value="Pay"/>
+        <string key="reparations" value="Reparations"/>
+        <string key="refuse_stop_war" value="I will fight to the end!"/>
+        <string key="win_conditions" value="Conditions of victory"/>
+        <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
+        <string key="confirm_black_mark" value="Put black mark?"/>
+        <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
     </language>
 
 
@@ -4458,9 +4575,8 @@
         <string key="menu_reset" value="Рестарт"/>
         <string key="game_saved" value="Игра запазена"/>
         <string key="restart_app" value="Restart app"/>
-        <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
-        <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
-        <string key="city_name_three" value="nsk, rra, ko, rry"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
         <string key="info_back" value="Назад"/>
@@ -4484,7 +4600,7 @@
         #Направена от yiotro
 		"/>
         <string key="reset_campaign_data" value="Рестартирай всички данни"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Сражение"/>
@@ -4514,6 +4630,8 @@
         <string key="expert" value="експерт"/>
         <string key="balancer" value="balancer"/>
         <string key="player_color" value="Цвят на играча"/>
+        <string key="fog_of_war" value="Fog of war"/>
+        <string key="diplomacy" value="Diplomacy"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Продължи"/>
@@ -4528,8 +4646,6 @@
         <string key="confirm_import" value="Confirm import"/>
         <string key="filter_no" value="No filter"/>
         <string key="filter_only_land" value="Only land"/>
-        <string key="confirm_clear_level" value="Clear map?"/>
-        <string key="confirm_randomize" value="Generate random map?"/>
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Ок"/>
@@ -4720,18 +4836,6 @@
         #унищожиш икономиката им.
         "/>
 
-        <string key="about_complicated_mode_article" value="Сложен режим значи, че
-        #има повече менюта.
-        #Разлики между него и Прост режим:
-        #
-        #- Няколко слота за запазване на игра
-        #
-        #- Потвърждение за рестарт на игра
-        #
-        #- Покажи статистика по цветове
-        #(натисни жълтицата)
-        "/>
-
         <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
         #
         #Initially game had only slay rules. That's why help describes them instead of normal rules.
@@ -4763,12 +4867,10 @@
         <string key="editor_clear" value="Изчисти"/>
 
         <!-- Settings -->
-        <string key="main_label" value=" # Автоматично запазване
-            # # Няколко слота
-            # # Питай за край на ходове
-            # # Имена на градовете
-            # # Звук
-            # # "/>
+        <string key="autosave" value="Автоматично запазване"/>
+        <string key="ask_to_end_turn" value="Питай за край на ходове"/>
+        <string key="city_names" value="Имена на градовете"/>
+        <string key="sound" value="Звук"/>
         <string key="limited_turns" value="Limited turns"/>
         <string key="hold_to_march" value="Long tap to move"/>
         <string key="skin" value="Графика"/>
@@ -4789,10 +4891,35 @@
         <string key="replay" value="Replay"/>
         <string key="replay_saved" value="Replay saved"/>
         <string key="fast_construction" value="Fast construction"/>
+        <string key="music" value="Music"/>
+        <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
         <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="Friends"/>
+        <string key="mutual_friends" value="Mutual"/>
+        <string key="dotations" value="Dotations"/>
+        <string key="treaty_of_friendship" value="Treaty of friendship"/>
+        <string key="state" value="State"/>
+        <string key="duration" value="Duration"/>
+        <string key="refuse_friendship" value="Sorry, I can't accept your friendship proposition."/>
+        <string key="friend" value="friend"/>
+        <string key="enemy" value="enemy"/>
+        <string key="neutral" value="neutral"/>
+        <string key="dead" value="dead"/>
+        <string key="confirm_cancel_friendship" value="Cancel friendship?"/>
+        <string key="confirm_start_war" value="Start war?"/>
+        <string key="peace_treaty" value="Peace treaty"/>
+        <string key="pay" value="Pay"/>
+        <string key="reparations" value="Reparations"/>
+        <string key="refuse_stop_war" value="I will fight to the end!"/>
+        <string key="win_conditions" value="Conditions of victory"/>
+        <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
+        <string key="confirm_black_mark" value="Put black mark?"/>
+        <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
 
     </language>
 

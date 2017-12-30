@@ -103,7 +103,7 @@ public class ReplaySaveSystem {
         RepSlot repSlot = new RepSlot(gameController, keyForNewSlot);
         repSlot.campaignMode = GameRules.campaignMode;
         repSlot.levelIndex = CampaignProgressManager.getInstance().getCurrentLevelIndex();
-        repSlot.numberOfHumans = gameController.playersNumber;
+        repSlot.numberOfHumans = replay.realNumberOfHumans;
         repSlot.replay = replay;
         repSlot.save();
     }

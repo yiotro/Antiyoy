@@ -2,7 +2,7 @@ package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.replay_selector.ReplaySelector;
-import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 
 public class SceneReplays extends AbstractScene{
 
@@ -40,7 +40,7 @@ public class SceneReplays extends AbstractScene{
 
 
     private void createBackButton() {
-        menuControllerYio.spawnBackButton(600, ReactBehavior.rbMoreSettings);
+        menuControllerYio.spawnBackButton(600, Reaction.rbMoreSettings);
     }
 
 

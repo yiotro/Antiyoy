@@ -4,7 +4,6 @@ public class GameRules {
 
     public static final int MAX_COLOR_NUMBER = 7;
     public static final int UNIT_MOVE_LIMIT = 4;
-    public static final int TURNS_LIMIT = 300;
 
     public static final int PRICE_UNIT = 10;
     public static final int PRICE_TOWER = 15;
@@ -30,6 +29,9 @@ public class GameRules {
     public static int difficulty;
     public static boolean aiOnlyMode;
     public static boolean replayMode;
+    public static int editorChosenColor;
+    public static boolean fogOfWarEnabled;
+    public static boolean diplomacyEnabled;
 
 
     public static void defaultValues() {
@@ -38,6 +40,9 @@ public class GameRules {
         inEditorMode = false;
         aiOnlyMode = false;
         replayMode = false;
+        fogOfWarEnabled = false;
+        diplomacyEnabled = false;
+        editorChosenColor = 0; // random
     }
 
 
@@ -57,5 +62,20 @@ public class GameRules {
 
     public static void setSlayRules(boolean slay_rules) {
         GameRules.slayRules = slay_rules;
+    }
+
+
+    public static void setEditorChosenColor(int editorChosenColor) {
+        GameRules.editorChosenColor = editorChosenColor;
+    }
+
+
+    public static void setFogOfWarEnabled(boolean fogOfWarEnabled) {
+        GameRules.fogOfWarEnabled = fogOfWarEnabled;
+    }
+
+
+    public static void setDiplomacyEnabled(boolean diplomacyEnabled) {
+        GameRules.diplomacyEnabled = diplomacyEnabled;
     }
 }

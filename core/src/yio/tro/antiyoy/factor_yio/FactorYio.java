@@ -1,8 +1,6 @@
 package yio.tro.antiyoy.factor_yio;
 
-/**
- * Created by ivan on 21.04.2015.
- */
+
 public class FactorYio {
     boolean itsTimeToStop;
     double f, gravity, dy, speedMultiplier;
@@ -20,7 +18,7 @@ public class FactorYio {
     }
 
 
-    public void beginSpawning(int moveMode, double speed) {
+    public void appear(int moveMode, double speed) {
         // speed == 1 is default
         setMoveBehaviorByMoveMode(moveMode);
         gravity = 0.01;
@@ -29,7 +27,7 @@ public class FactorYio {
     }
 
 
-    public void beginDestroying(int moveMode, double speed) {
+    public void destroy(int moveMode, double speed) {
         // speed == 1 is default
         setMoveBehaviorByMoveMode(moveMode);
         gravity = -0.01;
@@ -81,7 +79,7 @@ public class FactorYio {
     }
 
 
-    public boolean needsToMove() {
+    public boolean hasToMove() {
         return moveBehavior.needsToMove(this);
     }
 

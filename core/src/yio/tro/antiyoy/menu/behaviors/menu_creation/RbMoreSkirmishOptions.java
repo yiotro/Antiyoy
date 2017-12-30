@@ -1,15 +1,14 @@
 package yio.tro.antiyoy.menu.behaviors.menu_creation;
 
 import yio.tro.antiyoy.menu.ButtonYio;
-import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
-public class RbMoreSkirmishOptions extends ReactBehavior{
+public class RbMoreSkirmishOptions extends Reaction {
 
     @Override
     public void reactAction(ButtonYio buttonYio) {
-        Scenes.sceneSkirmishMenu.saveSkirmishSettings();
+        Scenes.sceneSkirmishMenu.saveValues();
         Scenes.sceneMoreSkirmishOptions.create();
-        buttonYio.menuControllerYio.loadMoreSkirmishOptions();
     }
 }

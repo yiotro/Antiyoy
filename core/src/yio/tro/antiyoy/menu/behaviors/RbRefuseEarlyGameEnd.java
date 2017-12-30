@@ -4,7 +4,7 @@ import yio.tro.antiyoy.gameplay.RefuseStatistics;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
-public class RbRefuseEarlyGameEnd extends ReactBehavior{
+public class RbRefuseEarlyGameEnd extends Reaction {
 
     @Override
     public void reactAction(ButtonYio buttonYio) {
@@ -12,7 +12,7 @@ public class RbRefuseEarlyGameEnd extends ReactBehavior{
         if (getGameController(buttonYio).tutorialScript != null)
             getGameController(buttonYio).tutorialScript.setTipIsCurrentlyShown(false);
 
-        Scenes.sceneTutorialTip.closeTutorialTip();
+        Scenes.sceneTutorialTip.hide();
         RefuseStatistics.getInstance().onEarlyGameEndRefuse();
     }
 }

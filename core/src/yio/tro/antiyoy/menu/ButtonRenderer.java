@@ -20,10 +20,9 @@ import yio.tro.antiyoy.stuff.RectangleYio;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-/**
- * Created by ivan on 22.07.14.
- */
+
 public class ButtonRenderer {
+
     private FrameBuffer frameBuffer;
     private final SpriteBatch batch;
     private RectangleYio pos;
@@ -83,15 +82,19 @@ public class ButtonRenderer {
 
     private void initText(ButtonYio buttonYio, BitmapFont font) {
         text = new ArrayList<>();
+
         if (buttonYio.text.size() == 1) {
             text = buttonYio.text;
             return;
         }
+
         double currentX, currentWidth;
         StringBuilder builder = new StringBuilder();
+
         for (String srcLine : buttonYio.text) {
             currentX = horizontalOffset;
             ArrayList<String> tokens = convertSourceLineToTokens(srcLine);
+
             for (String token : tokens) {
                 currentWidth = GraphicsYio.getTextWidth(font, token);
                 if (currentX + currentWidth > Gdx.graphics.getWidth()) {
@@ -102,9 +105,11 @@ public class ButtonRenderer {
                 builder.append(token);
                 currentX += currentWidth;
             }
+
             text.add(builder.toString());
             builder = new StringBuilder();
         }
+
         while (text.size() > buttonYio.text.size()) {
             String lastLine = text.get(text.size() - 1);
             if (lastLine.length() > 2) break;
@@ -158,6 +163,7 @@ public class ButtonRenderer {
         beginRender(buttonYio, font, FONT_SIZE);
         float ratio = (float) (pos.width / pos.height);
         int lineHeight = (int) (1.2f * FONT_SIZE);
+
         if (text.size() == 1) {
             //if button has single line of text then center it
             float textWidth = getTextWidth(text.get(0), font);
@@ -166,17 +172,24 @@ public class ButtonRenderer {
                 horizontalOffset = (int) (0.3f * FONT_SIZE);
             }
         }
+
+        if (buttonYio.getTextOffset() != 0) {
+            horizontalOffset = (int) buttonYio.getTextOffset();
+        }
+
         int verticalOffset = (int) (0.3f * FONT_SIZE);
         int lineNumber = 0;
         float longestLineLength = 0, currentLineLength;
         batch.begin();
         font.setColor(0, 0, 0, 1);
+
         for (String line : text) {
             font.draw(batch, line, horizontalOffset, verticalOffset + lineNumber * lineHeight);
             currentLineLength = getTextWidth(line, font);
             if (currentLineLength > longestLineLength) longestLineLength = currentLineLength;
             lineNumber++;
         }
+
         batch.end();
         pos.height = text.size() * lineHeight + verticalOffset / 2;
         pos.width = pos.height * ratio;

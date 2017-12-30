@@ -7,14 +7,11 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 /**
  * Created by ivan on 11.11.2015.
  */
-public class RbLoadGame extends ReactBehavior {
+public class RbLoadGame extends Reaction {
 
     @Override
     public void reactAction(ButtonYio buttonYio) {
-        if (Settings.interface_type == Settings.INTERFACE_SIMPLE) {
-            getGameController(buttonYio).loadGame();
-        } else { // complicated
-            Scenes.sceneSaveSlots.create(true);
-        }
+        Scenes.sceneSaveLoad.create();
+        Scenes.sceneSaveLoad.setOperationType(true);
     }
 }

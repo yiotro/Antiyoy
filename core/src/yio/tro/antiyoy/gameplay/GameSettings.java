@@ -2,9 +2,7 @@ package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.YioGdxGame;
 
-/**
- * Created by ivan on 05.08.14.
- */
+
 public class GameSettings {
 
     private final YioGdxGame yioGdxGame;

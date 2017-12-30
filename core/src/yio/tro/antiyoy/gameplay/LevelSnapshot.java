@@ -9,9 +9,7 @@ import yio.tro.antiyoy.gameplay.rules.GameRules;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-/**
- * Created by ivan on 06.11.2015.
- */
+
 public class LevelSnapshot {
 
     private final GameController gameController;
@@ -30,8 +28,8 @@ public class LevelSnapshot {
         this.gameController = gameController;
 
         fieldCopy = null;
-        provincesCopy = new ArrayList<Province>();
-        activeHexesCopy = new ArrayList<Hex>();
+        provincesCopy = new ArrayList<>();
+        activeHexesCopy = new ArrayList<>();
         matchStatistics = new MatchStatistics();
         if (Settings.replaysEnabled) {
             replayBuffer = new ArrayList<>();
@@ -52,7 +50,9 @@ public class LevelSnapshot {
         activeHexesCopy.clear();
         selectionHex = null;
         matchStatistics.defaultValues();
-        replayBuffer.clear();
+        if (replayBuffer != null) {
+            replayBuffer.clear();
+        }
 
         fWidth = -1;
         fHeight = -1;
@@ -180,6 +180,7 @@ public class LevelSnapshot {
 
     private void recreateSelection() {
         gameController.selectionController.deselectAll();
+
         if (selectionHex != null) {
             gameController.selectAdjacentHexes(selectionHex);
         }

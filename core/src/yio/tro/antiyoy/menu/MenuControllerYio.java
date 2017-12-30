@@ -1,11 +1,10 @@
 package yio.tro.antiyoy.menu;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
-import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.menu.scenes.*;
 import yio.tro.antiyoy.stuff.LanguagesManager;
@@ -15,9 +14,7 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.StringTokenizer;
 
-/**
- * Created by ivan on 22.07.14.
- */
+
 public class MenuControllerYio {
 
     public static int SPAWN_ANIM = 2, DESTROY_ANIM = 2;
@@ -27,12 +24,9 @@ public class MenuControllerYio {
     private final ButtonFactory buttonFactory;
     public ButtonRenderer buttonRenderer;
     TextureRegion unlockedLevelIcon, lockedLevelIcon, openedLevelIcon;
-    public LevelSelector levelSelector;
     public FactorYio infoPanelFactor;
     public final ArrayList<ButtonYio> buttons;
-    public ArrayList<SliderYio> sliders;
     public ArrayList<CheckButtonYio> checkButtons;
-    public NotificationHolder notificationHolder;
     public SpecialActionController specialActionController;
     public ArrayList<InterfaceElement> interfaceElements;
 
@@ -49,9 +43,6 @@ public class MenuControllerYio {
         openedLevelIcon = GameView.loadTextureRegion("opened_level_icon.png", true);
         interfaceElements = new ArrayList<>();
         initCheckButtons();
-        initLevelSelector();
-        initSliders();
-        notificationHolder = new NotificationHolder();
         applyAnimStyle();
 
         Scenes.createScenes(this);
@@ -62,7 +53,7 @@ public class MenuControllerYio {
 
 
     private void checkToCreateSingleMessage() {
-        SingleMessages.load();
+
 
 //        if (SingleMessages.achikapsRelease) {
 //            SingleMessages.achikapsRelease = false;
@@ -83,81 +74,22 @@ public class MenuControllerYio {
     }
 
 
-    private void initLevelSelector() {
-//        levelSelectorOld = new LevelSelectorOld(this, 175);
-        levelSelector = new LevelSelector(this, 175);
-    }
-
-
-    private void initSliders() {
-        sliders = new ArrayList<SliderYio>();
-        for (int i = 0; i < 11; i++) {
-            SliderYio sliderYio = new SliderYio(this);
-            sliderYio.index = i;
-            sliders.add(sliderYio);
-        }
-        sliders.get(2).addListener(sliders.get(1));
-        sliders.get(0).addListener(sliders.get(2));
-        sliders.get(2).addListener(sliders.get(4));
-
-        sliders.get(0).setValues(0.5f, 1, 3, true, SliderYio.CONFIGURE_SIZE);
-        sliders.get(1).setValues(0.2f, 0, 5, false, SliderYio.CONFIGURE_HUMANS);
-        sliders.get(2).setValues(0.6, 2, 6, false, SliderYio.CONFIGURE_COLORS);
-        sliders.get(3).setValues(0.33, 1, 5, true, SliderYio.CONFIGURE_DIFFICULTY);
-        sliders.get(4).setValues(0, 0, 6, true, SliderYio.CONFIGURE_COLOR_OFFSET_SKIRMISH);
-        sliders.get(5).setValues(0, 0, 3, true, SliderYio.CONFIGURE_SKIN);
-        sliders.get(6).setValues(0, 0, 6, true, SliderYio.CONFIGURE_COLOR_OFFSET_CAMPAIGN);
-//        sliders.get(7).setValues(0, 0, 1, false, SliderYio.CONFIGURE_COLOR_OFFSET_SKIRMISH); // autosave
-//        sliders.get(8).setValues(0, 0, 1, true, SliderYio.CONFIGURE_ASK_END_TURN); // ask to end turn
-        sliders.get(9).setValues(0.5, 0, 9, false, SliderYio.CONFIGURE_SENSITIVITY);
-//        sliders.get(10).setValues(0, 0, 1, false, SliderYio.CONFIGURE_COLOR_OFFSET_SKIRMISH); // city names
-    }
-
-
-    private void initScroller() {
-        long timeStart = System.currentTimeMillis();
-
-//        scrollerYio = new ScrollerYio(yioGdxGame, generateRectangle(0.05, 0.05, 0.9, 0.8), 0.09f * Gdx.graphics.getHeight(), yioGdxGame.batch);
-//        scrollerYio.addLine(openedLevelIcon, languagesManager.getString("how_to_play"));
-//        TextureRegion textureRegion;
-//        for (int i = 1; i <= YioGdxGame.INDEX_OF_LAST_LEVEL; i++) {
-//            if (yioGdxGame.isLevelLocked(i)) textureRegion = lockedLevelIcon;
-//            else if (yioGdxGame.isLevelComplete(i)) textureRegion = openedLevelIcon;
-//            else textureRegion = unlockedLevelIcon;
-//
-//            scrollerYio.addLine(textureRegion, scrollerYio.getLevelStringByIndex(languagesManager, i));
-//        }
-//        if (scrollerYio.selectionIndex > 6) {
-//            scrollerYio.pos = (scrollerYio.selectionIndex - 1) * scrollerYio.lineHeight - 0.5f * scrollerYio.lineHeight;
-//            scrollerYio.limit();
-//        }
-
-        YioGdxGame.say("init scroller: " + (System.currentTimeMillis() - timeStart));
-    }
-
-
     public void move() {
         infoPanelFactor.move();
-        levelSelector.move();
-        notificationHolder.move();
         specialActionController.move();
-
-        for (InterfaceElement interfaceElement : interfaceElements) {
-            if (interfaceElement.isVisible()) {
-                interfaceElement.move();
-            }
-        }
 
         for (CheckButtonYio checkButton : checkButtons) {
             checkButton.move();
         }
 
-        for (SliderYio sliderYio : sliders) {
-            sliderYio.move();
-        }
-
         for (ButtonYio buttonYio : buttons) {
             buttonYio.move();
+        }
+
+        for (InterfaceElement interfaceElement : interfaceElements) {
+            if (interfaceElement.isVisible()) {
+                interfaceElement.move();
+            }
         }
 
         checkToPerformAction();
@@ -239,13 +171,8 @@ public class MenuControllerYio {
 
 
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        for (SliderYio sliderYio : sliders) {
-            if (sliderYio.touchDown(screenX, screenY)) return true;
-        }
-
-        if (levelSelector.touchDown(screenX, screenY, pointer, button)) return true;
-
-        for (InterfaceElement interfaceElement : interfaceElements) {
+        for (int i = interfaceElements.size() - 1; i >= 0; i--) {
+            InterfaceElement interfaceElement = interfaceElements.get(i);
             if (interfaceElement.isTouchable() && interfaceElement.isVisible()) {
                 if (interfaceElement.touchDown(screenX, screenY, pointer, button)) return true;
             }
@@ -267,14 +194,19 @@ public class MenuControllerYio {
     }
 
 
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        for (SliderYio sliderYio : sliders) {
-            if (sliderYio.touchUp(screenX, screenY)) return true;
-        }
-
-        if (levelSelector.touchUp(screenX, screenY, pointer, button)) return true;
-
+    public void touchDragged(int screenX, int screenY, int pointer) {
+        // order doesn't matter here because no 'break' here
         for (InterfaceElement interfaceElement : interfaceElements) {
+            if (interfaceElement.isTouchable() && interfaceElement.isVisible()) {
+                interfaceElement.touchDrag(screenX, screenY, pointer);
+            }
+        }
+    }
+
+
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        for (int i = interfaceElements.size() - 1; i >= 0; i--) {
+            InterfaceElement interfaceElement = interfaceElements.get(i);
             if (interfaceElement.isTouchable() && interfaceElement.isVisible()) {
                 if (interfaceElement.touchUp(screenX, screenY, pointer, button)) return true;
             }
@@ -284,25 +216,22 @@ public class MenuControllerYio {
     }
 
 
-    public void touchDragged(int screenX, int screenY, int pointer) {
-        for (SliderYio sliderYio : sliders) {
-            sliderYio.touchDrag(screenX, screenY);
-        }
-
-        levelSelector.touchDrag(screenX, screenY, pointer);
-
+    public boolean onMouseWheelScrolled(int amount) {
         for (InterfaceElement interfaceElement : interfaceElements) {
             if (interfaceElement.isTouchable() && interfaceElement.isVisible()) {
-                interfaceElement.touchDrag(screenX, screenY, pointer);
+                if (interfaceElement.onMouseWheelScrolled(amount)) {
+                    return true;
+                }
             }
         }
+
+        return false;
     }
 
 
     public void beginMenuCreation() {
         infoPanelFactor.setValues(1, 0);
-        infoPanelFactor.beginDestroying(1, 3);
-        levelSelector.destroy();
+        infoPanelFactor.destroy(1, 3);
 
         for (InterfaceElement interfaceElement : interfaceElements) {
             interfaceElement.destroy();
@@ -312,23 +241,19 @@ public class MenuControllerYio {
             checkButton.destroy();
         }
 
-        for (SliderYio sliderYio : sliders) {
-            sliderYio.appearFactor.beginDestroying(2, 2);
-        }
-
         for (ButtonYio buttonYio : buttons) {
             buttonYio.destroy();
 
             if (buttonYio.id == 3 && buttonYio.isVisible()) {
                 buttonYio.appearFactor.setValues(1, 0);
-                buttonYio.appearFactor.beginDestroying(1, 2);
+                buttonYio.appearFactor.destroy(1, 2);
             }
             if (buttonYio.id >= 22 && buttonYio.id <= 29 && buttonYio.isVisible()) {
-                buttonYio.appearFactor.beginDestroying(1, 2.1);
+                buttonYio.appearFactor.destroy(1, 2.1);
             }
             if (buttonYio.id == 30 && buttonYio.appearFactor.get() > 0) {
                 buttonYio.appearFactor.setValues(1, 0);
-                buttonYio.appearFactor.beginDestroying(1, 1);
+                buttonYio.appearFactor.destroy(1, 1);
             }
         }
         if (yioGdxGame.gameView != null) yioGdxGame.gameView.beginDestroyProcess();
@@ -375,23 +300,7 @@ public class MenuControllerYio {
 
 
     public void createSpecialThanksMenu() {
-        Scenes.sceneInfoMenu.create("special_thanks", ReactBehavior.rbInfo, 312837182);
-    }
-
-
-    public void saveMoreSkirmishOptions() {
-        Preferences prefs = Gdx.app.getPreferences("skirmish");
-        prefs.putInteger("color_offset", sliders.get(4).getCurrentRunnerIndex());
-        prefs.putBoolean("slay_rules", getCheckButtonById(16).isChecked());
-        prefs.flush();
-    }
-
-
-    public void loadMoreSkirmishOptions() {
-        Preferences prefs = Gdx.app.getPreferences("skirmish");
-        sliders.get(4).setRunnerValueByIndex(prefs.getInteger("color_offset", 0));
-        sliders.get(4).setConfigureType(SliderYio.CONFIGURE_COLOR_OFFSET_SKIRMISH);
-        getCheckButtonById(16).setChecked(prefs.getBoolean("slay_rules", false));
+        Scenes.sceneInfoMenu.create("special_thanks", Reaction.rbInfo, 312837182);
     }
 
 
@@ -406,29 +315,10 @@ public class MenuControllerYio {
     }
 
 
-    public void saveMoreCampaignOptions() {
-        Preferences prefs = Gdx.app.getPreferences("campaign_options");
-        prefs.putInteger("color_offset", sliders.get(6).getCurrentRunnerIndex());
-        prefs.putBoolean("slay_rules", getCheckButtonById(17).isChecked());
-        prefs.flush();
-    }
-
-
-    public void loadMoreCampaignOptions() {
-        Preferences prefs = Gdx.app.getPreferences("campaign_options");
-
-        SliderYio colorOffsetSlider = sliders.get(6);
-        colorOffsetSlider.setRunnerValueByIndex(prefs.getInteger("color_offset", 1));
-        colorOffsetSlider.setConfigureType(SliderYio.CONFIGURE_COLOR_OFFSET_CAMPAIGN);
-
-        getCheckButtonById(17).setChecked(prefs.getBoolean("slay_rules", false));
-    }
-
-
     public void hideAllEditorPanels() {
         Scenes.sceneEditorHexPanel.hide();
         Scenes.sceneEditorObjectPanel.hide();
-        Scenes.sceneEditorOptionsPanel.hide();
+        Scenes.sceneEditorParams.hide();
         Scenes.sceneEditorAutomationPanel.hide();
         Scenes.sceneEditorMoneyPanel.hide();
 
@@ -448,17 +338,6 @@ public class MenuControllerYio {
         SPAWN_SPEED = 1.5;
         DESTROY_ANIM = 2;
         DESTROY_SPEED = 1.5;
-    }
-
-
-    public void addHelpButtonToTutorialTip() {
-        ButtonYio helpButton = buttonFactory.getButton(generateRectangle(0, 0.1, 0.6, 0.07), 54, null);
-        helpButton.setTextLine(getString("help"));
-        buttonRenderer.renderButton(helpButton);
-        helpButton.setShadow(false);
-        helpButton.setReactBehavior(ReactBehavior.rbHelpIndex);
-        helpButton.setAnimType(ButtonYio.ANIM_COLLAPSE_DOWN);
-        helpButton.appearFactor.beginSpawning(3, 1);
     }
 
 
@@ -493,14 +372,15 @@ public class MenuControllerYio {
     }
 
 
-    public void spawnBackButton(int id, ReactBehavior reactBehavior) {
+    public ButtonYio spawnBackButton(int id, Reaction reaction) {
         ButtonYio backButton = buttonFactory.getButton(generateRectangle(0.05, 0.9, 0.4, 0.07), id, null);
         loadButtonOnce(backButton, "back_icon.png");
         backButton.setShadow(true);
-        backButton.setAnimType(ButtonYio.ANIM_UP);
-        backButton.setReactBehavior(reactBehavior);
+        backButton.setAnimation(Animation.UP);
+        backButton.setReaction(reaction);
         backButton.setTouchOffset(0.05f * Gdx.graphics.getHeight());
         yioGdxGame.registerBackButtonId(id);
+        return backButton;
     }
 
 
@@ -536,13 +416,13 @@ public class MenuControllerYio {
     }
 
 
-    public void addElementToScene(InterfaceElement interfaceElement) {
-        // considered that menu block is not in array at this moment
+    public void addElementToScene(InterfaceElement element) {
+        // considered that ui element is not in array at this moment
         ListIterator iterator = interfaceElements.listIterator();
         while (iterator.hasNext()) {
             iterator.next();
         }
-        iterator.add(interfaceElement);
+        iterator.add(element);
     }
 
 
@@ -569,14 +449,8 @@ public class MenuControllerYio {
     }
 
 
-    public ArrayList<SliderYio> getSliders() {
-        return sliders;
-    }
-
-
     public void clear() {
         buttons.clear();
-        initSliders();
     }
 
 

@@ -1,0 +1,5 @@
+compression=2.0
+rows=200
+fog.png#0 0 64 64
+fog_low.png#65 0 32 32
+fog_lowest.png#98 0 16 16

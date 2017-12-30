@@ -6,7 +6,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 /**
  * Created by ivan on 05.10.2014.
  */
-public class RbCloseTutorialTip extends ReactBehavior {
+public class RbCloseTutorialTip extends Reaction {
 
     @Override
     public void reactAction(ButtonYio buttonYio) {
@@ -14,6 +14,6 @@ public class RbCloseTutorialTip extends ReactBehavior {
         if (getGameController(buttonYio).tutorialScript != null)
             getGameController(buttonYio).tutorialScript.setTipIsCurrentlyShown(false);
 
-        Scenes.sceneTutorialTip.closeTutorialTip();
+        Scenes.sceneTutorialTip.hide();
     }
 }

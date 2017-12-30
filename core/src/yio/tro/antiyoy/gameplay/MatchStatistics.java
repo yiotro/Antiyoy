@@ -1,8 +1,6 @@
 package yio.tro.antiyoy.gameplay;
 
-/**
- * Created by ivan on 09.11.2015.
- */
+
 public class MatchStatistics {
 
     public int turnsMade, unitsDied, unitsProduced, moneySpent;

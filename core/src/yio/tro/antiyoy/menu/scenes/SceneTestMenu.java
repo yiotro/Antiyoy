@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 
 public class SceneTestMenu extends AbstractScene{
@@ -18,7 +18,7 @@ public class SceneTestMenu extends AbstractScene{
         menuControllerYio.getYioGdxGame().beginBackgroundChange(2, false, true);
 
 
-        menuControllerYio.spawnBackButton(38721132, ReactBehavior.rbChooseGameModeMenu);
+        menuControllerYio.spawnBackButton(38721132, Reaction.rbChooseGameModeMenu);
 
         menuControllerYio.endMenuCreation();
     }

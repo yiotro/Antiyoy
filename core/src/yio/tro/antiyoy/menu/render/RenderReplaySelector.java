@@ -47,14 +47,12 @@ public class RenderReplaySelector extends MenuRender{
         menuViewYio.drawRoundRect(viewPosition);
         menuViewYio.shapeRenderer.end();
 
-        Masking.continueFromBatch();
         batch.begin();
+        Masking.continueAfterBatchBegin();
 
         renderInternals();
 
-        batch.end();
-        Masking.end();
-        batch.begin();
+        Masking.end(batch);
     }
 
 
@@ -81,7 +79,7 @@ public class RenderReplaySelector extends MenuRender{
     private void renderLabel() {
         if (factor < 0.5) return;
 
-        GraphicsYio.setFontAlpha(rs.titleFont, factor);
+        GraphicsYio.setFontAlpha(rs.titleFont, rs.textAlphaFactor.get());
 
         rs.titleFont.draw(
                 batch,
@@ -95,6 +93,8 @@ public class RenderReplaySelector extends MenuRender{
 
 
     private void renderItems() {
+        if (rs.textAlphaFactor.get() == 0) return;
+
         rs.descFont.setColor(Color.BLACK);
         Color titleColor = rs.titleFont.getColor();
         rs.titleFont.setColor(Color.BLACK);
@@ -114,7 +114,7 @@ public class RenderReplaySelector extends MenuRender{
 
 
     private void renderItemDescription(RsItem item) {
-        GraphicsYio.setFontAlpha(rs.descFont, factor);
+        GraphicsYio.setFontAlpha(rs.descFont, rs.textAlphaFactor.get());
 
         rs.descFont.draw(
                 batch,
@@ -143,7 +143,7 @@ public class RenderReplaySelector extends MenuRender{
 
 
     private void renderItemTitle(RsItem item) {
-        GraphicsYio.setFontAlpha(rs.titleFont, factor);
+        GraphicsYio.setFontAlpha(rs.titleFont, rs.textAlphaFactor.get());
 
         rs.titleFont.draw(
                 batch,

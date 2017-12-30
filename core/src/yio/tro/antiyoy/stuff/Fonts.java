@@ -14,6 +14,7 @@ public class Fonts {
     public static BitmapFont buttonFont;
     public static BitmapFont gameFont;
     public static BitmapFont microFont;
+    public static BitmapFont smallerMenuFont;
     public static int FONT_SIZE;
 
 
@@ -40,6 +41,11 @@ public class Fonts {
         parameter.flip = false;
         microFont = generator.generateFont(parameter);
         microFont.setColor(Color.WHITE);
+
+        parameter.size = (int) (0.8 * FONT_SIZE);
+        parameter.flip = false;
+        smallerMenuFont = generator.generateFont(parameter);
+        smallerMenuFont.setColor(Color.BLACK);
 
         generator.dispose();
 

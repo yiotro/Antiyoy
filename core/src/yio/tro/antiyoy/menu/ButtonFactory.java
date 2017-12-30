@@ -2,9 +2,7 @@ package yio.tro.antiyoy.menu;
 
 import yio.tro.antiyoy.stuff.RectangleYio;
 
-/**
- * Created by ivan on 22.07.14.
- */
+
 public class ButtonFactory {
     private final MenuControllerYio menuControllerYio;
     private final ButtonRenderer buttonRenderer;
@@ -28,7 +26,7 @@ public class ButtonFactory {
         }
         buttonYio.setVisible(true);
         buttonYio.setTouchable(true);
-        buttonYio.appearFactor.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
+        buttonYio.appearFactor.appear(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
         buttonYio.appearFactor.setValues(0, 0.001);
         buttonYio.touchAnimation = true;
         return buttonYio;

@@ -1,7 +1,6 @@
 package yio.tro.antiyoy.menu.replay_selector;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.ClickDetector;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
@@ -22,9 +21,8 @@ public class ReplaySelector extends InterfaceElement {
 
     MenuControllerYio menuControllerYio;
     public RectangleYio position, viewPosition;
-    public FactorYio appearFactor;
+    public FactorYio appearFactor, textAlphaFactor;
     PointYio currentTouch, lastTouch;
-    private float animDelta;
     public ArrayList<RsItem> items;
     float hook;
     private float itemHeight;
@@ -35,7 +33,8 @@ public class ReplaySelector extends InterfaceElement {
     public PointYio labelPosition;
     float labelWidth;
     RsItem clickedItem;
-    boolean touched;
+    boolean touched, alphaTriggered;
+    private float topLabelOffset;
 
 
     public ReplaySelector(MenuControllerYio menuControllerYio, int id) {
@@ -56,6 +55,8 @@ public class ReplaySelector extends InterfaceElement {
         labelWidth = GraphicsYio.getTextWidth(titleFont, label);
         items = new ArrayList<>();
         clickedItem = null;
+        textAlphaFactor = new FactorYio();
+        alphaTriggered = false;
 
         initMetrics();
         initScrollEngine();
@@ -65,7 +66,7 @@ public class ReplaySelector extends InterfaceElement {
     private void initScrollEngine() {
         scrollEngineYio = new ScrollEngineYio();
 
-        scrollEngineYio.setSlider(0, GraphicsYio.width);
+        scrollEngineYio.setSlider(0, 0);
         updateScrollEngineLimits();
         scrollEngineYio.setFriction(0.02);
         scrollEngineYio.setSoftLimitOffset(0.05f * GraphicsYio.width);
@@ -78,20 +79,13 @@ public class ReplaySelector extends InterfaceElement {
 
 
     private double getLowerLimit() {
-        double min = 0;
-
-        for (RsItem item : items) {
-            if (item.delta.y < min) {
-                min = item.delta.y;
-            }
-        }
-
-        return position.height - min - itemHeight;
+        return items.size() * itemHeight - itemHeight / 2;
     }
 
 
     private void initMetrics() {
         itemHeight = 0.1f * GraphicsYio.height;
+        topLabelOffset = 0.18f * GraphicsYio.height;
     }
 
 
@@ -136,7 +130,7 @@ public class ReplaySelector extends InterfaceElement {
 
 
     void updateItemMetrics() {
-        float currentY = (float) position.height - 1.7f * itemHeight;
+        float currentY = (float) position.height - topLabelOffset;
 
         for (RsItem item : items) {
             item.position.width = position.width;
@@ -150,13 +144,27 @@ public class ReplaySelector extends InterfaceElement {
 
     @Override
     public void move() {
-        appearFactor.move();
+        moveFactors();
 
         updateViewPosition();
         moveItems();
         scrollEngineYio.move();
         updateHook();
         updateLabelPosition();
+    }
+
+
+    private void moveFactors() {
+        textAlphaFactor.move();
+
+        if (!appearFactor.hasToMove()) return;
+
+        appearFactor.move();
+
+        if (!alphaTriggered && appearFactor.get() > 0.9) {
+            textAlphaFactor.appear(3, 0.7);
+            alphaTriggered = true;
+        }
     }
 
 
@@ -188,11 +196,10 @@ public class ReplaySelector extends InterfaceElement {
         viewPosition.setBy(position);
 
         if (appearFactor.get() < 1) {
-            animDelta = (float) ((1 - appearFactor.get()) * 0.5 * position.width);
-            viewPosition.x += animDelta;
-            viewPosition.y += animDelta;
-            viewPosition.width -= 2 * animDelta;
-            viewPosition.height -= 2 * animDelta;
+            viewPosition.x += (float) ((1 - appearFactor.get()) * 0.5 * position.width);
+            viewPosition.y += (float) ((1 - appearFactor.get()) * 0.5 * position.height);
+            viewPosition.width -= 2 * (float) ((1 - appearFactor.get()) * 0.5 * position.width);
+            viewPosition.height -= 2 * (float) ((1 - appearFactor.get()) * 0.5 * position.height);
         }
     }
 
@@ -205,14 +212,15 @@ public class ReplaySelector extends InterfaceElement {
 
     @Override
     public void destroy() {
-        appearFactor.beginDestroying(DES_TYPE, DES_SPEED);
+        appearFactor.destroy(DES_TYPE, DES_SPEED);
+        textAlphaFactor.destroy(3, 4);
     }
 
 
     @Override
     public void appear() {
         appearFactor.setValues(0.01, 0);
-        appearFactor.beginSpawning(SPAWN_TYPE, SPAWN_SPEED);
+        appearFactor.appear(SPAWN_TYPE, SPAWN_SPEED);
 
         onAppear();
     }
@@ -222,6 +230,8 @@ public class ReplaySelector extends InterfaceElement {
         updateItems();
         updateItemMetrics();
         updateScrollEngineLimits();
+        alphaTriggered = false;
+        scrollEngineYio.resetToBottom();
     }
 
 
@@ -353,6 +363,18 @@ public class ReplaySelector extends InterfaceElement {
 
 
     @Override
+    public boolean onMouseWheelScrolled(int amount) {
+        if (amount == 1) {
+            scrollEngineYio.giveImpulse(0.02 * GraphicsYio.width);
+        } else if (amount == -1) {
+            scrollEngineYio.giveImpulse(-0.02 * GraphicsYio.width);
+        }
+
+        return true;
+    }
+
+
+    @Override
     public void setTouchable(boolean touchable) {
 
     }
@@ -374,6 +396,8 @@ public class ReplaySelector extends InterfaceElement {
 
     private void onPositionChanged() {
         updateItemMetrics();
+
+        scrollEngineYio.setSlider(0, position.height - topLabelOffset);
         updateScrollEngineLimits();
     }
 

@@ -4,21 +4,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
-import yio.tro.antiyoy.stuff.Rect;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-/**
- * Created by ivan on 23.09.2015.
- */
+
 public class AtlasLoader {
 
     private String srcName, txtFileName;
     private TextureRegion atlasRegion;
     private boolean antialias;
     private ArrayList<String> fileNames;
-    private ArrayList<Rect> imageSpecs;
+    private ArrayList<RectangleYio> imageSpecs;
     private int rows;
 
 
@@ -50,14 +47,14 @@ public class AtlasLoader {
                 lines.add(token);
         }
         fileNames = new ArrayList<String>();
-        imageSpecs = new ArrayList<Rect>();
+        imageSpecs = new ArrayList<>();
         for (String line : lines) {
             int charPos = line.indexOf("#");
             String fileName = line.substring(0, charPos);
             fileNames.add(fileName);
             String sizeString = line.substring(charPos + 1, line.length() - 1);
             int array[] = getArrayFromString(sizeString, 4);
-            Rect rect = new Rect(array[0], array[1], array[2], array[3]);
+            RectangleYio rect = new RectangleYio(array[0], array[1], array[2], array[3]);
             imageSpecs.add(rect);
         }
     }
@@ -78,7 +75,13 @@ public class AtlasLoader {
 
     public TextureRegion getTexture(String fileName) {
         int index = fileNames.indexOf(fileName);
-        return new TextureRegion(atlasRegion, imageSpecs.get(index).x, imageSpecs.get(index).y, imageSpecs.get(index).width, imageSpecs.get(index).height);
+        return new TextureRegion(
+                atlasRegion,
+                (int) imageSpecs.get(index).x,
+                (int) imageSpecs.get(index).y,
+                (int) imageSpecs.get(index).width,
+                (int) imageSpecs.get(index).height
+        );
     }
 
 

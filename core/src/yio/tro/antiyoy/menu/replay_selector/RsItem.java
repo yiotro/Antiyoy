@@ -47,7 +47,7 @@ public class RsItem {
 
     void select() {
         selectionFactor.setValues(1, 0);
-        selectionFactor.beginDestroying(1, 2);
+        selectionFactor.destroy(1, 2);
     }
 
 

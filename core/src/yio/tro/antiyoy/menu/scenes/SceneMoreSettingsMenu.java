@@ -1,38 +1,53 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import com.badlogic.gdx.Gdx;
+import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.menu.*;
+import yio.tro.antiyoy.menu.slider.SliderBehavior;
+import yio.tro.antiyoy.menu.slider.SliderYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.LanguagesManager;
-import yio.tro.antiyoy.menu.SliderYio;
-import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
-import yio.tro.antiyoy.menu.ButtonYio;
-import yio.tro.antiyoy.menu.CheckButtonYio;
-import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
+import yio.tro.antiyoy.stuff.RectangleYio;
+
+import java.util.ArrayList;
 
 public class SceneMoreSettingsMenu extends AbstractScene{
 
 
     private double panelHeight;
     private double offset;
-    private double y;
     private double checkButtonSize;
     private double hSize;
     private double chkX;
     private double chkY;
-    private SliderYio sensitivitySlider;
-    private SliderYio skinSlider;
     private ButtonYio replaysButton;
     private double chkVerticalDelta;
     public CheckButtonYio chkWaterTexture;
-    public CheckButtonYio chkTurnLimit;
     public CheckButtonYio chkLongTapToMove;
     public CheckButtonYio chkReplays;
+    public CheckButtonYio chkLeftHanded;
     private double hTouchSize;
     public CheckButtonYio chkFastConstruction;
+    private ButtonYio topLabel;
+    ArrayList<SliderYio> sliders;
+    public SliderYio skinSlider;
+    public SliderYio sensitivitySlider;
+    private Reaction backReaction;
 
 
     public SceneMoreSettingsMenu(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
+
+        sliders = null;
+
+        backReaction = new Reaction() {
+            @Override
+            public void reactAction(ButtonYio buttonYio) {
+                Settings.getInstance().saveMoreSettings();
+                Scenes.sceneSettingsMenu.create();
+            }
+        };
     }
 
 
@@ -45,8 +60,8 @@ public class SceneMoreSettingsMenu extends AbstractScene{
         createResetButton();
 
         initMetrics();
-        createSkinLabel();
-        createSensitivityLabel();
+        createTopLabel();
+        createSliders();
 
         createCheckPanel();
         createCheckButtons();
@@ -54,21 +69,100 @@ public class SceneMoreSettingsMenu extends AbstractScene{
         createReplaysButton();
         createChooseLanguageButton();
 
+        loadValues();
+
         menuControllerYio.endMenuCreation();
+    }
+
+
+    private void loadValues() {
+        skinSlider.setCurrentRunnerIndex(Settings.skinIndex);
+        sensitivitySlider.setCurrentRunnerIndex((int) (6f * Settings.sensitivity));
+    }
+
+
+    private void createSliders() {
+        if (sliders == null) {
+            initSliders();
+        }
+
+        for (SliderYio slider : sliders) {
+            slider.appear();
+        }
+    }
+
+
+    private void initSliders() {
+        sliders = new ArrayList<>();
+        double sWidth = 0.6;
+        RectangleYio pos = generateRectangle((1 - sWidth) / 2, 0, sWidth, 0);
+
+        skinSlider = new SliderYio(menuControllerYio, -1);
+        skinSlider.setValues(0, 0, 3, Animation.UP);
+        skinSlider.setPosition(pos);
+        skinSlider.setLinkedButton(topLabel, 0.05);
+        skinSlider.setTitle("skin");
+        skinSlider.setBehavior(new SliderBehavior() {
+            @Override
+            public String getValueString(SliderYio sliderYio) {
+                return getSkinStringBySliderIndex(sliderYio.getCurrentRunnerIndex());
+            }
+        });
+        sliders.add(skinSlider);
+
+        sensitivitySlider = new SliderYio(menuControllerYio, -1);
+        sensitivitySlider.setValues(0.5, 0, 9, Animation.UP);
+        sensitivitySlider.setPosition(pos);
+        sensitivitySlider.setLinkedButton(topLabel, 0.2);
+        sensitivitySlider.setTitle("anim_style");
+        sensitivitySlider.setBehavior(new SliderBehavior() {
+            @Override
+            public String getValueString(SliderYio sliderYio) {
+                return "" + (sliderYio.getCurrentRunnerIndex() + 1);
+            }
+        });
+        sliders.add(sensitivitySlider);
+
+        for (SliderYio slider : sliders) {
+            menuControllerYio.addElementToScene(slider);
+            slider.setVerticalTouchOffset(0.05f * GraphicsYio.height);
+        }
+    }
+
+
+    private String getSkinStringBySliderIndex(int sliderIndex) {
+        switch (sliderIndex) {
+            default:
+            case 0:
+                return LanguagesManager.getInstance().getString("original");
+            case 1:
+                return LanguagesManager.getInstance().getString("points");
+            case 2:
+                return LanguagesManager.getInstance().getString("grid");
+            case 3:
+                return LanguagesManager.getInstance().getString("skin_shroomarts");
+        }
+    }
+
+
+    private void createTopLabel() {
+        topLabel = buttonFactory.getButton(generateRectangle(0.1, 0.56, 0.8, 0.3), 312, " ");
+        topLabel.setTouchable(false);
+        topLabel.setAnimation(Animation.UP);
     }
 
 
     private void createReplaysButton() {
         replaysButton = buttonFactory.getButton(generateRectangle(0.1, 0.13, 0.8, 0.07), 317, getString("replays"));
-        replaysButton.setReactBehavior(ReactBehavior.rbReplaysMenu);
-        replaysButton.setAnimType(ButtonYio.ANIM_DOWN);
+        replaysButton.setReaction(Reaction.rbReplaysMenu);
+        replaysButton.setAnimation(Animation.DOWN);
     }
 
 
     private void createChooseLanguageButton() {
         ButtonYio chooseLanguageButton = buttonFactory.getButton(generateRectangle(0.1, 0.03, 0.8, 0.07), 315, getString("language"));
-        chooseLanguageButton.setReactBehavior(ReactBehavior.rbLanguageMenu);
-        chooseLanguageButton.setAnimType(ButtonYio.ANIM_DOWN);
+        chooseLanguageButton.setReaction(Reaction.rbLanguageMenu);
+        chooseLanguageButton.setAnimation(Animation.DOWN);
     }
 
 
@@ -77,27 +171,27 @@ public class SceneMoreSettingsMenu extends AbstractScene{
 
         chkWaterTexture = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 10);
         chkWaterTexture.setTouchPosition(generateRectangle(0.1, chkY - hTouchSize / 2, 0.8, hTouchSize));
-        chkWaterTexture.setAnimType(ButtonYio.ANIM_DOWN);
-
-        chkY -= chkVerticalDelta;
-        chkTurnLimit = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 6);
-        chkTurnLimit.setTouchPosition(generateRectangle(0.1, chkY - hTouchSize / 2, 0.8, hTouchSize));
-        chkTurnLimit.setAnimType(ButtonYio.ANIM_DOWN);
+        chkWaterTexture.setAnimation(Animation.DOWN);
 
         chkY -= chkVerticalDelta;
         chkLongTapToMove = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 7);
         chkLongTapToMove.setTouchPosition(generateRectangle(0.1, chkY - hTouchSize / 2, 0.8, hTouchSize));
-        chkLongTapToMove.setAnimType(ButtonYio.ANIM_DOWN);
+        chkLongTapToMove.setAnimation(Animation.DOWN);
 
         chkY -= chkVerticalDelta;
         chkReplays = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 8);
         chkReplays.setTouchPosition(generateRectangle(0.1, chkY - hTouchSize / 2, 0.8, hTouchSize));
-        chkReplays.setAnimType(ButtonYio.ANIM_DOWN);
+        chkReplays.setAnimation(Animation.DOWN);
 
         chkY -= chkVerticalDelta;
         chkFastConstruction = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 9);
         chkFastConstruction.setTouchPosition(generateRectangle(0.1, chkY - hTouchSize / 2, 0.8, hTouchSize));
-        chkFastConstruction.setAnimType(ButtonYio.ANIM_DOWN);
+        chkFastConstruction.setAnimation(Animation.DOWN);
+
+        chkY -= chkVerticalDelta;
+        chkLeftHanded = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 12);
+        chkLeftHanded.setTouchPosition(generateRectangle(0.1, chkY - hTouchSize / 2, 0.8, hTouchSize));
+        chkLeftHanded.setAnimation(Animation.DOWN);
     }
 
 
@@ -112,49 +206,24 @@ public class SceneMoreSettingsMenu extends AbstractScene{
 
 
     private void createCheckPanel() {
-        panelHeight = 0.21;
-        y -= panelHeight + offset;
+        panelHeight = 0.04 * 7 + 0.01;
+        double y = 0.53 - panelHeight;
         ButtonYio chkPanel = buttonFactory.getButton(generateRectangle(0.1, y, 0.8, panelHeight), 316, null);
 
         if (chkPanel.notRendered()) {
             chkPanel.cleatText();
             chkPanel.addTextLine(LanguagesManager.getInstance().getString("water_texture"));
-            chkPanel.addTextLine(LanguagesManager.getInstance().getString("limited_turns"));
             chkPanel.addTextLine(LanguagesManager.getInstance().getString("hold_to_march"));
             chkPanel.addTextLine(LanguagesManager.getInstance().getString("replays"));
             chkPanel.addTextLine(LanguagesManager.getInstance().getString("fast_construction"));
+            chkPanel.addTextLine(LanguagesManager.getInstance().getString("left_handed"));
+            chkPanel.addTextLine(LanguagesManager.getInstance().getString(" "));
+            chkPanel.addTextLine(LanguagesManager.getInstance().getString(" "));
             menuControllerYio.getButtonRenderer().renderButton(chkPanel);
         }
 
         chkPanel.setTouchable(false);
-        chkPanel.setAnimType(ButtonYio.ANIM_DOWN);
-    }
-
-
-    private void createSensitivityLabel() {
-        ButtonYio animStyleButton = buttonFactory.getButton(generateRectangle(0.1, y, 0.8, panelHeight), 313, null);
-        menuControllerYio.renderTextAndSomeEmptyLines(animStyleButton, getString("anim_style"), 2);
-        animStyleButton.setTouchable(false);
-        animStyleButton.setAnimType(ButtonYio.ANIM_DOWN);
-
-        sensitivitySlider = menuControllerYio.getSliders().get(9);
-        sensitivitySlider.appear();
-        sensitivitySlider.setPos(0.15, y + 0.3 * panelHeight, 0.7, 0);
-        sensitivitySlider.setVerticalTouchOffset(0.06f * Gdx.graphics.getHeight());
-    }
-
-
-    private void createSkinLabel() {
-        ButtonYio skinLabel = buttonFactory.getButton(generateRectangle(0.1, y, 0.8, panelHeight), 312, null);
-        menuControllerYio.renderTextAndSomeEmptyLines(skinLabel, getString("skin"), 2);
-        skinLabel.setTouchable(false);
-        skinLabel.setAnimType(ButtonYio.ANIM_UP);
-
-        skinSlider = menuControllerYio.getSliders().get(5);
-        skinSlider.appear();
-        skinSlider.setPos(0.15, y + 0.3 * panelHeight, 0.7, 0);
-        skinSlider.setVerticalTouchOffset(0.06f * Gdx.graphics.getHeight());
-        y -= panelHeight + offset;
+        chkPanel.setAnimation(Animation.DOWN);
     }
 
 
@@ -164,21 +233,20 @@ public class SceneMoreSettingsMenu extends AbstractScene{
 
 
     private void createBackButton() {
-        menuControllerYio.spawnBackButton(310, ReactBehavior.rbSettingsMenu);
+        menuControllerYio.spawnBackButton(310, backReaction);
     }
 
 
     private void initMetrics() {
         panelHeight = 0.14;
         offset = 0.03;
-        y = 0.9 - offset - panelHeight;
     }
 
 
     private void createResetButton() {
         ButtonYio resetButton = buttonFactory.getButton(generateRectangle(0.55, 0.9, 0.4, 0.07), 311, getString("menu_reset"));
-        resetButton.setReactBehavior(ReactBehavior.rbConfirmReset);
-        resetButton.setAnimType(ButtonYio.ANIM_UP);
+        resetButton.setReaction(Reaction.rbConfirmReset);
+        resetButton.setAnimation(Animation.UP);
         resetButton.disableTouchAnimation();
     }
 }

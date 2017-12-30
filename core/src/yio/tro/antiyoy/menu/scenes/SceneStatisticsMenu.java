@@ -1,11 +1,17 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
+import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.menu.Animation;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.gameplay.MatchStatistics;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.stuff.GraphicsYio;
 
 public class SceneStatisticsMenu extends AbstractScene{
+
+
+    private ButtonYio replayButton;
 
 
     public SceneStatisticsMenu(MenuControllerYio menuControllerYio) {
@@ -18,7 +24,7 @@ public class SceneStatisticsMenu extends AbstractScene{
 
         menuControllerYio.getYioGdxGame().beginBackgroundChange(0, false, true);
 
-        menuControllerYio.spawnBackButton(111, ReactBehavior.rbChooseGameModeMenu);
+        menuControllerYio.spawnBackButton(111, Reaction.rbChooseGameModeMenu);
 
         ButtonYio textPanel = buttonFactory.getButton(generateRectangle(0.05, 0.1, 0.9, 0.7), 112, null);
         textPanel.cleatText();
@@ -33,9 +39,22 @@ public class SceneStatisticsMenu extends AbstractScene{
         }
         menuControllerYio.getButtonRenderer().renderButton(textPanel);
         textPanel.setTouchable(false);
-        textPanel.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+        textPanel.setAnimation(Animation.FROM_CENTER);
+
+        createReplayButton();
 
         menuControllerYio.endMenuCreation();
+    }
+
+
+    private void createReplayButton() {
+        if (!Settings.replaysEnabled) return;
+
+        replayButton = buttonFactory.getButton(generateRectangle(0.55, 0.9, 0.4, 0.07), 113, getString("replay"));
+        replayButton.setReaction(Reaction.rbStartInstantReplay);
+        replayButton.setAnimation(Animation.UP);
+        replayButton.setTouchOffset(0.05f * GraphicsYio.width);
+        replayButton.disableTouchAnimation();
     }
 
 

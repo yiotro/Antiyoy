@@ -6,7 +6,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 /**
  * Created by ivan on 06.08.14.
  */
-public class RbResumeGame extends ReactBehavior {
+public class RbResumeGame extends Reaction {
 
     @Override
     public void reactAction(ButtonYio buttonYio) {

@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.Animation;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 
@@ -30,11 +31,11 @@ public class SceneSingleMessage extends AbstractScene{
             menuControllerYio.getButtonRenderer().renderButton(textPanel);
         }
         textPanel.setTouchable(false);
-        textPanel.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+        textPanel.setAnimation(Animation.FROM_CENTER);
 
         ButtonYio okButton = buttonFactory.getButton(generateRectangle(0.65, 0.25, 0.3, 0.07), 401, "Ok");
-        okButton.setReactBehavior(ReactBehavior.rbMainMenu);
-        okButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+        okButton.setReaction(Reaction.rbMainMenu);
+        okButton.setAnimation(Animation.FROM_CENTER);
 
         menuControllerYio.endMenuCreation();
     }

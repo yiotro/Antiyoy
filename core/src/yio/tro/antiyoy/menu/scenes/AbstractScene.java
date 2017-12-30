@@ -23,8 +23,8 @@ public abstract class AbstractScene {
 
 
     protected void destroyByIndex(int startIndex, int endIndex) {
-        for (int i = startIndex; i <= endIndex; i++) {
-            menuControllerYio.destroyButton(i);
+        for (int index = startIndex; index <= endIndex; index++) {
+            menuControllerYio.destroyButton(index);
         }
     }
 

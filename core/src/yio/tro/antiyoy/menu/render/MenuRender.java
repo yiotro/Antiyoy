@@ -18,6 +18,12 @@ public abstract class MenuRender {
     public static RenderSpeedPanel renderSpeedPanel = new RenderSpeedPanel();
     public static RenderReplaySelector renderReplaySelector = new RenderReplaySelector();
     public static RenderFastConstructionPanel renderFastConstructionPanel = new RenderFastConstructionPanel();
+    public static RenderFireworksElement renderFireworksElement = new RenderFireworksElement();
+    public static RenderNotificationElement renderNotificationElement = new RenderNotificationElement();
+    public static RenderSaveSlotSelector renderSaveSlotSelector = new RenderSaveSlotSelector();
+    public static RenderSlider renderSlider = new RenderSlider();
+    public static RenderDiplomacyElement renderDiplomacyElement = new RenderDiplomacyElement();
+    public static RenderConfirmDialog renderConfirmDialog = new RenderConfirmDialog();
 
     protected MenuViewYio menuViewYio;
     protected SpriteBatch batch;

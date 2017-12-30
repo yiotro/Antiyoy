@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Clipboard;
 import yio.tro.antiyoy.stuff.LanguagesManager;
-import yio.tro.antiyoy.ai.ArtificialIntelligence;
 import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
@@ -17,9 +16,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-/**
- * Created by ivan on 27.11.2015.
- */
+
 public class LevelEditor {
 
     public static final String EDITOR_PREFS = "editor";
@@ -125,6 +122,7 @@ public class LevelEditor {
                 case Obj.PALM:
                 case Obj.PINE:
                 case Obj.STRONG_TOWER:
+                case Obj.TOWN:
                     return true;
             }
         }
@@ -137,6 +135,8 @@ public class LevelEditor {
         if (inputObject != Obj.TOWN) return;
 
         ArrayList<Hex> province = detectProvince(srcHex);
+        if (province == null) return;
+
         for (Hex hex : province) {
             if (hex.objectInside == Obj.TOWN && hex != srcHex) {
                 srcHex.objectInside = Obj.FARM;
@@ -214,6 +214,7 @@ public class LevelEditor {
 
     public String getFullLevelString() {
         GameRules.colorNumber = countUpColorNumber();
+        gameController.fieldController.detectProvinces();
         return gameController.fieldController.getFullLevelString();
     }
 
@@ -222,6 +223,7 @@ public class LevelEditor {
         String fullLevel = getFullLevelString();
         Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
         prefs.putString(SLOT_NAME + currentSlotNumber, fullLevel);
+        prefs.putInteger("chosen_color" + currentSlotNumber, GameRules.editorChosenColor);
         prefs.flush();
     }
 
@@ -246,6 +248,7 @@ public class LevelEditor {
         }
 
         LoadingManager.getInstance().startGame(instance);
+        GameRules.editorChosenColor = prefs.getInteger("chosen_color" + currentSlotNumber);
 
         defaultValues();
     }
@@ -315,7 +318,7 @@ public class LevelEditor {
         System.out.println("fullLevel = " + fullLevel);
         Clipboard clipboard = Gdx.app.getClipboard();
         clipboard.setContents(fullLevel);
-        Scenes.sceneNotification.showNotification("exported", true);
+        Scenes.sceneNotification.showNotification("exported");
     }
 
 
@@ -352,7 +355,9 @@ public class LevelEditor {
         LoadingParameters instance = LoadingParameters.getInstance();
         instance.mode = LoadingParameters.MODE_EDITOR_PLAY;
         instance.applyFullLevel(fullLevel);
-        instance.colorOffset = 0;
+        GameRules.editorChosenColor = prefs.getInteger("chosen_color" + currentSlotNumber);
+        instance.colorOffset = gameController.getColorOffsetBySliderIndex(GameRules.editorChosenColor, GameRules.MAX_COLOR_NUMBER);
+
         LoadingManager.getInstance().startGame(instance);
     }
 
@@ -410,7 +415,7 @@ public class LevelEditor {
             focusedHexActions(gameController.fieldController.focusedHex);
         }
 
-        return captureTouch();
+        return isTouchCaptured();
     }
 
 
@@ -419,7 +424,7 @@ public class LevelEditor {
         scrY = y;
         lastTimeTouched = gameController.currentTime;
 
-        return captureTouch();
+        return isTouchCaptured();
     }
 
 
@@ -427,65 +432,18 @@ public class LevelEditor {
         scrX = x;
         scrY = y;
         lastTimeTouched = gameController.currentTime;
-        if (!updateFocusedHex()) return captureTouch();
+        if (!updateFocusedHex()) return isTouchCaptured();
 
         if (inputMode == MODE_SET_HEX || inputMode == MODE_DELETE) {
             focusedHexActions(gameController.fieldController.focusedHex);
         }
 
-        return captureTouch();
+        return isTouchCaptured();
     }
 
 
-    private boolean captureTouch() {
+    private boolean isTouchCaptured() {
         return inputMode != MODE_MOVE;
-    }
-
-
-    public void changeLevelSize() {
-//        int levSize = gameController.levelSize;
-//        switch (levSize) {
-//            case GameController.SIZE_SMALL: levSize = GameController.SIZE_MEDIUM; break;
-//            case GameController.SIZE_MEDIUM: levSize = GameController.SIZE_BIG; break;
-//            case GameController.SIZE_BIG: levSize = GameController.SIZE_SMALL; break;
-//        }
-//        gameController.setLevelSize(levSize);
-//        gameController.yioGdxGame.menuControllerLighty.showNotification(getLangManager().getString("map_size"), true);
-    }
-
-
-    public void changeNumberOfPlayers() {
-        int numPlayers = gameController.playersNumber;
-        numPlayers++;
-        if (numPlayers > GameRules.MAX_COLOR_NUMBER) numPlayers = 0;
-        gameController.setPlayersNumber(numPlayers);
-        Scenes.sceneNotification.showNotification(getLangManager().getString("player_number") + " " + numPlayers, true);
-    }
-
-
-    public void changeDifficulty() {
-        int diff = GameRules.difficulty;
-        diff++;
-        if (diff > ArtificialIntelligence.DIFFICULTY_BALANCER) diff = ArtificialIntelligence.DIFFICULTY_EASY;
-        GameRules.setDifficulty(diff);
-        Scenes.sceneNotification.showNotification(getLangManager().getString("difficulty") + " " + getDiffString(diff), true);
-    }
-
-
-    private String getDiffString(int diff) {
-        switch (diff) {
-            default:
-            case ArtificialIntelligence.DIFFICULTY_EASY:
-                return getLangManager().getString("easy");
-            case ArtificialIntelligence.DIFFICULTY_NORMAL:
-                return getLangManager().getString("normal");
-            case ArtificialIntelligence.DIFFICULTY_HARD:
-                return getLangManager().getString("hard");
-            case ArtificialIntelligence.DIFFICULTY_EXPERT:
-                return getLangManager().getString("expert");
-            case ArtificialIntelligence.DIFFICULTY_BALANCER:
-                return getLangManager().getString("balancer");
-        }
     }
 
 

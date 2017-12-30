@@ -5,9 +5,7 @@ import yio.tro.antiyoy.YioGdxGame;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-/**
- * Created by ivan on 14.12.2015.
- */
+
 public class AnalyzeBalanceResults {
 
     private ArrayList<String> results, distributions;

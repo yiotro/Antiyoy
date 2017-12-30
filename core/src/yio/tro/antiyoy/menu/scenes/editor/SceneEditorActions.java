@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.menu.scenes.editor;
 
+import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.editor.EditorReactions;
@@ -28,24 +29,24 @@ public class SceneEditorActions extends AbstractScene{
         basePanel.onlyShadow = true;
 
         ButtonYio playButton = buttonFactory.getButton(generateRectangle(0.1, 0.3, 0.8, 0.1), 182, getString("play"));
-        playButton.setReactBehavior(EditorReactions.rbEditorPlay);
+        playButton.setReaction(EditorReactions.rbEditorPlay);
         playButton.setShadow(false);
 
         ButtonYio exportButton = buttonFactory.getButton(generateRectangle(0.1, 0.4, 0.8, 0.1), 183, getString("export"));
-        exportButton.setReactBehavior(EditorReactions.rbEditorExport);
+        exportButton.setReaction(EditorReactions.rbEditorExport);
         exportButton.setShadow(false);
 
         ButtonYio importButton = buttonFactory.getButton(generateRectangle(0.1, 0.5, 0.8, 0.1), 184, getString("import"));
-        importButton.setReactBehavior(EditorReactions.rbEditorImportConfirmMenu);
+        importButton.setReaction(EditorReactions.rbEditorImportConfirmMenu);
         importButton.setShadow(false);
 
         ButtonYio editButton = buttonFactory.getButton(generateRectangle(0.1, 0.6, 0.8, 0.1), 185, getString("edit"));
-        editButton.setReactBehavior(EditorReactions.rbStartEditorMode);
+        editButton.setReaction(EditorReactions.rbStartEditorMode);
         editButton.setShadow(false);
 
         for (int i = 181; i <= 185; i++) {
             ButtonYio buttonYio = menuControllerYio.getButtonById(i);
-            buttonYio.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+            buttonYio.setAnimation(Animation.FROM_CENTER);
             buttonYio.disableTouchAnimation();
         }
 

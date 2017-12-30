@@ -6,9 +6,7 @@ import yio.tro.antiyoy.gameplay.rules.GameRules;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by ivan on 26.10.2014.
- */
+
 public abstract class ArtificialIntelligence {
 
     public static final int DIFFICULTY_EASY = 0;
@@ -135,7 +133,7 @@ public abstract class ArtificialIntelligence {
 
     protected boolean mergeConditions(Province province, Unit unit, Hex hex) {
         return hex.sameColor(unit.currentHex) && hex.containsUnit() && hex.unit.isReadyToMove() && unit != hex.unit &&
-                province.hasEnoughIncomeToAffordUnit(gameController.mergedUnitStrength(unit, hex.unit));
+                province.canAiAffordUnit(gameController.mergedUnitStrength(unit, hex.unit));
     }
 
 
@@ -257,7 +255,7 @@ public abstract class ArtificialIntelligence {
 
 
     void tryToBuildUnitsOnPalms(Province province) {
-        if (!province.hasEnoughIncomeToAffordUnit(1)) return;
+        if (!province.canAiAffordUnit(1)) return;
         while (province.canBuildUnit(1)) {
             ArrayList<Hex> moveZone = gameController.detectMoveZone(province.getCapital(), 1);
             boolean killedPalm = false;
@@ -276,7 +274,7 @@ public abstract class ArtificialIntelligence {
         tryToBuildUnitsOnPalms(province);
 
         for (int i = 1; i <= 4; i++) {
-            if (!province.hasEnoughIncomeToAffordUnit(i)) break;
+            if (!province.canAiAffordUnit(i)) break;
             while (province.canBuildUnit(i)) {
                 if (!tryToAttackWithStrength(province, i)) break;
             }

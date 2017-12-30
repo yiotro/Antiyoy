@@ -3,7 +3,7 @@ package yio.tro.antiyoy.gameplay;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
-import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
@@ -76,7 +76,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
         waitingBeforeNextStep = true;
         ignoreAll();
         showTutorialTip("gen_greetings");
-        menuControllerYio.getButtonById(30).setReactBehavior(ReactBehavior.rbChooseGameModeMenu);
+        menuControllerYio.getButtonById(30).setReaction(Reaction.rbChooseGameModeMenu);
     }
 
 
@@ -201,7 +201,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
                 break;
             case STEP_GOODBYE:
                 resetIgnores();
-                menuControllerYio.getButtonById(30).setReactBehavior(ReactBehavior.rbPauseMenu);
+                menuControllerYio.getButtonById(30).setReaction(Reaction.rbPauseMenu);
                 break;
         }
     }
@@ -295,7 +295,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
                 break;
             case STEP_GOODBYE:
                 showTutorialTip("tip_help");
-                menuControllerYio.addHelpButtonToTutorialTip();
+                Scenes.sceneTutorialTip.addHelpButtonToTutorialTip();
                 break;
         }
     }

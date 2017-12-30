@@ -3,7 +3,6 @@ package yio.tro.antiyoy.menu.speed_panel;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.SpeedManager;
-import yio.tro.antiyoy.gameplay.replays.ReplaySaveSystem;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -117,14 +116,14 @@ public class SpeedPanel extends InterfaceElement {
 
     @Override
     public void destroy() {
-        appearFactor.beginDestroying(2, 2);
+        appearFactor.destroy(2, 2);
     }
 
 
     @Override
     public void appear() {
         appearFactor.setValues(0.01, 0);
-        appearFactor.beginSpawning(3, 0.8);
+        appearFactor.appear(3, 0.8);
 
         onAppear();
     }
@@ -158,16 +157,16 @@ public class SpeedPanel extends InterfaceElement {
     private void hideSomeItems() {
         for (SpItem item : items) {
             item.appearFactor.setValues(1, 0);
-            item.appearFactor.beginSpawning(1, 1);
+            item.appearFactor.appear(1, 1);
 
             if (item.action == SpItem.ACTION_SAVE) {
                 item.appearFactor.setValues(0, 0);
-                item.appearFactor.beginDestroying(1, 1);
+                item.appearFactor.destroy(1, 1);
             }
 
             if (item.action == SpItem.ACTION_STOP && !GameRules.replayMode) {
                 item.appearFactor.setValues(0, 0);
-                item.appearFactor.beginDestroying(1, 1);
+                item.appearFactor.destroy(1, 1);
             }
         }
     }
@@ -266,7 +265,7 @@ public class SpeedPanel extends InterfaceElement {
         GameController gameController = menuControllerYio.yioGdxGame.gameController;
         gameController.replayManager.saveCurrentReplay();
 
-        Scenes.sceneNotification.showNotification("replay_saved", true);
+        Scenes.sceneNotification.showNotification("replay_saved");
     }
 
 

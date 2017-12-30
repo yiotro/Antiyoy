@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class SnapshotManager {
 
-    public static final int FREE_SNAPSHOTS_LIMIT = 50;
-    public static final int MAX_SNAPSHOTS_IN_ONE_TURN = 30;
+    public static final int FREE_SNAPSHOTS_LIMIT = 30;
+    public static final int MAX_SNAPSHOTS = 25;
 
     GameController gameController;
     private ArrayList<LevelSnapshot> levelSnapshots, freeSnapshots;
@@ -51,12 +51,24 @@ public class SnapshotManager {
 
     public void takeSnapshot() {
         if (!gameController.isPlayerTurn()) return;
-        if (levelSnapshots.size() > MAX_SNAPSHOTS_IN_ONE_TURN) return; // to avoid out of memory crashes
 
-        LevelSnapshot snapshot = getFreeSnapshot();
+        LevelSnapshot snapshot = getNextSnapshot();
         snapshot.take();
 
         levelSnapshots.add(snapshot);
+    }
+
+
+    private LevelSnapshot getNextSnapshot() {
+        if (levelSnapshots.size() >= MAX_SNAPSHOTS) {
+            LevelSnapshot levelSnapshot = levelSnapshots.get(0);
+            levelSnapshots.remove(0);
+
+            levelSnapshot.reset();
+            return levelSnapshot;
+        }
+
+        return getFreeSnapshot();
     }
 
 

@@ -3,7 +3,6 @@ package yio.tro.antiyoy.gameplay;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
-import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.ArrayList;
 
@@ -54,7 +53,7 @@ public class Unit {
         lastHex = currentHex;
         currentHex = destinationHex;
         moveFactor.setValues(0, 0);
-        moveFactor.beginSpawning(1, 4);
+        moveFactor.appear(1, 4);
         lastHex.unit = null;
         destinationHex.unit = this;
 //        YioGdxGame.say("anim hexes: " + gameController.animHexes.size() + "        selected hexes: " + gameController.selectedHexes.size());

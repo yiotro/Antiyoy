@@ -3,11 +3,10 @@ package yio.tro.antiyoy.gameplay;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
-/**
- * Created by ivan on 19.10.2014.
- */
-public class Hex {
+
+public class Hex implements ReusableYio{
 
     public boolean active, selected, changingColor, flag, inMoveZone, genFlag, ignoreTouch;
     public int index1, index2, moveZoneNumber, genPotential, viewDiversityIndex;
@@ -17,7 +16,7 @@ public class Hex {
     float cos60, sin60;
     public int colorIndex, lastColorIndex, objectInside;
     long animStartTime;
-    boolean blockToTreeFromExpanding;
+    boolean blockToTreeFromExpanding, canContainObjects;
     public FactorYio animFactor, selectionFactor;
     public Unit unit;
 
@@ -27,6 +26,8 @@ public class Hex {
         this.index2 = index2;
         this.fieldPos = fieldPos;
         this.fieldController = fieldController;
+        if (fieldController == null) return;
+
         gameController = fieldController.gameController;
         active = false;
         pos = new PointYio();
@@ -36,7 +37,19 @@ public class Hex {
         selectionFactor = new FactorYio();
         unit = null;
         viewDiversityIndex = (101 * index1 * index2 + 7 * index2) % 3;
+        canContainObjects = true;
         updatePos();
+    }
+
+
+    @Override
+    public void reset() {
+        // this is just blank method, don't use it
+    }
+
+
+    void updateCanContainsObjects() {
+        canContainObjects = fieldController.isPointInsideLevelBoundsHorizontally(pos);
     }
 
 
@@ -68,7 +81,7 @@ public class Hex {
     public void setColorIndex(int colorIndex) {
         lastColorIndex = this.colorIndex;
         this.colorIndex = colorIndex;
-        animFactor.beginSpawning(1, 1);
+        animFactor.appear(1, 1);
         animFactor.setValues(0, 0);
     }
 
@@ -318,7 +331,7 @@ public class Hex {
         if (!selected) {
             selected = true;
             selectionFactor.setValues(0, 0);
-            selectionFactor.beginSpawning(3, 1.5);
+            selectionFactor.appear(3, 1.5);
         }
     }
 
@@ -341,7 +354,7 @@ public class Hex {
 
 
     public boolean canBeAttackedBy(Unit unit) {
-        boolean canUnitAttackHex = gameController.ruleset.canUnitAttackHex(unit.strength, this);
+        boolean canUnitAttackHex = gameController.canUnitAttackHex(unit.strength, unit.getColor(), this);
 
         if (GameRules.replayMode) {
             if (!canUnitAttackHex) {

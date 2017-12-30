@@ -69,10 +69,8 @@ public class ColorStatsRenderer {
     }
 
 
-    void setFontColorByIndex(int index) {
-        BitmapFont font = Fonts.buttonFont;
-        int colorIndexWithOffset = gameController.getColorIndexWithOffset(index);
-        switch (colorIndexWithOffset) {
+    public static void setFontColorByIndex(BitmapFont font, int colorIndex) {
+        switch (colorIndex) {
             case 0:
                 font.setColor(0.37f, 0.7f, 0.36f, 1);
                 break;
@@ -112,7 +110,7 @@ public class ColorStatsRenderer {
         float maxNumber = GameController.maxNumberFromArray(playerHexCount);
         float columnHeight = 0.25f * h;
         for (int i = 0; i < playerHexCount.length; i++) {
-            setFontColorByIndex(i);
+            setFontColorByIndex(Fonts.buttonFont, gameController.getColorIndexWithOffset(i));
             float numberLineWidth = YioGdxGame.getTextWidth(Fonts.buttonFont, "" + playerHexCount[i]);
             float columnX = columnWidth + distanceBetweenColumns * i;
             batch.draw(blackPixel, columnX - numberLineWidth / 2 - 0.01f * w, 0.28f * h, numberLineWidth + 0.02f * w, 0.05f * h);

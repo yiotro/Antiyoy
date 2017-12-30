@@ -4,9 +4,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 
-/**
- * Created by ivan on 25.04.2016.
- */
+
 public class FrameBufferYio extends FrameBuffer{
 
     public float f;

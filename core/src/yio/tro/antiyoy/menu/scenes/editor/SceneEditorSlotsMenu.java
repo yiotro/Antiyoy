@@ -2,7 +2,8 @@ package yio.tro.antiyoy.menu.scenes.editor;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.Animation;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.gameplay.editor.LevelEditor;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -37,8 +38,8 @@ public class SceneEditorSlotsMenu extends AbstractScene{
         ButtonYio basePanel = buttonFactory.getButton(generateRectangle(0.05, 0.05, 0.9, 0.8), 139, null);
         basePanel.setTouchable(false);
         basePanel.onlyShadow = true;
-        basePanel.setAnimType(ButtonYio.ANIM_FROM_CENTER);
-        basePanel.appearFactor.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
+        basePanel.setAnimation(Animation.FROM_CENTER);
+        basePanel.appearFactor.appear(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
 
         for (int i = 0; i < 8; i++) {
             ButtonYio slotButton = buttonFactory.getButton(generateRectangle(0.05, 0.75 - 0.1 * (double) i, 0.9, 0.1), 131 + i, null);
@@ -47,12 +48,12 @@ public class SceneEditorSlotsMenu extends AbstractScene{
             slotButton.addTextLine(" ");
             menuControllerYio.getButtonRenderer().renderButton(slotButton);
 
-            slotButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+            slotButton.setAnimation(Animation.FROM_CENTER);
             slotButton.setShadow(false);
-            slotButton.setReactBehavior(EditorReactions.rbEditorActionsMenu);
-            slotButton.appearFactor.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
+            slotButton.setReaction(EditorReactions.rbEditorActionsMenu);
+            slotButton.appearFactor.appear(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
         }
 
-        menuControllerYio.spawnBackButton(130, ReactBehavior.rbChooseGameModeMenu);
+        menuControllerYio.spawnBackButton(130, Reaction.rbChooseGameModeMenu);
     }
 }

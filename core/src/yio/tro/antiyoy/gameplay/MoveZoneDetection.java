@@ -59,6 +59,7 @@ public class MoveZoneDetection {
         while (propagationList.size() > 0) {
             iteratePropagation(startHex, strength);
         }
+
         return result;
     }
 
@@ -83,7 +84,7 @@ public class MoveZoneDetection {
                 adjHex.moveZoneNumber = tempHex.moveZoneNumber - 1;
                 adjHex.flag = true;
             } else {
-                if (fieldController.gameController.ruleset.canUnitAttackHex(strength, adjHex)) {
+                if (fieldController.gameController.canUnitAttackHex(strength, startHex.colorIndex, adjHex)) {
                     propagationList.add(adjHex);
                     adjHex.flag = true;
                 }

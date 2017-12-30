@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.menu.scenes.editor;
 
+import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.editor.EditorReactions;
@@ -25,17 +26,17 @@ public class SceneEditorConfirmImport extends AbstractScene{
             menuControllerYio.renderTextAndSomeEmptyLines(labelButton, getString("confirm_import"), 3);
         }
         labelButton.setTouchable(false);
-        labelButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+        labelButton.setAnimation(Animation.FROM_CENTER);
 
         ButtonYio noButton = buttonFactory.getButton(generateRectangle(0.1, 0.45, 0.4, 0.08), 351, getString("no"));
-        noButton.setReactBehavior(EditorReactions.rbEditorActionsMenu);
+        noButton.setReaction(EditorReactions.rbEditorActionsMenu);
         noButton.setShadow(false);
-        noButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+        noButton.setAnimation(Animation.FROM_CENTER);
 
         ButtonYio yesButton = buttonFactory.getButton(generateRectangle(0.5, 0.45, 0.4, 0.08), 352, getString("yes"));
-        yesButton.setReactBehavior(EditorReactions.rbEditorImport);
+        yesButton.setReaction(EditorReactions.rbEditorImport);
         yesButton.setShadow(false);
-        yesButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+        yesButton.setAnimation(Animation.FROM_CENTER);
 
         menuControllerYio.endMenuCreation();
     }

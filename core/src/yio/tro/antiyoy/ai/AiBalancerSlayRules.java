@@ -159,7 +159,7 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
         tryToBuildUnitsOnPalms(province);
 
         for (int i = 1; i <= 4; i++) {
-            if (!province.hasEnoughIncomeToAffordUnit(i, 5)) break;
+            if (!province.canAiAffordUnit(i, 5)) break;
             while (province.canBuildUnit(i)) {
                 if (!tryToAttackWithStrength(province, i)) break;
             }

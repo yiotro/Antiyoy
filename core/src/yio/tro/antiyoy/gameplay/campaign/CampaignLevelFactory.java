@@ -1,7 +1,5 @@
 package yio.tro.antiyoy.gameplay.campaign;
 
-import yio.tro.antiyoy.menu.SliderYio;
-import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.ai.ArtificialIntelligence;
 import yio.tro.antiyoy.gameplay.FieldController;
 import yio.tro.antiyoy.gameplay.GameController;
@@ -10,12 +8,12 @@ import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.scenes.Scenes;
+import yio.tro.antiyoy.menu.slider.SliderYio;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 
 import java.util.ArrayList;
 
-/**
- * Created by ivan on 18.11.2015.
- */
+
 public class CampaignLevelFactory {
 
     public GameController gameController;
@@ -26,6 +24,7 @@ public class CampaignLevelFactory {
     private final LevelPackTwo levelPackTwo;
     private final LevelPackThree levelPackThree;
     int index;
+    private final LevelPackFour levelPackFour;
 
 
     public CampaignLevelFactory(GameController gameController) {
@@ -34,6 +33,7 @@ public class CampaignLevelFactory {
         levelPackOne = new LevelPackOne(this);
         levelPackTwo = new LevelPackTwo(this);
         levelPackThree = new LevelPackThree(this);
+        levelPackFour = new LevelPackFour(this);
         index = -1;
     }
 
@@ -50,6 +50,7 @@ public class CampaignLevelFactory {
         if (levelPackOne.checkForLevelPackOne()) return true;
         if (levelPackTwo.checkForlevelPack()) return true;
         if (levelPackThree.checkForlevelPack()) return true;
+        if (levelPackFour.checkForlevelPack()) return true;
 
         createLevelWithPredictableRandom();
 
@@ -90,12 +91,12 @@ public class CampaignLevelFactory {
 
 
     public int readColorOffsetFromSlider(int colorNumber) {
-        return gameController.getColorOffsetBySlider(getColorOffsetSlider(), colorNumber);
+        return gameController.getColorOffsetBySliderIndex(getColorOffsetSlider().getCurrentRunnerIndex(), colorNumber);
     }
 
 
     private SliderYio getColorOffsetSlider() {
-        return gameController.yioGdxGame.menuControllerYio.sliders.get(6);
+        return Scenes.sceneMoreCampaignOptions.colorOffsetSlider;
     }
 
 

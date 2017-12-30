@@ -93,8 +93,6 @@ public class AiFactory {
 
 
     boolean checkToTestNewAi() {
-        if (!DebugFlags.CHECKING_BALANCE_MODE) return false;
-        if (!DebugFlags.testingNewAi) return false;
         if (GameRules.colorNumber != 5) return false;
 
         aiList.add(new AiExpertGenericRules(gameController, 0));

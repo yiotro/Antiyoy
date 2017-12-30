@@ -4,7 +4,7 @@ import yio.tro.antiyoy.Settings;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.ButtonYio;
 
-public class RbTutorialGeneric extends ReactBehavior{
+public class RbTutorialGeneric extends Reaction {
 
     @Override
     public void reactAction(ButtonYio buttonYio) {

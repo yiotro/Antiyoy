@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.Animation;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 
@@ -32,26 +33,26 @@ public class SceneHelpIndex extends AbstractScene{
 
 
         double y = top - tHeight;
-        createTopicButton(127, y, "help_about_rules", ReactBehavior.rbArticleRules);
+        createTopicButton(127, y, "help_about_rules", Reaction.rbArticleRules);
         y -= tHeight;
 
-        createTopicButton(122, y, "help_about_units", ReactBehavior.rbArticleUnits);
+        createTopicButton(122, y, "help_about_units", Reaction.rbArticleUnits);
         y -= tHeight;
 
-        createTopicButton(123, y, "help_about_trees", ReactBehavior.rbArticleTrees);
+        createTopicButton(123, y, "help_about_trees", Reaction.rbArticleTrees);
         y -= tHeight;
 
-        createTopicButton(124, y, "help_about_towers", ReactBehavior.rbArticleTowers);
+        createTopicButton(124, y, "help_about_towers", Reaction.rbArticleTowers);
         y -= tHeight;
 
-        createTopicButton(125, y, "help_about_money", ReactBehavior.rbArticleMoney);
+        createTopicButton(125, y, "help_about_money", Reaction.rbArticleMoney);
         y -= tHeight;
 
-        createTopicButton(126, y, "help_about_tactics", ReactBehavior.rbArticleTactics);
+        createTopicButton(126, y, "help_about_tactics", Reaction.rbArticleTactics);
         y -= tHeight;
 
 
-        menuControllerYio.spawnBackButton(129, ReactBehavior.rbMainMenu);
+        menuControllerYio.spawnBackButton(129, Reaction.rbMainMenu);
 
         menuControllerYio.endMenuCreation();
     }
@@ -68,14 +69,14 @@ public class SceneHelpIndex extends AbstractScene{
             menuControllerYio.getButtonRenderer().renderButton(basePanel);
         }
         basePanel.setTouchable(false);
-        basePanel.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+        basePanel.setAnimation(Animation.FROM_CENTER);
     }
 
 
-    private void createTopicButton(int id, double y, String key, ReactBehavior reactBehavior) {
+    private void createTopicButton(int id, double y, String key, Reaction reaction) {
         ButtonYio topicButton = buttonFactory.getButton(generateRectangle(0.1, y, 0.8, 0.08), id, getString(key));
-        topicButton.setReactBehavior(reactBehavior);
+        topicButton.setReaction(reaction);
         topicButton.setShadow(false);
-        topicButton.setAnimType(ButtonYio.ANIM_FROM_CENTER);
+        topicButton.setAnimation(Animation.FROM_CENTER);
     }
 }

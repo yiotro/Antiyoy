@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.*;
@@ -16,9 +15,7 @@ import yio.tro.antiyoy.stuff.*;
 
 import java.util.ArrayList;
 
-/**
- * Created by ivan on 05.08.14.
- */
+
 public class GameView {
 
     private final YioGdxGame yioGdxGame;
@@ -27,15 +24,14 @@ public class GameView {
     public final FactorYio factorModel;
     private final FrameBuffer frameBuffer;
     SpriteBatch batchMovable, batchSolid, batchCache;
-    private ShapeRenderer shapeRenderer;
     float cx, cy, dw, dh, borderLineThickness;
     public TextureRegion blackCircleTexture, exclamationMarkTexture, forefingerTexture;
     TextureRegion animationTextureRegion, blackBorderTexture, blackTriangle, greenPixel;
     TextureRegion hexGreen, hexRed, hexBlue, hexYellow, hexCyan, hexColor1, hexColor2, hexColor3;
     public float linkLineThickness, hexViewSize, cacheFrameX1, cacheFrameY1, cacheFrameX2, cacheFrameY2, hexShadowSize;
     public TextureRegion blackPixel, grayPixel, selectionPixel, shadowHexTexture, gradientShadow, transCircle1, transCircle2, selUnitShadow, currentObjectTexture;
-    Storage3xTexture manTextures[], palmTexture, houseTexture, towerTexture, graveTexture, pineTexture;
-    Storage3xTexture castleTexture, strongTowerTexture, farmTexture[];
+    public Storage3xTexture manTextures[], palmTexture, houseTexture, towerTexture, graveTexture, pineTexture;
+    public Storage3xTexture castleTexture, strongTowerTexture, farmTexture[];
     int segments, w, h, currentZoomQuality;
     public OrthographicCamera orthoCam, cacheCam;
     TextureRegion cacheLevelTextures[], sideShadow, moveZonePixel, responseAnimHexTexture, selectionBorder, defenseIcon;
@@ -44,7 +40,7 @@ public class GameView {
     PointYio pos;
     double camBlurSpeed, zoomLevelOne, zoomLevelTwo;
     GrManager grManager;
-    private AtlasLoader atlasLoader;
+    public AtlasLoader atlasLoader;
     private float smFactor;
     private float smDelta;
 
@@ -59,7 +55,6 @@ public class GameView {
         batchMovable = new SpriteBatch();
         batchSolid = yioGdxGame.batch;
         batchCache = new SpriteBatch();
-        shapeRenderer = new ShapeRenderer();
         createOrthoCam();
         cacheCam = new OrthographicCamera(yioGdxGame.w, yioGdxGame.h);
         cacheCam.position.set(orthoCam.viewportWidth / 2f, orthoCam.viewportHeight / 2f, 0);
@@ -74,14 +69,21 @@ public class GameView {
         if (segments > 24) segments = 24;
         hexViewSize = 1.04f * gameController.fieldController.hexSize;
         hexShadowSize = 1.00f * hexViewSize;
-        frameBufferList = new FrameBuffer[4];
-        for (int i = 0; i < frameBufferList.length; i++)
-            frameBufferList[i] = FrameBufferYio.getInstance(Pixmap.Format.RGB565, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-        loadTextures();
+        initFrameBufferList();
         screenRectangle = new RectangleYio(0, 0, w, h);
         camBlurSpeed = 0.001 * w;
         grManager = new GrManager(this);
         grManager.create();
+
+        loadTextures();
+    }
+
+
+    private void initFrameBufferList() {
+        frameBufferList = new FrameBuffer[4];
+        for (int i = 0; i < frameBufferList.length; i++) {
+            frameBufferList[i] = FrameBufferYio.getInstance(Pixmap.Format.RGB565, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+        }
     }
 
 
@@ -118,6 +120,7 @@ public class GameView {
         blackTriangle = loadTextureRegion("triangle.png", false);
         greenPixel = loadTextureRegion("pixels/pixel_green.png", false);
         grayPixel = loadTextureRegion("pixels/gray_pixel.png", false);
+        grManager.loadTextures();
     }
 
 
@@ -142,6 +145,7 @@ public class GameView {
         greenPixel.getTexture().dispose();
 
         atlasLoader.disposeAtlasRegion();
+        grManager.disposeTextures();
     }
 
 
@@ -274,9 +278,8 @@ public class GameView {
 
 
     public void updateCacheLevelTextures() {
-        if (DebugFlags.CHECKING_BALANCE_MODE) return;
-
         gameController.letsUpdateCacheByAnim = false;
+
         for (int i = 0; i < cacheLevelTextures.length; i++) {
             FrameBuffer cacheLevelFrameBuffer = frameBufferList[i];
             cacheLevelFrameBuffer.begin();
@@ -318,7 +321,6 @@ public class GameView {
 
 
     public void updateCacheNearAnimHexes() {
-        if (DebugFlags.CHECKING_BALANCE_MODE) return;
         float up, right, down, left;
         ArrayList<Hex> ah = gameController.fieldController.animHexes;
         if (ah.size() == 0) return;
@@ -386,7 +388,6 @@ public class GameView {
     public void updateCam() {
         orthoCam.update();
         batchMovable.setProjectionMatrix(orthoCam.combined);
-        shapeRenderer.setProjectionMatrix(orthoCam.combined);
     }
 
 
@@ -446,10 +447,10 @@ public class GameView {
     }
 
 
-    private void renderCertainUnits(SpriteBatch spriteBatch) {
+    private void renderCertainUnits() {
         for (Unit unit : gameController.unitList) {
             if (isPosInViewFrame(unit.currentPos, hexViewSize)) {
-                renderUnit(spriteBatch, unit);
+                renderUnit(batchMovable, unit);
             }
         }
     }
@@ -542,7 +543,7 @@ public class GameView {
 
     public void beginSpawnProcess() {
         factorModel.setValues(0.02, 0);
-        factorModel.beginSpawning(2, 1.3); // 3, 0.8
+        factorModel.appear(2, 1.3); // 3, 0.8
         updateAnimationTexture();
     }
 
@@ -551,7 +552,7 @@ public class GameView {
         if (yioGdxGame.gamePaused) return;
         if (factorModel.get() >= 1) {
             factorModel.setValues(1, 0);
-            factorModel.beginDestroying(2, 1.5); // 1, 5
+            factorModel.destroy(2, 1.5); // 1, 5
         }
         updateAnimationTexture();
     }
@@ -761,6 +762,8 @@ public class GameView {
 
 
     private void renderForefinger() {
+        if (!GameRules.tutorialMode) return;
+
         if (gameController.forefinger.isPointingToHex()) {
             batchMovable.begin();
             pos = gameController.forefinger.animPos;
@@ -904,9 +907,11 @@ public class GameView {
 
 
     private void renderBlackout() {
+        if (gameController.fieldController.moveZoneFactor.get() < 0.01) return;
+
         Color c = batchMovable.getColor();
         batchMovable.setColor(c.r, c.g, c.b, 0.5f * gameController.selectionController.getBlackoutFactor().get());
-        batchMovable.draw(blackPixel, 0, 0, gameController.boundWidth, gameController.boundHeight);
+        GraphicsYio.drawByRectangle(batchMovable, blackPixel, gameController.cameraController.frame);
         batchMovable.setColor(c.r, c.g, c.b, c.a);
     }
 
@@ -948,19 +953,20 @@ public class GameView {
 
 
     private void renderInternals() {
-        if (DebugFlags.CHECKING_BALANCE_MODE) return;
+        grManager.renderFogOfWar.beginFog();
         batchMovable.begin();
+        grManager.renderFogOfWar.continueFog();
         renderCacheLevelTextures();
-        if (YioGdxGame.isScreenVerySmall()) renderAllSolidObjects();
+        if (YioGdxGame.isScreenVerySmall()) {
+            renderAllSolidObjects();
+        }
 
         renderAnimHexes();
         renderSelectedHexes();
         renderExclamationMarks();
         renderResponseAnimHex();
-        renderCertainUnits(batchMovable);
-        if (gameController.fieldController.moveZoneFactor.get() > 0.01) {
-            renderBlackout();
-        }
+        renderCertainUnits();
+        renderBlackout();
         renderMoveZone();
         renderCityNames();
         renderSelectedUnit();
@@ -971,7 +977,7 @@ public class GameView {
         renderDebug();
         batchMovable.end();
 
-        if (GameRules.tutorialMode) renderForefinger();
+        renderForefinger();
     }
 
 
@@ -989,7 +995,13 @@ public class GameView {
             renderInternals();
         }
 
-        // render money
+        Fonts.gameFont.setColor(Color.WHITE);
+        renderMoney();
+        renderTip();
+    }
+
+
+    private void renderMoney() {
         smFactor = gameController.selectionController.getSelMoneyFactor().get();
         smDelta = 0.1f * h * (1 - smFactor);
         if (smFactor > 0) {
@@ -1000,8 +1012,6 @@ public class GameView {
             Fonts.gameFont.draw(batchSolid, gameController.balanceString, 0.47f * w, (1.08f - 0.1f * smFactor) * h);
             batchSolid.end();
         }
-
-        renderTip();
     }
 
 
@@ -1029,20 +1039,32 @@ public class GameView {
 
 
     private void renderTip() {
-        if (gameController.selectionController.tipFactor.get() > 0.01) {
-            batchSolid.begin();
-            float s = 0.2f * w;
+        if (gameController.selectionController.tipFactor.get() <= 0.01) return;
 
-            batchSolid.draw(
-                    getTipTypeTexture(gameController.selectionController.tipShowType),
-                    0.5f * w - 0.5f * s,
-                    s * (gameController.selectionController.tipFactor.get() - 1) + 0.04f * h, s, s);
+        batchSolid.begin();
+        float s = 0.2f * w;
 
-            Fonts.gameFont.draw(batchSolid,
-                    gameController.currentPriceString,
-                    0.5f * w - 0.5f * gameController.priceStringWidth,
-                    s * (gameController.selectionController.tipFactor.get() - 1) + 0.04f * h);
-            batchSolid.end();
+        batchSolid.draw(
+                getTipTypeTexture(gameController.selectionController.tipShowType),
+                0.5f * w - 0.5f * s,
+                getTipVerticalPos(s), s, s
+        );
+
+        Fonts.gameFont.draw(batchSolid,
+                gameController.currentPriceString,
+                0.5f * w - 0.5f * gameController.priceStringWidth,
+                getTipVerticalPos(s)
+        );
+
+        batchSolid.end();
+    }
+
+
+    private float getTipVerticalPos(float s) {
+        if (Settings.fastConstruction) {
+            return s * (gameController.selectionController.tipFactor.get() - 1) + 0.12f * h;
+        } else {
+            return s * (gameController.selectionController.tipFactor.get() - 1) + 0.04f * h;
         }
     }
 

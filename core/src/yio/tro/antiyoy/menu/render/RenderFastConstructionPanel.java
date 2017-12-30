@@ -32,6 +32,9 @@ public class RenderFastConstructionPanel extends MenuRender{
     private TextureRegion shrHouse;
     private TextureRegion sideShadow;
     private float smDelta;
+    private TextureRegion endTurnIcon;
+    private TextureRegion undoIcon;
+    private TextureRegion diplomacyIcon;
 
 
     @Override
@@ -39,6 +42,9 @@ public class RenderFastConstructionPanel extends MenuRender{
         backgroundTexture = GraphicsYio.loadTextureRegion("pixels/gray_pixel.png", false);
         selectionPixel = GraphicsYio.loadTextureRegion("pixels/black_pixel.png", false);
         sideShadow = GraphicsYio.loadTextureRegion("money_shadow.png", true);
+        endTurnIcon = GraphicsYio.loadTextureRegion("end_turn.png", true);
+        undoIcon = GraphicsYio.loadTextureRegion("undo.png", true);
+        diplomacyIcon = GraphicsYio.loadTextureRegion("diplomacy/flag.png", true);
 
         man0 = GraphicsYio.loadTextureRegion("field_elements/man0.png", true);
         man1 = GraphicsYio.loadTextureRegion("field_elements/man1.png", true);
@@ -125,6 +131,18 @@ public class RenderFastConstructionPanel extends MenuRender{
 
 
     private TextureRegion getItemTexture(FcpItem item) {
+        if (item.action == FcpItem.ACTION_UNDO) {
+            return undoIcon;
+        }
+
+        if (item.action == FcpItem.ACTION_END_TURN) {
+            return endTurnIcon;
+        }
+
+        if (item.action == FcpItem.ACTION_DIPLOMACY) {
+            return diplomacyIcon;
+        }
+
         if (Settings.isShroomArtsEnabled()) {
             return getShroomItemTexture(item);
         } else {

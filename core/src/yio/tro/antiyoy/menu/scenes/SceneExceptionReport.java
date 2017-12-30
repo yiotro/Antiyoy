@@ -5,7 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import yio.tro.antiyoy.stuff.Fonts;
-import yio.tro.antiyoy.menu.behaviors.ReactBehavior;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 
@@ -70,7 +70,7 @@ public class SceneExceptionReport extends AbstractScene{
         textPanel.setTouchable(false);
 
         ButtonYio okButton = buttonFactory.getButton(generateRectangle(0.1, 0.1, 0.8, 0.1), 73612321, "Ok");
-        okButton.setReactBehavior(ReactBehavior.rbMainMenu);
+        okButton.setReaction(Reaction.rbMainMenu);
 
         menuControllerYio.endMenuCreation();
     }

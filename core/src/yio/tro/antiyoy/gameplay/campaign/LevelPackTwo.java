@@ -13,7 +13,7 @@ public class LevelPackTwo extends AbstractLevelPack{
 
 
     @Override
-    String getLevelFromPack(int index) {
+    String getLevelFromPack() {
         switch (index) {
             default:
                 return "-";

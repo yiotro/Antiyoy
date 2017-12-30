@@ -12,9 +12,12 @@ public class FcpItem {
     public static final int ACTION_FARM = 5;
     public static final int ACTION_TOWER = 6;
     public static final int ACTION_STRONG_TOWER = 7;
+    public static final int ACTION_UNDO = 8;
+    public static final int ACTION_END_TURN = 9;
+    public static final int ACTION_DIPLOMACY = 10;
 
     FastConstructionPanel fastConstructionPanel;
-    public PointYio position, delta, touchDelta;
+    public PointYio position, delta, touchDelta, animDelta;
     public float radius, touchOffset;
     public FactorYio selectionFactor;
     public int action;
@@ -27,6 +30,7 @@ public class FcpItem {
         position = new PointYio();
         delta = new PointYio();
         touchDelta = new PointYio();
+        animDelta = new PointYio();
         radius = 0;
         touchOffset = 0;
         selectionFactor = new FactorYio();
@@ -57,7 +61,7 @@ public class FcpItem {
 
     void select() {
         selectionFactor.setValues(1, 0);
-        selectionFactor.beginDestroying(1, 2.5);
+        selectionFactor.destroy(1, 2.5);
     }
 
 
@@ -66,6 +70,11 @@ public class FcpItem {
 
         position.x = (float) (fastConstructionPanel.viewPosition.x + delta.x);
         position.y = (float) (fastConstructionPanel.viewPosition.y + delta.y);
+
+        if (fastConstructionPanel.appearFactor.get() < 1) {
+            position.x += (1 - fastConstructionPanel.appearFactor.get()) * animDelta.x;
+            position.y += (1 - fastConstructionPanel.appearFactor.get()) * animDelta.y;
+        }
     }
 
 

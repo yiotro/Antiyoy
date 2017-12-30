@@ -15,7 +15,7 @@ public class CheckButtonYio extends ButtonYio {
         checked = false;
         touchPosition = new RectangleYio(0, 0, 0, 0);
         viewFactor = new FactorYio();
-        reactBehavior = null;
+        reaction = null;
         lockAction = true;
     }
 
@@ -41,7 +41,7 @@ public class CheckButtonYio extends ButtonYio {
 
 
     public void appear() {
-        appearFactor.beginSpawning(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
+        appearFactor.appear(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
         appearFactor.setValues(0, 0.001);
     }
 
@@ -73,19 +73,19 @@ public class CheckButtonYio extends ButtonYio {
     public void press(int screenX, int screenY) {
         super.press(screenX, screenY);
         viewFactor.setValues(1, 0);
-        viewFactor.beginDestroying(1, 3);
+        viewFactor.destroy(1, 3);
         if (checked) { // uncheck
             checked = false;
             selectionFactor.setValues(1, 0);
-            selectionFactor.beginDestroying(1, 3);
+            selectionFactor.destroy(1, 3);
         } else { // check
             checked = true;
             selectionFactor.setValues(0, 0);
-            selectionFactor.beginSpawning(1, 2);
+            selectionFactor.appear(1, 2);
         }
 
-        if (reactBehavior != null) {
-            reactBehavior.reactAction(this);
+        if (reaction != null) {
+            reaction.reactAction(this);
         }
     }
 
@@ -94,10 +94,10 @@ public class CheckButtonYio extends ButtonYio {
         this.checked = checked;
         if (checked) {
             selectionFactor.setValues(1, 0);
-            selectionFactor.beginSpawning(1, 1);
+            selectionFactor.appear(1, 1);
         } else {
             selectionFactor.setValues(0, 0);
-            selectionFactor.beginDestroying(1, 1);
+            selectionFactor.destroy(1, 1);
         }
     }
 

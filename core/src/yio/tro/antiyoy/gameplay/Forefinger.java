@@ -4,9 +4,7 @@ import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 
-/**
- * Created by ivan on 12.11.2015.
- */
+
 public class Forefinger {
 
     private final GameController gameController;
@@ -36,7 +34,7 @@ public class Forefinger {
 
     void move() {
         jumpingUnit.moveJumpAnim();
-        if (sizeFactor.needsToMove()) sizeFactor.move();
+        if (sizeFactor.hasToMove()) sizeFactor.move();
         double deltaX = 0.05 * w * jumpingUnit.jumpPos * Math.cos(rotation - Math.PI / 2);
         double deltaY = 0.05 * w * jumpingUnit.jumpPos * Math.sin(rotation - Math.PI / 2);
         animPos.set(pointPos.x + deltaX, pointPos.y + deltaY);
@@ -45,7 +43,7 @@ public class Forefinger {
 
     private void beginSpawnAnimation() {
         sizeFactor.setValues(0, 0);
-        sizeFactor.beginSpawning(4, 2);
+        sizeFactor.appear(4, 2);
     }
 
 
@@ -56,7 +54,7 @@ public class Forefinger {
 
 
     void hide() {
-        sizeFactor.beginDestroying(1, 3);
+        sizeFactor.destroy(1, 3);
     }
 
 

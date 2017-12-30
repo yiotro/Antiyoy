@@ -18,6 +18,7 @@ public class Replay {
     public String initialLevelString;
     public boolean tempSlayRules;
     public int tempColorOffset;
+    public int realNumberOfHumans;
     RepActionFactory factory;
     int currentStepIndex;
     String stringActions;
@@ -32,6 +33,7 @@ public class Replay {
         tempSlayRules = false;
         tempColorOffset = 0;
         currentStepIndex = 0;
+        realNumberOfHumans = 0;
         stringActions = null;
         go = true;
         tempGo = true;
@@ -74,6 +76,8 @@ public class Replay {
 
         if (GameRules.replayMode) {
             gameController.speedManager.setSpeed(SpeedManager.SPEED_PAUSED);
+        } else {
+            realNumberOfHumans = gameController.playersNumber;
         }
     }
 
@@ -81,6 +85,7 @@ public class Replay {
     public void performStep() {
         while (go) {
             if (actions.size() == 0) return;
+            if (currentStepIndex < 0 || currentStepIndex >= actions.size()) return;
 
             RepAction repAction = actions.get(currentStepIndex);
             repAction.perform(gameController);
@@ -133,6 +138,7 @@ public class Replay {
 
         preferences.putBoolean("slay_rules", tempSlayRules);
         preferences.putInteger("color_offset", tempColorOffset);
+        preferences.putInteger("real_human_number", realNumberOfHumans);
 
         preferences.putString("actions", convertActionsToString());
 
@@ -156,6 +162,7 @@ public class Replay {
         initialLevelString = preferences.getString("initial");
         tempSlayRules = preferences.getBoolean("slay_rules");
         tempColorOffset = preferences.getInteger("color_offset", 0);
+        realNumberOfHumans = preferences.getInteger("real_human_number", 0);
 
         stringActions = preferences.getString("actions");
     }
@@ -196,6 +203,11 @@ public class Replay {
 
     public void setTempColorOffset(int tempColorOffset) {
         this.tempColorOffset = tempColorOffset;
+    }
+
+
+    public void setRealNumberOfHumans(int realNumberOfHumans) {
+        this.realNumberOfHumans = realNumberOfHumans;
     }
 
 
