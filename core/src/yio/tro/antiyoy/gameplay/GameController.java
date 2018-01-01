@@ -381,6 +381,8 @@ public class GameController {
 
 
     private void checkToProposeSurrender() {
+        if (GameRules.diplomacyEnabled) return;
+
         if (!proposedSurrender) {
             int possibleWinner = fieldController.possibleWinner();
             if (possibleWinner >= 0 && isPlayerTurn(possibleWinner)) {

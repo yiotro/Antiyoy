@@ -382,7 +382,10 @@ public class ButtonYio {
 
     private void reloadTexture() {
         resetTexture();
+
+        boolean sh = hasShadow;
         loadTexture(texturePath);
+        setShadow(sh);
     }
 
 

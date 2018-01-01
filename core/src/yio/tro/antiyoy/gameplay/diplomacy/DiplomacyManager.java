@@ -9,6 +9,7 @@ import yio.tro.antiyoy.menu.SingleMessages;
 import yio.tro.antiyoy.menu.diplomacy_element.DeIcon;
 import yio.tro.antiyoy.menu.diplomacy_element.DiplomacyElement;
 import yio.tro.antiyoy.menu.scenes.Scenes;
+import yio.tro.antiyoy.stuff.Yio;
 import yio.tro.antiyoy.stuff.object_pool.ObjectPoolYio;
 
 import java.util.ArrayList;
@@ -84,6 +85,31 @@ public class DiplomacyManager {
 
         Scenes.sceneDipMessage.create();
         Scenes.sceneDipMessage.dialog.setMessage("win_conditions", "diplomatic_win_conditions");
+    }
+
+
+    void onEntityDied(DiplomaticEntity deadEntity) {
+        dropEntityRelationsToDefault(deadEntity);
+        cancelContractsWithEntity(deadEntity);
+    }
+
+
+    private void dropEntityRelationsToDefault(DiplomaticEntity deadEntity) {
+        for (DiplomaticEntity entity : entities) {
+            if (entity == deadEntity) continue;
+
+            makeNeutral(deadEntity, entity);
+        }
+    }
+
+
+    private void cancelContractsWithEntity(DiplomaticEntity deadEntity) {
+        for (int i = contracts.size() - 1; i >= 0; i--) {
+            DiplomaticContract diplomaticContract = contracts.get(i);
+            if (!diplomaticContract.contains(deadEntity)) continue;
+
+            removeContract(diplomaticContract);
+        }
     }
 
 
@@ -202,7 +228,7 @@ public class DiplomacyManager {
 
 
     public void onUserRequestedFriendship(DiplomaticEntity selectedEntity) {
-        makeFriends(selectedEntity, getMainEntity());
+        makeFriends(getMainEntity(), selectedEntity);
     }
 
 
@@ -401,9 +427,9 @@ public class DiplomacyManager {
     }
 
 
-    public int calculateDotationsForFriendship(DiplomaticEntity one, DiplomaticEntity two) {
-        int money1 = one.getStateBalance() * one.getNumberOfFriends();
-        int money2 = two.getStateBalance() * two.getNumberOfFriends();
+    public int calculateDotationsForFriendship(DiplomaticEntity initiator, DiplomaticEntity entity) {
+        int money1 = entity.getStateBalance() * entity.getNumberOfFriends();
+        int money2 = initiator.getStateBalance() * initiator.getNumberOfFriends();
         int max = Math.max(money1, money2);
         int cutValue = (int) (0.2 * ((float) max));
 
@@ -486,7 +512,7 @@ public class DiplomacyManager {
         }
 
         if (relation == DiplomaticRelation.NEUTRAL) {
-            makeEnemies(two, initiator);
+            makeEnemies(initiator, two);
         }
     }
 
@@ -506,13 +532,13 @@ public class DiplomacyManager {
     }
 
 
-    DiplomaticContract addContract(int contractType, DiplomaticEntity initiator, DiplomaticEntity two) {
+    DiplomaticContract addContract(int contractType, DiplomaticEntity initiator, DiplomaticEntity entity) {
         DiplomaticContract next = poolContracts.getNext();
 
-        next.setOne(initiator);
-        next.setTwo(two);
+        next.setOne(entity);
+        next.setTwo(initiator);
         next.setType(contractType);
-        next.setDotations(getDotationsByContractType(contractType, initiator, two));
+        next.setDotations(getDotationsByContractType(contractType, initiator, entity));
         next.setExpireCountDown(DiplomaticContract.getDurationByType(contractType));
 
         contracts.add(next);
@@ -538,6 +564,11 @@ public class DiplomacyManager {
         DiplomaticContract contract = findContract(contractType, one, two);
         if (contract == null) return;
 
+        removeContract(contract);
+    }
+
+
+    private void removeContract(DiplomaticContract contract) {
         poolContracts.add(contract);
         contracts.remove(contract);
     }
@@ -584,20 +615,23 @@ public class DiplomacyManager {
     }
 
 
-    public void makeFriends(DiplomaticEntity one, DiplomaticEntity two) {
-        if (one.getRelation(two) == DiplomaticRelation.FRIEND) return;
+    public void makeFriends(DiplomaticEntity initiator, DiplomaticEntity entity) {
+        if (!initiator.alive || !entity.alive) return;
+        if (initiator.getRelation(entity) == DiplomaticRelation.FRIEND) return;
 
-        one.setRelation(two, DiplomaticRelation.FRIEND);
-        two.setRelation(one, DiplomaticRelation.FRIEND);
+        // should be before relations change because they will influence dotations
+        addContract(DiplomaticContract.TYPE_FRIENDSHIP, initiator, entity);
+        removeContract(DiplomaticContract.TYPE_PIECE, initiator, entity);
 
-        addContract(DiplomaticContract.TYPE_FRIENDSHIP, one, two);
-        removeContract(DiplomaticContract.TYPE_PIECE, one, two);
+        initiator.setRelation(entity, DiplomaticRelation.FRIEND);
+        entity.setRelation(initiator, DiplomaticRelation.FRIEND);
 
         onRelationsChanged();
     }
 
 
     public void makeNeutral(DiplomaticEntity one, DiplomaticEntity two) {
+        if (!one.alive || !two.alive) return;
         if (one.getRelation(two) == DiplomaticRelation.NEUTRAL) return;
 
         one.setRelation(two, DiplomaticRelation.NEUTRAL);
@@ -610,14 +644,15 @@ public class DiplomacyManager {
     }
 
 
-    public boolean makeEnemies(DiplomaticEntity one, DiplomaticEntity two) {
-        if (one.getRelation(two) == DiplomaticRelation.ENEMY) return false;
+    public boolean makeEnemies(DiplomaticEntity initiator, DiplomaticEntity entity) {
+        if (!initiator.alive || !entity.alive) return false;
+        if (initiator.getRelation(entity) == DiplomaticRelation.ENEMY) return false;
 
-        one.setRelation(two, DiplomaticRelation.ENEMY);
-        two.setRelation(one, DiplomaticRelation.ENEMY);
+        initiator.setRelation(entity, DiplomaticRelation.ENEMY);
+        entity.setRelation(initiator, DiplomaticRelation.ENEMY);
 
-        removeContract(DiplomaticContract.TYPE_FRIENDSHIP, one, two);
-        removeContract(DiplomaticContract.TYPE_PIECE, one, two);
+        removeContract(DiplomaticContract.TYPE_FRIENDSHIP, initiator, entity);
+        removeContract(DiplomaticContract.TYPE_PIECE, initiator, entity);
 
         onRelationsChanged();
         return true;

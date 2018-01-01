@@ -346,8 +346,6 @@ public class DiplomacyElement extends InterfaceElement {
 
     private void updateHook() {
         hook = +(float) scrollEngineYio.getSlider().a;
-
-//        hook -= (1 - appearFactor.get()) * 0.2f * GraphicsYio.width;
     }
 
 
@@ -400,12 +398,13 @@ public class DiplomacyElement extends InterfaceElement {
 
 
     private void onAppear() {
-        scrollEngineYio.resetToBottom();
         label.setVisible(true);
         selectedItem = null;
 
         updateAll();
         dropSelections();
+
+        scrollEngineYio.resetToBottom();
     }
 
 

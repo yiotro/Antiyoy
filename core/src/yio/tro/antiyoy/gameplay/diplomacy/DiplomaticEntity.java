@@ -4,10 +4,8 @@ import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
-import yio.tro.antiyoy.menu.scenes.SceneSkirmishMenu;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -197,13 +195,13 @@ public class DiplomaticEntity implements ReusableYio {
     }
 
 
-    boolean acceptsFriendsRequest(DiplomaticEntity entity) {
-        if (isAnyFriendBlackMarkedWithHim(entity)) return false;
-        if (isBlackMarkedWith(entity)) return false;
+    boolean acceptsFriendsRequest(DiplomaticEntity initiator) {
+        if (isAnyFriendBlackMarkedWithHim(initiator)) return false;
+        if (isBlackMarkedWith(initiator)) return false;
 
         if (human) return true;
 
-        int dotations = diplomacyManager.calculateDotationsForFriendship(entity, this);
+        int dotations = diplomacyManager.calculateDotationsForFriendship(initiator, this);
         if (dotations < -10) return false;
 
         return true;
@@ -223,6 +221,8 @@ public class DiplomaticEntity implements ReusableYio {
 
 
     void updateAlive() {
+        boolean previousAliveState = alive;
+
         alive = false;
 
         for (Province province : diplomacyManager.fieldController.provinces) {
@@ -231,6 +231,15 @@ public class DiplomaticEntity implements ReusableYio {
                 break;
             }
         }
+
+        if (previousAliveState != alive && !alive) {
+            onDeath();
+        }
+    }
+
+
+    private void onDeath() {
+        diplomacyManager.onEntityDied(this);
     }
 
 

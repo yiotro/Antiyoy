@@ -21,8 +21,6 @@ public class AiFactory {
         aiList = gameController.getAiList();
         aiList.clear();
 
-        if (checkToTestNewAi()) return;
-
         for (int i = 0; i < GameRules.colorNumber; i++) {
             addAiToList(difficulty, i);
         }
@@ -91,15 +89,4 @@ public class AiFactory {
         return new AiEasy(gameController, i);
     }
 
-
-    boolean checkToTestNewAi() {
-        if (GameRules.colorNumber != 5) return false;
-
-        aiList.add(new AiExpertGenericRules(gameController, 0));
-        aiList.add(new AiExpertGenericRules(gameController, 1));
-        aiList.add(new AiExpertGenericRules(gameController, 2));
-        aiList.add(new AiBalancerGenericRules(gameController, 3));
-        aiList.add(new AiBalancerGenericRules(gameController, 4));
-        return true;
-    }
 }

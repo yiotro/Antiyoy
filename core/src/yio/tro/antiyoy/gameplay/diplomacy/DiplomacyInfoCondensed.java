@@ -62,6 +62,10 @@ public class DiplomacyInfoCondensed implements ReusableYio {
             builder.append(getSingleContractCode(contract)).append(",");
         }
 
+        if (builder.length() == 0) {
+            builder.append(" ");
+        }
+
         contracts = builder.toString();
     }
 
@@ -93,6 +97,8 @@ public class DiplomacyInfoCondensed implements ReusableYio {
 
     private void applySingleContract(String s) {
         String[] split = s.split(" ");
+
+        if (split.length == 0) return;
 
         int type = Integer.valueOf(split[0]);
         int color1 = Integer.valueOf(split[1]);

@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.gameplay.diplomacy;
 
+import yio.tro.antiyoy.stuff.Yio;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
 public class DiplomaticContract implements ReusableYio {

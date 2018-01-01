@@ -34,6 +34,7 @@ public class LightUpAlgorithm {
                 Hex adjacentHex = hex.getAdjacentHex(dir);
                 if (adjacentHex == null) continue;
                 if (isUsed(adjacentHex)) continue;
+                if (queue.contains(adjacentHex)) continue;
 
                 adjacentHex.moveZoneNumber = hex.moveZoneNumber - 1;
                 queue.add(adjacentHex);
@@ -54,6 +55,8 @@ public class LightUpAlgorithm {
 
     private void deactivateFogPoint(Hex hex) {
         FogPoint fogPoint = fogOfWarManager.fogMap.get(hex);
+        if (fogPoint == null) return;
+
         fogPoint.setStatus(false);
     }
 

@@ -68,7 +68,7 @@ public class FriendshipDialog extends AbstractDiplomaticDialog {
     protected int getDotationsValue() {
         GameController gameController = menuControllerYio.yioGdxGame.gameController;
         DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
-        int dotations = diplomacyManager.calculateDotationsForFriendship(selectedEntity, mainEntity);
+        int dotations = diplomacyManager.calculateDotationsForFriendship(mainEntity, selectedEntity);
         return dotations;
     }
 
