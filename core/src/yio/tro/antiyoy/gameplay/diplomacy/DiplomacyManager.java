@@ -261,6 +261,8 @@ public class DiplomacyManager {
 
 
     public void onContractExpired(DiplomaticContract contract) {
+        removeContract(contract);
+
         if (contract.type == DiplomaticContract.TYPE_FRIENDSHIP) {
             int relation = contract.one.getRelation(contract.two);
             if (relation == DiplomaticRelation.FRIEND) {
@@ -580,7 +582,7 @@ public class DiplomacyManager {
         if (stateBalance < 5) return 0;
         if (two.getStateBalance() < 10) return 0;
 
-        return stateBalance / 2;
+        return - stateBalance / 2;
     }
 
 

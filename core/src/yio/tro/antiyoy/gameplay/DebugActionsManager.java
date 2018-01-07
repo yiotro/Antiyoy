@@ -25,7 +25,11 @@ public class DebugActionsManager {
 //        doShowActiveHexesString();
 //        doCaptureRandomHexes();
         //
-        gameController.fieldController.diplomacyManager.performAiToHumanFriendshipProposal();
+        for (Province province : gameController.fieldController.provinces) {
+            if (gameController.isPlayerTurn(province.getColor())) {
+                province.money += 50;
+            }
+        }
     }
 
 

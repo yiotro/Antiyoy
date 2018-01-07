@@ -1083,6 +1083,12 @@ public class FieldController {
     }
 
 
+    public Hex getRandomActivehex() {
+        int index = YioGdxGame.random.nextInt(activeHexes.size());
+        return activeHexes.get(index);
+    }
+
+
     public Province getMaxProvinceFromList(ArrayList<Province> list) {
         if (list.size() == 0) return null;
         Province max, temp;

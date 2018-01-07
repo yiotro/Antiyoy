@@ -58,7 +58,7 @@ public class StopWarDialog extends AbstractDiplomaticDialog {
         int reparations = diplomacyManager.calculateReparations(diplomacyManager.getMainEntity(), selectedEntity);
         if (reparations == 0) return "0";
 
-        return "-" + reparations;
+        return "" + reparations;
     }
 
 

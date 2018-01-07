@@ -41,6 +41,9 @@ public class CampaignLevelFactory {
     public boolean createCampaignLevel(int index) {
         this.index = index;
 
+        // to avoid crash
+        Scenes.sceneMoreCampaignOptions.prepare();
+
         CampaignProgressManager.getInstance().setCurrentLevelIndex(index);
         gameController.getYioGdxGame().setSelectedLevelIndex(index);
         updateRules(); // used for pack two

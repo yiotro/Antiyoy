@@ -143,7 +143,14 @@ public class DiplomaticEntity implements ReusableYio {
 
     public void updateCapitalName() {
         Province largestProvince = getLargestProvince(color);
-        Hex capital = largestProvince.getCapital();
+
+        Hex capital;
+        if (largestProvince != null) {
+            capital = largestProvince.getCapital();
+        } else {
+            capital = diplomacyManager.fieldController.getRandomActivehex();
+        }
+
         capitalName = CityNameGenerator.getInstance().generateName(capital);
     }
 

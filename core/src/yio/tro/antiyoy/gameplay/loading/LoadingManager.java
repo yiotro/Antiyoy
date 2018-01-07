@@ -135,6 +135,8 @@ public class LoadingManager {
         }
 
         gameController.fieldController.detectProvinces();
+        gameController.stopAllUnitsFromJumping();
+        gameController.prepareCertainUnitsToMove();
     }
 
 

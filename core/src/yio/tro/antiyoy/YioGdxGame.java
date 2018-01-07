@@ -604,9 +604,6 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         if (GameRules.campaignMode) {
             int currentLevelIndex = CampaignProgressManager.getInstance().currentLevelIndex;
 
-            // to avoid crash
-            Scenes.sceneMoreCampaignOptions.prepare();
-
             campaignLevelFactory.createCampaignLevel(currentLevelIndex);
             return;
         }

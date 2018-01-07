@@ -6,6 +6,7 @@ import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.GameSaver;
 import yio.tro.antiyoy.stuff.LanguagesManager;
+import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -202,10 +203,12 @@ public class SaveSystem {
 
         if (!containsKey(autosaveKey, SAVE_SLOT_PREFS)) {
             addKey(autosaveKey, SAVE_SLOT_PREFS);
-            SaveSlotInfo saveSlotInfo = new SaveSlotInfo();
-            saveSlotInfo.name = LanguagesManager.getInstance().getString("autosave");
-            editSlot(autosaveKey, saveSlotInfo, SAVE_SLOT_PREFS);
         }
+
+        SaveSlotInfo saveSlotInfo = new SaveSlotInfo();
+        saveSlotInfo.name = LanguagesManager.getInstance().getString("autosave");
+        saveSlotInfo.description = Yio.getDate();
+        editSlot(autosaveKey, saveSlotInfo, SAVE_SLOT_PREFS);
 
         saveGame(autosaveKey);
         moveAutosaveKeyToFirstPlace();
