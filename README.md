@@ -1,33 +1,10 @@
 
 # Setting up
 
-## LibGDX Project Generator
-(I used antiyoy-dd as the name, anything else is fine)
+1. `git clone https://github.com/yiotro/Antiyoy`
+2. Open the folder in android studio. The project should get generated from the gradle files.
 
-Download the libgdx project generator:
-https://libgdx.badlogicgames.com/download.html
-
-Use it to generate a project:
-1. Fill details
-   * Antiyoy:
-      * antiyoy-dd
-      * yio.tro.antiyoy
-      * YioGdxGame
-      * D:\Projects\Android\antiyoy-dd
-1. Remove ios and html sub-projects
-1. Under ‘Extensions’ enable the following:
-   * Freetype
-1. Inside ‘Advanced’ enable ‘IDEA’
-1. Click ‘Generate’
-1. Verify appropriate build-tools (23.0.1) & API (20) versions (NO,OK,NO,OK)
-
-## IDEA Project Settings
-Open ‘antiyoy-dd.ipr’ (do not import) in IDEA
-Ignore ballon notification about ‘unlinked gradle project’ (better just press ‘do not show anymore’)
-
-Open settings (Click Ctrl+Shift+Alt+S)
-1. Set Android SDK (default of libGdx - API 20)
-1. Set language level (Antiyoy minimum - 7)
+## Running the app
 
 Edit Run/Debug Configurations
 * Android
@@ -51,24 +28,6 @@ Or it can be done easier:
    1. Press Ctrl+Shift+F10
    1. Go to run configuration and set working directoy to ‘android/assets’
 
-## Test
-At this stage you should be able to run the android and the desktop version of the generated example. Use the run button or press Shift+F10. Also you can use Alt+Shift+F10 to choose which run config to run.
-
-##Copy Antiyoy Source Files
-Delete ‘android/assets/badlogic.jpg’.
-
-Download or clone the github repository of Antiyoy from:
-https://github.com/yiotro/Antiyoy
-
-Overwrite the files in ‘antiyoy-dd’ with the files from Antiyoy repository:
-   1. The ‘assets’ directory shoud overwrite ‘android/assets’ directory
-   1. The ‘core’ directory shoud overwrite ‘core’ directory (At least one file should be replaced, the one that extends ApplicationAdapter)
-
-## AndroidManifest
-Open ‘android/AndroidManifest.xml’
-Change screenOrientation to portrait
-
-## Test
 At this stage you should be able to run Antiyoy, try it!
 
 # TODO - How to make a pull request?
