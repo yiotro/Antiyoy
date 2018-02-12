@@ -310,7 +310,7 @@
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
         <string key="mutual_friends" value="Mutual"/>
-        <string key="dotations" value="Dotations"/>
+        <string key="dotations" value="Subsidies"/>
         <string key="treaty_of_friendship" value="Treaty of friendship"/>
         <string key="state" value="State"/>
         <string key="duration" value="Duration"/>
@@ -1478,7 +1478,7 @@
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
         <string key="mutual_friends" value="Mutual"/>
-        <string key="dotations" value="Dotations"/>
+        <string key="dotations" value="Subsidies"/>
         <string key="treaty_of_friendship" value="Treaty of friendship"/>
         <string key="state" value="State"/>
         <string key="duration" value="Duration"/>
@@ -1854,7 +1854,7 @@
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
         <string key="mutual_friends" value="Mutual"/>
-        <string key="dotations" value="Dotations"/>
+        <string key="dotations" value="Subsidies"/>
         <string key="treaty_of_friendship" value="Treaty of friendship"/>
         <string key="state" value="State"/>
         <string key="duration" value="Duration"/>
@@ -2239,7 +2239,7 @@
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
         <string key="mutual_friends" value="Mutual"/>
-        <string key="dotations" value="Dotations"/>
+        <string key="dotations" value="Subsidies"/>
         <string key="treaty_of_friendship" value="Treaty of friendship"/>
         <string key="state" value="State"/>
         <string key="duration" value="Duration"/>
@@ -2626,7 +2626,7 @@
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
         <string key="mutual_friends" value="Mutual"/>
-        <string key="dotations" value="Dotations"/>
+        <string key="dotations" value="Subsidies"/>
         <string key="treaty_of_friendship" value="Treaty of friendship"/>
         <string key="state" value="State"/>
         <string key="duration" value="Duration"/>
@@ -2975,7 +2975,7 @@
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
         <string key="mutual_friends" value="Mutual"/>
-        <string key="dotations" value="Dotations"/>
+        <string key="dotations" value="Subsidies"/>
         <string key="treaty_of_friendship" value="Treaty of friendship"/>
         <string key="state" value="State"/>
         <string key="duration" value="Duration"/>
@@ -3349,7 +3349,7 @@
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
         <string key="mutual_friends" value="Mutual"/>
-        <string key="dotations" value="Dotations"/>
+        <string key="dotations" value="Subsidies"/>
         <string key="treaty_of_friendship" value="Treaty of friendship"/>
         <string key="state" value="State"/>
         <string key="duration" value="Duration"/>
@@ -3726,7 +3726,7 @@
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
         <string key="mutual_friends" value="Mutual"/>
-        <string key="dotations" value="Dotations"/>
+        <string key="dotations" value="Subsidies"/>
         <string key="treaty_of_friendship" value="Treaty of friendship"/>
         <string key="state" value="State"/>
         <string key="duration" value="Duration"/>
@@ -4122,7 +4122,7 @@
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
         <string key="mutual_friends" value="Mutual"/>
-        <string key="dotations" value="Dotations"/>
+        <string key="dotations" value="Subsidies"/>
         <string key="treaty_of_friendship" value="Treaty of friendship"/>
         <string key="state" value="State"/>
         <string key="duration" value="Duration"/>
@@ -4510,7 +4510,7 @@
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
         <string key="mutual_friends" value="Mutual"/>
-        <string key="dotations" value="Dotations"/>
+        <string key="dotations" value="Subsidies"/>
         <string key="treaty_of_friendship" value="Treaty of friendship"/>
         <string key="state" value="State"/>
         <string key="duration" value="Duration"/>
@@ -4901,7 +4901,7 @@
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
         <string key="mutual_friends" value="Mutual"/>
-        <string key="dotations" value="Dotations"/>
+        <string key="dotations" value="Subsidies"/>
         <string key="treaty_of_friendship" value="Treaty of friendship"/>
         <string key="state" value="State"/>
         <string key="duration" value="Duration"/>
