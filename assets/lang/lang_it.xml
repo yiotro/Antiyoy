@@ -1,6 +1,6 @@
 <language name="it_IT">
     <!-- All characters -->
-    <string key="lang_characters" value="öàèùìò"/>
+    <string key="lang_characters" value="àèéìòöù"/>
 
     <!-- Main menu -->
     <string key="main_menu_info" value="Info"/>
@@ -9,7 +9,7 @@
 
     <!-- Random stuff -->
     <string key="menu_level" value="Livello"/>
-    <string key="menu_reset" value="Reset"/>
+    <string key="menu_reset" value="Riavvia"/>
     <string key="game_saved" value="Gioco salvato"/>
     <string key="city_name_one" value="gda, mi, ki, can, mos, san"/>
     <string key="city_name_two" value="X, X, X, da, ro, lo, ta"/>
@@ -17,38 +17,38 @@
 
     <!-- Info -->
     <string key="info_back" value="Indietro"/>
-    <string key="info_array" value="E' un gioco di pura
+    <string key="info_array" value="È un gioco di pura
         #strategia con uno stile minimale.
-        #E' gratis e non ha ads o donazioni.
+        #È gratis e non ha né pubblicità né acquisti interni.
         #
         #Se questa è la tua prima partita
-        #e se sei nuovo al gioco
-        #clicca su info o aiuto.
+        #e sei nuovo al gioco
+        #guarda il tutorial o l'aiuto.
         #
         #Questo gioco si è ispirato a
-        #Slay from Sean O'Connor
+        #Slay di Sean O'Connor
         #
         #
         #
         #
         #E-mail: yiotro93@gmail.com
-        #Made by yiotro
+        #Realizzato da yiotro
         "/>
 
-    <string key="reset_campaign_data" value="Resetta campagna"/>
+    <string key="reset_campaign_data" value="Riavvia campagna"/>
     <string key="special_thanks" value="Un ringraziamento speciale:
         #
         #Rebecca Nöll:
-        #traduzione tedesca
+        #traduzione in tedesco
         #
         #Jirka Justra:
-        #traduzione ceca
+        #traduzione in ceco
         #
         #Olek Jablonski:
-        #traduzioni polacco
+        #traduzione in polacco
         #
         #Andrea Rinaldi:
-        #traduzione italiana
+        #traduzione in italiano
         #
         #Louis Philibert-Morrissette:
         #traduzione in francese"/>
@@ -66,19 +66,19 @@
     <string key="map_size" value="Grandezza mappa"/>
     <string key="color_number" value="Colori"/>
     <string key="player_number" value="Giocatori"/>
-    <string key="small" value="Piccola"/>
-    <string key="medium" value="Media"/>
-    <string key="big" value="Grande"/>
-    <string key="ai_only" value="Solo AI"/>
+    <string key="small" value="piccola"/>
+    <string key="medium" value="media"/>
+    <string key="big" value="grande"/>
+    <string key="ai_only" value="Solo IA"/>
     <string key="single_player" value="Giocatore singolo"/>
     <string key="multiplayer" value="Più giocatori"/>
     <string key="colors" value="colori"/>
     <string key="color" value="colori"/>
     <string key="difficulty" value="Difficoltà"/>
-    <string key="easy" value="Facile"/>
-    <string key="normal" value="Normale"/>
-    <string key="hard" value="Difficile"/>
-    <string key="expert" value="Esperto"/>
+    <string key="easy" value="facile"/>
+    <string key="normal" value="normale"/>
+    <string key="hard" value="difficile"/>
+    <string key="expert" value="esperto"/>
     <string key="player_color" value="Colore giocatore"/>
 
     <!-- In game menu -->
@@ -87,15 +87,15 @@
     <string key="in_game_menu_surrender" value="Arrenditi"/>
     <string key="in_game_menu_main_menu" value="Menù principale"/>
     <string key="in_game_menu_restart" value="Ricomincia"/>
-    <string key="confirm_restart" value="Vuoi riniziare?"/>
+    <string key="confirm_restart" value="Vuoi ricominciare il gioco?"/>
     <string key="cancel" value="Cancella"/>
     <string key="confirm_end_turn" value="Fine turno?"/>
-    <string key="yes" value="Si"/>
+    <string key="yes" value="Sì"/>
 
     <!-- End game menu -->
     <string key="end_game_ok" value="Ok"/>
     <string key="player" value="giocatore"/>
-    <string key="ai" value="AI"/>
+    <string key="ai" value="IA"/>
     <string key="won" value="Vincitore"/>
     <string key="statistics" value="Statistiche"/>
     <string key="next" value="Successivo"/>
@@ -124,7 +124,7 @@
     <string key="gray_menu" value="Grigio"/>
 
     <!-- Tutorial -->
-    <string key="normal_rules" value="Normal rules"/>
+    <string key="normal_rules" value="Regole classiche"/>
     <string key="how_to_play" value="Come giocare"/>
     <string key="tutorial_ok" value="Ok"/>
     <string key="tut_select_unit" value="Seleziona unità"/>
@@ -133,7 +133,7 @@
     <string key="tut_build_tower" value="Costruisci una torre"/>
     <string key="tut_again" value="Ancora"/>
     <string key="tut_build_spearman" value="Addestra un lanciere"/>
-    <string key="tut_tap_to_undo" value="Clicca 'indietro'"/>
+    <string key="tut_tap_to_undo" value="Clicca 'Indietro'"/>
     <string key="tut_tap_to_end_turn" value="Clicca per terminare il turno"/>
     <string key="tut_hold_hex" value="Tieni premuto"/>
     <string key="tut_merge_units" value="Riunire le unità"/>
@@ -141,13 +141,13 @@
 
     <!-- Tutorial tips -->
     <string key="tip_capture_with_units" value="Attacca con le tue unità#per conquistare i territori"/>
-    <string key="tip_about_money" value="Più grande è il tuo territorio#più soldi riceverai da esso"/>
-    <string key="tip_build_towers" value="Costruisci una torre per proteggere#il territorio vicino ad essa"/>
-    <string key="tip_about_taxes" value="Unità più forti costano# più denaro ad ogni turno"/>
-    <string key="tip_about_defense" value="Unità e case anche#difendono i territori vicini"/>
-    <string key="tip_hold_to_march" value="Per muovere velocemente le unità#usa 'tieni la direzione'"/>
-    <string key="tip_about_unit_death" value="Se termini i soldi#le unità moriranno.#Fa attenzione!"/>
-    <string key="tip_merging" value="Raggruppa le unità #per avere più forza"/>
+    <string key="tip_about_money" value="Più grande è il tuo territorio,#più soldi riceverai da esso"/>
+    <string key="tip_build_towers" value="Costruisci una torre per proteggere#le celle vicine"/>
+    <string key="tip_about_taxes" value="Unità più forti costano#più denaro"/>
+    <string key="tip_about_defense" value="Anche le unità e le case#difendono i territori vicini"/>
+    <string key="tip_hold_to_march" value="Per muovere velocemente le unità#usa 'Tieni la direzione'"/>
+    <string key="tip_about_unit_death" value="Se termini i soldi#le unità moriranno.#Fa' attenzione!"/>
+    <string key="tip_merging" value="Raggruppa le unità#per avere più forza"/>
     <string key="tip_trees" value="Gli alberi diminuiscono il reddito#quindi è meglio tagliarli"/>
     <string key="tip_help" value="Più informazioni#in 'Aiuto'"/>
 
@@ -155,6 +155,7 @@
     <string key="gen_greetings" value="Ciao! Questa guida ti illustra le regole del gioco."/>
     <string key="gen_select_province" value="Clicca sulla tua città per selezionarla."/>
     <string key="gen_select_unit" value="Grande! Tu hai diverse unità. Selezionane una."/>
+    <!-- UNTIL HERE EVERYTHING HAS BEEN CHECKED -->
     <string key="gen_move_unit" value="Tutte le unità si muovono una volta per turno. Ora, cattura un esagono vicino all'unità selezionata cliccando su di esso."/>
     <string key="gen_income" value="Ogni slot conquistato fa aumentare le tue entrate . A più slot corrispondono guadagni maggiori."/>
     <string key="gen_lets_build_farm" value="Costruiamo una fattoria per avere entrate maggiori."/>
