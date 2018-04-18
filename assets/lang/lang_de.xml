@@ -68,18 +68,18 @@
     <string key="map_size" value="Kartengröße"/>
     <string key="color_number" value="Farben"/>
     <string key="player_number" value="Spieler"/>
-    <string key="small" value="klein"/>
-    <string key="medium" value="mittel"/>
-    <string key="big" value="groß"/>
+    <string key="small" value="Klein"/>
+    <string key="medium" value="Mittel"/>
+    <string key="big" value="Groß"/>
     <string key="ai_only" value="nur AI"/>
     <string key="single_player" value="Einzelspieler"/>
     <string key="multiplayer" value="Mehrspieler"/>
     <string key="colors" value="Farben"/>
     <string key="color" value="Farben"/>
     <string key="difficulty" value="Schwierigkeit"/>
-    <string key="easy" value="einfach"/>
-    <string key="normal" value="normal"/>
-    <string key="hard" value="schwer"/>
+    <string key="easy" value="Einfach"/>
+    <string key="normal" value="Normal"/>
+    <string key="hard" value="Schwer"/>
     <string key="expert" value="Experte"/>
     <string key="player_color" value="Spielerfarbe"/>
 
