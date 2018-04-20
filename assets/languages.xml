@@ -1944,7 +1944,7 @@
 
     <language name="fr_FR" title="French" author="Louis Philibert-Morrissette">
         <!-- All characters -->
-        <string key="lang_characters" value="öéè'àùïôû"/>
+        <string key="lang_characters" value="Éöéè'àùïôû"/>
 
         <!-- Main menu -->
         <string key="main_menu_info" value="Infos"/>
@@ -1965,7 +1965,7 @@
         <string key="info_array" value="Il s'agit d'un simple jeu de
         #stratégie d'un style minimaliste.
         #Il est gratuit, sans publicité et sans demande de don.
-        #Si vous jouez pour la première fois
+        #Si vous jouez pour la première fois, 
         #Si ce jeu est nouveau pour vous
         #Suivez le didacticiel ou lisez « Aide ».
         #
@@ -1981,20 +1981,20 @@
         #Courriel : yiotro93@gmail.com
         #Auteur : yiotro
 		"/>
-        <string key="reset_campaign_data" value="Effacer données"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/> <!-- Same as english -->
-        <string key="special_thanks_title" value="Special thanks"/>
+        <string key="reset_campaign_data" value="Effacer les données"/>
+        <string key="special_thanks" value="Remerciements spéciaux à: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Remerciements"/>
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Affrontement"/>
         <string key="choose_game_mode_tutorial" value="Didacticiel"/>
         <string key="choose_game_mode_campaign" value="Campagne"/>
         <string key="choose_game_mode_load" value="Charger partie"/>
-        <string key="user_levels" value="User levels"/>
+        <string key="user_levels" value="Niveaux perso"/>
 
         <!-- User levels -->
-        <string key="add_my_map" value="Add my map"/>
-        <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
+        <string key="add_my_map" value="Ajouter ma carte"/>
+        <string key="how_add_my_map" value="Comment ajouter votre carte ici: #1. Créez-la dans l'éditeur. #2. Assurez-vous qu'elle est intéressante et battable. #3. Sélectionnez 'Exporter'. #4a. Postez-la sur pastebin.com et envoyez-moi le lien sur mon email yiotro93@gmail.com #4b. Ou postez-la sur mon subreddit /r/yiotro_games # #Si votre carte est vraiment difficile, il serait sympathique d'ajouter une vidéo qui indique comment gagner sur cette carte."/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Menu principal"/>
@@ -2011,15 +2011,15 @@
         <string key="multiplayer" value="multijoueur"/>
         <string key="colors" value="couleurs"/>
         <string key="color" value="couleurs"/>
-        <string key="difficulty" value="Niveau difficulté"/>
+        <string key="difficulty" value="Niveau de difficulté"/>
         <string key="easy" value="facile"/>
         <string key="normal" value="normal"/>  <!-- Same as english -->
         <string key="hard" value="difficile"/>
         <string key="expert" value="expert"/>  <!-- Same as english -->
         <string key="balancer" value="niveleur"/>
         <string key="player_color" value="Couleur du joueur"/>
-        <string key="fog_of_war" value="Fog of war"/>
-        <string key="diplomacy" value="Diplomacy"/>
+        <string key="fog_of_war" value="Brouillard de guerre"/>
+        <string key="diplomacy" value="Diplomacie"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Reprendre"/>
@@ -2074,7 +2074,7 @@
         <string key="tut_press_button" value="Appuyer sur le bouton"/>
         <string key="tut_build_tower" value="Construire une tour"/>
         <string key="tut_again" value="Encore"/>
-        <string key="tut_build_spearman" value="Construire un lancier"/>
+        <string key="tut_build_spearman" value="Former un lancier"/>
         <string key="tut_tap_to_undo" value="Taper sur « annuler »"/>
         <string key="tut_tap_to_end_turn" value="Taper pour terminer le tour"/>
         <string key="tut_hold_hex" value="Taper et tenir appuyé"/>
@@ -2091,7 +2091,7 @@
         <string key="tip_about_unit_death" value="Si vos coffres se vident,#vos unités mourront.#Soyez prudent"/>
         <string key="tip_merging" value="Fusionnez des unités pour #devenir plus puissant"/>
         <string key="tip_trees" value="Les arbres diminuent vos revenus#Vaut mieux les abattre"/>
-        <string key="tip_help" value="To skip rest of tutorial press 'help'"/>
+        <string key="tip_help" value="Pour passer le reste du tutoriel, appuyez sur 'aide'"/>
 
         <!-- Generic Tutorial -->
         <string key="gen_greetings" value="Bonjour. Ce didacticiel vous expliquera les règles du jeu."/>
@@ -2193,7 +2193,7 @@
         #Les arbres diminuent le revenu.
         #
         #Entretenir des unités coûte de l'argent.
-        #Plus puissante l'unité,
+        #Plus puissante est l'unité,
         #plus son entretien est coûteux.
         #
         #
@@ -2220,32 +2220,32 @@
         #pour abattre leur économie.
         "/>
 
-        <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
+        <string key="article_rules" value="Il y a deux règles dans le jeu: les règles normales et les règles de Slay. Les règles normales sont actives par défaut.
         #
-        #Initially game had only slay rules. That's why help describes them instead of normal rules.
+        #Au départ, le jeu n'avait que les règles de Slay. C'est pourquoi l'aide les décrit au lieu des règles normales.
         #
-        #To change rules in skirmish you have to tap 'more' before starting new game.
+        #Pour changer les règles en affrontement, vous devez sélectionner 'plus' avant de commencer une nouvelle partie.
         #
-        #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
+        #Pour chnger les règles du mode campagne, vous devez sélectionner '...' en haut à droite du menu de choix du niveau."/>
 
-        <string key="article_diplomacy_1" value="To win in diplomacy mode you have to be in friendship with everyone on map.
+        <string key="article_diplomacy_1" value="Pour gagner en mode diplomacie, vous devez être ami avec tout les autres sur la carte.
         #
-        #To open diplomacy UI just select your country and tap little 'flag' icon.
+        #Pour ouvrir l'interface de diplomacie, sélectionnez juste votre territoire et cliquez sur l'icône 'drapeau'.
         #
-        #Tap on any country in list and you'll see what you can do.
+        #Selectionnez un pays sur la liste pour voir ce que vous pouvez faire.
         #
-        #'Like' and 'dislike' buttons can make relations with that country better or worse."/>
+        #Les boutons 'Like' et 'dislike' peuvent rendre les relations avec ce pays meilleures ou moins bonnes."/>
 
-        <string key="article_diplomacy_2" value="The idea of black mark is simple: any other country can't be friends with both of you. It's a sort of diplomatical pressure.
+        <string key="article_diplomacy_2" value="L'idée de la marque noire est simple: aucun autre pays ne peut être ami avec vous deux en même temps. C'est une sorte de pression diplomatique.
         #
-        #Also, you won't be able to become friend with everyone easily. Last country will always refuse your friend request."/>
+        #Vous ne pourrez donc pas devenir facilement ami avec tout le monde. Le dernier pays refusera roujours votre demande d'amitié."/>
 
         <!-- Statistics -->
         <string key="turns_made" value="Tours joués :"/>
         <string key="units_died" value="Unités mortes durant la partie :"/>
         <string key="units_produced" value="Unités produits durant la partie :"/>
         <string key="money_spent" value="Argent dépensé :"/>
-        <string key="time" value="Time:"/>  <!-- Same as english -->
+        <string key="time" value="Temps:"/>
 
         <!-- Editor -->
         <string key="editor" value="Éditeur"/>
@@ -2253,7 +2253,7 @@
         <string key="slots" value="Emplacements de sauvegarde"/>
         <string key="import" value="Importer"/>
         <string key="export" value="Exporter"/>
-        <string key="empty" value="vide"/>
+        <string key="empty" value="Vide"/>
         <string key="play" value="Jouer"/>
         <string key="edit" value="Modifier"/>
         <string key="random" value="Aléatoire"/>
@@ -2262,11 +2262,11 @@
         <string key="no" value="Non"/>
         <string key="yes" value="Oui"/>
         <string key="confirm_import" value="Confirmer l'importation"/>
-        <string key="filter_no" value="No filter"/>  <!-- Same as english -->
-        <string key="filter_only_land" value="Only land"/>  <!-- Same as english -->
-        <string key="confirm_clear_level" value="Clear map?"/>
-        <string key="confirm_randomize" value="Generate random map?"/>
-        <string key="randomize" value="Randomize"/>
+        <string key="filter_no" value="Aucun filtre"/>
+        <string key="filter_only_land" value="Terrain seulement"/>
+        <string key="confirm_clear_level" value="Vider la carte?"/>
+        <string key="confirm_randomize" value="Générer une carte aléatoire?"/>
+        <string key="randomize" value="Générer aléatoirement"/>
 
         <!-- Settings -->
         <string key="autosave" value="Sauvegarde auto"/>
@@ -2274,64 +2274,64 @@
         <string key="city_names" value="Nom des villes"/>
         <string key="sound" value="Son"/>
         <string key="limited_turns" value="Nb. fixe de tours"/>
-        <string key="hold_to_march" value="Long tap to move"/>
+        <string key="hold_to_march" value="Rester appuyé pour déplacer"/>
         <string key="skin" value="Habillage"/>
-        <string key="original" value="original"/>  <!-- Same as english -->
-        <string key="points" value="points"/>  <!-- Same as english -->
-        <string key="grid" value="grille"/>
+        <string key="original" value="Original"/>  <!-- Same as english -->
+        <string key="points" value="Points"/>  <!-- Same as english -->
+        <string key="grid" value="Grille"/>
         <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
-        <string key="anim_style" value="sensibilité"/>
+        <string key="anim_style" value="Sensibilité"/>
         <string key="more" value="Plus"/>
         <string key="camera_offset" value="Cadrage"/>
         <string key="slay_rules" value="Règles de Slay"/>
         <string key="language" value="Langue"/>
         <string key="more_settings_checks" value="# #Texture aquatique # # "/>
         <string key="water_texture" value="Texture aquatique "/>
-        <string key="confirm_reset" value="Clear progress?"/>
+        <string key="confirm_reset" value="Effacer la progression?"/>
         <string key="replays" value="Replays"/>
-        <string key="save_replay" value="Save replay"/>
+        <string key="save_replay" value="Enregistrer le replay"/>
         <string key="replay" value="Replay"/>
-        <string key="replay_saved" value="Replay saved"/>
+        <string key="replay_saved" value="Replay enregistré"/>
         <string key="fast_construction" value="Fast construction"/>
-        <string key="music" value="Music"/>
-        <string key="left_handed" value="Left handed"/>
+        <string key="music" value="Musique"/>
+        <string key="left_handed" value="Main gauche"/>
 
         <!-- Single messages -->
-        <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>  <!-- Same as english -->
-        <string key="bleentoro_release" value="Hi. #I've made a new game. It's called 'Bleentoro'. You can find it in Google Play. #I hope you'll like it :)"/>
+        <string key="level_24" value="Ceci est le premier niveau 'difficile'. Faîtes plus attention à la défense."/>
+        <string key="bleentoro_release" value="Salut. #J'ai créé un nouveau jeu appelé 'Bleentoro'. Vous pouvez le trouver sur Google Play. #J'espère que vous l'apprécierez :)"/>
 
         <!-- Gameplay -->
-        <string key="friends" value="Friends"/>
-        <string key="mutual_friends" value="Mutual"/>
-        <string key="dotations" value="Subsidies"/>
-        <string key="treaty_of_friendship" value="Treaty of friendship"/>
-        <string key="state" value="State"/>
-        <string key="duration" value="Duration"/>
-        <string key="refuse_friendship" value="Sorry, I can't accept your friendship proposition."/>
-        <string key="friend" value="friend"/>
-        <string key="enemy" value="enemy"/>
-        <string key="neutral" value="neutral"/>
-        <string key="dead" value="dead"/>
-        <string key="confirm_cancel_friendship" value="Cancel friendship?"/>
-        <string key="confirm_start_war" value="Start war?"/>
-        <string key="peace_treaty" value="Peace treaty"/>
-        <string key="pay" value="Pay"/>
+        <string key="friends" value="Amis"/>
+        <string key="mutual_friends" value="Mutuel"/>
+        <string key="dotations" value="Dotations"/>
+        <string key="treaty_of_friendship" value="Traité d'amitié"/>
+        <string key="state" value="État"/>
+        <string key="duration" value="Durée"/>
+        <string key="refuse_friendship" value="Désolé, je ne peux pas accepter votre demande d'amitié."/>
+        <string key="friend" value="Ami"/>
+        <string key="enemy" value="Ennemi"/>
+        <string key="neutral" value="Neutre"/>
+        <string key="dead" value="Détruit"/>
+        <string key="confirm_cancel_friendship" value="Annuler l'amitié?"/>
+        <string key="confirm_start_war" value="Déclarer la guerre?"/>
+        <string key="peace_treaty" value="Traité de paix"/>
+        <string key="pay" value="Paiement"/>
         <string key="reparations" value="Reparations"/>
-        <string key="refuse_stop_war" value="I will fight to the end!"/>
-        <string key="win_conditions" value="Conditions of victory"/>
-        <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
-        <string key="confirm_black_mark" value="Put black mark?"/>
-        <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
-        <string key="player_turn" value="Player turn"/>
-        <string key="fine" value="Fine"/>
-        <string key="log" value="Letters"/>
-        <string key="friendship_proposal" value="Friendship proposal"/>
-        <string key="war_declaration" value="War declaration"/>
-        <string key="stop_war" value="Stop war"/>
-        <string key="friendship_ended" value="Friendship ended"/>
-        <string key="friendship_canceled" value="Friendship canceled"/>
-        <string key="black_marked" value="Black marked"/>
-        <string key="letter_sent" value="Letter sent"/>
+        <string key="refuse_stop_war" value="Je combattrai jusqu'au bout!"/>
+        <string key="win_conditions" value="Conditions de victoire"/>
+        <string key="diplomatic_win_conditions" value="Pour gagner diplomatiquement, vous devez être ami avec tout le monde."/>
+        <string key="confirm_black_mark" value="Placer une marque noire?"/>
+        <string key="black_mark_description" value="En plaçant une marque noire sur le joueur vous interdisez aux autres d'étre amis avec vous deux en même temps. Ne fonctionne pas sur les contrats déjà conclus."/>
+        <string key="player_turn" value="Tour du joueur"/>
+        <string key="fine" value="Bien"/>
+        <string key="log" value="Lettres"/>
+        <string key="friendship_proposal" value="Proposition d'amitié"/>
+        <string key="war_declaration" value="Déclaration de guerre"/>
+        <string key="stop_war" value="Arrêger la guerre"/>
+        <string key="friendship_ended" value="Amitié terminée"/>
+        <string key="friendship_canceled" value="Amitié annulée"/>
+        <string key="black_marked" value="Marqué"/>
+        <string key="letter_sent" value="Lettre envoyée"/>
     </language>
 
 
