@@ -1,16 +1,26 @@
 package yio.tro.antiyoy.menu.scenes.editor;
 
+import yio.tro.antiyoy.gameplay.editor.LevelEditor;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.behaviors.editor.EditorReactions;
 import yio.tro.antiyoy.menu.scenes.AbstractScene;
 
 public class SceneEditorActions extends AbstractScene{
 
 
+    double bHeight, y;
+    private ButtonYio basePanel;
+    int lastSlotNumber;
+
+
     public SceneEditorActions(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
+
+        bHeight = 0.075;
+        lastSlotNumber = -1;
     }
 
 
@@ -24,25 +34,16 @@ public class SceneEditorActions extends AbstractScene{
 
         menuControllerYio.spawnBackButton(189, EditorReactions.rbEditorSlotMenu);
 
-        ButtonYio basePanel = buttonFactory.getButton(generateRectangle(0.1, 0.3, 0.8, 0.4), 181, null);
+        y = 0.24;
+
+        basePanel = buttonFactory.getButton(generateRectangle(0.1, y, 0.8, 0.4), 181, null);
+        updateBaseText();
         basePanel.setTouchable(false);
-        basePanel.onlyShadow = true;
 
-        ButtonYio playButton = buttonFactory.getButton(generateRectangle(0.1, 0.3, 0.8, 0.1), 182, getString("play"));
-        playButton.setReaction(EditorReactions.rbEditorPlay);
-        playButton.setShadow(false);
-
-        ButtonYio exportButton = buttonFactory.getButton(generateRectangle(0.1, 0.4, 0.8, 0.1), 183, getString("export"));
-        exportButton.setReaction(EditorReactions.rbEditorExport);
-        exportButton.setShadow(false);
-
-        ButtonYio importButton = buttonFactory.getButton(generateRectangle(0.1, 0.5, 0.8, 0.1), 184, getString("import"));
-        importButton.setReaction(EditorReactions.rbEditorImportConfirmMenu);
-        importButton.setShadow(false);
-
-        ButtonYio editButton = buttonFactory.getButton(generateRectangle(0.1, 0.6, 0.8, 0.1), 185, getString("edit"));
-        editButton.setReaction(EditorReactions.rbStartEditorMode);
-        editButton.setShadow(false);
+        addInternalButton(182, "play", EditorReactions.rbEditorPlay);
+        addInternalButton(183, "export", EditorReactions.rbEditorExport);
+        addInternalButton(184, "import", EditorReactions.rbEditorImportConfirmMenu);
+        addInternalButton(185, "edit", EditorReactions.rbStartEditorMode);
 
         for (int i = 181; i <= 185; i++) {
             ButtonYio buttonYio = menuControllerYio.getButtonById(i);
@@ -51,5 +52,32 @@ public class SceneEditorActions extends AbstractScene{
         }
 
         menuControllerYio.endMenuCreation();
+    }
+
+
+    private void updateBaseText() {
+        basePanel.cleatText();
+
+        LevelEditor levelEditor = menuControllerYio.yioGdxGame.gameController.getLevelEditor();
+        int currentSlotNumber = levelEditor.getCurrentSlotNumber();
+        if (lastSlotNumber == currentSlotNumber) return; // no need to update
+
+        basePanel.addTextLine(getString("slot") + " " + currentSlotNumber);
+
+        basePanel.addEmptyLines(7);
+
+        menuControllerYio.buttonRenderer.renderButton(basePanel);
+        System.out.println("SceneEditorActions.updateBaseText");
+
+        lastSlotNumber = currentSlotNumber;
+    }
+
+
+    private void addInternalButton(int id, String key, Reaction reaction) {
+        ButtonYio button = buttonFactory.getButton(generateRectangle(0.1, y, 0.8, bHeight), id, getString(key));
+        button.setReaction(reaction);
+        button.setShadow(false);
+
+        y += bHeight;
     }
 }

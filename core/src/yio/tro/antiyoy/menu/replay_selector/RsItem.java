@@ -14,6 +14,7 @@ public class RsItem {
     public PointYio titlePosition, descPosition;
     public String key, title, description;
     float titleOffset, descOffset;
+    public PointYio removeIconPosition;
 
 
     public RsItem(ReplaySelector replaySelector) {
@@ -29,6 +30,7 @@ public class RsItem {
         description = null;
         titleOffset = 0.02f * GraphicsYio.width;
         descOffset = 0.045f * GraphicsYio.height;
+        removeIconPosition = new PointYio();
     }
 
 
@@ -65,6 +67,13 @@ public class RsItem {
         updatePosition();
         updateTitlePosition();
         updateDescPosition();
+        updateRemoveIconPosition();
+    }
+
+
+    private void updateRemoveIconPosition() {
+        removeIconPosition.x = (float) (position.x + position.width - 2 * titleOffset);
+        removeIconPosition.y = (float) (position.y + position.height - 2 * titleOffset);
     }
 
 

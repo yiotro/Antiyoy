@@ -10,7 +10,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbStatisticsMenu extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         Scenes.sceneStatisticsMenu.create(getGameController(buttonYio).matchStatistics);
     }
 }

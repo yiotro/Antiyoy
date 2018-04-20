@@ -1,5 +1,7 @@
 package yio.tro.antiyoy.menu.scenes.gameplay;
 
+import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.diplomatic_dialogs.FriendshipDialog;
 import yio.tro.antiyoy.stuff.GraphicsYio;
@@ -21,6 +23,8 @@ public class SceneFriendshipDialog extends AbstractGameplayScene{
         if (dialog == null) {
             initDialog();
         }
+
+        forceElementToTop(dialog);
 
         dialog.appear();
     }

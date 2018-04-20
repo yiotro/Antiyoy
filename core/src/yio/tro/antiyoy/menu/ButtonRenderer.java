@@ -70,13 +70,24 @@ public class ButtonRenderer {
         matrix4.setToOrtho2D(0, 0, orthoWidth, orthoHeight);
         batch.setProjectionMatrix(matrix4);
         batch.begin();
-        if (buttonYio.position.height < 0.12 * Gdx.graphics.getHeight())
-            batch.draw(getButtonBackground(buttonYio), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        else
-            batch.draw(bigButtonBackground, 0, 0, orthoWidth, orthoHeight);
+        drawButtonBackground(buttonYio, orthoWidth, orthoHeight);
         batch.end();
         pos = new RectangleYio(buttonYio.position);
         initText(buttonYio, font);
+    }
+
+
+    private void drawButtonBackground(ButtonYio buttonYio, int orthoWidth, int orthoHeight) {
+        if (buttonYio.hasCustomBackground()) {
+            batch.draw(buttonYio.getCustomBackgroundForText(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            return;
+        }
+
+        if (buttonYio.position.height < 0.12 * Gdx.graphics.getHeight()) {
+            batch.draw(getButtonBackground(buttonYio), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        } else {
+            batch.draw(bigButtonBackground, 0, 0, orthoWidth, orthoHeight);
+        }
     }
 
 

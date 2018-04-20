@@ -9,7 +9,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbRestartGame extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         if (buttonYio.id == 221) { // restart game confirmed
             getYioGdxGame(buttonYio).restartGame();
         } else {

@@ -11,7 +11,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbInfo extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         Settings.getInstance().saveSettings();
         Scenes.sceneInfoMenu.create();
     }

@@ -11,10 +11,27 @@ public class SceneHelpIndex extends AbstractScene{
     private int topicsNumber;
     private double tHeight;
     private double top;
+    private Reaction rbDiplomacy1;
+    private Reaction rbDiplomacy2;
+    private double y;
 
 
     public SceneHelpIndex(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
+
+        rbDiplomacy1 = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                Scenes.sceneInfoMenu.create("article_diplomacy_1", Reaction.rbHelpIndex, 18);
+            }
+        };
+
+        rbDiplomacy2 = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                Scenes.sceneInfoMenu.create("article_diplomacy_2", Reaction.rbHelpIndex, 18);
+            }
+        };
     }
 
 
@@ -26,31 +43,20 @@ public class SceneHelpIndex extends AbstractScene{
 
         menuControllerYio.getYioGdxGame().beginBackgroundChange(1, false, true);
 
-        topicsNumber = 6;
-        tHeight = 0.08;
-        top = 0.63;
+        topicsNumber = 8;
+        tHeight = 0.07;
+        top = 0.7;
         createBasePanel();
 
-
-        double y = top - tHeight;
-        createTopicButton(127, y, "help_about_rules", Reaction.rbArticleRules);
-        y -= tHeight;
-
-        createTopicButton(122, y, "help_about_units", Reaction.rbArticleUnits);
-        y -= tHeight;
-
-        createTopicButton(123, y, "help_about_trees", Reaction.rbArticleTrees);
-        y -= tHeight;
-
-        createTopicButton(124, y, "help_about_towers", Reaction.rbArticleTowers);
-        y -= tHeight;
-
-        createTopicButton(125, y, "help_about_money", Reaction.rbArticleMoney);
-        y -= tHeight;
-
-        createTopicButton(126, y, "help_about_tactics", Reaction.rbArticleTactics);
-        y -= tHeight;
-
+        y = top - tHeight;
+        createTopicButton(127, "help_about_rules", Reaction.rbArticleRules);
+        createTopicButton(122, "help_about_units", Reaction.rbArticleUnits);
+        createTopicButton(123, "help_about_trees", Reaction.rbArticleTrees);
+        createTopicButton(124, "help_about_towers", Reaction.rbArticleTowers);
+        createTopicButton(125, "help_about_money", Reaction.rbArticleMoney);
+        createTopicButton(126, "help_about_tactics", Reaction.rbArticleTactics);
+        createTopicButton(931, getString("diplomacy") + " " + 1, rbDiplomacy1);
+        createTopicButton(932, getString("diplomacy") + " " + 2, rbDiplomacy2);
 
         menuControllerYio.spawnBackButton(129, Reaction.rbMainMenu);
 
@@ -63,7 +69,7 @@ public class SceneHelpIndex extends AbstractScene{
         ButtonYio basePanel = buttonFactory.getButton(generateRectangle(0.1, top - topicsNumber * tHeight, 0.8, height), 120, null);
         if (basePanel.notRendered()) {
             basePanel.addTextLine(getString("help") + ":");
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < 1 + topicsNumber; i++) {
                 basePanel.addTextLine(" ");
             }
             menuControllerYio.getButtonRenderer().renderButton(basePanel);
@@ -73,10 +79,12 @@ public class SceneHelpIndex extends AbstractScene{
     }
 
 
-    private void createTopicButton(int id, double y, String key, Reaction reaction) {
-        ButtonYio topicButton = buttonFactory.getButton(generateRectangle(0.1, y, 0.8, 0.08), id, getString(key));
+    private void createTopicButton(int id, String key, Reaction reaction) {
+        ButtonYio topicButton = buttonFactory.getButton(generateRectangle(0.1, y, 0.8, tHeight), id, getString(key));
         topicButton.setReaction(reaction);
         topicButton.setShadow(false);
         topicButton.setAnimation(Animation.FROM_CENTER);
+
+        y -= tHeight;
     }
 }

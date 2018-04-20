@@ -9,7 +9,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbResumeGame extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         getYioGdxGame(buttonYio).gameView.beginSpawnProcess();
         Scenes.sceneGameOverlay.create();
         getYioGdxGame(buttonYio).setGamePaused(false);

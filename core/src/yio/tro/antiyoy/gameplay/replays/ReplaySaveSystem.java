@@ -109,6 +109,13 @@ public class ReplaySaveSystem {
     }
 
 
+    public void removeReplay(String key) {
+        keys.remove(key);
+
+        saveKeys();
+    }
+
+
     public RepSlot getSlotByKey(String key) {
         RepSlot repSlot = new RepSlot(gameController, key);
         repSlot.load();

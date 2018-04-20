@@ -319,7 +319,7 @@ public class Province {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("[Province:");
+        builder.append("[Province" + "(").append(gameController.fieldController.getColorName(getColor())).append(")").append(":");
         for (Hex hex : hexList) {
             builder.append(" ").append(hex);
         }

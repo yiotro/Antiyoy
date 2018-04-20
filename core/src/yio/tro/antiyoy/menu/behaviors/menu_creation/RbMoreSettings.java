@@ -11,7 +11,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbMoreSettings extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         Settings.getInstance().saveSettings();
         Scenes.sceneMoreSettingsMenu.create();
     }

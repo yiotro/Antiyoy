@@ -1,12 +1,11 @@
 package yio.tro.antiyoy.gameplay;
 
-import yio.tro.antiyoy.Settings;
 import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
 import yio.tro.antiyoy.gameplay.replays.ReplaySaveSystem;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
-import yio.tro.antiyoy.menu.MenuControllerYio;
-import yio.tro.antiyoy.menu.scenes.SceneNotification;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
 import java.util.ArrayList;
@@ -25,11 +24,40 @@ public class DebugActionsManager {
 //        doShowActiveHexesString();
 //        doCaptureRandomHexes();
         //
-        for (Province province : gameController.fieldController.provinces) {
-            if (gameController.isPlayerTurn(province.getColor())) {
-                province.money += 50;
-            }
-        }
+        doForceWin();
+    }
+
+
+    private DiplomacyManager getDiplomacyManager() {
+        return gameController.fieldController.diplomacyManager;
+    }
+
+
+    private void doShowDiplomaticCooldownsInConsole() {
+        getDiplomacyManager().showCooldownsInConsole(gameController.turn);
+    }
+
+
+    private void doGetSomeFriendshipProposals() {
+        getDiplomacyManager().performAiToHumanFriendshipProposal();
+    }
+
+
+    private void doShowTurnStartDialog() {
+        Scenes.sceneTurnStartDialog.create();
+        Scenes.sceneTurnStartDialog.dialog.setColor(0);
+    }
+
+
+    private void doShowGameRules() {
+        System.out.println();
+        System.out.println("DebugActionsManager.doShowGameRules");
+        System.out.println("GameRules.campaignMode = " + GameRules.campaignMode);
+        System.out.println("CampaignProgressManager.getInstance().currentLevelIndex = " + CampaignProgressManager.getInstance().currentLevelIndex);
+        System.out.println("GameRules.slayRules = " + GameRules.slayRules);
+        System.out.println("GameRules.userLevelMode = " + GameRules.userLevelMode);
+        System.out.println("GameRules.editorFog = " + GameRules.editorFog);
+        System.out.println("GameRules.editorDiplomacy = " + GameRules.editorDiplomacy);
     }
 
 
@@ -40,7 +68,7 @@ public class DebugActionsManager {
 
 
     private void doShowDiplomaticContracts() {
-        gameController.fieldController.diplomacyManager.showContractsInConsole(0);
+        getDiplomacyManager().showContractsInConsole(0);
     }
 
 
@@ -163,6 +191,11 @@ public class DebugActionsManager {
             int colorIndexWithOffset = gameController.ruleset.getColorIndexWithOffset(i);
             System.out.println(i + " -> " + colorIndexWithOffset);
         }
+    }
+
+
+    private void doForceWin() {
+        doCaptureRandomHexes();
     }
 
 

@@ -10,7 +10,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbMainMenu extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         getYioGdxGame(buttonYio).setGamePaused(true);
         Scenes.sceneMainMenu.create();
     }

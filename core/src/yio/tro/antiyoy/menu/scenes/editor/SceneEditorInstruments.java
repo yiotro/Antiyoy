@@ -16,12 +16,20 @@ public class SceneEditorInstruments extends AbstractScene{
     public static final double ICON_SIZE = 0.07;
     private ButtonYio optionsButtons;
     boolean readyToShrink;
+    private Reaction rbShowEditorChecks;
 
 
     public SceneEditorInstruments(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
         readyToShrink = true;
+
+        rbShowEditorChecks = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                Scenes.sceneEditorChecks.onTumblerButtonPressed();
+            }
+        };
     }
 
 
@@ -65,6 +73,7 @@ public class SceneEditorInstruments extends AbstractScene{
         createIcon(144, 2, "field_elements/man0_low.png", EditorReactions.rbShowObjectPanel);
 //        createIcon(147, 3, "menu/editor/coin.png", EditorReactions.rbEditorShowMoneyPanel);
 
+        createIconFromRight(148, 2, "menu/editor/chk.png", rbShowEditorChecks);
         createIconFromRight(146, 1, "menu/editor/automation_icon.png", EditorReactions.rbShowAutomationPanel);
         createIconFromRight(145, 0, "menu/editor/params_icon.png", EditorReactions.rbShowEditorParams);
 
@@ -95,6 +104,7 @@ public class SceneEditorInstruments extends AbstractScene{
         Scenes.sceneEditorParams.create();
         Scenes.sceneEditorAutomationPanel.create();
 //        Scenes.sceneEditorMoneyPanel.create();
+        Scenes.sceneEditorChecks.create();
 
         menuControllerYio.hideAllEditorPanels();
     }

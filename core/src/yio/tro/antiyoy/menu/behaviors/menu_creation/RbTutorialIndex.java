@@ -8,7 +8,7 @@ public class RbTutorialIndex extends Reaction {
 
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         Scenes.sceneTutorialIndex.create();
     }
 }

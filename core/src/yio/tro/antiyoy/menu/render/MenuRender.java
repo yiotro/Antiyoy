@@ -23,7 +23,11 @@ public abstract class MenuRender {
     public static RenderSaveSlotSelector renderSaveSlotSelector = new RenderSaveSlotSelector();
     public static RenderSlider renderSlider = new RenderSlider();
     public static RenderDiplomacyElement renderDiplomacyElement = new RenderDiplomacyElement();
-    public static RenderConfirmDialog renderConfirmDialog = new RenderConfirmDialog();
+    public static RenderDiplomaticDialog renderDiplomaticDialog = new RenderDiplomaticDialog();
+    public static RenderScrollableList renderScrollableList = new RenderScrollableList();
+    public static RenderSpecialThanksDialog renderSpecialThanksDialog = new RenderSpecialThanksDialog();
+    public static RenderTurnStartDialog renderTurnStartDialog = new RenderTurnStartDialog();
+    public static RenderDiplomaticLogPanel renderDiplomaticLogPanel = new RenderDiplomaticLogPanel();
 
     protected MenuViewYio menuViewYio;
     protected SpriteBatch batch;

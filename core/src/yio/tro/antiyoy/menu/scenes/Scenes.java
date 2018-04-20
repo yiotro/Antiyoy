@@ -9,12 +9,10 @@ public class Scenes {
     public static SceneMainMenu sceneMainMenu;
     public static SceneSettingsMenu sceneSettingsMenu;
     public static SceneMoreSettingsMenu sceneMoreSettingsMenu;
-    public static SceneLanguageMenu sceneLanguageMenu;
     public static SceneInfoMenu sceneInfoMenu;
     public static SceneMoreSkirmishOptions sceneMoreSkirmishOptions;
     public static SceneSkirmishMenu sceneSkirmishMenu;
     public static SceneTestMenu sceneTestMenu;
-    public static SceneEditorSlotsMenu sceneEditorSlotsMenu;
     public static SceneChoodeGameModeMenu sceneChoodeGameModeMenu;
     public static SceneTutorialIndex sceneTutorialIndex;
     public static SceneHelpIndex sceneHelpIndex;
@@ -29,7 +27,7 @@ public class Scenes {
     public static SceneEditorHexPanel sceneEditorHexPanel;
     public static SceneEditorInstruments sceneEditorInstruments;
     public static SceneGameOverlay sceneGameOverlay;
-    public static SceneBuildButtons sceneBuildButtons;
+    public static SceneSelectionOverlay sceneSelectionOverlay;
     public static ScenePauseMenu scenePauseMenu;
     public static SceneColorStats sceneColorStats;
     public static SceneTutorialTip sceneTutorialTip;
@@ -57,18 +55,25 @@ public class Scenes {
     public static SceneDipMessage sceneDipMessage;
     public static SceneStopWarDialog sceneStopWarDialog;
     public static SceneConfirmBlackMarkDialog sceneConfirmBlackMarkDialog;
+    public static SceneTestScrollableList sceneTestScrollableList;
+    public static SceneLanguages sceneLanguages;
+    public static SceneSpecialThanks sceneSpecialThanks;
+    public static SceneUserLevels sceneUserLevels;
+    public static SceneEditorSlots sceneEditorSlots;
+    public static SceneEditorChecks sceneEditorChecks;
+    public static SceneTurnStartDialog sceneTurnStartDialog;
+    public static SceneDiplomaticLog sceneDiplomaticLog;
+    public static SceneBleentoroRelease sceneBleentoroRelease;
 
 
     public static void createScenes(MenuControllerYio menuController) {
         sceneMainMenu = new SceneMainMenu(menuController);
         sceneSettingsMenu = new SceneSettingsMenu(menuController);
         sceneMoreSettingsMenu = new SceneMoreSettingsMenu(menuController);
-        sceneLanguageMenu = new SceneLanguageMenu(menuController);
         sceneInfoMenu = new SceneInfoMenu(menuController);
         sceneMoreSkirmishOptions = new SceneMoreSkirmishOptions(menuController);
         sceneSkirmishMenu = new SceneSkirmishMenu(menuController);
         sceneTestMenu = new SceneTestMenu(menuController);
-        sceneEditorSlotsMenu = new SceneEditorSlotsMenu(menuController);
         sceneChoodeGameModeMenu = new SceneChoodeGameModeMenu(menuController);
         sceneTutorialIndex = new SceneTutorialIndex(menuController);
         sceneHelpIndex = new SceneHelpIndex(menuController);
@@ -83,7 +88,7 @@ public class Scenes {
         sceneEditorHexPanel = new SceneEditorHexPanel(menuController);
         sceneEditorInstruments = new SceneEditorInstruments(menuController);
         sceneGameOverlay = new SceneGameOverlay(menuController);
-        sceneBuildButtons = new SceneBuildButtons(menuController);
+        sceneSelectionOverlay = new SceneSelectionOverlay(menuController);
         scenePauseMenu = new ScenePauseMenu(menuController);
         sceneColorStats = new SceneColorStats(menuController);
         sceneTutorialTip = new SceneTutorialTip(menuController);
@@ -111,5 +116,15 @@ public class Scenes {
         sceneDipMessage = new SceneDipMessage(menuController);
         sceneStopWarDialog = new SceneStopWarDialog(menuController);
         sceneConfirmBlackMarkDialog = new SceneConfirmBlackMarkDialog(menuController);
+        sceneTestScrollableList = new SceneTestScrollableList(menuController);
+        sceneLanguages = new SceneLanguages(menuController);
+        sceneSpecialThanks = new SceneSpecialThanks(menuController);
+        sceneUserLevels = new SceneUserLevels(menuController);
+        sceneEditorSlots = new SceneEditorSlots(menuController);
+        sceneEditorSlots = new SceneEditorSlots(menuController);
+        sceneEditorChecks = new SceneEditorChecks(menuController);
+        sceneTurnStartDialog = new SceneTurnStartDialog(menuController);
+        sceneDiplomaticLog = new SceneDiplomaticLog(menuController);
+        sceneBleentoroRelease = new SceneBleentoroRelease(menuController);
     }
 }

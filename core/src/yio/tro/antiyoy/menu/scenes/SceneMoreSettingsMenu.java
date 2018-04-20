@@ -43,7 +43,7 @@ public class SceneMoreSettingsMenu extends AbstractScene{
 
         backReaction = new Reaction() {
             @Override
-            public void reactAction(ButtonYio buttonYio) {
+            public void perform(ButtonYio buttonYio) {
                 Settings.getInstance().saveMoreSettings();
                 Scenes.sceneSettingsMenu.create();
             }
@@ -66,7 +66,6 @@ public class SceneMoreSettingsMenu extends AbstractScene{
         createCheckPanel();
         createCheckButtons();
 
-        createReplaysButton();
         createChooseLanguageButton();
 
         loadValues();
@@ -149,13 +148,6 @@ public class SceneMoreSettingsMenu extends AbstractScene{
         topLabel = buttonFactory.getButton(generateRectangle(0.1, 0.56, 0.8, 0.3), 312, " ");
         topLabel.setTouchable(false);
         topLabel.setAnimation(Animation.UP);
-    }
-
-
-    private void createReplaysButton() {
-        replaysButton = buttonFactory.getButton(generateRectangle(0.1, 0.13, 0.8, 0.07), 317, getString("replays"));
-        replaysButton.setReaction(Reaction.rbReplaysMenu);
-        replaysButton.setAnimation(Animation.DOWN);
     }
 
 

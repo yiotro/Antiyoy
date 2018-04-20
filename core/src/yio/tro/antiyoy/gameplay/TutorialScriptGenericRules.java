@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
@@ -52,7 +53,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
     @Override
     public void createTutorialGame() {
         LoadingParameters instance = LoadingParameters.getInstance();
-        instance.mode = LoadingParameters.MODE_TUTORIAL;
+        instance.mode = LoadingMode.TUTORIAL;
         instance.activeHexes = map;
         instance.playersNumber = 1;
         instance.colorNumber = 5;

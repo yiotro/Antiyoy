@@ -29,7 +29,7 @@ public class SceneConfirmDislike extends AbstractGameplayScene{
     private void initDialog() {
         dialog = new ConfirmDislikeDialog(menuControllerYio);
 
-        dialog.setPosition(generateRectangle(0, 0.15, 1, GraphicsYio.convertToHeight(0.3)));
+        dialog.setPosition(generateRectangle(0, 0.15, 1, GraphicsYio.convertToHeight(0.35)));
 
         menuControllerYio.addElementToScene(dialog);
     }

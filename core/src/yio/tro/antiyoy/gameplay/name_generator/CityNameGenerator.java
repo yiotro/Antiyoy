@@ -25,6 +25,11 @@ public class CityNameGenerator {
     }
 
 
+    public static void initialize() {
+        instance = null;
+    }
+
+
     public static CityNameGenerator getInstance() {
         if (instance == null) {
             instance = new CityNameGenerator();

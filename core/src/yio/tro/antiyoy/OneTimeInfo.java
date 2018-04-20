@@ -8,30 +8,35 @@ public class OneTimeInfo {
     public static final String PREFS_ONE_TIME = "antiyoy.one_time_info";
     private static OneTimeInfo instance = null;
 
-    public boolean aboutShroomArts;
+    public boolean bleentoroRelease;
+
+
+    public static void initialize() {
+        instance = null;
+    }
 
 
     public static OneTimeInfo getInstance() {
         if (instance == null) {
             instance = new OneTimeInfo();
-            instance.loadValues();
+            instance.load();
         }
 
         return instance;
     }
 
 
-    void loadValues() {
+    void load() {
         Preferences preferences = Gdx.app.getPreferences(PREFS_ONE_TIME);
 
-        aboutShroomArts = preferences.getBoolean("shroom_arts", false);
+        bleentoroRelease = preferences.getBoolean("bleentoro_release", true);
     }
 
 
     public void save() {
         Preferences preferences = Gdx.app.getPreferences(PREFS_ONE_TIME);
 
-        preferences.putBoolean("shroom_arts", aboutShroomArts);
+        preferences.putBoolean("bleentoro_release", bleentoroRelease);
 
         preferences.flush();
     }

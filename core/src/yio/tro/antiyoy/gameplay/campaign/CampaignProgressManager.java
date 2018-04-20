@@ -10,12 +10,18 @@ import java.util.StringTokenizer;
 
 public class CampaignProgressManager {
 
-    public static final String PROGRESS_PREFS = "antiyoy.progress";
-    public static final int INDEX_OF_LAST_LEVEL = 100;
+    public static final String PROGRESS_PREFS_GENERIC = "antiyoy.progress";
+    public static final String PROGRESS_PREFS_SLAY = "antiyoy.progress.slay"; // maybe will be used later
+    public static final int INDEX_OF_LAST_LEVEL = 105;
 
     private static CampaignProgressManager instance;
     public int currentLevelIndex;
     boolean progress[];
+
+
+    public static void initialize() {
+        instance = null;
+    }
 
 
     public static CampaignProgressManager getInstance() {
@@ -72,9 +78,14 @@ public class CampaignProgressManager {
             if (!progress[i]) continue;
             builder.append(i).append(" ");
         }
-        Preferences preferences = Gdx.app.getPreferences(PROGRESS_PREFS);
+        Preferences preferences = getPreferences();
         preferences.putString("completed_levels", builder.toString());
         preferences.flush();
+    }
+
+
+    private Preferences getPreferences() {
+        return Gdx.app.getPreferences(PROGRESS_PREFS_GENERIC);
     }
 
 
@@ -105,7 +116,7 @@ public class CampaignProgressManager {
     private void loadProgress() {
         clearProgress();
 
-        Preferences preferences = Gdx.app.getPreferences(PROGRESS_PREFS);
+        Preferences preferences = getPreferences();
         String completedLevels = preferences.getString("completed_levels", "");
 
         StringTokenizer tokenizer = new StringTokenizer(completedLevels, " ");
@@ -160,6 +171,17 @@ public class CampaignProgressManager {
         }
 
         return index;
+    }
+
+
+    public boolean isAtLeastOneLevelCompleted() {
+        for (int i = 0; i < progress.length; i++) {
+            if (isLevelComplete(i)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 

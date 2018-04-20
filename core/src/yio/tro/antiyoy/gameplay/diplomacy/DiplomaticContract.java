@@ -7,10 +7,12 @@ public class DiplomaticContract implements ReusableYio {
 
     public static final int DURATION_FRIEND = 12;
     public static final int DURATION_PIECE = 9;
+    public static final int DURATION_TRAITOR = 20;
 
     public static final int TYPE_FRIENDSHIP = 0;
     public static final int TYPE_PIECE = 1;
     public static final int TYPE_BLACK_MARK = 2;
+    public static final int TYPE_TRAITOR = 3;
 
     DiplomaticEntity one;
     DiplomaticEntity two;
@@ -50,6 +52,8 @@ public class DiplomaticContract implements ReusableYio {
                 return DURATION_PIECE;
             case TYPE_BLACK_MARK:
                 return -1;
+            case TYPE_TRAITOR:
+                return DURATION_TRAITOR;
         }
     }
 
@@ -94,6 +98,24 @@ public class DiplomaticContract implements ReusableYio {
         }
 
         return 0;
+    }
+
+
+    public int getOneColor() {
+        if (one == null) {
+            return -1;
+        }
+
+        return one.color;
+    }
+
+
+    public int getTwoColor() {
+        if (two == null) {
+            return -1;
+        }
+
+        return two.color;
     }
 
 

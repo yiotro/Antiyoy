@@ -10,7 +10,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbHelpIndex extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         Scenes.sceneHelpIndex.create();
     }
 }

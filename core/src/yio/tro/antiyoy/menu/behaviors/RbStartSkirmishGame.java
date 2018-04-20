@@ -2,6 +2,7 @@ package yio.tro.antiyoy.menu.behaviors;
 
 import yio.tro.antiyoy.gameplay.FieldController;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
+import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -14,7 +15,7 @@ import yio.tro.antiyoy.menu.slider.SliderYio;
 public class RbStartSkirmishGame extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         MenuControllerYio menuControllerYio = buttonYio.menuControllerYio;
 
         Scenes.sceneSkirmishMenu.saveValues();
@@ -24,7 +25,7 @@ public class RbStartSkirmishGame extends Reaction {
 
         LoadingParameters instance = LoadingParameters.getInstance();
 
-        instance.mode = LoadingParameters.MODE_SKIRMISH;
+        instance.mode = LoadingMode.SKIRMISH;
         instance.levelSize = getLevelSizeBySliderPos(Scenes.sceneSkirmishMenu.mapSizeSlider);
         instance.playersNumber = Scenes.sceneSkirmishMenu.playersSlider.getCurrentRunnerIndex();
         instance.colorNumber = Scenes.sceneSkirmishMenu.colorsSlider.getCurrentRunnerIndex() + 2;

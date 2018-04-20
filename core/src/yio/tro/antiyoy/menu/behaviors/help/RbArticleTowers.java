@@ -10,7 +10,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbArticleTowers extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         Scenes.sceneInfoMenu.create("help_towers_article", Reaction.rbHelpIndex, 18);
     }
 }

@@ -29,6 +29,11 @@ public class Settings {
     public static boolean leftHandMode;
 
 
+    public static void initialize() {
+        instance = null;
+    }
+
+
     public static Settings getInstance() {
         if (instance == null) {
             instance = new Settings();
@@ -95,7 +100,7 @@ public class Settings {
         fastConstruction = prefs.getBoolean("fast_construction", false);
         applyCheckButtonIfNotNull(menuControllerYio.getCheckButtonById(9), fastConstruction);
 
-        musicEnabled = prefs.getBoolean("music", true);
+        musicEnabled = prefs.getBoolean("music", false);
         applyCheckButtonIfNotNull(menuControllerYio.getCheckButtonById(2), musicEnabled);
 
         leftHandMode = prefs.getBoolean("left_hand_mode", false);
@@ -158,7 +163,11 @@ public class Settings {
         int lastIndex = skinIndex;
         SliderYio skinSlider = Scenes.sceneMoreSettingsMenu.skinSlider;
         skinIndex = skinSlider.getCurrentRunnerIndex();
+        if (skinIndex == lastIndex) return false;
+
         prefs.putInteger("skin", skinIndex);
+
+        Scenes.sceneSelectionOverlay.onSkinChanged();
 
         // shroom arts
         if (lastIndex != skinIndex && (lastIndex == 3 || skinIndex == 3)) {

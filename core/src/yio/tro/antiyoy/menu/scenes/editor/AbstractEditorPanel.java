@@ -10,6 +10,10 @@ public abstract class AbstractEditorPanel extends AbstractScene{
     }
 
 
+    @Override
+    public abstract void create();
+
+
     public abstract void hide();
 
 

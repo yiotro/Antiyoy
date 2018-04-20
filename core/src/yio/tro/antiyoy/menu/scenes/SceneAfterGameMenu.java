@@ -1,11 +1,9 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.Settings;
-import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
-import yio.tro.antiyoy.gameplay.DebugFlags;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
@@ -14,14 +12,22 @@ public class SceneAfterGameMenu extends AbstractScene {
 
 
     private ButtonYio replayButton;
+    int whoWon;
+    boolean playerIsWinner;
 
 
     public SceneAfterGameMenu(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
+
+        whoWon = 0;
+        playerIsWinner = true;
     }
 
 
     public void create(int whoWon, boolean playerIsWinner) {
+        this.whoWon = whoWon;
+        this.playerIsWinner = playerIsWinner;
+
         menuControllerYio.beginMenuCreation();
 
         menuControllerYio.getYioGdxGame().setGamePaused(true);
@@ -29,11 +35,11 @@ public class SceneAfterGameMenu extends AbstractScene {
 
         String message;
         if (playerIsWinner) {
-            message = menuControllerYio.getColorNameByIndex(whoWon, "_player") + " " +
+            message = menuControllerYio.getColorNameByIndexWithOffset(whoWon, "_player") + " " +
                     getString("player") + " " +
                     getString("won") + ".";
         } else {
-            message = menuControllerYio.getColorNameByIndex(whoWon, "_ai") + " " +
+            message = menuControllerYio.getColorNameByIndexWithOffset(whoWon, "_ai") + " " +
                     getString("ai") + " " +
                     getString("won") + ".";
         }
@@ -92,6 +98,6 @@ public class SceneAfterGameMenu extends AbstractScene {
 
     @Override
     public void create() {
-
+        create(whoWon, playerIsWinner);
     }
 }

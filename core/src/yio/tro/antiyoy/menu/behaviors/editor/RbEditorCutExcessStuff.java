@@ -6,7 +6,7 @@ import yio.tro.antiyoy.menu.behaviors.Reaction;
 public class RbEditorCutExcessStuff extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         getGameController(buttonYio).getLevelEditor().cutExcessStuff();
     }
 }

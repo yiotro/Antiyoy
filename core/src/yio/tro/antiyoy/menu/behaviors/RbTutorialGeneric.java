@@ -7,7 +7,7 @@ import yio.tro.antiyoy.menu.ButtonYio;
 public class RbTutorialGeneric extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         GameRules.setSlayRules(false);
         Settings.fastConstruction = false;
 

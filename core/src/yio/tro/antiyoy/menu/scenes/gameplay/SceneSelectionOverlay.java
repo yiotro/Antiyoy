@@ -1,7 +1,8 @@
 package yio.tro.antiyoy.menu.scenes.gameplay;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.menu.Animation;
-import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.Settings;
 import yio.tro.antiyoy.SoundControllerYio;
@@ -11,17 +12,21 @@ import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 
-public class SceneBuildButtons extends AbstractGameplayScene {
+public class SceneSelectionOverlay extends AbstractGameplayScene {
 
 
     private ButtonYio unitButton;
     private ButtonYio towerButton;
     private ButtonYio coinButton;
     private ButtonYio diplomacyButton;
+    TextureRegion flagNormal, flagRed;
 
 
-    public SceneBuildButtons(MenuControllerYio menuControllerYio) {
+    public SceneSelectionOverlay(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
+
+        flagNormal = GraphicsYio.loadTextureRegion("diplomacy/flag.png", true);
+        flagRed = GraphicsYio.loadTextureRegion("diplomacy/flag_red.png", true);
     }
 
 
@@ -42,20 +47,30 @@ public class SceneBuildButtons extends AbstractGameplayScene {
             diplomacyButton.enableRectangularMask();
             diplomacyButton.disableTouchAnimation();
             diplomacyButton.setTouchOffset(0.05f * GraphicsYio.width);
+            diplomacyButton.setIgnorePauseResume(true);
             diplomacyButton.setReaction(new Reaction() {
                 @Override
-                public void reactAction(ButtonYio buttonYio) {
-                    getGameController(buttonYio).selectionController.deselectAll();
-                    Scenes.sceneDiplomacy.create();
+                public void perform(ButtonYio buttonYio) {
+                    getGameController(buttonYio).fieldController.diplomacyManager.onDiplomacyButtonPressed();
                 }
             });
-            menuControllerYio.loadButtonOnce(diplomacyButton, "diplomacy/flag.png");
         }
+        updateDiplomacyFlagTexture();
         diplomacyButton.appearFactor.appear(3, 2);
         diplomacyButton.setTouchable(GameRules.diplomacyEnabled);
 
         if (!GameRules.diplomacyEnabled) {
             diplomacyButton.destroy();
+        }
+    }
+
+
+    private void updateDiplomacyFlagTexture() {
+        DiplomacyManager diplomacyManager = menuControllerYio.yioGdxGame.gameController.fieldController.diplomacyManager;
+        if (diplomacyManager.log.hasSomethingToRead()) {
+            diplomacyButton.setTexture(flagRed);
+        } else {
+            diplomacyButton.setTexture(flagNormal);
         }
     }
 
@@ -69,7 +84,7 @@ public class SceneBuildButtons extends AbstractGameplayScene {
             coinButton.enableRectangularMask();
             coinButton.disableTouchAnimation();
         }
-        loadCoinButtonTexture(coinButton);
+        loadCoinButtonTexture();
         coinButton.appearFactor.appear(3, 2);
         coinButton.setTouchable(true);
         coinButton.setReaction(Reaction.rbShowColorStats);
@@ -84,7 +99,7 @@ public class SceneBuildButtons extends AbstractGameplayScene {
             towerButton.setAnimation(Animation.DOWN);
             towerButton.enableRectangularMask();
         }
-        loadBuildObjectButton(towerButton);
+        loadBuildObjectButton();
         towerButton.setTouchable(true);
         towerButton.setTouchOffset(0.05f * GraphicsYio.width);
         towerButton.appearFactor.appear(3, 2);
@@ -99,33 +114,46 @@ public class SceneBuildButtons extends AbstractGameplayScene {
             unitButton.setAnimation(Animation.DOWN);
             unitButton.enableRectangularMask();
         }
-        loadUnitButtonTexture(unitButton);
+        loadUnitButtonTexture();
         unitButton.setTouchable(true);
         unitButton.setTouchOffset(0.05f * GraphicsYio.width);
         unitButton.appearFactor.appear(3, 2);
     }
 
 
-    void loadBuildObjectButton(ButtonYio objectButton) {
+    void loadBuildObjectButton() {
         if (GameRules.slayRules) {
-            loadTowerButtonTexture(objectButton);
+            loadTowerButtonTexture();
         } else {
-            loadFarmButtonTexture(objectButton);
+            loadFarmButtonTexture();
         }
     }
 
 
-    void loadFarmButtonTexture(ButtonYio farmButton) {
+    public void onSkinChanged() {
+        if (coinButton != null) {
+            coinButton.resetTexture();
+        }
+        if (unitButton != null) {
+            unitButton.resetTexture();
+        }
+        if (towerButton != null) {
+            towerButton.resetTexture();
+        }
+    }
+
+
+    void loadFarmButtonTexture() {
         if (Settings.isShroomArtsEnabled()) {
-            menuControllerYio.loadButtonOnce(farmButton, "skins/ant/field_elements/house.png");
+            menuControllerYio.loadButtonOnce(towerButton, "skins/ant/field_elements/house.png");
             return;
         }
 
-        menuControllerYio.loadButtonOnce(farmButton, "field_elements/house.png");
+        menuControllerYio.loadButtonOnce(towerButton, "field_elements/house.png");
     }
 
 
-    void loadTowerButtonTexture(ButtonYio towerButton) {
+    void loadTowerButtonTexture() {
         if (Settings.isShroomArtsEnabled()) {
             menuControllerYio.loadButtonOnce(towerButton, "skins/ant/field_elements/tower.png");
             return;
@@ -135,7 +163,7 @@ public class SceneBuildButtons extends AbstractGameplayScene {
     }
 
 
-    void loadUnitButtonTexture(ButtonYio unitButton) {
+    void loadUnitButtonTexture() {
         if (Settings.isShroomArtsEnabled()) {
             menuControllerYio.loadButtonOnce(unitButton, "skins/ant/field_elements/man0.png");
             return;
@@ -145,7 +173,7 @@ public class SceneBuildButtons extends AbstractGameplayScene {
     }
 
 
-    void loadCoinButtonTexture(ButtonYio coinButton) {
+    void loadCoinButtonTexture() {
         if (Settings.isShroomArtsEnabled()) {
             menuControllerYio.loadButtonOnce(coinButton, "skins/ant/coin.png");
             return;

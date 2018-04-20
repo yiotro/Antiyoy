@@ -20,7 +20,7 @@ public class ButtonYio {
     public static final int DEFAULT_TOUCH_DELAY = 1000;
     public final MenuControllerYio menuControllerYio;
     public RectangleYio position, animPos;
-    public TextureRegion textureRegion;
+    public TextureRegion textureRegion, customBackgroundForText;
     public FactorYio appearFactor, selectionFactor, selAlphaFactor;
     public final int id; // must be unique for every menu button
     protected boolean touchable;
@@ -38,8 +38,9 @@ public class ButtonYio {
     private float deltaSizeArgument, deltaSize, touchOffset, textOffset;
     Sound pressSound;
     String texturePath;
-    public boolean hasShadow, mandatoryShadow, rectangularMask,
-            onlyShadow, touchAnimation, lockAction, deltaAnimationEnabled; // mandatory shadow - draw shadow right before button
+    public boolean hasShadow, mandatoryShadow, rectangularMask; // mandatory shadow - draw shadow right before button
+    public boolean onlyShadow, touchAnimation, lockAction, deltaAnimationEnabled;
+    boolean ignorePauseResume;
 
 
     public ButtonYio(RectangleYio position, int id, MenuControllerYio menuControllerYio) {
@@ -62,6 +63,8 @@ public class ButtonYio {
         deltaAnimationEnabled = false;
         pressSound = null;
         textOffset = 0;
+        customBackgroundForText = null;
+        ignorePauseResume = false;
     }
 
 
@@ -166,7 +169,7 @@ public class ButtonYio {
     public boolean checkToPerformAction() {
         if (needToPerformAction && System.currentTimeMillis() > timeToPerformAction && !lockAction) {
             needToPerformAction = false;
-            reaction.reactAction(this);
+            reaction.perform(this);
             return true;
         }
         return false;
@@ -236,12 +239,31 @@ public class ButtonYio {
     }
 
 
+    public void setTexture(TextureRegion textureRegion) {
+        this.textureRegion = textureRegion;
+        hasShadow = false;
+    }
+
+
     public void loadTexture(String path) {
         Texture texture = new Texture(Gdx.files.internal(path));
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         textureRegion = new TextureRegion(texture);
         texturePath = path;
         hasShadow = false;
+    }
+
+
+    public void loadCustomBackground(String path) {
+        Texture texture = new Texture(Gdx.files.internal(path));
+        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        customBackgroundForText = new TextureRegion(texture);
+        texturePath = path;
+    }
+
+
+    public boolean hasCustomBackground() {
+        return customBackgroundForText != null;
     }
 
 
@@ -290,6 +312,13 @@ public class ButtonYio {
 
     public void addManyLines(ArrayList<String> lines) {
         text.addAll(lines);
+    }
+
+
+    public void addEmptyLines(int quantity) {
+        for (int k = 0; k < quantity; k++) {
+            addTextLine(" ");
+        }
     }
 
 
@@ -365,18 +394,42 @@ public class ButtonYio {
 
 
     public void onPause() {
+        if (ignorePauseResume) return;
+
         if (textureRegion != null) {
             textureRegion.getTexture().dispose();
+        }
+
+        if (customBackgroundForText != null) {
+            customBackgroundForText.getTexture().dispose();
         }
     }
 
 
     public void onResume() {
+        if (ignorePauseResume) return;
+
+        if (hasCustomBackground()) {
+            reloadCustomBackground();
+        }
+
         if (hasText()) {
             menuControllerYio.buttonRenderer.renderButton(this);
         } else {
             reloadTexture();
         }
+    }
+
+
+    private void reloadCustomBackground() {
+        customBackgroundForText = null;
+
+        loadCustomBackground(texturePath);
+    }
+
+
+    public TextureRegion getCustomBackgroundForText() {
+        return customBackgroundForText;
     }
 
 
@@ -396,6 +449,11 @@ public class ButtonYio {
 
     public void setPosition(RectangleYio position) {
         this.position = position;
+    }
+
+
+    public void setIgnorePauseResume(boolean ignorePauseResume) {
+        this.ignorePauseResume = ignorePauseResume;
     }
 
 

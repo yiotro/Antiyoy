@@ -50,9 +50,17 @@ public class SceneMoreSkirmishOptions extends AbstractScene{
             initColorSlider();
         }
 
-        SliderYio colorsSlider = Scenes.sceneSkirmishMenu.colorsSlider;
-        colorOffsetSlider.setNumberOfSegments(colorsSlider.getCurrentRunnerIndex() + colorsSlider.getMinNumber());
+        colorOffsetSlider.setNumberOfSegments(getNumberOfSegmentsForColorOffset());
         colorOffsetSlider.appear();
+    }
+
+
+    private int getNumberOfSegmentsForColorOffset() {
+        SliderYio colorsSlider = Scenes.sceneSkirmishMenu.colorsSlider;
+
+//        return colorsSlider.getCurrentRunnerIndex() + colorsSlider.getMinNumber();
+
+        return 5 + colorsSlider.getMinNumber();
     }
 
 

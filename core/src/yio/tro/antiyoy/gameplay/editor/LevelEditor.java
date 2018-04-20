@@ -3,6 +3,7 @@ package yio.tro.antiyoy.gameplay.editor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Clipboard;
+import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
@@ -21,7 +22,7 @@ public class LevelEditor {
 
     public static final String EDITOR_PREFS = "editor";
     public static final String SLOT_NAME = "slot";
-    public static final int TEMPORARY_SLOT_NUMBER = 1993; // to edit campaign levels
+    public static final int TEMPORARY_SLOT_NUMBER = 12345; // to edit campaign levels
     public GameController gameController;
     private final EditorAutomationManager editorAutomationManager;
     private int inputMode, inputColor, inputObject;
@@ -224,6 +225,8 @@ public class LevelEditor {
         Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
         prefs.putString(SLOT_NAME + currentSlotNumber, fullLevel);
         prefs.putInteger("chosen_color" + currentSlotNumber, GameRules.editorChosenColor);
+        prefs.putBoolean("editor_fog" + currentSlotNumber, GameRules.editorFog);
+        prefs.putBoolean("editor_diplomacy" + currentSlotNumber, GameRules.editorDiplomacy);
         prefs.flush();
     }
 
@@ -235,20 +238,22 @@ public class LevelEditor {
         LoadingParameters instance = LoadingParameters.getInstance();
 
         if (fullLevel.length() < 3) {
-            instance.mode = LoadingParameters.MODE_EDITOR_NEW;
+            instance.mode = LoadingMode.EDITOR_NEW;
             instance.levelSize = FieldController.SIZE_BIG;
             instance.playersNumber = 1;
             instance.colorNumber = 5;
             instance.colorOffset = 0;
             instance.difficulty = 1;
         } else {
-            instance.mode = LoadingParameters.MODE_EDITOR_LOAD;
+            instance.mode = LoadingMode.EDITOR_LOAD;
             instance.applyFullLevel(fullLevel);
             instance.colorOffset = 0;
         }
 
         LoadingManager.getInstance().startGame(instance);
         GameRules.editorChosenColor = prefs.getInteger("chosen_color" + currentSlotNumber);
+        GameRules.editorFog = prefs.getBoolean("editor_fog" + currentSlotNumber, false);
+        GameRules.editorDiplomacy = prefs.getBoolean("editor_diplomacy" + currentSlotNumber, false);
 
         defaultValues();
     }
@@ -301,7 +306,7 @@ public class LevelEditor {
 
         if (isValidLevelString(fromClipboard)) {
             LoadingParameters instance = LoadingParameters.getInstance();
-            instance.mode = LoadingParameters.MODE_EDITOR_LOAD;
+            instance.mode = LoadingMode.EDITOR_LOAD;
             instance.applyFullLevel(fromClipboard);
             instance.colorOffset = 0;
             LoadingManager.getInstance().startGame(instance);
@@ -351,11 +356,16 @@ public class LevelEditor {
     public void playLevel() {
         Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
         String fullLevel = prefs.getString(SLOT_NAME + currentSlotNumber, "");
+        if (fullLevel.length() < 10) return; // empty slot
 
         LoadingParameters instance = LoadingParameters.getInstance();
-        instance.mode = LoadingParameters.MODE_EDITOR_PLAY;
+        instance.mode = LoadingMode.EDITOR_PLAY;
         instance.applyFullLevel(fullLevel);
         GameRules.editorChosenColor = prefs.getInteger("chosen_color" + currentSlotNumber);
+        GameRules.editorFog = prefs.getBoolean("editor_fog" + currentSlotNumber, false);
+        instance.fogOfWar = GameRules.editorFog;
+        GameRules.editorDiplomacy = prefs.getBoolean("editor_diplomacy" + currentSlotNumber, false);
+        instance.diplomacy = GameRules.editorDiplomacy;
         instance.colorOffset = gameController.getColorOffsetBySliderIndex(GameRules.editorChosenColor, GameRules.MAX_COLOR_NUMBER);
 
         LoadingManager.getInstance().startGame(instance);
@@ -569,6 +579,11 @@ public class LevelEditor {
 
     public void setCurrentSlotNumber(int currentSlotNumber) {
         this.currentSlotNumber = currentSlotNumber;
+    }
+
+
+    public int getCurrentSlotNumber() {
+        return currentSlotNumber;
     }
 
 

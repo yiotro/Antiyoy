@@ -9,6 +9,7 @@ public class SceneSecretScreen extends AbstractScene{
 
 
     private final Reaction rbFireworks;
+    private final Reaction rbTestScrollableList;
     double curY;
     private ButtonYio label;
 
@@ -18,8 +19,15 @@ public class SceneSecretScreen extends AbstractScene{
 
         rbFireworks = new Reaction() {
             @Override
-            public void reactAction(ButtonYio buttonYio) {
+            public void perform(ButtonYio buttonYio) {
                 Scenes.sceneFireworks.create();
+            }
+        };
+
+        rbTestScrollableList = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                Scenes.sceneTestScrollableList.create();
             }
         };
     }
@@ -46,6 +54,7 @@ public class SceneSecretScreen extends AbstractScene{
         createButton(572, "Unlock levels", Reaction.rbUnlockLevels);
         createButton(573, "Show FPS", Reaction.rbShowFps);
         createButton(574, "Fireworks", rbFireworks);
+        createButton(575, "Scrollable list", rbTestScrollableList);
 
         menuControllerYio.spawnBackButton(576, Reaction.rbMainMenu);
 

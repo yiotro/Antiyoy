@@ -11,7 +11,7 @@ import yio.tro.antiyoy.stuff.LanguagesManager;
 
 public class FriendshipDialog extends AbstractDiplomaticDialog {
 
-    DiplomaticEntity selectedEntity, mainEntity;
+    DiplomaticEntity sender, recipient;
 
 
     public FriendshipDialog(MenuControllerYio menuControllerYio) {
@@ -22,8 +22,8 @@ public class FriendshipDialog extends AbstractDiplomaticDialog {
 
 
     protected void resetEntities() {
-        selectedEntity = null;
-        mainEntity = null;
+        sender = null;
+        recipient = null;
     }
 
 
@@ -35,18 +35,38 @@ public class FriendshipDialog extends AbstractDiplomaticDialog {
     }
 
 
-    public void setEntities(DiplomaticEntity mainEntity, DiplomaticEntity selectedEntity) {
-        this.mainEntity = mainEntity;
-        this.selectedEntity = selectedEntity;
+    public void setEntities(DiplomaticEntity sender, DiplomaticEntity recipient) {
+        this.sender = sender;
+        this.recipient = recipient;
 
         updateAll();
+        updateTagColor();
+    }
+
+
+    private void updateTagColor() {
+        int color = sender.color;
+        if (sender.isMain()) {
+            color = recipient.color;
+        }
+
+        setTagColor(color);
+    }
+
+
+    @Override
+    protected void updateTagPosition() {
+        tagPosition.x = viewPosition.x + leftOffset;
+        tagPosition.width = viewPosition.width - 2 * leftOffset;
+        tagPosition.y = viewPosition.y + viewPosition.height - topOffset - titleOffset - lineOffset + lineOffset / 4;
+        tagPosition.height = lineOffset;
     }
 
 
     @Override
     protected void makeLabels() {
-        if (selectedEntity == null) return;
-        if (mainEntity == null) return;
+        if (sender == null) return;
+        if (recipient == null) return;
 
         LanguagesManager instance = LanguagesManager.getInstance();
         float y = (float) (position.height - topOffset);
@@ -54,7 +74,11 @@ public class FriendshipDialog extends AbstractDiplomaticDialog {
         addLabel(instance.getString("treaty_of_friendship"), Fonts.gameFont, leftOffset, y);
         y -= titleOffset;
 
-        addLabel(instance.getString("state") + ": " + selectedEntity.capitalName, Fonts.smallerMenuFont, leftOffset, y);
+        String capitalName = sender.capitalName;
+        if (sender.isMain()) {
+            capitalName = recipient.capitalName;
+        }
+        addLabel(instance.getString("state") + ": " + capitalName, Fonts.smallerMenuFont, leftOffset, y);
         y -= lineOffset;
 
         addLabel(instance.getString("dotations") + ": " + getDotationsValue(), Fonts.smallerMenuFont, leftOffset, y);
@@ -68,7 +92,12 @@ public class FriendshipDialog extends AbstractDiplomaticDialog {
     protected int getDotationsValue() {
         GameController gameController = menuControllerYio.yioGdxGame.gameController;
         DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
-        int dotations = diplomacyManager.calculateDotationsForFriendship(mainEntity, selectedEntity);
+        int dotations = diplomacyManager.calculateDotationsForFriendship(sender, recipient);
+
+        if (recipient.isMain()) {
+            dotations *= -1;
+        }
+
         return dotations;
     }
 
@@ -77,7 +106,7 @@ public class FriendshipDialog extends AbstractDiplomaticDialog {
     protected void onYesButtonPressed() {
         GameController gameController = menuControllerYio.yioGdxGame.gameController;
         DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
-        diplomacyManager.onUserRequestedFriendship(selectedEntity);
+        diplomacyManager.requestedFriendship(sender, recipient);
 
         Scenes.sceneFriendshipDialog.hide();
     }

@@ -43,6 +43,7 @@ public class DiplomacyElement extends InterfaceElement {
     private float iconTouchOffset;
     private float iconRadius;
     public final DeLabel label;
+    private ArrayList<DiplomaticContract> tempContracts;
 
 
     public DiplomacyElement(MenuControllerYio menuControllerYio, int id) {
@@ -66,6 +67,7 @@ public class DiplomacyElement extends InterfaceElement {
         touchedScrollArea = false;
         clickedIcon = null;
         selectedItem = null;
+        tempContracts = new ArrayList<>();
 
         initPool();
         initMetrics();
@@ -157,7 +159,7 @@ public class DiplomacyElement extends InterfaceElement {
         GameController gameController = getGameController();
         DiplomacyManager diplomacyManager = getDiplomacyManager(gameController);
 
-        DiplomaticEntity mainEntity = diplomacyManager.getEntity(gameController.turn);
+        DiplomaticEntity mainEntity = diplomacyManager.getMainEntity();
         if (!mainEntity.isHuman()) return;
 
         for (DeItem item : items) {
@@ -182,49 +184,46 @@ public class DiplomacyElement extends InterfaceElement {
     private String getItemDescription(DiplomaticEntity mainEntity, DiplomaticEntity relationEntity) {
         if (!relationEntity.alive) return LanguagesManager.getInstance().getString("dead");
 
-        switch (mainEntity.getRelation(relationEntity)) {
-            default:
-            case DiplomaticRelation.NEUTRAL:
-                return getNeutralItemDescription(mainEntity, relationEntity);
-            case DiplomaticRelation.FRIEND:
-                return getFriendItemDescription(mainEntity, relationEntity);
-            case DiplomaticRelation.ENEMY:
-                return getEnemyItemDescription(mainEntity, relationEntity);
+        updateTempContracts(mainEntity, relationEntity);
+
+        if (tempContracts.size() == 0) {
+            return LanguagesManager.getInstance().getString(getRelationStringKey(mainEntity, relationEntity));
         }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(LanguagesManager.getInstance().getString(getRelationStringKey(mainEntity, relationEntity)));
+        for (DiplomaticContract contract : tempContracts) {
+            stringBuilder.append(" [");
+            stringBuilder.append(contract.getDotationsStringFromEntityPerspective(mainEntity));
+            stringBuilder.append(", ");
+            stringBuilder.append(contract.getExpireCountDown());
+            stringBuilder.append("x]");
+        }
+
+        return stringBuilder.toString();
     }
 
 
-    private String getEnemyItemDescription(DiplomaticEntity mainEntity, DiplomaticEntity relationEntity) {
-        LanguagesManager instance = LanguagesManager.getInstance();
-
-        return instance.getString(getRelationStringKey(mainEntity, relationEntity));
-    }
-
-
-    private String getNeutralItemDescription(DiplomaticEntity mainEntity, DiplomaticEntity relationEntity) {
-        LanguagesManager instance = LanguagesManager.getInstance();
+    private void updateTempContracts(DiplomaticEntity mainEntity, DiplomaticEntity relationEntity) {
+        tempContracts.clear();
 
         DiplomacyManager diplomacyManager = getDiplomacyManager(getGameController());
-        DiplomaticContract contract = diplomacyManager.findContract(DiplomaticContract.TYPE_PIECE, mainEntity, relationEntity);
+        DiplomaticContract contract;
+
+        contract = diplomacyManager.findContract(DiplomaticContract.TYPE_PIECE, mainEntity, relationEntity);
         if (contract != null) {
-            return instance.getString(getRelationStringKey(mainEntity, relationEntity)) +
-                    " [" + contract.getDotationsStringFromEntityPerspective(mainEntity) +
-                    ", " + contract.getExpireCountDown() + "x]";
+            tempContracts.add(contract);
         }
 
-        return instance.getString(getRelationStringKey(mainEntity, relationEntity));
-    }
+        contract = diplomacyManager.findContract(DiplomaticContract.TYPE_FRIENDSHIP, mainEntity, relationEntity);
+        if (contract != null) {
+            tempContracts.add(contract);
+        }
 
-
-    private String getFriendItemDescription(DiplomaticEntity mainEntity, DiplomaticEntity relationEntity) {
-        LanguagesManager instance = LanguagesManager.getInstance();
-
-        GameController gameController = getGameController();
-        DiplomacyManager diplomacyManager = getDiplomacyManager(gameController);
-        DiplomaticContract contract = diplomacyManager.findContract(DiplomaticContract.TYPE_FRIENDSHIP, mainEntity, relationEntity);
-        return instance.getString(getRelationStringKey(mainEntity, relationEntity)) +
-                " [" + contract.getDotationsStringFromEntityPerspective(mainEntity) +
-                ", " + contract.getExpireCountDown() + "x]";
+        contract = diplomacyManager.findContract(DiplomaticContract.TYPE_TRAITOR, mainEntity, relationEntity);
+        if (contract != null) {
+            tempContracts.add(contract);
+        }
     }
 
 
@@ -405,6 +404,11 @@ public class DiplomacyElement extends InterfaceElement {
         dropSelections();
 
         scrollEngineYio.resetToBottom();
+    }
+
+
+    public void onTurnStarted() {
+        updateItems();
     }
 
 

@@ -6,7 +6,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbShowCheatSceen extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         Scenes.sceneSecretScreen.create();
     }
 }

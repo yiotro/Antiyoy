@@ -12,7 +12,7 @@ public class RbShowColorStats extends Reaction {
 
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         Scenes.sceneColorStats.create();
 
         ColorStatsRenderer colorStatsRenderer = new ColorStatsRenderer(buttonYio.menuControllerYio);

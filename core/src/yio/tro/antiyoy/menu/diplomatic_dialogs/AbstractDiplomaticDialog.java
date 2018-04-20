@@ -31,6 +31,8 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement {
     protected AcButton yesButton;
     protected AcButton noButton;
     AcButton clickedButton;
+    int tagColor;
+    public RectangleYio tagPosition;
 
 
     public AbstractDiplomaticDialog(MenuControllerYio menuControllerYio) {
@@ -45,6 +47,8 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement {
         currentTouch = new PointYio();
         touched = false;
         resetClickedButton();
+        tagColor = -1;
+        tagPosition = new RectangleYio();
 
         initPools();
         initMetrics();
@@ -114,6 +118,15 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement {
         updateViewPosition();
         moveLabels();
         moveButtons();
+
+        if (factorMoved) {
+            updateTagPosition();
+        }
+    }
+
+
+    protected void updateTagPosition() {
+        //
     }
 
 
@@ -311,6 +324,16 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement {
     }
 
 
+    public int getTagColor() {
+        return tagColor;
+    }
+
+
+    public void setTagColor(int tagColor) {
+        this.tagColor = tagColor;
+    }
+
+
     protected void onButtonClicked(AcButton button) {
         clickedButton = button;
     }
@@ -359,6 +382,6 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement {
 
     @Override
     public MenuRender getRenderSystem() {
-        return MenuRender.renderConfirmDialog;
+        return MenuRender.renderDiplomaticDialog;
     }
 }

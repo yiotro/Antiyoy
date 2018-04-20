@@ -10,8 +10,8 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbEditorSlotMenu extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
-        Scenes.sceneEditorSlotsMenu.create();
+    public void perform(ButtonYio buttonYio) {
+        Scenes.sceneEditorSlots.create();
         getGameController(buttonYio).turnOffEditorMode();
     }
 }

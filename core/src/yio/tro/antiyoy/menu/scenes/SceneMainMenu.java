@@ -1,6 +1,8 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.gameplay.campaign.CampaignLevelFactory;
+import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
@@ -11,10 +13,31 @@ public class SceneMainMenu extends AbstractScene{
 
 
     public ButtonYio playButton;
+    Reaction playButtonReaction;
 
 
     public SceneMainMenu(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
+
+        playButtonReaction = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                onPlayButtonPressed();
+            }
+        };
+    }
+
+
+    private void onPlayButtonPressed() {
+        if (!CampaignProgressManager.getInstance().isAtLeastOneLevelCompleted()) {
+            CampaignLevelFactory campaignLevelFactory = menuControllerYio.yioGdxGame.campaignLevelFactory;
+            campaignLevelFactory.createCampaignLevel(0);
+            return;
+        }
+
+        Scenes.sceneChoodeGameModeMenu.create();
+        menuControllerYio.yioGdxGame.setGamePaused(true);
+        menuControllerYio.yioGdxGame.setAnimToPlayButtonSpecial();
     }
 
 
@@ -42,7 +65,7 @@ public class SceneMainMenu extends AbstractScene{
 
         playButton = buttonFactory.getButton(generateSquare(0.3, 0.35, 0.4 * YioGdxGame.screenRatio), 3, null);
         menuControllerYio.loadButtonOnce(playButton, "play_button.png");
-        playButton.setReaction(Reaction.rbChooseGameModeMenu);
+        playButton.setReaction(playButtonReaction);
         playButton.disableTouchAnimation();
         playButton.selectionFactor.setValues(1, 0);
 

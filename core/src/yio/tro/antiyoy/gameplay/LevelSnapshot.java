@@ -1,6 +1,8 @@
 package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyInfoCondensed;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.gameplay.replays.Replay;
 import yio.tro.antiyoy.gameplay.replays.ReplayManager;
 import yio.tro.antiyoy.gameplay.replays.actions.RepAction;
@@ -21,6 +23,7 @@ public class LevelSnapshot {
     private int fHeight;
     private MatchStatistics matchStatistics;
     private ArrayList<RepAction> replayBuffer;
+    private String diplomacyInfo;
     boolean used;
 
 
@@ -36,6 +39,7 @@ public class LevelSnapshot {
         }
 
         used = false;
+        diplomacyInfo = null;
     }
 
 
@@ -56,6 +60,7 @@ public class LevelSnapshot {
 
         fWidth = -1;
         fHeight = -1;
+        diplomacyInfo = null;
     }
 
 
@@ -69,6 +74,18 @@ public class LevelSnapshot {
         updateActiveHexesCopy();
         updateMatchStatistics();
         updateReplayBuffer();
+        updateDiplomacyInfo();
+    }
+
+
+    private void updateDiplomacyInfo() {
+        if (!GameRules.diplomacyEnabled) return;
+
+        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomacyInfoCondensed instance = DiplomacyInfoCondensed.getInstance();
+        instance.update(diplomacyManager);
+
+        diplomacyInfo = instance.getFull();
     }
 
 
@@ -159,9 +176,21 @@ public class LevelSnapshot {
         recreateSelection();
         recreateStatistics();
         recreateReplayBuffer();
+        recreateDiplomacy();
 
         gameController.addAnimHex(gameController.fieldController.field[0][0]);
         gameController.updateWholeCache = true;
+    }
+
+
+    private void recreateDiplomacy() {
+        if (!GameRules.diplomacyEnabled) return;
+        if (diplomacyInfo == null) return;
+
+        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomacyInfoCondensed instance = DiplomacyInfoCondensed.getInstance();
+        instance.setFull(diplomacyInfo);
+        instance.apply(diplomacyManager);
     }
 
 

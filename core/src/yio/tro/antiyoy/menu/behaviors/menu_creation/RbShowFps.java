@@ -7,7 +7,7 @@ import yio.tro.antiyoy.menu.behaviors.Reaction;
 public class RbShowFps extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         DebugFlags.showFpsInfo = true;
     }
 }

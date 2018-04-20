@@ -11,7 +11,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbInputModeDelete extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         getGameController(buttonYio).getLevelEditor().setInputMode(LevelEditor.MODE_DELETE);
         Scenes.sceneEditorHexPanel.hide();
     }

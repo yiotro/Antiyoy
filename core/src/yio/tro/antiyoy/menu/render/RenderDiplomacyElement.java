@@ -299,6 +299,11 @@ public class RenderDiplomacyElement extends MenuRender {
     }
 
 
+    public TextureRegion getBackgroundPixel(int colorIndex) {
+        return bckColors[colorIndex];
+    }
+
+
     @Override
     public void renderThirdLayer(InterfaceElement element) {
 

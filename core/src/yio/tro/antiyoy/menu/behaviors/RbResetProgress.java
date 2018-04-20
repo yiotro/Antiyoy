@@ -6,7 +6,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbResetProgress extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         getGameController(buttonYio).resetProgress();
         Scenes.sceneCampaignMenu.updateLevelSelector();
 

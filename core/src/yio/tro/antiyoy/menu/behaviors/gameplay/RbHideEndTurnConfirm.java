@@ -10,7 +10,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbHideEndTurnConfirm extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         Scenes.sceneConfirmEndTurn.hide();
     }
 }

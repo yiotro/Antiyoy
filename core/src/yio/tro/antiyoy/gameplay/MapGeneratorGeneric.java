@@ -50,6 +50,8 @@ public class MapGeneratorGeneric extends MapGenerator {
         for (int i = 0; i < numberOfProvincesByLevelSize(); i++) {
             for (int colorIndex = 0; colorIndex < GameRules.colorNumber; colorIndex++) {
                 Hex hex = findGoodPlaceForNewProvince();
+                if (hex == null) continue;
+
                 hex.setColorIndex(colorIndex);
                 spawnProvince(hex, 2);
             }

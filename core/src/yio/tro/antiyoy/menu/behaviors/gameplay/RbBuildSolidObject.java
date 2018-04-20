@@ -23,7 +23,7 @@ public class RbBuildSolidObject extends Reaction {
 
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         if (GameRules.slayRules) {
             getGameController(buttonYio).selectionController.awakeTip(SelectionController.TIP_INDEX_TOWER);
         } else {

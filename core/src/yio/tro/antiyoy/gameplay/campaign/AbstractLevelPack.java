@@ -4,6 +4,7 @@ import yio.tro.antiyoy.gameplay.FieldController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
+import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 
@@ -27,7 +28,7 @@ public abstract class AbstractLevelPack {
         if (GameRules.slayRules) return false;
 
         LoadingParameters instance = LoadingParameters.getInstance();
-        instance.mode = LoadingParameters.MODE_CAMPAIGN_CUSTOM;
+        instance.mode = LoadingMode.CAMPAIGN_CUSTOM;
         instance.applyFullLevel(levelFromPackTwo);
         instance.campaignLevelIndex = index;
         instance.slayRules = GameRules.slayRules;

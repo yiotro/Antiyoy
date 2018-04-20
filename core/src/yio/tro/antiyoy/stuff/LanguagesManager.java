@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.stuff;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.xml.parsers.*;
 
@@ -32,6 +33,11 @@ public class LanguagesManager {
             loadLanguage(DEFAULT_LANGUAGE);
             _languageName = DEFAULT_LANGUAGE;
         }
+    }
+
+
+    public static void initialize() {
+        _instance = null;
     }
 
 
@@ -74,6 +80,39 @@ public class LanguagesManager {
 
     public String getString(String key, Object... args) {
         return String.format(getString(key), args);
+    }
+
+
+    @TargetApi(Build.VERSION_CODES.FROYO)
+    public ArrayList<LanguageChooseItem> getChooseListItems() {
+        ArrayList<LanguageChooseItem> result = new ArrayList<>();
+
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            FileHandle fileHandle = Gdx.files.internal(LANGUAGES_FILE);
+            Document doc = db.parse(fileHandle.read());
+
+            Element root = doc.getDocumentElement();
+
+            NodeList languages = root.getElementsByTagName("language");
+            int numLanguages = languages.getLength();
+
+            for (int i = 0; i < numLanguages; i++) {
+                Node language = languages.item(i);
+
+                LanguageChooseItem chooseItem = new LanguageChooseItem();
+                chooseItem.name = language.getAttributes().getNamedItem("name").getTextContent();
+                chooseItem.title = language.getAttributes().getNamedItem("title").getTextContent();
+                chooseItem.author = language.getAttributes().getNamedItem("author").getTextContent();
+
+                result.add(chooseItem);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
 

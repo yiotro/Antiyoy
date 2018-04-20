@@ -10,7 +10,7 @@ import yio.tro.antiyoy.menu.behaviors.Reaction;
 public class RbInputModeSetObject extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         getGameController(buttonYio).getLevelEditor().setInputMode(LevelEditor.MODE_SET_OBJECT);
         getGameController(buttonYio).getLevelEditor().setInputObject(buttonYio.id - 162);
     }

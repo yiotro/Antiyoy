@@ -4,6 +4,7 @@ import yio.tro.antiyoy.Settings;
 import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
+import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.replays.actions.*;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
@@ -125,7 +126,7 @@ public class ReplayManager {
         copyReplay.loadFromPreferences("temp");
 
         LoadingParameters loadingParameters = new LoadingParameters();
-        loadingParameters.mode = LoadingParameters.MODE_LOAD_REPLAY;
+        loadingParameters.mode = LoadingMode.LOAD_REPLAY;
         loadingParameters.applyFullLevel(copyReplay.initialLevelString);
         loadingParameters.replay = copyReplay;
         loadingParameters.playersNumber = 0;

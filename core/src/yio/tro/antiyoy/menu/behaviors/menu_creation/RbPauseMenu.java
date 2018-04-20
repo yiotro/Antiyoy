@@ -10,7 +10,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbPauseMenu extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         getGameController(buttonYio).selectionController.deselectAll(); // fix to prevent flickering of selection
         Scenes.scenePauseMenu.create();
         getYioGdxGame(buttonYio).setGamePaused(true);

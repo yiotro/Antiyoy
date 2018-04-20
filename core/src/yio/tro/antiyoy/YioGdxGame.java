@@ -15,9 +15,13 @@ import yio.tro.antiyoy.gameplay.campaign.CampaignLevelFactory;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyInfoCondensed;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
+import yio.tro.antiyoy.gameplay.loading.LoadingManager;
+import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
 import yio.tro.antiyoy.gameplay.replays.ReplaySaveSystem;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.gameplay.user_levels.UserLevelFactory;
+import yio.tro.antiyoy.gameplay.user_levels.UserLevelProgressManager;
 import yio.tro.antiyoy.menu.*;
 import yio.tro.antiyoy.menu.save_slot_selector.SaveSystem;
 import yio.tro.antiyoy.menu.scenes.Scenes;
@@ -122,11 +126,8 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         loadedResources = true;
         startedExitProcess = false;
         screenVerySmall = Gdx.graphics.getDensity() < 1.2;
-        mainBackground = GameView.loadTextureRegion("main_menu_background.png", true);
-        infoBackground = GameView.loadTextureRegion("info_background.png", true);
-        settingsBackground = GameView.loadTextureRegion("settings_background.png", true);
-        pauseBackground = GameView.loadTextureRegion("pause_background.png", true);
-        splatController.splatTexture = GameView.loadTextureRegion("splat.png", true);
+        initializeSingletons();
+        loadSomeTextures();
         SoundControllerYio.loadAllSounds();
         MusicManager.getInstance().load();
         transitionFactor = new FactorYio();
@@ -167,6 +168,43 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         ReplaySaveSystem.getInstance().setGameController(gameController);
 
         YioGdxGame.say("full loading time: " + (System.currentTimeMillis() - time1));
+        checkForSingleMessageOnStart();
+    }
+
+
+    private void checkForSingleMessageOnStart() {
+        if (OneTimeInfo.getInstance().bleentoroRelease) {
+            OneTimeInfo.getInstance().bleentoroRelease = false;
+            OneTimeInfo.getInstance().save();
+
+            currentBackground = gameView.blackPixel;
+            currentBackgroundIndex = 4;
+            Scenes.sceneBleentoroRelease.create();
+        }
+    }
+
+
+    private void initializeSingletons() {
+        CampaignProgressManager.initialize();
+        CityNameGenerator.initialize();
+        LanguagesManager.initialize();
+        LoadingManager.initialize();
+        LoadingParameters.initialize();
+        MusicManager.initialize();
+        OneTimeInfo.initialize();
+        RefuseStatistics.initialize();
+        Settings.initialize();
+        UserLevelFactory.initialize();
+        UserLevelProgressManager.initialize();
+    }
+
+
+    private void loadSomeTextures() {
+        mainBackground = GameView.loadTextureRegion("main_menu_background.png", true);
+        infoBackground = GameView.loadTextureRegion("info_background.png", true);
+        settingsBackground = GameView.loadTextureRegion("settings_background.png", true);
+        pauseBackground = GameView.loadTextureRegion("pause_background.png", true);
+        splatController.splatTexture = GameView.loadTextureRegion("splat.png", true);
     }
 
 
@@ -607,6 +645,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             campaignLevelFactory.createCampaignLevel(currentLevelIndex);
             return;
         }
+
         gameController.restartGame();
     }
 

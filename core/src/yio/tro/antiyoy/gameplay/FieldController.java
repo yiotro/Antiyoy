@@ -56,6 +56,7 @@ public class FieldController {
     public float compensatoryOffset; // fix for widescreen
     public FogOfWarManager fogOfWarManager;
     public DiplomacyManager diplomacyManager;
+    public String initialLevelString;
 
 
     public FieldController(GameController gameController) {
@@ -87,6 +88,7 @@ public class FieldController {
         moveZoneDetection = new MoveZoneDetection(this);
         fogOfWarManager = new FogOfWarManager(this);
         diplomacyManager = new DiplomacyManager(this);
+        initialLevelString = null;
     }
 
 
@@ -311,6 +313,11 @@ public class FieldController {
     }
 
 
+    public boolean hasAtLeastOneProvince() {
+        return provinces.size() > 0;
+    }
+
+
     public int numberOfProvincesWithColor(int color) {
         int count = 0;
         for (Province province : provinces) {
@@ -532,8 +539,14 @@ public class FieldController {
         clearAnims();
         updateHexInsideLevelStatuses();
 
-        fogOfWarManager.onEndCreation();
         diplomacyManager.onEndCreation();
+        fogOfWarManager.onEndCreation();
+        updateInitialLevelString();
+    }
+
+
+    private void updateInitialLevelString() {
+        initialLevelString = getFullLevelString();
     }
 
 
@@ -602,7 +615,7 @@ public class FieldController {
         if (Settings.fastConstruction) {
             Scenes.sceneFastConstructionPanel.create();
         } else {
-            Scenes.sceneBuildButtons.create();
+            Scenes.sceneSelectionOverlay.create();
         }
     }
 
@@ -616,7 +629,7 @@ public class FieldController {
 
 
     public String getColorName(int colorIndex) {
-        return gameController.yioGdxGame.menuControllerYio.getColorNameByIndex(colorIndex, "_player");
+        return gameController.yioGdxGame.menuControllerYio.getColorNameByIndexWithOffset(colorIndex, "_player");
     }
 
 

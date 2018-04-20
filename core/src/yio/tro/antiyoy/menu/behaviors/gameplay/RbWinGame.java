@@ -10,7 +10,7 @@ import yio.tro.antiyoy.menu.behaviors.Reaction;
 public class RbWinGame extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         getGameController(buttonYio).forceGameEnd();
         RefuseStatistics.getInstance().onEarlyGameEndAccept();
     }

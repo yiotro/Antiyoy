@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.ClickDetector;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
+import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.replays.RepSlot;
 import yio.tro.antiyoy.gameplay.replays.Replay;
@@ -32,9 +33,11 @@ public class ReplaySelector extends InterfaceElement {
     public String label;
     public PointYio labelPosition;
     float labelWidth;
-    RsItem clickedItem;
+    RsItem clickedItem, readyToRemoveItem;
     boolean touched, alphaTriggered;
     private float topLabelOffset;
+    LongTapDetector longTapDetector;
+    boolean inRemoveMode;
 
 
     public ReplaySelector(MenuControllerYio menuControllerYio, int id) {
@@ -57,9 +60,21 @@ public class ReplaySelector extends InterfaceElement {
         clickedItem = null;
         textAlphaFactor = new FactorYio();
         alphaTriggered = false;
+        readyToRemoveItem = null;
 
         initMetrics();
         initScrollEngine();
+        initLongTapDetector();
+    }
+
+
+    private void initLongTapDetector() {
+        longTapDetector = new LongTapDetector() {
+            @Override
+            public void onLongTapDetected() {
+                ReplaySelector.this.onLongTapDetected();
+            }
+        };
     }
 
 
@@ -151,6 +166,33 @@ public class ReplaySelector extends InterfaceElement {
         scrollEngineYio.move();
         updateHook();
         updateLabelPosition();
+        longTapDetector.move();
+    }
+
+
+    private void onLongTapDetected() {
+        switchRemoveMode();
+    }
+
+
+    private void switchRemoveMode() {
+        inRemoveMode = !inRemoveMode;
+
+        if (inRemoveMode) {
+            onRemoveModeEnabled();
+        } else {
+            onRemoveModeDisabled();
+        }
+    }
+
+
+    private void onRemoveModeDisabled() {
+        //
+    }
+
+
+    private void onRemoveModeEnabled() {
+        //
     }
 
 
@@ -214,6 +256,13 @@ public class ReplaySelector extends InterfaceElement {
     public void destroy() {
         appearFactor.destroy(DES_TYPE, DES_SPEED);
         textAlphaFactor.destroy(3, 4);
+
+        onDestroy();
+    }
+
+
+    private void onDestroy() {
+        inRemoveMode = false;
     }
 
 
@@ -232,6 +281,7 @@ public class ReplaySelector extends InterfaceElement {
         updateScrollEngineLimits();
         alphaTriggered = false;
         scrollEngineYio.resetToBottom();
+        inRemoveMode = false;
     }
 
 
@@ -250,7 +300,24 @@ public class ReplaySelector extends InterfaceElement {
             return true;
         }
 
+        if (readyToRemoveItem != null) {
+            removeClickedReplay();
+
+            readyToRemoveItem = null;
+            return true;
+        }
+
         return false;
+    }
+
+
+    private void removeClickedReplay() {
+        ReplaySaveSystem.getInstance().removeReplay(readyToRemoveItem.key);
+
+        updateItems();
+        updateItemMetrics();
+        updateScrollEngineLimits();
+        scrollEngineYio.resetToBottom();
     }
 
 
@@ -262,7 +329,7 @@ public class ReplaySelector extends InterfaceElement {
         replay.loadFromPreferences(slotByKey.key);
 
         LoadingParameters loadingParameters = new LoadingParameters();
-        loadingParameters.mode = LoadingParameters.MODE_LOAD_REPLAY;
+        loadingParameters.mode = LoadingMode.LOAD_REPLAY;
         loadingParameters.applyFullLevel(replay.initialLevelString);
         loadingParameters.replay = replay;
         loadingParameters.playersNumber = 0;
@@ -296,6 +363,8 @@ public class ReplaySelector extends InterfaceElement {
             clickDetector.touchDown(currentTouch);
             scrollEngineYio.updateCanSoftCorrect(false);
 
+            longTapDetector.onTouchDown(currentTouch);
+
             checkToSelectItems();
         }
 
@@ -320,6 +389,7 @@ public class ReplaySelector extends InterfaceElement {
             scrollEngineYio.setSpeed(currentTouch.y - lastTouch.y);
 
             clickDetector.touchDrag(currentTouch);
+            longTapDetector.onTouchDrag(currentTouch);
         }
 
         return touched;
@@ -339,6 +409,8 @@ public class ReplaySelector extends InterfaceElement {
                 onClick();
             }
 
+            longTapDetector.onTouchUp(currentTouch);
+
             return true;
         }
 
@@ -349,9 +421,24 @@ public class ReplaySelector extends InterfaceElement {
     private void onClick() {
         scrollEngineYio.setSpeed(0);
 
+        if (inRemoveMode) {
+            onClickInRemoveMode();
+            return;
+        }
+
         for (RsItem item : items) {
             if (item.isTouched(currentTouch)) {
                 onItemClicked(item);
+            }
+        }
+    }
+
+
+    private void onClickInRemoveMode() {
+        for (RsItem item : items) {
+            if (currentTouch.distanceTo(item.removeIconPosition) < 0.07f * GraphicsYio.width) {
+                readyToRemoveItem = item;
+                return;
             }
         }
     }
@@ -399,6 +486,11 @@ public class ReplaySelector extends InterfaceElement {
 
         scrollEngineYio.setSlider(0, position.height - topLabelOffset);
         updateScrollEngineLimits();
+    }
+
+
+    public boolean isInRemoveMode() {
+        return inRemoveMode;
     }
 
 

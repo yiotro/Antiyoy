@@ -335,13 +335,18 @@ public class FastConstructionPanel extends InterfaceElement{
 
 
     private void applyOpenDiplomacy() {
-        menuControllerYio.yioGdxGame.gameController.selectionController.deselectAll();
-        Scenes.sceneDiplomacy.create();
+        menuControllerYio.yioGdxGame.gameController.fieldController.diplomacyManager.onDiplomacyButtonPressed();
     }
 
 
     private void applyEndTurn() {
-        menuControllerYio.yioGdxGame.gameController.onEndTurnButtonPressed();
+        GameController gameController = menuControllerYio.yioGdxGame.gameController;
+
+        if (gameController.haveToAskToEndTurn()) {
+            Scenes.sceneConfirmEndTurn.create();
+        } else {
+            gameController.onEndTurnButtonPressed();
+        }
     }
 
 

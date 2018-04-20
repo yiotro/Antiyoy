@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Matrix4;
 import yio.tro.antiyoy.gameplay.campaign.CampaignLevelFactory;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.render.MenuRender;
 import yio.tro.antiyoy.stuff.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
@@ -36,6 +37,7 @@ public class LevelSelector extends InterfaceElement {
     ClickDetector clickDetector;
     PointYio currentTouch;
     SpriteBatch batch;
+    private boolean slayRulesMode;
 
 
     public LevelSelector(MenuControllerYio menuControllerYio, int id) {
@@ -51,6 +53,7 @@ public class LevelSelector extends InterfaceElement {
         iconRadius = (float) ((defPos.width / 5 - 0.01f * w) / 2);
         iconDiameter = 2 * iconRadius;
         offsetBetweenPanels = (float) (defPos.width + 0.05f * w);
+        slayRulesMode = false;
 
         tabsEngineYio = new TabsEngineYio();
         tabsEngineYio.setFriction(0);
@@ -291,6 +294,11 @@ public class LevelSelector extends InterfaceElement {
     }
 
 
+    public void checkToReloadProgress() {
+        // TODO finish this feature later
+    }
+
+
     @Override
     public boolean checkToPerformAction() {
         if (selectionFactor.get() == 1) {
@@ -384,9 +392,9 @@ public class LevelSelector extends InterfaceElement {
     @Override
     public boolean onMouseWheelScrolled(int amount) {
         if (amount == 1) {
-            tabsEngineYio.swipeTab(1);
-        } else if (amount == -1) {
             tabsEngineYio.swipeTab(-1);
+        } else if (amount == -1) {
+            tabsEngineYio.swipeTab(1);
         }
 
         return true;

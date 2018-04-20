@@ -10,7 +10,7 @@ import yio.tro.antiyoy.menu.behaviors.Reaction;
 public class RbInputModeMove extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         getGameController(buttonYio).getLevelEditor().setInputMode(LevelEditor.MODE_MOVE);
         buttonYio.menuControllerYio.hideAllEditorPanels();
     }

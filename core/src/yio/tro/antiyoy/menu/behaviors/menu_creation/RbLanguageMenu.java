@@ -8,8 +8,8 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbLanguageMenu extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         Settings.getInstance().saveSettings();
-        Scenes.sceneLanguageMenu.create();
+        Scenes.sceneLanguages.create();
     }
 }

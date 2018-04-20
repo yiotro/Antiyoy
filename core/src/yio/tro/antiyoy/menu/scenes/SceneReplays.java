@@ -40,7 +40,7 @@ public class SceneReplays extends AbstractScene{
 
 
     private void createBackButton() {
-        menuControllerYio.spawnBackButton(600, Reaction.rbMoreSettings);
+        menuControllerYio.spawnBackButton(600, Reaction.rbLoadGame);
     }
 
 

@@ -1,9 +1,11 @@
 package yio.tro.antiyoy.menu.scenes.gameplay;
 
+import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 
 import java.util.ArrayList;
 
@@ -87,7 +89,13 @@ public class SceneTutorialTip extends AbstractGameplayScene {
         helpButton.setTextLine(getString("help"));
         menuControllerYio.buttonRenderer.renderButton(helpButton);
         helpButton.setShadow(false);
-        helpButton.setReaction(Reaction.rbHelpIndex);
+        helpButton.setReaction(new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                CampaignProgressManager.getInstance().markLevelAsCompleted(0);
+                Scenes.sceneHelpIndex.create();
+            }
+        });
         helpButton.setAnimation(Animation.FIXED_DOWN);
         helpButton.appearFactor.appear(3, 1);
         helpButton.disableTouchAnimation();

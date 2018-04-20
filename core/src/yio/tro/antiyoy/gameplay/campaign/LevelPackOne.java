@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.gameplay.campaign;
 
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
+import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 
@@ -21,7 +22,7 @@ public class LevelPackOne {
 
         if (index > 70 && index <= 80) {
             LoadingParameters instance = LoadingParameters.getInstance();
-            instance.mode = LoadingParameters.MODE_CAMPAIGN_CUSTOM;
+            instance.mode = LoadingMode.CAMPAIGN_CUSTOM;
             instance.applyFullLevel(getLevelFromPackOne());
             instance.campaignLevelIndex = index;
             instance.slayRules = false; // these levels are forcing normal rules

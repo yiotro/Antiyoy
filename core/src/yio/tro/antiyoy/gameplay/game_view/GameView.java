@@ -309,7 +309,7 @@ public class GameView {
             }
             cacheCam.update();
             batchCache.setProjectionMatrix(cacheCam.combined);
-            renderCache(batchCache, true);
+            renderCache(batchCache);
 
             Texture texture = cacheLevelFrameBuffer.getColorBufferTexture();
             texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -366,7 +366,7 @@ public class GameView {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             cacheCam.update();
             batchCache.setProjectionMatrix(cacheCam.combined);
-            renderCache(batchCache, true);
+            renderCache(batchCache);
 
             Texture texture = frameBuffer.getColorBufferTexture();
             texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -391,36 +391,34 @@ public class GameView {
     }
 
 
-    private void renderCache(SpriteBatch spriteBatch, boolean cutOffHexes) {
+    private void renderCache(SpriteBatch spriteBatch) {
         spriteBatch.begin();
         spriteBatch.draw(backgroundRegion, 0, 0, 2 * yioGdxGame.w, 2 * yioGdxGame.h);
         int actualZoomQuality = currentZoomQuality;
         currentZoomQuality = 2;
-        renderHexField(spriteBatch, cutOffHexes);
+        renderHexField(spriteBatch);
         currentZoomQuality = actualZoomQuality;
         spriteBatch.end();
         Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
     }
 
 
-    private void renderHexField(SpriteBatch spriteBatch, boolean cutOffHexes) {
+    private void renderHexField(SpriteBatch spriteBatch) {
         TextureRegion currentHexTexture;
 
         // shadows
         for (Hex hex : gameController.fieldController.activeHexes) {
             pos = hex.getPos();
-            if (cutOffHexes) {
-                if (!isPosInCacheFrame(pos, hexViewSize)) continue;
-            }
+            if (!isPosInCacheFrame(pos, hexViewSize)) continue;
+
             spriteBatch.draw(shadowHexTexture, pos.x - hexViewSize + 0.1f * hexViewSize, pos.y - hexViewSize - 0.15f * hexViewSize, 2 * hexViewSize, 2 * hexViewSize);
         }
 
         // hexes
         for (Hex hex : gameController.fieldController.activeHexes) {
             pos = hex.getPos();
-            if (cutOffHexes) {
-                if (!isPosInCacheFrame(pos, hexViewSize)) continue;
-            }
+            if (!isPosInCacheFrame(pos, hexViewSize)) continue;
+
             currentHexTexture = getHexTextureByColor(hex.colorIndex);
             spriteBatch.draw(currentHexTexture, pos.x - 0.99f * hexViewSize, pos.y - 0.99f * hexViewSize, 2 * 0.99f * hexViewSize, 2 * 0.99f * hexViewSize);
         }
@@ -428,13 +426,16 @@ public class GameView {
         // lines between hexes
         for (Hex hex : gameController.fieldController.activeHexes) {
             pos = hex.getPos();
-            if (cutOffHexes) {
-                if (!isPosInCacheFrame(pos, hexViewSize)) continue;
-            }
+            if (!isPosInCacheFrame(pos, hexViewSize)) continue;
+
             for (int i = 0; i < 6; i++) {
                 Hex adjacentHex = hex.getAdjacentHex(i);
+                if (adjacentHex == gameController.fieldController.emptyHex) continue;
+
                 if (adjacentHex != null && ((adjacentHex.active && !adjacentHex.sameColor(hex) && i >= 2 && i <= 4) || !adjacentHex.active)) {
-                    if (i >= 2 && i <= 4) renderGradientShadow(hex, adjacentHex, spriteBatch);
+                    if (i >= 2 && i <= 4) {
+                        renderGradientShadow(hex, adjacentHex, spriteBatch);
+                    }
                     renderLineBetweenHexes(adjacentHex, hex, spriteBatch, borderLineThickness, i);
                 }
             }
@@ -968,11 +969,12 @@ public class GameView {
         renderCertainUnits();
         renderBlackout();
         renderMoveZone();
+
+        grManager.render(); // disable fog
+
         renderCityNames();
         renderSelectedUnit();
         renderDefenseTips();
-
-        grManager.render();
 
         renderDebug();
         batchMovable.end();

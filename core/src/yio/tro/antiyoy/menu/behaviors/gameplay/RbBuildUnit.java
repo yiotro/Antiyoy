@@ -24,7 +24,7 @@ public class RbBuildUnit extends Reaction {
 
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         if (!getGameController(buttonYio).selectionController.isSomethingSelected()) {
             YioGdxGame.say("detected strange bug in RbBuildUnit");
             return;

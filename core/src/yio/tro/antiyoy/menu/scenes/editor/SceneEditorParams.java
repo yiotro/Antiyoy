@@ -6,7 +6,6 @@ import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.editor.EditorReactions;
-import yio.tro.antiyoy.menu.scenes.AbstractScene;
 import yio.tro.antiyoy.menu.scenes.SceneSkirmishMenu;
 import yio.tro.antiyoy.menu.slider.SliderBehavior;
 import yio.tro.antiyoy.menu.slider.SliderYio;
@@ -53,6 +52,8 @@ public class SceneEditorParams extends AbstractEditorPanel {
         createRandomizeButton();
 
         createSliders();
+
+        loadValues();
     }
 
 
@@ -90,15 +91,13 @@ public class SceneEditorParams extends AbstractEditorPanel {
             initSliders();
         }
 
-        loadSliderValues();
-
         for (SliderYio slider : sliders) {
             slider.appear();
         }
     }
 
 
-    private void loadSliderValues() {
+    private void loadValues() {
         playersSlider.setCurrentRunnerIndex(getGameController().playersNumber);
         difficultySlider.setCurrentRunnerIndex(GameRules.difficulty);
         colorSlider.setCurrentRunnerIndex(GameRules.editorChosenColor);

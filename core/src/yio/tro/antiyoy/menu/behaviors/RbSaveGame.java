@@ -11,7 +11,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbSaveGame extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         Scenes.sceneSaveLoad.create();
         Scenes.sceneSaveLoad.setOperationType(false);
     }

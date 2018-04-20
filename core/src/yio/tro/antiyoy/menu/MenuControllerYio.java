@@ -11,6 +11,7 @@ import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.stuff.RectangleYio;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ListIterator;
 import java.util.StringTokenizer;
 
@@ -110,7 +111,7 @@ public class MenuControllerYio {
     }
 
 
-    public void addMenuBlockToArray(ButtonYio buttonYio) {
+    public void addButtonToArray(ButtonYio buttonYio) {
         // considered that menu block is not in array at this moment
         ListIterator iterator = buttons.listIterator();
         while (iterator.hasNext()) {
@@ -179,14 +180,17 @@ public class MenuControllerYio {
         }
 
         for (CheckButtonYio checkButton : checkButtons) {
-            if (checkButton.isTouchable()) {
-                if (checkButton.checkTouch(screenX, screenY, pointer, button)) return true;
-            }
+            if (!checkButton.isTouchable()) continue;
+
+            if (checkButton.checkTouch(screenX, screenY, pointer, button)) return true;
         }
 
-        for (ButtonYio buttonYio : buttons) {
-            if (buttonYio.isTouchable()) {
-                if (buttonYio.checkTouch(screenX, screenY, pointer, button)) return true;
+        for (int i = buttons.size() - 1; i >= 0; i--) {
+            ButtonYio buttonYio = buttons.get(i);
+            if (!buttonYio.isTouchable()) continue;
+
+            if (buttonYio.checkTouch(screenX, screenY, pointer, button)) {
+                return true;
             }
         }
 
@@ -299,11 +303,6 @@ public class MenuControllerYio {
     }
 
 
-    public void createSpecialThanksMenu() {
-        Scenes.sceneInfoMenu.create("special_thanks", Reaction.rbInfo, 312837182);
-    }
-
-
     public void renderTextAndSomeEmptyLines(ButtonYio buttonYio, String text, int emptyLines) {
         if (buttonYio.notRendered()) {
             buttonYio.addTextLine(text);
@@ -321,6 +320,7 @@ public class MenuControllerYio {
         Scenes.sceneEditorParams.hide();
         Scenes.sceneEditorAutomationPanel.hide();
         Scenes.sceneEditorMoneyPanel.hide();
+        Scenes.sceneEditorChecks.hide();
 
         yioGdxGame.gameController.getLevelEditor().onAllPanelsHide();
     }
@@ -341,8 +341,13 @@ public class MenuControllerYio {
     }
 
 
-    public String getColorNameByIndex(int index, String keyModifier) {
+    public String getColorNameByIndexWithOffset(int index, String keyModifier) {
         index = yioGdxGame.gameController.getColorIndexWithOffset(index);
+        return getColorNameWithoutOffset(index, keyModifier);
+    }
+
+
+    public String getColorNameWithoutOffset(int index, String keyModifier) {
         switch (index) {
             default:
             case 6:

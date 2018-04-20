@@ -9,7 +9,7 @@ import yio.tro.antiyoy.menu.behaviors.Reaction;
 public class RbEditorImport extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         getGameController(buttonYio).getLevelEditor().importLevel();
     }
 }

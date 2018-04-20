@@ -11,6 +11,11 @@ public class MusicManager {
     public Music music;
 
 
+    public static void initialize() {
+        instance = null;
+    }
+
+
     public static MusicManager getInstance() {
         if (instance == null) {
             instance = new MusicManager();

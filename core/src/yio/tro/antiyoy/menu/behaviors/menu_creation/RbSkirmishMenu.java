@@ -10,7 +10,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbSkirmishMenu extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         getYioGdxGame(buttonYio).setGamePaused(true);
         Scenes.sceneSkirmishMenu.create();
         getYioGdxGame(buttonYio).setAnimToPlayButtonSpecial();

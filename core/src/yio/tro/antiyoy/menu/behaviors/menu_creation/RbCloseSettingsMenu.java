@@ -12,7 +12,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbCloseSettingsMenu extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         boolean needToRestart = Settings.getInstance().saveSettings();
         Scenes.sceneMainMenu.create();
         if (needToRestart) {

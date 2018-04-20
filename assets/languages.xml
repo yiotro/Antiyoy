@@ -3,7 +3,7 @@
 
 <languages>
 
-    <language name="en_UK">
+    <language name="en_UK" title="English" author="yiotro">
         <!-- All characters -->
         <string key="lang_characters" value="ö"/>
 
@@ -38,13 +38,20 @@
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Reset data"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Skirmish"/>
         <string key="choose_game_mode_tutorial" value="Tutorial"/>
         <string key="choose_game_mode_campaign" value="Campaign"/>
         <string key="choose_game_mode_load" value="Load game"/>
+        <string key="user_levels" value="User levels"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Add my map"/>
+        <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
+
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Main menu"/>
@@ -144,7 +151,7 @@
         <string key="tip_about_unit_death" value="If money runs out then#all units will die.#So be careful"/>
         <string key="tip_merging" value="Merge units to get#a more powerful unit"/>
         <string key="tip_trees" value="Trees decrease income#So it's better to cut them"/>
-        <string key="tip_help" value="More details#in the 'help' menu"/>
+        <string key="tip_help" value="To skip rest of tutorial press 'help'"/>
 
         <!-- Generic Tutorial -->
         <string key="gen_greetings" value="Hi. This tutorial will explain the rules of this game."/>
@@ -247,6 +254,18 @@
         #
         #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
 
+        <string key="article_diplomacy_1" value="To win in diplomacy mode you have to be in friendship with everyone on map.
+        #
+        #To open diplomacy UI just select your country and tap little 'flag' icon.
+        #
+        #Tap on any country in list and you'll see what you can do.
+        #
+        #'Like' and 'dislike' buttons can make relations with that country better or worse."/>
+
+        <string key="article_diplomacy_2" value="The idea of black mark is simple: any other country can't be friends with both of you. It's a sort of diplomatical pressure.
+        #
+        #Also, you won't be able to become friend with everyone easily. Last country will always refuse your friend request."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Turns made:"/>
         <string key="units_died" value="Units died:"/>
@@ -304,8 +323,8 @@
         <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
-        <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+        <string key="bleentoro_release" value="Hi. #I've made a new game. It's called 'Bleentoro'. You can find it in Google Play. #I hope you'll like it :)"/>
 
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
@@ -329,6 +348,17 @@
         <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
         <string key="confirm_black_mark" value="Put black mark?"/>
         <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
+        <string key="player_turn" value="Player turn"/>
+        <string key="fine" value="Fine"/>
+        <string key="log" value="Letters"/>
+        <string key="friendship_proposal" value="Friendship proposal"/>
+        <string key="war_declaration" value="War declaration"/>
+        <string key="stop_war" value="Stop war"/>
+        <string key="friendship_ended" value="Friendship ended"/>
+        <string key="friendship_canceled" value="Friendship canceled"/>
+        <string key="black_marked" value="Black marked"/>
+        <string key="letter_sent" value="Letter sent"/>
+
 
 
     </language>
@@ -355,7 +385,7 @@
 
 
 
-    <language name="ru_RU">
+    <language name="ru_RU" title="Russian" author="yiotro">
         <!-- All characters -->
         <string key="lang_characters" value="йцукенгшщзхъёфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮö"/>
 
@@ -369,20 +399,16 @@
         <string key="menu_reset" value="Сбросить"/>
         <string key="game_saved" value="Игра сохранена"/>
         <string key="restart_app" value="Перезапустите игру"/>
-        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/> <!-- Same as english -->
         <string key="city_name_gen_groups" value="k: р т п с д к б н м #m: рб кр тр бр бн ко рт #a: о а аи е ой о е #o: во ва мск ск нск ов рг ро"/>
 
         <!-- Info -->
         <string key="info_back" value="Назад"/>
-        <string key="info_array" value="Это простая стратегия в
-        #минималистичном стиле.
-        #Игра бесплатна, в ней нет
-        #ни рекламы ни доната.
-        #Чтобы узнать правила игры
-        #советую пройти обучение.
+        <string key="info_array" value="Это простая стратегия в минималистичном стиле.
+        #Игра бесплатна, в ней нет ни рекламы ни доната.
+        #Чтобы узнать правила игры советую пройти обучение.
         #
-        #Игра основана на
-        #Slay от Sean O'Connor
+        #Игра основана на Slay от Sean O'Connor
         #
         #
         #
@@ -394,13 +420,19 @@
         #Игру сделал yiotro
 		"/>
         <string key="reset_campaign_data" value="Стереть данные"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Отдельное спасибо"/>
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Сражение"/>
         <string key="choose_game_mode_tutorial" value="Обучение"/>
         <string key="choose_game_mode_campaign" value="Кампания"/>
         <string key="choose_game_mode_load" value="Загрузить"/>
+        <string key="user_levels" value="Уровни игроков"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Добавить карту"/>
+        <string key="how_add_my_map" value="Как добавить сюда свою карту: #1. Сделать её в редакторе. #2. Убедиться в том, что она интересная и её можно пройти. #3. Нажать 'экспорт'. #4a. Запостить её на pastebin.com и послать мне ссылку на мой email yiotro93@gmail.com #4b. Или запостить её в моём сабреддите /r/yiotro_games # #Кстати, если карта сложная, то лучше к ней прикладывать видео с её прохождением."/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Назад"/>
@@ -497,7 +529,7 @@
         <string key="tip_about_unit_death" value="Если деньги кончатся,#то юниты умрут.#"/>
         <string key="tip_merging" value="Соединяй юнитов чтобы#получить более сильных"/>
         <string key="tip_trees" value="Деревья уменьшают доход.#Поэтому их надо рубить"/>
-        <string key="tip_help" value="Больше подробностей#в справке"/>
+        <string key="tip_help" value="Чтобы пропустить этот уровень нажми 'Справка'"/>
 
         <!-- Generic Tutorial -->
         <string key="gen_greetings" value="Привет. Это обучение расскажет про основные правила игры."/>
@@ -539,92 +571,51 @@
         <string key="help_about_tactics" value="Тактика"/>
         <string key="help_about_rules" value="Правила"/>
 
-        <string key="help_units_article" value="Есть 4 типа юнитов.
-        #Отличаются они только силой.
-        #В порядке возрастания силы:
+        <string key="help_units_article" value="Есть 4 типа юнитов. Отличаются они только силой. В порядке возрастания силы:
         #[1] крестьяне
         #[2] копейщики
         #[3] бароны
         #[4] рыцари
         #
-        #Юнит дает соседним клеткам
-        #защиту равную своей силе.
+        #Юнит дает соседним клеткам защиту равную своей силе.
         #
-        #Чтобы захватить клетку
-        #сила юнита должна быть
-        #больше чем защита клетки.
+        #Чтобы захватить клетку сила юнита должна быть больше чем защита клетки.
         #
-        #Каждый юнит кушает
-        #2, 6, 18 или 54
-        #монет за ход.
+        #Каждый юнит кушает 2, 6, 18 или 54 монет за ход.
         "/>
 
-        <string key="help_trees_article" value="Деревья остаются после
-        #умерших юнитов.
+        <string key="help_trees_article" value="Деревья остаются после умерших юнитов.
         #
-        #Клетка с деревом не
-        #дает дохода. Так что
-        #деревья наносят вред.
+        #Клетка с деревом не дает дохода. Так что деревья наносят вред.
         #
-        #С ними нужно бороться, иначе
-        #они разрастутся и приведут
-        #к кризису экономики.
+        #С ними нужно бороться, иначе они разрастутся и приведут к кризису экономики.
         #
-        #Пальмы появляются по краям
-        #и растут очень быстро.
-        #Их нужно мочить сразу.
+        #Пальмы появляются по краям и растут очень быстро. Их нужно мочить сразу.
         "/>
 
-        <string key="help_towers_article" value="Башни служат для
-        #защиты соседних клеток.
+        <string key="help_towers_article" value="Башни служат для защиты соседних клеток.
         #
-        #Башни дают защиту силы 2.
-        #Поэтому только бароны и
-        #рыцари могут пробить её.
+        #Башни дают защиту силы 2. Поэтому только бароны и рыцари могут пробить её.
         #
         #Хижины дают защиту 1.
         #
-        #В начале игры это лучший
-        #способ защиты.
-        #Башни стоят дешевле
-        #копейщиков и не жрут
-        #денег.
+        #В начале игры это лучший способ защиты. Башни стоят дешевле копейщиков и не жрут денег.
         "/>
 
-        <string key="help_money_article" value="Доход зависит от
-        #количества клеток.
-        #Чем больше территория
-        #тем больше доход.
-        #Деревья уменьшают доход.
+        <string key="help_money_article" value="Доход зависит от количества клеток. Чем больше территория тем больше доход. Деревья уменьшают доход.
         #
-        #Расход зависит от юнитов.
-        #Чем больше юнитов
-        #и чем они сильнее,
-        #тем больше затраты
-        #на их содержание.
+        #Расход зависит от юнитов. Чем больше юнитов и чем они сильнее, тем больше затраты на их содержание.
         #
-        #Если деньги кончаются,
-        #то юниты умирают.
+        #Если деньги кончаются, то юниты умирают.
         #
-        #Прибыль показывается
-        #сверху по центру.
+        #Прибыль показывается сверху по центру.
         "/>
 
-        <string key="help_tactics_article" value="В начале игры важно
-        #захватить ничейные клетки.
-        #После этого надо не
-        #допустить потерю клеток.
+        <string key="help_tactics_article" value="В начале игры важно захватить ничейные клетки. После этого надо не допустить потерю клеток.
         #
-        #Прежде чем строить
-        #сильных юнитов, надо
-        #убедиться что прибыль
-        #способна покрыть затраты
-        #на их содержание.
+        #Прежде чем строить сильных юнитов, надо убедиться что прибыль способна покрыть затраты на их содержание.
         #
-        #Разрезайте территории
-        #врагов на части
-        #чтобы разрушить их
-        #экономику.
+        #Разрезайте территории врагов на части чтобы разрушить их экономику.
         "/>
 
         <string key="article_rules" value="В игре есть 2 набора правил: Обычные правила и правила slay. По умолчанию включены обычные правила.
@@ -634,6 +625,18 @@
         #Чтобы поменять правила в режиме 'сражение' надо перед началом игры нажать 'еще'.
         #
         #Чтобы поменять правила в кампании надо на экране выбора уровня нажать '...' в правом вехнем углу."/>
+
+        <string key="article_diplomacy_1" value="Чтобы победить дипломатически нужно дружить со всеми на карте.
+        #
+        #Чтобы открыть интерфейс дипломатии надо просто нажать на свою страну, а потом нажать на значок флага.
+        #
+        #Если в списке стран нажать на любую из них, то будет показано какие действия можно предпринять.
+        #
+        #Кнопки 'палец вверх' и 'палец вниз' могут сделать отношения лучше или хуже."/>
+
+        <string key="article_diplomacy_2" value="Идея черной метки очень проста: любая другая страна не может быть одновременно другом с вами обоими. Это что-то вроде дипломатического давления.
+        #
+        #Кстати, победа простой не будет. Последняя страна всегда будет отказывать в дружбе."/>
 
         <!-- Statistics -->
         <string key="turns_made" value="Ходов сделано:"/>
@@ -692,8 +695,8 @@
         <string key="left_handed" value="Леворукий режим"/>
 
         <!-- Single messages -->
-        <string key="check_shroomarts" value="Новый скин от ShroomArts"/>
         <string key="level_24" value="Это первый 'сложный' уровень. Уделяй больше внимания защите."/>
+        <string key="bleentoro_release" value="Привет. #Я сделал новую игру. Она называется 'Bleentoro'. Ты можешь найти её в Google Play. #Надеюсь она тебе понравится :)"/>
 
         <!-- Gameplay -->
         <string key="friends" value="Друзья"/>
@@ -717,6 +720,16 @@
         <string key="diplomatic_win_conditions" value="Чтобы победить с помощью дипломатии нужно дружить со всеми."/>
         <string key="confirm_black_mark" value="Поставить черную метку?"/>
         <string key="black_mark_description" value="Поставив черную метку на игрока вы запрещаете остальным дружить с вами обоими одновременно. На уже заключенные договора не действует."/>
+        <string key="player_turn" value="Ход игрока"/>
+        <string key="fine" value="Штраф"/>
+        <string key="log" value="Письма"/>
+        <string key="friendship_proposal" value="Предложение дружбы"/>
+        <string key="war_declaration" value="Обьявление войны"/>
+        <string key="stop_war" value="Прекращение войны"/>
+        <string key="friendship_ended" value="Дружба закончилась"/>
+        <string key="friendship_canceled" value="Дружба отменена"/>
+        <string key="black_marked" value="Черная метка"/>
+        <string key="letter_sent" value="Письмо отправлено"/>
     </language>
 
 
@@ -740,7 +753,7 @@
 
 
 
-    <language name="uk_UA">
+    <language name="uk_UA" title="Ukrainian" author="yiotro">
         <!-- All characters -->
         <string key="lang_characters" value="йцукенгшщзхъёфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮїЇєЄöІіІ"/>
 
@@ -754,20 +767,16 @@
         <string key="menu_reset" value="Скинути"/>
         <string key="game_saved" value="Гра збережена"/>
         <string key="restart_app" value="Перезапустіть гру"/>
-        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/> <!-- Same as english -->
         <string key="city_name_gen_groups" value="k: р т п с д к б н м #m: рб кр тр бр бн ко рт #a: о а аі е ой о е #o: во ва мск ск нск ов рг ро"/>
 
         <!-- Info -->
         <string key="info_back" value="Назад"/>
-        <string key="info_array" value="Це проста стратегiя у
-        #мiнiмалистичному стилi.
-        #Гра безкоштовна, в нiй немає
-        #реклами та донату.
-        #Щоб зрозумiти правила гри
-        #раджу пройти туторiал
+        <string key="info_array" value="Це проста стратегiя у мiнiмалистичному стилi.
+        #Гра безкоштовна, в нiй немає реклами та донату.
+        #Щоб зрозумiти правила гри раджу пройти туторiал
         #
-        #Гра базується на
-        #Slay вiд Sean O'Connor
+        #Гра базується на Slay вiд Sean O'Connor
         #
         #
         #
@@ -779,13 +788,19 @@
         #Гру зробив yiotro
 		"/>
         <string key="reset_campaign_data" value="Стерти данi"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Дякую"/>
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Швидкий бiй"/>
         <string key="choose_game_mode_tutorial" value="Туторiал"/>
         <string key="choose_game_mode_campaign" value="Кампанiя"/>
         <string key="choose_game_mode_load" value="Завантажити"/>
+        <string key="user_levels" value="Рівні гравців"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Додати карту"/>
+        <string key="how_add_my_map" value="Як додати сюди свою мапу: #1. Зробити її у редакторі. #2. Впевнитись у тому, що вона цікава та її можна пройти. #3. Натиснути 'експорт'. #4a. Запостити її на pastebin.com та послати мені посилання на мій email yiotro93@gmail.com #4b. Або запостити її у моєму сабреддіті /r/yiotro_games # #До речі, якщо мапу важко пройти, то краще з нею також викласти відео з її проходженням.."/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Назад"/>
@@ -809,7 +824,7 @@
         <string key="expert" value="експерт"/>
         <string key="balancer" value="балансувальник"/>
         <string key="player_color" value="Колiр гравця"/>
-        <string key="fog_of_war" value="Туман войни"/>
+        <string key="fog_of_war" value="Туман війни"/>
         <string key="diplomacy" value="Дипломатія"/>
 
         <!-- In game menu -->
@@ -882,7 +897,7 @@
         <string key="tip_about_unit_death" value="Якщо грощi закiнчатся,#то юнiти помруть.#Тому будь обережним"/>
         <string key="tip_merging" value="Об'єднуй юнiтiв щоб#отримати сильнiших"/>
         <string key="tip_trees" value="Дерева зменшують дохiд.#Тому їх треба рубати"/>
-        <string key="tip_help" value="Бiльше подробиць#у довiдцi"/>
+        <string key="tip_help" value="Щоб пропустити цей рівень натисни 'Довідка'"/>
 
         <!-- Generic Tutorial -->
         <string key="gen_greetings" value="Привiт. Цей туторiал розповiсть про основнi правила гри."/>
@@ -924,93 +939,51 @@
         <string key="help_about_tactics" value="Тактика"/>
         <string key="help_about_rules" value="Правила"/>
 
-        <string key="help_units_article" value="У грi 4 типи юнiтiв.
-        #Вони вiдрiзняются силою.
-        #У порядку зростання силi:
+        <string key="help_units_article" value="У грi 4 типи юнiтiв. Вони вiдрiзняются силою. У порядку зростання силi:
         #[1] селяни
         #[2] воїни
         #[3] барони
         #[4] лицарi
         #
-        #Юнiт дає сусiднiм клiтинам
-        #захист рiвний своїй силi.
+        #Юнiт дає сусiднiм клiтинам захист рiвний своїй силi.
         #
-        #Щоб захопити клiтину
-        #сила юнiта має бути
-        #бiльше нiж захист клiтини.
+        #Щоб захопити клiтину сила юнiта має бути бiльше нiж захист клiтини.
         #
-        #Кожен юнiт їсть
-        #2, 6, 18 або 54
-        #монет за хiд.
+        #Кожен юнiт їсть 2, 6, 18 або 54 монет за хiд.
         "/>
 
-        <string key="help_trees_article" value="Дерева залишаются пiсля
-        #померлих юнiтiв.
+        <string key="help_trees_article" value="Дерева залишаются пiсля померлих юнiтiв.
         #
-        #Клiтина с деревом не
-        #дає прибутку. Отже
-        #дерева наносять шкоду.
+        #Клiтина с деревом не дає прибутку. Отже дерева наносять шкоду.
         #
-        #З ними треба боротися.
-        #Iнакше вони розростутся
-        #i призведуть до
-        #економiчної кризи
+        #З ними треба боротися. Iнакше вони розростутся i призведуть до економiчної кризи
         #
-        #Пальми з'являются з країв
-        #i ростуть дуже швидко.
-        #Їх треба вiдразу рубати.
+        #Пальми з'являются з країв i ростуть дуже швидко. Їх треба вiдразу рубати.
         "/>
 
-        <string key="help_towers_article" value="Вежi слугують для
-        #захисту сусiднiх клiтин.
+        <string key="help_towers_article" value="Вежi слугують для захисту сусiднiх клiтин.
         #
-        #Вежi дають захист сили 2.
-        #Тому тiльки барони та
-        #лицари можуть її пробити.
+        #Вежi дають захист сили 2. Тому тiльки барони та лицари можуть її пробити.
         #
         #Хатини дають захист 1.
         #
-        #На початку гри це найкращий
-        #спосiб захисту.
-        #Вежi коштують дешево
-        #i не потребують грошей
-        #на обслуговування.
+        #На початку гри це найкращий спосiб захисту. Вежi коштують дешево i не потребують грошей на обслуговування.
         "/>
 
-        <string key="help_money_article" value="Прибуток залежить вiд
-        #вiлькостi клiтин.
-        #Чим бiльша територiя
-        #тим бiльший прибуток.
-        #Дерева зменшують прибуток.
+        <string key="help_money_article" value="Прибуток залежить вiд вiлькостi клiтин. Чим бiльша територiя тим бiльший прибуток. Дерева зменшують прибуток.
         #
-        #Витрати залежать вiд юнiтiв.
-        #Чим бiльше юнiтiв
-        #i чим вони сильнiшi
-        #тим бiльше грошей
-        #вони потребують.
+        #Витрати залежать вiд юнiтiв. Чим бiльше юнiтiв i чим вони сильнiшi тим бiльше грошей вони потребують.
         #
-        #Якщо грошi закiнчатся,
-        #то юнiти помруть.
+        #Якщо грошi закiнчатся, то юнiти помруть.
         #
-        #Прибуток показаний
-        #зверху по центру.
+        #Прибуток показаний зверху по центру.
         "/>
 
-        <string key="help_tactics_article" value="На початку гри важливо
-        #захопити пустi клiтини.
-        #Пiлся цього треба не
-        #допустити втрату клiтин.
+        <string key="help_tactics_article" value="На початку гри важливо захопити пустi клiтини. Пiлся цього треба не допустити втрату клiтин.
         #
-        #Перед тим як будувати
-        #сильних юнiтiв треба
-        #впевнитись, що прибуток
-        #здатний покрити витрати
-        #на їх утримання.
+        #Перед тим як будувати сильних юнiтiв треба впевнитись, що прибуток здатний покрити витрати на їх утримання.
         #
-        #Розрiзайте територiї
-        #ворогiв на частини
-        #для того, щоб зруйнувати
-        #їхню економiку.
+        #Розрiзайте територiї ворогiв на частини для того, щоб зруйнувати їхню економiку.
         "/>
 
         <string key="article_rules" value="У грі є 2 набори правил: Звичайні правила ті правила slay. По замовчуванню обрані звичайні правила.
@@ -1020,6 +993,18 @@
         #Щоб змінити правила у режимі 'швидкий бій' треба перед початком гри натиснути 'ще'.
         #
         #Щоб змінити правила у кампанії треба на екрані вибору рівня натиснути'...' у правому верхньому кутку."/>
+
+        <string key="article_diplomacy_1" value="Щоб перемогти дипломатично потрібно дружити з усіма на карті.
+        #
+        #Щоб відкрити інтерфейс дипломатії треба просто натиснути на свою країну, а потім натиснути на значок прапора.
+        #
+        #Якщо в списку країн натиснути на будь-яку з них, то будуть показані можливі дії.
+        #
+        #Кнопки 'палець вгору' і 'палець вниз' можуть зробити відносини краще або гірше."/>
+
+        <string key="article_diplomacy_2" value="Ідея чорної мітки дуже проста: будь-яка інша країна не може дружити одночасно одним з вами обома. Це щось на зразок дипломатичного тиску.
+        #
+        #До речі, перемога простою не буде. Остання країна завжди буде відмовляти в дружбі."/>
 
         <!-- Statistics -->
         <string key="turns_made" value="Крокiв зроблено:"/>
@@ -1078,8 +1063,8 @@
         <string key="left_handed" value="Режим лівої руки"/>
 
         <!-- Single messages -->
-        <string key="check_shroomarts" value="Новий скін від ShroomArts"/>
         <string key="level_24" value="Це перший 'складний' рівень. Приділяй більше уваги захисту."/>
+        <string key="bleentoro_release" value="Привіт. #Я зробив нову гру. Вона називається 'Bleentoro'. Ти можеш знайти її у Google Play. #Сподіваюсь вона тобі сподобається :)"/>
 
         <!-- Gameplay -->
         <string key="friends" value="Друзі"/>
@@ -1103,6 +1088,16 @@
         <string key="diplomatic_win_conditions" value="Щоб перемогти дипломатично треба дружити зі всіма."/>
         <string key="confirm_black_mark" value="Поставити чорну мітку?"/>
         <string key="black_mark_description" value="Поставивши на гравця чорну мітку ви забороняєте решті гравців дружити з вами обома. На вже укладені договори не діє."/>
+        <string key="player_turn" value="Хід гравця"/>
+        <string key="fine" value="Штраф"/>
+        <string key="log" value="Листи"/>
+        <string key="friendship_proposal" value="Договір дружби"/>
+        <string key="war_declaration" value="Війна"/>
+        <string key="stop_war" value="Закінчити війну"/>
+        <string key="friendship_ended" value="Дружба закінчилась"/>
+        <string key="friendship_canceled" value="Відміна дружби"/>
+        <string key="black_marked" value="Чорна мітка"/>
+        <string key="letter_sent" value="Лист відправлено"/>
 
     </language>
 
@@ -1128,7 +1123,7 @@
 
 
 
-    <language name="de_DE">
+    <language name="de_DE" title="German" author="Rebecca Nöll">
         <!-- All characters -->
         <string key="lang_characters" value="ÄÜÖäüöß"/>
 
@@ -1168,13 +1163,19 @@
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Daten zurücksetzen"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Ein besonderer Dank gilt den folgenden Personen: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/>
+        <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Gefecht"/>
         <string key="choose_game_mode_tutorial" value="Tutorial"/>  <!-- Same as english -->
         <string key="choose_game_mode_campaign" value="Kampagne"/>
         <string key="choose_game_mode_load" value="Spiel laden"/>
+        <string key="user_levels" value="User levels"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Add my map"/>
+        <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Hauptmenü"/>
@@ -1198,8 +1199,8 @@
         <string key="expert" value="Experte"/>
         <string key="balancer" value="angleichen"/>
         <string key="player_color" value="Spielerfarbe"/>
-        <string key="fog_of_war" value="Fog of war"/>
-        <string key="diplomacy" value="Diplomacy"/>
+        <string key="fog_of_war" value="Fog of war"/> <!-- Same as english -->
+        <string key="diplomacy" value="Diplomatie"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Fortfahren"/>
@@ -1311,7 +1312,7 @@
         <string key="help_about_towers" value="Türme"/>
         <string key="help_about_money" value="Geld"/>
         <string key="help_about_tactics" value="Taktik"/>
-        <string key="help_about_rules" value="Rules"/>
+        <string key="help_about_rules" value="Regeln"/>
 
         <string key="help_units_article" value="Es gibt 4 Arten von Einheiten,
         #die sich nur durch ihre
@@ -1381,8 +1382,6 @@
         #Stärkere Einheiten
         #konsumieren mehr Geld.
         #
-        #
-        #
         #Wenn Dir das Geld ausgeht,
         #sterben Deine Einheiten.
         #
@@ -1399,21 +1398,30 @@
         #Einkommen hoch genug ist
         #bevor du Einheiten baust.
         #
-        #
-        #
-        #
         #Trenne feindliche Gebiete
         #voneinander ab, um so
         #ihre Wirtschaft zu zerstören.
         "/>
 
-        <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
+        <string key="article_rules" value="Du kannst dieses Spiel entweder nach Standardregeln oder nach den Slay-Regeln spielen. Die Standardregeln sind voreingestellt.
         #
-        #Initially game had only slay rules. That's why help describes them instead of normal rules.
+        #Anfänglich gab es nur die Slay-Regeln, weshalb diese anstelle der Standardregeln in der Hilfe erklärt werden.
         #
-        #To change rules in skirmish you have to tap 'more' before starting new game.
+        #Um das Regelwerk für den Gefechtmodus zu ändern musst du auf 'Mehr' tippen, bevor Du ein neues Spiel startest.
         #
-        #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
+        #Um das Regelwerk für die Kampagne zu ändern tippe auf die drei Punkte '...' oben rechts in der Levelauswahl."/>
+
+        <string key="article_diplomacy_1" value="To win in diplomacy mode you have to be in friendship with everyone on map.
+        #
+        #To open diplomacy UI just select your country and tap little 'flag' icon.
+        #
+        #Tap on any country in list and you'll see what you can do.
+        #
+        #'Like' and 'dislike' buttons can make relations with that country better or worse."/>
+
+        <string key="article_diplomacy_2" value="The idea of black mark is simple: any other country can't be friends with both of you. It's a sort of diplomatical pressure.
+        #
+        #Also, you won't be able to become friend with everyone easily. Last country will always refuse your friend request."/>
 
         <!-- Statistics -->
         <string key="turns_made" value="Gemachte Züge:"/>
@@ -1437,11 +1445,11 @@
         <string key="no" value="Nein"/>
         <string key="yes" value="Ja"/>
         <string key="confirm_import" value="Import bestätigen"/>
-        <string key="filter_no" value="No filter"/>
-        <string key="filter_only_land" value="Only land"/>
-        <string key="confirm_clear_level" value="Clear map?"/>
-        <string key="confirm_randomize" value="Generate random map?"/>
-        <string key="randomize" value="Randomize"/>
+        <string key="filter_no" value="Kein Filter"/>
+        <string key="filter_only_land" value="Nur Land"/>
+        <string key="confirm_clear_level" value="Karte zurücksetzen?"/>
+        <string key="confirm_randomize" value="Zufällige Karte generieren?"/>
+        <string key="randomize" value="Zufall"/>
 
         <!-- Settings -->
         <string key="autosave" value="Autosave"/>
@@ -1462,41 +1470,51 @@
         <string key="language" value="Sprache"/>
         <string key="more_settings_checks" value="# #Wasser-Textur # # "/>
         <string key="water_texture" value="Wasser-Textur "/>
-        <string key="confirm_reset" value="Clear progress?"/>
+        <string key="confirm_reset" value="Fortschritt zurücksetzen?"/>
         <string key="replays" value="Replays"/>
-        <string key="save_replay" value="Save replay"/>
+        <string key="save_replay" value="Replay speichern"/>
         <string key="replay" value="Replay"/>
-        <string key="replay_saved" value="Replay saved"/>
-        <string key="fast_construction" value="Fast construction"/>
-        <string key="music" value="Music"/>
-        <string key="left_handed" value="Left handed"/>
+        <string key="replay_saved" value="Replay gespeichert"/>
+        <string key="fast_construction" value="Schnelles Bauen"/>
+        <string key="music" value="Musik"/>
+        <string key="left_handed" value="Linkshänder"/>
 
         <!-- Single messages -->
-        <string key="check_shroomarts" value="New skin by ShroomArts"/>
-        <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+        <string key="level_24" value="Dies ist das erste 'schwere' Level. Achte besonders auf Deine Verteidigung."/>
+        <string key="bleentoro_release" value="Hi. #I've made a new game. It's called 'Bleentoro'. You can find it in Google Play. #I hope you'll like it :)"/>
 
         <!-- Gameplay -->
-        <string key="friends" value="Friends"/>
-        <string key="mutual_friends" value="Mutual"/>
-        <string key="dotations" value="Subsidies"/>
-        <string key="treaty_of_friendship" value="Treaty of friendship"/>
-        <string key="state" value="State"/>
-        <string key="duration" value="Duration"/>
-        <string key="refuse_friendship" value="Sorry, I can't accept your friendship proposition."/>
-        <string key="friend" value="friend"/>
-        <string key="enemy" value="enemy"/>
-        <string key="neutral" value="neutral"/>
-        <string key="dead" value="dead"/>
-        <string key="confirm_cancel_friendship" value="Cancel friendship?"/>
-        <string key="confirm_start_war" value="Start war?"/>
-        <string key="peace_treaty" value="Peace treaty"/>
-        <string key="pay" value="Pay"/>
-        <string key="reparations" value="Reparations"/>
-        <string key="refuse_stop_war" value="I will fight to the end!"/>
-        <string key="win_conditions" value="Conditions of victory"/>
-        <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
-        <string key="confirm_black_mark" value="Put black mark?"/>
-        <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
+        <string key="friends" value="Freunde"/>
+        <string key="mutual_friends" value="Davon gemeinsame"/>
+        <string key="dotations" value="Spenden"/>
+        <string key="treaty_of_friendship" value="Freundschaftsvertrag"/>
+        <string key="state" value="Status"/>
+        <string key="duration" value="Dauer"/>
+        <string key="refuse_friendship" value="Tut mir Leid, ich kann Deine Freundschaftsanfrage nicht annehmen."/>
+        <string key="friend" value="Freund"/>
+        <string key="enemy" value="Feind"/>
+        <string key="neutral" value="neutral"/> <!-- Same as english -->
+        <string key="dead" value="tot"/>
+        <string key="confirm_cancel_friendship" value="Freundschaft beenden?"/>
+        <string key="confirm_start_war" value="Krieg beginnen?"/>
+        <string key="peace_treaty" value="Friedensvertrag"/>
+        <string key="pay" value="Bezahlen"/>
+        <string key="reparations" value="Reparationszahlungen"/>
+        <string key="refuse_stop_war" value="Ich werde bis zum Ende kämpfen!"/>
+        <string key="win_conditions" value="Siegesbedingungen"/>
+        <string key="diplomatic_win_conditions" value="Um durch Diplomatie zu gewinnen, musst Du mit jedem Spieler befreundet sein."/>
+        <string key="confirm_black_mark" value="Schwarzen Marker setzen?"/>
+        <string key="black_mark_description" value="Indem Du einen schwarzen Marker auf den Spieler setzt verbietest du anderen Spielern mit Euch beiden gleichzeitig befreundet zu sein. Funktioniert nicht bei bereits abgeschlossenen Verträgen."/>
+        <string key="player_turn" value="Player turn"/>
+        <string key="fine" value="Fine"/>
+        <string key="log" value="Letters"/>
+        <string key="friendship_proposal" value="Friendship proposal"/>
+        <string key="war_declaration" value="War declaration"/>
+        <string key="stop_war" value="Stop war"/>
+        <string key="friendship_ended" value="Friendship ended"/>
+        <string key="friendship_canceled" value="Friendship canceled"/>
+        <string key="black_marked" value="Black marked"/>
+        <string key="letter_sent" value="Letter sent"/>
     </language>
 
 
@@ -1518,7 +1536,7 @@
 
 
 
-    <language name="cs_CZ">
+    <language name="cs_CZ" title="Czech" author="Jirka Justra">
         <!-- All characters -->
         <string key="lang_characters" value="öěščřžýáíéůúňťďóĚŠČŘŽÝÁÍÉŮÚŇŤĎÓ"/>
 
@@ -1532,7 +1550,7 @@
         <string key="menu_reset" value="Reset"/>  <!-- Same as english -->
         <string key="game_saved" value="Hra uložena"/>
         <string key="restart_app" value="Restart app"/>
-        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/> <!-- Same as english -->
         <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
@@ -1556,13 +1574,19 @@
         #Vytvořil yiotro
         "/>
         <string key="reset_campaign_data" value="Resetovat data"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Rychlá hra"/>
         <string key="choose_game_mode_tutorial" value="Tutoriál"/>
         <string key="choose_game_mode_campaign" value="Kampaň"/>
         <string key="choose_game_mode_load" value="Načíst hru"/>
+        <string key="user_levels" value="User levels"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Add my map"/>
+        <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Hlavní menu"/>
@@ -1659,7 +1683,7 @@
         <string key="tip_about_unit_death" value="Pokud dojdou peníze#jednotky zemřou.#Hraj obezřetně"/>
         <string key="tip_merging" value="Spoj jednotky pro#zvýšení síly"/>
         <string key="tip_trees" value="Zarostlé hexy nedávají peníze#stromy je třeba pokácet"/>
-        <string key="tip_help" value="Více podrobností#v nápovědě"/>
+        <string key="tip_help" value="To skip rest of tutorial press 'help'"/>
 
         <!-- Generic Tutorial -->
         <string key="gen_greetings" value="Ahoj, tento tutoriál ti vysvětlí pravidla hry."/>
@@ -1791,6 +1815,18 @@
         #
         #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
 
+        <string key="article_diplomacy_1" value="To win in diplomacy mode you have to be in friendship with everyone on map.
+        #
+        #To open diplomacy UI just select your country and tap little 'flag' icon.
+        #
+        #Tap on any country in list and you'll see what you can do.
+        #
+        #'Like' and 'dislike' buttons can make relations with that country better or worse."/>
+
+        <string key="article_diplomacy_2" value="The idea of black mark is simple: any other country can't be friends with both of you. It's a sort of diplomatical pressure.
+        #
+        #Also, you won't be able to become friend with everyone easily. Last country will always refuse your friend request."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Provedeno tahů:"/>
         <string key="units_died" value="Zabito jednotek:"/>
@@ -1848,8 +1884,8 @@
         <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
-        <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+        <string key="bleentoro_release" value="Hi. #I've made a new game. It's called 'Bleentoro'. You can find it in Google Play. #I hope you'll like it :)"/>
 
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
@@ -1873,6 +1909,16 @@
         <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
         <string key="confirm_black_mark" value="Put black mark?"/>
         <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
+        <string key="player_turn" value="Player turn"/>
+        <string key="fine" value="Fine"/>
+        <string key="log" value="Letters"/>
+        <string key="friendship_proposal" value="Friendship proposal"/>
+        <string key="war_declaration" value="War declaration"/>
+        <string key="stop_war" value="Stop war"/>
+        <string key="friendship_ended" value="Friendship ended"/>
+        <string key="friendship_canceled" value="Friendship canceled"/>
+        <string key="black_marked" value="Black marked"/>
+        <string key="letter_sent" value="Letter sent"/>
     </language>
 
 
@@ -1896,7 +1942,7 @@
 
 
 
-    <language name="fr_FR">
+    <language name="fr_FR" title="French" author="Louis Philibert-Morrissette">
         <!-- All characters -->
         <string key="lang_characters" value="öéè'àùïôû"/>
 
@@ -1911,7 +1957,7 @@
 
         <string key="game_saved" value="Partie sauvegardée"/>
         <string key="restart_app" value="Redémarrer appli"/>
-        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/> <!-- Same as english -->
         <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
@@ -1936,13 +1982,19 @@
         #Auteur : yiotro
 		"/>
         <string key="reset_campaign_data" value="Effacer données"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Affrontement"/>
         <string key="choose_game_mode_tutorial" value="Didacticiel"/>
         <string key="choose_game_mode_campaign" value="Campagne"/>
         <string key="choose_game_mode_load" value="Charger partie"/>
+        <string key="user_levels" value="User levels"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Add my map"/>
+        <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Menu principal"/>
@@ -2039,7 +2091,7 @@
         <string key="tip_about_unit_death" value="Si vos coffres se vident,#vos unités mourront.#Soyez prudent"/>
         <string key="tip_merging" value="Fusionnez des unités pour #devenir plus puissant"/>
         <string key="tip_trees" value="Les arbres diminuent vos revenus#Vaut mieux les abattre"/>
-        <string key="tip_help" value="Détails supplémentaires#dans la section « Aide »"/>
+        <string key="tip_help" value="To skip rest of tutorial press 'help'"/>
 
         <!-- Generic Tutorial -->
         <string key="gen_greetings" value="Bonjour. Ce didacticiel vous expliquera les règles du jeu."/>
@@ -2061,7 +2113,7 @@
         <string key="gen_about_towers" value="Les tours protègent les cellules adjacentes des attaques des paysans et des lanciers."/>
         <string key="gen_lets_build_spearman" value="Le lancier est plus puissant que le paysan. Construisons-en un."/>
         <string key="gen_build_spearman" value="Tapez sur une cellule pour construire un lancier."/>
-        <string key="gen_units_consume_money" value="L'entretien des unités coûte de l'argent. Plus puissante une unité, plus coûteux est son entretien."/>
+        <string key="gen_units_consume_money" value="Entretenir des unités coûte de l'argent. Plus puissante est une unité, plus coûteux est son entretien."/>
         <string key="gen_undo_spearman" value="Vos revenus viennent de passer à -1. Ça regarde mal... Renvoyons un lancier."/>
         <string key="gen_why_units_die" value="Lorsqu'une cité n'a plus d'argent, ses unités meurent. Vous devez donc gérer vos revenus avec prudence."/>
         <string key="gen_about_trees_one" value="Les arbres sont aussi problématiques. Une cellule où se trouve un arbre ne produit aucun argent."/>
@@ -2176,6 +2228,18 @@
         #
         #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
 
+        <string key="article_diplomacy_1" value="To win in diplomacy mode you have to be in friendship with everyone on map.
+        #
+        #To open diplomacy UI just select your country and tap little 'flag' icon.
+        #
+        #Tap on any country in list and you'll see what you can do.
+        #
+        #'Like' and 'dislike' buttons can make relations with that country better or worse."/>
+
+        <string key="article_diplomacy_2" value="The idea of black mark is simple: any other country can't be friends with both of you. It's a sort of diplomatical pressure.
+        #
+        #Also, you won't be able to become friend with everyone easily. Last country will always refuse your friend request."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Tours joués :"/>
         <string key="units_died" value="Unités mortes durant la partie :"/>
@@ -2233,8 +2297,8 @@
         <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
-        <string key="check_shroomarts" value="Nouvel habillage signé ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>  <!-- Same as english -->
+        <string key="bleentoro_release" value="Hi. #I've made a new game. It's called 'Bleentoro'. You can find it in Google Play. #I hope you'll like it :)"/>
 
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
@@ -2258,6 +2322,16 @@
         <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
         <string key="confirm_black_mark" value="Put black mark?"/>
         <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
+        <string key="player_turn" value="Player turn"/>
+        <string key="fine" value="Fine"/>
+        <string key="log" value="Letters"/>
+        <string key="friendship_proposal" value="Friendship proposal"/>
+        <string key="war_declaration" value="War declaration"/>
+        <string key="stop_war" value="Stop war"/>
+        <string key="friendship_ended" value="Friendship ended"/>
+        <string key="friendship_canceled" value="Friendship canceled"/>
+        <string key="black_marked" value="Black marked"/>
+        <string key="letter_sent" value="Letter sent"/>
     </language>
 
 
@@ -2278,7 +2352,7 @@
 
 
 
-    <language name="pl_PL">
+    <language name="pl_PL" title="Polish" author="Aleksander Jabłoński">
         <!-- All characters -->
         <string key="lang_characters" value="ĄąĆćĘęŁłŃńŚśÓóŻżŹźö"/>
 
@@ -2292,7 +2366,7 @@
         <string key="menu_reset" value="Resetuj"/>
         <string key="game_saved" value="Gra zapisana"/>
         <string key="restart_app" value="Restart app"/>
-        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/> <!-- Same as english -->
         <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
@@ -2319,7 +2393,8 @@
     #Wykonane przez yiotro
     "/>
         <string key="reset_campaign_data" value="Resetuj kampanie"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Special thanks"/>
 
 
         <!-- Choose game mode menu-->
@@ -2327,6 +2402,11 @@
         <string key="choose_game_mode_tutorial" value="Samouczek"/>
         <string key="choose_game_mode_campaign" value="Kampania"/>
         <string key="choose_game_mode_load" value="Wczytaj grę"/>
+        <string key="user_levels" value="User levels"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Add my map"/>
+        <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Menu główne"/>
@@ -2423,7 +2503,7 @@
         <string key="tip_about_unit_death" value="Jeśli pieniądze się skończą#jednostki umrą.#Uważaj!"/>
         <string key="tip_merging" value="Łącz jednostki by stały#się silniejsze."/>
         <string key="tip_trees" value="Drzewa zmniejszają zyski.#Lepiej je ściąć."/>
-        <string key="tip_help" value="Więcej szczegółów znajdziesz w zakładce pomocy"/>
+        <string key="tip_help" value="To skip rest of tutorial press 'help'"/>
 
         <!-- Generic Tutorial -->
         <string key="gen_greetings" value="Witaj. W tym samouczku poznasz podstawowe zasady gry."/>
@@ -2563,6 +2643,18 @@
         #
         #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
 
+        <string key="article_diplomacy_1" value="To win in diplomacy mode you have to be in friendship with everyone on map.
+        #
+        #To open diplomacy UI just select your country and tap little 'flag' icon.
+        #
+        #Tap on any country in list and you'll see what you can do.
+        #
+        #'Like' and 'dislike' buttons can make relations with that country better or worse."/>
+
+        <string key="article_diplomacy_2" value="The idea of black mark is simple: any other country can't be friends with both of you. It's a sort of diplomatical pressure.
+        #
+        #Also, you won't be able to become friend with everyone easily. Last country will always refuse your friend request."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Wykonane ruchy:"/>
         <string key="units_died" value="Zginęło jednostek:"/>
@@ -2592,7 +2684,7 @@
         <string key="randomize" value="Randomize"/>
 
         <!-- Settings -->
-        <string key="autosave" value="utozapis"/>
+        <string key="autosave" value="Autozapis"/>
         <string key="ask_to_end_turn" value="Zapytaj czy zakończyć"/>
         <string key="city_names" value="Nazwy miast"/>
         <string key="sound" value="Dźwięki"/>
@@ -2620,8 +2712,8 @@
         <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
-        <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+        <string key="bleentoro_release" value="Hi. #I've made a new game. It's called 'Bleentoro'. You can find it in Google Play. #I hope you'll like it :)"/>
 
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
@@ -2645,6 +2737,16 @@
         <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
         <string key="confirm_black_mark" value="Put black mark?"/>
         <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
+        <string key="player_turn" value="Player turn"/>
+        <string key="fine" value="Fine"/>
+        <string key="log" value="Letters"/>
+        <string key="friendship_proposal" value="Friendship proposal"/>
+        <string key="war_declaration" value="War declaration"/>
+        <string key="stop_war" value="Stop war"/>
+        <string key="friendship_ended" value="Friendship ended"/>
+        <string key="friendship_canceled" value="Friendship canceled"/>
+        <string key="black_marked" value="Black marked"/>
+        <string key="letter_sent" value="Letter sent"/>
     </language>
 
 
@@ -2667,7 +2769,7 @@
 
 
 
-    <language name="it_IT">
+    <language name="it_IT" title="Italian" author="Andrea Rinaldi">
         <!-- All characters -->
         <string key="lang_characters" value="öàèùìò"/>
 
@@ -2681,7 +2783,7 @@
         <string key="menu_reset" value="Reset"/>
         <string key="game_saved" value="Gioco salvato"/>
         <string key="restart_app" value="Restart app"/>
-        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/> <!-- Same as english -->
         <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
@@ -2705,13 +2807,19 @@
         "/>
 
         <string key="reset_campaign_data" value="Resetta campagna"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Schermaglia"/>
         <string key="choose_game_mode_tutorial" value="Tutorial"/>
         <string key="choose_game_mode_campaign" value="Campagna"/>
         <string key="choose_game_mode_load" value="Carica partita"/>
+        <string key="user_levels" value="User levels"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Add my map"/>
+        <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Menù principale"/>
@@ -2808,7 +2916,7 @@
         <string key="tip_about_unit_death" value="Se termini i soldi#le unità moriranno.#Fa attenzione!"/>
         <string key="tip_merging" value="Raggruppa le unità #per avere più forza"/>
         <string key="tip_trees" value="Gli alberi diminuiscono il reddito#quindi è meglio tagliarli"/>
-        <string key="tip_help" value="Più informazioni#in 'Aiuto'"/>
+        <string key="tip_help" value="To skip rest of tutorial press 'help'"/>
 
         <!-- Generic Tutorial -->
         <string key="gen_greetings" value="Ciao! Questa guida ti illustra le regole del gioco."/>
@@ -2912,6 +3020,18 @@
         #
         #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
 
+        <string key="article_diplomacy_1" value="To win in diplomacy mode you have to be in friendship with everyone on map.
+        #
+        #To open diplomacy UI just select your country and tap little 'flag' icon.
+        #
+        #Tap on any country in list and you'll see what you can do.
+        #
+        #'Like' and 'dislike' buttons can make relations with that country better or worse."/>
+
+        <string key="article_diplomacy_2" value="The idea of black mark is simple: any other country can't be friends with both of you. It's a sort of diplomatical pressure.
+        #
+        #Also, you won't be able to become friend with everyone easily. Last country will always refuse your friend request."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Numero di turni:"/>
         <string key="units_died" value="Unità uccise:"/>
@@ -2969,8 +3089,8 @@
         <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
-        <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+        <string key="bleentoro_release" value="Hi. #I've made a new game. It's called 'Bleentoro'. You can find it in Google Play. #I hope you'll like it :)"/>
 
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
@@ -2994,6 +3114,16 @@
         <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
         <string key="confirm_black_mark" value="Put black mark?"/>
         <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
+        <string key="player_turn" value="Player turn"/>
+        <string key="fine" value="Fine"/>
+        <string key="log" value="Letters"/>
+        <string key="friendship_proposal" value="Friendship proposal"/>
+        <string key="war_declaration" value="War declaration"/>
+        <string key="stop_war" value="Stop war"/>
+        <string key="friendship_ended" value="Friendship ended"/>
+        <string key="friendship_canceled" value="Friendship canceled"/>
+        <string key="black_marked" value="Black marked"/>
+        <string key="letter_sent" value="Letter sent"/>
     </language>
 
 
@@ -3013,7 +3143,7 @@
 
 
 
-    <language name="es_MX">
+    <language name="es_MX" title="Spanish" author="Hilda Julieta Lacaze">
 
         <!-- All characters -->
         <string key="lang_characters" value="Ááéíóúñö¿"/>
@@ -3028,7 +3158,7 @@
         <string key="menu_reset" value="Reiniciar"/>
         <string key="game_saved" value="Juego guardado"/>
         <string key="restart_app" value="Restart app"/>
-        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/> <!-- Same as english -->
         <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
@@ -3051,13 +3181,19 @@
        #Reddit: /r/yiotro_games
        #E-mail: yiotro93@gmail.com #Creado por yiotro"/>
         <string key="reset_campaign_data" value="Borrar datos"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu -->
         <string key="choose_game_mode_skirmish" value="Escaramuza"/>
         <string key="choose_game_mode_tutorial" value="Tutorial"/>
         <string key="choose_game_mode_campaign" value="Campaña"/>
         <string key="choose_game_mode_load" value="Cargar juego"/>
+        <string key="user_levels" value="User levels"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Add my map"/>
+        <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Menú principal"/>
@@ -3097,6 +3233,9 @@
         <string key="confirm_import" value="Confirm import"/>
         <string key="filter_no" value="No filter"/>
         <string key="filter_only_land" value="Only land"/>
+        <string key="confirm_clear_level" value="Clear map?"/>
+        <string key="confirm_randomize" value="Generate random map?"/>
+        <string key="randomize" value="Randomize"/>
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Ok"/>
@@ -3158,7 +3297,7 @@
         <string key="tip_about_unit_death" value="Si te quedas sin dinero,#tus unidades morirán.#Ten cuidado."/>
         <string key="tip_merging" value="Combina unidades para formar una más#poderosa."/>
         <string key="tip_trees" value="Los árboles reducen tus ingresos. Es mejor #cortarlos."/>
-        <string key="tip_help" value="Más detalles en 'Ayuda'"/>
+        <string key="tip_help" value="To skip rest of tutorial press 'help'"/>
 
         <!-- Generic Tutorial -->
         <string key="gen_greetings" value="Hola. Este tutorial te explicará las reglas del juego."/>
@@ -3292,6 +3431,18 @@
         #
         #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
 
+        <string key="article_diplomacy_1" value="To win in diplomacy mode you have to be in friendship with everyone on map.
+        #
+        #To open diplomacy UI just select your country and tap little 'flag' icon.
+        #
+        #Tap on any country in list and you'll see what you can do.
+        #
+        #'Like' and 'dislike' buttons can make relations with that country better or worse."/>
+
+        <string key="article_diplomacy_2" value="The idea of black mark is simple: any other country can't be friends with both of you. It's a sort of diplomatical pressure.
+        #
+        #Also, you won't be able to become friend with everyone easily. Last country will always refuse your friend request."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Turnos jugados:"/>
         <string key="units_died" value="Unidades muertas en la partida:"/>
@@ -3343,8 +3494,8 @@
         <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
-        <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+        <string key="bleentoro_release" value="Hi. #I've made a new game. It's called 'Bleentoro'. You can find it in Google Play. #I hope you'll like it :)"/>
 
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
@@ -3368,6 +3519,16 @@
         <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
         <string key="confirm_black_mark" value="Put black mark?"/>
         <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
+        <string key="player_turn" value="Player turn"/>
+        <string key="fine" value="Fine"/>
+        <string key="log" value="Letters"/>
+        <string key="friendship_proposal" value="Friendship proposal"/>
+        <string key="war_declaration" value="War declaration"/>
+        <string key="stop_war" value="Stop war"/>
+        <string key="friendship_ended" value="Friendship ended"/>
+        <string key="friendship_canceled" value="Friendship canceled"/>
+        <string key="black_marked" value="Black marked"/>
+        <string key="letter_sent" value="Letter sent"/>
     </language>
 
 
@@ -3389,7 +3550,7 @@
 
 
 
-    <language name="sk_SK">
+    <language name="sk_SK" title="Slovak" author="neviemaky">
         <!-- All characters -->
         <string key="lang_characters" value="ľťäöěščřžýáíéůúňťďóĚŠČŘŽÝÁÍÉŮÚŇŤĎÓ"/>
 
@@ -3403,7 +3564,7 @@
         <string key="menu_reset" value="Reset"/> <!-- Same as english -->
         <string key="game_saved" value="Hra uložená"/>
         <string key="restart_app" value="Reštart app"/>
-        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/> <!-- Same as english -->
         <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
@@ -3427,13 +3588,19 @@
         #Vytvořil yiotro
         "/>
         <string key="reset_campaign_data" value="Resetovať údaje"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Rýchla hra"/>
         <string key="choose_game_mode_tutorial" value="Tutoriál"/>
         <string key="choose_game_mode_campaign" value="Kampaň"/>
         <string key="choose_game_mode_load" value="Načítať hru"/>
+        <string key="user_levels" value="User levels"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Add my map"/>
+        <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Hlavné menu"/>
@@ -3457,8 +3624,8 @@
         <string key="expert" value="expert"/> <!-- Same as english -->
         <string key="balancer" value="balancer"/> <!-- Same as english -->
         <string key="player_color" value="Farba hráča"/>
-        <string key="fog_of_war" value="Fog of war"/>
-        <string key="diplomacy" value="Diplomacy"/>
+        <string key="fog_of_war" value="hmla_vojny"/>
+        <string key="diplomacy" value="diplomacia"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Pokračovať"/>
@@ -3530,7 +3697,7 @@
         <string key="tip_about_unit_death" value="Ak sa minú peniaze#jednotky umrú.#Hraj obozretne"/>
         <string key="tip_merging" value="Spoj jednotky pre#zvýšenie sily"/>
         <string key="tip_trees" value="Zarastené hexy nedávajú peniaze#stromy je potrebné vyrúbať"/>
-        <string key="tip_help" value="Viac podrobností#v nápovede"/>
+        <string key="tip_help" value="To skip rest of tutorial press 'help'"/>
 
         <!-- Generic Tutorial -->
         <string key="gen_greetings" value="Ahoj, tento tutoriál ti vysvetlí pravidlá hry."/>
@@ -3570,7 +3737,7 @@
         <string key="help_about_towers" value="Veže"/>
         <string key="help_about_money" value="Peniaze"/>
         <string key="help_about_tactics" value="Taktiky"/>
-        <string key="help_about_rules" value="Rules"/>
+        <string key="help_about_rules" value="pomoc_s_pravidlami"/>
 
         <string key="help_units_article" value="Sú štyri typy jednotiek
         #Líšia se iba silou.
@@ -3663,12 +3830,24 @@
         #
         #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
 
+        <string key="article_diplomacy_1" value="To win in diplomacy mode you have to be in friendship with everyone on map.
+        #
+        #To open diplomacy UI just select your country and tap little 'flag' icon.
+        #
+        #Tap on any country in list and you'll see what you can do.
+        #
+        #'Like' and 'dislike' buttons can make relations with that country better or worse."/>
+
+        <string key="article_diplomacy_2" value="The idea of black mark is simple: any other country can't be friends with both of you. It's a sort of diplomatical pressure.
+        #
+        #Also, you won't be able to become friend with everyone easily. Last country will always refuse your friend request."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Uskutočnených ťahov:"/>
         <string key="units_died" value="Zabitých jednotiek:"/>
         <string key="units_produced" value="Postavených jednotiek:"/>
         <string key="money_spent" value="Utratených peňazí:"/>
-        <string key="time" value="Time:"/>
+        <string key="time" value="čas:"/>
 
         <!-- Editor -->
         <string key="editor" value="Editor"/> <!-- Same as english -->
@@ -3687,9 +3866,9 @@
         <string key="confirm_import" value="Potvrdiť import"/>
         <string key="filter_no" value="Žiadny filter"/>
         <string key="filter_only_land" value="len krajina"/>
-        <string key="confirm_clear_level" value="Clear map?"/>
-        <string key="confirm_randomize" value="Generate random map?"/>
-        <string key="randomize" value="Randomize"/>
+        <string key="confirm_clear_level" value="potvrď_vyčistenie_levelu"/>
+        <string key="confirm_randomize" value="potvrď_náhodne"/>
+        <string key="randomize" value="náhodne"/>
 
         <!-- Settings -->
         <string key="autosave" value="Auto ukladanie"/>
@@ -3710,41 +3889,51 @@
         <string key="language" value="Jazyk"/>
         <string key="more_settings_checks" value="# #Textúra vody # # "/>
         <string key="water_texture" value="Textúra vody "/>
-        <string key="confirm_reset" value="Clear progress?"/>
-        <string key="replays" value="Replays"/>
-        <string key="save_replay" value="Save replay"/>
-        <string key="replay" value="Replay"/>
-        <string key="replay_saved" value="Replay saved"/>
-        <string key="fast_construction" value="Fast construction"/>
-        <string key="music" value="Music"/>
-        <string key="left_handed" value="Left handed"/>
+        <string key="confirm_reset" value="potvrď_reset"/>
+        <string key="replays" value="opakovania"/>
+        <string key="save_replay" value="uložiť_opakovanie"/>
+        <string key="replay" value="opakovanie"/>
+        <string key="replay_saved" value="opakovanie_uložené"/>
+        <string key="fast_construction" value="rýchla_stavba"/>
+        <string key="music" value="hudba"/>
+        <string key="left_handed" value="ľavoruký"/>
 
         <!-- Single messages -->
-        <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+        <string key="bleentoro_release" value="Hi. #I've made a new game. It's called 'Bleentoro'. You can find it in Google Play. #I hope you'll like it :)"/>
 
         <!-- Gameplay -->
-        <string key="friends" value="Friends"/>
+        <string key="friends" value="priatelia"/>
         <string key="mutual_friends" value="Mutual"/>
-        <string key="dotations" value="Subsidies"/>
+        <string key="dotations" value="príspevky"/>
         <string key="treaty_of_friendship" value="Treaty of friendship"/>
-        <string key="state" value="State"/>
-        <string key="duration" value="Duration"/>
+        <string key="state" value="štát"/>
+        <string key="duration" value="trvanie"/>
         <string key="refuse_friendship" value="Sorry, I can't accept your friendship proposition."/>
-        <string key="friend" value="friend"/>
-        <string key="enemy" value="enemy"/>
-        <string key="neutral" value="neutral"/>
-        <string key="dead" value="dead"/>
-        <string key="confirm_cancel_friendship" value="Cancel friendship?"/>
-        <string key="confirm_start_war" value="Start war?"/>
-        <string key="peace_treaty" value="Peace treaty"/>
-        <string key="pay" value="Pay"/>
-        <string key="reparations" value="Reparations"/>
+        <string key="friend" value="priateľ"/>
+        <string key="enemy" value="nepriateľ"/>
+        <string key="neutral" value="neutrál"/>
+        <string key="dead" value="mŕtvy"/>
+        <string key="confirm_cancel_friendship" value="potvrď_zrušenie_priateľstva"/>
+        <string key="confirm_start_war" value="potvrď_začatie_vojny"/>
+        <string key="peace_treaty" value="mierová_zmluva"/>
+        <string key="pay" value="platiť"/>
+        <string key="reparations" value="opravy"/>
         <string key="refuse_stop_war" value="I will fight to the end!"/>
         <string key="win_conditions" value="Conditions of victory"/>
         <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
         <string key="confirm_black_mark" value="Put black mark?"/>
         <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
+        <string key="player_turn" value="Player turn"/>
+        <string key="fine" value="Fine"/>
+        <string key="log" value="Letters"/>
+        <string key="friendship_proposal" value="Friendship proposal"/>
+        <string key="war_declaration" value="War declaration"/>
+        <string key="stop_war" value="Stop war"/>
+        <string key="friendship_ended" value="Friendship ended"/>
+        <string key="friendship_canceled" value="Friendship canceled"/>
+        <string key="black_marked" value="Black marked"/>
+        <string key="letter_sent" value="Letter sent"/>
     </language>
 
 
@@ -3779,7 +3968,7 @@
 
 
 
-    <language name="cn_CN">
+    <language name="cn_CN" title="Chinese" author="Jim Chen">
         <!-- All characters -->
         <string key="lang_characters" value="ö"/>
 
@@ -3794,7 +3983,7 @@
 
         <string key="game_saved" value="已保存"/>
         <string key="restart_app" value="重启游戏"/>
-        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/> <!-- Same as english -->
         <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
@@ -3819,13 +4008,19 @@
         #yiotro出品
 		"/>
         <string key="reset_campaign_data" value="重置数据"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="遭遇战"/>
         <string key="choose_game_mode_tutorial" value="教程"/>
         <string key="choose_game_mode_campaign" value="战役"/>
         <string key="choose_game_mode_load" value="载入游戏"/>
+        <string key="user_levels" value="User levels"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Add my map"/>
+        <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="主菜单"/>
@@ -3922,7 +4117,7 @@
         <string key="tip_about_unit_death" value="如果钱用光了#所有单位都会死亡#投资需谨慎"/>
         <string key="tip_merging" value="合并单位#即刻升级"/>
         <string key="tip_trees" value="树林不会产出#所以砍光他们吧"/>
-        <string key="tip_help" value="更多信息#请前往 '帮助'"/>
+        <string key="tip_help" value="To skip rest of tutorial press 'help'"/>
 
         <!-- Generic Tutorial -->
         <string key="gen_greetings" value="哈咯. 本教程会讲解游戏规则."/>
@@ -4059,6 +4254,18 @@
         #
         #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
 
+        <string key="article_diplomacy_1" value="To win in diplomacy mode you have to be in friendship with everyone on map.
+        #
+        #To open diplomacy UI just select your country and tap little 'flag' icon.
+        #
+        #Tap on any country in list and you'll see what you can do.
+        #
+        #'Like' and 'dislike' buttons can make relations with that country better or worse."/>
+
+        <string key="article_diplomacy_2" value="The idea of black mark is simple: any other country can't be friends with both of you. It's a sort of diplomatical pressure.
+        #
+        #Also, you won't be able to become friend with everyone easily. Last country will always refuse your friend request."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="回合数:"/>
         <string key="units_died" value="单位死亡数:"/>
@@ -4116,8 +4323,8 @@
         <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
-        <string key="check_shroomarts" value="ShroomArts的新皮肤"/>
         <string key="level_24" value="这是第一个'困难' 关卡。 注意防守！"/>
+        <string key="bleentoro_release" value="Hi. #I've made a new game. It's called 'Bleentoro'. You can find it in Google Play. #I hope you'll like it :)"/>
 
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
@@ -4141,6 +4348,16 @@
         <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
         <string key="confirm_black_mark" value="Put black mark?"/>
         <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
+        <string key="player_turn" value="Player turn"/>
+        <string key="fine" value="Fine"/>
+        <string key="log" value="Letters"/>
+        <string key="friendship_proposal" value="Friendship proposal"/>
+        <string key="war_declaration" value="War declaration"/>
+        <string key="stop_war" value="Stop war"/>
+        <string key="friendship_ended" value="Friendship ended"/>
+        <string key="friendship_canceled" value="Friendship canceled"/>
+        <string key="black_marked" value="Black marked"/>
+        <string key="letter_sent" value="Letter sent"/>
     </language>
 
 
@@ -4167,7 +4384,7 @@
 
 
 
-    <language name="tr_TR">
+    <language name="tr_TR" title="Turkish" author="Kaan Aydeniz">
         <!-- All characters -->
         <string key="lang_characters" value="ğĞıüÜşŞİöÖçÇ"/>
 
@@ -4182,7 +4399,7 @@
 
         <string key="game_saved" value="Oyun kaydedildi"/>
         <string key="restart_app" value="Uygulamayı yeniden başlat"/>
-        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/> <!-- Same as english -->
         <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
@@ -4206,13 +4423,19 @@
         #Yiotro tarafından yapıldı.
 		"/>
         <string key="reset_campaign_data" value="Verileri sıfırla"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Savaş"/>
         <string key="choose_game_mode_tutorial" value="Rehber"/>
         <string key="choose_game_mode_campaign" value="Mücadele"/>
         <string key="choose_game_mode_load" value="Oyunu yükle"/>
+        <string key="user_levels" value="User levels"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Add my map"/>
+        <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Ana menü"/>
@@ -4309,7 +4532,7 @@
         <string key="tip_about_unit_death" value="Eğer paran biterse#birliklerin ölür.#Buna dikkat et"/>
         <string key="tip_merging" value="Birliklerini birleştirerek#daha güçlü birlikler elde et"/>
         <string key="tip_trees" value="Ağaçlar gelirini düşürecektir#Bu yüzden onları kesmen iyi olur"/>
-        <string key="tip_help" value="Daha fazla detayı#'yardım'da bulabilirsin"/>
+        <string key="tip_help" value="To skip rest of tutorial press 'help'"/>
 
         <!-- Generic Tutorial -->
         <string key="gen_greetings" value="Merhaba. Bu rehber oyunun kurallarını anlatacak."/>
@@ -4447,6 +4670,18 @@
         #
         #Mücadele modunda ise kuralları değiştirmek için level seçme ekranından sağ köşedeki '...' butonuna dokun."/>
 
+        <string key="article_diplomacy_1" value="To win in diplomacy mode you have to be in friendship with everyone on map.
+        #
+        #To open diplomacy UI just select your country and tap little 'flag' icon.
+        #
+        #Tap on any country in list and you'll see what you can do.
+        #
+        #'Like' and 'dislike' buttons can make relations with that country better or worse."/>
+
+        <string key="article_diplomacy_2" value="The idea of black mark is simple: any other country can't be friends with both of you. It's a sort of diplomatical pressure.
+        #
+        #Also, you won't be able to become friend with everyone easily. Last country will always refuse your friend request."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Yapılan hamle sayısı:"/>
         <string key="units_died" value="Ölen birlik sayısı:"/>
@@ -4504,8 +4739,8 @@
         <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
-        <string key="check_shroomarts" value="ShroomArts'tan yeni kaplama"/>
         <string key="level_24" value="Bu ilk 'zor' seviye. Savunmaya daha fazla önem ver."/>
+        <string key="bleentoro_release" value="Hi. #I've made a new game. It's called 'Bleentoro'. You can find it in Google Play. #I hope you'll like it :)"/>
 
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
@@ -4529,6 +4764,16 @@
         <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
         <string key="confirm_black_mark" value="Put black mark?"/>
         <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
+        <string key="player_turn" value="Player turn"/>
+        <string key="fine" value="Fine"/>
+        <string key="log" value="Letters"/>
+        <string key="friendship_proposal" value="Friendship proposal"/>
+        <string key="war_declaration" value="War declaration"/>
+        <string key="stop_war" value="Stop war"/>
+        <string key="friendship_ended" value="Friendship ended"/>
+        <string key="friendship_canceled" value="Friendship canceled"/>
+        <string key="black_marked" value="Black marked"/>
+        <string key="letter_sent" value="Letter sent"/>
     </language>
 
 
@@ -4561,7 +4806,7 @@
 
 
 
-    <language name="bg_BG">
+    <language name="bg_BG" title="Bulgarian" author="Vassil Antonov">
         <!-- All characters -->
         <string key="lang_characters" value="йцукенгшщзхъёфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮö"/>
 
@@ -4575,7 +4820,7 @@
         <string key="menu_reset" value="Рестарт"/>
         <string key="game_saved" value="Игра запазена"/>
         <string key="restart_app" value="Restart app"/>
-        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/> <!-- Same as english -->
         <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
         <!-- Info -->
@@ -4600,13 +4845,19 @@
         #Направена от yiotro
 		"/>
         <string key="reset_campaign_data" value="Рестартирай всички данни"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Сражение"/>
         <string key="choose_game_mode_tutorial" value="Упътване"/>
         <string key="choose_game_mode_campaign" value="Кампания"/>
         <string key="choose_game_mode_load" value="Зареди игра"/>
+        <string key="user_levels" value="User levels"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Add my map"/>
+        <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Главно меню"/>
@@ -4646,6 +4897,9 @@
         <string key="confirm_import" value="Confirm import"/>
         <string key="filter_no" value="No filter"/>
         <string key="filter_only_land" value="Only land"/>
+        <string key="confirm_clear_level" value="Clear map?"/>
+        <string key="confirm_randomize" value="Generate random map?"/>
+        <string key="randomize" value="Randomize"/>
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Ок"/>
@@ -4706,7 +4960,7 @@
         <string key="tip_about_unit_death" value="Ако парите свършат#всички единици умират.#Бъди внимателен"/>
         <string key="tip_merging" value="Слей две единици#за по-силна единица"/>
         <string key="tip_trees" value="Дърветата намаляват прихода#Затова е по-добре да ги отсичаш"/>
-        <string key="tip_help" value="Още детайли#в менюто 'Помощ'"/>
+        <string key="tip_help" value="To skip rest of tutorial press 'help'"/>
 
         <!-- Generic Tutorial -->
         <string key="gen_greetings" value="Здравейте. Това упътване ще ви обясни правилата на играта."/>
@@ -4844,6 +5098,18 @@
         #
         #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
 
+        <string key="article_diplomacy_1" value="To win in diplomacy mode you have to be in friendship with everyone on map.
+        #
+        #To open diplomacy UI just select your country and tap little 'flag' icon.
+        #
+        #Tap on any country in list and you'll see what you can do.
+        #
+        #'Like' and 'dislike' buttons can make relations with that country better or worse."/>
+
+        <string key="article_diplomacy_2" value="The idea of black mark is simple: any other country can't be friends with both of you. It's a sort of diplomatical pressure.
+        #
+        #Also, you won't be able to become friend with everyone easily. Last country will always refuse your friend request."/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Изиграни ходове:"/>
         <string key="units_died" value="Умрели единици:"/>
@@ -4895,8 +5161,8 @@
         <string key="left_handed" value="Left handed"/>
 
         <!-- Single messages -->
-        <string key="check_shroomarts" value="New skin by ShroomArts"/>
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
+        <string key="bleentoro_release" value="Hi. #I've made a new game. It's called 'Bleentoro'. You can find it in Google Play. #I hope you'll like it :)"/>
 
         <!-- Gameplay -->
         <string key="friends" value="Friends"/>
@@ -4920,8 +5186,805 @@
         <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
         <string key="confirm_black_mark" value="Put black mark?"/>
         <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
+        <string key="player_turn" value="Player turn"/>
+        <string key="fine" value="Fine"/>
+        <string key="log" value="Letters"/>
+        <string key="friendship_proposal" value="Friendship proposal"/>
+        <string key="war_declaration" value="War declaration"/>
+        <string key="stop_war" value="Stop war"/>
+        <string key="friendship_ended" value="Friendship ended"/>
+        <string key="friendship_canceled" value="Friendship canceled"/>
+        <string key="black_marked" value="Black marked"/>
+        <string key="letter_sent" value="Letter sent"/>
 
     </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <language name="pt_BR" title="Portuguese (BR)" author="Matheus Kote">
+        <!-- All characters -->
+        <string key="lang_characters" value="áâãàçéêíóôõúÁÂÃÀÇÉÊÍÓÔÕÚ"/>
+
+        <!-- Main menu -->
+        <string key="main_menu_info" value="Info"/>  <!-- Same as english -->
+        <string key="main_menu_exit" value="Sair"/>
+        <string key="main_menu_something" value="Texto branco sobre nada"/>
+
+        <!-- Random stuff -->
+        <string key="menu_level" value="Nível"/>
+        <string key="menu_reset" value="Resetar"/>
+        <string key="game_saved" value="Jogo salvo"/>
+        <string key="restart_app" value="Reiniciar app"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/> <!-- Same as english -->
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/> <!-- Same as english -->
+
+        <!-- Info -->
+        <string key="info_back" value="Voltar"/>
+        <string key="info_array" value="Esse é um simples jogo de estratégia em estilo minimalista.
+        #É grátis e não possui anúncios ou doações.
+        #Se você é novato, por favor olhe o tutorial ou o menu 'ajuda'.
+        #
+        #Esse jogo foi inspirado por Slay de Sean O'Connor.
+        #
+        #
+        #
+        #
+        #
+        #
+        #Reddit: /r/yiotro_games
+        #E-mail: yiotro93@gmail.com
+        #Feito por yiotro
+        "/>
+        <string key="reset_campaign_data" value="Resetar progresso"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Special thanks"/>
+
+        <!-- Choose game mode menu-->
+        <string key="choose_game_mode_skirmish" value="Slay"/>  <!-- Same as english -->
+        <string key="choose_game_mode_tutorial" value="Tutorial"/>  <!-- Same as english -->
+        <string key="choose_game_mode_campaign" value="Campanha"/>
+        <string key="choose_game_mode_load" value="Carregar jogo"/>
+        <string key="user_levels" value="User levels"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Add my map"/>
+        <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
+
+        <!-- Skirmish menu -->
+        <string key="game_settings_main_menu" value="Menu principal"/>
+        <string key="game_settings_tutorial" value="Tutorial"/>  <!-- Same as english -->
+        <string key="game_settings_start" value="Começar"/>
+        <string key="map_size" value="Tamanho do mapa"/>
+        <string key="color_number" value="Cores"/>
+        <string key="player_number" value="Jogadores"/>
+        <string key="small" value="pequeno"/>
+        <string key="medium" value="médio"/>
+        <string key="big" value="grande"/>
+        <string key="ai_only" value="apenas IA"/>
+        <string key="single_player" value="um jogador"/>
+        <string key="multiplayer" value="multijogadores"/>
+        <string key="colors" value="cores"/>
+        <string key="color" value="cores"/>
+        <string key="difficulty" value="Dificuldade"/>
+        <string key="easy" value="fácil"/>
+        <string key="normal" value="normal"/>  <!-- Same as english -->
+        <string key="hard" value="difícil"/>
+        <string key="expert" value="experiente"/>
+        <string key="balancer" value="balanceador"/>
+        <string key="player_color" value="Cor do jogador"/>
+        <string key="fog_of_war" value="Névoa de guerra"/>
+        <string key="diplomacy" value="Diplomacia"/>
+
+        <!-- In game menu -->
+        <string key="in_game_menu_resume" value="Continuar"/>
+        <string key="in_game_menu_save" value="Salvar jogo"/>
+        <string key="in_game_menu_surrender" value="Render-se"/>
+        <string key="in_game_menu_main_menu" value="Menu principal"/>
+        <string key="in_game_menu_restart" value="Recomeçar"/>
+        <string key="confirm_restart" value="Recomeçar a partida?"/>
+        <string key="cancel" value="Cancelar"/>
+        <string key="confirm_end_turn" value="Terminar turno?"/>
+        <string key="yes" value="Sim"/>
+        <string key="confirm_import" value="Confirmar importação"/>
+        <string key="filter_no" value="Sem filtro"/>
+        <string key="filter_only_land" value="Apenas terreno"/>
+
+        <!-- End game menu -->
+        <string key="end_game_ok" value="Ok"/>  <!-- Same as english -->
+        <string key="end_game_okay" value="Okay..."/>  <!-- Same as english -->
+        <string key="player" value="jogador"/>
+        <string key="ai" value="IA"/>
+        <string key="won" value="venceu"/>
+        <string key="statistics" value="Estastísticas"/>
+        <string key="next" value="Próximo"/>
+        <string key="level_complete" value="Nível completo"/>
+        <string key="win_game" value="Vencer"/>
+        <string key="win_or_continue" value="Vencer agora#ou continuar?"/>
+        <string key="continue" value="Continuar"/>
+
+        <!-- Colors -->
+        <string key="green_player" value="verde"/>
+        <string key="red_player" value="vermelho"/>
+        <string key="magenta_player" value="magenta"/>  <!-- Same as english -->
+        <string key="cyan_player" value="ciano"/>
+        <string key="yellow_player" value="amarelo"/>
+        <string key="gray_player" value="cinza"/>
+        <string key="green_ai" value="verde"/>
+        <string key="red_ai" value="vermelho"/>
+        <string key="magenta_ai" value="magenta"/>  <!-- Same as english -->
+        <string key="cyan_ai" value="ciano"/>
+        <string key="yellow_ai" value="amarelo"/>
+        <string key="gray_ai" value="cinza"/>
+        <string key="green_menu" value="amarelo"/>
+        <string key="red_menu" value="vermelho"/>
+        <string key="magenta_menu" value="magenta"/>  <!-- Same as english -->
+        <string key="cyan_menu" value="ciano"/>
+        <string key="yellow_menu" value="amarelo"/>
+        <string key="gray_menu" value="cinza"/>
+
+        <!-- Tutorial -->
+        <string key="normal_rules" value="Regras normais"/>
+        <string key="how_to_play" value="Como jogar?"/>
+        <string key="tutorial_ok" value="Ok"/>  <!-- Same as english -->
+        <string key="tut_select_unit" value="Selecione uma unidade"/>
+        <string key="tut_tap_on_hex" value="Toque no hexágono"/>
+        <string key="tut_press_button" value="Toque o botão duas vezes"/>
+        <string key="tut_build_tower" value="Construa uma torre"/>
+        <string key="tut_again" value="De novo"/>
+        <string key="tut_build_spearman" value="Construa um lanceiro"/>
+        <string key="tut_tap_to_undo" value="Toque em 'desfazer'"/>
+        <string key="tut_tap_to_end_turn" value="Toque para acabar o turno"/>
+        <string key="tut_hold_hex" value="Toque e segure"/>
+        <string key="tut_merge_units" value="Fundir unidades"/>
+        <string key="tut_good_luck" value="Boa sorte!"/>
+
+        <!-- Tutorial tips -->
+        <string key="tip_capture_with_units" value="Ataque com suas unidades#para capturar territórios"/>
+        <string key="tip_about_money" value="Quanto maior seu território,#mais dinheiro você ganha"/>
+        <string key="tip_build_towers" value="Construa torres para proteger#células próximas"/>
+        <string key="tip_about_taxes" value="Unidades mais fortes consomem#mais dinheiro"/>
+        <string key="tip_about_defense" value="Unidades e casas também#defendem células próximas"/>
+        <string key="tip_hold_to_march" value="Para rapidamente mover exércitos use 'Toque e segure#para marchar'"/>
+        <string key="tip_about_unit_death" value="Se o dinheiro acaba,#todas unidades morrem.#Então, seja cuidadoso"/>
+        <string key="tip_merging" value="Funda unidades para ter#uma unidade mais poderosa"/>
+        <string key="tip_trees" value="Árvores diminuem o rendimento.#Então é melhor cortá-las"/>
+        <string key="tip_help" value="To skip rest of tutorial press 'help'"/>
+
+        <!-- Generic Tutorial -->
+        <string key="gen_greetings" value="Olá. Esse tutorial irá explicar as regras desse jogo."/>
+        <string key="gen_select_province" value="Toque em sua cidade para selecioná-la."/>
+        <string key="gen_select_unit" value="Bom trabalho. Você tem várias unidades. Toque em uma delas."/>
+        <string key="gen_move_unit" value="Toda unidade move uma vez por turno. Agora, selecione um hexágono neutro próximo a unidade selecionada, tocando ali."/>
+        <string key="gen_income" value="Capturando novos hexágonos você aumenta o rendimento da sua cidade. Mais hexágonos - maior rendimento."/>
+        <string key="gen_lets_build_farm" value="Vamos construir uma fazenda para gerar um rendimento ainda maior."/>
+        <string key="gen_press_button_twice" value="Toque o botão duas vezes."/>
+        <string key="gen_build_farm" value="Fazendas só podem ser construídas próximas da capital ou outras fazendas."/>
+        <string key="gen_about_farms" value="Toda fazendo rende 3 moedas por turno. Cada fazenda nova custa 2 moedas a mais que a anterior."/>
+        <string key="gen_lets_build_peasant" value="Vamos construir uma nova unidade e capturar um hexágono neutro."/>
+        <string key="gen_press_button" value="Toque o botão em baixo."/>
+        <string key="gen_build_peasant" value="Coloque uma unidade em um hexágono próximo às bordas da cidade."/>
+        <string key="gen_capture_peasant" value="Agora, capture um hexágono neutro selecionando uma unidade e apontando a ele aonde ir."/>
+        <string key="gen_capture_hex" value="Capture um hexágono neutro."/>
+        <string key="gen_lets_build_tower" value="Você precisa defender suas terras. Torres são boas nisso."/>
+        <string key="gen_build_tower" value="Construa uma torre tocando no hexágono destacado."/>
+        <string key="gen_about_towers" value="Torres defendem hexágonos adjacentes de camponeses e lanceiros se tais hexágonos estão sobre seu controle."/>
+        <string key="gen_lets_build_spearman" value="Lanceiro é mais forte que camponês. Vamos construí-lo."/>
+        <string key="gen_build_spearman" value="Toque num hexágono para construir um lanceiro."/>
+        <string key="gen_units_consume_money" value="Unidades consomem dinheiro para viver. Unidades mais fortes precisam de mais dinheiro."/>
+        <string key="gen_undo_spearman" value="Agora o seu rendimento é igual a -1. Isso é ruim, então vamos desfazer o lanceiro."/>
+        <string key="gen_why_units_die" value="Todas as unidades morrem quando acaba o dinheiro da sua cidade. Então, você tem que ser cuidadoso com seu rendimento."/>
+        <string key="gen_about_trees_one" value="Árvores também são um problema. Hexágonos com árvores não produzem dinheiro."/>
+        <string key="gen_about_trees_two" value="Corte as árvores o mais cedo possível quando elas estão em baixa quantidade."/>
+        <string key="gen_end_turn" value="Para acabar o turno pressione o botão em baixo, na direita."/>
+        <string key="gen_choose_to_merge" value="Você também pode fundir unidades. Selecione o camponês de baixo."/>
+        <string key="gen_merge_units" value="Agora, quando o camponês está selecionado, toque em outro camponês para fundí-los"/>
+        <string key="gen_long_tap" value="Se você tem muitas unidades, você pode mover todas de uma vez com um toque longo."/>
+        <string key="gen_several_provinces" value="Você pode ter multiplas cidades, cada qual com sua própria economia."/>
+
+        <!-- Tutorial help -->
+        <string key="help" value="Ajuda"/>
+        <string key="help_about_units" value="Unidades"/>
+        <string key="help_about_trees" value="Árvores"/>
+        <string key="help_about_towers" value="Torres"/>
+        <string key="help_about_money" value="Dinheiro"/>
+        <string key="help_about_tactics" value="Táticas"/>
+        <string key="help_about_rules" value="Regras"/>
+
+        <string key="help_units_article" value="Existem 4 tipos de unidade.
+        #Elas se diferenciam apenas pela força.
+        #Em ordem ascendente de força:
+        #[1] campones
+        #[2] lanceiro
+        #[3] barão
+        #[4] cavaleiro
+        #
+        #Unidades dá proteção igual a força as células adjacentes.
+        #
+        #Para capturar uma célula, a força da unidade deve ser maior que a proteção.
+        #
+        #Cada unidade consome 2, 6, 18 ou 54 moedas por turno.
+        "/>
+
+        <string key="help_trees_article" value="Árvores nascem aonde unidades morrem.
+        #
+        #Uma celula com árvore não tem rendimento. Isso significa que árvores prejudicam sua economia.
+        #
+        #Você tem que cortá-las. Se não elas se espalharão e matarão sua economia.
+        #
+        #Palmeiras aparecem nas bordas e se espalham rapidamente. Elas devem ser cortadas bem rápido.
+        "/>
+
+        <string key="help_towers_article" value="Torres são usadas para proteger células adjacentes.
+        #
+        #Torres dão proteção [2]. Portanto, t barões e cavaleiros podem destruí-las.
+        #
+        #Cabanas dão proteção [1].
+        #
+        #No início da partida essa é a melhor forma de proteger seu território.
+        #O preço das torres são baixos e elas não comem dinheiro.
+        "/>
+
+        <string key="help_money_article" value="O rendimento depende do número de células.
+        #Território grande tem rendimento grande.
+        #Árvores diminuem o rendimento.
+        #
+        #Unidades consomem dinheiro. Unidades poderosas consomem mais dinheiro.
+        #
+        #Quando o dinheiro acaba, todas unidades morrem.
+        #
+        #O rendimento é mostrado em cima, no meio.
+        "/>
+
+        <string key="help_tactics_article" value="Capture células neutras no início da partida.
+        #Defenda todas as suas células depois disso.
+        #
+        #Tenha certeza que seu rendimento é bom o suficiente antes de construir unidades.
+        #
+        #Corte os territórios inimigos em pedaços para destruir a economia deles.
+        "/>
+
+        <string key="article_rules" value="Há dois conjuntos de regras no jogo: Regras normais e regras do Slay. Regras normais são ativas por padrão.
+        #
+        #No início o jogo tinha apenas as regras do Slay. Por isso que a ajuda a descreve ao invés das regras normais.
+        #
+        #Para mudar as regras no Slay, você tem que tocar em 'mais' antes de começar uma nova partida.
+        #
+        #Para mudar as regras na campanha, você tem que tocar em '...' no canto superior direito no menu de escolha de nível."/>
+
+        <string key="article_diplomacy_1" value="To win in diplomacy mode you have to be in friendship with everyone on map.
+        #
+        #To open diplomacy UI just select your country and tap little 'flag' icon.
+        #
+        #Tap on any country in list and you'll see what you can do.
+        #
+        #'Like' and 'dislike' buttons can make relations with that country better or worse."/>
+
+        <string key="article_diplomacy_2" value="The idea of black mark is simple: any other country can't be friends with both of you. It's a sort of diplomatical pressure.
+        #
+        #Also, you won't be able to become friend with everyone easily. Last country will always refuse your friend request."/>
+
+        <!-- Statistics -->
+        <string key="turns_made" value="Turnos feitos:"/>
+        <string key="units_died" value="Unidades mortas:"/>
+        <string key="units_produced" value="Unidades produzidas:"/>
+        <string key="money_spent" value="Dinheiro gasto:"/>
+        <string key="time" value="Tempo:"/>
+
+        <!-- Editor -->
+        <string key="editor" value="Editor"/>  <!-- Same as english -->
+        <string key="slot" value="Espaço"/>
+        <string key="slots" value="Espaços"/>
+        <string key="import" value="Importar"/>
+        <string key="export" value="Exportar"/>
+        <string key="empty" value="vazio"/>
+        <string key="play" value="Jogar"/>
+        <string key="edit" value="Editar"/>
+        <string key="random" value="aleatório"/>
+        <string key="exported" value="Mapa na área de transferência"/>
+        <string key="editor_clear" value="Limpar"/>
+        <string key="no" value="Não"/>
+        <string key="yes" value="Sim"/>
+        <string key="confirm_import" value="Confirmar importação"/>
+        <string key="filter_no" value="Sem filtro"/>
+        <string key="filter_only_land" value="Apenas terra"/>
+        <string key="confirm_clear_level" value="Limpar mapa?"/>
+        <string key="confirm_randomize" value="Gerar mapa aleatório?"/>
+        <string key="randomize" value="Randomizar"/>
+
+        <!-- Settings -->
+        <string key="autosave" value="Salvar automaticamente"/>
+        <string key="ask_to_end_turn" value="Perguntar fim do turno"/>
+        <string key="city_names" value="Nome das cidades"/>
+        <string key="sound" value="Som"/>
+        <string key="limited_turns" value="Turnos limitados"/>
+        <string key="hold_to_march" value="Toque longo para marchar"/>
+        <string key="skin" value="Aparência"/>
+        <string key="original" value="original"/>  <!-- Same as english -->
+        <string key="points" value="pontos"/>
+        <string key="grid" value="grade"/>
+        <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
+        <string key="anim_style" value="Sensibilidade"/>
+        <string key="more" value="Mais"/>
+        <string key="camera_offset" value="Compensamento da câmera"/>
+        <string key="slay_rules" value="Regras do Slay"/>
+        <string key="language" value="Idioma"/>
+        <string key="more_settings_checks" value="# #Textura da água # # "/>
+        <string key="water_texture" value="Textura da água"/>
+        <string key="confirm_reset" value="Limpar progresso?"/>
+        <string key="replays" value="Replays"/>  <!-- Same as english -->
+        <string key="save_replay" value="Salvar replay"/>
+        <string key="replay" value="Replay"/>  <!-- Same as english -->
+        <string key="replay_saved" value="Replay salvo"/>
+        <string key="fast_construction" value="Construções rápidas"/>
+        <string key="music" value="Música"/>
+        <string key="left_handed" value="Mão esquerda"/>
+
+        <!-- Single messages -->
+        <string key="level_24" value="Esse é o primeiro nível 'difícil'. Preste mais atenção na defesa."/>
+        <string key="bleentoro_release" value="Hi. #I've made a new game. It's called 'Bleentoro'. You can find it in Google Play. #I hope you'll like it :)"/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="Amigos"/>
+        <string key="mutual_friends" value="Mútuo"/>
+        <string key="dotations" value="Subsídios"/>
+        <string key="treaty_of_friendship" value="Tratado de amizade"/>
+        <string key="state" value="Estado"/>
+        <string key="duration" value="Duração"/>
+        <string key="refuse_friendship" value="Desculpa, não posso aceitar sua proposta de amizade."/>
+        <string key="friend" value="amigo"/>
+        <string key="enemy" value="inimigo"/>
+        <string key="neutral" value="neutro"/>
+        <string key="dead" value="morto"/>
+        <string key="confirm_cancel_friendship" value="Cancelar amizade?"/>
+        <string key="confirm_start_war" value="Começar guerra?"/>
+        <string key="peace_treaty" value="Tratado de paz"/>
+        <string key="pay" value="Pagar"/>
+        <string key="reparations" value="Reparações"/>
+        <string key="refuse_stop_war" value="Lutarei até o fim!"/>
+        <string key="win_conditions" value="Condições de vitória"/>
+        <string key="diplomatic_win_conditions" value="Para vencer diplomaticamente você precisa ser amigo com todos."/>
+        <string key="confirm_black_mark" value="Colocar marca preta?"/>
+        <string key="black_mark_description" value="Ao colocar uma marca preta em um jogador você proíbe outros de serem amigos com vocês dois ao mesmo tempo. Não funciona em contratos já concluídos."/>
+        <string key="player_turn" value="Player turn"/>
+        <string key="fine" value="Fine"/>
+        <string key="log" value="Letters"/>
+        <string key="friendship_proposal" value="Friendship proposal"/>
+        <string key="war_declaration" value="War declaration"/>
+        <string key="stop_war" value="Stop war"/>
+        <string key="friendship_ended" value="Friendship ended"/>
+        <string key="friendship_canceled" value="Friendship canceled"/>
+        <string key="black_marked" value="Black marked"/>
+        <string key="letter_sent" value="Letter sent"/>
+
+
+    </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <language name="nl_NL" title="Dutch" author="Kees Prutsaer">
+        <!-- All characters -->
+        <string key="lang_characters" value="éë"/>
+
+        <!-- Main menu -->
+        <string key="main_menu_info" value="Info"/>
+        <string key="main_menu_exit" value="Afsluiten"/>
+        <string key="main_menu_something" value="Witte tekst zonder betekenis"/>
+
+        <!-- Random stuff -->
+        <string key="menu_level" value="Niveau"/>
+        <string key="menu_reset" value="Initialiseren"/>
+        <string key="game_saved" value="Spel opgeslagen"/>
+        <string key="restart_app" value="Programma herstarten"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
+
+        <!-- Info -->
+        <string key="info_back" value="Terug"/>
+        <string key="info_array" value="Dit is een eenvoudig strategie spel in minimalistische stijl.
+        #Het is gratis en heeft geen advertenties of donatieverzoeken.
+        #Bekijk alsjeblieft de instructie of het 'help' menu als het spel nieuw voor je is.
+        #
+        #Inspiratie voor dit spel was Slay van Sean O'Connor.
+        #
+        #
+        #
+        #
+        #
+        #
+        #Reddit: /r/yiotro_games
+        #E-mail: yiotro93@gmail.com
+        #Gemaakt door yiotro
+        "/>
+        <string key="reset_campaign_data" value="Gegevens initialiseren"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/>
+        <string key="special_thanks_title" value="Special thanks"/>
+
+        <!-- Choose game mode menu-->
+        <string key="choose_game_mode_skirmish" value="Skirmish"/>
+        <string key="choose_game_mode_tutorial" value="Instructie"/>
+        <string key="choose_game_mode_campaign" value="Campagne"/>
+        <string key="choose_game_mode_load" value="Spel laden"/>
+        <string key="user_levels" value="User levels"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Add my map"/>
+        <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
+
+        <!-- Skirmish menu -->
+        <string key="game_settings_main_menu" value="Hoofdmenu"/>
+        <string key="game_settings_tutorial" value="Instructie"/>
+        <string key="game_settings_start" value="Start"/>
+        <string key="map_size" value="Grootte kaart"/>
+        <string key="color_number" value="Kleuren"/>
+        <string key="player_number" value="Spelers"/>
+        <string key="small" value="klein"/>
+        <string key="medium" value="middel"/>
+        <string key="big" value="groot"/>
+        <string key="ai_only" value="Alleen AI"/>
+        <string key="single_player" value="één speler"/>
+        <string key="multiplayer" value="meerdere spelers"/>
+        <string key="colors" value="kleuren"/>
+        <string key="color" value="kleuren"/>
+        <string key="difficulty" value="Moeilijkheid"/>
+        <string key="easy" value="eenvoudig"/>
+        <string key="normal" value="normaal"/>
+        <string key="hard" value="moeilijk"/>
+        <string key="expert" value="expert"/>
+        <string key="balancer" value="balanceren"/>
+        <string key="player_color" value="Kleur speler"/>
+        <string key="fog_of_war" value="Waas van oorlog"/>
+        <string key="diplomacy" value="Diplomatie"/>
+
+        <!-- In game menu -->
+        <string key="in_game_menu_resume" value="Verder"/>
+        <string key="in_game_menu_save" value="Spel bewaren"/>
+        <string key="in_game_menu_surrender" value="Overgave"/>
+        <string key="in_game_menu_main_menu" value="Hoofdmenu"/>
+        <string key="in_game_menu_restart" value="Opnieuw"/>
+        <string key="confirm_restart" value="Spel herstarten?"/>
+        <string key="cancel" value="Annuleren"/>
+        <string key="confirm_end_turn" value="Beurt beëindigen?"/>
+        <string key="yes" value="Ja"/>
+        <string key="confirm_import" value="Import bevestigen"/>
+        <string key="filter_no" value="Geen filter"/>
+        <string key="filter_only_land" value="Alleen land"/>
+
+        <!-- End game menu -->
+        <string key="end_game_ok" value="Ok"/>
+        <string key="end_game_okay" value="Okee..."/>
+        <string key="player" value="speler"/>
+        <string key="ai" value="AI"/>
+        <string key="won" value="gewonnen"/>
+        <string key="statistics" value="Statistieken"/>
+        <string key="next" value="Volgende"/>
+        <string key="level_complete" value="Niveau afgerond"/>
+        <string key="win_game" value="Gewonnen"/>
+        <string key="win_or_continue" value="Nu winnen#of verder?"/>
+        <string key="continue" value="Verder"/>
+
+        <!-- Colors -->
+        <string key="green_player" value="Groen"/>
+        <string key="red_player" value="Rood"/>
+        <string key="magenta_player" value="Magenta"/>
+        <string key="cyan_player" value="Cyaan"/>
+        <string key="yellow_player" value="Geel"/>
+        <string key="gray_player" value="Grijs"/>
+        <string key="green_ai" value="Groen"/>
+        <string key="red_ai" value="Rood"/>
+        <string key="magenta_ai" value="Magenta"/>
+        <string key="cyan_ai" value="Cyaan"/>
+        <string key="yellow_ai" value="Geel"/>
+        <string key="gray_ai" value="Grijs"/>
+        <string key="green_menu" value="Groen"/>
+        <string key="red_menu" value="Rood"/>
+        <string key="magenta_menu" value="Magenta"/>
+        <string key="cyan_menu" value="Cyaan"/>
+        <string key="yellow_menu" value="Geel"/>
+        <string key="gray_menu" value="Grijs"/>
+
+        <!-- Tutorial -->
+        <string key="normal_rules" value="Normale regels"/>
+        <string key="how_to_play" value="Hoe werkt het spel?"/>
+        <string key="tutorial_ok" value="Ok"/>
+        <string key="tut_select_unit" value="Kies een eenheid"/>
+        <string key="tut_tap_on_hex" value="Tik op het veld"/>
+        <string key="tut_press_button" value="Druk tweemaal op de knop"/>
+        <string key="tut_build_tower" value="Bouw een toren"/>
+        <string key="tut_again" value="Nogmaals"/>
+        <string key="tut_build_spearman" value="Bouw een soldaat"/>
+        <string key="tut_tap_to_undo" value="Tik op 'herstel'"/>
+        <string key="tut_tap_to_end_turn" value="Tik om beurt te eindigen"/>
+        <string key="tut_hold_hex" value="Tik en hou vast"/>
+        <string key="tut_merge_units" value="Eenheden samenvoegen"/>
+        <string key="tut_good_luck" value="Succes!"/>
+
+        <!-- Tutorial tips -->
+        <string key="tip_capture_with_units" value="Val aan met jouw eenheden#om gebied te veroveren"/>
+        <string key="tip_about_money" value="Hoe groter je gebied#hoe meer geld je ontvangt"/>
+        <string key="tip_build_towers" value="Bouw torens om nabijgelegen#cellen te beschermen"/>
+        <string key="tip_about_taxes" value="Sterkere eenheden verbruiken#meer geld"/>
+        <string key="tip_about_defense" value="Ook eenheden en gebouwen verdedigen nabijgelegen cellen"/>
+        <string key="tip_hold_to_march" value="Gebruik 'Loop door ingedrukt houden' om legers#snel te verplaatsen"/>
+        <string key="tip_about_unit_death" value="Als er onvoldoende geld is#zullen alle eenheden dood gaan.#Wees dus voorzichtig"/>
+        <string key="tip_merging" value="Voeg eenheden samen om een#sterkere eenheid te krijgen"/>
+        <string key="tip_trees" value="Bomen verminderen de inkomsten#Het is dus beter ze te kappen"/>
+        <string key="tip_help" value="To skip rest of tutorial press 'help'"/>
+
+        <!-- Generic Tutorial -->
+        <string key="gen_greetings" value="Hallo. Deze instructie zal de regels van dit spel uitleggen."/>
+        <string key="gen_select_province" value="Tik op jouw stad om het te selecteren."/>
+        <string key="gen_select_unit" value="Goed gedaan. Er zijn meerdere eenheden. Tik op een van hen."/>
+        <string key="gen_move_unit" value="Elke eenheid beweegt eenmaal per beurt. Verover nu een vrij veld in de buurt van de geselecteerde eenheid door erop te tikken."/>
+        <string key="gen_income" value="Door nieuwe velden te veroveren vergroot je de inkomsten van je stad. Meer velden - meer inkomen."/>
+        <string key="gen_lets_build_farm" value="We gaan een boerderij bouwen om nog meer inkomsten te krijgen."/>
+        <string key="gen_press_button_twice" value="Druk twee keer op de knop"/>
+        <string key="gen_build_farm" value="Boerderijen kunnen alleen dichtbij de hoofdstad of andere boerderijen gebouwd worden."/>
+        <string key="gen_about_farms" value="Elke boerderij levert 3 munten per beurt op. Elke nieuwe boerderij kost 2 meer dan de voorgaande."/>
+        <string key="gen_lets_build_peasant" value="We gaan een nieuwe eenheid bouwen en een vrij veld innemen."/>
+        <string key="gen_press_button" value="Druk op de knop onderaan"/>
+        <string key="gen_build_peasant" value="Plaats je eenheid op een veld nabij de stadsgrenzen."/>
+        <string key="gen_capture_peasant" value="Neem nu een vrij veld in door een eenheid te selecteren en hem te wijzen waar hij heen moet."/>
+        <string key="gen_capture_hex" value="Vrij veld innemen"/>
+        <string key="gen_lets_build_tower" value="Je moet je gebieden verdedigen. Torens zijn hier geschikt voor."/>
+        <string key="gen_build_tower" value="Bouw een toren door op het gemarkeerde veld te tikken."/>
+        <string key="gen_about_towers" value="Torens verdedigen aanliggende velden tegen boeren en soldaten als deze velden bij jouw gebied horen."/>
+        <string key="gen_lets_build_spearman" value="Een soldaat is sterker dan elke boer. Laten we hem bouwen."/>
+        <string key="gen_build_spearman" value="Tik op het veld om een soldaat te bouwen."/>
+        <string key="gen_units_consume_money" value="Eenheden verbruiken geld om te leven. Sterkere eenheden hebben meer geld nodig."/>
+        <string key="gen_undo_spearman" value="Nu zijn je inkomsten gelijk aan -1. Dit is niet goed, dus laten we een soldaat ongedaan maken."/>
+        <string key="gen_why_units_die" value="Alle eenheden sterven als je stad geen geld meer heeft. Je moet dus voorzichtig zijn met je inkomsten."/>
+        <string key="gen_about_trees_one" value="Bomen zijn ook een probleem. Velden met bomen leveren geen geld op."/>
+        <string key="gen_about_trees_two" value="Kap bomen zo snel mogelijk op het moment dat er nog niet veel zijn."/>
+        <string key="gen_end_turn" value="Druk op de knop in de rechter onderhoek om een beurt te beëindigen."/>
+        <string key="gen_choose_to_merge" value="Je kunt ook eenheden samenvoegen. Selecteer de onderste boer."/>
+        <string key="gen_merge_units" value="Als de boer nu geselecteerd is, selecteer je een andere boer om ze samen te voegen."/>
+        <string key="gen_long_tap" value="Als je teveel eenheden hebt kun je ze gelijktijdig verplaatsen door het scherm lang ingedrukt te houden."/>
+        <string key="gen_several_provinces" value="Je kunt meerdere steden hebben, elk met zijn eigen economie."/>
+
+        <!-- Tutorial help -->
+        <string key="help" value="Help"/>
+        <string key="help_about_units" value="Eenheden"/>
+        <string key="help_about_trees" value="Bomen"/>
+        <string key="help_about_towers" value="Torens"/>
+        <string key="help_about_money" value="Geld"/>
+        <string key="help_about_tactics" value="Tactiek"/>
+        <string key="help_about_rules" value="Regels"/>
+
+        <string key="help_units_article" value="Er zijn 4 soorten eenheden.
+        #Ze verschillen alleen in sterkte.
+        #In oplopende volgorde van sterkte:
+        #[1] boer
+        #[2] soldaat
+        #[3] baron
+        #[4] ridder
+        #
+        #Eenheden geven aangrenzende velden die bij jouw gebied horen bescherming gelijk aan hun sterkte.
+        #
+        #Om een veld te veroveren moet de sterkte van de eenheid groter zijn dan de verdediging.
+        #
+        #Elke eenheid verbruikt 2, 6, 18 of 54 munten per beurt.
+        "/>
+
+        <string key="help_trees_article" value="Bomen groeien waar eenheden zijn gestorven.
+        #
+        #Een veld met een boom levert geen inkomsten op. Dit betekent dat bomen de economie schaden.
+        #
+        #Je moet ze omhakken. Anders zullen ze uitzaaien en je economie verwoesten.
+        #
+        #Palmbomen ontstaan aan randen en groeien zeer snel. Ze moeten zeer snel omgehakt worden.
+        "/>
+
+        <string key="help_towers_article" value="Torens worden gebruikt om naastgelegen velden te beschermen.
+        #
+        #Torens geven bescherming [2]. Daarom kunnen alleen baronnen en ridders ze aanvallen.
+        #
+        #Hutten geven bescherming [1].
+        #
+        #Aan het begin van het spel is dit de beste manier om je gebied te beschermen.
+        #De prijs van een toren is laag en ze verbruiken weinig geld.
+        "/>
+
+        <string key="help_money_article" value="Het aantal velden bepaalt het inkomen.
+        #Een groter gebied heeft meer inkomsten.
+        #Bomen verminderen de inkomsten.
+        #
+        #Eenheden verbruiken geld. Sterke eenheden verbruiken meer geld.
+        #
+        #Als het geld op is, sterven alle eenheden.
+        #
+        #De inkomsten staan boven in het midden van het scherm.
+        "/>
+
+        <string key="help_tactics_article" value="Neem aan het begin van het spel vrije velden in.
+        #Verdedig daarna al je velden.
+        #
+        #Zorg dat je inkomsten hoog genoeg zijn voordat je eenheden bouwt.
+        #
+        #Verdeel vijandige gebieden in stukken om hun economie te verwoesten.
+        "/>
+
+        <string key="article_rules" value="De spelregels zijn er in 2 varianten: Normale regels en Slay regels. Normale regels zijn standaard geselecteerd.
+        #
+        #Oorspronkelijk had het spel alleen Slay regels. Daarom beschrijft help deze in plaats van normale regels.
+        #
+        #Om de regels aan te passen in Skirmish moet je op 'meer' tikken voordat je een nieuw spel start.
+        #
+        #Om de regels aan te passen bij Campagne moet je op '...' tikken rechtsboven in het niveau keuze menu."/>
+
+        <string key="article_diplomacy_1" value="To win in diplomacy mode you have to be in friendship with everyone on map.
+        #
+        #To open diplomacy UI just select your country and tap little 'flag' icon.
+        #
+        #Tap on any country in list and you'll see what you can do.
+        #
+        #'Like' and 'dislike' buttons can make relations with that country better or worse."/>
+
+        <string key="article_diplomacy_2" value="The idea of black mark is simple: any other country can't be friends with both of you. It's a sort of diplomatical pressure.
+        #
+        #Also, you won't be able to become friend with everyone easily. Last country will always refuse your friend request."/>
+
+        <!-- Statistics -->
+        <string key="turns_made" value="Gebruikte beurten:"/>
+        <string key="units_died" value="Eenheden overleden:"/>
+        <string key="units_produced" value="Eenheden gemaakt:"/>
+        <string key="money_spent" value="Uitgaven:"/>
+        <string key="time" value="Tijd:"/>
+
+        <!-- Editor -->
+        <string key="editor" value="Werkplaats"/>
+        <string key="slot" value="Plaats"/>
+        <string key="slots" value="Bewaarplaatsen"/>
+        <string key="import" value="Importeren"/>
+        <string key="export" value="Exporteren"/>
+        <string key="empty" value="leeg"/>
+        <string key="play" value="Speel"/>
+        <string key="edit" value="Bewerk"/>
+        <string key="random" value="Willekeurig"/>
+        <string key="exported" value="Kaart in geheugen"/>
+        <string key="editor_clear" value="Verwijderen"/>
+        <string key="no" value="Nee"/>
+        <string key="yes" value="Ja"/>
+        <string key="confirm_import" value="Bevestig importeren"/>
+        <string key="filter_no" value="Geen filter"/>
+        <string key="filter_only_land" value="Alleen land"/>
+        <string key="confirm_clear_level" value="Kaart verwijderen?"/>
+        <string key="confirm_randomize" value="Willekeurige kaart aanmaken?"/>
+        <string key="randomize" value="Randomiseren"/>
+
+        <!-- Settings -->
+        <string key="autosave" value="Automatisch opslaan"/>
+        <string key="ask_to_end_turn" value="Einde beurt vragen"/>
+        <string key="city_names" value="Plaatsnamen"/>
+        <string key="sound" value="Geluid"/>
+        <string key="limited_turns" value="Beperkt aantal beurten"/>
+        <string key="hold_to_march" value="Loop door ingedrukt houden"/>
+        <string key="skin" value="Uiterlijk"/>
+        <string key="original" value="origineel"/>
+        <string key="points" value="punten"/>
+        <string key="grid" value="grid"/>
+        <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
+        <string key="anim_style" value="Gevoeligheid"/>
+        <string key="more" value="Meer"/>
+        <string key="camera_offset" value="Camera offset"/>  <!-- Same as english -->
+        <string key="slay_rules" value="Slay regels"/>
+        <string key="language" value="Taal"/>
+        <string key="more_settings_checks" value="# #Water oppervlak # # "/>
+        <string key="water_texture" value="Water oppervlak "/>
+        <string key="confirm_reset" value="Resultaten verwijderen?"/>
+        <string key="replays" value="Herhalingen"/>
+        <string key="save_replay" value="Bewaar herhaling"/>
+        <string key="replay" value="Herhaling"/>
+        <string key="replay_saved" value="Herhaling opgeslagen"/>
+        <string key="fast_construction" value="Snel bouwen"/>
+        <string key="music" value="Muziek"/>
+        <string key="left_handed" value="Linkshandig"/>
+
+        <!-- Single messages -->
+        <string key="level_24" value="Dit is het eerste level in categorie 'moeilijk'. Let meer op verdediging."/>
+        <string key="bleentoro_release" value="Hi. #I've made a new game. It's called 'Bleentoro'. You can find it in Google Play. #I hope you'll like it :)"/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="Vrienden"/>
+        <string key="mutual_friends" value="Wederzijds"/>
+        <string key="dotations" value="Giften"/>
+        <string key="treaty_of_friendship" value="Vriendschapsverdrag"/>
+        <string key="state" value="Status"/>
+        <string key="duration" value="Duur"/>
+        <string key="refuse_friendship" value="Sorry, ik kan je vriendschapsvoorstel niet accepteren."/>
+        <string key="friend" value="vriend"/>
+        <string key="enemy" value="vijand"/>
+        <string key="neutral" value="neutraal"/>
+        <string key="dead" value="dood"/>
+        <string key="confirm_cancel_friendship" value="Vriendschap opzeggen?"/>
+        <string key="confirm_start_war" value="Begin oorlog?"/>
+        <string key="peace_treaty" value="Vredesverdrag"/>
+        <string key="pay" value="Betaal"/>
+        <string key="reparations" value="Herstelbetalingen"/>
+        <string key="refuse_stop_war" value="Ik zal doorvechten tot het einde!"/>
+        <string key="win_conditions" value="Voorwaarden van overwinning"/>
+        <string key="diplomatic_win_conditions" value="Om diplomatiek te winnen moet je met iedereen vrienden zijn."/>
+        <string key="confirm_black_mark" value="Op zwarte lijst plaatsen?"/>
+        <string key="black_mark_description" value="Door een speler op de zwarte lijst te plaatsen verbied je andere spelers om met jullie beide gelijktijdig vrienden te zijn. Dit heeft geen invloed op al gesloten overeenkomsten."/>
+        <string key="player_turn" value="Player turn"/>
+        <string key="fine" value="Fine"/>
+        <string key="log" value="Letters"/>
+        <string key="friendship_proposal" value="Friendship proposal"/>
+        <string key="war_declaration" value="War declaration"/>
+        <string key="stop_war" value="Stop war"/>
+        <string key="friendship_ended" value="Friendship ended"/>
+        <string key="friendship_canceled" value="Friendship canceled"/>
+        <string key="black_marked" value="Black marked"/>
+        <string key="letter_sent" value="Letter sent"/>
+
+
+    </language>
+
 
 
 

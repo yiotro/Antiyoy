@@ -15,16 +15,6 @@ public class LoadingParameters {
 
     private static LoadingParameters instance = null;
 
-    public static final int MODE_TUTORIAL = 0;
-    public static final int MODE_SKIRMISH = 1;
-    public static final int MODE_CAMPAIGN_CUSTOM = 2;
-    public static final int MODE_LOAD_GAME = 3;
-    public static final int MODE_EDITOR_LOAD = 4;
-    public static final int MODE_EDITOR_PLAY = 5;
-    public static final int MODE_CAMPAIGN_RANDOM = 6;
-    public static final int MODE_EDITOR_NEW = 7;
-    public static final int MODE_LOAD_REPLAY = 8;
-
     public int mode;
     public int levelSize;
     public int playersNumber;
@@ -39,6 +29,8 @@ public class LoadingParameters {
     public boolean fogOfWar;
     public boolean diplomacy;
     public DiplomacyInfoCondensed diplomacyInfo;
+    public boolean userLevelMode;
+    public String ulKey;
 
 
     void defaultValues() {
@@ -56,6 +48,7 @@ public class LoadingParameters {
         diplomacyInfo = null;
         fogOfWar = false;
         diplomacy = false;
+        ulKey = null;
     }
 
 
@@ -74,6 +67,13 @@ public class LoadingParameters {
         fogOfWar = src.fogOfWar;
         diplomacy = src.diplomacy;
         diplomacyInfo = src.diplomacyInfo;
+        userLevelMode = src.userLevelMode;
+        ulKey = src.ulKey;
+    }
+
+
+    public static void initialize() {
+        instance = null;
     }
 
 
@@ -103,6 +103,8 @@ public class LoadingParameters {
         System.out.println("replay = " + replay);
         System.out.println("fogOfWar = " + fogOfWar);
         System.out.println("diplomacy = " + diplomacy);
+        System.out.println("userLevelMode = " + userLevelMode);
+        System.out.println("ulKey = " + ulKey);
 
         System.out.println();
     }
@@ -150,5 +152,7 @@ public class LoadingParameters {
         slayRules = prefs.getBoolean("slay_rules", true);
         fogOfWar = prefs.getBoolean("fog_of_war", false);
         diplomacy = prefs.getBoolean("diplomacy", false);
+        userLevelMode = prefs.getBoolean("user_level_mode", false);
+        ulKey = prefs.getString("ul_key", null);
     }
 }

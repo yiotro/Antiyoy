@@ -6,9 +6,9 @@ import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyInfoCondensed;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
+import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
-import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.*;
@@ -41,6 +41,10 @@ public class GameSaver {
         prefs.putString("date", Yio.getDate());
         prefs.putBoolean("fog_of_war", GameRules.fogOfWarEnabled);
         prefs.putBoolean("diplomacy", GameRules.diplomacyEnabled);
+        prefs.putBoolean("user_level_mode", GameRules.userLevelMode);
+        if (GameRules.ulKey != null) {
+            prefs.putString("ul_key", GameRules.ulKey);
+        }
     }
 
 
@@ -121,8 +125,14 @@ public class GameSaver {
         saveBasicInfo();
         saveStatistics();
         saveDiplomacy();
+        saveInitialLevelString();
         prefs.putString("save_active_hexes", getActiveHexesString());
         prefs.flush();
+    }
+
+
+    private void saveInitialLevelString() {
+        prefs.putString("initial_level", gameController.fieldController.initialLevelString);
     }
 
 
@@ -239,12 +249,18 @@ public class GameSaver {
         if (activeHexesString.length() < 3) return;
 
         LoadingParameters instance = LoadingParameters.getInstance();
-        instance.mode = LoadingParameters.MODE_LOAD_GAME;
+        instance.mode = LoadingMode.LOAD_GAME;
         instance.applyPrefs(prefs);
         instance.activeHexes = activeHexesString;
         LoadingManager.getInstance().startGame(instance);
         loadStatistics();
         loadDiplomacy();
+        loadInitialLevelString();
+    }
+
+
+    private void loadInitialLevelString() {
+        gameController.fieldController.initialLevelString = prefs.getString("initial_level", null);
     }
 
 

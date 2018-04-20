@@ -4,6 +4,8 @@ import yio.tro.antiyoy.gameplay.FieldController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Obj;
 import yio.tro.antiyoy.gameplay.Province;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticRelation;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
@@ -78,23 +80,98 @@ public class FogOfWarManager {
 
         resetStatuses();
 
+        int playersNumber = fieldController.gameController.playersNumber;
+
+        if (playersNumber == 0) {
+            lightUpAllMap();
+        } else if (playersNumber == 1) {
+            lightUpInSingleplayerMode();
+        } else {
+            lightUpInMultiplayerMode();
+        }
+
+        updateVisibleArea();
+        updateBlocks();
+        updateSlices();
+    }
+
+
+    private void lightUpInMultiplayerMode() {
+        for (Province province : fieldController.provinces) {
+            if (isCurrentPlayerProvince(province)) {
+                lightUpProvince(province);
+                continue;
+            }
+            if (isFriendOfCurrentPlayer(province)) {
+                lightUpProvince(province);
+            }
+        }
+    }
+
+
+    private void lightUpInSingleplayerMode() {
         foundPlayersProvince = false;
         for (Province province : fieldController.provinces) {
-            if (fieldController.gameController.isPlayerTurn(province.getColor())) {
+            if (isFirstPlayerProvince(province)) {
                 foundPlayersProvince = true;
-                for (Hex hex : province.hexList) {
-                    applyHex(hex);
-                }
+                lightUpProvince(province);
+                continue;
+            }
+            if (isFriendOfFirstPlayer(province)) {
+                lightUpProvince(province);
             }
         }
 
         if (!foundPlayersProvince) {
             lightUpAllMap();
         }
+    }
 
-        updateVisibleArea();
-        updateBlocks();
-        updateSlices();
+
+    boolean isFriendOfCurrentPlayer(Province province) {
+        if (!GameRules.diplomacyEnabled) return false;
+
+        DiplomaticEntity entity = fieldController.diplomacyManager.getEntity(province.getColor());
+        if (entity == null) return false;
+
+        DiplomaticEntity currentEntity = fieldController.diplomacyManager.getEntity(fieldController.gameController.turn);
+        if (currentEntity == entity) return false;
+
+        int relation = entity.getRelation(currentEntity);
+
+        return relation == DiplomaticRelation.FRIEND;
+    }
+
+
+    boolean isFriendOfFirstPlayer(Province province) {
+        if (!GameRules.diplomacyEnabled) return false;
+
+        DiplomaticEntity entity = fieldController.diplomacyManager.getEntity(province.getColor());
+        if (entity == null) return false;
+
+        DiplomaticEntity firstEntity = fieldController.diplomacyManager.getEntity(0);
+        if (firstEntity == entity) return false;
+
+        int relation = entity.getRelation(firstEntity);
+
+        return relation == DiplomaticRelation.FRIEND;
+    }
+
+
+    private boolean isCurrentPlayerProvince(Province province) {
+        return province.getColor() == fieldController.gameController.turn;
+    }
+
+
+    private boolean isFirstPlayerProvince(Province province) {
+        return province.getColor() == 0;
+    }
+
+
+    private void lightUpProvince(Province province) {
+        for (Hex hex : province.hexList) {
+            applyHex(hex);
+        }
     }
 
 
@@ -202,17 +279,22 @@ public class FogOfWarManager {
 
     private void applyHex(Hex hex) {
         if (hex.containsUnit()) {
+            lightUp(hex, 2);
+            return;
+        }
+
+        if (hex.objectInside == Obj.TOWER) {
             lightUp(hex, 3);
             return;
         }
 
-        if (hex.containsTower()) {
+        if (hex.objectInside == Obj.STRONG_TOWER) {
             lightUp(hex, 5);
             return;
         }
 
         if (hex.objectInside == Obj.TOWN) {
-            lightUp(hex, 6);
+            lightUp(hex, 4);
             return;
         }
 

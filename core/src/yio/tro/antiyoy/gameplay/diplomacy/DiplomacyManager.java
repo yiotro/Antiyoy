@@ -9,7 +9,6 @@ import yio.tro.antiyoy.menu.SingleMessages;
 import yio.tro.antiyoy.menu.diplomacy_element.DeIcon;
 import yio.tro.antiyoy.menu.diplomacy_element.DiplomacyElement;
 import yio.tro.antiyoy.menu.scenes.Scenes;
-import yio.tro.antiyoy.stuff.Yio;
 import yio.tro.antiyoy.stuff.object_pool.ObjectPoolYio;
 
 import java.util.ArrayList;
@@ -22,6 +21,9 @@ public class DiplomacyManager {
     ObjectPoolYio<DiplomaticEntity> poolEntities;
     public ArrayList<DiplomaticContract> contracts;
     ObjectPoolYio<DiplomaticContract> poolContracts;
+    public ArrayList<DiplomaticCooldown> cooldowns;
+    ObjectPoolYio<DiplomaticCooldown> poolCooldowns;
+    public DiplomaticLog log;
 
 
     public DiplomacyManager(FieldController fieldController) {
@@ -29,6 +31,8 @@ public class DiplomacyManager {
 
         entities = new ArrayList<>();
         contracts = new ArrayList<>();
+        cooldowns = new ArrayList<>();
+        log = new DiplomaticLog(this);
 
         initPools();
     }
@@ -48,6 +52,13 @@ public class DiplomacyManager {
                 return new DiplomaticContract();
             }
         };
+
+        poolCooldowns = new ObjectPoolYio<DiplomaticCooldown>() {
+            @Override
+            public DiplomaticCooldown makeNewObject() {
+                return new DiplomaticCooldown();
+            }
+        };
     }
 
 
@@ -56,11 +67,22 @@ public class DiplomacyManager {
 
         updateEntities();
         clearContracts();
+        clearCooldowns();
+        log.clear();
 
         DiplomacyElement diplomacyElement = Scenes.sceneDiplomacy.diplomacyElement;
         if (diplomacyElement != null) {
             diplomacyElement.updateAll();
         }
+    }
+
+
+    private void clearCooldowns() {
+        for (DiplomaticCooldown cooldown : cooldowns) {
+            poolCooldowns.add(cooldown);
+        }
+
+        cooldowns.clear();
     }
 
 
@@ -85,6 +107,18 @@ public class DiplomacyManager {
 
         Scenes.sceneDipMessage.create();
         Scenes.sceneDipMessage.dialog.setMessage("win_conditions", "diplomatic_win_conditions");
+    }
+
+
+    public void onDiplomacyButtonPressed() {
+        fieldController.gameController.selectionController.deselectAll();
+
+        if (log.hasSomethingToRead()) {
+            Scenes.sceneDiplomaticLog.create();
+            return;
+        }
+
+        Scenes.sceneDiplomacy.create();
     }
 
 
@@ -221,14 +255,25 @@ public class DiplomacyManager {
 
 
     public void makeBlackMarked(DiplomaticEntity initiator, DiplomaticEntity entity) {
+        log.addMessage(DipMessageType.black_marked, initiator, entity);
+
         addContract(DiplomaticContract.TYPE_BLACK_MARK, initiator, entity);
 
         onRelationsChanged();
     }
 
 
-    public void onUserRequestedFriendship(DiplomaticEntity selectedEntity) {
-        makeFriends(getMainEntity(), selectedEntity);
+    public void requestedFriendship(DiplomaticEntity sender, DiplomaticEntity recipient) {
+        DiplomaticEntity mainEntity = getMainEntity();
+
+        if (mainEntity == sender) {
+            log.addMessage(DipMessageType.friendship_proposal, sender, recipient);
+            showLetterSentNotification();
+        } else {
+            if (!recipient.acceptsFriendsRequest(sender)) return;
+
+            makeFriends(sender, recipient);
+        }
     }
 
 
@@ -239,6 +284,10 @@ public class DiplomacyManager {
 
     void onEntityRequestedToMakeRelationsWorse(DiplomaticEntity initiator, DiplomaticEntity entity) {
         int previousRelation = initiator.getRelation(entity);
+
+        if (previousRelation == DiplomaticRelation.FRIEND) {
+            punishFriendshipTraitor(initiator, entity);
+        }
 
         requestWorseRelations(initiator, entity);
 
@@ -251,12 +300,28 @@ public class DiplomacyManager {
     }
 
 
+    private void punishFriendshipTraitor(DiplomaticEntity initiator, DiplomaticEntity entity) {
+        int stateBalance = initiator.getStateBalance();
+        if (stateBalance <= 0) return;
+
+        addContract(DiplomaticContract.TYPE_TRAITOR, initiator, entity);
+        onRelationsChanged();
+    }
+
+
+    public void onEntityRequestedToStopWar(DiplomaticEntity initiator, DiplomaticEntity entity) {
+        addContract(DiplomaticContract.TYPE_PIECE, initiator, entity);
+        makeNeutral(initiator, entity);
+        initiator.pay(calculatePayToStopWar(initiator, entity));
+    }
+
+
     public void onUserRequestedToStopWar(DiplomaticEntity selectedEntity) {
         DiplomaticEntity mainEntity = getMainEntity();
+//        onEntityRequestedToStopWar(mainEntity, selectedEntity);
 
-        addContract(DiplomaticContract.TYPE_PIECE, mainEntity, selectedEntity);
-        makeNeutral(mainEntity, selectedEntity);
-        mainEntity.pay(calculatePayToStopWar(mainEntity, selectedEntity));
+        log.addMessage(DipMessageType.stop_war, mainEntity, selectedEntity);
+        showLetterSentNotification();
     }
 
 
@@ -265,6 +330,9 @@ public class DiplomacyManager {
 
         if (contract.type == DiplomaticContract.TYPE_FRIENDSHIP) {
             int relation = contract.one.getRelation(contract.two);
+
+            log.addMessage(DipMessageType.friendship_ended, contract.one, contract.two);
+
             if (relation == DiplomaticRelation.FRIEND) {
                 makeNeutral(contract.one, contract.two);
             }
@@ -285,22 +353,95 @@ public class DiplomacyManager {
     public void onTurnStarted() {
         if (!GameRules.diplomacyEnabled) return;
 
+        DiplomacyElement diplomacyElement = Scenes.sceneDiplomacy.diplomacyElement;
+        if (diplomacyElement != null) {
+            diplomacyElement.onTurnStarted();
+        }
+
         if (fieldController.gameController.isPlayerTurn()) {
             onHumanTurnStarted();
+        } else {
+            onAiTurnStarted();
         }
+
+        moveCooldowns();
     }
 
 
-    private void onHumanTurnStarted() {
+    private void onAiTurnStarted() {
+        aiProcessMessages();
+
         if (YioGdxGame.random.nextInt(8) == 0) {
             performAiToHumanFriendshipProposal();
-            return;
         }
 
         if (YioGdxGame.random.nextInt(4) == 0) {
             performAiToHumanBlackMark();
-            return;
         }
+    }
+
+
+    private void aiProcessMessages() {
+        DiplomaticEntity mainEntity = getMainEntity();
+
+        for (int i = log.messages.size() - 1; i >= 0; i--) {
+            DiplomaticMessage message = log.messages.get(i);
+
+            if (message.recipient != mainEntity) continue;
+
+            switch (message.type) {
+                case friendship_proposal:
+                    makeFriends(message.sender, message.recipient);
+                    break;
+                case stop_war:
+                    onEntityRequestedToStopWar(message.sender, message.recipient);
+                    break;
+            }
+
+            log.removeMessage(message);
+        }
+    }
+
+
+    private void moveCooldowns() {
+        for (DiplomaticCooldown cooldown : cooldowns) {
+            if (cooldown.getOneColor() != fieldController.gameController.turn) continue;
+
+            cooldown.decreaseCounter();
+        }
+
+        checkToRemoveCooldowns();
+    }
+
+
+    private void checkToRemoveCooldowns() {
+        if (fieldController.gameController.turn != 0) return;
+
+        for (int i = cooldowns.size() - 1; i >= 0; i--) {
+            DiplomaticCooldown cooldown = cooldowns.get(i);
+            if (!cooldown.isReady()) continue;
+
+            cooldowns.remove(i);
+        }
+    }
+
+
+    public boolean checkForStopWarCooldown(DiplomaticEntity one, DiplomaticEntity two) {
+        for (DiplomaticCooldown cooldown : cooldowns) {
+            if (cooldown.type != DiplomaticCooldown.TYPE_STOP_WAR) continue;
+            if (!cooldown.contains(one)) continue;
+            if (!cooldown.contains(two)) continue;
+            if (cooldown.isReady()) continue;
+
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private void onHumanTurnStarted() {
+
     }
 
 
@@ -308,33 +449,38 @@ public class DiplomacyManager {
         DiplomaticEntity aiEntity = findAiEntityThatIsCloseToWin();
         if (aiEntity == null) return;
 
-        DiplomaticEntity mainEntity = getMainEntity();
+        DiplomaticEntity randomHumanEntity = getRandomHumanEntity();
 
-        int relation = aiEntity.getRelation(mainEntity);
+        int relation = aiEntity.getRelation(randomHumanEntity);
         if (relation == DiplomaticRelation.FRIEND) return;
+        if (randomHumanEntity.isBlackMarkedWith(aiEntity)) return;
 
-        makeBlackMarked(aiEntity, mainEntity);
+        log.addMessage(DipMessageType.black_marked, aiEntity, randomHumanEntity);
+
+        makeBlackMarked(aiEntity, randomHumanEntity);
     }
 
 
     public boolean performAiToHumanFriendshipProposal() {
-        DiplomaticEntity mainEntity = getMainEntity();
-        if (mainEntity.isOneFriendAwayFromDiplomaticVictory()) return false;
-        if (!mainEntity.isHuman()) return false;
-        if (!mainEntity.alive) return false;
+        DiplomaticEntity humanEntity = getRandomHumanEntity();
+        if (humanEntity == null) return false;
+        if (humanEntity.isOneFriendAwayFromDiplomaticVictory()) return false;
+        if (!humanEntity.alive) return false;
 
         for (int i = 0; i < 25; i++) {
             DiplomaticEntity randomEntity = getRandomEntity();
             if (!randomEntity.alive) continue;
-            if (randomEntity == mainEntity) continue;
+            if (randomEntity == humanEntity) continue;
             if (randomEntity.isOneFriendAwayFromDiplomaticVictory()) continue; // no tricky friend requests
 
-            int relation = mainEntity.getRelation(randomEntity);
+            int relation = humanEntity.getRelation(randomEntity);
             if (relation != DiplomaticRelation.NEUTRAL) continue;
-            if (!mainEntity.acceptsFriendsRequest(randomEntity)) continue;
+            if (!humanEntity.acceptsFriendsRequest(randomEntity)) continue;
 
-            Scenes.sceneFriendshipDialog.create();
-            Scenes.sceneFriendshipDialog.dialog.setEntities(mainEntity, randomEntity);
+            log.addMessage(DipMessageType.friendship_proposal, randomEntity, humanEntity);
+
+//            Scenes.sceneFriendshipDialog.create();
+//            Scenes.sceneFriendshipDialog.dialog.setEntities(humanEntity, randomEntity);
             return true;
         }
 
@@ -364,6 +510,8 @@ public class DiplomacyManager {
 
         checkToChangeRelations();
 
+        log.removeMessagesByRecipient(entity);
+
         if (fieldController.gameController.turn == 0) {
             onFirstPlayerTurnEnded();
         }
@@ -391,6 +539,8 @@ public class DiplomacyManager {
 
 
     public boolean canUnitAttackHex(int unitStrength, int unitColor, Hex hex) {
+        if (isHexSingle(hex)) return true;
+
         DiplomaticEntity one = getEntity(unitColor);
         DiplomaticEntity two = getEntity(hex.colorIndex);
 
@@ -399,6 +549,18 @@ public class DiplomacyManager {
         int relation = one.getRelation(two);
 
         return relation == DiplomaticRelation.ENEMY;
+    }
+
+
+    private boolean isHexSingle(Hex hex) {
+        for (int dir = 0; dir < 6; dir++) {
+            Hex adjacentHex = hex.getAdjacentHex(dir);
+            if (adjacentHex == null) continue;
+            if (adjacentHex == fieldController.emptyHex) continue;
+            if (adjacentHex.sameColor(hex)) return false;
+        }
+
+        return true;
     }
 
 
@@ -455,6 +617,29 @@ public class DiplomacyManager {
     }
 
 
+    public DiplomaticEntity getRandomHumanEntity() {
+        if (!isAtLeastOneHumanEntity()) return null;
+
+        while (true) {
+            DiplomaticEntity randomEntity = getRandomEntity();
+            if (randomEntity.isHuman()) {
+                return randomEntity;
+            }
+        }
+    }
+
+
+    private boolean isAtLeastOneHumanEntity() {
+        for (DiplomaticEntity entity : entities) {
+            if (entity.isHuman()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
     public DiplomaticEntity getMainEntity() {
         int turn = fieldController.gameController.turn;
         return getEntity(turn);
@@ -468,11 +653,16 @@ public class DiplomacyManager {
     }
 
 
-    void requestBetterRelations(DiplomaticEntity one, DiplomaticEntity two) {
-        int relation = one.getRelation(two);
+    public void showLetterSentNotification() {
+        Scenes.sceneNotification.showNotification("letter_sent");
+    }
+
+
+    void requestBetterRelations(DiplomaticEntity initiator, DiplomaticEntity two) {
+        int relation = initiator.getRelation(two);
 
         if (relation == DiplomaticRelation.ENEMY) {
-            if (canWarBeStopped(one, two)) {
+            if (canWarBeStopped(initiator, two)) {
                 Scenes.sceneStopWarDialog.create();
                 Scenes.sceneStopWarDialog.dialog.setSelectedEntity(two);
             } else {
@@ -482,9 +672,9 @@ public class DiplomacyManager {
         }
 
         if (relation == DiplomaticRelation.NEUTRAL) {
-            if (isFriendshipPossible(one, two)) {
+            if (isFriendshipPossible(initiator, two)) {
                 Scenes.sceneFriendshipDialog.create();
-                Scenes.sceneFriendshipDialog.dialog.setEntities(one, two);
+                Scenes.sceneFriendshipDialog.dialog.setEntities(initiator, two);
             } else {
                 Scenes.sceneDipMessage.create();
                 Scenes.sceneDipMessage.dialog.setMessage(two.capitalName, "refuse_friendship");
@@ -502,6 +692,8 @@ public class DiplomacyManager {
 
 
     boolean canWarBeStopped(DiplomaticEntity one, DiplomaticEntity two) {
+        if (!checkForStopWarCooldown(one, two)) return false;
+
         return one.acceptsToStopWar(two) && two.acceptsToStopWar(one);
     }
 
@@ -510,10 +702,14 @@ public class DiplomacyManager {
         int relation = two.getRelation(initiator);
 
         if (relation == DiplomaticRelation.FRIEND) {
+            log.addMessage(DipMessageType.friendship_canceled, initiator, two);
+
             makeNeutral(two, initiator);
         }
 
         if (relation == DiplomaticRelation.NEUTRAL) {
+            log.addMessage(DipMessageType.war_declaration, initiator, two);
+
             makeEnemies(initiator, two);
         }
     }
@@ -521,6 +717,7 @@ public class DiplomacyManager {
 
     private void onWarStarted(DiplomaticEntity initiator, DiplomaticEntity one) {
         punishAggressor(initiator, one);
+        addCooldown(DiplomaticCooldown.TYPE_STOP_WAR, 10, initiator, one);
     }
 
 
@@ -531,6 +728,19 @@ public class DiplomacyManager {
                 requestWorseRelations(initiator, entity);
             }
         }
+    }
+
+
+    DiplomaticCooldown addCooldown(int type, int counter, DiplomaticEntity one, DiplomaticEntity two) {
+        DiplomaticCooldown next = poolCooldowns.getNext();
+
+        next.setType(type);
+        next.setCounter(counter);
+        next.setOne(one);
+        next.setTwo(two);
+
+        cooldowns.add(next);
+        return next;
     }
 
 
@@ -558,7 +768,16 @@ public class DiplomacyManager {
                 return calculateReparations(initiator, two);
             case DiplomaticContract.TYPE_BLACK_MARK:
                 return 0;
+            case DiplomaticContract.TYPE_TRAITOR:
+                return calculateTraitorFine(initiator);
         }
+    }
+
+
+    public int calculateTraitorFine(DiplomaticEntity initiator) {
+        int stateBalance = initiator.getStateBalance();
+
+        return -stateBalance / 3;
     }
 
 
@@ -582,7 +801,7 @@ public class DiplomacyManager {
         if (stateBalance < 5) return 0;
         if (two.getStateBalance() < 10) return 0;
 
-        return - stateBalance / 2;
+        return -stateBalance / 2;
     }
 
 
@@ -666,6 +885,10 @@ public class DiplomacyManager {
         if (diplomacyElement != null) {
             diplomacyElement.onRelationsChanged();
         }
+
+        if (GameRules.fogOfWarEnabled) {
+            fieldController.fogOfWarManager.updateFog();
+        }
     }
 
 
@@ -677,6 +900,17 @@ public class DiplomacyManager {
         }
 
         return null;
+    }
+
+
+    public void showCooldownsInConsole(int colorFilter) {
+        System.out.println();
+        System.out.println("DiplomacyManager.showCooldownsInConsole");
+        DiplomaticEntity entity = getEntity(colorFilter);
+        for (DiplomaticCooldown cooldown : cooldowns) {
+            if (entity != null && !cooldown.contains(entity)) continue;
+            System.out.println("- " + cooldown);
+        }
     }
 
 

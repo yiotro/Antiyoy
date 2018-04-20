@@ -1,5 +1,7 @@
 package yio.tro.antiyoy.menu.scenes;
 
+import yio.tro.antiyoy.menu.ButtonYio;
+import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.stuff.RectangleYio;
 import yio.tro.antiyoy.menu.ButtonFactory;
@@ -41,6 +43,18 @@ public abstract class AbstractScene {
 
     public String getString(String key) {
         return LanguagesManager.getInstance().getString(key);
+    }
+
+
+    public void forceElementToTop(InterfaceElement element) {
+        menuControllerYio.removeElementFromScene(element);
+        menuControllerYio.addElementToScene(element);
+    }
+
+
+    public void forceElementToTop(ButtonYio buttonYio) {
+        menuControllerYio.removeButtonById(buttonYio.id);
+        menuControllerYio.addButtonToArray(buttonYio);
     }
 
 }

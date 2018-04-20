@@ -85,7 +85,7 @@ public class CheckButtonYio extends ButtonYio {
         }
 
         if (reaction != null) {
-            reaction.reactAction(this);
+            reaction.perform(this);
         }
     }
 

@@ -8,7 +8,7 @@ import yio.tro.antiyoy.menu.behaviors.Reaction;
 public class RbStartInstantReplay extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         GameController gameController = buttonYio.getMenuControllerYio().yioGdxGame.gameController;
         ReplayManager replayManager = gameController.replayManager;
         replayManager.startInstantReplay();

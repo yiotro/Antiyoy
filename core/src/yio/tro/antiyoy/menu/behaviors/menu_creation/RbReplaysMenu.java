@@ -7,7 +7,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbReplaysMenu extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         Scenes.sceneReplays.create();
     }
 }

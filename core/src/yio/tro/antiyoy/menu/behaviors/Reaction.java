@@ -13,7 +13,7 @@ import yio.tro.antiyoy.menu.behaviors.menu_creation.*;
  */
 public abstract class Reaction {
 
-    public abstract void reactAction(ButtonYio buttonYio);
+    public abstract void perform(ButtonYio buttonYio);
 
 
     protected YioGdxGame getYioGdxGame(ButtonYio buttonYio) {
@@ -72,7 +72,6 @@ public abstract class Reaction {
     public static final RbExitToCampaign rbExitToCampaign = new RbExitToCampaign();
     public static final RbTutorialIndex rbTutorialIndex = new RbTutorialIndex();
     public static final RbLanguageMenu rbLanguageMenu = new RbLanguageMenu();
-    public static final RbSetLanguage rbSetLanguage = new RbSetLanguage();
     public static final RbResetProgress rbResetProgress = new RbResetProgress();
     public static final RbConfirmReset rbConfirmReset = new RbConfirmReset();
     public static final RbRefuseEarlyGameEnd rbRefuseEarlyGameEnd = new RbRefuseEarlyGameEnd();

@@ -4,6 +4,7 @@ import yio.tro.antiyoy.ai.ArtificialIntelligence;
 import yio.tro.antiyoy.gameplay.FieldController;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
+import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -25,6 +26,7 @@ public class CampaignLevelFactory {
     private final LevelPackThree levelPackThree;
     int index;
     private final LevelPackFour levelPackFour;
+    private final LevelPackFive levelPackFive;
 
 
     public CampaignLevelFactory(GameController gameController) {
@@ -34,6 +36,7 @@ public class CampaignLevelFactory {
         levelPackTwo = new LevelPackTwo(this);
         levelPackThree = new LevelPackThree(this);
         levelPackFour = new LevelPackFour(this);
+        levelPackFive = new LevelPackFive(this);
         index = -1;
     }
 
@@ -54,6 +57,7 @@ public class CampaignLevelFactory {
         if (levelPackTwo.checkForlevelPack()) return true;
         if (levelPackThree.checkForlevelPack()) return true;
         if (levelPackFour.checkForlevelPack()) return true;
+        if (levelPackFive.checkForlevelPack()) return true;
 
         createLevelWithPredictableRandom();
 
@@ -79,7 +83,7 @@ public class CampaignLevelFactory {
 
     private void createLevelWithPredictableRandom() {
         LoadingParameters instance = LoadingParameters.getInstance();
-        instance.mode = LoadingParameters.MODE_CAMPAIGN_RANDOM;
+        instance.mode = LoadingMode.CAMPAIGN_RANDOM;
         instance.levelSize = getLevelSizeByIndex(index);
         instance.playersNumber = 1;
         instance.colorNumber = getColorNumberByIndex(index);

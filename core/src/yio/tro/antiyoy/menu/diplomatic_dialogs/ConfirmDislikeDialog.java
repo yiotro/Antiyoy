@@ -2,11 +2,13 @@ package yio.tro.antiyoy.menu.diplomatic_dialogs;
 
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticContract;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticRelation;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.Fonts;
+import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 
 public class ConfirmDislikeDialog extends AbstractDiplomaticDialog {
@@ -45,6 +47,20 @@ public class ConfirmDislikeDialog extends AbstractDiplomaticDialog {
         }
 
         addLabel(instance.getString(messageKey), Fonts.gameFont, leftOffset, y);
+
+        if (relation == DiplomaticRelation.FRIEND) {
+            addTraitorFineLabel();
+        }
+    }
+
+
+    private void addTraitorFineLabel() {
+        DiplomacyManager diplomacyManager = getDiplomacyManager();
+        int finePerTurn = diplomacyManager.calculateTraitorFine(diplomacyManager.getMainEntity());
+        int fine = finePerTurn * DiplomaticContract.DURATION_TRAITOR;
+
+        float y = (float) (position.height - topOffset - 0.05f * GraphicsYio.height);
+        addLabel(LanguagesManager.getInstance().getString("fine") + ": " + fine, Fonts.smallerMenuFont, leftOffset, y);
     }
 
 

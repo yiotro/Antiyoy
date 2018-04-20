@@ -8,7 +8,7 @@ import yio.tro.antiyoy.menu.diplomatic_dialogs.AcButton;
 import yio.tro.antiyoy.menu.diplomatic_dialogs.AcLabel;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
-public class RenderConfirmDialog extends MenuRender{
+public class RenderDiplomaticDialog extends MenuRender{
 
     private TextureRegion backgroundTexture;
     private TextureRegion selectionPixel;
@@ -41,8 +41,23 @@ public class RenderConfirmDialog extends MenuRender{
 
         renderBlackout();
         renderBackground();
+        renderColorTag();
         renderLabels();
         renderButtons();
+    }
+
+
+    private void renderColorTag() {
+        if (dialog.getTagColor() == -1) return;
+
+        int tagColor = menuViewYio.yioGdxGame.gameController.getColorIndexWithOffset(dialog.getTagColor());
+        TextureRegion tagPixel = MenuRender.renderDiplomacyElement.getBackgroundPixel(tagColor);
+
+        GraphicsYio.drawByRectangle(
+                batch,
+                tagPixel,
+                dialog.tagPosition
+        );
     }
 
 

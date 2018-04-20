@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.menu;
 
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.menu.speed_panel.SpeedPanel;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.OneTimeInfo;
@@ -21,6 +22,11 @@ public class SpecialActionController {
 
 
     public void perform() {
-        Scenes.sceneDiplomacy.create();
+        getDiplomacyManager().onDiplomacyButtonPressed();
+    }
+
+
+    private DiplomacyManager getDiplomacyManager() {
+        return menuControllerYio.yioGdxGame.gameController.fieldController.diplomacyManager;
     }
 }

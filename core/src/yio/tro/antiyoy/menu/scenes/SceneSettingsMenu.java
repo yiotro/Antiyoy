@@ -27,7 +27,7 @@ public class SceneSettingsMenu extends AbstractScene{
 
         soundChkReaction = new Reaction() {
             @Override
-            public void reactAction(ButtonYio buttonYio) {
+            public void perform(ButtonYio buttonYio) {
                 Settings.soundEnabled = chkSound.isChecked();
             }
         };

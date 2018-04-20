@@ -9,7 +9,7 @@ import yio.tro.antiyoy.menu.behaviors.Reaction;
 public class RbStartEditorMode extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
 //        getYioGdxGame(buttonLighty).startInEditorMode();
         getGameController(buttonYio).getLevelEditor().loadSlot();
     }

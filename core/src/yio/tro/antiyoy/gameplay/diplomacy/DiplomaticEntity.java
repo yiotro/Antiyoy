@@ -53,6 +53,11 @@ public class DiplomaticEntity implements ReusableYio {
     }
 
 
+    public boolean isMain() {
+        return color == diplomacyManager.fieldController.gameController.turn;
+    }
+
+
     public boolean isHuman() {
         return human;
     }
@@ -117,12 +122,16 @@ public class DiplomaticEntity implements ReusableYio {
         for (DiplomaticContract contract : diplomacyManager.contracts) {
             if (!contract.contains(this)) continue;
 
-            if (contract.type == DiplomaticContract.TYPE_FRIENDSHIP) {
-                dotations += contract.getDotationsFromEntityPerspective(this);
-            }
-
-            if (contract.type == DiplomaticContract.TYPE_PIECE) {
-                dotations += contract.getDotationsFromEntityPerspective(this);
+            switch (contract.type) {
+                case DiplomaticContract.TYPE_FRIENDSHIP:
+                    dotations += contract.getDotationsFromEntityPerspective(this);
+                    break;
+                case DiplomaticContract.TYPE_PIECE:
+                    dotations += contract.getDotationsFromEntityPerspective(this);
+                    break;
+                case DiplomaticContract.TYPE_TRAITOR:
+                    dotations += contract.getDotationsFromEntityPerspective(this);
+                    break;
             }
         }
 
@@ -204,6 +213,7 @@ public class DiplomaticEntity implements ReusableYio {
 
     boolean acceptsFriendsRequest(DiplomaticEntity initiator) {
         if (isAnyFriendBlackMarkedWithHim(initiator)) return false;
+        if (initiator.isAnyFriendBlackMarkedWithHim(this)) return false;
         if (isBlackMarkedWith(initiator)) return false;
 
         if (human) return true;
@@ -275,6 +285,8 @@ public class DiplomaticEntity implements ReusableYio {
             if (contract != null) continue;
 
             if (isGoodIdeaToAttackEntity(randomEntity)) {
+                diplomacyManager.log.addMessage(DipMessageType.war_declaration, this, randomEntity);
+
                 diplomacyManager.onEntityRequestedToMakeRelationsWorse(this, randomEntity);
             }
 

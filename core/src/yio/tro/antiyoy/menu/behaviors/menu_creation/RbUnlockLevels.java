@@ -8,7 +8,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbUnlockLevels extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         DebugFlags.unlockLevels = true;
 
         Scenes.sceneCampaignMenu.create();

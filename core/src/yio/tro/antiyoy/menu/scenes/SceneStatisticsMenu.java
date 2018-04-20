@@ -12,10 +12,18 @@ public class SceneStatisticsMenu extends AbstractScene{
 
 
     private ButtonYio replayButton;
+    private Reaction backReaction;
 
 
     public SceneStatisticsMenu(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
+
+        backReaction = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                Scenes.sceneAfterGameMenu.create();
+            }
+        };
     }
 
 
@@ -24,7 +32,7 @@ public class SceneStatisticsMenu extends AbstractScene{
 
         menuControllerYio.getYioGdxGame().beginBackgroundChange(0, false, true);
 
-        menuControllerYio.spawnBackButton(111, Reaction.rbChooseGameModeMenu);
+        menuControllerYio.spawnBackButton(111, backReaction);
 
         ButtonYio textPanel = buttonFactory.getButton(generateRectangle(0.05, 0.1, 0.9, 0.7), 112, null);
         textPanel.cleatText();

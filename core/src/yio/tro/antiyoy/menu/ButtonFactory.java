@@ -22,7 +22,7 @@ public class ButtonFactory {
                 buttonYio.addTextLine(text);
                 buttonRenderer.renderButton(buttonYio);
             }
-            menuControllerYio.addMenuBlockToArray(buttonYio);
+            menuControllerYio.addButtonToArray(buttonYio);
         }
         buttonYio.setVisible(true);
         buttonYio.setTouchable(true);

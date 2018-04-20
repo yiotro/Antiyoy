@@ -13,6 +13,7 @@ import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.gameplay.rules.Ruleset;
 import yio.tro.antiyoy.gameplay.rules.RulesetGeneric;
 import yio.tro.antiyoy.gameplay.rules.RulesetSlay;
+import yio.tro.antiyoy.gameplay.user_levels.UserLevelProgressManager;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
@@ -382,6 +383,7 @@ public class GameController {
 
     private void checkToProposeSurrender() {
         if (GameRules.diplomacyEnabled) return;
+        if (playersNumber != 1) return;
 
         if (!proposedSurrender) {
             int possibleWinner = fieldController.possibleWinner();
@@ -436,14 +438,37 @@ public class GameController {
 
 
     private void endGame(int winColor) {
+        onGameFinished(winColor);
+
+        Scenes.sceneAfterGameMenu.create(winColor, isPlayerTurn(winColor));
+    }
+
+
+    private void onGameFinished(int winColor) {
+        checkToTagCampaignLevel(winColor);
+        checkToTagUserLevel(winColor);
+    }
+
+
+    private void checkToTagUserLevel(int winColor) {
+        if (!isPlayerTurn(winColor)) return;
+
+        String key = GameRules.ulKey;
+        if (key == null) return;
+
+        UserLevelProgressManager instance = UserLevelProgressManager.getInstance();
+
+        instance.onLevelCompleted(key);
+    }
+
+
+    private void checkToTagCampaignLevel(int winColor) {
         CampaignProgressManager instance = CampaignProgressManager.getInstance();
 
         if (instance.completedCampaignLevel(winColor)) {
             instance.markLevelAsCompleted(instance.currentLevelIndex);
             Scenes.sceneCampaignMenu.updateLevelSelector();
         }
-
-        Scenes.sceneAfterGameMenu.create(winColor, isPlayerTurn(winColor));
     }
 
 
@@ -469,10 +494,6 @@ public class GameController {
             unit.setReadyToMove(false);
             unit.stopJumping();
         }
-
-        if (isPlayerTurn()) {
-            fieldController.fogOfWarManager.updateFog();
-        }
     }
 
 
@@ -489,17 +510,14 @@ public class GameController {
         collectTributesAndPayTaxes();
         checkForStarvation();
 
-        if (isCurrentTurn(0)) {
-            yioGdxGame.gameView.updateCacheLevelTextures();
-        }
+        checkToUpdateCacheTextures();
 
         if (isPlayerTurn()) {
             resetCurrentTouchCount();
             snapshotManager.onTurnStart();
             jumperUnit.startJumping();
-            if (fieldController.numberOfProvincesWithColor(turn) == 0) {
-                onEndTurnButtonPressed();
-            }
+            checkToSkipTurn();
+            fieldController.fogOfWarManager.updateFog();
         } else {
             for (Hex animHex : fieldController.animHexes) {
                 animHex.animFactor.setValues(1, 0);
@@ -509,6 +527,20 @@ public class GameController {
         fieldController.diplomacyManager.onTurnStarted();
 
         checkToAutoSave();
+    }
+
+
+    private void checkToUpdateCacheTextures() {
+        if (!isCurrentTurn(0)) return;
+
+        yioGdxGame.gameView.updateCacheLevelTextures();
+    }
+
+
+    private void checkToSkipTurn() {
+        if (fieldController.numberOfProvincesWithColor(turn) == 0) {
+            onEndTurnButtonPressed();
+        }
     }
 
 
@@ -546,8 +578,29 @@ public class GameController {
 
     public void onEndTurnButtonPressed() {
         cameraController.onEndTurnButtonPressed();
+
         if (!isPlayerTurn()) return;
-        applyReadyToEndTurn();
+
+        if (isInMultiplayerMode()) {
+            Scenes.sceneTurnStartDialog.create();
+
+            int nextTurnIndex = turn;
+            while (fieldController.hasAtLeastOneProvince()) {
+                nextTurnIndex = getNextTurnIndex(nextTurnIndex);
+                if (isPlayerTurn(nextTurnIndex) && fieldController.numberOfProvincesWithColor(nextTurnIndex) > 0) {
+                    break;
+                }
+            }
+
+            Scenes.sceneTurnStartDialog.dialog.setColor(getColorIndexWithOffset(nextTurnIndex));
+        } else {
+            applyReadyToEndTurn();
+        }
+    }
+
+
+    public boolean isInMultiplayerMode() {
+        return playersNumber > 1;
     }
 
 
@@ -802,14 +855,11 @@ public class GameController {
 
 
     public void restartGame() {
-//        int currentColorOffset = colorIndexViewOffset;
+        if (fieldController.initialLevelString != null) {
+            initialParameters.applyFullLevel(fieldController.initialLevelString);
+        }
 
         LoadingManager.getInstance().startGame(initialParameters);
-
-//        gameSaver.setActiveHexesString(levelInitialString);
-//        gameSaver.beginRecreation(false);
-//        colorIndexViewOffset = currentColorOffset;
-//        gameSaver.endRecreation();
     }
 
 
@@ -917,10 +967,19 @@ public class GameController {
     }
 
 
-    private int getNextTurnIndex() {
-        int next = turn + 1;
-        if (next >= GameRules.colorNumber) next = 0;
+    private int getNextTurnIndex(int currentTurn) {
+        int next = currentTurn + 1;
+
+        if (next >= GameRules.colorNumber) {
+            next = 0;
+        }
+
         return next;
+    }
+
+
+    private int getNextTurnIndex() {
+        return getNextTurnIndex(turn);
     }
 
 
@@ -963,7 +1022,7 @@ public class GameController {
 
 
     private void moveUnitWithAttack(Unit unit, Hex destination, Province unitProvince) {
-        if (!destination.canBeAttackedBy(unit)) {
+        if (!destination.canBeAttackedBy(unit) || unitProvince == null) {
             System.out.println("Problem in GameController.moveUnitWithAttack");
             Yio.printStackTrace();
             return;

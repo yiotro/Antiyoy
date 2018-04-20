@@ -11,7 +11,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbInputModeHex extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         getGameController(buttonYio).getLevelEditor().setInputMode(LevelEditor.MODE_SET_HEX);
         getGameController(buttonYio).getLevelEditor().setInputColor(buttonYio.id - 150);
         Scenes.sceneEditorHexPanel.hide();

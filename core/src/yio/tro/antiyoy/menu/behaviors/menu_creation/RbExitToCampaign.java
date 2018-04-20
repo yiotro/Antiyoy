@@ -7,7 +7,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbExitToCampaign extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         Scenes.sceneMoreCampaignOptions.saveValues();
         Scenes.sceneCampaignMenu.create();
     }

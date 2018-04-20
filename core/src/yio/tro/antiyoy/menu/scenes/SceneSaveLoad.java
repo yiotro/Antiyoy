@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.menu.scenes;
 
+import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
@@ -10,6 +11,7 @@ public class SceneSaveLoad extends AbstractScene{
 
     private ButtonYio backButton;
     SaveSlotSelector slotSelector;
+    private ButtonYio replaysButton;
 
 
     public SceneSaveLoad(MenuControllerYio menuControllerYio) {
@@ -34,6 +36,13 @@ public class SceneSaveLoad extends AbstractScene{
     }
 
 
+    private void createReplaysButton() {
+        replaysButton = buttonFactory.getButton(generateRectangle(0.55, 0.9, 0.4, 0.07), 581, getString("replays"));
+        replaysButton.setReaction(Reaction.rbReplaysMenu);
+        replaysButton.setAnimation(Animation.UP);
+    }
+
+
     private void checkToCreateSlotSelector() {
         if (slotSelector != null) return;
 
@@ -49,6 +58,7 @@ public class SceneSaveLoad extends AbstractScene{
 
         if (load) {
             backButton.setReaction(Reaction.rbChooseGameModeMenu);
+            createReplaysButton();
         } else {
             backButton.setReaction(Reaction.rbPauseMenu);
         }

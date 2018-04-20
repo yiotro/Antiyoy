@@ -11,6 +11,11 @@ public class RefuseStatistics {
     public int refusedEarlyGameEnd;
 
 
+    public static void initialize() {
+        instance = null;
+    }
+
+
     public static RefuseStatistics getInstance() {
         if (instance == null) {
             instance = new RefuseStatistics();

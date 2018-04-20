@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.menu.scenes;
 
+import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.LevelSelector;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
@@ -41,6 +42,7 @@ public class SceneCampaignMenu extends AbstractScene{
         checkToUpdateSelectorMetrics();
 
         menuControllerYio.endMenuCreation();
+        levelSelector.checkToReloadProgress();
     }
 
 

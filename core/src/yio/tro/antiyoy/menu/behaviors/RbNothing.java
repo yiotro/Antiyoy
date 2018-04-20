@@ -8,7 +8,7 @@ import yio.tro.antiyoy.menu.ButtonYio;
 public class RbNothing extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         // nothing
     }
 }

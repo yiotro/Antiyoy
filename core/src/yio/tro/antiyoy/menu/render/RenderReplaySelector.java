@@ -18,12 +18,14 @@ public class RenderReplaySelector extends MenuRender{
     private ReplaySelector rs;
     private RectangleYio viewPosition;
     private float factor;
+    private TextureRegion cancelIconTexture;
 
 
     @Override
     public void loadTextures() {
         backgroundTexture = GraphicsYio.loadTextureRegion("menu/background.png", false);
         selectionPixel = GraphicsYio.loadTextureRegion("pixels/black_pixel.png", false);
+        cancelIconTexture = GraphicsYio.loadTextureRegion("cancel_icon.png", true);
     }
 
 
@@ -106,10 +108,24 @@ public class RenderReplaySelector extends MenuRender{
             renderItemTitle(item);
             renderItemDescription(item);
             renderItemSelection(item, pos);
+            renderRemoveIcon(item);
         }
 
         rs.descFont.setColor(Color.WHITE);
         rs.titleFont.setColor(titleColor);
+    }
+
+
+    private void renderRemoveIcon(RsItem item) {
+        if (!rs.isInRemoveMode()) return;
+
+        GraphicsYio.drawFromCenter(
+                batch,
+                cancelIconTexture,
+                item.removeIconPosition.x,
+                item.removeIconPosition.y,
+                0.04f * GraphicsYio.width
+        );
     }
 
 

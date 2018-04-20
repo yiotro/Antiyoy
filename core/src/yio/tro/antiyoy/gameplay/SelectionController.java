@@ -156,7 +156,7 @@ public class SelectionController {
         if (Settings.fastConstruction) {
             Scenes.sceneFastConstructionPanel.hide();
         } else {
-            Scenes.sceneBuildButtons.hide();
+            Scenes.sceneSelectionOverlay.hide();
         }
     }
 

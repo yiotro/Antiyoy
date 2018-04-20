@@ -11,10 +11,18 @@ public class SceneChoodeGameModeMenu extends AbstractScene{
 
 
     public ButtonYio skirmishButton;
+    private Reaction rbUserLevels;
 
 
     public SceneChoodeGameModeMenu(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
+
+        rbUserLevels = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                Scenes.sceneUserLevels.create();
+            }
+        };
     }
 
 
@@ -27,7 +35,7 @@ public class SceneChoodeGameModeMenu extends AbstractScene{
         createBasePanel();
 
         createSkirmishButton();
-        createTutorialButton();
+        createUserLevelsButton();
         createCampaignButton();
         createLoadGameButton();
         createEditorButton();
@@ -74,11 +82,11 @@ public class SceneChoodeGameModeMenu extends AbstractScene{
     }
 
 
-    private void createTutorialButton() {
-        ButtonYio tutorialButton = buttonFactory.getButton(generateRectangle(0.1, 0.46, 0.8, 0.08), 73, getString("choose_game_mode_tutorial"));
-        tutorialButton.setShadow(false);
-        tutorialButton.setReaction(Reaction.rbTutorialIndex);
-        tutorialButton.setAnimation(Animation.FROM_CENTER);
+    private void createUserLevelsButton() {
+        ButtonYio userLevelsButton = buttonFactory.getButton(generateRectangle(0.1, 0.46, 0.8, 0.08), 73, getString("user_levels"));
+        userLevelsButton.setShadow(false);
+        userLevelsButton.setReaction(rbUserLevels);
+        userLevelsButton.setAnimation(Animation.FROM_CENTER);
     }
 
 

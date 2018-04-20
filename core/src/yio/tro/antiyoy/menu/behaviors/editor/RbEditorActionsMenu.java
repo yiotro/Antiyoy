@@ -10,12 +10,8 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 public class RbEditorActionsMenu extends Reaction {
 
     @Override
-    public void reactAction(ButtonYio buttonYio) {
+    public void perform(ButtonYio buttonYio) {
         if (buttonYio.id != 140) {
-//            String textLine = buttonLighty.getText().get(0);
-//            char numberChar = textLine.charAt(5);
-//            getGameController(buttonLighty).getLevelEditor().setCurrentSlotNumber((int)numberChar);
-
             getGameController(buttonYio).getLevelEditor().setCurrentSlotNumber(buttonYio.id - 130);
         } else {
             getGameController(buttonYio).getLevelEditor().saveSlot();

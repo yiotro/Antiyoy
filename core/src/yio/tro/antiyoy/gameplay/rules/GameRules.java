@@ -32,6 +32,10 @@ public class GameRules {
     public static int editorChosenColor;
     public static boolean fogOfWarEnabled;
     public static boolean diplomacyEnabled;
+    public static boolean userLevelMode;
+    public static String ulKey;
+    public static boolean editorFog;
+    public static boolean editorDiplomacy;
 
 
     public static void defaultValues() {
@@ -42,7 +46,11 @@ public class GameRules {
         replayMode = false;
         fogOfWarEnabled = false;
         diplomacyEnabled = false;
+        userLevelMode = false;
         editorChosenColor = 0; // random
+        ulKey = null;
+        editorFog = false;
+        editorDiplomacy = false;
     }
 
 

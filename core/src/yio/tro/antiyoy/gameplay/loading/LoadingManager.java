@@ -29,6 +29,11 @@ public class LoadingManager {
     }
 
 
+    public static void initialize() {
+        instance = null;
+    }
+
+
     public static LoadingManager getInstance() {
         if (instance == null) {
             instance = new LoadingManager();
@@ -51,36 +56,50 @@ public class LoadingManager {
         beginCreation();
 
         switch (loadingParameters.mode) {
-            case LoadingParameters.MODE_TUTORIAL:
+            case LoadingMode.TUTORIAL:
                 createTutorial();
                 break;
-            case LoadingParameters.MODE_SKIRMISH:
+            case LoadingMode.SKIRMISH:
                 createSkirmish();
                 break;
-            case LoadingParameters.MODE_CAMPAIGN_CUSTOM:
+            case LoadingMode.CAMPAIGN_CUSTOM:
                 createCustomCampaignLevel();
                 break;
-            case LoadingParameters.MODE_CAMPAIGN_RANDOM:
+            case LoadingMode.CAMPAIGN_RANDOM:
                 createRandomCampaignLevel();
                 break;
-            case LoadingParameters.MODE_LOAD_GAME:
+            case LoadingMode.LOAD_GAME:
                 createLoadedGame();
                 break;
-            case LoadingParameters.MODE_EDITOR_LOAD:
+            case LoadingMode.EDITOR_LOAD:
                 createEditorLoaded();
                 break;
-            case LoadingParameters.MODE_EDITOR_PLAY:
+            case LoadingMode.EDITOR_PLAY:
                 createEditorPlay();
                 break;
-            case LoadingParameters.MODE_EDITOR_NEW:
+            case LoadingMode.EDITOR_NEW:
                 createEditorNew();
                 break;
-            case LoadingParameters.MODE_LOAD_REPLAY:
+            case LoadingMode.LOAD_REPLAY:
                 createLoadedReplay();
+                break;
+            case LoadingMode.USER_LEVEL:
+                createUserLevel();
                 break;
         }
 
         endCreation();
+    }
+
+
+    private void createUserLevel() {
+        GameRules.campaignMode = false;
+        GameRules.userLevelMode = true;
+        GameRules.ulKey = parameters.ulKey;
+
+        recreateActiveHexesFromParameter();
+
+        gameSaver.detectRules();
     }
 
 
@@ -149,7 +168,12 @@ public class LoadingManager {
             GameRules.campaignMode = true;
 
             CampaignProgressManager.getInstance().setCurrentLevelIndex(parameters.campaignLevelIndex);
+        } else {
+            CampaignProgressManager.getInstance().setCurrentLevelIndex(0);
         }
+
+        GameRules.userLevelMode = parameters.userLevelMode;
+        GameRules.ulKey = parameters.ulKey;
 
         gameController.checkToEnableAiOnlyMode();
     }
@@ -222,6 +246,7 @@ public class LoadingManager {
     private void createSkirmish() {
         gameController.fieldController.generateMap();
         gameController.checkToEnableAiOnlyMode();
+        CampaignProgressManager.getInstance().setCurrentLevelIndex(0); // yes, it's needed
     }
 
 
