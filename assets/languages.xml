@@ -2327,7 +2327,7 @@
         <string key="log" value="Lettres"/>
         <string key="friendship_proposal" value="Proposition d'amitié"/>
         <string key="war_declaration" value="Déclaration de guerre"/>
-        <string key="stop_war" value="Arrêger la guerre"/>
+        <string key="stop_war" value="Arrêter la guerre"/>
         <string key="friendship_ended" value="Amitié terminée"/>
         <string key="friendship_canceled" value="Amitié annulée"/>
         <string key="black_marked" value="Marqué"/>
