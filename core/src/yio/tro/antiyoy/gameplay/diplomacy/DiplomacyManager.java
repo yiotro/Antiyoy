@@ -1,9 +1,7 @@
 package yio.tro.antiyoy.gameplay.diplomacy;
 
 import yio.tro.antiyoy.YioGdxGame;
-import yio.tro.antiyoy.gameplay.FieldController;
-import yio.tro.antiyoy.gameplay.Hex;
-import yio.tro.antiyoy.gameplay.Province;
+import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.SingleMessages;
 import yio.tro.antiyoy.menu.diplomacy_element.DeIcon;
@@ -203,11 +201,15 @@ public class DiplomacyManager {
 
         DiplomaticEntity bestEntity = null;
         for (DiplomaticEntity entity : entities) {
-            if (!entity.hasOnlyFriends()) continue;
+            if (!isEntityWinner(entity)) continue;
 
             if (bestEntity == null || entity.getNumberOfLands() > bestEntity.getNumberOfLands()) {
                 bestEntity = entity;
             }
+        }
+
+        if (bestEntity == null) {
+            return -1;
         }
 
         return bestEntity.color;
@@ -216,12 +218,20 @@ public class DiplomacyManager {
 
     boolean isThereAtLeastOneDiplomaticWinner() {
         for (DiplomaticEntity entity : entities) {
-            if (entity.hasOnlyFriends()) {
-                return true;
-            }
+            if (!isEntityWinner(entity)) continue;
+
+            return true;
         }
 
         return false;
+    }
+
+
+    boolean isEntityWinner(DiplomaticEntity entity) {
+        if (!entity.hasOnlyFriends()) return false;
+        if (!entity.alive) return false;
+
+        return true;
     }
 
 
@@ -245,7 +255,157 @@ public class DiplomacyManager {
                 Scenes.sceneDipInfoDialog.create();
                 Scenes.sceneDipInfoDialog.dialog.setEntities(mainEntity, selectedEntity);
                 break;
+            case DeIcon.ACTION_TRANSFER_MONEY:
+                Scenes.sceneTransferMoneyDialog.create();
+                Scenes.sceneTransferMoneyDialog.dialog.setEntities(mainEntity, selectedEntity);
+                break;
+            case DeIcon.ACTION_BUY_HEXES:
+                Scenes.sceneDiplomacy.hide();
+                enableAreaSelectionMode(selectedEntity.color);
+                doAreaSelectRandomHex(); // to show player
+                break;
         }
+    }
+
+
+    public void enableAreaSelectionMode(int filterColor) {
+        GameController gameController = fieldController.gameController;
+        Province province = gameController.fieldController.findProvince(0);
+        Hex capital = province.getCapital();
+        gameController.selectionController.setAreaSelectionMode(true);
+        gameController.selectionController.setAsFilterColor(filterColor);
+        MoveZoneManager moveZoneManager = fieldController.moveZoneManager;
+        moveZoneManager.detectAndShowMoveZone(capital, 0, 0);
+        moveZoneManager.clear();
+
+        Scenes.sceneAreaSelectionUI.create();
+    }
+
+
+    public void doAreaSelectRandomHex() {
+        Hex hex;
+        if (isThereAtLeastOneFilteredHexInViewFrame()) {
+            hex = getRandomFilteredHex(true);
+        } else {
+            hex = getRandomFilteredHex(false);
+        }
+
+        if (hex == null) return;
+
+        MoveZoneManager moveZoneManager = fieldController.moveZoneManager;
+        moveZoneManager.addHexToMoveZoneManually(hex);
+    }
+
+
+
+
+
+    private Hex getRandomFilteredHex(boolean inViewFrame) {
+        int asFilterColor = fieldController.gameController.selectionController.getAsFilterColor();
+        int index;
+        int c = 100;
+        while (c > 0) {
+            c--;
+            index = YioGdxGame.random.nextInt(fieldController.provinces.size());
+            Province province = fieldController.provinces.get(index);
+            if (province.getColor() != asFilterColor) continue;
+
+            c = 100;
+            while (c > 0) {
+                c--;
+                index = YioGdxGame.random.nextInt(province.hexList.size());
+                Hex hex = province.hexList.get(index);
+                if (!isHexInViewFrame(hex) && inViewFrame) continue;
+
+                return hex;
+            }
+        }
+
+        return null;
+    }
+
+
+    private boolean isThereAtLeastOneFilteredHexInViewFrame() {
+        int asFilterColor = fieldController.gameController.selectionController.getAsFilterColor();
+        for (Province province : fieldController.provinces) {
+            if (province.getColor() != asFilterColor) continue;
+            for (Hex hex : province.hexList) {
+                if (!isHexInViewFrame(hex)) continue;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    private boolean isHexInViewFrame(Hex hex) {
+        return fieldController.gameController.cameraController.frame.isPointInside(hex.pos, 0);
+    }
+
+
+    public void disableAreaSelectionMode() {
+        GameController gameController = fieldController.gameController;
+        gameController.selectionController.setAreaSelectionMode(false);
+        fieldController.moveZoneManager.hide();
+        Scenes.sceneAreaSelectionUI.hide();
+    }
+
+
+    public int calculatePriceForHexes(ArrayList<Hex> hexList) {
+        int price = 0;
+
+        for (Hex hex : hexList) {
+            if (hex.containsTower()) {
+                price += 40;
+            }
+
+            if (hex.objectInside == Obj.FARM) {
+                price += 75;
+            }
+
+            if (hex.objectInside == Obj.TOWN) {
+                price += 500;
+            }
+
+            if (hex.containsTree()) {
+                price -= 10;
+            }
+
+            if (hex.containsUnit()) {
+                price += 15 * hex.unit.strength;
+            }
+
+            price += 25;
+        }
+
+        return price;
+    }
+
+
+    public void onUserRequestedBuyHexes(DiplomaticEntity initiator, DiplomaticEntity entity, ArrayList<Hex> hexList, int price) {
+        if (initiator.getStateFullMoney() < price) return;
+
+        transferMoney(initiator, entity, price);
+
+        for (Hex hex : hexList) {
+            int objectInside = hex.objectInside;
+            int unitStrength = -1;
+            if (hex.containsUnit()) {
+                unitStrength = hex.unit.strength;
+            }
+
+            fieldController.setHexColor(hex, initiator.color);
+            fieldController.gameController.replayManager.onHexChangedColorWithoutObviousReason(hex);
+
+            if (objectInside > 0) {
+                hex.setObjectInside(objectInside);
+            } else if (unitStrength > 0) {
+                fieldController.addUnit(hex, unitStrength);
+            }
+        }
+
+        fieldController.tryToDetectAddiotionalProvinces();
     }
 
 
@@ -316,11 +476,8 @@ public class DiplomacyManager {
     }
 
 
-    public void onUserRequestedToStopWar(DiplomaticEntity selectedEntity) {
-        DiplomaticEntity mainEntity = getMainEntity();
-//        onEntityRequestedToStopWar(mainEntity, selectedEntity);
-
-        log.addMessage(DipMessageType.stop_war, mainEntity, selectedEntity);
+    public void onUserRequestedToStopWar(DiplomaticEntity user, DiplomaticEntity recipient) {
+        log.addMessage(DipMessageType.stop_war, user, recipient);
         showLetterSentNotification();
     }
 
@@ -353,6 +510,8 @@ public class DiplomacyManager {
     public void onTurnStarted() {
         if (!GameRules.diplomacyEnabled) return;
 
+        log.checkToClearAbuseMessages();
+
         DiplomacyElement diplomacyElement = Scenes.sceneDiplomacy.diplomacyElement;
         if (diplomacyElement != null) {
             diplomacyElement.onTurnStarted();
@@ -369,6 +528,8 @@ public class DiplomacyManager {
 
 
     private void onAiTurnStarted() {
+        if (!getMainEntity().alive) return;
+
         aiProcessMessages();
 
         if (YioGdxGame.random.nextInt(8) == 0) {
@@ -378,6 +539,32 @@ public class DiplomacyManager {
         if (YioGdxGame.random.nextInt(4) == 0) {
             performAiToHumanBlackMark();
         }
+
+        if (getMainEntity().getStateFullMoney() > 100 && YioGdxGame.random.nextInt(10) == 0) {
+            performAiToHumanGift();
+        }
+
+        if (DebugFlags.cheatCharisma) {
+            applyCharismaCheat();
+        }
+    }
+
+
+    private void applyCharismaCheat() {
+        DiplomaticEntity mainEntity = getMainEntity();
+        DiplomaticEntity randomHumanEntity = getRandomHumanEntity();
+        if (randomHumanEntity == null) return;
+
+        transferMoney(mainEntity, randomHumanEntity, mainEntity.getStateFullMoney() / 2);
+    }
+
+
+    private void performAiToHumanGift() {
+        DiplomaticEntity mainEntity = getMainEntity();
+        DiplomaticEntity randomHumanEntity = getRandomHumanEntity();
+        if (randomHumanEntity == null) return;
+
+        transferMoney(mainEntity, randomHumanEntity, 10 + YioGdxGame.random.nextInt(11));
     }
 
 
@@ -391,7 +578,9 @@ public class DiplomacyManager {
 
             switch (message.type) {
                 case friendship_proposal:
-                    makeFriends(message.sender, message.recipient);
+                    if (isFriendshipPossible(message.sender, message.recipient)) {
+                        makeFriends(message.sender, message.recipient);
+                    }
                     break;
                 case stop_war:
                     onEntityRequestedToStopWar(message.sender, message.recipient);
@@ -404,9 +593,9 @@ public class DiplomacyManager {
 
 
     private void moveCooldowns() {
-        for (DiplomaticCooldown cooldown : cooldowns) {
-            if (cooldown.getOneColor() != fieldController.gameController.turn) continue;
+        if (fieldController.gameController.turn != 0) return;
 
+        for (DiplomaticCooldown cooldown : cooldowns) {
             cooldown.decreaseCounter();
         }
 
@@ -421,8 +610,14 @@ public class DiplomacyManager {
             DiplomaticCooldown cooldown = cooldowns.get(i);
             if (!cooldown.isReady()) continue;
 
-            cooldowns.remove(i);
+            removeCooldown(cooldown);
         }
+    }
+
+
+    private void removeCooldown(DiplomaticCooldown cooldown) {
+        cooldowns.remove(cooldown);
+        poolCooldowns.addWithCheck(cooldown);
     }
 
 
@@ -450,6 +645,7 @@ public class DiplomacyManager {
         if (aiEntity == null) return;
 
         DiplomaticEntity randomHumanEntity = getRandomHumanEntity();
+        if (randomHumanEntity == null) return;
 
         int relation = aiEntity.getRelation(randomHumanEntity);
         if (relation == DiplomaticRelation.FRIEND) return;
@@ -470,7 +666,7 @@ public class DiplomacyManager {
         for (int i = 0; i < 25; i++) {
             DiplomaticEntity randomEntity = getRandomEntity();
             if (!randomEntity.alive) continue;
-            if (randomEntity == humanEntity) continue;
+            if (randomEntity.isHuman()) continue;
             if (randomEntity.isOneFriendAwayFromDiplomaticVictory()) continue; // no tricky friend requests
 
             int relation = humanEntity.getRelation(randomEntity);
@@ -521,6 +717,7 @@ public class DiplomacyManager {
     private void checkToChangeRelations() {
         DiplomaticEntity mainEntity = getMainEntity();
         if (mainEntity.isHuman()) return;
+        if (!mainEntity.alive) return;
 
         mainEntity.thinkAboutChangingRelations();
     }
@@ -556,7 +753,7 @@ public class DiplomacyManager {
         for (int dir = 0; dir < 6; dir++) {
             Hex adjacentHex = hex.getAdjacentHex(dir);
             if (adjacentHex == null) continue;
-            if (adjacentHex == fieldController.emptyHex) continue;
+            if (adjacentHex == fieldController.nullHex) continue;
             if (adjacentHex.sameColor(hex)) return false;
         }
 
@@ -617,6 +814,35 @@ public class DiplomacyManager {
     }
 
 
+    public void transferMoney(DiplomaticEntity sender, DiplomaticEntity recipient, int value) {
+        int senderMoney = sender.getStateFullMoney();
+        int recipientMoney = recipient.getStateFullMoney();
+
+        if (value > senderMoney) {
+            value = senderMoney;
+        }
+
+        DiplomaticMessage diplomaticMessage = log.addMessage(DipMessageType.gift, sender, recipient);
+        diplomaticMessage.setArg1("" + value);
+
+        float f;
+        for (Province province : fieldController.provinces) {
+            int money = province.money;
+
+            if (province.getColor() == sender.color) {
+                f = (float) money / (float) senderMoney;
+                province.money -= f * value;
+                continue;
+            }
+
+            if (province.getColor() == recipient.color) {
+                f = (float) money / (float) recipientMoney;
+                province.money += f * value;
+            }
+        }
+    }
+
+
     public DiplomaticEntity getRandomHumanEntity() {
         if (!isAtLeastOneHumanEntity()) return null;
 
@@ -664,7 +890,7 @@ public class DiplomacyManager {
         if (relation == DiplomaticRelation.ENEMY) {
             if (canWarBeStopped(initiator, two)) {
                 Scenes.sceneStopWarDialog.create();
-                Scenes.sceneStopWarDialog.dialog.setSelectedEntity(two);
+                Scenes.sceneStopWarDialog.dialog.setEntities(initiator, two);
             } else {
                 Scenes.sceneDipMessage.create();
                 Scenes.sceneDipMessage.dialog.setMessage(two.capitalName, "refuse_stop_war");
@@ -740,6 +966,11 @@ public class DiplomacyManager {
         next.setTwo(two);
 
         cooldowns.add(next);
+
+        if (cooldowns.size() > 25) {
+            cooldowns.remove(0);
+        }
+
         return next;
     }
 

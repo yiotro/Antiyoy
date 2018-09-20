@@ -1,11 +1,12 @@
 package yio.tro.antiyoy.menu.save_slot_selector;
 
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.menu.context_list_menu.LiEditable;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
 
-public class SsItem {
+public class SsItem implements LiEditable{
 
 
     SaveSlotSelector saveSlotSelector;
@@ -119,5 +120,33 @@ public class SsItem {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+
+    @Override
+    public void rename(String name) {
+        if (name.length() == 0) return;
+
+        setTitle(name);
+        saveSlotSelector.onSlotRenamed(this);
+    }
+
+
+    @Override
+    public String getEditableName() {
+        return title;
+    }
+
+
+    @Override
+    public void onDeleteRequested() {
+        saveSlotSelector.readyToDeleteItem = true;
+        saveSlotSelector.targetItem = this;
+    }
+
+
+    @Override
+    public void onContextMenuDestroy() {
+        saveSlotSelector.touched = false; // to move selection
     }
 }

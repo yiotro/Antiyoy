@@ -119,7 +119,7 @@ public class SceneEditorParams extends AbstractEditorPanel {
         playersSlider = new SliderYio(menuControllerYio, -1);
         playersSlider.setValues(0, 0, GameRules.MAX_COLOR_NUMBER, Animation.DOWN);
         playersSlider.setPosition(generateRectangle(0.1, 0, 0.8, 0));
-        playersSlider.setLinkedButton(basePanel, curSlY);
+        playersSlider.setParentElement(basePanel, curSlY);
         playersSlider.setTitle("player_number");
         playersSlider.setBehavior(new SliderBehavior() {
             @Override
@@ -139,7 +139,7 @@ public class SceneEditorParams extends AbstractEditorPanel {
         difficultySlider = new SliderYio(menuControllerYio, -1);
         difficultySlider.setValues(1, 0, 4, Animation.DOWN);
         difficultySlider.setPosition(generateRectangle(0.1, 0, 0.8, 0));
-        difficultySlider.setLinkedButton(basePanel, curSlY);
+        difficultySlider.setParentElement(basePanel, curSlY);
         difficultySlider.setTitle("difficulty");
         difficultySlider.setBehavior(new SliderBehavior() {
             @Override
@@ -159,7 +159,7 @@ public class SceneEditorParams extends AbstractEditorPanel {
         colorSlider = new SliderYio(menuControllerYio, -1);
         colorSlider.setValues(0, 0, 7, Animation.DOWN);
         colorSlider.setPosition(generateRectangle(0.1, 0, 0.8, 0));
-        colorSlider.setLinkedButton(basePanel, curSlY);
+        colorSlider.setParentElement(basePanel, curSlY);
         colorSlider.setTitle("player_color");
         colorSlider.setBehavior(new SliderBehavior() {
             @Override

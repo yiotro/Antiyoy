@@ -8,11 +8,11 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 /**
  * Created by ivan on 05.08.14.
  */
-public class RbInfo extends Reaction {
+public class RbAboutGame extends Reaction {
 
     @Override
     public void perform(ButtonYio buttonYio) {
         Settings.getInstance().saveSettings();
-        Scenes.sceneInfoMenu.create();
+        Scenes.sceneAboutGame.create();
     }
 }

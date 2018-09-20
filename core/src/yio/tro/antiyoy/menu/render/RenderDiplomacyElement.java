@@ -27,6 +27,8 @@ public class RenderDiplomacyElement extends MenuRender {
     private TextureRegion dislikeIcon;
     private TextureRegion skullIcon;
     private TextureRegion infoIcon;
+    private TextureRegion transferMoneyIcon;
+    private TextureRegion buyHexesIcon;
 
 
     public RenderDiplomacyElement() {
@@ -48,6 +50,8 @@ public class RenderDiplomacyElement extends MenuRender {
         dislikeIcon = GraphicsYio.loadTextureRegion("diplomacy/dislike_icon.png", true);
         skullIcon = GraphicsYio.loadTextureRegion("diplomacy/skull_icon.png", true);
         infoIcon = GraphicsYio.loadTextureRegion("diplomacy/info_icon.png", true);
+        transferMoneyIcon = GraphicsYio.loadTextureRegion("diplomacy/transfer_money_icon.png", true);
+        buyHexesIcon = GraphicsYio.loadTextureRegion("diplomacy/buy_hexes_icon.png", true);
 
         bckColors = new TextureRegion[7];
         for (int i = 0; i < bckColors.length; i++) {
@@ -139,6 +143,10 @@ public class RenderDiplomacyElement extends MenuRender {
                 return skullIcon;
             case DeIcon.ACTION_INFO:
                 return infoIcon;
+            case DeIcon.ACTION_TRANSFER_MONEY:
+                return transferMoneyIcon;
+            case DeIcon.ACTION_BUY_HEXES:
+                return buyHexesIcon;
         }
     }
 

@@ -8,10 +8,13 @@ import yio.tro.antiyoy.menu.MenuControllerYio;
 
 import java.util.ArrayList;
 
-public class SceneInfoMenu extends AbstractScene{
+public class SceneAboutGame extends AbstractScene{
 
 
-    public SceneInfoMenu(MenuControllerYio menuControllerYio) {
+    private ButtonYio infoPanel;
+
+
+    public SceneAboutGame(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
     }
 
@@ -23,7 +26,7 @@ public class SceneInfoMenu extends AbstractScene{
 
         menuControllerYio.spawnBackButton(id_offset, backButtonBehavior);
 
-        ButtonYio infoPanel = buttonFactory.getButton(generateRectangle(0.05, 0.1, 0.9, 0.7), id_offset + 1, null);
+        infoPanel = buttonFactory.getButton(generateRectangle(0.05, 0.1, 0.9, 0.7), id_offset + 1, null);
 
         infoPanel.cleatText();
         ArrayList<String> list = menuControllerYio.getArrayListFromString(getString(key));
@@ -38,10 +41,6 @@ public class SceneInfoMenu extends AbstractScene{
         infoPanel.setTouchable(false);
         infoPanel.setAnimation(Animation.FROM_CENTER);
         infoPanel.appearFactor.appear(2, 1.5);
-//        infoPanel.factorModel.setValues(-0.3, 0);
-//        infoPanel.factorModel.beginSpawning(1, 0.3);
-//        infoPanelFactor.setValues(-0.3, 0);
-//        infoPanelFactor.beginSpawning(1, 0.37);
 
         menuControllerYio.endMenuCreation();
     }
@@ -58,6 +57,8 @@ public class SceneInfoMenu extends AbstractScene{
         ButtonYio moreInfoButton = buttonFactory.getButton(generateRectangle(0.65, 0.1, 0.3, 0.04), 38123717, getString("more"));
         moreInfoButton.setReaction(Reaction.rbSpecialThanksMenu);
         moreInfoButton.setAnimation(Animation.FROM_CENTER);
+        moreInfoButton.setShadow(false);
+        moreInfoButton.setVisualHook(infoPanel);
         moreInfoButton.disableTouchAnimation();
         moreInfoButton.setTouchOffset(0.05f * Gdx.graphics.getHeight());
     }

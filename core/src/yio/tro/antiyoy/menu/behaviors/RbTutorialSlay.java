@@ -12,7 +12,6 @@ public class RbTutorialSlay extends Reaction {
     @Override
     public void perform(ButtonYio buttonYio) {
         GameRules.setSlayRules(true);
-        Settings.fastConstruction = false;
 
         getGameController(buttonYio).initTutorial();
     }

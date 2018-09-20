@@ -63,6 +63,11 @@ public class UserLevelProgressManager {
     }
 
 
+    public int getNumberOfCompletedLevels() {
+        return keys.size();
+    }
+
+
     boolean containsKey(String key) {
         for (String s : keys) {
             if (s == null) continue;

@@ -14,6 +14,7 @@ public class SoundControllerYio {
     public static Sound soundWalk;
     public static Sound soundEndTurn;
     public static Sound soundHoldToMarch;
+    public static Sound soundKeyboardPress;
 
 
     public static void loadAllSounds() {
@@ -25,6 +26,7 @@ public class SoundControllerYio {
         soundWalk = loadSound("walk");
         soundEndTurn = loadSound("end_turn");
         soundHoldToMarch = loadSound("hold_to_march");
+        soundKeyboardPress = loadSound("kb_press");
     }
 
 

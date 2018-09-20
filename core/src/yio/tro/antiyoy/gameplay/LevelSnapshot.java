@@ -24,6 +24,7 @@ public class LevelSnapshot {
     private MatchStatistics matchStatistics;
     private ArrayList<RepAction> replayBuffer;
     private String diplomacyInfo;
+    private String namings;
     boolean used;
 
 
@@ -40,6 +41,7 @@ public class LevelSnapshot {
 
         used = false;
         diplomacyInfo = null;
+        namings = null;
     }
 
 
@@ -61,6 +63,7 @@ public class LevelSnapshot {
         fWidth = -1;
         fHeight = -1;
         diplomacyInfo = null;
+        namings = null;
     }
 
 

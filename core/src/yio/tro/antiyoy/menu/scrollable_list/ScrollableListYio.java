@@ -7,12 +7,13 @@ import yio.tro.antiyoy.gameplay.ClickDetector;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.render.MenuRender;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.*;
 import yio.tro.antiyoy.stuff.scroll_engine.ScrollEngineYio;
 
 import java.util.ArrayList;
 
-public class ScrollableListYio extends InterfaceElement{
+public class ScrollableListYio extends InterfaceElement {
 
     protected MenuControllerYio menuControllerYio;
     public RectangleYio position, viewPosition;
@@ -32,6 +33,10 @@ public class ScrollableListYio extends InterfaceElement{
     public RectangleYio topEdge, bottomEdge;
     private float topLabelOffset;
     ListBehaviorYio listBehaviorYio;
+    LongTapDetector longTapDetector;
+    boolean readyToProcessLongTap;
+    boolean scrollLock;
+    boolean editable;
 
 
     public ScrollableListYio(MenuControllerYio menuControllerYio) {
@@ -57,9 +62,29 @@ public class ScrollableListYio extends InterfaceElement{
         topEdge = new RectangleYio();
         bottomEdge = new RectangleYio();
         listBehaviorYio = null;
+        editable = false;
 
         initMetrics();
         initScrollEngine();
+        initLongTapDetector();
+    }
+
+
+    private void initLongTapDetector() {
+        longTapDetector = new LongTapDetector() {
+            @Override
+            public void onLongTapDetected() {
+                onLongTap();
+            }
+        };
+    }
+
+
+    private void onLongTap() {
+        if (!editable) return;
+
+        readyToProcessLongTap = true;
+        scrollLock = true;
     }
 
 
@@ -162,6 +187,7 @@ public class ScrollableListYio extends InterfaceElement{
         updateHook();
         updateLabelPosition();
         updateEdgeRectangles();
+        longTapDetector.move();
     }
 
 
@@ -253,6 +279,8 @@ public class ScrollableListYio extends InterfaceElement{
     protected void onAppear() {
         alphaTriggered = false;
         scrollEngineYio.resetToBottom();
+        readyToProcessLongTap = false;
+        scrollLock = false;
     }
 
 
@@ -271,7 +299,29 @@ public class ScrollableListYio extends InterfaceElement{
             return true;
         }
 
+        if (readyToProcessLongTap) {
+            readyToProcessLongTap = false;
+            processLongTap();
+            return true;
+        }
+
         return false;
+    }
+
+
+    private void processLongTap() {
+        ListItemYio longTappedItem = null;
+
+        for (ListItemYio item : items) {
+            if (!item.isTouched(currentTouch)) continue;
+            longTappedItem = item;
+            break;
+        }
+
+        if (longTappedItem == null) return;
+
+        Scenes.sceneContextListMenu.create();
+        Scenes.sceneContextListMenu.contextListMenuElement.setEditableItem(longTappedItem);
     }
 
 
@@ -307,8 +357,11 @@ public class ScrollableListYio extends InterfaceElement{
         touched = (screenY < position.y + position.height);
 
         if (touched) {
+            readyToProcessLongTap = false;
+            scrollLock = false;
             clickDetector.touchDown(currentTouch);
             scrollEngineYio.updateCanSoftCorrect(false);
+            longTapDetector.onTouchDown(currentTouch);
 
             checkToSelectItems();
         }
@@ -338,9 +391,12 @@ public class ScrollableListYio extends InterfaceElement{
         if (touched) {
             updateCurrentTouch(screenX, screenY);
 
-            scrollEngineYio.setSpeed(currentTouch.y - lastTouch.y);
+            if (!scrollLock) {
+                scrollEngineYio.setSpeed(currentTouch.y - lastTouch.y);
+            }
 
             clickDetector.touchDrag(currentTouch);
+            longTapDetector.onTouchDrag(currentTouch);
         }
 
         return touched;
@@ -355,6 +411,7 @@ public class ScrollableListYio extends InterfaceElement{
         if (touched) {
             touched = false;
             clickDetector.touchUp(currentTouch);
+            longTapDetector.onTouchUp(currentTouch);
 
             if (clickDetector.isClicked()) {
                 onClick();
@@ -427,5 +484,10 @@ public class ScrollableListYio extends InterfaceElement{
     @Override
     public MenuRender getRenderSystem() {
         return MenuRender.renderScrollableList;
+    }
+
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
     }
 }

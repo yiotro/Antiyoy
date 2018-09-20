@@ -79,7 +79,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
 
 
     private void enableLongTapToMoveInSettings() {
-        Settings.long_tap_to_move = true;
+        Settings.longTapToMove = true;
     }
 
 

@@ -20,7 +20,7 @@ public abstract class AbstractLevelPack {
     }
 
 
-    boolean checkForlevelPack() {
+    boolean check() {
         index = campaignLevelFactory.index;
 
         String levelFromPackTwo = getLevelFromPack();

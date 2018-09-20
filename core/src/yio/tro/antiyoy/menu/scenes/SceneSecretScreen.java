@@ -1,5 +1,7 @@
 package yio.tro.antiyoy.menu.scenes;
 
+import yio.tro.antiyoy.gameplay.DebugFlags;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -8,28 +10,16 @@ import yio.tro.antiyoy.menu.behaviors.Reaction;
 public class SceneSecretScreen extends AbstractScene{
 
 
-    private final Reaction rbFireworks;
-    private final Reaction rbTestScrollableList;
+    private Reaction rbFireworks;
     double curY;
     private ButtonYio label;
+    private Reaction rbCheats;
 
 
     public SceneSecretScreen(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
-        rbFireworks = new Reaction() {
-            @Override
-            public void perform(ButtonYio buttonYio) {
-                Scenes.sceneFireworks.create();
-            }
-        };
-
-        rbTestScrollableList = new Reaction() {
-            @Override
-            public void perform(ButtonYio buttonYio) {
-                Scenes.sceneTestScrollableList.create();
-            }
-        };
+        initReactions();
     }
 
 
@@ -54,11 +44,34 @@ public class SceneSecretScreen extends AbstractScene{
         createButton(572, "Unlock levels", Reaction.rbUnlockLevels);
         createButton(573, "Show FPS", Reaction.rbShowFps);
         createButton(574, "Fireworks", rbFireworks);
-        createButton(575, "Scrollable list", rbTestScrollableList);
+        createButton(575, "Cheats on/off", rbCheats);
 
-        menuControllerYio.spawnBackButton(576, Reaction.rbMainMenu);
+        menuControllerYio.spawnBackButton(579, Reaction.rbMainMenu);
 
         menuControllerYio.endMenuCreation();
+    }
+
+
+    private void initReactions() {
+        rbFireworks = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                Scenes.sceneFireworks.create();
+            }
+        };
+
+        rbCheats = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                if (!DebugFlags.cheatsEnabled) {
+                    DebugFlags.cheatsEnabled = true;
+                    Scenes.sceneNotification.showNotification("Cheats are now enabled");
+                } else {
+                    DebugFlags.cheatsEnabled = false;
+                    Scenes.sceneNotification.showNotification("Cheats disabled");
+                }
+            }
+        };
     }
 
 

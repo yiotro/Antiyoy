@@ -59,16 +59,15 @@ public class RenderReplaySelector extends MenuRender{
 
 
     private void renderShadow() {
-        if (factor <= 0.5) return;
+        if (factor <= 0.6) return;
 
-//        batch.begin();
-        menuViewYio.renderShadow(viewPosition, 1, batch);
-//        batch.end();
+        MenuRender.renderShadow.disableInternalFillForOneDraw();
+        MenuRender.renderShadow.renderShadow(viewPosition, 1);
     }
 
 
     private void renderInternals() {
-        GraphicsYio.setBatchAlpha(batch, Math.sqrt(factor));
+        GraphicsYio.setBatchAlpha(batch, factor * factor);
 
         renderBackground();
         renderItems();

@@ -64,22 +64,33 @@ public class RenderScrollableList extends MenuRender{
 
 
     private void renderShadow() {
-        if (factor <= 0.5) return;
+        if (factor <= 0.6) return;
 
-//        batch.begin();
-        menuViewYio.renderShadow(viewPosition, 1, batch);
-//        batch.end();
+        MenuRender.renderShadow.disableInternalFillForOneDraw();
+        MenuRender.renderShadow.renderShadow(viewPosition, 1);
     }
 
 
     private void renderInternals() {
         GraphicsYio.setBatchAlpha(batch, factor);
 
+        renderBackground();
         renderEdges();
         renderItems();
         renderLabel();
 
         GraphicsYio.setBatchAlpha(batch, 1);
+    }
+
+
+    private void renderBackground() {
+        if (scrollableList.bottomEdge.y < scrollableList.position.y) return; // no need to render background
+
+        GraphicsYio.drawByRectangle(
+                batch,
+                backgroundTexture,
+                scrollableList.viewPosition
+        );
     }
 
 

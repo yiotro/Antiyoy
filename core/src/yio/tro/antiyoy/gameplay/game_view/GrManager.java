@@ -6,9 +6,13 @@ public class GrManager {
 
 
     GameView gameView;
-    RenderLevelEditorStuff renderLevelEditorStuff;
-    public RenderFogOfWar renderFogOfWar;
     public ArrayList<GameRender> gameRenderList;
+
+    public RenderLevelEditorStuff renderLevelEditorStuff;
+    public RenderFogOfWar renderFogOfWar;
+    public RenderCityNames renderCityNames;
+    public RenderMoveZone renderMoveZone;
+    // init them lower
 
 
     public GrManager(GameView gameView) {
@@ -21,6 +25,8 @@ public class GrManager {
     public void create() {
         renderLevelEditorStuff = new RenderLevelEditorStuff(this);
         renderFogOfWar = new RenderFogOfWar(this);
+        renderCityNames = new RenderCityNames(this);
+        renderMoveZone = new RenderMoveZone(this);
     }
 
 

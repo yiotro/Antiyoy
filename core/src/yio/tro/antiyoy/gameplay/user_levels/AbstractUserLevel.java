@@ -15,5 +15,18 @@ public abstract class AbstractUserLevel {
     public abstract String getKey();
 
 
+    public int getColorOffset() {
+        return 0;
+    }
+
+
+    public boolean getFogOfWar() {
+        return false;
+    }
+
+
+    public boolean isHistorical() {
+        return false;
+    }
 
 }

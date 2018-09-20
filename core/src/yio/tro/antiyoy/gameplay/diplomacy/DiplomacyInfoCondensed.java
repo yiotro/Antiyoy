@@ -16,10 +16,11 @@ public class DiplomacyInfoCondensed implements ReusableYio {
     String cooldowns;
     String messages;
     DiplomacyManager diplomacyManager;
+    private StringBuilder builder;
 
 
     public DiplomacyInfoCondensed() {
-
+        builder = new StringBuilder();
     }
 
 
@@ -62,7 +63,7 @@ public class DiplomacyInfoCondensed implements ReusableYio {
 
 
     private void updateMessages() {
-        StringBuilder builder = new StringBuilder();
+        builder.setLength(0);
 
         for (DiplomaticMessage message : diplomacyManager.log.messages) {
             builder.append(getSingleMessageCode(message)).append(",");
@@ -82,7 +83,7 @@ public class DiplomacyInfoCondensed implements ReusableYio {
 
 
     private void updateCooldowns() {
-        StringBuilder builder = new StringBuilder();
+        builder.setLength(0);
 
         for (DiplomaticCooldown cooldown : diplomacyManager.cooldowns) {
             builder.append(getSingleCooldownCode(cooldown)).append(",");
@@ -102,7 +103,7 @@ public class DiplomacyInfoCondensed implements ReusableYio {
 
 
     private void updateContracts() {
-        StringBuilder builder = new StringBuilder();
+        builder.setLength(0);
 
         for (DiplomaticContract contract : diplomacyManager.contracts) {
             builder.append(getSingleContractCode(contract)).append(",");
@@ -159,9 +160,11 @@ public class DiplomacyInfoCondensed implements ReusableYio {
 
         DiplomaticEntity entity1 = diplomacyManager.getEntity(color1);
         DiplomaticEntity entity2 = diplomacyManager.getEntity(color2);
+        if (entity1 == null || entity2 == null) return;
 
         DiplomaticMessage diplomaticMessage = diplomacyManager.log.addMessage(type, entity1, entity2);
         if (diplomaticMessage == null) return;
+
         diplomaticMessage.setArg1(arg1);
         diplomaticMessage.setArg2(arg2);
         diplomaticMessage.setArg3(arg3);
@@ -189,6 +192,7 @@ public class DiplomacyInfoCondensed implements ReusableYio {
 
         DiplomaticEntity entity1 = diplomacyManager.getEntity(color1);
         DiplomaticEntity entity2 = diplomacyManager.getEntity(color2);
+        if (entity1 == null || entity2 == null) return;
 
         diplomacyManager.addCooldown(type, counter, entity1, entity2);
     }
@@ -214,6 +218,7 @@ public class DiplomacyInfoCondensed implements ReusableYio {
 
         DiplomaticEntity entity1 = diplomacyManager.getEntity(color1);
         DiplomaticEntity entity2 = diplomacyManager.getEntity(color2);
+        if (entity1 == null || entity2 == null) return;
 
         DiplomaticContract contract = diplomacyManager.findContract(type, entity1, entity2);
 
@@ -262,7 +267,7 @@ public class DiplomacyInfoCondensed implements ReusableYio {
     void updateRelations() {
         ArrayList<DiplomaticEntity> entities = diplomacyManager.entities;
 
-        StringBuilder builder = new StringBuilder();
+        builder.setLength(0);
 
         for (int i = 0; i < entities.size(); i++) {
             for (int j = i + 1; j < entities.size(); j++) {

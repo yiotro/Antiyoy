@@ -1,7 +1,9 @@
 package yio.tro.antiyoy.gameplay.game_view;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.stuff.GraphicsYio;
 
 public abstract class GameRender {
 
@@ -30,4 +32,9 @@ public abstract class GameRender {
 
 
     public abstract void disposeTextures();
+
+
+    protected TextureRegion loadTextureRegion(String name, boolean antialias) {
+        return GraphicsYio.loadTextureRegion(name, antialias);
+    }
 }

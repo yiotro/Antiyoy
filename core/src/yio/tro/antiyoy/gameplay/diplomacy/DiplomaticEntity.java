@@ -154,13 +154,13 @@ public class DiplomaticEntity implements ReusableYio {
         Province largestProvince = getLargestProvince(color);
 
         Hex capital;
-        if (largestProvince != null) {
-            capital = largestProvince.getCapital();
-        } else {
+        if (largestProvince == null) {
             capital = diplomacyManager.fieldController.getRandomActivehex();
+            capitalName = CityNameGenerator.getInstance().generateName(capital);
+            return;
         }
 
-        capitalName = CityNameGenerator.getInstance().generateName(capital);
+        capitalName = diplomacyManager.fieldController.gameController.namingManager.getProvinceName(largestProvince);
     }
 
 
@@ -273,6 +273,8 @@ public class DiplomaticEntity implements ReusableYio {
 
 
     private void tryToStartWar() {
+        if (!alive) return;
+
         for (int i = 0; i < 10; i++) {
             DiplomaticEntity randomEntity = diplomacyManager.getRandomEntity();
             if (randomEntity == this) continue;
@@ -341,6 +343,11 @@ public class DiplomaticEntity implements ReusableYio {
 
 
     boolean isOneFriendAwayFromDiplomaticVictory() {
+        return numberOfNotFriends() == 1;
+    }
+
+
+    int numberOfNotFriends() {
         int c = 0;
 
         for (Map.Entry<DiplomaticEntity, Integer> entry : relations.entrySet()) {
@@ -350,7 +357,7 @@ public class DiplomaticEntity implements ReusableYio {
             c++;
         }
 
-        return c == 1;
+        return c;
     }
 
 
@@ -377,7 +384,7 @@ public class DiplomaticEntity implements ReusableYio {
     }
 
 
-    boolean hasOnlyFriends() {
+    public boolean hasOnlyFriends() {
         for (Map.Entry<DiplomaticEntity, Integer> entry : relations.entrySet()) {
             if (!entry.getKey().alive) continue;
 

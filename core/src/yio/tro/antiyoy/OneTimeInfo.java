@@ -8,7 +8,7 @@ public class OneTimeInfo {
     public static final String PREFS_ONE_TIME = "antiyoy.one_time_info";
     private static OneTimeInfo instance = null;
 
-    public boolean bleentoroRelease;
+    public boolean iosPortDone;
 
 
     public static void initialize() {
@@ -29,14 +29,14 @@ public class OneTimeInfo {
     void load() {
         Preferences preferences = Gdx.app.getPreferences(PREFS_ONE_TIME);
 
-        bleentoroRelease = preferences.getBoolean("bleentoro_release", true);
+        iosPortDone = preferences.getBoolean("ios_port_done", true);
     }
 
 
     public void save() {
         Preferences preferences = Gdx.app.getPreferences(PREFS_ONE_TIME);
 
-        preferences.putBoolean("bleentoro_release", bleentoroRelease);
+        preferences.putBoolean("ios_port_done", iosPortDone);
 
         preferences.flush();
     }

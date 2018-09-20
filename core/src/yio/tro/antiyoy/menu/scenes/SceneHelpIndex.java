@@ -13,23 +13,32 @@ public class SceneHelpIndex extends AbstractScene{
     private double top;
     private Reaction rbDiplomacy1;
     private Reaction rbDiplomacy2;
+    private Reaction rbMyGames;
     private double y;
+    private ButtonYio basePanel;
 
 
     public SceneHelpIndex(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
+        rbMyGames = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                Scenes.sceneAboutGame.create(getString("article_my_games") + " #- Achikaps #- Bleentoro", Reaction.rbHelpIndex, 18);
+            }
+        };
+
         rbDiplomacy1 = new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
-                Scenes.sceneInfoMenu.create("article_diplomacy_1", Reaction.rbHelpIndex, 18);
+                Scenes.sceneAboutGame.create("article_diplomacy_1", Reaction.rbHelpIndex, 18);
             }
         };
 
         rbDiplomacy2 = new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
-                Scenes.sceneInfoMenu.create("article_diplomacy_2", Reaction.rbHelpIndex, 18);
+                Scenes.sceneAboutGame.create("article_diplomacy_2", Reaction.rbHelpIndex, 18);
             }
         };
     }
@@ -43,7 +52,7 @@ public class SceneHelpIndex extends AbstractScene{
 
         menuControllerYio.getYioGdxGame().beginBackgroundChange(1, false, true);
 
-        topicsNumber = 8;
+        topicsNumber = 9;
         tHeight = 0.07;
         top = 0.7;
         createBasePanel();
@@ -57,6 +66,7 @@ public class SceneHelpIndex extends AbstractScene{
         createTopicButton(126, "help_about_tactics", Reaction.rbArticleTactics);
         createTopicButton(931, getString("diplomacy") + " " + 1, rbDiplomacy1);
         createTopicButton(932, getString("diplomacy") + " " + 2, rbDiplomacy2);
+        createTopicButton(933, "my_games", rbMyGames);
 
         menuControllerYio.spawnBackButton(129, Reaction.rbMainMenu);
 
@@ -66,7 +76,7 @@ public class SceneHelpIndex extends AbstractScene{
 
     private void createBasePanel() {
         double height = 0.1 + topicsNumber * tHeight;
-        ButtonYio basePanel = buttonFactory.getButton(generateRectangle(0.1, top - topicsNumber * tHeight, 0.8, height), 120, null);
+        basePanel = buttonFactory.getButton(generateRectangle(0.1, top - topicsNumber * tHeight, 0.8, height), 120, null);
         if (basePanel.notRendered()) {
             basePanel.addTextLine(getString("help") + ":");
             for (int i = 0; i < 1 + topicsNumber; i++) {
@@ -83,6 +93,7 @@ public class SceneHelpIndex extends AbstractScene{
         ButtonYio topicButton = buttonFactory.getButton(generateRectangle(0.1, y, 0.8, tHeight), id, getString(key));
         topicButton.setReaction(reaction);
         topicButton.setShadow(false);
+        topicButton.setVisualHook(basePanel);
         topicButton.setAnimation(Animation.FROM_CENTER);
 
         y -= tHeight;

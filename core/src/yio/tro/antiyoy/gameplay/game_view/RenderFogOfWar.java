@@ -192,11 +192,8 @@ public class RenderFogOfWar extends GameRender {
     private void renderDebugSlices() {
         for (FogSlice viewSlice : fogOfWarManager.viewSlices) {
             GraphicsYio.drawLine(
-                    viewSlice.bottomPoint.position,
-                    viewSlice.topPoint.position,
-                    GraphicsYio.borderThickness,
-                    batchMovable,
-                    whitePixel
+                    batchMovable, whitePixel, viewSlice.topPoint.position, viewSlice.bottomPoint.position,
+                    GraphicsYio.borderThickness
             );
         }
 
@@ -252,9 +249,7 @@ public class RenderFogOfWar extends GameRender {
 
     private void renderVisibleArea() {
         GraphicsYio.renderBorder(
-                fogOfWarManager.visibleArea,
-                batchMovable,
-                whitePixel
+                batchMovable, whitePixel, fogOfWarManager.visibleArea
         );
     }
 

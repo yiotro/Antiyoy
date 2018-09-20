@@ -70,7 +70,15 @@ public class SceneExceptionReport extends AbstractScene{
         textPanel.setTouchable(false);
 
         ButtonYio okButton = buttonFactory.getButton(generateRectangle(0.1, 0.1, 0.8, 0.1), 73612321, "Ok");
-        okButton.setReaction(Reaction.rbMainMenu);
+        okButton.setReaction(new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                getYioGdxGame(buttonYio).setGamePaused(true);
+                Scenes.sceneMainMenu.create();
+
+                Scenes.sceneNotification.showNotification("restart_app");
+            }
+        });
 
         menuControllerYio.endMenuCreation();
     }

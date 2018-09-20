@@ -9,7 +9,7 @@ public class Scenes {
     public static SceneMainMenu sceneMainMenu;
     public static SceneSettingsMenu sceneSettingsMenu;
     public static SceneMoreSettingsMenu sceneMoreSettingsMenu;
-    public static SceneInfoMenu sceneInfoMenu;
+    public static SceneAboutGame sceneAboutGame;
     public static SceneMoreSkirmishOptions sceneMoreSkirmishOptions;
     public static SceneSkirmishMenu sceneSkirmishMenu;
     public static SceneTestMenu sceneTestMenu;
@@ -64,13 +64,24 @@ public class Scenes {
     public static SceneTurnStartDialog sceneTurnStartDialog;
     public static SceneDiplomaticLog sceneDiplomaticLog;
     public static SceneBleentoroRelease sceneBleentoroRelease;
+    public static SceneMapTooBig sceneMapTooBig;
+    public static SceneKeyboard sceneKeyboard;
+    public static SceneContextListMenu sceneContextListMenu;
+    public static SceneConfirmDeleteSlot sceneConfirmDeleteSlot;
+    public static SceneCheatsMenu sceneCheatsMenu;
+    public static SceneUlFilters sceneUlFilters;
+    public static SceneTakeControl sceneTakeControl;
+    public static SceneConfirmSkipLevel sceneConfirmSkipLevel;
+    public static SceneTransferMoneyDialog sceneTransferMoneyDialog;
+    public static SceneAreaSelectionUI sceneAreaSelectionUI;
+    public static SceneHexPurchaseDialog sceneHexPurchaseDialog;
 
 
     public static void createScenes(MenuControllerYio menuController) {
         sceneMainMenu = new SceneMainMenu(menuController);
         sceneSettingsMenu = new SceneSettingsMenu(menuController);
         sceneMoreSettingsMenu = new SceneMoreSettingsMenu(menuController);
-        sceneInfoMenu = new SceneInfoMenu(menuController);
+        sceneAboutGame = new SceneAboutGame(menuController);
         sceneMoreSkirmishOptions = new SceneMoreSkirmishOptions(menuController);
         sceneSkirmishMenu = new SceneSkirmishMenu(menuController);
         sceneTestMenu = new SceneTestMenu(menuController);
@@ -126,5 +137,16 @@ public class Scenes {
         sceneTurnStartDialog = new SceneTurnStartDialog(menuController);
         sceneDiplomaticLog = new SceneDiplomaticLog(menuController);
         sceneBleentoroRelease = new SceneBleentoroRelease(menuController);
+        sceneMapTooBig = new SceneMapTooBig(menuController);
+        sceneKeyboard = new SceneKeyboard(menuController);
+        sceneContextListMenu = new SceneContextListMenu(menuController);
+        sceneConfirmDeleteSlot = new SceneConfirmDeleteSlot(menuController);
+        sceneCheatsMenu = new SceneCheatsMenu(menuController);
+        sceneUlFilters = new SceneUlFilters(menuController);
+        sceneTakeControl = new SceneTakeControl(menuController);
+        sceneConfirmSkipLevel = new SceneConfirmSkipLevel(menuController);
+        sceneTransferMoneyDialog = new SceneTransferMoneyDialog(menuController);
+        sceneAreaSelectionUI = new SceneAreaSelectionUI(menuController);
+        sceneHexPurchaseDialog = new SceneHexPurchaseDialog(menuController);
     }
 }

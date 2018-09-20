@@ -15,7 +15,7 @@ public class LevelPackOne {
     }
 
 
-    boolean checkForLevelPackOne() {
+    boolean check() {
         int index = campaignLevelFactory.index;
 
         if (GameRules.slayRules) return false;

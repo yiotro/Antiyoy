@@ -1,12 +1,13 @@
 package yio.tro.antiyoy.menu.scenes;
 
+import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
-import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.gameplay.user_levels.AbstractUserLevel;
 import yio.tro.antiyoy.gameplay.user_levels.UserLevelFactory;
 import yio.tro.antiyoy.gameplay.user_levels.UserLevelProgressManager;
+import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
@@ -15,18 +16,19 @@ import yio.tro.antiyoy.menu.scrollable_list.ListItemYio;
 import yio.tro.antiyoy.menu.scrollable_list.ScrollableListYio;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 
-import java.util.ArrayList;
-
 public class SceneUserLevels extends AbstractScene {
 
     ScrollableListYio scrollableListYio;
     private ButtonYio backButton;
+    private ButtonYio filtersButton;
+    private Reaction rbFilters;
 
 
     public SceneUserLevels(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
         scrollableListYio = null;
+        initReactions();
     }
 
 
@@ -39,8 +41,27 @@ public class SceneUserLevels extends AbstractScene {
         backButton = menuControllerYio.spawnBackButton(910, Reaction.rbChooseGameModeMenu);
 
         createList();
+        createFiltersButton();
 
         menuControllerYio.endMenuCreation();
+    }
+
+
+    private void createFiltersButton() {
+        filtersButton = buttonFactory.getButton(generateRectangle(0.55, 0.9, 0.4, 0.07), 912, getString("filters"));
+        filtersButton.setReaction(rbFilters);
+        filtersButton.setAnimation(Animation.UP);
+        filtersButton.disableTouchAnimation();
+    }
+
+
+    private void initReactions() {
+        rbFilters = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                Scenes.sceneUlFilters.create();
+            }
+        };
     }
 
 
@@ -57,7 +78,15 @@ public class SceneUserLevels extends AbstractScene {
     private void updateList() {
         scrollableListYio.clearItems();
 
+        Preferences filterPrefs = SceneUlFilters.getFilterPrefs();
+        boolean completedAllowed = filterPrefs.getBoolean("completed", true);
+        boolean historicalAllowed = filterPrefs.getBoolean("historical", true);
+
         for (AbstractUserLevel userLevel : UserLevelFactory.getInstance().getLevels()) {
+            boolean levelCompleted = UserLevelProgressManager.getInstance().isLevelCompleted(userLevel.getKey());
+            if (!completedAllowed && levelCompleted) continue;
+            if (!historicalAllowed && userLevel.isHistorical()) continue;
+
             scrollableListYio.addItem(
                     userLevel.getKey(),
                     getMapTitle(userLevel),
@@ -65,11 +94,27 @@ public class SceneUserLevels extends AbstractScene {
             );
         }
 
+        checkToCreateAddMapItem();
+    }
+
+
+    private void checkToCreateAddMapItem() {
+        if (!isAddMapItemEnabled()) return;
+
         scrollableListYio.addItem(
                 "add_my_map",
                 LanguagesManager.getInstance().getString("add_my_map"),
                 " "
         );
+    }
+
+
+    private boolean isAddMapItemEnabled() {
+        float numberOfCompletedLevels = UserLevelProgressManager.getInstance().getNumberOfCompletedLevels();
+        float allLevels = UserLevelFactory.getInstance().getLevels().size();
+        float completionRatio = numberOfCompletedLevels / allLevels;
+
+        return completionRatio > 0.8;
     }
 
 
@@ -93,6 +138,18 @@ public class SceneUserLevels extends AbstractScene {
             public void applyItem(ListItemYio item) {
                 OnItemClicked(item);
             }
+
+
+            @Override
+            public void onItemRenamed(ListItemYio item) {
+
+            }
+
+
+            @Override
+            public void onItemDeleteRequested(ListItemYio item) {
+
+            }
         });
     }
 
@@ -108,14 +165,15 @@ public class SceneUserLevels extends AbstractScene {
         LoadingParameters instance = LoadingParameters.getInstance();
         instance.mode = LoadingMode.USER_LEVEL;
         instance.applyFullLevel(level.getFullLevelString());
-        instance.colorOffset = 0;
+        instance.colorOffset = level.getColorOffset();
+        instance.fogOfWar = level.getFogOfWar();
         instance.ulKey = level.getKey();
         LoadingManager.getInstance().startGame(instance);
     }
 
 
     private void onAddMyMapClicked() {
-        Scenes.sceneInfoMenu.create("how_add_my_map", new Reaction() {
+        Scenes.sceneAboutGame.create("how_add_my_map", new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
                 Scenes.sceneUserLevels.create();

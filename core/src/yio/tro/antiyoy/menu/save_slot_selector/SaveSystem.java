@@ -14,7 +14,6 @@ import java.util.StringTokenizer;
 public class SaveSystem {
 
     public static final String SAVE_SLOT_PREFS = "antiyoy.slot_prefs";
-    public static final String EDITOR_SLOT_PREFS = "antiyoy.editor_slot_prefs";
     public static final String AUTOSAVE_KEY = "autosave";
 
     GameController gameController;
@@ -107,7 +106,6 @@ public class SaveSystem {
 
 
     private String getKeysString(Preferences preferences) {
-//        return getDefaultKeys();
         return preferences.getString("keys", getDefaultKeys());
     }
 
@@ -168,16 +166,13 @@ public class SaveSystem {
     }
 
 
-    public void deleteSlot(SaveSlotInfo saveSlotInfo, String prefs) {
-        // currently this method is not used
-        // but may be used in future
-
+    public void deleteSlot(String key, String prefs) {
         Preferences preferences = getPreferences(prefs);
 
         StringBuilder newKeys = new StringBuilder();
-        for (String key : getKeys(prefs)) {
-            if (key.equals(saveSlotInfo.key)) continue;
-            newKeys.append(key).append(" ");
+        for (String k : getKeys(prefs)) {
+            if (k.equals(key)) continue;
+            newKeys.append(k).append(" ");
         }
 
         preferences.putString("keys", newKeys.toString());
@@ -248,8 +243,6 @@ public class SaveSystem {
         if (keys.size() == 0) return;
 
         for (String key : keys) {
-            if (key.equals(AUTOSAVE_KEY)) continue;
-
             loadGame(key);
             break;
         }

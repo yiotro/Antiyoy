@@ -4,9 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
-import yio.tro.antiyoy.stuff.PointYio;
-import yio.tro.antiyoy.stuff.RectangleYio;
-import yio.tro.antiyoy.stuff.Yio;
 
 public class GraphicsYio {
 
@@ -47,16 +44,16 @@ public class GraphicsYio {
     }
 
 
-    public static void renderBorder(RectangleYio viewPos, SpriteBatch batch, TextureRegion pixel) {
-        renderBorder(viewPos, borderThickness, batch, pixel);
+    public static void renderBorder(SpriteBatch batch, TextureRegion pixel, RectangleYio viewPos) {
+        renderBorder(batch, pixel, viewPos, borderThickness);
     }
 
 
-    public static void renderBorder(RectangleYio viewPos, float thickness, SpriteBatch batch, TextureRegion pixel) {
-        drawLine(viewPos.x, viewPos.y, viewPos.x, viewPos.y + viewPos.height, thickness, batch, pixel);
-        drawLine(viewPos.x, viewPos.y, viewPos.x + viewPos.width, viewPos.y, thickness, batch, pixel);
-        drawLine(viewPos.x, viewPos.y + viewPos.height, viewPos.x + viewPos.width, viewPos.y + viewPos.height, thickness, batch, pixel);
-        drawLine(viewPos.x + viewPos.width, viewPos.y, viewPos.x + viewPos.width, viewPos.y + viewPos.height, thickness, batch, pixel);
+    public static void renderBorder(SpriteBatch batch, TextureRegion pixel, RectangleYio viewPos, float thickness) {
+        drawLine(batch, pixel, viewPos.x, viewPos.y, viewPos.x, viewPos.y + viewPos.height, thickness);
+        drawLine(batch, pixel, viewPos.x, viewPos.y, viewPos.x + viewPos.width, viewPos.y, thickness);
+        drawLine(batch, pixel, viewPos.x, viewPos.y + viewPos.height, viewPos.x + viewPos.width, viewPos.y + viewPos.height, thickness);
+        drawLine(batch, pixel, viewPos.x + viewPos.width, viewPos.y, viewPos.x + viewPos.width, viewPos.y + viewPos.height, thickness);
     }
 
 
@@ -65,8 +62,8 @@ public class GraphicsYio {
     }
 
 
-    public static void drawLine(PointYio p1, PointYio p2, double thickness, SpriteBatch spriteBatch, TextureRegion texture) {
-        drawLine(p1.x, p1.y, p2.x, p2.y, thickness, spriteBatch, texture);
+    public static void drawLine(SpriteBatch spriteBatch, TextureRegion texture, PointYio p2, PointYio p1, double thickness) {
+        drawLine(spriteBatch, texture, p1.x, p1.y, p2.x, p2.y, thickness);
     }
 
 
@@ -92,7 +89,12 @@ public class GraphicsYio {
     }
 
 
-    public static void drawLine(double x1, double y1, double x2, double y2, double thickness, SpriteBatch spriteBatch, TextureRegion texture) {
+    public static void drawRectangleRotatedSimple(Batch batch, TextureRegion textureRegion, double x, double y, double width, double height, double angle) {
+        batch.draw(textureRegion, (float) x, (float) y, 0, 0, (float) width, (float) height, 1, 1, 57.29f * (float) angle);
+    }
+
+
+    public static void drawLine(SpriteBatch spriteBatch, TextureRegion texture, double x1, double y1, double x2, double y2, double thickness) {
         spriteBatch.draw(texture, (float) x1, (float) (y1 - thickness * 0.5), 0f, (float) thickness * 0.5f,
                 (float) Yio.distance(x1, y1, x2, y2), (float) thickness, 1f, 1f, (float) (180 / Math.PI * Yio.angle(x1, y1, x2, y2)));
     }

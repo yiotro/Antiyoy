@@ -143,7 +143,9 @@ public class LoadingManager {
 
     private void applyEditorChosenColorFix() {
         if (gameController.colorIndexViewOffset == 0) return;
+        if (parameters.editorColorFixApplied) return;
 
+        parameters.editorColorFixApplied = true;
         gameController.updateRuleset();
 
         ArrayList<Hex> activeHexes = gameController.fieldController.activeHexes;
@@ -168,12 +170,11 @@ public class LoadingManager {
             GameRules.campaignMode = true;
 
             CampaignProgressManager.getInstance().setCurrentLevelIndex(parameters.campaignLevelIndex);
-        } else {
-            CampaignProgressManager.getInstance().setCurrentLevelIndex(0);
         }
 
         GameRules.userLevelMode = parameters.userLevelMode;
         GameRules.ulKey = parameters.ulKey;
+        GameRules.editorColorFixApplied = parameters.editorColorFixApplied;
 
         gameController.checkToEnableAiOnlyMode();
     }
@@ -182,6 +183,7 @@ public class LoadingManager {
     private void createRandomCampaignLevel() {
         gameController.predictableRandom = new Random(parameters.campaignLevelIndex);
         GameRules.campaignMode = true;
+        CampaignProgressManager.getInstance().setCurrentLevelIndex(parameters.campaignLevelIndex);
 
         if (parameters.slayRules) {
             generateMapForSlayRules();
@@ -222,6 +224,7 @@ public class LoadingManager {
     private void createCustomCampaignLevel() {
         gameController.predictableRandom = new Random(parameters.campaignLevelIndex);
         GameRules.campaignMode = true;
+        CampaignProgressManager.getInstance().setCurrentLevelIndex(parameters.campaignLevelIndex);
 
         recreateActiveHexesFromParameter();
 
@@ -246,7 +249,6 @@ public class LoadingManager {
     private void createSkirmish() {
         gameController.fieldController.generateMap();
         gameController.checkToEnableAiOnlyMode();
-        CampaignProgressManager.getInstance().setCurrentLevelIndex(0); // yes, it's needed
     }
 
 
@@ -278,6 +280,7 @@ public class LoadingManager {
         gameController.defaultValues();
         yioGdxGame.beginBackgroundChange(4, false, true);
         gameController.predictableRandom = new Random(parameters.campaignLevelIndex);
+        CampaignProgressManager.getInstance().setCurrentLevelIndex(-1);
 
         applyLoadingParameters();
 //        parameters.showInConsole();

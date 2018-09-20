@@ -14,6 +14,7 @@ public class RenderLevelSelector extends MenuRender {
     private float selX;
     private float selY;
     private LevelSelector selector;
+    private float f;
 
 
     @Override
@@ -31,8 +32,9 @@ public class RenderLevelSelector extends MenuRender {
     @Override
     public void renderSecondLayer(InterfaceElement element) {
         selector = (LevelSelector) element;
+        f = selector.getFactor().get();
 
-        if (selector.getFactor().get() == 0) return;
+        if (f == 0) return;
         c = batch.getColor();
 
         renderShadows();
@@ -44,11 +46,11 @@ public class RenderLevelSelector extends MenuRender {
         batch.begin();
         Masking.continueAfterBatchBegin();
 
-        batch.setColor(c.r, c.g, c.b, selector.getFactor().get());
+        batch.setColor(c.r, c.g, c.b, f);
 
         for (int i = 0; i < selector.textures.length; i++) {
             RectangleYio pos = selector.positions[i];
-            batch.draw(selector.textures[i], (float) pos.x, (float) pos.y, (float) pos.width, (float) pos.height);
+            GraphicsYio.drawByRectangle(batch, selector.textures[i], pos);
             checkToRenderSelection(selector, pos, i);
         }
 
@@ -60,7 +62,7 @@ public class RenderLevelSelector extends MenuRender {
 
     private void drawShapeRendererStuff() {
         menuViewYio.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        if (selector.getFactor().get() == 1) {
+        if (f > 0.98) {
             for (RectangleYio pos : selector.positions) {
                 menuViewYio.drawRoundRect(pos);
             }
@@ -83,11 +85,35 @@ public class RenderLevelSelector extends MenuRender {
 
 
     private void renderShadows() {
-        if (selector.getFactor().get() <= 0.95) return;
+        if (f <= 0.05) return;
+
+        if (f < 1) {
+            renderShadowsInAnimationPhase();
+            return;
+        }
 
         for (RectangleYio pos : selector.positions) {
-            menuViewYio.renderShadow(pos, selector.getFactor().get(), batch);
+            MenuRender.renderShadow.renderShadow(pos, f);
         }
+    }
+
+
+    private void renderShadowsInAnimationPhase() {
+        batch.end();
+        Masking.begin();
+
+        menuViewYio.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        menuViewYio.drawCircle(selector.getCircleX(), selector.getCircleY(), selector.getCircleR() + 0.03f * GraphicsYio.width);
+        menuViewYio.shapeRenderer.end();
+
+        batch.begin();
+        Masking.continueAfterBatchBegin();
+
+        for (RectangleYio pos : selector.positions) {
+            MenuRender.renderShadow.renderShadow(pos, Math.max(0.25 * f, Math.pow(f, 10)));
+        }
+
+        Masking.end(batch);
     }
 
 
@@ -108,6 +134,6 @@ public class RenderLevelSelector extends MenuRender {
                 2 * selector.iconRadius, 2 * selector.iconRadius
         );
 
-        GraphicsYio.setBatchAlpha(batch, selector.getFactor().get());
+        GraphicsYio.setBatchAlpha(batch, f);
     }
 }

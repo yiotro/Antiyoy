@@ -29,6 +29,7 @@ public class ButtonRenderer {
     private TextureRegion buttonBackground1, buttonBackground2, buttonBackground3, bigButtonBackground;
     private ArrayList<String> text;
     private int horizontalOffset;
+    float singleLineDeltaOffset; // aplied only when button has one line of text
 
 
     public ButtonRenderer() {
@@ -41,6 +42,8 @@ public class ButtonRenderer {
         buttonBackground3.flip(false, true);
         bigButtonBackground = GameView.loadTextureRegion("big_button_background.png", true);
         bigButtonBackground.flip(false, true);
+        pos = new RectangleYio();
+        singleLineDeltaOffset = 0.05f * GraphicsYio.width;
     }
 
 
@@ -72,7 +75,7 @@ public class ButtonRenderer {
         batch.begin();
         drawButtonBackground(buttonYio, orthoWidth, orthoHeight);
         batch.end();
-        pos = new RectangleYio(buttonYio.position);
+        pos.setBy(buttonYio.position);
         initText(buttonYio, font);
     }
 
@@ -94,21 +97,21 @@ public class ButtonRenderer {
     private void initText(ButtonYio buttonYio, BitmapFont font) {
         text = new ArrayList<>();
 
-        if (buttonYio.text.size() == 1) {
-            text = buttonYio.text;
+        if (buttonYio.textLines.size() == 1) {
+            text = buttonYio.textLines;
             return;
         }
 
         double currentX, currentWidth;
         StringBuilder builder = new StringBuilder();
 
-        for (String srcLine : buttonYio.text) {
+        for (String srcLine : buttonYio.textLines) {
             currentX = horizontalOffset;
             ArrayList<String> tokens = convertSourceLineToTokens(srcLine);
 
             for (String token : tokens) {
                 currentWidth = GraphicsYio.getTextWidth(font, token);
-                if (currentX + currentWidth > Gdx.graphics.getWidth()) {
+                if (currentX + currentWidth > Gdx.graphics.getWidth() - 2) {
                     text.add(builder.toString());
                     builder = new StringBuilder();
                     currentX = 0;
@@ -121,7 +124,7 @@ public class ButtonRenderer {
             builder = new StringBuilder();
         }
 
-        while (text.size() > buttonYio.text.size()) {
+        while (text.size() > buttonYio.textLines.size()) {
             String lastLine = text.get(text.size() - 1);
             if (lastLine.length() > 2) break;
             text.remove(text.size() - 1);
@@ -174,11 +177,12 @@ public class ButtonRenderer {
         beginRender(buttonYio, font, FONT_SIZE);
         float ratio = (float) (pos.width / pos.height);
         int lineHeight = (int) (1.2f * FONT_SIZE);
+        int verticalOffset = (int) (0.3f * FONT_SIZE);
 
         if (text.size() == 1) {
             //if button has single line of text then center it
             float textWidth = getTextWidth(text.get(0), font);
-            horizontalOffset = (int) (0.5 * (1.35f * FONT_SIZE * ratio - textWidth));
+            horizontalOffset = (int) ((1.35f * FONT_SIZE * ratio - textWidth) / 2);
             if (horizontalOffset < 0) {
                 horizontalOffset = (int) (0.3f * FONT_SIZE);
             }
@@ -188,7 +192,11 @@ public class ButtonRenderer {
             horizontalOffset = (int) buttonYio.getTextOffset();
         }
 
-        int verticalOffset = (int) (0.3f * FONT_SIZE);
+        if (conditionsForSmallerText(buttonYio)) {
+            horizontalOffset += singleLineDeltaOffset / 2;
+            verticalOffset += (singleLineDeltaOffset / ratio) / 2;
+        }
+
         int lineNumber = 0;
         float longestLineLength = 0, currentLineLength;
         batch.begin();
@@ -202,12 +210,29 @@ public class ButtonRenderer {
         }
 
         batch.end();
+
+        updatePos(buttonYio, ratio, lineHeight, verticalOffset, longestLineLength);
+        endRender(buttonYio);
+    }
+
+
+    private void updatePos(ButtonYio buttonYio, float ratio, int lineHeight, int verticalOffset, float longestLineLength) {
         pos.height = text.size() * lineHeight + verticalOffset / 2;
         pos.width = pos.height * ratio;
+
         if (longestLineLength > pos.width - 0.3f * (float) lineHeight) {
             pos.width = longestLineLength + 2 * horizontalOffset;
         }
-        endRender(buttonYio);
+
+        if (conditionsForSmallerText(buttonYio)) {
+            pos.width += singleLineDeltaOffset;
+            pos.height += singleLineDeltaOffset / ratio;
+        }
+    }
+
+
+    private boolean conditionsForSmallerText(ButtonYio buttonYio) {
+        return buttonYio.textLines.size() == 1 && buttonYio.position.height > 0.06f * GraphicsYio.height;
     }
 
 

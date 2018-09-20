@@ -5,13 +5,14 @@ import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.render.MenuRender;
+import yio.tro.antiyoy.menu.slider.SliderParentElement;
 import yio.tro.antiyoy.stuff.*;
 import yio.tro.antiyoy.stuff.object_pool.ObjectPoolYio;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public abstract class AbstractDiplomaticDialog extends InterfaceElement {
+public abstract class AbstractDiplomaticDialog extends InterfaceElement implements SliderParentElement {
 
 
     protected MenuControllerYio menuControllerYio;
@@ -66,7 +67,7 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement {
 
         yesButton = new AcButton(this);
         yesButton.setFont(Fonts.smallerMenuFont);
-        yesButton.setText(LanguagesManager.getInstance().getString("yes"));
+        yesButton.setText(getYesButtonString());
         yesButton.setTouchOffset(0.05f * GraphicsYio.width);
         yesButton.setAction(AcButton.ACTION_YES);
         buttons.add(yesButton);
@@ -77,6 +78,15 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement {
         noButton.setTouchOffset(0.05f * GraphicsYio.width);
         noButton.setAction(AcButton.ACTION_NO);
         buttons.add(noButton);
+    }
+
+
+    private String getYesButtonString() {
+        if (isInSingleButtonMode()) {
+            return LanguagesManager.getInstance().getString("ok");
+        }
+
+        return LanguagesManager.getInstance().getString("yes");
     }
 
 
@@ -181,6 +191,12 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement {
     @Override
     public void destroy() {
         appearFactor.destroy(1, 2.2);
+        onDestroy();
+    }
+
+
+    protected void onDestroy() {
+        //
     }
 
 
@@ -235,6 +251,11 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement {
 
 
     public abstract boolean areButtonsEnabled();
+
+
+    public boolean isInSingleButtonMode() {
+        return false;
+    }
 
 
     @Override
@@ -302,10 +323,15 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement {
         boolean buttonsClicked = checkToClickButtons();
 
         if (!buttonsClicked && !viewPosition.isPointInside(currentTouch, 0)) {
-            destroy();
+            onUserClickedOutside();
         }
 
         return true;
+    }
+
+
+    protected void onUserClickedOutside() {
+        destroy();
     }
 
 
@@ -313,6 +339,8 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement {
         if (!areButtonsEnabled()) return false;
 
         for (AcButton button : buttons) {
+            if (isInSingleButtonMode() && button.action != AcButton.ACTION_YES) continue;
+
             if (button.isTouched(currentTouch)) {
                 button.select();
                 onButtonClicked(button);
@@ -377,6 +405,12 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement {
 
     protected void onPositionChanged() {
         updateButtonMetrics();
+    }
+
+
+    @Override
+    public RectangleYio getViewPosition() {
+        return viewPosition;
     }
 
 

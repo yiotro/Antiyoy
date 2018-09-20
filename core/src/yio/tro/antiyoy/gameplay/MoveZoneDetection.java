@@ -14,8 +14,8 @@ public class MoveZoneDetection {
     public MoveZoneDetection(FieldController fieldController) {
         this.fieldController = fieldController;
 
-        result = new ArrayList<Hex>();
-        propagationList = new ArrayList<Hex>();
+        result = new ArrayList<>();
+        propagationList = new ArrayList<>();
     }
 
 
@@ -28,7 +28,7 @@ public class MoveZoneDetection {
 
 
     public ArrayList<Hex> detectMoveZoneForFarm() {
-        fieldController.clearMoveZone();
+        fieldController.moveZoneManager.clear();
         unFlagAllHexesInArrayList(fieldController.activeHexes);
         result.clear();
         for (Hex hex : fieldController.selectedProvince.hexList) {
@@ -74,8 +74,8 @@ public class MoveZoneDetection {
         if (!tempHex.sameColor(startHex)) return;
         if (tempHex.moveZoneNumber == 0) return;
 
-        for (int i = 0; i < 6; i++) {
-            adjHex = tempHex.getAdjacentHex(i);
+        for (int dir = 0; dir < 6; dir++) {
+            adjHex = tempHex.getAdjacentHex(dir);
             if (!adjHex.active) continue;
             if (adjHex.flag) continue;
 

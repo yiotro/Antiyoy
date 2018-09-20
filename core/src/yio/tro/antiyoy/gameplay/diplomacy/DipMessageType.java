@@ -8,4 +8,5 @@ public enum DipMessageType {
     friendship_ended,
     friendship_canceled,
     black_marked,
+    gift,
 }

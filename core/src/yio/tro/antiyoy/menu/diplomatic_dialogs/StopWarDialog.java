@@ -10,19 +10,34 @@ import yio.tro.antiyoy.stuff.LanguagesManager;
 
 public class StopWarDialog extends AbstractDiplomaticDialog {
 
-    DiplomaticEntity selectedEntity;
+    DiplomaticEntity sender, recipient;
 
 
     public StopWarDialog(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
-        selectedEntity = null;
+        resetEntities();
+    }
+
+
+    protected void resetEntities() {
+        sender = null;
+        recipient = null;
+    }
+
+
+    @Override
+    protected void onAppear() {
+        super.onAppear();
+
+        resetEntities();
     }
 
 
     @Override
     protected void makeLabels() {
-        if (selectedEntity == null) return;
+        if (sender == null) return;
+        if (recipient == null) return;
 
         LanguagesManager instance = LanguagesManager.getInstance();
         float y = (float) (position.height - topOffset);
@@ -30,7 +45,11 @@ public class StopWarDialog extends AbstractDiplomaticDialog {
         addLabel(instance.getString("peace_treaty"), Fonts.gameFont, leftOffset, y);
         y -= titleOffset;
 
-        addLabel(instance.getString("state") + ": " + selectedEntity.capitalName, Fonts.smallerMenuFont, leftOffset, y);
+        String capitalName = sender.capitalName;
+        if (sender.isMain()) {
+            capitalName = recipient.capitalName;
+        }
+        addLabel(instance.getString("state") + ": " + capitalName, Fonts.smallerMenuFont, leftOffset, y);
         y -= lineOffset;
 
         addLabel(instance.getString("pay") + " (1x) : " + getPay(), Fonts.smallerMenuFont, leftOffset, y);
@@ -46,7 +65,7 @@ public class StopWarDialog extends AbstractDiplomaticDialog {
 
     private String getPay() {
         DiplomacyManager diplomacyManager = getDiplomacyManager();
-        int pay = diplomacyManager.calculatePayToStopWar(diplomacyManager.getMainEntity(), selectedEntity);
+        int pay = diplomacyManager.calculatePayToStopWar(sender, recipient);
         if (pay == 0) return "0";
 
         return "" + pay;
@@ -55,7 +74,7 @@ public class StopWarDialog extends AbstractDiplomaticDialog {
 
     private String getReparations() {
         DiplomacyManager diplomacyManager = getDiplomacyManager();
-        int reparations = diplomacyManager.calculateReparations(diplomacyManager.getMainEntity(), selectedEntity);
+        int reparations = diplomacyManager.calculateReparations(sender, recipient);
         if (reparations == 0) return "0";
 
         return "" + reparations;
@@ -64,7 +83,11 @@ public class StopWarDialog extends AbstractDiplomaticDialog {
 
     @Override
     protected void onYesButtonPressed() {
-        getDiplomacyManager().onUserRequestedToStopWar(selectedEntity);
+        if (sender.isMain()) {
+            getDiplomacyManager().onUserRequestedToStopWar(sender, recipient);
+        } else {
+            getDiplomacyManager().onEntityRequestedToStopWar(sender, recipient);
+        }
 
         destroy();
     }
@@ -88,12 +111,12 @@ public class StopWarDialog extends AbstractDiplomaticDialog {
     }
 
 
-    public void setSelectedEntity(DiplomaticEntity selectedEntity) {
-        this.selectedEntity = selectedEntity;
+    public void setEntities(DiplomaticEntity sender, DiplomaticEntity recipient) {
+        this.sender = sender;
+        this.recipient = recipient;
 
         updateAll();
     }
-
 
 
 }

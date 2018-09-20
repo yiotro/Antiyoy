@@ -8,6 +8,11 @@ import yio.tro.antiyoy.menu.MenuControllerYio;
 public class SceneConfirmReset extends AbstractScene{
 
 
+    private ButtonYio basePanel;
+    private ButtonYio yesButton;
+    private ButtonYio noButton;
+
+
     public SceneConfirmReset(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
     }
@@ -19,7 +24,7 @@ public class SceneConfirmReset extends AbstractScene{
 
         menuControllerYio.getYioGdxGame().beginBackgroundChange(3, true, true);
 
-        ButtonYio basePanel = buttonFactory.getButton(generateRectangle(0.05, 0.4, 0.9, 0.2), 410, null);
+        basePanel = buttonFactory.getButton(generateRectangle(0.05, 0.4, 0.9, 0.15), 410, null);
         if (basePanel.notRendered()) {
             basePanel.addTextLine(getString("confirm_reset"));
             basePanel.addTextLine(" ");
@@ -29,15 +34,19 @@ public class SceneConfirmReset extends AbstractScene{
         basePanel.setTouchable(false);
         basePanel.setAnimation(Animation.FROM_CENTER);
 
-        ButtonYio restartButton = buttonFactory.getButton(generateRectangle(0.5, 0.4, 0.45, 0.07), 411, getString("menu_reset"));
-        restartButton.setReaction(Reaction.rbResetProgress);
-        restartButton.setShadow(false);
-        restartButton.setAnimation(Animation.FROM_CENTER);
+        yesButton = buttonFactory.getButton(generateRectangle(0.5, 0.4, 0.45, 0.05), 411, getString("menu_reset"));
+        yesButton.setReaction(Reaction.rbResetProgress);
+        yesButton.setShadow(false);
+        yesButton.disableTouchAnimation();
+        yesButton.setVisualHook(basePanel);
+        yesButton.setAnimation(Animation.FROM_CENTER);
 
-        ButtonYio cancelButton = buttonFactory.getButton(generateRectangle(0.05, 0.4, 0.45, 0.07), 412, getString("cancel"));
-        cancelButton.setReaction(Reaction.rbMoreSettings);
-        cancelButton.setShadow(false);
-        cancelButton.setAnimation(Animation.FROM_CENTER);
+        noButton = buttonFactory.getButton(generateRectangle(0.05, 0.4, 0.45, 0.05), 412, getString("cancel"));
+        noButton.setReaction(Reaction.rbMoreSettings);
+        noButton.setShadow(false);
+        noButton.disableTouchAnimation();
+        noButton.setVisualHook(basePanel);
+        noButton.setAnimation(Animation.FROM_CENTER);
 
         menuControllerYio.endMenuCreation();
     }

@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.gameplay.diplomacy;
 
+import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
 import java.util.ArrayList;
@@ -49,8 +50,19 @@ public class DiplomaticMessage implements ReusableYio {
         if (type != message.type) return false;
         if (sender != message.sender) return false;
         if (recipient != message.recipient) return false;
+        if (arg1 != null && !arg1.equals(message.arg1)) return false;
 
         return true;
+    }
+
+
+    public String getListName() {
+        switch (type) {
+            default:
+                return LanguagesManager.getInstance().getString(type.name());
+            case gift:
+                return LanguagesManager.getInstance().getString(type.name()) + ": $" + arg1;
+        }
     }
 
 

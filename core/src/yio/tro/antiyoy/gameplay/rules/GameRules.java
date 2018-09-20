@@ -36,6 +36,7 @@ public class GameRules {
     public static String ulKey;
     public static boolean editorFog;
     public static boolean editorDiplomacy;
+    public static boolean editorColorFixApplied;
 
 
     public static void defaultValues() {
@@ -51,6 +52,7 @@ public class GameRules {
         ulKey = null;
         editorFog = false;
         editorDiplomacy = false;
+        editorColorFixApplied = false;
     }
 
 

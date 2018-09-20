@@ -79,10 +79,12 @@ public class DiplomacyElement extends InterfaceElement {
     private void initIcons() {
         icons = new ArrayList<>();
 
+        addIcon(DeIcon.ACTION_TRANSFER_MONEY);
         addIcon(DeIcon.ACTION_LIKE);
         addIcon(DeIcon.ACTION_DISLIKE);
         addIcon(DeIcon.ACTION_BLACK_MARK);
         addIcon(DeIcon.ACTION_INFO);
+        addIcon(DeIcon.ACTION_BUY_HEXES);
 
         for (DeIcon icon : icons) {
             icon.setTouchOffset(iconTouchOffset);
@@ -654,8 +656,8 @@ public class DiplomacyElement extends InterfaceElement {
         DiplomacyManager diplomacyManager = getDiplomacyManager(gameController);
         int colorIndex = selectedItem.colorIndex;
         DiplomaticEntity selectedEntity = diplomacyManager.getEntity(colorIndex);
-        int relation = selectedEntity.getRelation(diplomacyManager.getEntity(gameController.turn));
         DiplomaticEntity mainEntity = diplomacyManager.getMainEntity();
+        int relation = mainEntity.getRelation(selectedEntity);
         boolean blackMarked = mainEntity.isBlackMarkedWith(selectedEntity);
 
         switch (relation) {
@@ -668,8 +670,12 @@ public class DiplomacyElement extends InterfaceElement {
                 enableIcon(DeIcon.ACTION_INFO);
                 break;
             case DiplomaticRelation.FRIEND:
+                enableIcon(DeIcon.ACTION_TRANSFER_MONEY);
                 enableIcon(DeIcon.ACTION_DISLIKE);
                 enableIcon(DeIcon.ACTION_INFO);
+                if (!selectedEntity.isHuman()) {
+                    enableIcon(DeIcon.ACTION_BUY_HEXES);
+                }
                 break;
             case DiplomaticRelation.ENEMY:
                 enableIcon(DeIcon.ACTION_LIKE);

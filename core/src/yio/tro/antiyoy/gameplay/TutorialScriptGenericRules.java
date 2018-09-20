@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
@@ -113,6 +114,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
         switch (currentStep) {
             default:
             case STEP_GREETINGS:
+                CampaignProgressManager.getInstance().markLevelAsCompleted(0);
                 break;
             case STEP_SELECT_PROVINCE:
                 setHexToRespondByColor(0);

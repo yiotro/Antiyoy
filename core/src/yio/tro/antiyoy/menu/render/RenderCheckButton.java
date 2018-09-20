@@ -44,7 +44,7 @@ public class RenderCheckButton extends MenuRender {
             GraphicsYio.setBatchAlpha(batch, checkButtonYio.getFactor().get());
         }
 //        GraphicsYio.drawByRectangle(batch, backgroundTexture, checkButtonYio.viewPosition);
-        GraphicsYio.renderBorder(checkButtonYio.animPos, batch, blackPixel);
+        GraphicsYio.renderBorder(batch, blackPixel, checkButtonYio.animPos);
         if (checkButtonYio.selectionFactor.get() > 0) {
             GraphicsYio.setBatchAlpha(batch, Math.min(checkButtonYio.selectionFactor.get(), checkButtonYio.getFactor().get()));
             GraphicsYio.drawByRectangle(batch, activeTexture, checkButtonYio.animPos);

@@ -31,6 +31,7 @@ public class LoadingParameters {
     public DiplomacyInfoCondensed diplomacyInfo;
     public boolean userLevelMode;
     public String ulKey;
+    public boolean editorColorFixApplied;
 
 
     void defaultValues() {
@@ -49,6 +50,7 @@ public class LoadingParameters {
         fogOfWar = false;
         diplomacy = false;
         ulKey = null;
+        editorColorFixApplied = false;
     }
 
 
@@ -69,6 +71,7 @@ public class LoadingParameters {
         diplomacyInfo = src.diplomacyInfo;
         userLevelMode = src.userLevelMode;
         ulKey = src.ulKey;
+        editorColorFixApplied = src.editorColorFixApplied;
     }
 
 
@@ -105,6 +108,7 @@ public class LoadingParameters {
         System.out.println("diplomacy = " + diplomacy);
         System.out.println("userLevelMode = " + userLevelMode);
         System.out.println("ulKey = " + ulKey);
+        System.out.println("editorColorFixApplied = " + editorColorFixApplied);
 
         System.out.println();
     }
@@ -154,5 +158,6 @@ public class LoadingParameters {
         diplomacy = prefs.getBoolean("diplomacy", false);
         userLevelMode = prefs.getBoolean("user_level_mode", false);
         ulKey = prefs.getString("ul_key", null);
+        editorColorFixApplied = prefs.getBoolean("editor_color_fix_applied", false);
     }
 }

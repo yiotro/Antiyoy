@@ -23,6 +23,7 @@ public class LevelEditor {
     public static final String EDITOR_PREFS = "editor";
     public static final String SLOT_NAME = "slot";
     public static final int TEMPORARY_SLOT_NUMBER = 12345; // to edit campaign levels
+    public static final int MAX_ACCEPTABLE_DELTA = 27;
     public GameController gameController;
     private final EditorAutomationManager editorAutomationManager;
     private int inputMode, inputColor, inputObject;
@@ -320,10 +321,36 @@ public class LevelEditor {
 
         Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
         String fullLevel = prefs.getString(SLOT_NAME + currentSlotNumber, "");
-        System.out.println("fullLevel = " + fullLevel);
+        System.out.println("Level exported to clipboard.");
         Clipboard clipboard = Gdx.app.getClipboard();
         clipboard.setContents(fullLevel);
+
+        if (!isLevelAcceptableForUserLevels(fullLevel)) {
+            Scenes.sceneMapTooBig.create();
+        }
+
         Scenes.sceneNotification.showNotification("exported");
+    }
+
+
+    public boolean isLevelAcceptableForUserLevels(String fullLevel) {
+        String innerString = fullLevel.substring(fullLevel.indexOf("/") + 1);
+        int min = -1;
+        int max = -1;
+        for (String token : innerString.split("#")) {
+            String[] split = token.split(" ");
+            int index1 = Integer.valueOf(split[0]);
+            if (min == -1 || index1 < min) {
+                min = index1;
+            }
+            if (max == -1 || index1 > max) {
+                max = index1;
+            }
+        }
+
+        int delta = max - min;
+
+        return delta <= MAX_ACCEPTABLE_DELTA;
     }
 
 
@@ -393,7 +420,9 @@ public class LevelEditor {
 
     private void inputModeHexActions(Hex focusedHex) {
         if (focusedHex.active) {
+            int objectInside = focusedHex.objectInside;
             gameController.fieldController.setHexColor(focusedHex, inputColor);
+            focusedHex.setObjectInside(objectInside);
         } else {
             if (filteredByOnlyLand) return;
             activateHex(focusedHex, inputColor);
@@ -544,16 +573,24 @@ public class LevelEditor {
     }
 
 
-    public void launchEditCampaignLevelMode() {
+    public void launchEditLevelMode() {
         if (GameRules.inEditorMode) return;
 
         int currentLevelIndex = CampaignProgressManager.getInstance().currentLevelIndex;
-        System.out.println("opened campaign level in editor: " + currentLevelIndex);
+        if (currentLevelIndex > 0) {
+            System.out.println("opened campaign level in editor: " + currentLevelIndex);
+        }
 
         GameRules.inEditorMode = true;
         currentSlotNumber = TEMPORARY_SLOT_NUMBER;
         saveSlot();
         Scenes.sceneEditorActions.create();
+    }
+
+
+    public void importFromClipboardToExtraSlot() {
+        setCurrentSlotNumber(3);
+        importLevel();
     }
 
 

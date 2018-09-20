@@ -1,9 +1,6 @@
 package yio.tro.antiyoy.gameplay.rules;
 
-import yio.tro.antiyoy.gameplay.GameController;
-import yio.tro.antiyoy.gameplay.Hex;
-import yio.tro.antiyoy.gameplay.Province;
-import yio.tro.antiyoy.gameplay.Unit;
+import yio.tro.antiyoy.gameplay.*;
 
 public class RulesetSlay extends Ruleset{
 
@@ -101,8 +98,13 @@ public class RulesetSlay extends Ruleset{
     public int getColorIndexWithOffset(int srcIndex) {
         srcIndex += gameController.colorIndexViewOffset;
 
-        if (srcIndex >= GameRules.colorNumber) {
-            srcIndex -= GameRules.colorNumber;
+        // this variant leads to problems when colorViewOffset if bigger or equal to colorNumber
+//        if (srcIndex >= GameRules.colorNumber) {
+//            srcIndex -= GameRules.colorNumber;
+//        }
+
+        if (srcIndex >= FieldController.NEUTRAL_LANDS_INDEX) {
+            srcIndex -= FieldController.NEUTRAL_LANDS_INDEX;
         }
 
         return srcIndex;

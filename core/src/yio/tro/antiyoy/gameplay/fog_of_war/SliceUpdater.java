@@ -2,8 +2,6 @@ package yio.tro.antiyoy.gameplay.fog_of_war;
 
 import yio.tro.antiyoy.gameplay.Hex;
 
-import java.util.Map;
-
 public class SliceUpdater {
 
 
@@ -56,7 +54,7 @@ public class SliceUpdater {
         if (hex == null) return null;
 
         Hex adjacentHex = hex.getAdjacentHex(dir);
-        if (adjacentHex == fogOfWarManager.fieldController.emptyHex) return null;
+        if (adjacentHex == fogOfWarManager.fieldController.nullHex) return null;
 
         return fogOfWarManager.fogMap.get(adjacentHex);
     }

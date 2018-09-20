@@ -322,7 +322,7 @@ public class Hex implements ReusableYio{
     }
 
 
-    public boolean isEmptyHex() {
+    public boolean isNullHex() {
         return index1 == -1 && index2 == -1;
     }
 
@@ -354,6 +354,8 @@ public class Hex implements ReusableYio{
 
 
     public boolean canBeAttackedBy(Unit unit) {
+        if (unit == null) return false; // normally this shouldn't happen, but it happened once in replay
+
         boolean canUnitAttackHex = gameController.canUnitAttackHex(unit.strength, unit.getColor(), this);
 
         if (GameRules.replayMode) {

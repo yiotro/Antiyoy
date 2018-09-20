@@ -4,6 +4,7 @@ import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
 import yio.tro.antiyoy.stuff.Fonts;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.*;
 
@@ -187,7 +188,7 @@ public class Province {
 
 
     public void updateName() {
-        setName(CityNameGenerator.getInstance().generateName(getCapital()));
+        setName(gameController.namingManager.getProvinceName(this));
     }
 
 

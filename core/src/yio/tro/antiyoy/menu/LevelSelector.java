@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Matrix4;
 import yio.tro.antiyoy.gameplay.campaign.CampaignLevelFactory;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
-import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.render.MenuRender;
 import yio.tro.antiyoy.stuff.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
@@ -37,7 +36,7 @@ public class LevelSelector extends InterfaceElement {
     ClickDetector clickDetector;
     PointYio currentTouch;
     SpriteBatch batch;
-    private boolean slayRulesMode;
+    float fullCircleRadius;
 
 
     public LevelSelector(MenuControllerYio menuControllerYio, int id) {
@@ -53,7 +52,6 @@ public class LevelSelector extends InterfaceElement {
         iconRadius = (float) ((defPos.width / 5 - 0.01f * w) / 2);
         iconDiameter = 2 * iconRadius;
         offsetBetweenPanels = (float) (defPos.width + 0.05f * w);
-        slayRulesMode = false;
 
         tabsEngineYio = new TabsEngineYio();
         tabsEngineYio.setFriction(0);
@@ -279,6 +277,7 @@ public class LevelSelector extends InterfaceElement {
         tabsEngineYio.setLimits(0, GraphicsYio.width * positions.length);
         tabsEngineYio.setSlider(0, GraphicsYio.width);
         tabsEngineYio.setNumberOfTabs(positions.length);
+        fullCircleRadius = (float) (0.5 * Yio.distance(0, 0, defPos.width, defPos.height));
     }
 
 
@@ -302,22 +301,29 @@ public class LevelSelector extends InterfaceElement {
     @Override
     public boolean checkToPerformAction() {
         if (selectionFactor.get() == 1) {
-            int levelNumber = getLevelNumber(selIndexX, selIndexY, selectedPanelIndex);
-            CampaignLevelFactory campaignLevelFactory = menuControllerYio.yioGdxGame.campaignLevelFactory;
-            boolean result = campaignLevelFactory.createCampaignLevel(levelNumber);
-            CampaignProgressManager.getInstance();
-            if (result) { // level loaded
-                selectionFactor.setValues(0.99, 0);
-                selectionFactor.destroy(0, 0);
-            } else { // tried to load locked level
-                selectionFactor.setValues(0.99, 0);
-                selectionFactor.destroy(1, 2);
-                menuControllerYio.getButtonById(20).setTouchable(true);
-            }
+            launchCampaignLevel();
             return true;
         }
 
         return false;
+    }
+
+
+    private void launchCampaignLevel() {
+        int levelNumber = getLevelNumber(selIndexX, selIndexY, selectedPanelIndex);
+        CampaignLevelFactory campaignLevelFactory = menuControllerYio.yioGdxGame.campaignLevelFactory;
+        boolean result = campaignLevelFactory.createCampaignLevel(levelNumber);
+        CampaignProgressManager.getInstance();
+
+        if (result) { // level loaded
+            selectionFactor.setValues(0.99, 0);
+            selectionFactor.destroy(0, 0);
+            menuControllerYio.yioGdxGame.gameController.checkToAutoSave();
+        } else { // tried to load locked level
+            selectionFactor.setValues(0.99, 0);
+            selectionFactor.destroy(1, 2);
+            menuControllerYio.getButtonById(20).setTouchable(true);
+        }
     }
 
 
@@ -461,7 +467,7 @@ public class LevelSelector extends InterfaceElement {
 
 
     public float getCircleR() {
-        return (float) (appearFactor.get() * appearFactor.get() * defPos.height * 0.6);
+        return (float) (appearFactor.get() * appearFactor.get() * fullCircleRadius);
     }
 
 

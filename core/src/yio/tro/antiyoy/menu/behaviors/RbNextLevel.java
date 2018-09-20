@@ -19,6 +19,8 @@ public class RbNextLevel extends Reaction {
         }
 
         int nextLevelIndex = instance.getNextLevelIndex();
+        if (CampaignProgressManager.getInstance().isLevelLocked(nextLevelIndex)) return;
+
         getYioGdxGame(buttonYio).campaignLevelFactory.createCampaignLevel(nextLevelIndex);
     }
 }

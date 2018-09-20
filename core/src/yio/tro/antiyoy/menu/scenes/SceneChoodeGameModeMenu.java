@@ -12,6 +12,12 @@ public class SceneChoodeGameModeMenu extends AbstractScene{
 
     public ButtonYio skirmishButton;
     private Reaction rbUserLevels;
+    private ButtonYio basePanel;
+    private ButtonYio userLevelsButton;
+    private ButtonYio campaignButton;
+    private ButtonYio loadGameButton;
+    private ButtonYio editorButton;
+    private ButtonYio secretScreenButton;
 
 
     public SceneChoodeGameModeMenu(MenuControllerYio menuControllerYio) {
@@ -50,56 +56,57 @@ public class SceneChoodeGameModeMenu extends AbstractScene{
 
     private void createInvisibleButton() {
         double size = 0.07;
-        ButtonYio invisButton = buttonFactory.getButton(generateSquare(1 - size, 1 - GraphicsYio.convertToHeight(size), size), 78, null);
-        invisButton.setVisible(false);
-        invisButton.setReaction(Reaction.rbShowCheatSceen);
+        secretScreenButton = buttonFactory.getButton(generateSquare(1 - size, 1 - GraphicsYio.convertToHeight(size), size), 78, null);
+        secretScreenButton.setVisible(false);
+        secretScreenButton.setReaction(Reaction.rbShowCheatSceen);
     }
 
 
     private void createEditorButton() {
-        ButtonYio editorButton = buttonFactory.getButton(generateRectangle(0.1, 0.54, 0.8, 0.08), 77, getString("editor"));
-        editorButton.setShadow(false);
-        editorButton.setAnimation(Animation.FROM_CENTER);
+        editorButton = buttonFactory.getButton(generateRectangle(0.1, 0.54, 0.8, 0.08), 77, getString("editor"));
         editorButton.setReaction(EditorReactions.rbEditorSlotMenu);
+        finishMakingInnerButton(editorButton);
     }
 
 
     private void createLoadGameButton() {
-        ButtonYio loadGameButton = buttonFactory.getButton(generateRectangle(0.1, 0.3, 0.8, 0.08), 75, getString("choose_game_mode_load"));
-        loadGameButton.setShadow(false);
-        loadGameButton.setAnimation(Animation.FROM_CENTER);
+        loadGameButton = buttonFactory.getButton(generateRectangle(0.1, 0.3, 0.8, 0.08), 75, getString("choose_game_mode_load"));
         loadGameButton.setReaction(Reaction.rbLoadGame);
-        loadGameButton.disableTouchAnimation();
+        finishMakingInnerButton(loadGameButton);
     }
 
 
     private void createCampaignButton() {
-        ButtonYio campaignButton = buttonFactory.getButton(generateRectangle(0.1, 0.38, 0.8, 0.08), 74, getString("choose_game_mode_campaign"));
+        campaignButton = buttonFactory.getButton(generateRectangle(0.1, 0.38, 0.8, 0.08), 74, getString("choose_game_mode_campaign"));
         campaignButton.setReaction(Reaction.rbCampaignMenu);
-        campaignButton.setShadow(false);
-        campaignButton.setAnimation(Animation.FROM_CENTER);
-        campaignButton.disableTouchAnimation();
+        finishMakingInnerButton(campaignButton);
     }
 
 
     private void createUserLevelsButton() {
-        ButtonYio userLevelsButton = buttonFactory.getButton(generateRectangle(0.1, 0.46, 0.8, 0.08), 73, getString("user_levels"));
-        userLevelsButton.setShadow(false);
+        userLevelsButton = buttonFactory.getButton(generateRectangle(0.1, 0.46, 0.8, 0.08), 73, getString("user_levels"));
         userLevelsButton.setReaction(rbUserLevels);
-        userLevelsButton.setAnimation(Animation.FROM_CENTER);
+        finishMakingInnerButton(userLevelsButton);
     }
 
 
     private void createSkirmishButton() {
         skirmishButton = buttonFactory.getButton(generateRectangle(0.1, 0.62, 0.8, 0.08), 72, getString("choose_game_mode_skirmish"));
         skirmishButton.setReaction(Reaction.rbSkirmishMenu);
-        skirmishButton.setShadow(false);
-        skirmishButton.setAnimation(Animation.FROM_CENTER);
+        finishMakingInnerButton(skirmishButton);
+    }
+
+
+    private void finishMakingInnerButton(ButtonYio buttonYio) {
+        buttonYio.setShadow(false);
+        buttonYio.setAnimation(Animation.FROM_CENTER);
+        buttonYio.setVisualHook(basePanel);
+        buttonYio.disableTouchAnimation();
     }
 
 
     private void createBasePanel() {
-        ButtonYio basePanel = buttonFactory.getButton(generateRectangle(0.1, 0.3, 0.8, 0.4), 70, null);
+        basePanel = buttonFactory.getButton(generateRectangle(0.1, 0.3, 0.8, 0.4), 70, null);
         basePanel.setTouchable(false);
         basePanel.onlyShadow = true;
         basePanel.setAnimation(Animation.FROM_CENTER);

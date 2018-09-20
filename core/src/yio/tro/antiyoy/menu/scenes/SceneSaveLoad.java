@@ -10,7 +10,7 @@ public class SceneSaveLoad extends AbstractScene{
 
 
     private ButtonYio backButton;
-    SaveSlotSelector slotSelector;
+    public SaveSlotSelector slotSelector;
     private ButtonYio replaysButton;
 
 
@@ -50,6 +50,13 @@ public class SceneSaveLoad extends AbstractScene{
         slotSelector.setPosition(generateRectangle(0.05, 0.07, 0.9, 0.75));
 
         menuControllerYio.addElementToScene(slotSelector);
+    }
+
+
+    public boolean getOperationType() {
+        if (slotSelector == null) return false;
+
+        return slotSelector.getOperationType();
     }
 
 

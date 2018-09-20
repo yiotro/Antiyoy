@@ -97,7 +97,7 @@ public class SceneMoreCampaignOptions extends AbstractScene{
         colorOffsetSlider = new SliderYio(menuControllerYio, -1);
         colorOffsetSlider.setValues(0, 0, 6, Animation.UP);
         colorOffsetSlider.setPosition(pos);
-        colorOffsetSlider.setLinkedButton(label, 0.27);
+        colorOffsetSlider.setParentElement(label, 0.27);
         colorOffsetSlider.setTitle("player_color");
         colorOffsetSlider.setBehavior(new SliderBehavior() {
             @Override

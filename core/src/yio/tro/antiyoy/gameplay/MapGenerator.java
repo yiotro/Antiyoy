@@ -595,7 +595,7 @@ public class MapGenerator {
             if (hex.genPotential == 0 || !activated) continue;
             for (int i = 0; i < 6; i++) {
                 Hex adjHex = hex.getAdjacentHex(i);
-                if (!adjHex.genFlag && !adjHex.isEmptyHex() && !propagationList.contains(adjHex)) {
+                if (!adjHex.genFlag && !adjHex.isNullHex() && !propagationList.contains(adjHex)) {
                     adjHex.genPotential = hex.genPotential - 1;
                     propagationList.add(adjHex);
                 }
@@ -710,7 +710,7 @@ public class MapGenerator {
 
 
     protected void endGeneration() {
-        gameController.fieldController.emptyHex.active = false;
+        gameController.fieldController.nullHex.active = false;
     }
 
 

@@ -26,7 +26,7 @@ public class SceneBleentoroRelease extends AbstractScene{
         panel = buttonFactory.getButton(generateRectangle(0.05, 0.33, 0.9, 0.34), 830, null);
         panel.cleatText();
         panel.addManyLines(menuControllerYio.getArrayListFromString(LanguagesManager.getInstance().getString("bleentoro_release")));
-        while (panel.text.size() < 8) {
+        while (panel.textLines.size() < 8) {
             panel.addTextLine(" ");
         }
         menuControllerYio.buttonRenderer.renderButton(panel);

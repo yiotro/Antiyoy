@@ -1,6 +1,5 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import com.badlogic.gdx.Gdx;
 import yio.tro.antiyoy.Settings;
 import yio.tro.antiyoy.menu.*;
 import yio.tro.antiyoy.menu.slider.SliderBehavior;
@@ -34,6 +33,7 @@ public class SceneMoreSettingsMenu extends AbstractScene{
     public SliderYio skinSlider;
     public SliderYio sensitivitySlider;
     private Reaction backReaction;
+    public CheckButtonYio chkResumeButton;
 
 
     public SceneMoreSettingsMenu(MenuControllerYio menuControllerYio) {
@@ -99,7 +99,7 @@ public class SceneMoreSettingsMenu extends AbstractScene{
         skinSlider = new SliderYio(menuControllerYio, -1);
         skinSlider.setValues(0, 0, 3, Animation.UP);
         skinSlider.setPosition(pos);
-        skinSlider.setLinkedButton(topLabel, 0.05);
+        skinSlider.setParentElement(topLabel, 0.05);
         skinSlider.setTitle("skin");
         skinSlider.setBehavior(new SliderBehavior() {
             @Override
@@ -112,7 +112,7 @@ public class SceneMoreSettingsMenu extends AbstractScene{
         sensitivitySlider = new SliderYio(menuControllerYio, -1);
         sensitivitySlider.setValues(0.5, 0, 9, Animation.UP);
         sensitivitySlider.setPosition(pos);
-        sensitivitySlider.setLinkedButton(topLabel, 0.2);
+        sensitivitySlider.setParentElement(topLabel, 0.2);
         sensitivitySlider.setTitle("anim_style");
         sensitivitySlider.setBehavior(new SliderBehavior() {
             @Override
@@ -184,6 +184,11 @@ public class SceneMoreSettingsMenu extends AbstractScene{
         chkLeftHanded = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 12);
         chkLeftHanded.setTouchPosition(generateRectangle(0.1, chkY - hTouchSize / 2, 0.8, hTouchSize));
         chkLeftHanded.setAnimation(Animation.DOWN);
+
+        chkY -= chkVerticalDelta;
+        chkResumeButton = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 13);
+        chkResumeButton.setTouchPosition(generateRectangle(0.1, chkY - hTouchSize / 2, 0.8, hTouchSize));
+        chkResumeButton.setAnimation(Animation.DOWN);
     }
 
 
@@ -209,7 +214,7 @@ public class SceneMoreSettingsMenu extends AbstractScene{
             chkPanel.addTextLine(LanguagesManager.getInstance().getString("replays"));
             chkPanel.addTextLine(LanguagesManager.getInstance().getString("fast_construction"));
             chkPanel.addTextLine(LanguagesManager.getInstance().getString("left_handed"));
-            chkPanel.addTextLine(LanguagesManager.getInstance().getString(" "));
+            chkPanel.addTextLine(LanguagesManager.getInstance().getString("resume_button"));
             chkPanel.addTextLine(LanguagesManager.getInstance().getString(" "));
             menuControllerYio.getButtonRenderer().renderButton(chkPanel);
         }

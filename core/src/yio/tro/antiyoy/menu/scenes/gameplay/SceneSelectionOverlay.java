@@ -76,6 +76,7 @@ public class SceneSelectionOverlay extends AbstractGameplayScene {
 
 
     private void createCoinButton() {
+        // important: there is another coin button on SceneFastConstruction
         coinButton = menuControllerYio.getButtonById(37);
         if (coinButton == null) { // init
             coinButton = buttonFactory.getButton(generateSquare(0, 0.93, 0.07), 37, null);

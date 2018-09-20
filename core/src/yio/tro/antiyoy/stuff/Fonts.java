@@ -27,7 +27,7 @@ public class Fonts {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         FONT_SIZE = (int) (0.041 * Gdx.graphics.getHeight());
 
-        parameter.size = (int) (0.95f * FONT_SIZE);
+        parameter.size = (int) (0.85f * FONT_SIZE);
         parameter.characters = getAllCharacters();
         parameter.flip = true;
         buttonFont = generator.generateFont(parameter);

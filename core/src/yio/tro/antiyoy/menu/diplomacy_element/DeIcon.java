@@ -9,6 +9,8 @@ public class DeIcon {
     public static final int ACTION_DISLIKE = 1;
     public static final int ACTION_BLACK_MARK = 2;
     public static final int ACTION_INFO = 3;
+    public static final int ACTION_TRANSFER_MONEY = 4;
+    public static final int ACTION_BUY_HEXES = 5;
 
 
     DiplomacyElement diplomacyElement;

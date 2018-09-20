@@ -5,7 +5,10 @@ import yio.tro.antiyoy.Settings;
 import yio.tro.antiyoy.SoundControllerYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.menu.keyboard.AbstractKbReaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
+import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.RectangleYio;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -34,6 +37,10 @@ public class SelectionController {
     public int defTipDelay;
     long defTipSpawnTime;
     private boolean isSomethingSelected;
+    boolean readyToRenameCity;
+    private Hex focusedHex;
+    boolean areaSelectionMode;
+    int asFilterColor; // area selection
 
 
     public SelectionController(GameController gameController) {
@@ -45,6 +52,9 @@ public class SelectionController {
         selMoneyFactor = new FactorYio();
         blackoutFactor = new FactorYio();
         tipFactor = new FactorYio();
+        readyToRenameCity = false;
+        areaSelectionMode = false;
+        asFilterColor = -1;
     }
 
 
@@ -53,20 +63,56 @@ public class SelectionController {
         if (selectedUnit != null && selUnitFactor.hasToMove()) {
             selUnitFactor.move();
         }
+        moveRenameCity();
+    }
+
+
+    private void moveRenameCity() {
+        if (!readyToRenameCity) return;
+
+        readyToRenameCity = false;
+        if (!isSomethingSelected()) return;
+
+        Province selectedProvince = gameController.fieldController.selectedProvince;
+        if (selectedProvince == null) return;
+
+        String name = selectedProvince.getName();
+
+        Scenes.sceneKeyboard.create();
+        Scenes.sceneKeyboard.setValue(name);
+        Scenes.sceneKeyboard.setReaction(new AbstractKbReaction() {
+            @Override
+            public void onInputFromKeyboardReceived(String input) {
+                if (input.length() == 0) return;
+
+                Province selectedProvince = gameController.fieldController.selectedProvince;
+                if (selectedProvince == null) return;
+
+                Hex capital = selectedProvince.getCapital();
+                gameController.namingManager.setHexName(capital, input);
+
+                selectedProvince.updateName();
+            }
+        });
     }
 
 
     void moveDefenseTips() {
-        gameController.fieldController.defenseTipFactor.move();
-        if (gameController.getCurrentTime() > defTipSpawnTime + defTipDelay) {
-            if (gameController.fieldController.defenseTipFactor.getDy() >= 0)
-                gameController.fieldController.defenseTipFactor.destroy(1, 1);
-            if (gameController.fieldController.defenseTipFactor.get() == 0 && gameController.fieldController.defenseTips.size() > 0) {
-                ListIterator iterator = gameController.fieldController.defenseTips.listIterator();
-                while (iterator.hasNext()) {
-                    Hex hex = (Hex) iterator.next();
-                    iterator.remove();
-                }
+        FactorYio defenseTipFactor = gameController.fieldController.defenseTipFactor;
+        defenseTipFactor.move();
+
+        if (gameController.getCurrentTime() <= defTipSpawnTime + defTipDelay) return;
+
+        if (defenseTipFactor.getDy() >= 0) {
+            defenseTipFactor.destroy(1, 1);
+        }
+
+        ArrayList<Hex> defenseTips = gameController.fieldController.defenseTips;
+        if (defenseTipFactor.get() == 0 && defenseTips.size() > 0) {
+            ListIterator iterator = defenseTips.listIterator();
+            while (iterator.hasNext()) {
+                Hex hex = (Hex) iterator.next();
+                iterator.remove();
             }
         }
     }
@@ -78,9 +124,36 @@ public class SelectionController {
         tipType = type;
         tipShowType = type;
         selectedUnit = null;
-        if (isTipTypeSolidObject() && gameController.fieldController.moveZone.size() > 0)
-            gameController.fieldController.hideMoveZone();
+        if (isTipTypeSolidObject() && getMoveZone().size() > 0) {
+            hideMoveZone();
+        }
         gameController.updateCurrentPriceString();
+    }
+
+
+    private ArrayList<Hex> getMoveZone() {
+        return gameController.fieldController.moveZoneManager.moveZone;
+    }
+
+
+    private void hideMoveZone() {
+        gameController.fieldController.moveZoneManager.hide();
+    }
+
+
+    public boolean checkForCityNameReaction() {
+        if (!gameController.areCityNamesEnabled()) return false;
+        if (!isSomethingSelected()) return false;
+
+        RectangleYio pos = gameController.yioGdxGame.gameView.grManager.renderCityNames.pos;
+        if (pos == null) return false;
+
+        boolean pointInside = pos.isPointInside(gameController.convertedTouchPoint, 0);
+        if (!pointInside) return false;
+
+        readyToRenameCity = true;
+
+        return true;
     }
 
 
@@ -126,29 +199,32 @@ public class SelectionController {
     }
 
 
+    public void setAreaSelectionMode(boolean areaSelectionMode) {
+        this.areaSelectionMode = areaSelectionMode;
+    }
+
+
     public boolean isSomethingSelected() {
         return gameController.fieldController.isSomethingSelected();
     }
 
 
     public void deselectAll() {
-        for (int i = 0; i < gameController.fieldController.fWidth; i++)
-            for (int j = 0; j < gameController.fieldController.fHeight; j++) {
-                gameController.fieldController.field[i][j].selected = false;
+        FieldController fieldController = gameController.fieldController;
+        for (int i = 0; i < fieldController.fWidth; i++) {
+            for (int j = 0; j < fieldController.fHeight; j++) {
+                fieldController.field[i][j].selected = false;
             }
-        ListIterator listIterator = gameController.fieldController.selectedHexes.listIterator();
-        while (listIterator.hasNext()) {
-            listIterator.next();
-            listIterator.remove();
         }
-//        if (selectedUnit != null) selectedUnit.selected = false;
+        fieldController.selectedHexes.clear();
         selectedUnit = null;
         selMoneyFactor.destroy(3, 2);
         tipFactor.setValues(0, 0);
         tipFactor.destroy(1, 1);
-        gameController.fieldController.hideMoveZone();
+        hideMoveZone();
         hideBuildOverlay();
         resetTipType();
+        areaSelectionMode = false;
     }
 
 
@@ -172,27 +248,54 @@ public class SelectionController {
 
 
     void showDefenseTip(Hex hex) {
-        gameController.fieldController.defenseTips = new ArrayList<Hex>();
+        FieldController fieldController = gameController.fieldController;
+        ArrayList<Hex> defenseTips = fieldController.defenseTips;
+
+        if (fieldController.defenseTipFactor.get() == 1) {
+            defenseTips.clear();
+        }
+
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.getAdjacentHex(i);
             if (adjHex.active && adjHex.sameColor(hex)) {
-                gameController.fieldController.defenseTips.add(adjHex);
+                defenseTips.add(adjHex);
             }
         }
-        gameController.fieldController.defenseTipFactor.setValues(0, 0);
-        gameController.fieldController.defenseTipFactor.appear(3, 1);
+        fieldController.defenseTipFactor.setValues(0, 0);
+        fieldController.defenseTipFactor.appear(3, 0.7);
         defTipSpawnTime = System.currentTimeMillis();
-        gameController.fieldController.defTipHex = hex;
+        fieldController.defTipHex = hex;
+    }
+
+
+    public Hex getDefSrcHex(Hex hex) {
+        for (int i = 0; i < 6; i++) {
+            Hex adjacentHex = hex.getAdjacentHex(i);
+            if (adjacentHex == null) continue;
+            if (!adjacentHex.active) continue;
+            if (adjacentHex.colorIndex != hex.colorIndex) continue;
+            if (!isHexGoodForDefenseTip(adjacentHex)) continue;
+
+            return adjacentHex;
+        }
+
+        return null;
     }
 
 
     public void focusedHexActions(Hex focusedHex) {
+        this.focusedHex = focusedHex;
         // don't change order in this method
 
-        debug(focusedHex);
+        debug();
 
         if (focusedHex.ignoreTouch) return;
         if (GameRules.inEditorMode) return;
+
+        if (areaSelectionMode) {
+            reactionAreaSelection();
+            return;
+        }
 
         if (!focusedHex.active) {
             deselectAll();
@@ -201,19 +304,49 @@ public class SelectionController {
 
         updateIsSomethingSelected();
 
-        if (reactionBuildStuff(focusedHex)) return;
+        if (isReadyToBuild()) {
+            reactionBuildStuff();
+            return;
+        }
 
-        reactionInsideSelection(focusedHex);
+        reactionInsideSelection();
 
-        reactionAttackEnemy(focusedHex);
+        reactionAttackEnemy();
 
-        reactionSelectProvince(focusedHex);
+        reactionSelectProvince();
 
-        reactionSelectOrMovePeacefully(focusedHex);
+        reactionSelectOrMovePeacefully();
     }
 
 
-    private void debug(Hex focusedHex) {
+    private void reactionAreaSelection() {
+        MoveZoneManager moveZoneManager = gameController.fieldController.moveZoneManager;
+
+        if (!isHexAllowedForAreaSelection(focusedHex)) return;
+
+        if (moveZoneManager.isHexInMoveZone(focusedHex)) {
+            moveZoneManager.removeHexFromMoveZoneManually(focusedHex);
+        } else {
+            moveZoneManager.addHexToMoveZoneManually(focusedHex);
+        }
+    }
+
+
+    private boolean isHexAllowedForAreaSelection(Hex hex) {
+        if (hex.isNeutral()) return false;
+        if (!hex.active) return false;
+
+        if (asFilterColor == -1) return true;
+
+        if (hex.colorIndex != asFilterColor) return false;
+        if (gameController.fieldController.getProvinceByHex(hex) == null) return false;
+        if (getMoveZone().size() > 0 && hex.colorIndex != getMoveZone().get(0).colorIndex) return false;
+
+        return true;
+    }
+
+
+    private void debug() {
 //        showDebugHexColors(focusedHex);
 //        showProvinceHexListInConsole(focusedHex);
     }
@@ -241,7 +374,7 @@ public class SelectionController {
     }
 
 
-    private void reactionSelectOrMovePeacefully(Hex focusedHex) {
+    private void reactionSelectOrMovePeacefully() {
         if (!isSomethingSelected) return;
 
         if (checkToSelectUnit(focusedHex)) return;
@@ -266,7 +399,7 @@ public class SelectionController {
 
         selectedUnit = focusedHex.unit;
         SoundControllerYio.playSound(SoundControllerYio.soundSelectUnit);
-        gameController.fieldController.detectAndShowMoveZone(selectedUnit.currentHex, selectedUnit.strength, GameRules.UNIT_MOVE_LIMIT);
+        gameController.fieldController.moveZoneManager.detectAndShowMoveZone(selectedUnit.currentHex, selectedUnit.strength, GameRules.UNIT_MOVE_LIMIT);
         selUnitFactor.setValues(0, 0);
         selUnitFactor.appear(3, 2);
         hideTip();
@@ -274,7 +407,7 @@ public class SelectionController {
     }
 
 
-    private void reactionSelectProvince(Hex focusedHex) {
+    private void reactionSelectProvince() {
         if (!gameController.isCurrentTurn(focusedHex.colorIndex)) return;
         if (!gameController.fieldController.hexHasNeighbourWithColor(focusedHex, gameController.getTurn())) return;
 
@@ -283,7 +416,7 @@ public class SelectionController {
     }
 
 
-    private void reactionAttackEnemy(Hex focusedHex) {
+    private void reactionAttackEnemy() {
         if (focusedHex.colorIndex == gameController.getTurn()) return;
         if (!focusedHex.inMoveZone) return;
         if (selectedUnit == null) return;
@@ -295,47 +428,94 @@ public class SelectionController {
     }
 
 
-    private void reactionInsideSelection(Hex focusedHex) {
+    private void reactionInsideSelection() {
         if (!isSomethingSelected) return;
 
         if (!focusedHex.selected && !focusedHex.inMoveZone) deselectAll();
 
-        if (gameController.fieldController.moveZone.size() > 0 && !focusedHex.inMoveZone) {
+        if (getMoveZone().size() > 0 && !focusedHex.inMoveZone) {
             selectedUnit = null;
-            gameController.fieldController.hideMoveZone();
+            hideMoveZone();
         }
 
-        // check to show defense tip
-        if (focusedHex.selected &&
-                gameController.fieldController.moveZone.size() == 0 &&
-                focusedHex.containsBuilding() &&
-                focusedHex.objectInside != Obj.FARM) {
-            showDefenseTip(focusedHex);
+        if (defenseTipConditions()) {
+            showAllDefenseTipsInProvince(focusedHex);
         }
     }
 
 
-    private boolean reactionBuildStuff(Hex focusedHex) {
-        if (tipFactor.get() <= 0) return false;
-        if (tipFactor.getDy() < 0) return false;
+    private boolean defenseTipConditions() {
+        if (!focusedHex.selected) return false;
+        if (getMoveZone().size() != 0) return false;
+        if (!isHexGoodForDefenseTip(focusedHex)) return false;
+
+        return true;
+    }
+
+
+    private void showAllDefenseTipsInProvince(Hex srcHex) {
+        Province provinceByHex = gameController.fieldController.getProvinceByHex(srcHex);
+
+        for (Hex hex : provinceByHex.hexList) {
+            if (!isHexGoodForDefenseTip(hex)) continue;
+            if (hex.getPos().distanceTo(srcHex.getPos()) > 0.8f * GraphicsYio.width) continue;
+
+            showDefenseTip(hex);
+        }
+
+        gameController.fieldController.defTipHex = provinceByHex.getCapital();
+    }
+
+
+    private boolean isHexGoodForDefenseTip(Hex hex) {
+        if (!hex.containsBuilding()) return false;
+
+        if (hex.objectInside == Obj.TOWER) return true;
+        if (hex.objectInside == Obj.STRONG_TOWER) return true;
+        if (hex.objectInside == Obj.TOWN) return true;
+
+        return false;
+    }
+
+
+    private boolean reactionBuildStuff() {
+        FieldController fieldController = gameController.fieldController;
 
         if (canBuildOnHex(focusedHex, tipType)) {
             buildSomethingOnHex(focusedHex);
             // else attack by building unit
-        } else if (focusedHex.isInMoveZone() && focusedHex.colorIndex != gameController.getTurn() && isTipTypeUnit() && gameController.fieldController.selectedProvince.canBuildUnit(tipType)) {
-            gameController.fieldController.buildUnit(gameController.fieldController.selectedProvince, focusedHex, tipType);
-            gameController.fieldController.selectedProvince = gameController.fieldController.getProvinceByHex(focusedHex); // when uniting provinces, selected province object may change
-            gameController.fieldController.selectAdjacentHexes(focusedHex);
-            resetTipType();
-            SoundControllerYio.playSound(SoundControllerYio.soundBuild);
         } else {
-            gameController.fieldController.setResponseAnimHex(focusedHex);
+            if (unitBuildConditions()) {
+                fieldController.buildUnit(fieldController.selectedProvince, focusedHex, tipType);
+                fieldController.selectedProvince = fieldController.getProvinceByHex(focusedHex); // when uniting provinces, selected province object may change
+                fieldController.selectAdjacentHexes(focusedHex);
+                resetTipType();
+                SoundControllerYio.playSound(SoundControllerYio.soundBuild);
+            } else {
+                fieldController.setResponseAnimHex(focusedHex);
+            }
         }
 
         hideTip();
         Scenes.sceneFastConstructionPanel.checkToReappear();
-        gameController.fieldController.hideMoveZone();
+        hideMoveZone();
+
         return true;
+    }
+
+
+    private boolean unitBuildConditions() {
+        if (!focusedHex.isInMoveZone()) return false;
+        if (focusedHex.colorIndex == gameController.getTurn()) return false;
+        if (!isTipTypeUnit()) return false;
+        if (!gameController.fieldController.selectedProvince.canBuildUnit(tipType)) return false;
+
+        return true;
+    }
+
+
+    private boolean isReadyToBuild() {
+        return tipFactor.get() > 0 && tipFactor.getDy() >= 0;
     }
 
 
@@ -418,6 +598,16 @@ public class SelectionController {
 
     public void setSelectedUnit(Unit selectedUnit) {
         this.selectedUnit = selectedUnit;
+    }
+
+
+    public void setAsFilterColor(int asFilterColor) {
+        this.asFilterColor = asFilterColor;
+    }
+
+
+    public int getAsFilterColor() {
+        return asFilterColor;
     }
 
 

@@ -3,9 +3,11 @@ package yio.tro.antiyoy.menu.render;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.slider.SliderYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.Masking;
 
 public class RenderSlider extends MenuRender {
 
@@ -40,6 +42,32 @@ public class RenderSlider extends MenuRender {
     public void renderSecondLayer(InterfaceElement element) {
         slider = (SliderYio) element;
 
+        if (slider.hasVisualHook() && slider.appearFactor.get() < 1) {
+            renderSliderWithVisualHook();
+            return;
+        }
+
+        renderInternals();
+    }
+
+
+    private void renderSliderWithVisualHook() {
+        batch.end();
+        Masking.begin();
+        menuViewYio.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        menuViewYio.drawRoundRect(slider.parentElement.getViewPosition());
+        menuViewYio.shapeRenderer.end();
+
+        batch.begin();
+        Masking.continueAfterBatchBegin();
+
+        renderInternals();
+
+        Masking.end(batch);
+    }
+
+
+    private void renderInternals() {
         checkToChangeBatchAlpha();
 
         renderBlackLine();
@@ -98,7 +126,7 @@ public class RenderSlider extends MenuRender {
 
     private void renderBorder() {
         GraphicsYio.setBatchAlpha(batch, 1);
-        GraphicsYio.renderBorder(slider.getTouchRectangle(), batch, getGameView().blackPixel);
+        GraphicsYio.renderBorder(batch, getGameView().blackPixel, slider.getTouchRectangle());
     }
 
 

@@ -8,17 +8,23 @@ import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 
+import java.util.ArrayList;
+
 public class SceneSurrenderDialog extends AbstractScene {
+
+
+    private ArrayList<String> panelText;
 
 
     public SceneSurrenderDialog(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
+        panelText = menuControllerYio.getArrayListFromString(getString("win_or_continue"));
     }
 
 
     @Override
     public void create() {
-        Scenes.sceneTutorialTip.createTutorialTip(menuControllerYio.getArrayListFromString(LanguagesManager.getInstance().getString("win_or_continue")));
+        Scenes.sceneTutorialTip.createTutorialTip(panelText);
         addWinButtonToTutorialTip();
     }
 
@@ -33,12 +39,16 @@ public class SceneSurrenderDialog extends AbstractScene {
         winButton.appearFactor.appear(3, 1);
         winButton.disableTouchAnimation();
 
-        ButtonYio okButton = menuControllerYio.getButtonById(53);
-        okButton.setPosition(generateRectangle(0.5, 0.1, 0.5, 0.05));
-        okButton.setTextLine(getString("continue"));
+        menuControllerYio.getButtonById(53).destroy();
+
+        ButtonYio okButton = buttonFactory.getButton(generateRectangle(0.5, 0.1, 0.5, 0.05), 55, getString("continue"));
+//        okButton.setPosition(generateRectangle(0.5, 0.1, 0.5, 0.05));
+//        okButton.setTextLine(getString("continue"));
         okButton.setReaction(Reaction.rbRefuseEarlyGameEnd);
         okButton.setAnimation(Animation.FIXED_DOWN);
+        okButton.setShadow(false);
+        okButton.appearFactor.appear(3, 1);
         okButton.disableTouchAnimation();
-        menuControllerYio.getButtonRenderer().renderButton(okButton);
+//        menuControllerYio.getButtonRenderer().renderButton(okButton);
     }
 }

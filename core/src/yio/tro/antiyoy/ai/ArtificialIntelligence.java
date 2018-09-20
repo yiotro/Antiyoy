@@ -17,7 +17,7 @@ public abstract class ArtificialIntelligence {
 
     final GameController gameController;
     final Random random;
-    protected final int color;
+    protected int color;
     protected ArrayList<Province> nearbyProvinces;
     protected ArrayList<Unit> unitsReadyToMove;
     private ArrayList<Hex> tempResultList;
@@ -425,5 +425,21 @@ public abstract class ArtificialIntelligence {
             if (hex.containsUnit()) c++;
         }
         return c;
+    }
+
+
+    public int getColor() {
+        return color;
+    }
+
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
+
+    @Override
+    public String toString() {
+        return "[AI: " + color + "]";
     }
 }

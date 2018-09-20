@@ -28,8 +28,19 @@ public class MoveBehaviorMaterial extends MoveBehavior {
 
 
     private void moveSpawn(FactorYio fy) {
-        if (fy.f < 0.01) fy.f = 0.01;
-        if (fy.f > 0.99) fy.f = 1;
+        if (fy.f < 0.01) {
+            fy.f = 0.01;
+        }
+
+        if (fy.f > 0.99) {
+            fy.f += 0.001;
+
+            if (fy.f > 1) {
+                fy.f = 1;
+            }
+
+            return;
+        }
 
         if (fy.f < 0.5) {
             fy.f += 0.05 * fy.speedMultiplier * fy.f;

@@ -18,12 +18,18 @@ public class UlevConquestOfItalicPeninsula extends AbstractUserLevel{
 
     @Override
     public String getAuthor() {
-        return "Fire Enigma";
+        return "Axel";
     }
 
 
     @Override
     public String getKey() {
         return "italic_conquest_1";
+    }
+
+
+    @Override
+    public boolean isHistorical() {
+        return true;
     }
 }

@@ -6,9 +6,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import yio.tro.antiyoy.SoundControllerYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.ClickDetector;
+import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.render.MenuRender;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.*;
 import yio.tro.antiyoy.stuff.scroll_engine.ScrollEngineYio;
 
@@ -38,6 +41,11 @@ public class SaveSlotSelector extends InterfaceElement {
     boolean operationType;
     private String slotPrefsString;
     private float topLabelOffset;
+    LongTapDetector longTapDetector;
+    boolean readyToProcessLongTap;
+    boolean scrollLock;
+    boolean readyToDeleteItem;
+    SsItem targetItem;
 
 
     public SaveSlotSelector(MenuControllerYio menuControllerYio, int id) {
@@ -64,9 +72,27 @@ public class SaveSlotSelector extends InterfaceElement {
         bottomEdge = new RectangleYio();
         operationType = false;
         slotPrefsString = SaveSystem.SAVE_SLOT_PREFS;
+        readyToDeleteItem = false;
 
         initMetrics();
+        initLongTapDetector();
         initScrollEngine();
+    }
+
+
+    private void initLongTapDetector() {
+        longTapDetector = new LongTapDetector() {
+            @Override
+            public void onLongTapDetected() {
+                onLongTap();
+            }
+        };
+    }
+
+
+    private void onLongTap() {
+        readyToProcessLongTap = true;
+        scrollLock = true;
     }
 
 
@@ -184,6 +210,7 @@ public class SaveSlotSelector extends InterfaceElement {
         updateHook();
         updateLabelPosition();
         updateEdgeRectangles();
+        longTapDetector.move();
     }
 
 
@@ -273,10 +300,14 @@ public class SaveSlotSelector extends InterfaceElement {
     private void onAppear() {
         alphaTriggered = false;
         scrollEngineYio.resetToBottom();
+        readyToProcessLongTap = false;
+        readyToDeleteItem = false;
+        targetItem = null;
+        scrollLock = false;
     }
 
 
-    private void updateAll() {
+    public void updateAll() {
         updateItems();
         updateMetrics();
         updateScrollEngineLimits();
@@ -298,23 +329,70 @@ public class SaveSlotSelector extends InterfaceElement {
             return true;
         }
 
+        if (readyToProcessLongTap) {
+            readyToProcessLongTap = false;
+            processLongTap();
+            return true;
+        }
+
+        if (readyToDeleteItem) {
+            readyToDeleteItem = false;
+            showConfirmDeleteDialog();
+            return true;
+        }
+
         return false;
+    }
+
+
+    private void showConfirmDeleteDialog() {
+        Scenes.sceneConfirmDeleteSlot.create();
+        Scenes.sceneConfirmDeleteSlot.setCurrentYesReaction(new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                deleteTargetItem();
+                Scenes.sceneSaveLoad.create();
+                updateAll();
+            }
+        });
+    }
+
+
+    public void deleteTargetItem() {
+        SaveSystem saveSystem = menuControllerYio.yioGdxGame.saveSystem;
+        saveSystem.deleteSlot(targetItem.key, SaveSystem.SAVE_SLOT_PREFS);
+    }
+
+
+    private void processLongTap() {
+        SsItem longTappedItem = null;
+
+        for (SsItem item : items) {
+            if (!item.isTouched(currentTouch)) continue;
+            longTappedItem = item;
+            break;
+        }
+
+        if (longTappedItem == null) return;
+        if (longTappedItem.key.equals(SaveSystem.AUTOSAVE_KEY)) return; // don't edit autosave slot
+
+        Scenes.sceneContextListMenu.create();
+        Scenes.sceneContextListMenu.contextListMenuElement.setEditableItem(longTappedItem);
     }
 
 
     private void onSlotSelected() {
         String key = clickedItem.key;
-        SaveSystem saveSystem = menuControllerYio.yioGdxGame.saveSystem;
-
         if (operationType) {
-            loadSlot(key, saveSystem);
+            loadSlot(key);
         } else {
-            saveSlot(key, saveSystem);
+            saveSlot(key);
         }
     }
 
 
-    private void saveSlot(String key, SaveSystem saveSystem) {
+    void saveSlot(String key) {
+        SaveSystem saveSystem = menuControllerYio.yioGdxGame.saveSystem;
         if (key.equals(SaveSystem.AUTOSAVE_KEY)) return; // don't overwrite autosave in selector
 
         if (!saveSystem.containsKey(key, slotPrefsString)) {
@@ -335,7 +413,24 @@ public class SaveSlotSelector extends InterfaceElement {
     }
 
 
-    private void loadSlot(String key, SaveSystem saveSystem) {
+    void onSlotRenamed(SsItem renamedItem) {
+        String key = renamedItem.key;
+        if (key.equals(SaveSystem.AUTOSAVE_KEY)) return;
+
+        SaveSlotInfo saveSlotInfo = new SaveSlotInfo();
+
+        Preferences slotPrefs = Gdx.app.getPreferences(key);
+        saveSlotInfo.name = renamedItem.getEditableName();
+        saveSlotInfo.description = SaveSystem.getDescriptionString(slotPrefs);
+        saveSlotInfo.key = key;
+
+        SaveSystem saveSystem = menuControllerYio.yioGdxGame.saveSystem;
+        saveSystem.editSlot(key, saveSlotInfo, slotPrefsString);
+    }
+
+
+    private void loadSlot(String key) {
+        SaveSystem saveSystem = menuControllerYio.yioGdxGame.saveSystem;
         SaveSlotInfo slotInfo = saveSystem.getSlotInfo(key, slotPrefsString);
         if (slotInfo.name.length() < 3) {
             System.out.println("clicked on empty slot");
@@ -366,8 +461,11 @@ public class SaveSlotSelector extends InterfaceElement {
         touched = (screenY < position.y + position.height);
 
         if (touched) {
+            readyToProcessLongTap = false;
+            scrollLock = false;
             clickDetector.touchDown(currentTouch);
             scrollEngineYio.updateCanSoftCorrect(false);
+            longTapDetector.onTouchDown(currentTouch);
 
             checkToSelectItems();
         }
@@ -390,9 +488,12 @@ public class SaveSlotSelector extends InterfaceElement {
         if (touched) {
             updateCurrentTouch(screenX, screenY);
 
-            scrollEngineYio.setSpeed(currentTouch.y - lastTouch.y);
+            if (!scrollLock) {
+                scrollEngineYio.setSpeed(currentTouch.y - lastTouch.y);
+            }
 
             clickDetector.touchDrag(currentTouch);
+            longTapDetector.onTouchDrag(currentTouch);
         }
 
         return touched;
@@ -407,6 +508,7 @@ public class SaveSlotSelector extends InterfaceElement {
         if (touched) {
             touched = false;
             clickDetector.touchUp(currentTouch);
+            longTapDetector.onTouchUp(currentTouch);
 
             if (clickDetector.isClicked()) {
                 onClick();
@@ -459,6 +561,11 @@ public class SaveSlotSelector extends InterfaceElement {
         this.operationType = operationType;
 
         updateAll();
+    }
+
+
+    public boolean getOperationType() {
+        return operationType;
     }
 
 

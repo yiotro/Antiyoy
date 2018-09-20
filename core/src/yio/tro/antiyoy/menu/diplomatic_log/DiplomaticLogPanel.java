@@ -50,6 +50,18 @@ public class DiplomaticLogPanel extends ScrollableListYio {
                     Scenes.sceneDiplomaticLog.hide();
                 }
             }
+
+
+            @Override
+            public void onItemRenamed(ListItemYio item) {
+
+            }
+
+
+            @Override
+            public void onItemDeleteRequested(ListItemYio item) {
+
+            }
         });
     }
 
@@ -127,7 +139,7 @@ public class DiplomaticLogPanel extends ScrollableListYio {
         for (DiplomaticMessage message : log.messages) {
             if (message.recipient != mainEntity) continue;
 
-            ListItemYio listItemYio = addItem(message.getKey(), LanguagesManager.getInstance().getString(message.type.name()), " ");
+            ListItemYio listItemYio = addItem(message.getKey(), message.getListName(), " ");
             int senderColor = gameController.getColorIndexWithOffset(message.getSenderColor());
             listItemYio.setBckViewType(senderColor);
         }

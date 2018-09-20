@@ -39,6 +39,7 @@ public class SceneEditorActions extends AbstractScene{
         basePanel = buttonFactory.getButton(generateRectangle(0.1, y, 0.8, 0.4), 181, null);
         updateBaseText();
         basePanel.setTouchable(false);
+        basePanel.setIgnorePauseResume(true);
 
         addInternalButton(182, "play", EditorReactions.rbEditorPlay);
         addInternalButton(183, "export", EditorReactions.rbEditorExport);
@@ -62,14 +63,22 @@ public class SceneEditorActions extends AbstractScene{
         int currentSlotNumber = levelEditor.getCurrentSlotNumber();
         if (lastSlotNumber == currentSlotNumber) return; // no need to update
 
-        basePanel.addTextLine(getString("slot") + " " + currentSlotNumber);
+        basePanel.addTextLine(getSlotString(currentSlotNumber));
 
         basePanel.addEmptyLines(7);
 
         menuControllerYio.buttonRenderer.renderButton(basePanel);
-        System.out.println("SceneEditorActions.updateBaseText");
 
         lastSlotNumber = currentSlotNumber;
+    }
+
+
+    private String getSlotString(int currentSlotNumber) {
+        if (currentSlotNumber == LevelEditor.TEMPORARY_SLOT_NUMBER) {
+            return getString("temp_slot");
+        }
+
+        return getString("slot") + " " + currentSlotNumber;
     }
 
 
@@ -77,6 +86,7 @@ public class SceneEditorActions extends AbstractScene{
         ButtonYio button = buttonFactory.getButton(generateRectangle(0.1, y, 0.8, bHeight), id, getString(key));
         button.setReaction(reaction);
         button.setShadow(false);
+        button.setVisualHook(basePanel);
 
         y += bHeight;
     }

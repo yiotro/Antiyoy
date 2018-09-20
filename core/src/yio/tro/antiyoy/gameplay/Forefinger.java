@@ -21,7 +21,7 @@ public class Forefinger {
 
     public Forefinger(GameController gameController) {
         this.gameController = gameController;
-        jumpingUnit = new Unit(gameController, gameController.fieldController.emptyHex, 0);
+        jumpingUnit = new Unit(gameController, gameController.fieldController.nullHex, 0);
         sizeFactor = new FactorYio();
         jumpingUnit.startJumping();
         jumpingUnit.jumpGravity /= 2;

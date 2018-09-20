@@ -96,6 +96,7 @@ public class SceneEditorChecks extends AbstractEditorPanel{
             basePanel.addEmptyLines(1);
             basePanel.setTextOffset(0.07f * GraphicsYio.width);
             basePanel.loadCustomBackground("gray_pixel.png");
+            basePanel.setIgnorePauseResume(true);
             menuControllerYio.buttonRenderer.renderButton(basePanel);
         }
         basePanel.setTouchable(false);

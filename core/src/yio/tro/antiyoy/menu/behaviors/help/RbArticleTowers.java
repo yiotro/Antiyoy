@@ -11,6 +11,6 @@ public class RbArticleTowers extends Reaction {
 
     @Override
     public void perform(ButtonYio buttonYio) {
-        Scenes.sceneInfoMenu.create("help_towers_article", Reaction.rbHelpIndex, 18);
+        Scenes.sceneAboutGame.create("help_towers_article", Reaction.rbHelpIndex, 18);
     }
 }

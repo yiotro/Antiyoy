@@ -28,6 +28,10 @@ public abstract class MenuRender {
     public static RenderSpecialThanksDialog renderSpecialThanksDialog = new RenderSpecialThanksDialog();
     public static RenderTurnStartDialog renderTurnStartDialog = new RenderTurnStartDialog();
     public static RenderDiplomaticLogPanel renderDiplomaticLogPanel = new RenderDiplomaticLogPanel();
+    public static RenderKeyboardElement renderKeyboardElement = new RenderKeyboardElement();
+    public static RenderContextListMenuElement renderContextListMenuElement = new RenderContextListMenuElement();
+    public static RenderShadow renderShadow = new RenderShadow();
+    public static RenderTextViewElement renderTextViewElement = new RenderTextViewElement();
 
     protected MenuViewYio menuViewYio;
     protected SpriteBatch batch;

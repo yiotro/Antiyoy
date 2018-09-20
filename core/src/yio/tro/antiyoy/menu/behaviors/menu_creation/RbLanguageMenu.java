@@ -10,6 +10,7 @@ public class RbLanguageMenu extends Reaction {
     @Override
     public void perform(ButtonYio buttonYio) {
         Settings.getInstance().saveSettings();
+        Settings.getInstance().saveMoreSettings();
         Scenes.sceneLanguages.create();
     }
 }

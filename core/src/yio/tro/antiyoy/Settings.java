@@ -13,9 +13,9 @@ public class Settings {
 
     static Settings instance = null;
     YioGdxGame yioGdxGame;
-    public static boolean ask_to_end_turn = false;
+    public static boolean askToEndTurn = false;
     public static boolean autosave;
-    public static boolean long_tap_to_move;
+    public static boolean longTapToMove;
     public static boolean soundEnabled = true;
     public static float sensitivity;
     public static boolean waterTexture;
@@ -27,6 +27,7 @@ public class Settings {
     public static boolean fastConstruction;
     public static boolean musicEnabled;
     public static boolean leftHandMode;
+    public static boolean resumeButtonEnabled;
 
 
     public static void initialize() {
@@ -56,8 +57,7 @@ public class Settings {
 
         // sound
         int soundIndex = prefs.getInteger("sound", 0);
-        if (soundIndex == 0) soundEnabled = false;
-        else soundEnabled = true;
+        soundEnabled = (soundIndex != 0);
         menuControllerYio.getCheckButtonById(5).setChecked(soundEnabled);
 
         // skin
@@ -65,9 +65,8 @@ public class Settings {
         gameView.loadSkin(skinIndex);
 
         // autosave
-        int AS = prefs.getInteger("autosave", 0);
-        autosave = false;
-        if (AS == 1) autosave = true;
+        int AS = prefs.getInteger("autosave", 1);
+        autosave = (AS == 1);
         menuControllerYio.getCheckButtonById(1).setChecked(autosave);
 
         // sensitivity
@@ -76,9 +75,8 @@ public class Settings {
 
         // ask to end turn
         int ATET = prefs.getInteger("ask_to_end_turn", 0);
-        ask_to_end_turn = (ATET == 1);
-//        menuControllerYio.sliders.get(8).setRunnerValue(ATET);
-        menuControllerYio.getCheckButtonById(3).setChecked(ask_to_end_turn);
+        askToEndTurn = (ATET == 1);
+        menuControllerYio.getCheckButtonById(3).setChecked(askToEndTurn);
 
         // show city names
         int cityNames = prefs.getInteger("city_names", 0);
@@ -86,8 +84,8 @@ public class Settings {
         menuControllerYio.getCheckButtonById(4).setChecked(cityNames == 1);
 
         // long tap to move
-        long_tap_to_move = prefs.getBoolean("long_tap_to_move", true);
-        applyCheckButtonIfNotNull(menuControllerYio.getCheckButtonById(7), long_tap_to_move);
+        longTapToMove = prefs.getBoolean("long_tap_to_move", true);
+        applyCheckButtonIfNotNull(menuControllerYio.getCheckButtonById(7), longTapToMove);
 
         // water texture
         waterTexture = prefs.getBoolean("water_texture", false);
@@ -105,6 +103,9 @@ public class Settings {
 
         leftHandMode = prefs.getBoolean("left_hand_mode", false);
         applyCheckButtonIfNotNull(menuControllerYio.getCheckButtonById(12), leftHandMode);
+
+        resumeButtonEnabled = prefs.getBoolean("resume_button", false);
+        applyCheckButtonIfNotNull(menuControllerYio.getCheckButtonById(13), resumeButtonEnabled);
 
         MusicManager.getInstance().onMusicStatusChanged();
     }
@@ -137,6 +138,7 @@ public class Settings {
         prefs.putBoolean("replays_enabled", menuControllerYio.getCheckButtonById(8).isChecked());
         prefs.putBoolean("fast_construction", menuControllerYio.getCheckButtonById(9).isChecked());
         prefs.putBoolean("left_hand_mode", menuControllerYio.getCheckButtonById(12).isChecked());
+        prefs.putBoolean("resume_button", menuControllerYio.getCheckButtonById(13).isChecked());
 
         MusicManager.getInstance().onMusicStatusChanged();
 

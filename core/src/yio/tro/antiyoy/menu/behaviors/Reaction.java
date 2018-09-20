@@ -27,7 +27,7 @@ public abstract class Reaction {
 
 
     public static final RbExit rbExit = new RbExit();
-    public static final RbInfo rbInfo = new RbInfo();
+    public static final RbAboutGame RB_ABOUT_GAME = new RbAboutGame();
     public static final RbMainMenu rbMainMenu = new RbMainMenu();
     public static final RbCampaignMenu rbCampaignMenu = new RbCampaignMenu();
     public static final RbStartSkirmishGame rbStartSkirmishGame = new RbStartSkirmishGame();
@@ -39,10 +39,8 @@ public abstract class Reaction {
     public static final RbBuildUnit rbBuildUnit = new RbBuildUnit();
     public static final RbBuildSolidObject rbBuildSolidObject = new RbBuildSolidObject();
     public static final RbUndo rbUndo = new RbUndo();
-    public static RbDebugActions rbDebugActions = new RbDebugActions();
     public static final RbChooseGameModeMenu rbChooseGameModeMenu = new RbChooseGameModeMenu();
     public static final RbSkirmishMenu rbSkirmishMenu = new RbSkirmishMenu();
-    public static RbTestMenu rbTestMenu = new RbTestMenu();
     public static final RbStatisticsMenu rbStatisticsMenu = new RbStatisticsMenu();
     public static final RbSaveGame rbSaveGame = new RbSaveGame();
     public static final RbLoadGame rbLoadGame = new RbLoadGame();
@@ -70,7 +68,6 @@ public abstract class Reaction {
     public static final RbBackFromSkirmish rbBackFromSkirmish = new RbBackFromSkirmish();
     public static final RbMoreCampaignOptions rbMoreCampaignOptions = new RbMoreCampaignOptions();
     public static final RbExitToCampaign rbExitToCampaign = new RbExitToCampaign();
-    public static final RbTutorialIndex rbTutorialIndex = new RbTutorialIndex();
     public static final RbLanguageMenu rbLanguageMenu = new RbLanguageMenu();
     public static final RbResetProgress rbResetProgress = new RbResetProgress();
     public static final RbConfirmReset rbConfirmReset = new RbConfirmReset();

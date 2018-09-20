@@ -31,7 +31,7 @@ public class SceneReplays extends AbstractScene{
     private void createReplaySelector() {
         if (replaySelector == null) {
             replaySelector = new ReplaySelector(menuControllerYio, -1);
-            replaySelector.setPosition(generateRectangle(0.1, 0.07, 0.8, 0.75));
+            replaySelector.setPosition(generateRectangle(0.05, 0.05, 0.9, 0.8));
             menuControllerYio.addElementToScene(replaySelector);
         }
 

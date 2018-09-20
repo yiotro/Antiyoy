@@ -12,7 +12,7 @@ public class CampaignProgressManager {
 
     public static final String PROGRESS_PREFS_GENERIC = "antiyoy.progress";
     public static final String PROGRESS_PREFS_SLAY = "antiyoy.progress.slay"; // maybe will be used later
-    public static final int INDEX_OF_LAST_LEVEL = 105;
+    public static final int INDEX_OF_LAST_LEVEL = 110;
 
     private static CampaignProgressManager instance;
     public int currentLevelIndex;
@@ -40,7 +40,7 @@ public class CampaignProgressManager {
     }
 
 
-    public boolean completedCampaignLevel(int winColor) {
+    public boolean areCampaignLevelCompletionConditionsSatisfied(int winColor) {
         return GameRules.campaignMode && winColor == 0;
     }
 
@@ -74,10 +74,12 @@ public class CampaignProgressManager {
 
     private void saveProgress() {
         StringBuilder builder = new StringBuilder();
+
         for (int i = 0; i < progress.length; i++) {
             if (!progress[i]) continue;
             builder.append(i).append(" ");
         }
+
         Preferences preferences = getPreferences();
         preferences.putString("completed_levels", builder.toString());
         preferences.flush();
@@ -143,7 +145,7 @@ public class CampaignProgressManager {
 
     private void importOldProgress() {
         Preferences preferences = Gdx.app.getPreferences("main");
-        int progress = preferences.getInteger("progress", 1); // 1 - default value;
+        int progress = preferences.getInteger("progress", 0); // 0 - default value;
 
         for (int i = 0; i < progress; i++) {
             markLevelAsCompleted(i);

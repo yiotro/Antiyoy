@@ -11,6 +11,6 @@ public class RbArticleTrees extends Reaction {
 
     @Override
     public void perform(ButtonYio buttonYio) {
-        Scenes.sceneInfoMenu.create("help_trees_article", Reaction.rbHelpIndex, 18);
+        Scenes.sceneAboutGame.create("help_trees_article", Reaction.rbHelpIndex, 18);
     }
 }

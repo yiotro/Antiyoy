@@ -7,6 +7,7 @@ import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.menu.scenes.*;
+import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.stuff.RectangleYio;
 
@@ -171,6 +172,15 @@ public class MenuControllerYio {
     }
 
 
+    public ButtonYio getCoinButton() {
+        if (Settings.fastConstruction) {
+            return getButtonById(610);
+        } else {
+            return getButtonById(37);
+        }
+    }
+
+
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         for (int i = interfaceElements.size() - 1; i >= 0; i--) {
             InterfaceElement interfaceElement = interfaceElements.get(i);
@@ -329,6 +339,7 @@ public class MenuControllerYio {
     public void destroyButton(int id) {
         ButtonYio buttonYio = getButtonById(id);
         if (buttonYio == null) return;
+
         buttonYio.destroy();
     }
 
@@ -378,13 +389,27 @@ public class MenuControllerYio {
 
 
     public ButtonYio spawnBackButton(int id, Reaction reaction) {
-        ButtonYio backButton = buttonFactory.getButton(generateRectangle(0.05, 0.9, 0.4, 0.07), id, null);
-        loadButtonOnce(backButton, "back_icon.png");
+        double x = 0.05;
+        double y = 0.9;
+        double width = 0.4;
+        double height = 0.07;
+
+        ButtonYio backButton = buttonFactory.getButton(generateRectangle(x, y, width, height), id, null);
+        loadButtonOnce(backButton, "menu/back_icon.png");
         backButton.setShadow(true);
         backButton.setAnimation(Animation.UP);
         backButton.setReaction(reaction);
         backButton.setTouchOffset(0.05f * Gdx.graphics.getHeight());
         yioGdxGame.registerBackButtonId(id);
+
+        double arrowVerSize = 0.07;
+        RectangleYio position = generateSquare(x + width / 2 - GraphicsYio.convertToWidth(arrowVerSize) / 2, y + height / 2 - arrowVerSize / 2, arrowVerSize);
+        ButtonYio arrowIcon = buttonFactory.getButton(position, id + 317263313, null);
+        loadButtonOnce(arrowIcon, "menu/arrow.png");
+        arrowIcon.setShadow(false);
+        arrowIcon.setAnimation(Animation.UP);
+        arrowIcon.setTouchable(false);
+
         return backButton;
     }
 

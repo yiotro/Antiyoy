@@ -15,7 +15,7 @@ import yio.tro.antiyoy.gameplay.rules.RulesetGeneric;
 import yio.tro.antiyoy.gameplay.rules.RulesetSlay;
 import yio.tro.antiyoy.gameplay.user_levels.UserLevelProgressManager;
 import yio.tro.antiyoy.menu.ButtonYio;
-import yio.tro.antiyoy.menu.behaviors.Reaction;
+import yio.tro.antiyoy.menu.scenes.SceneSkirmishMenu;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.Fonts;
 import yio.tro.antiyoy.stuff.GraphicsYio;
@@ -71,9 +71,12 @@ public class GameController {
     public Ruleset ruleset;
     ClickDetector clickDetector;
     public PointYio touchPoint;
+    public PointYio convertedTouchPoint;
     public SnapshotManager snapshotManager;
     public SpeedManager speedManager;
     public ReplayManager replayManager;
+    public NamingManager namingManager;
+    public SkipLevelManager skipLevelManager;
 
 
     public GameController(YioGdxGame yioGdxGame) {
@@ -84,18 +87,20 @@ public class GameController {
         selectionController = new SelectionController(this);
         marchDelay = 500;
         cameraController = new CameraController(this);
-        unitList = new ArrayList<Unit>();
+        unitList = new ArrayList<>();
 
         mapGeneratorSlay = new MapGenerator(this);
+        convertedTouchPoint = new PointYio();
         mapGeneratorGeneric = new MapGeneratorGeneric(this);
-        aiList = new ArrayList<ArtificialIntelligence>();
+        aiList = new ArrayList<>();
         initialParameters = new LoadingParameters();
         touchPoint = new PointYio();
         snapshotManager = new SnapshotManager(this);
         fieldController = new FieldController(this);
-        jumperUnit = new Unit(this, fieldController.emptyHex, 0);
+        jumperUnit = new Unit(this, fieldController.nullHex, 0);
         speedManager = new SpeedManager(this);
         replayManager = new ReplayManager(this);
+        namingManager = new NamingManager(this);
 
         matchStatistics = new MatchStatistics();
         gameSaver = new GameSaver(this);
@@ -104,6 +109,7 @@ public class GameController {
         aiFactory = new AiFactory(this);
         debugActionsManager = new DebugActionsManager(this);
         clickDetector = new ClickDetector();
+        skipLevelManager = new SkipLevelManager(this);
 
         LoadingManager.getInstance().setGameController(this);
     }
@@ -151,7 +157,7 @@ public class GameController {
 
 
     public void move() {
-        currentTime = System.currentTimeMillis();
+        updateCurrentTime();
         matchStatistics.increaseTimeCount();
         cameraController.move();
 
@@ -159,9 +165,7 @@ public class GameController {
         checkToEndTurn();
         checkToUpdateCacheByAnim();
 
-        if (fieldController.letsCheckAnimHexes && currentTime > fieldController.timeToCheckAnimHexes && (doesCurrentTurnEndDependOnAnimHexes())) {
-            fieldController.checkAnimHexes();
-        }
+        doCheckAnimHexes();
 
         moveCheckToMarch();
         moveUnits();
@@ -169,17 +173,31 @@ public class GameController {
         selectionController.moveSelections();
 
         jumperUnit.moveJumpAnim();
-        fieldController.moveZoneFactor.move();
+        fieldController.moveZoneManager.move();
         selectionController.getBlackoutFactor().move();
         selectionController.moveDefenseTips();
 
-        if (fieldController.moveZone.size() > 0 && fieldController.moveZoneFactor.get() < 0.01) {
-            fieldController.clearMoveZone();
-        }
+        fieldController.moveZoneManager.checkToClear();
         selectionController.tipFactor.move();
 
         fieldController.moveResponseAnimHex();
         moveTutorialStuff();
+        namingManager.move();
+        skipLevelManager.move();
+    }
+
+
+    private void updateCurrentTime() {
+        currentTime = System.currentTimeMillis();
+    }
+
+
+    private void doCheckAnimHexes() {
+        if (!fieldController.letsCheckAnimHexes) return;
+        if (currentTime <= fieldController.timeToCheckAnimHexes) return;
+        if (!doesCurrentTurnEndDependOnAnimHexes()) return;
+
+        fieldController.checkAnimHexes();
     }
 
 
@@ -233,7 +251,7 @@ public class GameController {
 
 
     private void moveCheckToMarch() {
-        if (!Settings.long_tap_to_move) return;
+        if (!Settings.longTapToMove) return;
         if (ignoreMarch) return;
         if (!checkToMarch) return;
         if (!checkConditionsToMarch()) return;
@@ -312,7 +330,7 @@ public class GameController {
     public boolean haveToAskToEndTurn() {
         if (GameRules.tutorialMode) return false;
 
-        return Settings.ask_to_end_turn && fieldController.atLeastOneUnitIsReadyToMove();
+        return Settings.askToEndTurn && fieldController.atLeastOneUnitIsReadyToMove();
     }
 
 
@@ -347,7 +365,7 @@ public class GameController {
     private int checkIfWeHaveWinner() {
         if (fieldController.activeHexes.size() == 0) return -1;
         if (GameRules.diplomacyEnabled) return fieldController.diplomacyManager.getDiplomaticWinner();
-        if (fieldController.numberOfActiveProvinces() != 1) return -1;
+        if (!fieldController.isThereOnlyOneKingdomOnMap()) return -1;
 
         for (Province province : fieldController.provinces) {
             if (province.hexList.get(0).isNeutral()) continue;
@@ -388,10 +406,16 @@ public class GameController {
         if (!proposedSurrender) {
             int possibleWinner = fieldController.possibleWinner();
             if (possibleWinner >= 0 && isPlayerTurn(possibleWinner)) {
-                Scenes.sceneSurrenderDialog.create();
+                doProposeSurrender();
                 proposedSurrender = true;
             }
         }
+    }
+
+
+    private void doProposeSurrender() {
+        onGameFinished(turn);
+        Scenes.sceneSurrenderDialog.create();
     }
 
 
@@ -465,7 +489,7 @@ public class GameController {
     private void checkToTagCampaignLevel(int winColor) {
         CampaignProgressManager instance = CampaignProgressManager.getInstance();
 
-        if (instance.completedCampaignLevel(winColor)) {
+        if (instance.areCampaignLevelCompletionConditionsSatisfied(winColor)) {
             instance.markLevelAsCompleted(instance.currentLevelIndex);
             Scenes.sceneCampaignMenu.updateLevelSelector();
         }
@@ -552,7 +576,7 @@ public class GameController {
     }
 
 
-    private void checkToAutoSave() {
+    public void checkToAutoSave() {
         if (!Settings.autosave) return;
         if (turn != 0) return;
         if (playersNumber <= 0) return;
@@ -582,20 +606,30 @@ public class GameController {
         if (!isPlayerTurn()) return;
 
         if (isInMultiplayerMode()) {
-            Scenes.sceneTurnStartDialog.create();
-
-            int nextTurnIndex = turn;
-            while (fieldController.hasAtLeastOneProvince()) {
-                nextTurnIndex = getNextTurnIndex(nextTurnIndex);
-                if (isPlayerTurn(nextTurnIndex) && fieldController.numberOfProvincesWithColor(nextTurnIndex) > 0) {
-                    break;
-                }
-            }
-
-            Scenes.sceneTurnStartDialog.dialog.setColor(getColorIndexWithOffset(nextTurnIndex));
+            endTurnInMultiplayerMode();
         } else {
             applyReadyToEndTurn();
         }
+    }
+
+
+    private void endTurnInMultiplayerMode() {
+        if (!Settings.askToEndTurn) {
+            applyReadyToEndTurn();
+            return;
+        }
+
+        Scenes.sceneTurnStartDialog.create();
+
+        int nextTurnIndex = turn;
+        while (fieldController.hasAtLeastOneProvince()) {
+            nextTurnIndex = getNextTurnIndex(nextTurnIndex);
+            if (isPlayerTurn(nextTurnIndex) && fieldController.numberOfProvincesWithColor(nextTurnIndex) > 0) {
+                break;
+            }
+        }
+
+        Scenes.sceneTurnStartDialog.dialog.setColor(getColorIndexWithOffset(nextTurnIndex));
     }
 
 
@@ -617,6 +651,8 @@ public class GameController {
         speedManager.defaultValues();
         replayManager.defaultValues();
         GameRules.defaultValues();
+        namingManager.defaultValues();
+        skipLevelManager.defaultValues();
 
         proposedSurrender = false;
         backgroundVisible = true;
@@ -630,6 +666,8 @@ public class GameController {
 
 
     public void initTutorial() {
+        Settings.fastConstruction = false;
+
         if (GameRules.slayRules) {
             tutorialScript = new TutorialScriptSlayRules(this);
         } else {
@@ -658,6 +696,8 @@ public class GameController {
         aiFactory.createAiList(GameRules.difficulty);
         selectionController.deselectAll();
         replayManager.onEndCreation();
+        namingManager.onEndCreation();
+        skipLevelManager.onEndCreation();
     }
 
 
@@ -684,24 +724,6 @@ public class GameController {
 
     public void createCamera() {
         cameraController.createCamera();
-    }
-
-
-    void createAiList() {
-        aiFactory.createAiList(GameRules.difficulty);
-    }
-
-
-    int getRandomLevelSize() {
-        switch (random.nextInt(3)) {
-            default:
-            case 0:
-                return FieldController.SIZE_SMALL;
-            case 1:
-                return FieldController.SIZE_MEDIUM;
-            case 2:
-                return FieldController.SIZE_BIG;
-        }
     }
 
 
@@ -740,7 +762,7 @@ public class GameController {
     }
 
 
-    public boolean isCityNamesEnabled() {
+    public boolean areCityNamesEnabled() {
         return cityNamesEnabled;
     }
 
@@ -791,7 +813,7 @@ public class GameController {
     }
 
 
-    void takeSnapshot() {
+    public void takeSnapshot() {
         snapshotManager.takeSnapshot();
     }
 
@@ -843,12 +865,7 @@ public class GameController {
 
 
     void tickleMoneySign() {
-        ButtonYio coinButton;
-        if (Settings.fastConstruction) {
-            coinButton = yioGdxGame.menuControllerYio.getButtonById(610);
-        } else {
-            coinButton = yioGdxGame.menuControllerYio.getButtonById(37);
-        }
+        ButtonYio coinButton = yioGdxGame.menuControllerYio.getCoinButton();
         coinButton.appearFactor.setValues(1, 0.13);
         coinButton.appearFactor.appear(4, 1);
     }
@@ -929,26 +946,22 @@ public class GameController {
 
 
     public void detectAndShowMoveZoneForBuildingUnit(int strength) {
-//        if (selectedHexes.size() == 0) {
-//            YioGdxGame.say("detected bug #3128739172, GameController.detectAndShowMoveZoneForBuildingUnit()");
-//            return;
-//        }
-        fieldController.detectAndShowMoveZoneForBuildingUnit(strength);
+        fieldController.moveZoneManager.detectAndShowMoveZoneForBuildingUnit(strength);
     }
 
 
     public void detectAndShowMoveZoneForFarm() {
-        fieldController.detectAndShowMoveZoneForFarm();
+        fieldController.moveZoneManager.detectAndShowMoveZoneForFarm();
     }
 
 
     public ArrayList<Hex> detectMoveZone(Hex startHex, int strength) {
-        return fieldController.detectMoveZone(startHex, strength);
+        return fieldController.moveZoneManager.detectMoveZone(startHex, strength);
     }
 
 
     public ArrayList<Hex> detectMoveZone(Hex startHex, int strength, int moveLimit) {
-        return fieldController.detectMoveZone(startHex, strength, moveLimit);
+        return fieldController.moveZoneManager.detectMoveZone(startHex, strength, moveLimit);
     }
 
 
@@ -1015,7 +1028,7 @@ public class GameController {
         }
 
         if (isPlayerTurn()) {
-            fieldController.hideMoveZone();
+            fieldController.moveZoneManager.hide();
             updateBalanceString();
         }
     }
@@ -1056,6 +1069,8 @@ public class GameController {
         fieldController.updateFocusedHex();
         showFocusedHexInConsole();
 
+        if (selectionController.checkForCityNameReaction()) return;
+
         if (fieldController.focusedHex != null && isPlayerTurn()) {
             focusedHexActions(fieldController.focusedHex);
         }
@@ -1065,7 +1080,9 @@ public class GameController {
     private void showFocusedHexInConsole() {
         if (!DebugFlags.showFocusedHexInConsole) return;
 
-        YioGdxGame.say(fieldController.focusedHex.index1 + " " + fieldController.focusedHex.index2);
+        Hex focusedHex = fieldController.focusedHex;
+        YioGdxGame.say("Hex: " + SceneSkirmishMenu.getColorStringBySliderIndex(focusedHex.colorIndex + 1) + " " + focusedHex.index1 + " " + focusedHex.index2);
+        System.out.println("focusedHex.colorIndex = " + focusedHex.colorIndex);
     }
 
 

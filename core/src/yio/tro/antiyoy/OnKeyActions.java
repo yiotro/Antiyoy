@@ -32,40 +32,45 @@ public class OnKeyActions {
             }
         }
 
-        if (keycode == Input.Keys.SPACE) {
-            onSpaceButtonPressed();
-        }
-
-        if (keycode == Input.Keys.NUM_1) {
-            onBuildUnitButtonPressed();
-        }
-
-        if (keycode == Input.Keys.NUM_2) {
-            onBuildObjectButtonPressed();
-        }
-
-        if (keycode == Input.Keys.D) {
-            onDebugButtonPressed();
-        }
-
-        if (keycode == Input.Keys.Z) {
-            yioGdxGame.gameController.cameraController.setTargetZoomLevel(0.9f);
-        }
-
-        if (keycode == Input.Keys.NUM_0) {
-            onEditLevelButtonPressed();
-        }
-
-        if (keycode == Input.Keys.C) {
-            openCheatScreen();
-        }
-
-        if (keycode == Input.Keys.S) {
-            yioGdxGame.menuControllerYio.specialActionController.perform();
-        }
-
-        if (keycode == Input.Keys.L) {
-            yioGdxGame.saveSystem.loadTopSlot();
+        switch (keycode) {
+            case Input.Keys.SPACE:
+                onSpaceButtonPressed();
+                break;
+            case Input.Keys.NUM_1:
+                onBuildUnitButtonPressed();
+                break;
+            case Input.Keys.NUM_2:
+                onBuildObjectButtonPressed();
+                break;
+            case Input.Keys.D:
+                onDebugButtonPressed();
+                break;
+            case Input.Keys.Z:
+                yioGdxGame.gameController.cameraController.setTargetZoomLevel(0.9f);
+                break;
+            case Input.Keys.NUM_0:
+                onEditLevelButtonPressed();
+                break;
+            case Input.Keys.C:
+                openCheatScreen();
+                break;
+            case Input.Keys.S:
+                yioGdxGame.menuControllerYio.specialActionController.perform();
+                break;
+            case Input.Keys.L:
+                yioGdxGame.saveSystem.loadTopSlot();
+                break;
+            case Input.Keys.I:
+                yioGdxGame.gameController.getLevelEditor().importFromClipboardToExtraSlot();
+                break;
+            case Input.Keys.X:
+                Scenes.sceneCampaignMenu.create();
+                yioGdxGame.setGamePaused(true);
+                break;
+            case Input.Keys.U:
+                Scenes.sceneUserLevels.create();
+                yioGdxGame.setGamePaused(true);
+                break;
         }
 
         checkFastConstructionPanel(keycode);
@@ -107,7 +112,7 @@ public class OnKeyActions {
 
 
     private void onEditLevelButtonPressed() {
-        yioGdxGame.gameController.getLevelEditor().launchEditCampaignLevelMode();
+        yioGdxGame.gameController.getLevelEditor().launchEditLevelMode();
     }
 
 

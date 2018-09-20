@@ -12,12 +12,19 @@ import java.util.ArrayList;
 public class SceneTutorialTip extends AbstractGameplayScene {
 
 
+    private final ArrayList<String> text;
+
+
     public SceneTutorialTip(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
+        text = new ArrayList<>();
     }
 
 
-    public void createTutorialTip(ArrayList<String> text) {
+    public void createTutorialTip(ArrayList<String> srcText) {
+        text.clear();
+        text.addAll(srcText);
+
         menuControllerYio.getButtonById(31).setTouchable(false);
         menuControllerYio.getButtonById(32).setTouchable(false);
 
@@ -49,7 +56,7 @@ public class SceneTutorialTip extends AbstractGameplayScene {
         textPanel.setPosition(generateRectangle(0, 0.1, 1, 0.3));
         textPanel.cleatText();
         textPanel.addManyLines(text);
-        while (textPanel.text.size() < lines) {
+        while (textPanel.textLines.size() < lines) {
             textPanel.addTextLine(" ");
         }
         menuControllerYio.getButtonRenderer().renderButton(textPanel);
@@ -76,6 +83,11 @@ public class SceneTutorialTip extends AbstractGameplayScene {
         if (menuControllerYio.getButtonById(54) != null) { // help index button
             menuControllerYio.getButtonById(54).destroy();
             menuControllerYio.getButtonById(54).appearFactor.destroy(1, 3);
+        }
+
+        if (menuControllerYio.getButtonById(55) != null) { // help index button
+            menuControllerYio.getButtonById(55).destroy();
+            menuControllerYio.getButtonById(55).appearFactor.destroy(1, 3);
         }
 
         menuControllerYio.getButtonById(30).setTouchable(true);

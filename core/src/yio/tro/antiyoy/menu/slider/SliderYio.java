@@ -27,7 +27,7 @@ public class SliderYio extends InterfaceElement implements SliderListener {
     public FactorYio sizeFactor, appearFactor;
     RectangleYio pos;
     String valueString;
-    public ButtonYio linkedButton;
+    public SliderParentElement parentElement;
     ArrayList<SliderListener> listeners;
     private RectangleYio touchRectangle; // used for debug
     SliderBehavior behavior;
@@ -36,6 +36,7 @@ public class SliderYio extends InterfaceElement implements SliderListener {
     public PointYio titlePosition, valueStringPosition;
     public String title;
     float titleOffset, valueOffset;
+    ButtonYio visualHook;
 
 
     public SliderYio(MenuControllerYio menuControllerYio, int id) {
@@ -62,6 +63,7 @@ public class SliderYio extends InterfaceElement implements SliderListener {
         valueStringPosition = new PointYio();
         titleOffset = 0.125f * GraphicsYio.width;
         valueOffset = 0.065f * GraphicsYio.width;
+        visualHook = null;
         title = null;
     }
 
@@ -166,19 +168,19 @@ public class SliderYio extends InterfaceElement implements SliderListener {
 
 
     private void updateVerticalPos() {
-        if (linkedButton != null) {
+        if (parentElement != null) {
             updateVerticalPosByLinkedButton();
             return;
         }
         switch (animType) {
             case Animation.UP:
-                currentVerticalPos = (float) ((1 - appearFactor.get()) * (1.1f * Gdx.graphics.getHeight() - pos.y) + pos.y);
+                animUp();
                 break;
             case Animation.DOWN:
-                currentVerticalPos = (float) (appearFactor.get() * (pos.y + 0.1f * Gdx.graphics.getHeight()) - 0.1f * Gdx.graphics.getHeight());
+                animDown();
                 break;
             case Animation.FROM_CENTER:
-                currentVerticalPos = (float) (0.5f * Gdx.graphics.getHeight() + (pos.y - 0.5f * Gdx.graphics.getHeight()) * appearFactor.get());
+                animFromCenter();
                 break;
             default:
             case Animation.DEFAULT:
@@ -189,13 +191,28 @@ public class SliderYio extends InterfaceElement implements SliderListener {
     }
 
 
+    private void animFromCenter() {
+        currentVerticalPos = (float) (GraphicsYio.height / 2 + (pos.y - GraphicsYio.height / 2) * appearFactor.get());
+    }
+
+
+    private void animDown() {
+        currentVerticalPos = (float) (appearFactor.get() * (pos.y + 0.1f * Gdx.graphics.getHeight()) - 0.1f * Gdx.graphics.getHeight());
+    }
+
+
+    private void animUp() {
+        currentVerticalPos = (float) ((1 - appearFactor.get()) * (1.1f * Gdx.graphics.getHeight() - pos.y) + pos.y);
+    }
+
+
     private void animNone() {
         currentVerticalPos = (float) pos.y;
     }
 
 
     private void updateVerticalPosByLinkedButton() {
-        currentVerticalPos = (float) (linkedButton.animPos.y + linkedDelta);
+        currentVerticalPos = (float) (parentElement.getViewPosition().y + linkedDelta);
     }
 
 
@@ -401,8 +418,8 @@ public class SliderYio extends InterfaceElement implements SliderListener {
     }
 
 
-    public void setLinkedButton(ButtonYio linkedButton, double linkedDelta) {
-        this.linkedButton = linkedButton;
+    public void setParentElement(SliderParentElement parentElement, double linkedDelta) {
+        this.parentElement = parentElement;
         this.linkedDelta = (float) linkedDelta * GraphicsYio.height;
     }
 
@@ -487,6 +504,21 @@ public class SliderYio extends InterfaceElement implements SliderListener {
 
     public float getLinkedDelta() {
         return linkedDelta;
+    }
+
+
+    public boolean hasVisualHook() {
+        return visualHook != null;
+    }
+
+
+    public ButtonYio getVisualHook() {
+        return visualHook;
+    }
+
+
+    public void setVisualHook(ButtonYio visualHook) {
+        this.visualHook = visualHook;
     }
 
 

@@ -70,6 +70,18 @@ public class SceneLanguages extends AbstractScene{
                 public void applyItem(ListItemYio item) {
                     applyLanguage(item.key);
                 }
+
+
+                @Override
+                public void onItemRenamed(ListItemYio item) {
+
+                }
+
+
+                @Override
+                public void onItemDeleteRequested(ListItemYio item) {
+
+                }
             });
         }
 

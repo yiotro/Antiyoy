@@ -17,14 +17,13 @@ public class LanguagesManager {
     private static final String LANGUAGES_FILE = "languages.xml";
     private static final String DEFAULT_LANGUAGE = "en_UK";
 
-    //private HashMap<String, HashMap<String, String>> _strings = null;
     private HashMap<String, String> _language = null;
     private String _languageName = null;
 
 
     private LanguagesManager() {
         // Create language map
-        _language = new HashMap<String, String>();
+        _language = new HashMap<>();
 
         // Try to load system language
         // If it fails, fallback to default language
@@ -132,7 +131,9 @@ public class LanguagesManager {
             for (int i = 0; i < numLanguages; ++i) {
                 Node language = languages.item(i);
 
-                if (language.getAttributes().getNamedItem("name").getTextContent().equals(languageName)) {
+                Node secondName = language.getAttributes().getNamedItem("second_name");
+                if (    language.getAttributes().getNamedItem("name").getTextContent().equals(languageName) ||
+                        (secondName != null && secondName.getTextContent().equals(languageName))) {
                     _language.clear();
                     Element languageElement = (Element) language;
                     NodeList strings = languageElement.getElementsByTagName("string");
@@ -142,7 +143,6 @@ public class LanguagesManager {
                         NamedNodeMap attributes = strings.item(j).getAttributes();
                         String key = attributes.getNamedItem("key").getTextContent();
                         String value = attributes.getNamedItem("value").getTextContent();
-//                        System.out.println(value);
                         value = value.replace("<br />", "\n");
                         _language.put(key, value);
                     }

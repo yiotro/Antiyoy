@@ -34,7 +34,7 @@ public class GameSaver {
         prefs.putInteger("save_level_size", gameController.fieldController.levelSize);
         prefs.putInteger("save_player_number", gameController.playersNumber);
         prefs.putBoolean("save_campaign_mode", GameRules.campaignMode);
-        prefs.putInteger("save_current_level", CampaignProgressManager.getInstance().currentLevelIndex);
+        prefs.putInteger("save_current_level", getCurrentLevelIndexForSave());
         prefs.putInteger("save_difficulty", GameRules.difficulty);
         prefs.putInteger("save_color_offset", gameController.colorIndexViewOffset);
         prefs.putBoolean("slay_rules", GameRules.slayRules);
@@ -45,6 +45,16 @@ public class GameSaver {
         if (GameRules.ulKey != null) {
             prefs.putString("ul_key", GameRules.ulKey);
         }
+        prefs.putBoolean("editor_color_fix_applied", GameRules.editorColorFixApplied);
+    }
+
+
+    private int getCurrentLevelIndexForSave() {
+        if (!GameRules.campaignMode) {
+            return -1; 
+        }
+
+        return CampaignProgressManager.getInstance().currentLevelIndex;
     }
 
 
@@ -126,8 +136,15 @@ public class GameSaver {
         saveStatistics();
         saveDiplomacy();
         saveInitialLevelString();
+        saveNamings();
         prefs.putString("save_active_hexes", getActiveHexesString());
         prefs.flush();
+    }
+
+
+    private void saveNamings() {
+        String saveString = gameController.namingManager.saveToString();
+        prefs.putString("namings", saveString);
     }
 
 
@@ -226,7 +243,7 @@ public class GameSaver {
     }
 
 
-    private void loadStatistics() {
+    public void loadStatistics() {
         MatchStatistics matchStatistics = gameController.matchStatistics;
         matchStatistics.turnsMade = prefs.getInteger("save_stat_turns_made", matchStatistics.turnsMade);
         matchStatistics.unitsDied = prefs.getInteger("save_stat_units_died", matchStatistics.unitsDied);
@@ -253,18 +270,24 @@ public class GameSaver {
         instance.applyPrefs(prefs);
         instance.activeHexes = activeHexesString;
         LoadingManager.getInstance().startGame(instance);
+        loadNamings();
         loadStatistics();
         loadDiplomacy();
         loadInitialLevelString();
     }
 
 
-    private void loadInitialLevelString() {
+    public void loadNamings() {
+        gameController.namingManager.loadFromString(prefs.getString("namings"));
+    }
+
+
+    public void loadInitialLevelString() {
         gameController.fieldController.initialLevelString = prefs.getString("initial_level", null);
     }
 
 
-    private void loadDiplomacy() {
+    public void loadDiplomacy() {
         if (!GameRules.diplomacyEnabled) return;
 
         DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;

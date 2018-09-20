@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import yio.tro.antiyoy.menu.slider.SliderParentElement;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
 import yio.tro.antiyoy.SoundControllerYio;
@@ -14,7 +15,7 @@ import yio.tro.antiyoy.factor_yio.FactorYio;
 import java.util.ArrayList;
 
 
-public class ButtonYio {
+public class ButtonYio implements SliderParentElement{
 
     public static final int ACTION_DELAY = 50;
     public static final int DEFAULT_TOUCH_DELAY = 1000;
@@ -29,18 +30,20 @@ public class ButtonYio {
     private long lastTimeTouched;
     public boolean currentlyTouched;
     private int touchDelay, animType;
-    public final ArrayList<String> text;
+    public final ArrayList<String> textLines;
     public final Color backColor;
     private boolean needToPerformAction;
     private long timeToPerformAction;
     public float hor, ver, cx, cy, touchX, touchY, animR;
     public float x1, x2, y1, y2;
-    private float deltaSizeArgument, deltaSize, touchOffset, textOffset;
+    private float touchOffset, textOffset;
     Sound pressSound;
     String texturePath;
-    public boolean hasShadow, mandatoryShadow, rectangularMask; // mandatory shadow - draw shadow right before button
-    public boolean onlyShadow, touchAnimation, lockAction, deltaAnimationEnabled;
+    public boolean hasShadow, rectangularMask; // mandatory shadow - draw shadow right before button
+    public boolean onlyShadow, touchAnimation, lockAction;
     boolean ignorePauseResume;
+    ButtonYio visualHook;
+    private float f;
 
 
     public ButtonYio(RectangleYio position, int id, MenuControllerYio menuControllerYio) {
@@ -54,115 +57,174 @@ public class ButtonYio {
         appearFactor = new FactorYio();
         selectionFactor = new FactorYio();
         selAlphaFactor = new FactorYio();
-        text = new ArrayList<String>();
+        textLines = new ArrayList<String>();
         backColor = new Color(0.5f, 0.5f, 0.5f, 1);
         hasShadow = true;
-        mandatoryShadow = false;
         texturePath = null;
         animPos = new RectangleYio(0, 0, 0, 0);
-        deltaAnimationEnabled = false;
         pressSound = null;
         textOffset = 0;
         customBackgroundForText = null;
         ignorePauseResume = false;
+        visualHook = null;
     }
 
 
     public void move() {
-        if (appearFactor.hasToMove()) appearFactor.move();
-        if (selectionFactor.hasToMove()) {
-            selectionFactor.move();
-            if (lockAction && selectionFactor.get() == 1) lockAction = false;
-        }
-        if (currentlyTouched) selAlphaFactor.move();
-        if (deltaAnimationEnabled) {
-            deltaSizeArgument += 0.1f;
-            deltaSize = 0.98f + 0.04f * (float) Math.cos(deltaSizeArgument);
-        }
-        if (currentlyTouched && System.currentTimeMillis() - lastTimeTouched > touchDelay && selAlphaFactor.get() == 0) {
-            currentlyTouched = false;
-        }
-        float factor = appearFactor.get();
+        moveAppearFactor();
+        moveSelection();
+        moveSelAlphaFactor();
+        checkToDisableCurrentlyTouched();
+        updateAnimPos();
+    }
+
+
+    private void updateAnimPos() {
+        f = appearFactor.get();
+
         switch (animType) {
             case Animation.DEFAULT:
-                hor = (float) (0.5 * factor * position.width);
-                ver = (float) (0.5 * factor * position.height);
-                cx = (float) position.x + 0.5f * (float) position.width;
-                cy = (float) position.y + 0.5f * (float) position.height;
-                x1 = cx - hor;
-                x2 = cx + hor;
-                y1 = cy - ver;
-                y2 = cy + ver;
+                animDefault();
                 break;
             case Animation.UP:
-                x1 = (float) position.x;
-                x2 = x1 + (float) position.width;
-                hor = 0.5f * (float) position.width;
-                ver = 0.5f * (float) position.height;
-                y1 = (float) position.y + (float) ((1 - factor) * (menuControllerYio.yioGdxGame.h - position.y));
-                y2 = y1 + (float) position.height;
+                animUp();
                 break;
             case Animation.DOWN:
-                x1 = (float) position.x;
-                x2 = x1 + (float) position.width;
-                hor = 0.5f * (float) position.width;
-                ver = 0.5f * (float) position.height;
-                y1 = (float) (factor * (position.y + position.height)) - (float) position.height;
-                y2 = y1 + (float) position.height;
+                animDown();
                 break;
             case Animation.SOLID:
-                x1 = (float) position.x;
-                x2 = x1 + (float) position.width;
-                hor = 0.5f * (float) position.width;
-                ver = 0.5f * (float) position.height;
-                y1 = (float) position.y;
-                y2 = y1 + (float) position.height;
+                animSolid();
                 break;
             case Animation.FROM_CENTER:
-                hor = (float) (0.5 * factor * position.width);
-                ver = (float) (0.5 * factor * position.height);
-                cx = (float) position.x + 0.5f * (float) position.width;
-                cy = (float) position.y + 0.5f * (float) position.height;
-                cx -= (1 - factor) * (cx - 0.5f * menuControllerYio.yioGdxGame.w);
-                cy -= (1 - factor) * (cy - 0.5f * menuControllerYio.yioGdxGame.h);
-                x1 = cx - hor;
-                x2 = cx + hor;
-                y1 = cy - ver;
-                y2 = cy + ver;
+                animFromCenter();
                 break;
             case Animation.FIXED_DOWN:
-                x1 = (float) position.x;
-                x2 = x1 + (float) position.width;
-                hor = 0.5f * (float) position.width;
-                ver = 0.5f * (float) position.height;
-                y1 = (float) (position.y - (1 - factor) * 0.6 * GraphicsYio.height);
-                y2 = y1 + (float) position.height;
+                animFixedDown();
                 break;
             case Animation.FIXED_UP:
-                x1 = (float) position.x;
-                x2 = x1 + (float) position.width;
-                hor = 0.5f * (float) position.width;
-                ver = 0.5f * (float) position.height;
-                y1 = (float) (position.y + (1 - factor) * 0.6 * GraphicsYio.height);
-                y2 = y1 + (float) position.height;
+                animFixedUp();
                 break;
             case Animation.LEFT:
-                x1 = (float) (position.x - (1 - factor) * (position.width));
-                x2 = x1 + (float) position.width;
-                hor = 0.5f * (float) position.width;
-                ver = 0.5f * (float) position.height;
-                y1 = (float) position.y;
-                y2 = y1 + (float) position.height;
+                animLeft();
                 break;
         }
 
-        if (deltaAnimationEnabled) {
-            cx = x1 + hor;
-            cy = y1 + ver;
-            animPos.set(cx - deltaSize * hor, cy - deltaSize * ver, deltaSize * 2 * hor, deltaSize * 2 * ver);
-        } else {
-            animPos.set(x1, y1, 2 * hor, 2 * ver);
+        animPos.set(x1, y1, 2 * hor, 2 * ver);
+    }
+
+
+    private void checkToDisableCurrentlyTouched() {
+        if (currentlyTouched && System.currentTimeMillis() - lastTimeTouched > touchDelay && selAlphaFactor.get() == 0) {
+            currentlyTouched = false;
         }
+    }
+
+
+    private void moveSelAlphaFactor() {
+        if (!currentlyTouched) return;
+
+        selAlphaFactor.move();
+    }
+
+
+    private void moveSelection() {
+        if (!selectionFactor.hasToMove()) return;
+
+        selectionFactor.move();
+        if (lockAction && selectionFactor.get() == 1) lockAction = false;
+    }
+
+
+    private void moveAppearFactor() {
+        if (!appearFactor.hasToMove()) return;
+
+        appearFactor.move();
+    }
+
+
+    private void animLeft() {
+        x1 = (float) (position.x - (1 - f) * (position.width));
+        x2 = x1 + (float) position.width;
+        hor = 0.5f * (float) position.width;
+        ver = 0.5f * (float) position.height;
+        y1 = (float) position.y;
+        y2 = y1 + (float) position.height;
+    }
+
+
+    private void animFixedUp() {
+        x1 = (float) position.x;
+        x2 = x1 + (float) position.width;
+        hor = 0.5f * (float) position.width;
+        ver = 0.5f * (float) position.height;
+        y1 = (float) (position.y + (1 - f) * 0.6 * GraphicsYio.height);
+        y2 = y1 + (float) position.height;
+    }
+
+
+    private void animFixedDown() {
+        x1 = (float) position.x;
+        x2 = x1 + (float) position.width;
+        hor = 0.5f * (float) position.width;
+        ver = 0.5f * (float) position.height;
+        y1 = (float) (position.y - (1 - f) * 0.6 * GraphicsYio.height);
+        y2 = y1 + (float) position.height;
+    }
+
+
+    private void animFromCenter() {
+        hor = (float) (0.5 * f * position.width);
+        ver = (float) (0.5 * f * position.height);
+        cx = (float) position.x + 0.5f * (float) position.width;
+        cy = (float) position.y + 0.5f * (float) position.height;
+        cx -= (1 - f) * (cx - 0.5f * menuControllerYio.yioGdxGame.w);
+        cy -= (1 - f) * (cy - 0.5f * menuControllerYio.yioGdxGame.h);
+        x1 = cx - hor;
+        x2 = cx + hor;
+        y1 = cy - ver;
+        y2 = cy + ver;
+    }
+
+
+    private void animSolid() {
+        x1 = (float) position.x;
+        x2 = x1 + (float) position.width;
+        hor = 0.5f * (float) position.width;
+        ver = 0.5f * (float) position.height;
+        y1 = (float) position.y;
+        y2 = y1 + (float) position.height;
+    }
+
+
+    private void animDown() {
+        x1 = (float) position.x;
+        x2 = x1 + (float) position.width;
+        hor = 0.5f * (float) position.width;
+        ver = 0.5f * (float) position.height;
+        y1 = (float) (f * (position.y + position.height)) - (float) position.height;
+        y2 = y1 + (float) position.height;
+    }
+
+
+    private void animUp() {
+        x1 = (float) position.x;
+        x2 = x1 + (float) position.width;
+        hor = 0.5f * (float) position.width;
+        ver = 0.5f * (float) position.height;
+        y1 = (float) position.y + (float) ((1 - f) * (menuControllerYio.yioGdxGame.h - position.y));
+        y2 = y1 + (float) position.height;
+    }
+
+
+    private void animDefault() {
+        hor = (float) (0.5 * f * position.width);
+        ver = (float) (0.5 * f * position.height);
+        cx = (float) position.x + 0.5f * (float) position.width;
+        cy = (float) position.y + 0.5f * (float) position.height;
+        x1 = cx - hor;
+        x2 = cx + hor;
+        y1 = cy - ver;
+        y2 = cy + ver;
     }
 
 
@@ -280,7 +342,7 @@ public class ButtonYio {
 
 
     public void cleatText() {
-        text.clear();
+        textLines.clear();
     }
 
 
@@ -291,12 +353,7 @@ public class ButtonYio {
 
 
     public ArrayList<String> getText() {
-        return text;
-    }
-
-
-    public void enableDeltaAnimation() {
-        deltaAnimationEnabled = true;
+        return textLines;
     }
 
 
@@ -306,17 +363,24 @@ public class ButtonYio {
 
 
     public void addTextLine(String textLine) {
-        text.add(textLine);
+        textLines.add(textLine);
     }
 
 
     public void addManyLines(ArrayList<String> lines) {
-        text.addAll(lines);
+        textLines.addAll(lines);
     }
 
 
     public void addEmptyLines(int quantity) {
         for (int k = 0; k < quantity; k++) {
+            addTextLine(" ");
+        }
+    }
+
+
+    public void applyNumberOfLines(int targetNumber) {
+        while (textLines.size() < targetNumber) {
             addTextLine(" ");
         }
     }
@@ -380,16 +444,6 @@ public class ButtonYio {
 
     public void setShadow(boolean hasShadow) {
         this.hasShadow = hasShadow;
-    }
-
-
-    public boolean isShadowMandatory() {
-        return mandatoryShadow;
-    }
-
-
-    public void setMandatoryShadow(boolean mandatoryShadow) {
-        this.mandatoryShadow = mandatoryShadow;
     }
 
 
@@ -464,5 +518,21 @@ public class ButtonYio {
 
     public void setTextOffset(float textOffset) {
         this.textOffset = textOffset;
+    }
+
+
+    public void setVisualHook(ButtonYio visualHook) {
+        this.visualHook = visualHook;
+    }
+
+
+    public boolean hasVisualHook() {
+        return visualHook != null;
+    }
+
+
+    @Override
+    public RectangleYio getViewPosition() {
+        return animPos;
     }
 }

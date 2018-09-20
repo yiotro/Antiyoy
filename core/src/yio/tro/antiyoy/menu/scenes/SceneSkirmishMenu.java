@@ -27,6 +27,7 @@ public class SceneSkirmishMenu extends AbstractScene {
     public SliderYio mapSizeSlider;
     public SliderYio playersSlider;
     public SliderYio colorsSlider;
+    private ButtonYio moreButton;
 
 
     public SceneSkirmishMenu(MenuControllerYio menuControllerYio) {
@@ -96,7 +97,7 @@ public class SceneSkirmishMenu extends AbstractScene {
         difficultySlider = new SliderYio(menuControllerYio, -1);
         difficultySlider.setValues(0.33, 1, 5, Animation.SOLID);
         difficultySlider.setPosition(pos);
-        difficultySlider.setLinkedButton(topLabel, 0.2);
+        difficultySlider.setParentElement(topLabel, 0.2);
         difficultySlider.setTitle("difficulty");
         difficultySlider.setBehavior(new SliderBehavior() {
             @Override
@@ -109,7 +110,7 @@ public class SceneSkirmishMenu extends AbstractScene {
         mapSizeSlider = new SliderYio(menuControllerYio, -1);
         mapSizeSlider.setValues(0.5, 1, 3, Animation.SOLID);
         mapSizeSlider.setPosition(pos);
-        mapSizeSlider.setLinkedButton(topLabel, 0.05);
+        mapSizeSlider.setParentElement(topLabel, 0.05);
         mapSizeSlider.setTitle("map_size");
         mapSizeSlider.setBehavior(new SliderBehavior() {
             @Override
@@ -122,7 +123,7 @@ public class SceneSkirmishMenu extends AbstractScene {
         playersSlider = new SliderYio(menuControllerYio, -1);
         playersSlider.setValues(0.2, 0, 5, Animation.SOLID);
         playersSlider.setPosition(pos);
-        playersSlider.setLinkedButton(bottomLabel, 0.24);
+        playersSlider.setParentElement(bottomLabel, 0.24);
         playersSlider.setTitle("player_number");
         playersSlider.setBehavior(new SliderBehavior() {
             @Override
@@ -143,7 +144,7 @@ public class SceneSkirmishMenu extends AbstractScene {
         colorsSlider = new SliderYio(menuControllerYio, -1);
         colorsSlider.setValues(0.6, 2, 6, Animation.SOLID);
         colorsSlider.setPosition(pos);
-        colorsSlider.setLinkedButton(bottomLabel, 0.09);
+        colorsSlider.setParentElement(bottomLabel, 0.09);
         colorsSlider.setTitle("color_number");
         colorsSlider.setBehavior(new SliderBehavior() {
             @Override
@@ -195,7 +196,7 @@ public class SceneSkirmishMenu extends AbstractScene {
 
 
     private void createMoreButton() {
-        ButtonYio moreButton = buttonFactory.getButton(generateRectangle(0.56, 0.08, 0.3, 0.04), 86, getString("more"));
+        moreButton = buttonFactory.getButton(generateRectangle(0.56, 0.08, 0.3, 0.04), 86, getString("more"));
         moreButton.setReaction(Reaction.rbMoreSkirmishOptions);
         moreButton.setAnimation(Animation.FIXED_DOWN);
         moreButton.setShadow(false);

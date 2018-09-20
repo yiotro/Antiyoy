@@ -172,6 +172,11 @@ public class ReplayManager {
     }
 
 
+    public void onHexChangedColorWithoutObviousReason(Hex hex) {
+        replay.addAction(new RaHexColorChanged(hex, hex.colorIndex));
+    }
+
+
     public void setReplay(Replay replay) {
         this.replay = replay;
     }

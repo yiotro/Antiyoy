@@ -11,8 +11,6 @@ import yio.tro.antiyoy.menu.CheckButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 
-import java.util.ArrayList;
-
 public class SceneSettingsMenu extends AbstractScene{
 
 
@@ -20,6 +18,7 @@ public class SceneSettingsMenu extends AbstractScene{
     private double labelTopY;
     Reaction soundChkReaction;
     private CheckButtonYio chkSound;
+    private ButtonYio mainLabel;
 
 
     public SceneSettingsMenu(MenuControllerYio menuControllerYio) {
@@ -58,6 +57,8 @@ public class SceneSettingsMenu extends AbstractScene{
         moreSettingsButton.setReaction(Reaction.rbMoreSettings);
         moreSettingsButton.setAnimation(Animation.FROM_CENTER);
         moreSettingsButton.disableTouchAnimation();
+        moreSettingsButton.setShadow(false);
+        moreSettingsButton.setVisualHook(mainLabel);
         moreSettingsButton.setTouchOffset(0.05f * Gdx.graphics.getHeight());
     }
 
@@ -97,7 +98,7 @@ public class SceneSettingsMenu extends AbstractScene{
     private void createMainLabel() {
         labelHeight = 0.52;
         labelTopY = 0.7;
-        ButtonYio mainLabel = buttonFactory.getButton(generateRectangle(0.04, labelTopY - labelHeight, 0.92, labelHeight), 192, null);
+        mainLabel = buttonFactory.getButton(generateRectangle(0.04, labelTopY - labelHeight, 0.92, labelHeight), 192, null);
         if (mainLabel.notRendered()) {
             mainLabel.cleatText();
 
@@ -126,11 +127,11 @@ public class SceneSettingsMenu extends AbstractScene{
 
 
     private void createInfoButton() {
-        ButtonYio infoButton = buttonFactory.getButton(generateSquare(0.8, 0.89, 0.15 * YioGdxGame.screenRatio), 191, null);
-        menuControllerYio.loadButtonOnce(infoButton, "info_icon.png");
+        ButtonYio infoButton = buttonFactory.getButton(generateSquare(0.95 - 0.07 / YioGdxGame.screenRatio, 0.9, 0.07), 191, null);
+        menuControllerYio.loadButtonOnce(infoButton, "menu/info_icon.png");
         infoButton.setShadow(true);
         infoButton.setAnimation(Animation.UP);
-        infoButton.setReaction(Reaction.rbInfo);
+        infoButton.setReaction(Reaction.RB_ABOUT_GAME);
         infoButton.disableTouchAnimation();
     }
 }

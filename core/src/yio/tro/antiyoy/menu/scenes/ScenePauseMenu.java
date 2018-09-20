@@ -1,9 +1,14 @@
 package yio.tro.antiyoy.menu.scenes;
 
+import yio.tro.antiyoy.gameplay.DebugFlags;
+import yio.tro.antiyoy.gameplay.SkipLevelManager;
+import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.stuff.GraphicsYio;
 
 public class ScenePauseMenu extends AbstractScene{
 
@@ -13,10 +18,38 @@ public class ScenePauseMenu extends AbstractScene{
     private double bottomY;
     private double x;
     private double bWidth;
+    private ButtonYio cheatsButton;
+    private ButtonYio restartButton;
+    private ButtonYio chooseLevelButton;
+    private ButtonYio mainMenuButton;
+    private ButtonYio basePanel;
+    private Reaction rbCheats;
+    private double y;
+    private ButtonYio specialActionButton;
+    private Reaction rbSkipLevelMenu;
 
 
     public ScenePauseMenu(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
+
+        initReactions();
+    }
+
+
+    private void initReactions() {
+        rbCheats = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                Scenes.sceneCheatsMenu.create();
+            }
+        };
+
+        rbSkipLevelMenu = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                Scenes.sceneConfirmSkipLevel.create();
+            }
+        };
     }
 
 
@@ -27,42 +60,118 @@ public class ScenePauseMenu extends AbstractScene{
         menuControllerYio.getYioGdxGame().beginBackgroundChange(3, true, true);
 
         initMetrics();
-        ButtonYio basePanel = buttonFactory.getButton(generateRectangle(x, bottomY, bWidth, 4 * bHeight), 40, null);
+        basePanel = buttonFactory.getButton(generateRectangle(x, bottomY, bWidth, 4 * bHeight), 40, null);
         basePanel.setTouchable(false);
         basePanel.onlyShadow = true;
         basePanel.setAnimation(Animation.FROM_CENTER);
 
-        double y = bottomY;
+        y = bottomY;
 
-        ButtonYio mainMenuButton = buttonFactory.getButton(generateRectangle(x, y, bWidth, bHeight), 42, getString("in_game_menu_main_menu"));
+        mainMenuButton = buttonFactory.getButton(generateRectangle(x, y, bWidth, bHeight), 42, getString("in_game_menu_main_menu"));
         mainMenuButton.setReaction(Reaction.rbMainMenu);
         mainMenuButton.setShadow(false);
         mainMenuButton.setAnimation(Animation.FROM_CENTER);
+        mainMenuButton.setVisualHook(basePanel);
         mainMenuButton.disableTouchAnimation();
         y += bHeight;
 
-        ButtonYio chooseLevelButton = buttonFactory.getButton(generateRectangle(x, y, bWidth, bHeight), 43, getString("in_game_menu_save"));
+        chooseLevelButton = buttonFactory.getButton(generateRectangle(x, y, bWidth, bHeight), 43, getString("in_game_menu_save"));
         chooseLevelButton.setReaction(Reaction.rbSaveGame);
         chooseLevelButton.setShadow(false);
         chooseLevelButton.setAnimation(Animation.FROM_CENTER);
+        chooseLevelButton.setVisualHook(basePanel);
         chooseLevelButton.disableTouchAnimation();
         y += bHeight;
 
-        ButtonYio restartButton = buttonFactory.getButton(generateRectangle(x, y, bWidth, bHeight), 44, getString("in_game_menu_restart"));
-        restartButton.setReaction(Reaction.rbRestartGame);
-        restartButton.setShadow(false);
-        restartButton.setAnimation(Animation.FROM_CENTER);
-        restartButton.disableTouchAnimation();
-        y += bHeight;
+        createThirdButton();
 
         resumeButton = buttonFactory.getButton(generateRectangle(x, y, bWidth, bHeight), 45, getString("in_game_menu_resume"));
         resumeButton.setReaction(Reaction.rbResumeGame);
         resumeButton.setShadow(false);
         resumeButton.setAnimation(Animation.FROM_CENTER);
+        resumeButton.setVisualHook(basePanel);
         resumeButton.disableTouchAnimation();
         y += bHeight;
 
+        checkToAddCheatsStuff();
+
         menuControllerYio.endMenuCreation();
+    }
+
+
+    private void createThirdButton() {
+        if (GameRules.replayMode) {
+            createSpecialActionButtonInReplayMode();
+            return;
+        }
+
+        SkipLevelManager skipLevelManager = menuControllerYio.yioGdxGame.gameController.skipLevelManager;
+        int currentLevelIndex = CampaignProgressManager.getInstance().currentLevelIndex;
+        if (GameRules.campaignMode && skipLevelManager.canSkipLevel(currentLevelIndex)) {
+            createSkipLevelButton();
+            return;
+        }
+
+        restartButton = buttonFactory.getButton(generateRectangle(x, y, bWidth, bHeight), 44, getString("in_game_menu_restart"));
+        restartButton.setReaction(Reaction.rbRestartGame);
+        restartButton.setShadow(false);
+        restartButton.setAnimation(Animation.FROM_CENTER);
+        restartButton.setVisualHook(basePanel);
+        restartButton.disableTouchAnimation();
+        y += bHeight;
+    }
+
+
+    private void createSkipLevelButton() {
+        specialActionButton = buttonFactory.getButton(generateRectangle(x, y, bWidth, bHeight), 47, null);
+        specialActionButton.setTextLine(getString("next"));
+        specialActionButton.setReaction(rbSkipLevelMenu);
+        menuControllerYio.buttonRenderer.renderButton(specialActionButton);
+        specialActionButton.setShadow(false);
+        specialActionButton.setAnimation(Animation.FROM_CENTER);
+        specialActionButton.setVisualHook(basePanel);
+        specialActionButton.disableTouchAnimation();
+        y += bHeight;
+    }
+
+
+    private void createSpecialActionButtonInReplayMode() {
+        int currentLevelIndex = CampaignProgressManager.getInstance().currentLevelIndex;
+        specialActionButton = buttonFactory.getButton(generateRectangle(x, y, bWidth, bHeight), 47, null);
+        specialActionButton.cleatText();
+        if (currentLevelIndex > 0) {
+            specialActionButton.setTextLine(getString("next"));
+            specialActionButton.setReaction(Reaction.rbNextLevel);
+        } else {
+            specialActionButton.setTextLine(getString("edit"));
+            specialActionButton.setReaction(new Reaction() {
+                @Override
+                public void perform(ButtonYio buttonYio) {
+                    menuControllerYio.yioGdxGame.gameController.getLevelEditor().launchEditLevelMode();
+                }
+            });
+        }
+        menuControllerYio.buttonRenderer.renderButton(specialActionButton);
+        specialActionButton.setShadow(false);
+        specialActionButton.setAnimation(Animation.FROM_CENTER);
+        specialActionButton.setVisualHook(basePanel);
+        specialActionButton.disableTouchAnimation();
+        y += bHeight;
+    }
+
+
+    private void checkToAddCheatsStuff() {
+        if (!DebugFlags.cheatsEnabled) return;
+        if (GameRules.replayMode) return;
+        if (menuControllerYio.yioGdxGame.gameController.playersNumber != 1) return;
+
+        double oieWidth = 0.4;
+        double oieHeight = 0.055;
+        cheatsButton = buttonFactory.getButton(generateRectangle(0.5 - oieWidth / 2, 0.02, oieWidth, oieHeight), 46, "Cheats");
+        cheatsButton.setReaction(rbCheats);
+        cheatsButton.setAnimation(Animation.FIXED_DOWN);
+        cheatsButton.setTouchOffset(0.05f * GraphicsYio.width);
+        cheatsButton.disableTouchAnimation();
     }
 
 

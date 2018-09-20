@@ -39,7 +39,7 @@ public class RenderNotificationElement extends MenuRender{
 
 
     private void renderShadow() {
-        menuViewYio.renderShadow(notificationElement.viewPosition, 1, batch);
+        MenuRender.renderShadow.renderShadow(notificationElement.viewPosition, 1);
     }
 
 

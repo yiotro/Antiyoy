@@ -27,6 +27,7 @@ public class CampaignLevelFactory {
     int index;
     private final LevelPackFour levelPackFour;
     private final LevelPackFive levelPackFive;
+    private final LevelPackSix levelPackSix;
 
 
     public CampaignLevelFactory(GameController gameController) {
@@ -37,6 +38,7 @@ public class CampaignLevelFactory {
         levelPackThree = new LevelPackThree(this);
         levelPackFour = new LevelPackFour(this);
         levelPackFive = new LevelPackFive(this);
+        levelPackSix = new LevelPackSix(this);
         index = -1;
     }
 
@@ -53,11 +55,12 @@ public class CampaignLevelFactory {
 
         if (checkForTutorial()) return true;
         if (CampaignProgressManager.getInstance().isLevelLocked(index)) return false;
-        if (levelPackOne.checkForLevelPackOne()) return true;
-        if (levelPackTwo.checkForlevelPack()) return true;
-        if (levelPackThree.checkForlevelPack()) return true;
-        if (levelPackFour.checkForlevelPack()) return true;
-        if (levelPackFive.checkForlevelPack()) return true;
+        if (levelPackOne.check()) return true;
+        if (levelPackTwo.check()) return true;
+        if (levelPackThree.check()) return true;
+        if (levelPackFour.check()) return true;
+        if (levelPackFive.check()) return true;
+        if (levelPackSix.check()) return true;
 
         createLevelWithPredictableRandom();
 

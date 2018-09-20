@@ -1,11 +1,12 @@
 package yio.tro.antiyoy.menu.scrollable_list;
 
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.menu.context_list_menu.LiEditable;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
 
-public class ListItemYio {
+public class ListItemYio implements LiEditable{
 
 
     ScrollableListYio scrollableListYio;
@@ -136,5 +137,32 @@ public class ListItemYio {
                 title + ", " +
                 description +
                 "]";
+    }
+
+
+    @Override
+    public void rename(String name) {
+        if (name.length() == 0) return;
+
+        setTitle(name);
+        scrollableListYio.listBehaviorYio.onItemRenamed(this);
+    }
+
+
+    @Override
+    public void onDeleteRequested() {
+        scrollableListYio.listBehaviorYio.onItemDeleteRequested(this);
+    }
+
+
+    @Override
+    public void onContextMenuDestroy() {
+        scrollableListYio.touched = false; // to move selection
+    }
+
+
+    @Override
+    public String getEditableName() {
+        return title;
     }
 }

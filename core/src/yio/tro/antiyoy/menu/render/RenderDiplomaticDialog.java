@@ -65,6 +65,8 @@ public class RenderDiplomaticDialog extends MenuRender{
         if (!dialog.areButtonsEnabled()) return;
 
         for (AcButton button : dialog.buttons) {
+            if (dialog.isInSingleButtonMode() && button.action != AcButton.ACTION_YES) continue;
+
             GraphicsYio.drawByRectangle(
                     batch,
                     getButtonBackground(button),
@@ -147,7 +149,8 @@ public class RenderDiplomaticDialog extends MenuRender{
 
 
     private void renderShadow() {
-        menuViewYio.renderShadow(dialog.viewPosition, 1, batch);
+        MenuRender.renderShadow.disableInternalFillForOneDraw();
+        MenuRender.renderShadow.renderShadow(dialog.viewPosition, 1);
     }
 
 

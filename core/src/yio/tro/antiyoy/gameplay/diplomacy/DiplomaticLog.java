@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.gameplay.diplomacy;
 
 import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.MatchStatistics;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.object_pool.ObjectPoolYio;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 public class DiplomaticLog {
 
 
+    public static final int TURNS_BEFORE_EASY_WIN_IS_POSSIBLE = 25;
     DiplomacyManager diplomacyManager;
     public ArrayList<DiplomaticMessage> messages;
     ObjectPoolYio<DiplomaticMessage> poolMessages;
@@ -70,14 +72,74 @@ public class DiplomaticLog {
                 break;
             case stop_war:
                 Scenes.sceneStopWarDialog.create();
-                Scenes.sceneStopWarDialog.dialog.setSelectedEntity(message.recipient);
+                Scenes.sceneStopWarDialog.dialog.setEntities(message.sender, message.recipient);
                 break;
             case black_marked:
+                // nothing
+                break;
+            case gift:
                 // nothing
                 break;
         }
 
         removeMessage(message);
+    }
+
+
+    void checkToClearAbuseMessages() {
+        DiplomaticEntity mainEntity = diplomacyManager.getMainEntity();
+        boolean oneFriendAwayFromDiplomaticVictory = mainEntity.isOneFriendAwayFromDiplomaticVictory();
+        int turnsMade = diplomacyManager.fieldController.gameController.matchStatistics.turnsMade;
+
+        for (int i = messages.size() - 1; i >= 0; i--) {
+            DiplomaticMessage diplomaticMessage = messages.get(i);
+            if (!isFriendshipProposalToMainEntity(diplomaticMessage)) continue;
+
+            if (oneFriendAwayFromDiplomaticVictory && turnsMade < TURNS_BEFORE_EASY_WIN_IS_POSSIBLE) {
+                removeMessage(diplomaticMessage);
+                continue;
+            }
+
+            if (diplomaticMessage.sender.isOneFriendAwayFromDiplomaticVictory()) {
+                removeMessage(diplomaticMessage);
+                continue;
+            }
+        }
+
+        // it's possible that player can be 2 friends away from win and receive 2 friendship proposals at 1 turn
+        if (countNumberOfFriendshipProposals() >= mainEntity.numberOfNotFriends()) {
+            removeAnyFriendshipProposalToMainEntity();
+        }
+    }
+
+
+    private void removeAnyFriendshipProposalToMainEntity() {
+        for (int i = messages.size() - 1; i >= 0; i--) {
+            DiplomaticMessage diplomaticMessage = messages.get(i);
+
+            if (!isFriendshipProposalToMainEntity(diplomaticMessage)) continue;
+
+            removeMessage(diplomaticMessage);
+            break;
+        }
+    }
+
+
+    int countNumberOfFriendshipProposals() {
+        int c = 0;
+
+        for (DiplomaticMessage diplomaticMessage : messages) {
+            if (!isFriendshipProposalToMainEntity(diplomaticMessage)) continue;
+
+            c++;
+        }
+
+        return c;
+    }
+
+
+    private boolean isFriendshipProposalToMainEntity(DiplomaticMessage message) {
+        return message.recipient == diplomacyManager.getMainEntity() && message.type == DipMessageType.friendship_proposal;
     }
 
 
