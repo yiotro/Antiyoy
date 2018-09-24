@@ -236,6 +236,7 @@ public class LoadingManager {
         recreateActiveHexesFromParameter();
 
         GameRules.campaignMode = true;
+        CampaignProgressManager.getInstance().setCurrentLevelIndex(0);
         gameController.fieldController.giveMoneyToPlayerProvinces(90);
     }
 

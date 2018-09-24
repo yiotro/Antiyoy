@@ -131,6 +131,7 @@ public class SceneSettingsMenu extends AbstractScene{
         menuControllerYio.loadButtonOnce(infoButton, "menu/info_icon.png");
         infoButton.setShadow(true);
         infoButton.setAnimation(Animation.UP);
+        infoButton.setTouchOffset(0.05f * GraphicsYio.width);
         infoButton.setReaction(Reaction.RB_ABOUT_GAME);
         infoButton.disableTouchAnimation();
     }

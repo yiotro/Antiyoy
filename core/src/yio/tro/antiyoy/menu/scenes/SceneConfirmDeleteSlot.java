@@ -30,8 +30,10 @@ public class SceneConfirmDeleteSlot extends AbstractScene{
         rbYes = new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
+                // this reaction can be switched to another
                 Scenes.sceneSaveLoad.slotSelector.deleteTargetItem();
                 Scenes.sceneSaveLoad.create();
+                Scenes.sceneSaveLoad.setOperationType(Scenes.sceneSaveLoad.getOperationType());
                 Scenes.sceneSaveLoad.slotSelector.updateAll();
             }
         };

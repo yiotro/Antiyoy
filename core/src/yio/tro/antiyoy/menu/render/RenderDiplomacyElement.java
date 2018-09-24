@@ -235,6 +235,8 @@ public class RenderDiplomacyElement extends MenuRender {
 
 
     private void renderItemDescription(DeItem item) {
+        if (item.descriptionString == null) return;
+
         diplomacyElement.descFont.draw(
                 batch,
                 item.descriptionString,

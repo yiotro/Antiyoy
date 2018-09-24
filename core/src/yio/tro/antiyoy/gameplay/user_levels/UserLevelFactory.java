@@ -53,6 +53,7 @@ public class UserLevelFactory {
         add(new UlevCastleIsles());
         add(new UlevLittleKingdom());
         add(new UlevDichArik());
+        add(new UlevBoneBreaker());
         add(new UlevDoubleThreat());
         add(new UlevCatan());
         add(new UlevTahaFidan());

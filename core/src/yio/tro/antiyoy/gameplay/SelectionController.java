@@ -38,7 +38,7 @@ public class SelectionController {
     long defTipSpawnTime;
     private boolean isSomethingSelected;
     boolean readyToRenameCity;
-    private Hex focusedHex;
+    Hex focusedHex;
     boolean areaSelectionMode;
     int asFilterColor; // area selection
 
@@ -145,11 +145,10 @@ public class SelectionController {
         if (!gameController.areCityNamesEnabled()) return false;
         if (!isSomethingSelected()) return false;
 
-        RectangleYio pos = gameController.yioGdxGame.gameView.grManager.renderCityNames.pos;
-        if (pos == null) return false;
-
-        boolean pointInside = pos.isPointInside(gameController.convertedTouchPoint, 0);
-        if (!pointInside) return false;
+        if (focusedHex == null) return false;
+        if (focusedHex.objectInside != Obj.TOWN) return false;
+        if (!focusedHex.active) return false;
+        if (focusedHex.colorIndex != gameController.turn) return false;
 
         readyToRenameCity = true;
 
@@ -283,8 +282,12 @@ public class SelectionController {
     }
 
 
-    public void focusedHexActions(Hex focusedHex) {
+    public void setFocusedHex(Hex focusedHex) {
         this.focusedHex = focusedHex;
+    }
+
+
+    public void focusedHexActions(Hex focusedHex) {
         // don't change order in this method
 
         debug();
@@ -412,6 +415,8 @@ public class SelectionController {
         if (!gameController.fieldController.hexHasNeighbourWithColor(focusedHex, gameController.getTurn())) return;
 
         gameController.fieldController.selectAdjacentHexes(focusedHex);
+        if (gameController.fieldController.selectedProvince == null) return;
+
         isSomethingSelected = true;
     }
 

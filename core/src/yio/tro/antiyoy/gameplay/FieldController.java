@@ -648,6 +648,8 @@ public class FieldController {
 
     public void selectAdjacentHexes(Hex startHex) {
         setSelectedProvince(startHex);
+        if (selectedProvince == null) return;
+
         ListIterator listIterator = selectedHexes.listIterator();
         for (Hex hex : selectedProvince.hexList) {
             hex.select();
@@ -669,6 +671,8 @@ public class FieldController {
 
     public void setSelectedProvince(Hex hex) {
         selectedProvince = getProvinceByHex(hex);
+        if (selectedProvince == null) return;
+
         selectedProvinceMoney = selectedProvince.money;
         gameController.selectionController.getSelMoneyFactor().setDy(0);
         gameController.selectionController.getSelMoneyFactor().appear(3, 2);
@@ -911,6 +915,7 @@ public class FieldController {
 
     public boolean buildFarm(Province province, Hex hex) {
         if (province == null) return false;
+
         if (!hex.hasThisObjectNearby(Obj.TOWN) && !hex.hasThisObjectNearby(Obj.FARM)) {
             return false;
         }

@@ -2,6 +2,7 @@ package yio.tro.antiyoy.gameplay.diplomacy;
 
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.*;
+import yio.tro.antiyoy.gameplay.replays.ReplayManager;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.SingleMessages;
 import yio.tro.antiyoy.menu.diplomacy_element.DeIcon;
@@ -297,9 +298,6 @@ public class DiplomacyManager {
     }
 
 
-
-
-
     private Hex getRandomFilteredHex(boolean inViewFrame) {
         int asFilterColor = fieldController.gameController.selectionController.getAsFilterColor();
         int index;
@@ -386,6 +384,7 @@ public class DiplomacyManager {
     public void onUserRequestedBuyHexes(DiplomaticEntity initiator, DiplomaticEntity entity, ArrayList<Hex> hexList, int price) {
         if (initiator.getStateFullMoney() < price) return;
 
+        fieldController.gameController.takeSnapshot();
         transferMoney(initiator, entity, price);
 
         for (Hex hex : hexList) {
@@ -396,12 +395,44 @@ public class DiplomacyManager {
             }
 
             fieldController.setHexColor(hex, initiator.color);
-            fieldController.gameController.replayManager.onHexChangedColorWithoutObviousReason(hex);
+            ReplayManager replayManager = fieldController.gameController.replayManager;
+            replayManager.onHexChangedColorWithoutObviousReason(hex);
+            Province provinceByHex = fieldController.getProvinceByHex(hex);
+
+            if (unitStrength > 0) {
+                fieldController.addUnit(hex, unitStrength);
+                if (provinceByHex != null) {
+                    replayManager.onUnitBuilt(provinceByHex, hex, unitStrength);
+                }
+                continue;
+            }
 
             if (objectInside > 0) {
-                hex.setObjectInside(objectInside);
-            } else if (unitStrength > 0) {
-                fieldController.addUnit(hex, unitStrength);
+                fieldController.addSolidObject(hex, objectInside);
+
+                switch (objectInside) {
+                    case Obj.PINE:
+                        replayManager.onPineSpawned(hex);
+                        break;
+                    case Obj.PALM:
+                        replayManager.onPalmSpawned(hex);
+                        break;
+                    case Obj.FARM:
+                        replayManager.onFarmBuilt(hex);
+                        break;
+                    case Obj.GRAVE:
+                        replayManager.onUnitDiedFromStarvation(hex);
+                        break;
+                    case Obj.STRONG_TOWER:
+                        replayManager.onTowerBuilt(hex, true);
+                        break;
+                    case Obj.TOWER:
+                        replayManager.onTowerBuilt(hex, false);
+                        break;
+                    case Obj.TOWN:
+                        replayManager.onCitySpawned(hex);
+                        break;
+                }
             }
         }
 
@@ -540,7 +571,7 @@ public class DiplomacyManager {
             performAiToHumanBlackMark();
         }
 
-        if (getMainEntity().getStateFullMoney() > 100 && YioGdxGame.random.nextInt(10) == 0) {
+        if (getMainEntity().getStateFullMoney() > 100 && YioGdxGame.random.nextInt(15) == 0) {
             performAiToHumanGift();
         }
 
@@ -563,6 +594,8 @@ public class DiplomacyManager {
         DiplomaticEntity mainEntity = getMainEntity();
         DiplomaticEntity randomHumanEntity = getRandomHumanEntity();
         if (randomHumanEntity == null) return;
+        if (mainEntity.getRelation(randomHumanEntity) == DiplomaticRelation.ENEMY) return;
+        if (mainEntity.isBlackMarkedWith(randomHumanEntity)) return;
 
         transferMoney(mainEntity, randomHumanEntity, 10 + YioGdxGame.random.nextInt(11));
     }
@@ -754,6 +787,7 @@ public class DiplomacyManager {
             Hex adjacentHex = hex.getAdjacentHex(dir);
             if (adjacentHex == null) continue;
             if (adjacentHex == fieldController.nullHex) continue;
+            if (!adjacentHex.active) continue;
             if (adjacentHex.sameColor(hex)) return false;
         }
 

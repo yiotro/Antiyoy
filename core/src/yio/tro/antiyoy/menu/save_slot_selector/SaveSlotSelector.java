@@ -352,6 +352,7 @@ public class SaveSlotSelector extends InterfaceElement {
             public void perform(ButtonYio buttonYio) {
                 deleteTargetItem();
                 Scenes.sceneSaveLoad.create();
+                Scenes.sceneSaveLoad.setOperationType(Scenes.sceneSaveLoad.getOperationType());
                 updateAll();
             }
         });

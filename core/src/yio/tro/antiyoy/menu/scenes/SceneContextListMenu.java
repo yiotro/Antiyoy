@@ -20,7 +20,9 @@ public class SceneContextListMenu extends AbstractGameplayScene{
     @Override
     public void create() {
         initContextListMenuElement();
+
         contextListMenuElement.appear();
+        forceElementToTop(contextListMenuElement);
     }
 
 

@@ -18,7 +18,7 @@ public class UlevDoubleTrouble extends AbstractUserLevel{
 
     @Override
     public String getAuthor() {
-        return "Ray Lau";
+        return "Raay";
     }
 
 

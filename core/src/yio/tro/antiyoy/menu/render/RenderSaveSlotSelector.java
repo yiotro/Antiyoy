@@ -74,11 +74,23 @@ public class RenderSaveSlotSelector extends MenuRender{
     private void renderInternals() {
         GraphicsYio.setBatchAlpha(batch, factor);
 
+        renderBackground();
         renderEdges();
         renderItems();
         renderLabel();
 
         GraphicsYio.setBatchAlpha(batch, 1);
+    }
+
+
+    private void renderBackground() {
+        if (selector.bottomEdge.y < selector.position.y) return; // no need to render background
+
+        GraphicsYio.drawByRectangle(
+                batch,
+                backgroundTexture,
+                selector.viewPosition
+        );
     }
 
 

@@ -25,7 +25,7 @@ public class DebugActionsManager {
 
 
     public void debugActions() {
-        doTestAreaSelectionMode();
+        doShiftColorsInEditorMode();
     }
 
 

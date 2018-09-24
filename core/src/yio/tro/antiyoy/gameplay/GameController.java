@@ -1067,6 +1067,7 @@ public class GameController {
 
     public void onClick() {
         fieldController.updateFocusedHex();
+        selectionController.setFocusedHex(fieldController.focusedHex);
         showFocusedHexInConsole();
 
         if (selectionController.checkForCityNameReaction()) return;
