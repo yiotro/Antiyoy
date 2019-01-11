@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.menu.behaviors.gameplay;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,15 +17,27 @@ import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 
 public class ColorStatsRenderer {
 
     MenuControllerYio menuControllerYio;
     private FrameBuffer frameBuffer;
     private SpriteBatch batch;
-    TextureRegion buttonBackground, greenPixel, redPixel, bluePixel, cyanPixel, yellowPixel, blackPixel;
+    TextureRegion backgroundTexture, greenPixel, redPixel, bluePixel, cyanPixel, yellowPixel, blackPixel;
     TextureRegion pixelColor1, pixelColor2, pixelColor3;
     private GameController gameController;
+    private BitmapFont font;
+    private float w;
+    private float h;
+    private float columnWidth;
+    private float distanceBetweenColumns;
+    private float maxNumber;
+    private float maxColumnHeight;
+    private float y;
+    private int[] quantityArray;
+    private ButtonYio statButton;
 
 
     public ColorStatsRenderer(MenuControllerYio menuControllerYio) {
@@ -32,7 +45,7 @@ public class ColorStatsRenderer {
         gameController = menuControllerYio.yioGdxGame.gameController;
 
         batch = new SpriteBatch();
-        buttonBackground = GameView.loadTextureRegion("pixels/pixel_dark_gray.png", true);
+        backgroundTexture = GameView.loadTextureRegion("diplomacy/background.png", false);
         greenPixel = GameView.loadTextureRegion("pixels/pixel_green.png", false);
         redPixel = GameView.loadTextureRegion("pixels/pixel_red.png", false);
         bluePixel = GameView.loadTextureRegion("pixels/pixel_blue.png", false);
@@ -99,42 +112,61 @@ public class ColorStatsRenderer {
     }
 
 
-    void renderStatButton(ButtonYio statButton, int playerHexCount[]) {
-        beginRender(statButton, Fonts.gameFont);
+    void performRendering(ButtonYio statButton, int quantityArray[]) {
+        this.statButton = statButton;
+        this.quantityArray = quantityArray;
+        font = Fonts.buttonFont;
+
+        beginRender();
         batch.begin();
 
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
-        float columnWidth = 0.1f * w;
-        float distanceBetweenColumns = (w - 2 * columnWidth) / (playerHexCount.length - 1);
-        float maxNumber = GameController.maxNumberFromArray(playerHexCount);
-        float columnHeight = 0.25f * h;
-        for (int i = 0; i < playerHexCount.length; i++) {
-            setFontColorByIndex(Fonts.buttonFont, gameController.getColorIndexWithOffset(i));
-            float numberLineWidth = YioGdxGame.getTextWidth(Fonts.buttonFont, "" + playerHexCount[i]);
-            float columnX = columnWidth + distanceBetweenColumns * i;
-            batch.draw(blackPixel, columnX - numberLineWidth / 2 - 0.01f * w, 0.28f * h, numberLineWidth + 0.02f * w, 0.05f * h);
-            Fonts.buttonFont.draw(batch, "" + playerHexCount[i], columnX - numberLineWidth / 2, 0.29f * h);
+        prepareMetrics();
+        font.setColor(Color.BLACK);
 
-            float currentSize = (float) playerHexCount[i] / maxNumber;
-            currentSize *= columnHeight;
-            batch.draw(getPixelByIndex(i), columnX - columnWidth / 2, 0.01f * h + columnHeight - currentSize, columnWidth, currentSize);
-        }
-        batch.draw(blackPixel, 0.025f * w, 0.0125f * h + columnHeight, 0.95f * w, 0.005f * h);
+        renderInternals();
 
-        Fonts.buttonFont.setColor(0, 0, 0, 1);
+        font.setColor(0, 0, 0, 1);
         batch.end();
-        endRender(statButton);
+        endRender();
     }
 
 
-    private void beginRender(ButtonYio buttonYio, BitmapFont font) {
+    private void renderInternals() {
+        for (int i = 0; i < this.quantityArray.length; i++) {
+            float stringWidth = YioGdxGame.getTextWidth(font, "" + this.quantityArray[i]);
+            float columnX = columnWidth + distanceBetweenColumns * i;
+            float currentColumnHeight = (float) this.quantityArray[i] / maxNumber;
+            currentColumnHeight *= maxColumnHeight;
+
+            font.draw(batch, "" + this.quantityArray[i], columnX - stringWidth / 2, y + 0.04f * h);
+            batch.draw(getPixelByIndex(i), columnX - columnWidth / 2, 0.01f * h + y - currentColumnHeight, columnWidth, currentColumnHeight);
+        }
+        batch.draw(blackPixel, 0.025f * w, 0.0125f * h + y, 0.95f * w, 0.005f * h);
+
+        String incomeString = LanguagesManager.getInstance().getString("income");
+        float incomeWidth = GraphicsYio.getTextWidth(font, incomeString);
+        font.draw(batch, incomeString, w / 2 - incomeWidth / 2, 0.02f * h);
+    }
+
+
+    private void prepareMetrics() {
+        w = Gdx.graphics.getWidth();
+        h = Gdx.graphics.getHeight();
+        columnWidth = 0.1f * w;
+        distanceBetweenColumns = (w - 2 * columnWidth) / (quantityArray.length - 1);
+        maxNumber = GameController.maxNumberFromArray(quantityArray);
+        maxColumnHeight = 0.25f * h;
+        y = maxColumnHeight + 0.07f * h;
+    }
+
+
+    private void beginRender() {
         if (frameBuffer != null) {
             frameBuffer.dispose();
         }
         frameBuffer = FrameBufferYio.getInstance(Pixmap.Format.RGB565, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 2, false);
         frameBuffer.begin();
-        Gdx.gl.glClearColor(buttonYio.backColor.r, buttonYio.backColor.g, buttonYio.backColor.b, 1);
+        Gdx.gl.glClearColor(statButton.backColor.r, statButton.backColor.g, statButton.backColor.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Matrix4 matrix4 = new Matrix4();
         int orthoWidth = Gdx.graphics.getWidth();
@@ -142,16 +174,16 @@ public class ColorStatsRenderer {
         matrix4.setToOrtho2D(0, 0, orthoWidth, orthoHeight);
         batch.setProjectionMatrix(matrix4);
         batch.begin();
-        batch.draw(buttonBackground, 0, 0, orthoWidth, orthoHeight);
+        batch.draw(backgroundTexture, 0, 0, orthoWidth, orthoHeight);
         batch.end();
     }
 
 
-    void endRender(ButtonYio buttonYio) {
+    void endRender() {
         Texture texture = frameBuffer.getColorBufferTexture();
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         float f = ((FrameBufferYio) frameBuffer).f;
-        buttonYio.textureRegion = new TextureRegion(texture, (int) (buttonYio.position.width * f), (int) (buttonYio.position.height * f));
+        statButton.textureRegion = new TextureRegion(texture, (int) (statButton.position.width * f), (int) (statButton.position.height * f));
         frameBuffer.end();
         frameBuffer.dispose();
     }

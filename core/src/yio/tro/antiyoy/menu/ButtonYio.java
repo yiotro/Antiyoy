@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.menu.slider.SliderParentElement;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
-import yio.tro.antiyoy.SoundControllerYio;
+import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 
@@ -40,7 +40,7 @@ public class ButtonYio implements SliderParentElement{
     Sound pressSound;
     String texturePath;
     public boolean hasShadow, rectangularMask; // mandatory shadow - draw shadow right before button
-    public boolean onlyShadow, touchAnimation, lockAction;
+    public boolean onlyShadow, touchAnimation, lockAction, renderable, selectionRenderable;
     boolean ignorePauseResume;
     ButtonYio visualHook;
     private float f;
@@ -67,6 +67,8 @@ public class ButtonYio implements SliderParentElement{
         customBackgroundForText = null;
         ignorePauseResume = false;
         visualHook = null;
+        renderable = true;
+        selectionRenderable = true;
     }
 
 
@@ -92,7 +94,7 @@ public class ButtonYio implements SliderParentElement{
             case Animation.DOWN:
                 animDown();
                 break;
-            case Animation.SOLID:
+            case Animation.NONE:
                 animSolid();
                 break;
             case Animation.FROM_CENTER:
@@ -290,9 +292,9 @@ public class ButtonYio implements SliderParentElement{
 
     private void playPressSound() {
         if (pressSound == null)
-            SoundControllerYio.playSound(SoundControllerYio.soundPressButton);
+            SoundManagerYio.playSound(SoundManagerYio.soundPressButton);
         else
-            SoundControllerYio.playSound(pressSound);
+            SoundManagerYio.playSound(pressSound);
     }
 
 
@@ -521,6 +523,11 @@ public class ButtonYio implements SliderParentElement{
     }
 
 
+    public void setRenderable(boolean renderable) {
+        this.renderable = renderable;
+    }
+
+
     public void setVisualHook(ButtonYio visualHook) {
         this.visualHook = visualHook;
     }
@@ -528,6 +535,11 @@ public class ButtonYio implements SliderParentElement{
 
     public boolean hasVisualHook() {
         return visualHook != null;
+    }
+
+
+    public void setSelectionRenderable(boolean selectionRenderable) {
+        this.selectionRenderable = selectionRenderable;
     }
 
 

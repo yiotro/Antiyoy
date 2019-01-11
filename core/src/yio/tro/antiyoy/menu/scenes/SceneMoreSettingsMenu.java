@@ -32,8 +32,11 @@ public class SceneMoreSettingsMenu extends AbstractScene{
     ArrayList<SliderYio> sliders;
     public SliderYio skinSlider;
     public SliderYio sensitivitySlider;
-    private Reaction backReaction;
+    private Reaction rbBack;
     public CheckButtonYio chkResumeButton;
+    public CheckButtonYio chkFullScreen;
+    private Reaction rbStatistics;
+    private ButtonYio statisticsButton;
 
 
     public SceneMoreSettingsMenu(MenuControllerYio menuControllerYio) {
@@ -41,13 +44,32 @@ public class SceneMoreSettingsMenu extends AbstractScene{
 
         sliders = null;
 
-        backReaction = new Reaction() {
+        initReactions();
+    }
+
+
+    private void initReactions() {
+        rbBack = new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
-                Settings.getInstance().saveMoreSettings();
+                onDestroy();
                 Scenes.sceneSettingsMenu.create();
             }
         };
+
+        rbStatistics = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                onDestroy();
+                Scenes.sceneGlobalStatistics.create();
+            }
+        };
+    }
+
+
+    public void onDestroy() {
+        applyValues();
+        Settings.getInstance().saveMoreSettings();
     }
 
 
@@ -67,6 +89,7 @@ public class SceneMoreSettingsMenu extends AbstractScene{
         createCheckButtons();
 
         createChooseLanguageButton();
+        createGlobalStatisticsButton();
 
         loadValues();
 
@@ -74,9 +97,50 @@ public class SceneMoreSettingsMenu extends AbstractScene{
     }
 
 
+    private void createGlobalStatisticsButton() {
+        statisticsButton = buttonFactory.getButton(generateRectangle(0.1, 0.13, 0.8, 0.07), 317, getString("statistics"));
+        statisticsButton.setReaction(rbStatistics);
+        statisticsButton.setAnimation(Animation.DOWN);
+    }
+
+
     private void loadValues() {
         skinSlider.setCurrentRunnerIndex(Settings.skinIndex);
         sensitivitySlider.setCurrentRunnerIndex((int) (6f * Settings.sensitivity));
+
+        chkLongTapToMove.setChecked(Settings.longTapToMove);
+        chkWaterTexture.setChecked(Settings.waterTextureChosen);
+        chkReplays.setChecked(Settings.replaysEnabled);
+        chkFastConstruction.setChecked(Settings.fastConstructionEnabled);
+        chkLeftHanded.setChecked(Settings.leftHandMode);
+        chkResumeButton.setChecked(Settings.resumeButtonEnabled);
+        chkFullScreen.setChecked(Settings.fullScreenMode);
+    }
+
+
+    public void applyValues() {
+        boolean needRestart = false;
+
+        Settings.getInstance().setSkin(skinSlider.getCurrentRunnerIndex());
+        Settings.getInstance().setSensitivity(sensitivitySlider.getCurrentRunnerIndex());
+
+        Settings.longTapToMove = chkLongTapToMove.isChecked();
+        Settings.waterTextureChosen = chkWaterTexture.isChecked();
+        Settings.replaysEnabled = chkReplays.isChecked();
+        Settings.fastConstructionEnabled = chkFastConstruction.isChecked();
+        Settings.leftHandMode = chkLeftHanded.isChecked();
+        Settings.resumeButtonEnabled = chkResumeButton.isChecked();
+
+        if (Settings.fullScreenMode != chkFullScreen.isChecked()) {
+            Settings.fullScreenMode = chkFullScreen.isChecked();
+            needRestart = true;
+        }
+
+        menuControllerYio.yioGdxGame.gameView.loadBackgroundTexture();
+
+        if (needRestart) {
+            Scenes.sceneNotification.show("restart_app");
+        }
     }
 
 
@@ -189,6 +253,11 @@ public class SceneMoreSettingsMenu extends AbstractScene{
         chkResumeButton = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 13);
         chkResumeButton.setTouchPosition(generateRectangle(0.1, chkY - hTouchSize / 2, 0.8, hTouchSize));
         chkResumeButton.setAnimation(Animation.DOWN);
+
+        chkY -= chkVerticalDelta;
+        chkFullScreen = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 14);
+        chkFullScreen.setTouchPosition(generateRectangle(0.1, chkY - hTouchSize / 2, 0.8, hTouchSize));
+        chkFullScreen.setAnimation(Animation.DOWN);
     }
 
 
@@ -215,7 +284,7 @@ public class SceneMoreSettingsMenu extends AbstractScene{
             chkPanel.addTextLine(LanguagesManager.getInstance().getString("fast_construction"));
             chkPanel.addTextLine(LanguagesManager.getInstance().getString("left_handed"));
             chkPanel.addTextLine(LanguagesManager.getInstance().getString("resume_button"));
-            chkPanel.addTextLine(LanguagesManager.getInstance().getString(" "));
+            chkPanel.addTextLine(LanguagesManager.getInstance().getString("full_screen_mode"));
             menuControllerYio.getButtonRenderer().renderButton(chkPanel);
         }
 
@@ -230,7 +299,7 @@ public class SceneMoreSettingsMenu extends AbstractScene{
 
 
     private void createBackButton() {
-        menuControllerYio.spawnBackButton(310, backReaction);
+        menuControllerYio.spawnBackButton(310, rbBack);
     }
 
 

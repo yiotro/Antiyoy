@@ -96,6 +96,8 @@ public class NamingManager implements SavableYio{
         String[] renamedHexesSplit = src.split(",");
         for (String token : renamedHexesSplit) {
             String[] split = token.split(" ");
+            if (split.length < 3) continue;
+
             int index1 = Integer.valueOf(split[0]);
             int index2 = Integer.valueOf(split[1]);
             String name = split[2];

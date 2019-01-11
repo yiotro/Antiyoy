@@ -184,7 +184,7 @@ public class SliderYio extends InterfaceElement implements SliderListener {
                 break;
             default:
             case Animation.DEFAULT:
-            case Animation.SOLID:
+            case Animation.NONE:
                 animNone();
                 break;
         }

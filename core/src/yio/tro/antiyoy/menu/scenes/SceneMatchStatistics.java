@@ -8,14 +8,14 @@ import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
-public class SceneStatisticsMenu extends AbstractScene{
+public class SceneMatchStatistics extends AbstractScene{
 
 
     private ButtonYio replayButton;
     private Reaction backReaction;
 
 
-    public SceneStatisticsMenu(MenuControllerYio menuControllerYio) {
+    public SceneMatchStatistics(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
         backReaction = new Reaction() {
@@ -36,12 +36,12 @@ public class SceneStatisticsMenu extends AbstractScene{
 
         ButtonYio textPanel = buttonFactory.getButton(generateRectangle(0.05, 0.1, 0.9, 0.7), 112, null);
         textPanel.cleatText();
-        textPanel.addTextLine(getString("statistics") + ":");
-        textPanel.addTextLine(getString("turns_made") + " " + matchStatistics.turnsMade);
-        textPanel.addTextLine(getString("units_died") + " " + matchStatistics.unitsDied);
-        textPanel.addTextLine(getString("units_produced") + " " + matchStatistics.unitsProduced);
-        textPanel.addTextLine(getString("money_spent") + " " + matchStatistics.moneySpent);
-        textPanel.addTextLine(getString("time") + " " + matchStatistics.getTimeString());
+        textPanel.addTextLine(getString("statistics"));
+        textPanel.addTextLine(getString("turns_made") + ": " + matchStatistics.turnsMade);
+        textPanel.addTextLine(getString("units_died") + ": " + matchStatistics.unitsDied);
+        textPanel.addTextLine(getString("units_produced") + ": " + matchStatistics.unitsProduced);
+        textPanel.addTextLine(getString("money_spent") + ": " + matchStatistics.moneySpent);
+        textPanel.addTextLine(getString("time") + ": " + matchStatistics.getTimeString());
         for (int i = 0; i < 10; i++) {
             textPanel.addTextLine("");
         }

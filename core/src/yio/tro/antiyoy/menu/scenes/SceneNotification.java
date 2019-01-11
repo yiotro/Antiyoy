@@ -45,14 +45,14 @@ public class SceneNotification extends AbstractScene {
     }
 
 
-    public void showNotification(String messageKey, boolean autoHide) {
+    public void show(String messageKey, boolean autoHide) {
         create();
         setValues(messageKey, autoHide);
     }
 
 
-    public void showNotification(String messageKey) {
-        showNotification(messageKey, true);
+    public void show(String messageKey) {
+        show(messageKey, true);
     }
 
 

@@ -5,7 +5,7 @@ import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.Settings;
-import yio.tro.antiyoy.SoundControllerYio;
+import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
@@ -81,7 +81,7 @@ public class SceneSelectionOverlay extends AbstractGameplayScene {
         if (coinButton == null) { // init
             coinButton = buttonFactory.getButton(generateSquare(0, 0.93, 0.07), 37, null);
             coinButton.setAnimation(Animation.UP);
-            coinButton.setPressSound(SoundControllerYio.soundCoin);
+            coinButton.setPressSound(SoundManagerYio.soundCoin);
             coinButton.enableRectangularMask();
             coinButton.disableTouchAnimation();
         }

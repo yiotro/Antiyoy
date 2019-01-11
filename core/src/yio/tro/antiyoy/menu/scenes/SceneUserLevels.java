@@ -22,6 +22,11 @@ public class SceneUserLevels extends AbstractScene {
     private ButtonYio backButton;
     private ButtonYio filtersButton;
     private Reaction rbFilters;
+    private boolean completedAllowed;
+    private boolean historicalAllowed;
+    private boolean singlePlayerAllowed;
+    private boolean multiplayerAllowed;
+    private String searchName;
 
 
     public SceneUserLevels(MenuControllerYio menuControllerYio) {
@@ -79,22 +84,53 @@ public class SceneUserLevels extends AbstractScene {
         scrollableListYio.clearItems();
 
         Preferences filterPrefs = SceneUlFilters.getFilterPrefs();
-        boolean completedAllowed = filterPrefs.getBoolean("completed", true);
-        boolean historicalAllowed = filterPrefs.getBoolean("historical", true);
+        completedAllowed = filterPrefs.getBoolean("completed", true);
+        historicalAllowed = filterPrefs.getBoolean("historical", true);
+        singlePlayerAllowed = filterPrefs.getBoolean("single_player", true);
+        multiplayerAllowed = filterPrefs.getBoolean("multiplayer", true);
+        searchName = filterPrefs.getString("search_name", "");
 
         for (AbstractUserLevel userLevel : UserLevelFactory.getInstance().getLevels()) {
-            boolean levelCompleted = UserLevelProgressManager.getInstance().isLevelCompleted(userLevel.getKey());
-            if (!completedAllowed && levelCompleted) continue;
-            if (!historicalAllowed && userLevel.isHistorical()) continue;
+            if (hasToSkipLevel(userLevel)) continue;
 
-            scrollableListYio.addItem(
-                    userLevel.getKey(),
-                    getMapTitle(userLevel),
-                    userLevel.getAuthor()
-            );
+            addUserLevelToList(userLevel);
         }
 
+        checkToAddOneLevel();
         checkToCreateAddMapItem();
+    }
+
+
+    private void addUserLevelToList(AbstractUserLevel userLevel) {
+        scrollableListYio.addItem(
+                userLevel.getKey(),
+                getMapTitle(userLevel),
+                userLevel.getAuthor()
+        );
+    }
+
+
+    private void checkToAddOneLevel() {
+        if (scrollableListYio.items.size() > 0) return;
+
+        AbstractUserLevel firstLevel = UserLevelFactory.getInstance().getLevels().get(0);
+        addUserLevelToList(firstLevel);
+    }
+
+
+    private boolean hasToSkipLevel(AbstractUserLevel userLevel) {
+        if (!completedAllowed) {
+            boolean levelCompleted = UserLevelProgressManager.getInstance().isLevelCompleted(userLevel.getKey());
+            if (levelCompleted) return true;
+        }
+
+        if (!historicalAllowed && userLevel.isHistorical()) return true;
+        if (!singlePlayerAllowed && userLevel.isSinglePlayer()) return true;
+        if (!multiplayerAllowed && userLevel.isMultiplayer()) return true;
+
+        if (searchName.length() > 0 && !userLevel.getMapName().toLowerCase().contains(searchName.toLowerCase())) return true;
+
+        return false;
     }
 
 
@@ -167,17 +203,20 @@ public class SceneUserLevels extends AbstractScene {
         instance.applyFullLevel(level.getFullLevelString());
         instance.colorOffset = level.getColorOffset();
         instance.fogOfWar = level.getFogOfWar();
+        instance.diplomacy = level.getDiplomacy();
         instance.ulKey = level.getKey();
         LoadingManager.getInstance().startGame(instance);
+
+        level.onLevelLoaded(menuControllerYio.yioGdxGame.gameController);
     }
 
 
-    private void onAddMyMapClicked() {
+    public void onAddMyMapClicked() {
         Scenes.sceneAboutGame.create("how_add_my_map", new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
                 Scenes.sceneUserLevels.create();
             }
-        }, 911);
+        }, 913);
     }
 }

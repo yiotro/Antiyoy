@@ -9,4 +9,5 @@ public enum DipMessageType {
     friendship_canceled,
     black_marked,
     gift,
+    hex_purchase,
 }

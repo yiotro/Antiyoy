@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticRelation;
 import yio.tro.antiyoy.gameplay.fog_of_war.FogOfWarManager;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
@@ -55,6 +57,8 @@ public class FieldController {
     public DiplomacyManager diplomacyManager;
     public String initialLevelString;
     public MoveZoneManager moveZoneManager;
+    private ArrayList<Hex> tempList;
+    private ArrayList<Hex> propagationList;
 
 
     public FieldController(GameController gameController) {
@@ -85,6 +89,8 @@ public class FieldController {
         fogOfWarManager = new FogOfWarManager(this);
         diplomacyManager = new DiplomacyManager(this);
         initialLevelString = null;
+        tempList = new ArrayList<Hex>();
+        propagationList = new ArrayList<Hex>();
     }
 
 
@@ -359,8 +365,8 @@ public class FieldController {
 
         clearProvincesList();
         MoveZoneDetection.unFlagAllHexesInArrayList(activeHexes);
-        ArrayList<Hex> tempList = new ArrayList<>();
-        ArrayList<Hex> propagationList = new ArrayList<>();
+        tempList.clear();
+        propagationList.clear();
 
         for (Hex hex : activeHexes) {
             if (hex.isNeutral()) continue;
@@ -391,8 +397,8 @@ public class FieldController {
         if (gameController.isInEditorMode()) return;
 
         MoveZoneDetection.unFlagAllHexesInArrayList(activeHexes);
-        ArrayList<Hex> tempList = new ArrayList<>();
-        ArrayList<Hex> propagationList = new ArrayList<>();
+        tempList.clear();
+        propagationList.clear();
 
         for (Hex hex : activeHexes) {
             if (hex.isNeutral()) continue;
@@ -635,7 +641,7 @@ public class FieldController {
             }
         }
         setResponseAnimHex(toWhere);
-        SoundControllerYio.playSound(SoundControllerYio.soundHoldToMarch);
+        SoundManagerYio.playSound(SoundManagerYio.soundHoldToMarch);
     }
 
 
@@ -661,7 +667,7 @@ public class FieldController {
 
 
     private void showBuildOverlay() {
-        if (Settings.fastConstruction) {
+        if (Settings.fastConstructionEnabled) {
             Scenes.sceneFastConstructionPanel.create();
         } else {
             Scenes.sceneSelectionOverlay.create();
@@ -801,7 +807,7 @@ public class FieldController {
 
     public void cleanOutHex(Hex hex) {
         if (hex.containsUnit()) {
-            gameController.getMatchStatistics().unitWasKilled();
+            gameController.getMatchStatistics().onUnitKilled();
             gameController.getUnitList().remove(hex.unit);
             hex.unit = null;
         }
@@ -830,45 +836,49 @@ public class FieldController {
     public boolean buildUnit(Province province, Hex hex, int strength) {
         if (province == null || hex == null) return false;
 
-        if (province.canBuildUnit(strength)) {
-            // check if can build unit
-            if (hex.sameColor(province) && hex.containsUnit() && !gameController.canMergeUnits(strength, hex.unit.strength))
-                return false;
-
-            gameController.takeSnapshot();
-            province.money -= GameRules.PRICE_UNIT * strength;
-            gameController.getMatchStatistics().moneyWereSpent(GameRules.PRICE_UNIT * strength);
-            gameController.replayManager.onUnitBuilt(province, hex, strength);
-            updateSelectedProvinceMoney();
-
-            if (hex.sameColor(province)) { // build unit peacefully inside province
-                if (hex.containsUnit()) { // merge units
-                    Unit bUnit = new Unit(gameController, hex, strength);
-                    bUnit.setReadyToMove(true);
-                    gameController.matchStatistics.unitsDied++;
-                    gameController.mergeUnits(hex, bUnit, hex.unit);
-                } else {
-                    addUnit(hex, strength);
-                }
-            } else { // attack on other province
-                setHexColor(hex, province.getColor()); // must be called before object in hex destroyed
-                addUnit(hex, strength);
-                hex.unit.setReadyToMove(false);
-                hex.unit.stopJumping();
-                province.addHex(hex);
-                addAnimHex(hex);
-                gameController.updateCacheOnceAfterSomeTime();
+        if (!province.canBuildUnit(strength)) {
+            if (gameController.isPlayerTurn()) {
+                gameController.tickleMoneySign();
             }
-            gameController.updateBalanceString();
-            return true;
+            return false;
         }
 
-        // can't build unit
-        if (gameController.isPlayerTurn()) {
-            gameController.tickleMoneySign();
+        // check for unmergeable situation
+        if (hex.sameColor(province) && hex.containsUnit() && !gameController.canMergeUnits(strength, hex.unit.strength)) {
+            return false;
         }
 
-        return false;
+        gameController.takeSnapshot();
+        province.money -= GameRules.PRICE_UNIT * strength;
+        gameController.getMatchStatistics().onMoneySpent(gameController.turn, GameRules.PRICE_UNIT * strength);
+        gameController.replayManager.onUnitBuilt(province, hex, strength);
+        updateSelectedProvinceMoney();
+
+        if (isUnitBuildingPeaceful(province, hex)) { // build unit peacefully
+            if (hex.containsUnit()) { // merge units
+                Unit bUnit = new Unit(gameController, hex, strength);
+                bUnit.setReadyToMove(true);
+                gameController.matchStatistics.unitsDied++;
+                gameController.mergeUnits(hex, bUnit, hex.unit);
+            } else {
+                addUnit(hex, strength);
+            }
+        } else { // attack
+            setHexColor(hex, province.getColor()); // must be called before object in hex destroyed
+            addUnit(hex, strength);
+            hex.unit.setReadyToMove(false);
+            hex.unit.stopJumping();
+            province.addHex(hex);
+            addAnimHex(hex);
+            gameController.updateCacheOnceAfterSomeTime();
+        }
+        gameController.updateBalanceString();
+        return true;
+    }
+
+
+    private boolean isUnitBuildingPeaceful(Province province, Hex hex) {
+        return hex.sameColor(province);
     }
 
 
@@ -880,7 +890,7 @@ public class FieldController {
             addSolidObject(hex, Obj.TOWER);
             addAnimHex(hex);
             province.money -= GameRules.PRICE_TOWER;
-            gameController.getMatchStatistics().moneyWereSpent(GameRules.PRICE_TOWER);
+            gameController.getMatchStatistics().onMoneySpent(gameController.turn, GameRules.PRICE_TOWER);
             updateSelectedProvinceMoney();
             gameController.updateCacheOnceAfterSomeTime();
             return true;
@@ -901,7 +911,7 @@ public class FieldController {
             addSolidObject(hex, Obj.STRONG_TOWER);
             addAnimHex(hex);
             province.money -= GameRules.PRICE_STRONG_TOWER;
-            gameController.getMatchStatistics().moneyWereSpent(GameRules.PRICE_STRONG_TOWER);
+            gameController.getMatchStatistics().onMoneySpent(gameController.turn, GameRules.PRICE_STRONG_TOWER);
             updateSelectedProvinceMoney();
             gameController.updateCacheOnceAfterSomeTime();
             return true;
@@ -924,7 +934,7 @@ public class FieldController {
             gameController.takeSnapshot();
             gameController.replayManager.onFarmBuilt(hex);
             province.money -= province.getCurrentFarmPrice();
-            gameController.getMatchStatistics().moneyWereSpent(province.getCurrentFarmPrice());
+            gameController.getMatchStatistics().onMoneySpent(gameController.turn, province.getCurrentFarmPrice());
             addSolidObject(hex, Obj.FARM);
             addAnimHex(hex);
             updateSelectedProvinceMoney();
@@ -945,7 +955,7 @@ public class FieldController {
             spawnTree(hex);
             addAnimHex(hex);
             province.money -= GameRules.PRICE_TREE;
-            gameController.getMatchStatistics().moneyWereSpent(GameRules.PRICE_TREE);
+            gameController.getMatchStatistics().onMoneySpent(gameController.turn, GameRules.PRICE_TREE);
             updateSelectedProvinceMoney();
             gameController.updateCacheOnceAfterSomeTime();
             return true;
@@ -1117,8 +1127,8 @@ public class FieldController {
         Province oldProvince = getProvinceByHex(hex);
         if (oldProvince == null) return;
         MoveZoneDetection.unFlagAllHexesInArrayList(oldProvince.hexList);
-        ArrayList<Hex> tempList = new ArrayList<Hex>();
-        ArrayList<Hex> propagationList = new ArrayList<Hex>();
+        tempList.clear();
+        propagationList.clear();
         ArrayList<Province> provincesAdded = new ArrayList<Province>();
         Hex startHex, tempHex, adjHex;
         hex.flag = true;

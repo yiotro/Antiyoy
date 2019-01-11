@@ -42,9 +42,8 @@ public class ReplayManager {
 
 
     public void onPineSpawned(Hex hex) {
-        if (canAddAction()) {
-            replay.addAction(new RaPineSpawned(hex));
-        }
+        if (!canAddAction()) return;
+        replay.addAction(new RaPineSpawned(hex));
     }
 
 
@@ -72,37 +71,38 @@ public class ReplayManager {
 
 
     public void onPalmSpawned(Hex hex) {
-        if (canAddAction()) {
-            replay.addAction(new RaPalmSpawned(hex));
-        }
+        if (!canAddAction()) return;
+        replay.addAction(new RaPalmSpawned(hex));
     }
 
 
     public void onUnitBuilt(Province src, Hex dst, int strength) {
-        if (canAddAction()) {
-            replay.addAction(new RaUnitBuilt(src.getCapital(), dst, strength));
-        }
+        if (!canAddAction()) return;
+        replay.addAction(new RaUnitBuilt(src.getCapital(), dst, strength));
+    }
+
+
+    public void onUnitSpawned(Hex hex, int strength) {
+        if (!canAddAction()) return;
+        replay.addAction(new RaUnitSpawned(hex, strength));
     }
 
 
     public void onUnitMoved(Hex src, Hex dst) {
-        if (canAddAction()) {
-            replay.addAction(new RaUnitMoved(src, dst));
-        }
+        if (!canAddAction()) return;
+        replay.addAction(new RaUnitMoved(src, dst));
     }
 
 
     public void onTowerBuilt(Hex hex, boolean strong) {
-        if (canAddAction()) {
-            replay.addAction(new RaTowerBuilt(hex, strong));
-        }
+        if (!canAddAction()) return;
+        replay.addAction(new RaTowerBuilt(hex, strong));
     }
 
 
     public void onFarmBuilt(Hex hex) {
-        if (canAddAction()) {
-            replay.addAction(new RaFarmBuilt(hex));
-        }
+        if (!canAddAction()) return;
+        replay.addAction(new RaFarmBuilt(hex));
     }
 
 
@@ -152,23 +152,20 @@ public class ReplayManager {
 
 
     public void onTurnEnded() {
-        if (canAddAction()) {
-            replay.addAction(new RaTurnEnded());
-        }
+        if (!canAddAction()) return;
+        replay.addAction(new RaTurnEnded());
     }
 
 
     public void onCitySpawned(Hex hex) {
-        if (canAddAction()) {
-            replay.addAction(new RaCitySpawned(hex));
-        }
+        if (!canAddAction()) return;
+        replay.addAction(new RaCitySpawned(hex));
     }
 
 
     public void onUnitDiedFromStarvation(Hex hex) {
-        if (canAddAction()) {
-            replay.addAction(new RaUnitDiedFromStarvation(hex));
-        }
+        if (!canAddAction()) return;
+        replay.addAction(new RaUnitDiedFromStarvation(hex));
     }
 
 

@@ -97,17 +97,20 @@ public class DiplomaticMessage implements ReusableYio {
     }
 
 
-    public void setArg1(String arg1) {
+    public DiplomaticMessage setArg1(String arg1) {
         this.arg1 = arg1;
+        return this;
     }
 
 
-    public void setArg2(String arg2) {
+    public DiplomaticMessage setArg2(String arg2) {
         this.arg2 = arg2;
+        return this;
     }
 
 
-    public void setArg3(String arg3) {
+    public DiplomaticMessage setArg3(String arg3) {
         this.arg3 = arg3;
+        return this;
     }
 }

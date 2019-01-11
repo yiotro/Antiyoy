@@ -154,7 +154,7 @@ public class GameView {
 
 
     public void loadBackgroundTexture() {
-        if (Settings.waterTexture) {
+        if (Settings.waterTextureChosen) {
             backgroundRegion = loadTextureRegion("game_background_water.png", true);
         } else {
             backgroundRegion = loadTextureRegion("game_background.png", true);
@@ -925,7 +925,7 @@ public class GameView {
 
 
     private float getTipVerticalPos(float s) {
-        if (Settings.fastConstruction) {
+        if (Settings.fastConstructionEnabled) {
             return s * (gameController.selectionController.tipFactor.get() - 1) + 0.12f * h;
         } else {
             return s * (gameController.selectionController.tipFactor.get() - 1) + 0.04f * h;

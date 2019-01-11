@@ -83,7 +83,7 @@ public class SceneTakeControl extends AbstractScene{
 
     private void onOkButtonPressed() {
         if (GameRules.diplomacyEnabled) {
-            Scenes.sceneNotification.showNotification("Please disable diplomacy");
+            Scenes.sceneNotification.show("Please disable diplomacy");
             return;
         }
 
@@ -155,7 +155,7 @@ public class SceneTakeControl extends AbstractScene{
         RectangleYio pos = generateRectangle((1 - sWidth) / 2, 0, sWidth, 0);
 
         colorSlider = new SliderYio(menuControllerYio, -1);
-        colorSlider.setValues(0, 0, GameRules.MAX_COLOR_NUMBER, Animation.SOLID);
+        colorSlider.setValues(0, 0, GameRules.MAX_COLOR_NUMBER, Animation.NONE);
         colorSlider.setPosition(pos);
         colorSlider.setParentElement(label, 0.1);
         colorSlider.setTitle("player_color");

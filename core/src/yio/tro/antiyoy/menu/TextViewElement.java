@@ -25,7 +25,7 @@ public class TextViewElement extends InterfaceElement {
         position = new RectangleYio();
         viewPosition = new RectangleYio();
         appearFactor = new FactorYio();
-        animType = Animation.SOLID;
+        animType = Animation.NONE;
         font = Fonts.gameFont;
         textWidth = 0;
         textHeight = 0;
@@ -66,7 +66,7 @@ public class TextViewElement extends InterfaceElement {
 
         switch (animType) {
             default:
-            case Animation.SOLID:
+            case Animation.NONE:
             case Animation.DEFAULT:
                 // nothing
                 break;

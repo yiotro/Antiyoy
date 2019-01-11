@@ -147,11 +147,14 @@ public class LevelSnapshot {
 
 
     private void updateSelectionHex() {
-        if (gameController.selectionController.isSomethingSelected()) {
-            selectionHex = gameController.fieldController.selectedProvince.hexList.get(0);
-        } else {
-            selectionHex = null;
-        }
+        selectionHex = null;
+
+        if (!gameController.selectionController.isSomethingSelected()) return;
+
+        Province selectedProvince = gameController.fieldController.selectedProvince;
+        if (selectedProvince == null) return;
+
+        selectionHex = selectedProvince.hexList.get(0);
     }
 
 

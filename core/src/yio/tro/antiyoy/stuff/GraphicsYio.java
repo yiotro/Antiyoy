@@ -89,6 +89,11 @@ public class GraphicsYio {
     }
 
 
+    public static void renderText(BitmapFont font, SpriteBatch spriteBatch, String text, PointYio position) {
+        font.draw(spriteBatch, text, position.x, position.y);
+    }
+
+
     public static void drawRectangleRotatedSimple(Batch batch, TextureRegion textureRegion, double x, double y, double width, double height, double angle) {
         batch.draw(textureRegion, (float) x, (float) y, 0, 0, (float) width, (float) height, 1, 1, 57.29f * (float) angle);
     }

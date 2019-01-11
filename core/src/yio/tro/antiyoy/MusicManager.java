@@ -26,6 +26,8 @@ public class MusicManager {
 
 
     public void onMusicStatusChanged() {
+        if (YioGdxGame.IOS) return;
+
         if (Settings.musicEnabled && Settings.soundEnabled) {
             if (music.isPlaying()) return;
 
@@ -54,6 +56,8 @@ public class MusicManager {
 
 
     public void load() {
+        if (YioGdxGame.IOS) return;
+
         music = Gdx.audio.newMusic(Gdx.files.internal("sound/music.ogg"));
     }
 

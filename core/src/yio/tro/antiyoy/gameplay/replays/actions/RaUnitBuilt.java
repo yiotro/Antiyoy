@@ -49,12 +49,7 @@ public class RaUnitBuilt extends RepAction{
         boolean success = fieldController.buildUnit(provinceByHex, dst, strength);
 
         if (!success) {
-            System.out.println();
             System.out.println("Problem in RaUnitBuilt.perform()");
-            System.out.println("src = " + src);
-            System.out.println("dst = " + dst);
-            System.out.println("strength = " + strength);
-            System.out.println("provinceByHex = " + provinceByHex);
         }
     }
 

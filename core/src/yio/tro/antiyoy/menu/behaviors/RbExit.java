@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.menu.behaviors;
 
 import com.badlogic.gdx.Gdx;
+import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.menu.ButtonYio;
 
 /**
@@ -10,6 +11,8 @@ public class RbExit extends Reaction {
 
     @Override
     public void perform(ButtonYio buttonYio) {
+        if (YioGdxGame.IOS) return;
+
         getYioGdxGame(buttonYio).close();
         buttonYio.menuControllerYio.yioGdxGame.startedExitProcess = true;
         Gdx.app.exit();

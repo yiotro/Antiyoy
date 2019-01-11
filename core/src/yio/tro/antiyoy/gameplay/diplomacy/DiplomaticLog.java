@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.gameplay.diplomacy;
 
 import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.MatchStatistics;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.object_pool.ObjectPoolYio;
@@ -79,6 +80,12 @@ public class DiplomaticLog {
                 break;
             case gift:
                 // nothing
+                break;
+            case hex_purchase:
+                ArrayList<Hex> hexesToBuy = diplomacyManager.convertStringToPurchaseList(message.arg1);
+                int price = Integer.valueOf(message.arg2);
+                Scenes.sceneConfirmSellHexes.create();
+                Scenes.sceneConfirmSellHexes.dialog.setData(message.sender, hexesToBuy, price);
                 break;
         }
 

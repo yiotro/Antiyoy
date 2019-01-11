@@ -12,7 +12,7 @@ public class UlevOlegDonskih2 extends AbstractUserLevel{
 
     @Override
     public String getMapName() {
-        return "Oleg Donskih 2";
+        return "Oleg 2";
     }
 
 

@@ -38,7 +38,7 @@
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Reset data"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -270,11 +270,12 @@
         <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="Turns made:"/>
-        <string key="units_died" value="Units died:"/>
-        <string key="units_produced" value="Units produced:"/>
-        <string key="money_spent" value="Money spent:"/>
-        <string key="time" value="Time:"/>
+        <string key="turns_made" value="Turns made"/>
+        <string key="units_died" value="Units died"/>
+        <string key="units_produced" value="Units produced"/>
+        <string key="money_spent" value="Money spent"/>
+        <string key="time" value="Time"/>
+        <string key="wins" value="Wins"/>
 
         <!-- Editor -->
         <string key="editor" value="Editor"/>
@@ -324,6 +325,7 @@
         <string key="fast_construction" value="Fast construction"/>
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -383,6 +385,8 @@
         <string key="ok" value="Ok"/>
         <string key="money" value="Money"/>
         <string key="quantity" value="Quantity"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
 
 
 
@@ -445,7 +449,7 @@
         #Игру сделал yiotro
 		"/>
         <string key="reset_campaign_data" value="Стереть данные"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Отдельное спасибо"/>
 
         <!-- Choose game mode menu-->
@@ -667,11 +671,12 @@
         <string key="article_my_games" value="Если тебе понравилась эта игра, то тебе также могут понравиться некоторые другие мои игры:"/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="Ходов сделано:"/>
-        <string key="units_died" value="Юнитов умерло:"/>
-        <string key="units_produced" value="Юнитов построено:"/>
-        <string key="money_spent" value="Денег потрачено:"/>
-        <string key="time" value="Время:"/>
+        <string key="turns_made" value="Ходов сделано"/>
+        <string key="units_died" value="Юнитов умерло"/>
+        <string key="units_produced" value="Юнитов построено"/>
+        <string key="money_spent" value="Денег потрачено"/>
+        <string key="time" value="Время"/>
+        <string key="wins" value="Победы"/>
 
         <!-- Editor -->
         <string key="editor" value="Редактор"/>
@@ -721,6 +726,7 @@
         <string key="fast_construction" value="Быстрая постройка"/>
         <string key="music" value="Музыка"/>
         <string key="left_handed" value="Леворукий режим"/>
+        <string key="full_screen_mode" value="Полноэкранный режим"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Это первый 'сложный' уровень. Уделяй больше внимания защите."/>
@@ -780,6 +786,8 @@
         <string key="ok" value="Ок"/>
         <string key="money" value="Деньги"/>
         <string key="quantity" value="Количество"/>
+        <string key="income" value="Доход"/>
+        <string key="by_name" value="По имени"/>
     </language>
 
 
@@ -838,7 +846,7 @@
         #Гру зробив yiotro
 		"/>
         <string key="reset_campaign_data" value="Стерти данi"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Дякую"/>
 
         <!-- Choose game mode menu-->
@@ -1021,11 +1029,11 @@
         #На початку гри це найкращий спосiб захисту. Вежi коштують дешево i не потребують грошей на обслуговування.
         "/>
 
-        <string key="help_money_article" value="Прибуток залежить вiд вiлькостi клiтин. Чим бiльша територiя тим бiльший прибуток. Дерева зменшують прибуток.
+        <string key="help_money_article" value="Прибуток залежить вiд кiлькостi клiтин. Чим бiльша територiя тим бiльший прибуток. Дерева зменшують прибуток.
         #
         #Витрати залежать вiд юнiтiв. Чим бiльше юнiтiв i чим вони сильнiшi тим бiльше грошей вони потребують.
         #
-        #Якщо грошi закiнчатся, то юнiти помруть.
+        #Якщо грошi закiнчаться, то юнiти помруть.
         #
         #Прибуток показаний зверху по центру.
         "/>
@@ -1060,11 +1068,12 @@
         <string key="article_my_games" value="Якщо тобі сподобалась ця гра, то тобі також можуть сподобатись деякі мої інші ігри:"/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="Крокiв зроблено:"/>
-        <string key="units_died" value="Юнiтiв померло:"/>
-        <string key="units_produced" value="Юнiтiв побудовано:"/>
-        <string key="money_spent" value="Грошей витрачено:"/>
-        <string key="time" value="Час:"/>
+        <string key="turns_made" value="Крокiв зроблено"/>
+        <string key="units_died" value="Юнiтiв померло"/>
+        <string key="units_produced" value="Юнiтiв побудовано"/>
+        <string key="money_spent" value="Грошей витрачено"/>
+        <string key="time" value="Час"/>
+        <string key="wins" value="Перемоги"/>
 
         <!-- Editor -->
         <string key="editor" value="Редактор"/>
@@ -1114,6 +1123,7 @@
         <string key="fast_construction" value="Швидке будівництво"/>
         <string key="music" value="Музика"/>
         <string key="left_handed" value="Режим лівої руки"/>
+        <string key="full_screen_mode" value="Повний екран"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Це перший 'складний' рівень. Приділяй більше уваги захисту."/>
@@ -1173,6 +1183,8 @@
         <string key="ok" value="Ок"/>
         <string key="money" value="Гроші"/>
         <string key="quantity" value="Кількість"/>
+        <string key="income" value="Дохід"/>
+        <string key="by_name" value="По імені"/>
 
     </language>
 
@@ -1238,7 +1250,7 @@
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Daten zurücksetzen"/>
-        <string key="special_thanks" value="Ein besonderer Dank gilt den folgenden Personen: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas #BY: Anton Zhmodikov #"/>
         <string key="special_thanks_title" value="Besonderer Dank"/>
 
         <!-- Choose game mode menu-->
@@ -1507,11 +1519,12 @@
         <string key="article_my_games" value="Wenn dir dieses Spiel gefällt magst du vielleicht auch meine anderen Spiele:"/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="Gemachte Züge:"/>
-        <string key="units_died" value="Im Spiel gestorbene Einheiten:"/>
-        <string key="units_produced" value="Im Spiel produzierte Einheiten:"/>
-        <string key="money_spent" value="Ausgegebenes Geld:"/>
-        <string key="time" value="Zeit:"/>
+        <string key="turns_made" value="Gemachte Züge"/>
+        <string key="units_died" value="Im Spiel gestorbene Einheiten"/>
+        <string key="units_produced" value="Im Spiel produzierte Einheiten"/>
+        <string key="money_spent" value="Ausgegebenes Geld"/>
+        <string key="time" value="Zeit"/>
+        <string key="wins" value="Wins"/>
 
         <!-- Editor -->
         <string key="editor" value="Editor"/>  <!-- Same as english -->
@@ -1561,6 +1574,7 @@
         <string key="fast_construction" value="Schnelles Bauen"/>
         <string key="music" value="Musik"/>
         <string key="left_handed" value="Linkshänder"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Dies ist das erste 'schwere' Level. Achte besonders auf Deine Verteidigung."/>
@@ -1620,6 +1634,8 @@
         <string key="ok" value="Ok"/>
         <string key="money" value="Money"/>
         <string key="quantity" value="Quantity"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
     </language>
 
 
@@ -1679,7 +1695,7 @@
         #Vytvořil yiotro
         "/>
         <string key="reset_campaign_data" value="Resetovat data"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -1936,11 +1952,12 @@
         <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="Provedeno tahů:"/>
-        <string key="units_died" value="Zabito jednotek:"/>
-        <string key="units_produced" value="Postaveno jednotek:"/>
-        <string key="money_spent" value="Utraceno peněz:"/>
-        <string key="time" value="Time:"/>
+        <string key="turns_made" value="Provedeno tahů"/>
+        <string key="units_died" value="Zabito jednotek"/>
+        <string key="units_produced" value="Postaveno jednotek"/>
+        <string key="money_spent" value="Utraceno peněz"/>
+        <string key="time" value="Time"/>
+        <string key="wins" value="Wins"/>
 
         <!-- Editor -->
         <string key="editor" value="Editor"/>  <!-- Same as english -->
@@ -1990,6 +2007,7 @@
         <string key="fast_construction" value="Fast construction"/>
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -2049,6 +2067,8 @@
         <string key="ok" value="Ok"/>
         <string key="money" value="Money"/>
         <string key="quantity" value="Quantity"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
     </language>
 
 
@@ -2109,7 +2129,7 @@
         #Auteur : yiotro
 		"/>
         <string key="reset_campaign_data" value="Effacer données"/>
-        <string key="special_thanks" value="Merci à : #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Remerciements"/>
 
         <!-- Choose game mode menu-->
@@ -2372,11 +2392,12 @@
         <string key="article_my_games" value="Si vous aimez mon jeu, regardez mes autres créations :"/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="Tours joués :"/>
-        <string key="units_died" value="Unités mortes durant la partie :"/>
-        <string key="units_produced" value="Unités produits durant la partie :"/>
-        <string key="money_spent" value="Argent dépensé :"/>
-        <string key="time" value="Temps passé:"/>
+        <string key="turns_made" value="Tours joués "/>
+        <string key="units_died" value="Unités mortes durant la partie "/>
+        <string key="units_produced" value="Unités produits durant la partie "/>
+        <string key="money_spent" value="Argent dépensé "/>
+        <string key="time" value="Temps passé"/>
+        <string key="wins" value="Wins"/>
 
         <!-- Editor -->
         <string key="editor" value="Editeur"/>
@@ -2426,6 +2447,7 @@
         <string key="fast_construction" value="Construction rapide"/>
         <string key="music" value="Musique"/>
         <string key="left_handed" value="Gaucher"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
 
         <!-- Single messages -->
         <string key="level_24" value="C'est le premier niveau difficile, attention à vos défenses."/>  <!-- Same as english -->
@@ -2486,6 +2508,8 @@
         <string key="ok" value="Ok"/>
         <string key="money" value="Money"/>
         <string key="quantity" value="Quantity"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
     </language>
 
 
@@ -2547,7 +2571,7 @@
     #Wykonane przez yiotro
     "/>
         <string key="reset_campaign_data" value="Resetuj kampanie"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
 
@@ -2813,11 +2837,12 @@
         <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="Wykonane ruchy:"/>
-        <string key="units_died" value="Zginęło jednostek:"/>
-        <string key="units_produced" value="Wynajęte jednostki:"/>
-        <string key="money_spent" value="Wydane pieniądze:"/>
-        <string key="time" value="Time:"/>
+        <string key="turns_made" value="Wykonane ruchy"/>
+        <string key="units_died" value="Zginęło jednostek"/>
+        <string key="units_produced" value="Wynajęte jednostki"/>
+        <string key="money_spent" value="Wydane pieniądze"/>
+        <string key="time" value="Time"/>
+        <string key="wins" value="Wins"/>
 
         <!-- Editor -->
         <string key="editor" value="Edytor"/>
@@ -2867,6 +2892,7 @@
         <string key="fast_construction" value="Fast construction"/>
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -2926,6 +2952,8 @@
         <string key="ok" value="Ok"/>
         <string key="money" value="Money"/>
         <string key="quantity" value="Quantity"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
     </language>
 
 
@@ -2986,7 +3014,7 @@
         "/>
 
         <string key="reset_campaign_data" value="Resetta campagna"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -3215,11 +3243,12 @@
         <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="Numero di turni:"/>
-        <string key="units_died" value="Unità uccise:"/>
-        <string key="units_produced" value="Unità prodotte:"/>
-        <string key="money_spent" value="Soldi spesi:"/>
-        <string key="time" value="Time:"/>
+        <string key="turns_made" value="Numero di turni"/>
+        <string key="units_died" value="Unità uccise"/>
+        <string key="units_produced" value="Unità prodotte"/>
+        <string key="money_spent" value="Soldi spesi"/>
+        <string key="time" value="Time"/>
+        <string key="wins" value="Wins"/>
 
         <!-- Editor -->
         <string key="editor" value="Editor"/>
@@ -3269,6 +3298,7 @@
         <string key="fast_construction" value="Fast construction"/>
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -3328,6 +3358,8 @@
         <string key="ok" value="Ok"/>
         <string key="money" value="Money"/>
         <string key="quantity" value="Quantity"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
     </language>
 
 
@@ -3385,7 +3417,7 @@
        #Reddit: /r/yiotro_games
        #E-mail: yiotro93@gmail.com #Creado por yiotro"/>
         <string key="reset_campaign_data" value="Borrar datos"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu -->
@@ -3393,7 +3425,7 @@
         <string key="choose_game_mode_tutorial" value="Tutorial"/>
         <string key="choose_game_mode_campaign" value="Campaña"/>
         <string key="choose_game_mode_load" value="Cargar juego"/>
-        <string key="user_levels" value="User levels"/>
+        <string key="user_levels" value="Niveles de usuarios"/>
 
         <!-- User levels -->
         <string key="add_my_map" value="Add my map"/>
@@ -3651,11 +3683,12 @@
         <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="Turnos jugados:"/>
-        <string key="units_died" value="Unidades muertas en la partida:"/>
-        <string key="units_produced" value="Unidades creadas en la partida:"/>
-        <string key="money_spent" value="Dinero gastado:"/>
-        <string key="time" value="Time:"/>
+        <string key="turns_made" value="Turnos jugados"/>
+        <string key="units_died" value="Unidades muertas en la partida"/>
+        <string key="units_produced" value="Unidades creadas en la partida"/>
+        <string key="money_spent" value="Dinero gastado"/>
+        <string key="time" value="Time"/>
+        <string key="wins" value="Wins"/>
 
         <!-- Editor -->
         <string key="editor" value="Editor" />
@@ -3699,6 +3732,7 @@
         <string key="fast_construction" value="Fast construction"/>
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -3758,6 +3792,8 @@
         <string key="ok" value="Ok"/>
         <string key="money" value="Money"/>
         <string key="quantity" value="Quantity"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
     </language>
 
 
@@ -3817,7 +3853,7 @@
         #Vytvořil yiotro
         "/>
         <string key="reset_campaign_data" value="Resetovať údaje"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -4075,11 +4111,12 @@
         <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="Uskutočnených ťahov:"/>
-        <string key="units_died" value="Zabitých jednotiek:"/>
-        <string key="units_produced" value="Postavených jednotiek:"/>
-        <string key="money_spent" value="Utratených peňazí:"/>
-        <string key="time" value="čas:"/>
+        <string key="turns_made" value="Uskutočnených ťahov"/>
+        <string key="units_died" value="Zabitých jednotiek"/>
+        <string key="units_produced" value="Postavených jednotiek"/>
+        <string key="money_spent" value="Utratených peňazí"/>
+        <string key="time" value="čas"/>
+        <string key="wins" value="Wins"/>
 
         <!-- Editor -->
         <string key="editor" value="Editor"/> <!-- Same as english -->
@@ -4129,6 +4166,7 @@
         <string key="fast_construction" value="rýchla_stavba"/>
         <string key="music" value="hudba"/>
         <string key="left_handed" value="ľavoruký"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -4188,6 +4226,8 @@
         <string key="ok" value="Ok"/>
         <string key="money" value="Money"/>
         <string key="quantity" value="Quantity"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
     </language>
 
 
@@ -4262,7 +4302,7 @@
         #yiotro出品
 		"/>
         <string key="reset_campaign_data" value="重置数据"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -4524,11 +4564,12 @@
         <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="回合数:"/>
-        <string key="units_died" value="单位死亡数:"/>
-        <string key="units_produced" value="单位生产数:"/>
-        <string key="money_spent" value="金币支出:"/>
-        <string key="time" value="用时:"/>
+        <string key="turns_made" value="回合数"/>
+        <string key="units_died" value="单位死亡数"/>
+        <string key="units_produced" value="单位生产数"/>
+        <string key="money_spent" value="金币支出"/>
+        <string key="time" value="用时"/>
+        <string key="wins" value="Wins"/>
 
         <!-- Editor -->
         <string key="editor" value="编辑器"/>
@@ -4578,6 +4619,7 @@
         <string key="fast_construction" value="Fast construction"/>
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
 
         <!-- Single messages -->
         <string key="level_24" value="这是第一个'困难' 关卡。 注意防守！"/>
@@ -4637,6 +4679,8 @@
         <string key="ok" value="Ok"/>
         <string key="money" value="Money"/>
         <string key="quantity" value="Quantity"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
     </language>
 
 
@@ -4702,7 +4746,7 @@
         #Yiotro tarafından yapıldı.
 		"/>
         <string key="reset_campaign_data" value="Verileri sıfırla"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Özel Teşekkürler"/>
 
         <!-- Choose game mode menu-->
@@ -4965,11 +5009,12 @@
         <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="Yapılan hamle sayısı:"/>
-        <string key="units_died" value="Ölen birlik sayısı:"/>
-        <string key="units_produced" value="Üretilen birlik sayısı:"/>
-        <string key="money_spent" value="Harcanan para:"/>
-        <string key="time" value="Süre:"/>
+        <string key="turns_made" value="Yapılan hamle sayısı"/>
+        <string key="units_died" value="Ölen birlik sayısı"/>
+        <string key="units_produced" value="Üretilen birlik sayısı"/>
+        <string key="money_spent" value="Harcanan para"/>
+        <string key="time" value="Süre"/>
+        <string key="wins" value="Wins"/>
 
         <!-- Editor -->
         <string key="editor" value="Düzenleyici"/>
@@ -5019,6 +5064,7 @@
         <string key="fast_construction" value="Hızlı inşaat"/>
         <string key="music" value="Müzik"/>
         <string key="left_handed" value="Sol el modu"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Bu ilk 'zor' seviye. Savunmaya daha fazla önem ver."/>
@@ -5078,6 +5124,8 @@
         <string key="ok" value="Ok"/>
         <string key="money" value="Money"/>
         <string key="quantity" value="Quantity"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
     </language>
 
 
@@ -5149,7 +5197,7 @@
         #Направена от yiotro
 		"/>
         <string key="reset_campaign_data" value="Рестартирай всички данни"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -5418,11 +5466,12 @@
         <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="Изиграни ходове:"/>
-        <string key="units_died" value="Умрели единици:"/>
-        <string key="units_produced" value="Създадени единици:"/>
-        <string key="money_spent" value="Изхарчени пари:"/>
-        <string key="time" value="Time:"/>
+        <string key="turns_made" value="Изиграни ходове"/>
+        <string key="units_died" value="Умрели единици"/>
+        <string key="units_produced" value="Създадени единици"/>
+        <string key="money_spent" value="Изхарчени пари"/>
+        <string key="time" value="Time"/>
+        <string key="wins" value="Wins"/>
 
         <!-- Editor -->
         <string key="editor" value="Редактор"/>
@@ -5466,6 +5515,7 @@
         <string key="fast_construction" value="Fast construction"/>
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -5525,6 +5575,8 @@
         <string key="ok" value="Ok"/>
         <string key="money" value="Money"/>
         <string key="quantity" value="Quantity"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
 
     </language>
 
@@ -5599,7 +5651,7 @@
         #Feito por yiotro
         "/>
         <string key="reset_campaign_data" value="Resetar progresso"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -5830,11 +5882,12 @@
         <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="Turnos feitos:"/>
-        <string key="units_died" value="Unidades mortas:"/>
-        <string key="units_produced" value="Unidades produzidas:"/>
-        <string key="money_spent" value="Dinheiro gasto:"/>
-        <string key="time" value="Tempo:"/>
+        <string key="turns_made" value="Turnos feitos"/>
+        <string key="units_died" value="Unidades mortas"/>
+        <string key="units_produced" value="Unidades produzidas"/>
+        <string key="money_spent" value="Dinheiro gasto"/>
+        <string key="time" value="Tempo"/>
+        <string key="wins" value="Wins"/>
 
         <!-- Editor -->
         <string key="editor" value="Editor"/>  <!-- Same as english -->
@@ -5884,6 +5937,7 @@
         <string key="fast_construction" value="Construções rápidas"/>
         <string key="music" value="Música"/>
         <string key="left_handed" value="Mão esquerda"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Esse é o primeiro nível 'difícil'. Preste mais atenção na defesa."/>
@@ -5943,6 +5997,8 @@
         <string key="ok" value="Ok"/>
         <string key="money" value="Money"/>
         <string key="quantity" value="Quantity"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
 
 
     </language>
@@ -5986,7 +6042,7 @@
         <string key="lang_characters" value="éë"/>
 
         <!-- Main menu -->
-        <string key="main_menu_info" value="Info"/>
+        <string key="main_menu_info" value="Info"/>  <!-- Same as english -->
         <string key="main_menu_exit" value="Afsluiten"/>
         <string key="main_menu_something" value="Witte tekst zonder betekenis"/>
 
@@ -5995,8 +6051,8 @@
         <string key="menu_reset" value="Initialiseren"/>
         <string key="game_saved" value="Spel opgeslagen"/>
         <string key="restart_app" value="Programma herstarten"/>
-        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
-        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>  <!-- Same as english -->
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: dam bos loo waard veen -stad huizen geest"/>
 
         <!-- Info -->
         <string key="info_back" value="Terug"/>
@@ -6016,24 +6072,24 @@
         #Gemaakt door yiotro
         "/>
         <string key="reset_campaign_data" value="Gegevens initialiseren"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #"/>
-        <string key="special_thanks_title" value="Special thanks"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxasvid - Takacs David #"/>
+        <string key="special_thanks_title" value="Speciale dank"/>
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Skirmish"/>
         <string key="choose_game_mode_tutorial" value="Instructie"/>
         <string key="choose_game_mode_campaign" value="Campagne"/>
         <string key="choose_game_mode_load" value="Spel laden"/>
-        <string key="user_levels" value="User levels"/>
+        <string key="user_levels" value="Gebruikerslevels"/>
 
         <!-- User levels -->
-        <string key="add_my_map" value="Add my map"/>
-        <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
+        <string key="add_my_map" value="Voeg mijn ontwerp toe"/>
+        <string key="how_add_my_map" value="Hoe je jouw ontwerp kunt laten toevoegen: #1. Maak het in de editor. #2. Zorg ervoor dat het interessant en speelbaar is. #3. Druk op 'exporteren'. #4a. Plaats het op pastebin.com en stuur de link naar mijn mailadres yiotro93@gmail.com #4b. Of plaats et op mijn subreddit /r/yiotro_games # #Daarnaast, als je ontwerp lastig speelbaar is, zou een video van de oplossing aardig zijn."/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Hoofdmenu"/>
         <string key="game_settings_tutorial" value="Instructie"/>
-        <string key="game_settings_start" value="Start"/>
+        <string key="game_settings_start" value="Start"/>  <!-- Same as english -->
         <string key="map_size" value="Grootte kaart"/>
         <string key="color_number" value="Kleuren"/>
         <string key="player_number" value="Spelers"/>
@@ -6049,7 +6105,7 @@
         <string key="easy" value="eenvoudig"/>
         <string key="normal" value="normaal"/>
         <string key="hard" value="moeilijk"/>
-        <string key="expert" value="expert"/>
+        <string key="expert" value="expert"/>  <!-- Same as english -->
         <string key="balancer" value="balanceren"/>
         <string key="player_color" value="Kleur speler"/>
         <string key="fog_of_war" value="Waas van oorlog"/>
@@ -6070,11 +6126,11 @@
         <string key="filter_only_land" value="Alleen land"/>
 
         <!-- End game menu -->
-        <string key="end_game_ok" value="Ok"/>
+        <string key="end_game_ok" value="Ok"/>  <!-- Same as english -->
         <string key="end_game_okay" value="Okee..."/>
         <string key="player" value="speler"/>
         <string key="ai" value="AI"/>
-        <string key="won" value="gewonnen"/>
+        <string key="won" value="heeft gewonnen"/>
         <string key="statistics" value="Statistieken"/>
         <string key="next" value="Volgende"/>
         <string key="level_complete" value="Niveau afgerond"/>
@@ -6083,21 +6139,21 @@
         <string key="continue" value="Verder"/>
 
         <!-- Colors -->
-        <string key="green_player" value="Groen"/>
-        <string key="red_player" value="Rood"/>
-        <string key="magenta_player" value="Magenta"/>
+        <string key="green_player" value="Groene"/>
+        <string key="red_player" value="Rode"/>
+        <string key="magenta_player" value="Magenta"/>  <!-- Same as english -->
         <string key="cyan_player" value="Cyaan"/>
-        <string key="yellow_player" value="Geel"/>
-        <string key="gray_player" value="Grijs"/>
-        <string key="green_ai" value="Groen"/>
-        <string key="red_ai" value="Rood"/>
-        <string key="magenta_ai" value="Magenta"/>
+        <string key="yellow_player" value="Gele"/>
+        <string key="gray_player" value="Grijze"/>
+        <string key="green_ai" value="Groene"/>
+        <string key="red_ai" value="Rode"/>
+        <string key="magenta_ai" value="Magenta"/>  <!-- Same as english -->
         <string key="cyan_ai" value="Cyaan"/>
-        <string key="yellow_ai" value="Geel"/>
-        <string key="gray_ai" value="Grijs"/>
+        <string key="yellow_ai" value="Gele"/>
+        <string key="gray_ai" value="Grijze"/>
         <string key="green_menu" value="Groen"/>
         <string key="red_menu" value="Rood"/>
-        <string key="magenta_menu" value="Magenta"/>
+        <string key="magenta_menu" value="Magenta"/>  <!-- Same as english -->
         <string key="cyan_menu" value="Cyaan"/>
         <string key="yellow_menu" value="Geel"/>
         <string key="gray_menu" value="Grijs"/>
@@ -6105,7 +6161,7 @@
         <!-- Tutorial -->
         <string key="normal_rules" value="Normale regels"/>
         <string key="how_to_play" value="Hoe werkt het spel?"/>
-        <string key="tutorial_ok" value="Ok"/>
+        <string key="tutorial_ok" value="Ok"/>  <!-- Same as english -->
         <string key="tut_select_unit" value="Kies een eenheid"/>
         <string key="tut_tap_on_hex" value="Tik op het veld"/>
         <string key="tut_press_button" value="Druk tweemaal op de knop"/>
@@ -6128,7 +6184,7 @@
         <string key="tip_about_unit_death" value="Als er onvoldoende geld is#zullen alle eenheden dood gaan.#Wees dus voorzichtig"/>
         <string key="tip_merging" value="Voeg eenheden samen om een#sterkere eenheid te krijgen"/>
         <string key="tip_trees" value="Bomen verminderen de inkomsten#Het is dus beter ze te kappen"/>
-        <string key="tip_help" value="To skip rest of tutorial press 'help'"/>
+        <string key="tip_help" value="Druk op 'help' om de rest van de instructie over te slaan"/>
 
         <!-- Generic Tutorial -->
         <string key="gen_greetings" value="Hallo. Deze instructie zal de regels van dit spel uitleggen."/>
@@ -6162,14 +6218,14 @@
         <string key="gen_several_provinces" value="Je kunt meerdere steden hebben, elk met zijn eigen economie."/>
 
         <!-- Tutorial help -->
-        <string key="help" value="Help"/>
+        <string key="help" value="Help"/>  <!-- Same as english -->
         <string key="help_about_units" value="Eenheden"/>
         <string key="help_about_trees" value="Bomen"/>
         <string key="help_about_towers" value="Torens"/>
         <string key="help_about_money" value="Geld"/>
         <string key="help_about_tactics" value="Tactiek"/>
         <string key="help_about_rules" value="Regels"/>
-        <string key="my_games" value="My games"/>
+        <string key="my_games" value="Mijn spellen"/>
 
         <string key="help_units_article" value="Er zijn 4 soorten eenheden.
         #Ze verschillen alleen in sterkte.
@@ -6232,26 +6288,27 @@
         #
         #Om de regels aan te passen bij Campagne moet je op '...' tikken rechtsboven in het niveau keuze menu."/>
 
-        <string key="article_diplomacy_1" value="To win in diplomacy mode you have to be in friendship with everyone on map.
+        <string key="article_diplomacy_1" value="Om met diplomatie te winnen moet je vrienden zijn met alle spelers.
         #
-        #To open diplomacy UI just select your country and tap little 'flag' icon.
+        #Open het diplomatie-scherm door je land te selecteren en te tikken op het 'vlag' icoon.
         #
-        #Tap on any country in list and you'll see what you can do.
+        #Tik op een land in de lijst om te zien wat je kunt doen.
         #
-        #'Like' and 'dislike' buttons can make relations with that country better or worse."/>
+        #'Like' en 'dislike' knoppen kunnen de relatie met dat land beter of slechter maken."/>
 
-        <string key="article_diplomacy_2" value="The idea of black mark is simple: any other country can't be friends with both of you. It's a sort of diplomatical pressure.
+        <string key="article_diplomacy_2" value="Het idee van de zwarte lijst is eenvoudig: een ander land kan niet vrienden zijn met jullie beiden. Het is een soort diplomatieke druk.
         #
-        #Also, you won't be able to become friend with everyone easily. Last country will always refuse your friend request."/>
+        #Daarnaast kun je niet eenvoudig met iedereen vrienden worden. Het laatste land zal altijd je vriendschapsverzoek weigeren."/>
 
-        <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
+        <string key="article_my_games" value="Als je dit spel leuk vindt, vind je enkele van mijn andere spellen mogelijk ook leuk:"/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="Gebruikte beurten:"/>
-        <string key="units_died" value="Eenheden overleden:"/>
-        <string key="units_produced" value="Eenheden gemaakt:"/>
-        <string key="money_spent" value="Uitgaven:"/>
-        <string key="time" value="Tijd:"/>
+        <string key="turns_made" value="Gebruikte beurten"/>
+        <string key="units_died" value="Eenheden overleden"/>
+        <string key="units_produced" value="Eenheden gemaakt"/>
+        <string key="money_spent" value="Uitgaven"/>
+        <string key="time" value="Tijd"/>
+        <string key="wins" value="Wins"/>
 
         <!-- Editor -->
         <string key="editor" value="Werkplaats"/>
@@ -6284,7 +6341,7 @@
         <string key="skin" value="Uiterlijk"/>
         <string key="original" value="origineel"/>
         <string key="points" value="punten"/>
-        <string key="grid" value="grid"/>
+        <string key="grid" value="grid"/>  <!-- Same as english -->
         <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
         <string key="anim_style" value="Gevoeligheid"/>
         <string key="more" value="Meer"/>
@@ -6301,11 +6358,12 @@
         <string key="fast_construction" value="Snel bouwen"/>
         <string key="music" value="Muziek"/>
         <string key="left_handed" value="Linkshandig"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Dit is het eerste level in categorie 'moeilijk'. Let meer op verdediging."/>
-        <string key="map_too_big_for_user_levels" value="Map was successfully exported, but if you want to send it as user level then please make it smaller."/>
-        <string key="available_on_ios" value="Now available on iOS"/>
+        <string key="map_too_big_for_user_levels" value="Kaart met succes geëxporteerd, maar maak hem alsjeblieft kleiner als je hem wilt inzenden als userlevel."/>
+        <string key="available_on_ios" value="Nu beschikbaar in iOS"/>
 
         <!-- Gameplay -->
         <string key="friends" value="Vrienden"/>
@@ -6325,41 +6383,43 @@
         <string key="pay" value="Betaal"/>
         <string key="reparations" value="Herstelbetalingen"/>
         <string key="refuse_stop_war" value="Ik zal doorvechten tot het einde!"/>
-        <string key="win_conditions" value="Voorwaarden van overwinning"/>
+        <string key="win_conditions" value="Voorwaarden overwinning"/>
         <string key="diplomatic_win_conditions" value="Om diplomatiek te winnen moet je met iedereen vrienden zijn."/>
         <string key="confirm_black_mark" value="Op zwarte lijst plaatsen?"/>
         <string key="black_mark_description" value="Door een speler op de zwarte lijst te plaatsen verbied je andere spelers om met jullie beide gelijktijdig vrienden te zijn. Dit heeft geen invloed op al gesloten overeenkomsten."/>
-        <string key="player_turn" value="Player turn"/>
-        <string key="fine" value="Fine"/>
-        <string key="log" value="Letters"/>
-        <string key="friendship_proposal" value="Friendship proposal"/>
-        <string key="war_declaration" value="War declaration"/>
-        <string key="stop_war" value="Stop war"/>
-        <string key="friendship_ended" value="Friendship ended"/>
-        <string key="friendship_canceled" value="Friendship canceled"/>
-        <string key="black_marked" value="Black marked"/>
-        <string key="letter_sent" value="Letter sent"/>
-        <string key="delete" value="Delete"/>
-        <string key="rename" value="Rename"/>
-        <string key="confirm_delete_slot" value="Delete slot?"/>
-        <string key="resume_button" value="'Resume' button"/>
-        <string key="filters" value="Filters"/>
-        <string key="completed" value="Completed"/>
-        <string key="historical" value="Historical"/>
-        <string key="temp_slot" value="Temporary slot"/>
-        <string key="can_skip_level" value="You can skip this level"/>
-        <string key="reason" value="Reason"/>
-        <string key="friends_with_everybody" value="friendship with all kingdoms"/>
-        <string key="hex_purchase" value="Hex purchase"/>
-        <string key="confirm_buy_hexes" value="Buy hexes?"/>
-        <string key="price" value="Price"/>
-        <string key="gift" value="Gift"/>
-        <string key="gift_received" value="Gift received"/>
-        <string key="confirm_sell_hexes" value="Sell hexes?"/>
-        <string key="confirm_skip_level" value="Skip level?"/>
-        <string key="ok" value="Ok"/>
-        <string key="money" value="Money"/>
-        <string key="quantity" value="Quantity"/>
+        <string key="player_turn" value="Beurt speler"/>
+        <string key="fine" value="Boete"/>
+        <string key="log" value="Brieven"/>
+        <string key="friendship_proposal" value="Vriendschapsvoorstel"/>
+        <string key="war_declaration" value="Oorlogsverklaring"/>
+        <string key="stop_war" value="Stop oorlog"/>
+        <string key="friendship_ended" value="Vriendschap beëindigd"/>
+        <string key="friendship_canceled" value="Vriendschap opgezegd"/>
+        <string key="black_marked" value="Op zwarte lijst"/>
+        <string key="letter_sent" value="Brief verzonden"/>
+        <string key="delete" value="Verwijderen"/>
+        <string key="rename" value="Hernoemen"/>
+        <string key="confirm_delete_slot" value="Deze verwijderen?"/>
+        <string key="resume_button" value="'Verder' knop"/>
+        <string key="filters" value="Filters"/>  <!-- Same as english -->
+        <string key="completed" value="Afgerond"/>
+        <string key="historical" value="Verouderd"/>
+        <string key="temp_slot" value="Tijdelijke opslag"/>
+        <string key="can_skip_level" value="Je kunt dit level overslaan"/>
+        <string key="reason" value="Reden"/>
+        <string key="friends_with_everybody" value="vriendschap met alle koningkrijken"/>
+        <string key="hex_purchase" value="Hex aankopen"/>
+        <string key="confirm_buy_hexes" value="Hexes kopen?"/>
+        <string key="price" value="Prijs"/>
+        <string key="gift" value="Gift"/>  <!-- Same as english -->
+        <string key="gift_received" value="Gift ontvangen"/>
+        <string key="confirm_sell_hexes" value="Hexes verkopen?"/>
+        <string key="confirm_skip_level" value="Level overslaan?"/>
+        <string key="ok" value="Ok"/>  <!-- Same as english -->
+        <string key="money" value="Geld"/>
+        <string key="quantity" value="Hoeveelheid"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
 
 
     </language>
@@ -6444,7 +6504,7 @@
         #Készítette: yiotro
         "/>
         <string key="reset_campaign_data" value="Kampány Újrakezdése"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -6710,11 +6770,12 @@
         <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="Eddigi körök száma:"/>
-        <string key="units_died" value="Halott egységek száma:"/>
-        <string key="units_produced" value="Képzett egységek száma:"/>
-        <string key="money_spent" value="Elköltött pénz:"/>
-        <string key="time" value="Eltelt idő:"/>
+        <string key="turns_made" value="Eddigi körök száma"/>
+        <string key="units_died" value="Halott egységek száma"/>
+        <string key="units_produced" value="Képzett egységek száma"/>
+        <string key="money_spent" value="Elköltött pénz"/>
+        <string key="time" value="Eltelt idő"/>
+        <string key="wins" value="Wins"/>
 
         <!-- Editor -->
         <string key="editor" value="Szerkesztő"/>
@@ -6764,6 +6825,7 @@
         <string key="fast_construction" value="Gyors építkezés"/>
         <string key="music" value="Zene"/>
         <string key="left_handed" value="Bal kezes"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Ez az első nehéz szint, fordíts nagyobb figyelmet a védelemre."/>
@@ -6823,6 +6885,8 @@
         <string key="ok" value="Ok"/>
         <string key="money" value="Money"/>
         <string key="quantity" value="Quantity"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
 
 
     </language>
@@ -6905,7 +6969,7 @@
         #Гульню зрабіў yiotro
 		"/>
         <string key="reset_campaign_data" value="Глядзець даныя"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #"/> <!-- Same as english -->
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Асоба дзякую"/>
 
         <!-- Choose game mode menu-->
@@ -6966,7 +7030,7 @@
         <string key="level_complete" value="Узровень пройдзены"/>
         <string key="win_game" value="Перамога"/>
         <string key="win_or_continue" value="Скончыць гульню#або прадоўжыць?"/>
-        <string key="continue" value="Прадоўжыць"/>
+        <string key="continue" value="Працягнуць"/>
 
         <!-- Colors -->
         <string key="green_player" value="Зялёны"/>
@@ -7055,7 +7119,7 @@
         <string key="help_about_money" value="Грошы"/>
         <string key="help_about_tactics" value="Тактыка"/>
         <string key="help_about_rules" value="Правілы"/>
-        <string key="my_games" value="My games"/>
+        <string key="my_games" value="My games"/>  <!-- Same as english -->
 
         <string key="help_units_article" value="Ёсць 4 тыпы юнітаў. Адрозніваюцца яны толькі сілай. В парадку ўзрастання сілы:
         #[1] сяляне
@@ -7124,14 +7188,15 @@
         #
         #Дарэчы, перамога простай не будзе. Апошняя краіна заўсёды будзе адмаўляцца ў сяброўстве."/>
 
-        <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
+        <string key="article_my_games" value="Калі табе спадабалася гэта гульня, то табе таксама могуць спадабацца маенекаторыя іншыя гульні:"/>
 
         <!-- Statistics -->
-        <string key="turns_made" value="Хадоў зроблена:"/>
-        <string key="units_died" value="Юнітаў памерла:"/>
-        <string key="units_produced" value="Юнітаў пабудавана:"/>
-        <string key="money_spent" value="Грошаў выдаткавана:"/>
-        <string key="time" value="Час:"/>
+        <string key="turns_made" value="Хадоў зроблена"/>
+        <string key="units_died" value="Юнітаў памерла"/>
+        <string key="units_produced" value="Юнітаў пабудавана"/>
+        <string key="money_spent" value="Грошаў выдаткавана"/>
+        <string key="time" value="Час"/>
+        <string key="wins" value="Wins"/>
 
         <!-- Editor -->
         <string key="editor" value="Рэдактар"/>
@@ -7181,12 +7246,12 @@
         <string key="fast_construction" value="Хуткая пабудова"/>
         <string key="music" value="Музыка"/>
         <string key="left_handed" value="Леварукі рэжым"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Гэта першы 'цяжкі' узровень. Удзяляй больш увагі абароне."/>
-        <string key="map_too_big_for_user_levels" value="Map was successfully exported, but if you want to send it as user level then please make it smaller."/>
-        <string key="available_on_ios" value="Now available on iOS"/>
-        <string key="bleentoro_release" value="Вітаю. #Я зрабіў новую гульню. Яна называцца 'Bleentoro'. Ты можа знайсці яе ў Google Play. #Спадзяваюся яна табе спадабаецца :)"/>
+        <string key="map_too_big_for_user_levels" value="Карта была паспяхова экспартыравана, але калі ты хочаш паслаць яе як узровень гульцоў, то, калі ласка, зрабі яе менш."/>
+        <string key="available_on_ios" value="Зараз даступная на iOS"/>
 
         <!-- Gameplay -->
         <string key="friends" value="Сябры"/>
@@ -7220,28 +7285,857 @@
         <string key="friendship_canceled" value="Сяброўства адменена"/>
         <string key="black_marked" value="Чорная метка"/>
         <string key="letter_sent" value="Ліст адпраўлены"/>
-        <string key="delete" value="Delete"/>
-        <string key="rename" value="Rename"/>
-        <string key="confirm_delete_slot" value="Delete slot?"/>
-        <string key="resume_button" value="'Resume' button"/>
-        <string key="filters" value="Filters"/>
-        <string key="completed" value="Completed"/>
-        <string key="historical" value="Historical"/>
-        <string key="temp_slot" value="Temporary slot"/>
-        <string key="can_skip_level" value="You can skip this level"/>
-        <string key="reason" value="Reason"/>
-        <string key="friends_with_everybody" value="friendship with all kingdoms"/>
-        <string key="hex_purchase" value="Hex purchase"/>
-        <string key="confirm_buy_hexes" value="Buy hexes?"/>
-        <string key="price" value="Price"/>
-        <string key="gift" value="Gift"/>
-        <string key="gift_received" value="Gift received"/>
-        <string key="confirm_sell_hexes" value="Sell hexes?"/>
-        <string key="confirm_skip_level" value="Skip level?"/>
-        <string key="ok" value="Ok"/>
-        <string key="money" value="Money"/>
-        <string key="quantity" value="Quantity"/>
+        <string key="delete" value="Выдаліць"/>
+        <string key="rename" value="Перайменаваць"/>
+        <string key="confirm_delete_slot" value="Выдаліць слот?"/>
+        <string key="resume_button" value="Кнопка 'Працягнуць'"/>
+        <string key="filters" value="Фільтры"/>
+        <string key="completed" value="Пройдзеныя"/>
+        <string key="historical" value="Гістарычныя"/>
+        <string key="temp_slot" value="Часовы слот"/>
+        <string key="can_skip_level" value="Узровень можна прапусціць"/>
+        <string key="reason" value="Прычына"/>
+        <string key="friends_with_everybody" value="сяброўства з усімі краінамі"/>
+        <string key="hex_purchase" value="Купля клетак"/>
+        <string key="confirm_buy_hexes" value="Купіць клеткі?"/>
+        <string key="price" value="Цена"/>
+        <string key="gift" value="Падарунак"/>
+        <string key="gift_received" value="Падарунак атрыманы"/>
+        <string key="confirm_sell_hexes" value="Прадаць клеткі?"/>
+        <string key="confirm_skip_level" value="Прапусціць узровень?"/>
+        <string key="ok" value="Добра"/>
+        <string key="money" value="Грошы"/>
+        <string key="quantity" value="Колькасць"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
     </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <language name="id_ID" title="Indonesian" author="Jawad Yuwono">
+        <!-- All characters -->
+        <string key="lang_characters" value="é"/>
+
+        <!-- Main menu -->
+        <string key="main_menu_info" value="Informasi"/>
+        <string key="main_menu_exit" value="Keluar"/>
+        <string key="main_menu_something" value="Teks putih tidak penting"/>
+
+        <!-- Random stuff -->
+        <string key="menu_level" value="Level"/>
+        <string key="menu_reset" value="Atur ulang"/>
+        <string key="game_saved" value="Permainan tersimpan"/>
+        <string key="restart_app" value="Mulai kembali"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/> <!-- Same as english -->
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
+
+        <!-- Info -->
+        <string key="info_back" value="Kembali"/>
+        <string key="info_array" value="Ini adalah permainan strategi sederhana.
+        #Gratis, tanpa iklan ataupun donasi.
+        #Jika kamu baru pertama kali bermain, boleh cek tutorial atau menu 'bantuan'.
+        #
+        #Permainan ini terisnpirasi dari Slay oleh Sean O'Connor.
+        #
+        #
+        #
+        #
+        #
+        #
+        #Reddit: /r/yiotro_games
+        #Surel: yiotro93@gmail.com
+        #Dibuat oleh yiotro
+        "/>
+        <string key="reset_campaign_data" value="Atur ulang data"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Terima kasih"/>
+
+        <!-- Choose game mode menu-->
+        <string key="choose_game_mode_skirmish" value="Tempur"/>
+        <string key="choose_game_mode_tutorial" value="Tutorial"/>
+        <string key="choose_game_mode_campaign" value="Ekspedisi"/>
+        <string key="choose_game_mode_load" value="Lanjutkan"/>
+        <string key="user_levels" value="Level sumbangan"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Tambahkan level"/>
+        <string key="how_add_my_map" value="Cara menambahkan levelmu sendiri: #1. Buat level dengan editor peta. #2. Pastikan levelnya menarik dan dapat diselesaikan. #3. Pilih 'ekspor'. #4a. Poskan di pastebin.com dan kirim tautannya melalui surel ke yiotro93@gmail.com #4b. Atau poskan di subreddit /r/yiotro_games # #Tambahan, jika level buatanmu sangat sulit, akan lebih bagus jika kamu menyertakan video cara menyelesaikannya."/>
+
+
+        <!-- Skirmish menu -->
+        <string key="game_settings_main_menu" value="Menu utama"/>
+        <string key="game_settings_tutorial" value="Tutorial"/>
+        <string key="game_settings_start" value="Mulai"/>
+        <string key="map_size" value="Ukuran peta"/>
+        <string key="color_number" value="Warna"/>
+        <string key="player_number" value="Pemain"/>
+        <string key="small" value="kecil"/>
+        <string key="medium" value="sedang"/>
+        <string key="big" value="besar"/>
+        <string key="ai_only" value="AI saja"/>
+        <string key="single_player" value="satu pemain"/>
+        <string key="multiplayer" value="multipemain"/>
+        <string key="colors" value="warna"/>
+        <string key="color" value="warna"/>
+        <string key="difficulty" value="Kesulitan"/>
+        <string key="easy" value="easy"/>
+        <string key="normal" value="normal"/>
+        <string key="hard" value="hard"/>
+        <string key="expert" value="expert"/>
+        <string key="balancer" value="balancer"/>
+        <string key="player_color" value="Warna pemain"/>
+        <string key="fog_of_war" value="Kabut perang"/>
+        <string key="diplomacy" value="Diplomasi"/>
+
+        <!-- In game menu -->
+        <string key="in_game_menu_resume" value="Lanjutkan"/>
+        <string key="in_game_menu_save" value="Simpan"/>
+        <string key="in_game_menu_surrender" value="Menyerah"/>
+        <string key="in_game_menu_main_menu" value="Menu utama"/>
+        <string key="in_game_menu_restart" value="Mulai kembali"/>
+        <string key="confirm_restart" value="Mulai ulang permainan?"/>
+        <string key="cancel" value="Batalkan"/>
+        <string key="confirm_end_turn" value="Akhiri giliran?"/>
+        <string key="yes" value="Ya"/>
+        <string key="confirm_import" value="Impor"/>
+        <string key="filter_no" value="Tanpa filter"/>
+        <string key="filter_only_land" value="Daratan saja"/>
+
+        <!-- End game menu -->
+        <string key="end_game_ok" value="Oke"/>
+        <string key="end_game_okay" value="Oke..."/>
+        <string key="player" value="yang"/>
+        <string key="ai" value="AI"/>
+        <string key="won" value="menang!"/>
+        <string key="statistics" value="Statistik"/>
+        <string key="next" value="Lanjut"/>
+        <string key="level_complete" value="Level selesai"/>
+        <string key="win_game" value="Menang"/>
+        <string key="win_or_continue" value="Menangi sekarang#atau lanjutkan?"/>
+        <string key="continue" value="Lanjutkan"/>
+
+        <!-- Colors -->
+        <string key="green_player" value="Hijau"/>
+        <string key="red_player" value="Merah"/>
+        <string key="magenta_player" value="Ungu"/>
+        <string key="cyan_player" value="Biru"/>
+        <string key="yellow_player" value="Kuning"/>
+        <string key="gray_player" value="Kelabu"/>
+        <string key="green_ai" value="Hijau"/>
+        <string key="red_ai" value="Merah"/>
+        <string key="magenta_ai" value="Ungu"/>
+        <string key="cyan_ai" value="Biru"/>
+        <string key="yellow_ai" value="Kuning"/>
+        <string key="gray_ai" value="Kelabu"/>
+        <string key="green_menu" value="Hijau"/>
+        <string key="red_menu" value="Merah"/>
+        <string key="magenta_menu" value="Ungu"/>
+        <string key="cyan_menu" value="Biru"/>
+        <string key="yellow_menu" value="Kuning"/>
+        <string key="gray_menu" value="Kelabu"/>
+
+        <!-- Tutorial -->
+        <string key="normal_rules" value="Peraturan normal"/>
+        <string key="how_to_play" value="Cara bermain"/>
+        <string key="tutorial_ok" value="Oke"/>
+        <string key="tut_select_unit" value="Pilih satu unit"/>
+        <string key="tut_tap_on_hex" value="Ketuk di satu kotak"/>
+        <string key="tut_press_button" value="Ketuk tombol dua kali"/>
+        <string key="tut_build_tower" value="Bangun menara"/>
+        <string key="tut_again" value="Lagi"/>
+        <string key="tut_build_spearman" value="Tambah prajurit"/>
+        <string key="tut_tap_to_undo" value="Pilih 'undo'"/>
+        <string key="tut_tap_to_end_turn" value="Ketuk untuk menyelesaikan giliran"/>
+        <string key="tut_hold_hex" value="Ketuk-tahan"/>
+        <string key="tut_merge_units" value="Gabungkan unit"/>
+        <string key="tut_good_luck" value="Semoga beruntung!"/>
+
+        <!-- Tutorial tips -->
+        <string key="tip_capture_with_units" value="Serang dengan unitmu#untuk menguasai wilayah baru"/>
+        <string key="tip_about_money" value="Semakin besar wilayahmu#semakin banyak uang yang didapat"/>
+        <string key="tip_build_towers" value="Bangun menara untuk lindungi#area sekitar"/>
+        <string key="tip_about_taxes" value="Unit yang lebih kuat#memerlukan uang lebih banyak"/>
+        <string key="tip_about_defense" value="Unit dan rumah juga#mampu melindungi area sekitar"/>
+        <string key="tip_hold_to_march" value="Untuk menggerakkan tentara#dengan cepat, pakai 'hold to march'"/>
+        <string key="tip_about_unit_death" value="Jika uang habis, maka#seluruh unit akan mati.#Berhati-hatilah!"/>
+        <string key="tip_merging" value="Gabungkan unit untuk#mendapat unit yang lebih kuat"/>
+        <string key="tip_trees" value="Tumbuhnya pohon mengurangi pemasukan#Tebanglah secara rutin"/>
+        <string key="tip_help" value="Untuk melewatkan tutorial pilih 'bantuan'"/>
+
+        <!-- Generic Tutorial -->
+        <string key="gen_greetings" value="Hai. Tutorial ini akan menjelaskan semua peraturan permainan ini."/>
+        <string key="gen_select_province" value="Ketuk di kotamu untuk memilih."/>
+        <string key="gen_select_unit" value="Bagus. Kamu punya beberapa unit. Pilih satu di antaranya."/>
+        <string key="gen_move_unit" value="Setiap unit boleh bergerak sekali tiap giliran. Sekarang, kuasai wilayah netral di dekat unit yang dipilih dengan mengetuknya."/>
+        <string key="gen_income" value="Perkaya kotamu dengan menguasai wilayah baru. Semakin besar kota - semakin banyak pemasukan."/>
+        <string key="gen_lets_build_farm" value="Ayo bangun pertanian untuk mendapat lebih banyak pemasukan."/>
+        <string key="gen_press_button_twice" value="Ketuk tombol dua kali"/>
+        <string key="gen_build_farm" value="Pertanian hanya bisa dibangun di dekat ibukota atau pertanian lainnya."/>
+        <string key="gen_about_farms" value="Setiap pertanian memberi 3 koin tiap giliran. Tiap pertanian baru lebih mahal 2 koin dari sebelumnya."/>
+        <string key="gen_lets_build_peasant" value="Ayo bangun unit baru dan kuasai wilayah netral."/>
+        <string key="gen_press_button" value="Tekan tombol di bawah"/>
+        <string key="gen_build_peasant" value="Letakkan unitmu di wilayah dekat batas kota."/>
+        <string key="gen_capture_peasant" value="Sekarang, kuasai wilayah netral dengan memilih unit dan arah pergerakannya."/>
+        <string key="gen_capture_hex" value="Kuasai wilayah netral"/>
+        <string key="gen_lets_build_tower" value="Jangan sampai kehilangan wilayah. Gunakan menara untuk mempertahankan wilayahmu."/>
+        <string key="gen_build_tower" value="Bangun menara dengan mengetuk wilayah yang di-highlight."/>
+        <string key="gen_about_towers" value="Menara dapat membantu mempertahankan wilayah sekitarnya (yang sudah kamu kuasai) dari peladang dan prajurit."/>
+        <string key="gen_lets_build_spearman" value="Prajurit lebih kuat daripada peladang. Ayo kita tambahkan satu prajurit."/>
+        <string key="gen_build_spearman" value="Ketuk di satu wilayah untuk menambahkan prajurit."/>
+        <string key="gen_units_consume_money" value="Setiap unit membutuhkan uang agar tetap hidup. Unit yang lebih kuat memerlukan uang lebih banyak."/>
+        <string key="gen_undo_spearman" value="Sekarang pendapatanmu sama dengan -1. Ini tidak baik, jadi kita balikkan saja penambahan prajurit."/>
+        <string key="gen_why_units_die" value="Semua unit akan mati jika kotamu kehabisan uang. Jadi perhatikan terus penghasilanmu."/>
+        <string key="gen_about_trees_one" value="Hutan lebat juga masalah. Wilayah dengan pohon tidak akan menghasilkan uang."/>
+        <string key="gen_about_trees_two" value="Tebang pohon secepatnya selama mereka masih sedikit."/>
+        <string key="gen_end_turn" value="Untuk mengakhiri giliran pilih tombol di pojok kanan bawah."/>
+        <string key="gen_choose_to_merge" value="Kamu juga bisa menggabungkan unit. Pilih peladang di bawah."/>
+        <string key="gen_merge_units" value="Sekarang, pilih peladang satunya untuk menggabungkan kedua unit menjadi prajurit."/>
+        <string key="gen_long_tap" value="Jika unitmu terlalu banyak, kamu bisa menggerakan mereka sekaligus dengan ketuk dan tahan."/>
+        <string key="gen_several_provinces" value="Kamu bisa memiliki banyak kota, dengan ekonomi masing-masing."/>
+
+        <!-- Tutorial help -->
+        <string key="help" value="Bantuan"/>
+        <string key="help_about_units" value="Unit"/>
+        <string key="help_about_trees" value="Pohon"/>
+        <string key="help_about_towers" value="Menara"/>
+        <string key="help_about_money" value="Uang"/>
+        <string key="help_about_tactics" value="Taktik"/>
+        <string key="help_about_rules" value="Peraturan"/>
+        <string key="my_games" value="Permainan saya"/>
+
+        <string key="help_units_article" value="Ada 4 jenis unit.
+        #Perbedaan mereka adalah kekuatannya.
+        #Dari yang terlemah hingga yang terkuat:
+        #[1] peladang
+        #[2] prajurit
+        #[3] baron
+        #[4] kesatria
+        #
+        #Setiap unit memberi perlindungan pada wilayah sekitar yang dikuasai sesuai kekuatannya.
+        #
+        #Untuk menguasai satu wilayah, kekuatan unit harus lebih kuat daripada perlindungannya.
+        #
+        #Setiap jenis unit menghabiskan 2, 6, 18 atau 54 coin setiap giliran.
+        "/>
+
+        <string key="help_trees_article" value="Pohon akan tumbuh di tempat matinya sebuah unit.
+        #
+        #Wilayah dengan pohon tidak akan menambah penghasilan. Ini tidak baik untuk ekonomi kotamu.
+        #
+        #Kamu harus membersihkannya. Jika tidak mereka akan terus tumbuh dan mematikan ekonomi.
+        #
+        #Pohon kelapa tumbuh di pojok-pojok dan menyebar dengan cepat. Tebang secepatnya.
+        "/>
+
+        <string key="help_towers_article" value="Menara bisa melindungi wilayah sekitarnya.
+        #
+        #Kekuatan menara adalah [2]. Hanya baron dan ksatria yang bisa menghancurkannya.
+        #
+        #Kekuatan rumah adalah [1].
+        #
+        #Di awal permainan, ini adalah cara paling mudah untuk melindungi wilayahmu.
+        #Harga menara cukup murah dan tidak memakan uang tiap giliran.
+        "/>
+
+        <string key="help_money_article" value="Pemasukan bergantung pada jumlah kotak.
+        #Semakin banyak kotak wilayah yang kamu kuasai semakin besar.
+        #Pohon mengurangi pemasukan.
+        #
+        #Unit butuh gaji. Semakin kuat unit, semakin besar gajinya.
+        #
+        #Jika uangmu habis, seluruh unit akan mati.
+        #
+        #Pemasukan dapat dilihat dari angka di atas tengah.
+        "/>
+
+        <string key="help_tactics_article" value="Di awal permainan kuasai wilayah netral.
+        #Pertahankan wilayah yang sudah dikuasai.
+        #
+        #Pastikan pemasukanmu cukup sebelum membuat unit baru.
+        #
+        #Potong-potong wilayah lawanmu untuk mengganggu ekonominya.
+        "/>
+
+        <string key="article_rules" value="Ada dua set peraturan di permainan ini: Normal dan Slay. Peraturan normal digunakan secara default.
+        #
+        #Awalnya permainan ini hanya menggunakan peraturan Slay.
+        #
+        #Untuk mengganti permainan di mode Tempur, pilih 'lainnya' sebelum bermain.
+        #
+        #Untuk mengganti peraturan di mode Ekspedisi, pilih '...' di menu pojok kanan atas."/>
+
+        <string key="article_diplomacy_1" value="Untuk memenangi mode diplomasi kamu harus berkawan dengan semua pihak.
+        #
+        #Untuk membuka menu diplomasi ketuk saja di wilayahmu dan pilih simbol bendera.
+        #
+        #Pilih negara mana saja di daftar dan lihat apa yang bisa dilakukan.
+        #
+        #Tombol 'like' dan 'dislike' bisa membuat hubungan dengan negara tersebut membaik atau memburuk."/>
+
+        <string key="article_diplomacy_2" value="Negara yang bertanda hitam: negara lain tidak boleh berteman secara bersamaan denganmu dan negara tersebut.
+        #
+        #Tidak mudah untuk bisa berteman dengan semua. Negara terakhir akan selalu menolak permintaan berteman."/>
+
+        <string key="article_my_games" value="Jika kamu menyukai permainan ini lihat juga permainan saya yang lain:"/>
+
+        <!-- Statistics -->
+        <string key="turns_made" value="Jumlah giliran"/>
+        <string key="units_died" value="Unit mati"/>
+        <string key="units_produced" value="Unit dibuat"/>
+        <string key="money_spent" value="Uang terpakai"/>
+        <string key="time" value="Waktu"/>
+        <string key="wins" value="Wins"/>
+
+        <!-- Editor -->
+        <string key="editor" value="Editor"/>
+        <string key="slot" value="Slot"/>
+        <string key="slots" value="Simpan slot"/>
+        <string key="import" value="Impor"/>
+        <string key="export" value="Ekspor"/>
+        <string key="empty" value="kosong"/>
+        <string key="play" value="Mainkan"/>
+        <string key="edit" value="Edit"/>
+        <string key="random" value="Acak"/>
+        <string key="exported" value="Peta di clipboard"/>
+        <string key="editor_clear" value="Kosongkan"/>
+        <string key="no" value="Tidak"/>
+        <string key="yes" value="Ya"/>
+        <string key="confirm_import" value="Konfirmasi impor"/>
+        <string key="filter_no" value="Tanpa filter"/>
+        <string key="filter_only_land" value="Daratan saja"/>
+        <string key="confirm_clear_level" value="Kosongkan peta?"/>
+        <string key="confirm_randomize" value="Buat peta secara acak?"/>
+        <string key="randomize" value="Acak"/>
+
+        <!-- Settings -->
+        <string key="autosave" value="Autosimpan"/>
+        <string key="ask_to_end_turn" value="Tanyakan akhiri giliran"/>
+        <string key="city_names" value="Nama kota"/>
+        <string key="sound" value="Suara"/>
+        <string key="limited_turns" value="Batasi giliran"/>
+        <string key="hold_to_march" value="Ketuk-tahan untuk bergerak"/>
+        <string key="skin" value="Skin"/>
+        <string key="original" value="original"/>
+        <string key="points" value="point"/>
+        <string key="grid" value="grid"/>
+        <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
+        <string key="anim_style" value="Sensitifitas"/>
+        <string key="more" value="Lainnya"/>
+        <string key="camera_offset" value="Offset kamera"/>
+        <string key="slay_rules" value="Peraturan Slay"/>
+        <string key="language" value="Bahasa"/>
+        <string key="more_settings_checks" value="# #Tekstur air # # "/>
+        <string key="water_texture" value="Tekstur air "/>
+        <string key="confirm_reset" value="Hapus progres?"/>
+        <string key="replays" value="Replay"/>
+        <string key="save_replay" value="Simpan replay"/>
+        <string key="replay" value="Replay"/>
+        <string key="replay_saved" value="Replay tersimpan"/>
+        <string key="fast_construction" value="Konstruksi kilat"/>
+        <string key="music" value="Musik"/>
+        <string key="left_handed" value="Kidal"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
+
+        <!-- Single messages -->
+        <string key="level_24" value="Ini level tingkat 'hard' pertama. Beri perhatian lebih pada pertahanan."/>
+        <string key="map_too_big_for_user_levels" value="Peta sukses diekspor, tapi jika kamu ingin menyumbangkan level ini mohon dikecilkan ukurannya."/>
+        <string key="available_on_ios" value="Sekarang tersedia di iOS"/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="Teman"/>
+        <string key="mutual_friends" value="Bersama"/>
+        <string key="dotations" value="Subsidi"/>
+        <string key="treaty_of_friendship" value="Perjanjian aliansi"/>
+        <string key="state" value="Negara"/>
+        <string key="duration" value="Durasi"/>
+        <string key="refuse_friendship" value="Maaf, saya tidak bisa menerima perjanjian ini."/>
+        <string key="friend" value="kawan"/>
+        <string key="enemy" value="lawan"/>
+        <string key="neutral" value="netral"/>
+        <string key="dead" value="mati"/>
+        <string key="confirm_cancel_friendship" value="Batalkan aliansi?"/>
+        <string key="confirm_start_war" value="Nyatakan perang?"/>
+        <string key="peace_treaty" value="Perjanjian perdamaian"/>
+        <string key="pay" value="Bayar"/>
+        <string key="reparations" value="Perbaikan"/>
+        <string key="refuse_stop_war" value="Aku akan berjuang hingga akhir!"/>
+        <string key="win_conditions" value="Kondisi kemenangan"/>
+        <string key="diplomatic_win_conditions" value="Untuk menang secara diplomatis kamu harus berkawan dengan semuanya."/>
+        <string key="confirm_black_mark" value="Beri tanda hitam?"/>
+        <string key="black_mark_description" value="Dengan memberi tanda hitam kamu melarang yang lain untuk berkawan dengannya dan negaramu secara bersamaan. Tidak berlaku jika sudah ada kontrak lain sebelumnya."/>
+        <string key="player_turn" value="Giliran pemain"/>
+        <string key="fine" value="Denda"/>
+        <string key="log" value="Pesan"/>
+        <string key="friendship_proposal" value="Proposal aliansi"/>
+        <string key="war_declaration" value="Pernyataan perang"/>
+        <string key="stop_war" value="Hentikan perang"/>
+        <string key="friendship_ended" value="Aliansi berakhir"/>
+        <string key="friendship_canceled" value="Aliansi dibatalkan"/>
+        <string key="black_marked" value="Tanda hitam"/>
+        <string key="letter_sent" value="Pesan terkirim"/>
+        <string key="delete" value="Hapus"/>
+        <string key="rename" value="Ubah nama"/>
+        <string key="confirm_delete_slot" value="Hapus slot?"/>
+        <string key="resume_button" value="Tombol 'lanjutkan'"/>
+        <string key="filters" value="Filter"/>
+        <string key="completed" value="Selesai"/>
+        <string key="historical" value="Historis"/>
+        <string key="temp_slot" value="Slot sementara"/>
+        <string key="can_skip_level" value="Kamu bisa melewatkan level ini"/>
+        <string key="reason" value="Alasan"/>
+        <string key="friends_with_everybody" value="berteman dengan seluruh kerajaan"/>
+        <string key="hex_purchase" value="Pembelian wilayah"/>
+        <string key="confirm_buy_hexes" value="Beli wilayah?"/>
+        <string key="price" value="Harga"/>
+        <string key="gift" value="Hadiah"/>
+        <string key="gift_received" value="Hadiah diterima"/>
+        <string key="confirm_sell_hexes" value="Jual wilayah?"/>
+        <string key="confirm_skip_level" value="Lewatkan level?"/>
+        <string key="ok" value="Oke"/>
+        <string key="money" value="Uang"/>
+        <string key="quantity" value="Jumlah"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
+
+
+
+    </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <language name="el_GR" title="Greek" author="Nikos Loxas">
+        <!-- All characters -->
+        <string key="lang_characters" value="αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΤΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩάέήίόύώΆΈΉΊΌΎΏ;"/>
+
+        <!-- Main menu -->
+        <string key="main_menu_info" value="Πληροφορίες"/>
+        <string key="main_menu_exit" value="Έξοδος"/>
+        <string key="main_menu_something" value="Άσπρο κείμενο άνεφ σημασίας"/>
+
+        <!-- Random stuff -->
+        <string key="menu_level" value="Επίπεδο"/>
+        <string key="menu_reset" value="Επαναφορά"/>
+        <string key="game_saved" value="Το παιχνίδι αποθηκεύτηκε"/>
+        <string key="restart_app" value="Επανεκκίνηση εφαρμογής"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
+
+        <!-- Info -->
+        <string key="info_back" value="Πίσω"/>
+        <string key="info_array" value="Το Antiyoy είναι ένα απλό παιχνίδι στρατηγικής με μινιμαλιστικό στύλ.
+        #Είναι δωρεάν και δεν έχει διαφημίσεις ή δωρέες.
+        #Αν είσαι νέος στο παιχνίδι, δοκίμασε το Παιχνίδι εκμάθησης ή πάτα το μενού 'βοήθειας'.
+        #
+        #Αυτό το παιχνίδι είναι εμπνευσμένο από το Slay του Sean O'Connor.
+        #
+        #
+        #
+        #
+        #
+        #
+        #Reddit: /r/yiotro_games
+        #E-mail: yiotro93@gmail.com
+        #Made by yiotro
+        "/>
+        <string key="reset_campaign_data" value="Επαναφορά δεδομένων"/>
+        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Ιδιαίτερες ευχαριστίες"/>
+
+        <!-- Choose game mode menu-->
+        <string key="choose_game_mode_skirmish" value="Αψιμαχία"/>
+        <string key="choose_game_mode_tutorial" value="Παιχνίδι εκμάθησης"/>
+        <string key="choose_game_mode_campaign" value="Εκστρατεία"/>
+        <string key="choose_game_mode_load" value="Φόρτωση παιχνιδιού"/>
+        <string key="user_levels" value="Επίπεδα χρηστών"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Προσθήκη του χάρτη μου"/>
+        <string key="how_add_my_map" value="Πώς να βάλεις τον χάρτη σου εδώ: #1. Φτιάξε τον στον editor #2. Σιγουρέψου πως είναι ενδιαφέρον και νικιέται#3. Πάτα 'εξαγωγή'. #4a. Πόσταρε το στο pastebin.com και στείλε μου τον σύνδεσμο στο email yiotro93@gmail.com #4b. Ή πόσταρε το στο subreddit μου /r/yiotro_games # #Επίσης, αν ο χάρτης σου είναι πολύ δύσκολος, θα βοηθούσε πολύ αν συμπεριλάμβανες και ένα βίντεο με τον τρόπο για να τον νικήσεις."/>
+
+
+        <!-- Skirmish menu -->
+        <string key="game_settings_main_menu" value="Κύριο μενού"/>
+        <string key="game_settings_tutorial" value="Παιχνίδι εκμάθησης"/>
+        <string key="game_settings_start" value="Έναρξη"/>
+        <string key="map_size" value="Μέγεθος χάρτη"/>
+        <string key="color_number" value="Χρώματα"/>
+        <string key="player_number" value="Παίχτες"/>
+        <string key="small" value="μικρός"/>
+        <string key="medium" value="μεσαίος"/>
+        <string key="big" value="μεγάλος"/>
+        <string key="ai_only" value="Μόνο τεχνητή νοημοσύνη"/>
+        <string key="single_player" value="Ένας παίχτης"/>
+        <string key="multiplayer" value="Πολλοί παίχτες"/>
+        <string key="colors" value="χρώματα"/>
+        <string key="color" value="χρώματα"/>
+        <string key="difficulty" value="Δυσκολία"/>
+        <string key="easy" value="εύκολη"/>
+        <string key="normal" value="φυσιολογική"/>
+        <string key="hard" value="δύσκολή"/>
+        <string key="expert" value="πολύ δύσκολη"/>
+        <string key="balancer" value="ισορροπιστής"/>
+        <string key="player_color" value="Χρώμα παίχτη"/>
+        <string key="fog_of_war" value="Ομίχλη πολέμου"/>
+        <string key="diplomacy" value="Διπλωματία"/>
+
+        <!-- In game menu -->
+        <string key="in_game_menu_resume" value="Συνέχεια"/>
+        <string key="in_game_menu_save" value="Αποθήκευση παιχνιδιού"/>
+        <string key="in_game_menu_surrender" value="Παραδίνομαι"/>
+        <string key="in_game_menu_main_menu" value="Κύριο μενού"/>
+        <string key="in_game_menu_restart" value="Επανεκκίνηση"/>
+        <string key="confirm_restart" value="Επανεκκίνηση παιχνιδιού;"/>
+        <string key="cancel" value="Άκυρο"/>
+        <string key="confirm_end_turn" value="Τέλος γύρου;"/>
+        <string key="yes" value="Ναι"/>
+        <string key="confirm_import" value="Επιβεβαίωση εισαγωγής"/>
+        <string key="filter_no" value="Χωρίς φίλτρο"/>
+        <string key="filter_only_land" value="Μόνο γη"/>
+
+        <!-- End game menu -->
+        <string key="end_game_ok" value="ok"/>
+        <string key="end_game_okay" value="Okay..."/>
+        <string key="player" value="παίχτης"/>
+        <string key="ai" value="Τεχνητή νοημοσύνηI"/>
+        <string key="won" value="νικημένο"/>
+        <string key="statistics" value="Στατιστικά"/>
+        <string key="next" value="Επόμενο"/>
+        <string key="level_complete" value="Το επίπεδο ολοκληρώθηκε"/>
+        <string key="win_game" value="Νίκη"/>
+        <string key="win_or_continue" value="Νίκη τώρα#ή συνέχισε;"/>
+        <string key="continue" value="Συνέχισε"/>
+
+        <!-- Colors -->
+        <string key="green_player" value="Πράσινο"/>
+        <string key="red_player" value="Κόκκινο"/>
+        <string key="magenta_player" value="Μωβ"/>
+        <string key="cyan_player" value="Κυανό"/>
+        <string key="yellow_player" value="Κίτρινο"/>
+        <string key="gray_player" value="Γκρι"/>
+        <string key="green_ai" value="Πράσινο"/>
+        <string key="red_ai" value="Κόκκινο"/>
+        <string key="magenta_ai" value="Μωβ"/>
+        <string key="cyan_ai" value="Κυανό"/>
+        <string key="yellow_ai" value="Κίτρινο"/>
+        <string key="gray_ai" value="Γκρι"/>
+        <string key="green_menu" value="Πράσινο"/>
+        <string key="red_menu" value="Κόκκινο"/>
+        <string key="magenta_menu" value="Μωβ"/>
+        <string key="cyan_menu" value="Κυανό"/>
+        <string key="yellow_menu" value="Κίτρινο"/>
+        <string key="gray_menu" value="Γκρι"/>
+
+        <!-- Tutorial -->
+        <string key="normal_rules" value="Κανονικοί κανόνες"/>
+        <string key="how_to_play" value="Πώς να παίξεις;"/>
+        <string key="tutorial_ok" value="Ok"/>
+        <string key="tut_select_unit" value="Επέλεξε μια μονάδα"/>
+        <string key="tut_tap_on_hex" value="Πάτα στο εξάγωνο"/>
+        <string key="tut_press_button" value="Πάτα το κουμπί δύο φορές"/>
+        <string key="tut_build_tower" value="Κατασκεύασε έναν πύργο"/>
+        <string key="tut_again" value="Πάλι"/>
+        <string key="tut_build_spearman" value="Κατασκεύασε έναν ακοντιστή"/>
+        <string key="tut_tap_to_undo" value="Πάτα 'πάρτο πίσω'"/>
+        <string key="tut_tap_to_end_turn" value="Πάτα για να τελειώσει ο γύρος"/>
+        <string key="tut_hold_hex" value="Πάτα το κρατημένο"/>
+        <string key="tut_merge_units" value="Συγχώνευσε μονάδες"/>
+        <string key="tut_good_luck" value="Καλή τύχη!"/>
+
+        <!-- Tutorial tips -->
+        <string key="tip_capture_with_units" value="Κάνε επίθεση με τις μονάδες σου#για να πάρεις εδάφη"/>
+        <string key="tip_about_money" value="Όσο μεγαλύτερη είναι η επικράτειά σου#τόσα περισσότερα λεφτά παίρνεις"/>
+        <string key="tip_build_towers" value="Κατασκεύασε πύργους για να προστατέψεις#τα κοντινά εδάφη"/>
+        <string key="tip_about_taxes" value="Οι δυνατότερες μονάδες καταναλώνουν#περισσότερα λεφτά"/>
+        <string key="tip_about_defense" value="Οι μονάδες και τα σπίτια επίσης#προστατεύουν τα κοντινά εδάφη"/>
+        <string key="tip_hold_to_march" value="Για να μετακινήσεις γρήγορα τις μονάδες#χρησιμοποίησε το 'πάτα παρατεταμένα για να μετακινηθείς'"/>
+        <string key="tip_about_unit_death" value="Αν σου τελειώσουν τα λεφτά τότε#όλες οι μονάδες πεθαίνουν.#Γι 'αυτό πρόσεχε"/>
+        <string key="tip_merging" value="Συγχώνευσε μονάδες για να πάρεις#μια πιο δυνατή μονάδα"/>
+        <string key="tip_trees" value="Τα δέντρα μειώνουν το εισόδημα.#Γι 'αυτό είναι καλύτερο να τα κόβεις"/>
+        <string key="tip_help" value="Για να παραλείψεις το υπόλοιπο παιχνίδι εκμάθησης πάτα 'βοήθεια'"/>
+
+        <!-- Generic Tutorial -->
+        <string key="gen_greetings" value="Γεια. Αυτό το παιχνίδι εκμάθησης θα σου εξηγήσει τους κανόνες του παιχνιδιού."/>
+        <string key="gen_select_province" value="Πάτα πάνω στην πόλη σου για να την επιλέξεις."/>
+        <string key="gen_select_unit" value="Μπράβο. Έχει διάφορες μονάδες. Πάτα πάνω σε μια από αυτές."/>
+        <string key="gen_move_unit" value="Κάθε μονάδα κινείται μια φορά σε κάθε γύρο. Τώρα, αιχμαλώτισε ένα ουδέτερο εξάγωνο κοντά στην επιλεγμένη μονάδα, πατώντας πάνω του."/>
+        <string key="gen_income" value="Με το να αιχμαλωτίζεις νέα εξάγωνα, μεγαλώνεις το εισόδημα της πόλης σου. Περισσότερα εξάγωνα - περισσότερο εισόδημα."/>
+        <string key="gen_lets_build_farm" value="Ας χτίσουμε μια φάρμα για να πάρουμε ακόμα μεγαλύτερο εισόδημα."/>
+        <string key="gen_press_button_twice" value="Πάτα το κουμπί δύο φορές"/>
+        <string key="gen_build_farm" value="Οι φάρμες μπορούν να κατασκευαστούν κοντά στην πρωτεύουσα ή κοντά σε άλλες φάρμες."/>
+        <string key="gen_about_farms" value="Κάθε φάρμα δίνει 3 νομίσματα τον γύρο. Κάθε φάρμα, για να κατασκευαστεί, κοστίζει 2 παραπάνω από την προηγούμενη της."/>
+        <string key="gen_lets_build_peasant" value="Ας χτίσουμε μια καινούρια μονάδα για να αιχμαλωτίσουμε ένα ουδέτερο εξάγωνο."/>
+        <string key="gen_press_button" value="Πάτα το κουμπί κάτω"/>
+        <string key="gen_build_peasant" value="Τοποθέτησε τη μονάδα σου σε ένα εξάγωνο κοντά στα σύνολα της πόλης."/>
+        <string key="gen_capture_peasant" value="Τώρα, αιμχαλώτισε ένα ουδέτερο εξάγωνο επιλέγοντας τη μονάδα και υποδεικνύοντάς της πού να πάει."/>
+        <string key="gen_capture_hex" value="Αιχμαλώτισε το ουδέτερο εξάγωνο"/>
+        <string key="gen_lets_build_tower" value="Πρέπει να υπερασπιστείτε τα εδάφη σας. Οι πύργοι είναι καλόι για αυτό"/>
+        <string key="gen_build_tower" value="Κατασκεύασε έναν πύργο πατώντας πάνω σε ένα επισημασμένο εξάγωνο."/>
+        <string key="gen_about_towers" value="Οι πύργοι υπερασπίζονται τα παρακείμενα εξάγωνα από αγρότες και ακοντιστές, αν αυτά τα εξάγωνα είναι υπό τον έλεγχό σου."/>
+        <string key="gen_lets_build_spearman" value="Ο ακοντιστής είναι δυνατότερος από οποιονδήποτε αγρότη. Ας τον κατασκευάσουμε."/>
+        <string key="gen_build_spearman" value="Πάτα στο εξάγωνο για να χτίσεις έναν ακοντιστή."/>
+        <string key="gen_units_consume_money" value="Οι μονάδες καταναλώνουν λεφτά για να ζήσουν. Δυνατότερες μονάδες χρειάζονται περισσότερα λεφτά."/>
+        <string key="gen_undo_spearman" value="Τώρα το εισόδημα σου είναι ίσο με -1. Αυτό είναι κακό, άρα ας πάρουμε πίσω τον ακοντιστή."/>
+        <string key="gen_why_units_die" value="Όλες οι μονάδες πεθαίνουν όταν η πόλη σου δεν έχει χρήματα. Έτσι πρέπει να είσαι προσεκτικός με το εισόδημά σου."/>
+        <string key="gen_about_trees_one" value="Και τα δέντρα αποτελούν πρόβλημα. Εξάγωνα με δέντρα δεν παράγουν λεφτά."/>
+        <string key="gen_about_trees_two" value="Κόψε τα δέντρα όσο το δυνατόν συντομότερα, όταν είναι λίγα."/>
+        <string key="gen_end_turn" value="Για να τελειώσεις τον γύρο σου, πάτα το κουμπί στην κάτω δεξιά γωνία."/>
+        <string key="gen_choose_to_merge" value="Μπορείς επίσης να συγχωνεύσεις τις μονάδες σου. Επέλεξε τον κατώτερο αγρότη."/>
+        <string key="gen_merge_units" value="Τώρα, με τον αγρότη επιλεγμένο, πάτα πάνω στον άλλο αγρότη για να τους συγχωνεύσεις."/>
+        <string key="gen_long_tap" value="Αν έχεις υπερβολικά πολλές μονάδες, μπορείς να τις μετακινήσεις όλες μαζί με ένα παρατεταμένο πάτημα."/>
+        <string key="gen_several_provinces" value="Μπορείς να έχεις πολλές πόλεις, η καθεμιά με την δική της οικονομία."/>
+
+        <!-- Tutorial help -->
+        <string key="help" value="Βοήθεια"/>
+        <string key="help_about_units" value="Μονάδες"/>
+        <string key="help_about_trees" value="Δέντρα"/>
+        <string key="help_about_towers" value="Πύργοι"/>
+        <string key="help_about_money" value="Λεφτά"/>
+        <string key="help_about_tactics" value="Τακτικές"/>
+        <string key="help_about_rules" value="Κανόνες"/>
+        <string key="my_games" value="Τα παιχνίδια μου"/>
+
+        <string key="help_units_article" value="Υπάρχουν 4 είδη μονάδων.
+        #Διαφέρουν μόνο στην δύναμη.
+        #Κατά αύξουσα σειρά δύναμης:
+        #[1] αγρότης
+        #[2] ακοντιστής
+        #[3] βαρώνος
+        #[4] ιππότης
+        #
+        #Οι μονάδες προσφέρουν προστασία ίση με τη δύναμή τους στα παρακείμενα εξάγωνα που βρίσκονται υπό τον έλεγχό σου.
+        #
+        #Για να αιμχαλωτίσεις ένα εξάγωνο, η δύναμη της μονάδας πρέπει να είναι μεγαλύτερη από την προστασία του εξαγώνου.
+        #
+        #Κάθε μονάδα καταναλώνει 2, 6, 18 ή 54 νομίσματα τον γύρο.
+        "/>
+
+        <string key="help_trees_article" value="Τα δέντρα φυτρώνουν μετά από νεκρές μονάδες.
+        #
+        #Ένα εξάγωνο με δέντρο δεν δίνει εισόδημα. Αυτό σημαίνει ότι τα δέντρα βλάπτουν την οικονομία.
+        #
+        #Πρέπει να τα κόψεις. Διαφορετικά, θα αναπτυχθούν και θα σκοτώσουν την οικονομία σου.
+        #
+        #Οι φοίνικες αναπτύσσονται στις άκρες και μεγαλώνουν πολύ γρήγορα. Πρέπει να κοπούν το συντομότερο δυνατό.
+        "/>
+
+        <string key="help_towers_article" value="Οι πύργοι υπερασπίζονται τα παρακείμενα εξάγωνα
+        #
+        #Οι πύργοι δίνουν προστασία [2]. Άρα, μόνοι οι βαρώνοι και οι ιππότες μπορούν να τους πολεμήσουν.
+        #
+        #Οι καλύβες δίνουν προστασία [1].
+        #
+        #Στην αρχή του παιχνιδιού αυτός είναι ο καλύτερος τρόπος για να προστατεύσεις την περιοχή σου.
+        #Η τιμή του πύργου είναι χαμηλή και δεν καταναλώνει χρήματα.
+        "/>
+
+        <string key="help_money_article" value="Το εισόδημα εξαρτάται από τον αριθμό των εξαγώνων.
+        #Όσο μεγαλύτερη η επικράτεια τόσο μεγαλύτερο το εισόδημα.
+        #Τα δέντρα μειώνουν το εισόδημα.
+        #
+        #Οι μονάδες καταναλώνουν λεφτά. Δυνατότερες μονάδες καταναλώνουν περισσότερα λεφτά.
+        #
+        #Όταν σου τελειώσουν τα λεφτά, όλες οι μονάδες σου πεθαίνουν.
+        #
+        #Μπορείς να δεις το εισόδημα σου πάνω κεντρικά.
+        "/>
+
+        <string key="help_tactics_article" value="Στην αρχή του παιχνιδιού αιχμαλώτισε ουδέτερα εξάγωνα.
+        #Μετά από αυτό υπερασπίσου τα εξάγωνά σου.
+        #
+        #Σιγουρέψου πως το εισόδημά σου είναι αρκετό πριν κατασκευάσεις μονάδες.
+        #
+        #Κόψε τις επικράτειες των αντιπάλων σου σε κομματάκια για να καταστρέψεις την οικονομία τους.
+        "/>
+
+        <string key="article_rules" value="Υπάρχουν 2 είδη κανόνων στο παιχνίδι: Κανονικοί κανόνες και Slay κανόνες. Οι κανονικοί κανόνες είναι ενεργοποιημένοι από προεπιλογή.
+        #
+        #Αρχικά το παιχνίδι είχε μόνο τους Slay κανόνες. Γι 'αυτό η βοήθεια περιγράφει αυτούς αντί για τους κανονικούς κανόνες.
+        #
+        #Για να αλλάξεις κανόνες στην Αψιμαχία, πάτα στο 'περισσότερα' πριν ξεκινήσεις ένα καινούριο παιχνίδι.
+        #
+        #Για να αλλάξεις κανόνες στην Εκστρατεία πρέπει να πατήσεις το '...' στην πάνω δεξιά γωνία του μενού επιλογής επιπέδου."/>
+
+        <string key="article_diplomacy_1" value="Για να κερδίσεις με τους κανόνες Διπλωματίας πρέπει να είσαι σε φιλία με όλους στον χάρτη.
+        #
+        #Για να ανοίξεις το UI διπλωματίας, επέλεξε τη χώρα σου και πάτα το μικρό εικονίδιο με την ΄σημαία'.
+        #
+        #Πάτα σε οποιαδήποτε χώρα στη λίστα και θα δεις τι μπορείς να κάνεις.
+        #
+        #Τα 'Μου αρέσει' και 'δε μου αρέσει' κουμπιά μπορούν να κάνουν τις σχέσεις με αυτή την χώρα καλύτερες ή χειρότερες."/>
+
+        <string key="article_diplomacy_2" value="Η ιδέα του μαύρου πρόβατου είναι απλή: οποιαδήποτε άλλη χώρα δεν μπορεί να είναι φίλη και με εσένα και με το 'μαύρο πρόβατο'. Είναι ένα είδος διπλωματικής πίεσης.
+        #
+        #Επίσης, δε θα μπορείς να γίνεις εύκολα φίλος με όλους. Η τελευταία χώρα θα απορρίπτει πάντα το αίτημα φιλίας σου."/>
+
+        <string key="article_my_games" value="Αν σου άρεσε αυτό το παιχνίδι, ίσως σου αρέσουν και κάποια άλλα παιχνίδια μου:"/>
+
+        <!-- Statistics -->
+        <string key="turns_made" value="Γύροι που έγιναν"/>
+        <string key="units_died" value="Μονάδες που πέθαναν"/>
+        <string key="units_produced" value="Μονάδες που κατασκευάστηκαν"/>
+        <string key="money_spent" value="Χρήματα που ξοδεύτηκαν"/>
+        <string key="time" value="Χρόνος"/>
+        <string key="wins" value="Wins"/>
+
+        <!-- Editor -->
+        <string key="editor" value="Editor"/>
+        <string key="slot" value="Θέση"/>
+        <string key="slots" value="Αποθήκευση θέσεων"/>
+        <string key="import" value="Εισαγωγή"/>
+        <string key="export" value="Εξαγωγή"/>
+        <string key="empty" value="άδειο"/>
+        <string key="play" value="Παίξε"/>
+        <string key="edit" value="Επεξεργασία"/>
+        <string key="random" value="Τυχαίο"/>
+        <string key="exported" value="Χάρτης στο πρόχειρο"/>
+        <string key="editor_clear" value="Άδειο"/>
+        <string key="no" value="Όχι"/>
+        <string key="yes" value="Ναι"/>
+        <string key="confirm_import" value="Επιβεβαίωση εισαγωγής"/>
+        <string key="filter_no" value="Χωρίς φίλτρο"/>
+        <string key="filter_only_land" value="Μόνο γη"/>
+        <string key="confirm_clear_level" value="Καθαρισμός χάρτη;"/>
+        <string key="confirm_randomize" value="Δημιουργία τυχαίου χάρτη;"/>
+        <string key="randomize" value="Τυχαιοποίηση"/>
+
+        <!-- Settings -->
+        <string key="autosave" value="Αυτόματη αποθήκευση"/>
+        <string key="ask_to_end_turn" value="Ερώτηση για τέλος γύρου"/>
+        <string key="city_names" value="Ονόματα πόλεων"/>
+        <string key="sound" value="Ήχος"/>
+        <string key="limited_turns" value="Περιορισμένοι γύροι"/>
+        <string key="hold_to_march" value="Πάτα παρατεταμένα για να μετακινηθείς"/>
+        <string key="skin" value="Εμφάνιση"/>
+        <string key="original" value="πρωτότυπη"/>
+        <string key="points" value="πόντοι"/>
+        <string key="grid" value="πλέγμα"/>
+        <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
+        <string key="anim_style" value="Ευαισθησία"/>
+        <string key="more" value="Περισσότερα"/>
+        <string key="camera_offset" value="Μετατόπιση κάμερας"/>
+        <string key="slay_rules" value="Κανόνες Slay"/>
+        <string key="language" value="Γλώσσα"/>
+        <string key="more_settings_checks" value="# #Υφή νερού # # "/>
+        <string key="water_texture" value="Υφή νερού"/>
+        <string key="confirm_reset" value="Καθαρισμός προόδου;"/>
+        <string key="replays" value="Επαναλήψεις"/>
+        <string key="save_replay" value="Αποθήκευση επανάληψης"/>
+        <string key="replay" value="Επανάληψη"/>
+        <string key="replay_saved" value="Η επανάληψη αποθηκεύτηκε"/>
+        <string key="fast_construction" value="Γρήγορη κατασκευή"/>
+        <string key="music" value="Μουσική"/>
+        <string key="left_handed" value="Αριστερόχειρας"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
+
+        <!-- Single messages -->
+        <string key="level_24" value="Αυτός είναι το πρώτο 'δύσκολο' επίπεδο. Δώσε μεγαλύτερη προσοχή στην άμυνα."/>
+        <string key="map_too_big_for_user_levels" value="Ο χάρτης εξήχθη με επιτυχία, αλλά αν θες να τον στείλεις σαν επίπεδο χρήστη, παρακαλώ κάνε τον μικρότερο."/>
+        <string key="available_on_ios" value="Τώρα διαθέσιμο και για iOS"/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="Φίλοι"/>
+        <string key="mutual_friends" value="Κοινοί"/>
+        <string key="dotations" value="Επιχορηγήσεις"/>
+        <string key="treaty_of_friendship" value="Συνθήκη φιλίας"/>
+        <string key="state" value="Κατάσταση"/>
+        <string key="duration" value="Διάρκεια"/>
+        <string key="refuse_friendship" value="Συγγνώμη, δεν μπορώ να αποδεχτώ την πρόταση φιλίας σου."/>
+        <string key="friend" value="φίλος"/>
+        <string key="enemy" value="εχθρός"/>
+        <string key="neutral" value="ουδέτερος"/>
+        <string key="dead" value="νεκρός"/>
+        <string key="confirm_cancel_friendship" value="Ακύρωση φιλίας;"/>
+        <string key="confirm_start_war" value="Έναρξη πολέμου;"/>
+        <string key="peace_treaty" value="Συνθήκη ειρήνης"/>
+        <string key="pay" value="Πλήρωσε"/>
+        <string key="reparations" value="Αποζημιώσεις"/>
+        <string key="refuse_stop_war" value="Θα πολεμήσω μέχρι τέλους!"/>
+        <string key="win_conditions" value="Συνθήκες για τη νίκη"/>
+        <string key="diplomatic_win_conditions" value="Για να κερδίσεις διπλωματικά πρέπει να είσαι φίλος με όλους."/>
+        <string key="confirm_black_mark" value="Τοποθέτησε μαύρο πρόβατο;"/>
+        <string key="black_mark_description" value="Τοποθετώντας ένα μαύρο πρόβατο στον παίχτη, απαγορεύεις στους άλλους να είναι ταυτόχρονα φίλοι με εσένα και με αυτόν. Δεν λειτουργεί σε ήδη ολοκληρωμένες συμφωνίες"/>
+        <string key="player_turn" value="Γύρος του παίχτη"/>
+        <string key="fine" value="Πρόστιμο"/>
+        <string key="log" value="Γράμματα"/>
+        <string key="friendship_proposal" value="Προτάσεις φιλίας"/>
+        <string key="war_declaration" value="Κήρυξη πολέμου"/>
+        <string key="stop_war" value="Τερματισμός πολέμου"/>
+        <string key="friendship_ended" value="Η φιλία τελείωσε"/>
+        <string key="friendship_canceled" value="Η φιλία ακυρώθηκε"/>
+        <string key="black_marked" value="Μαύρο πρόβατο"/>
+        <string key="letter_sent" value="Γράμμα απεστάλη"/>
+        <string key="delete" value="Διαγραφή"/>
+        <string key="rename" value="Μετονομασία"/>
+        <string key="confirm_delete_slot" value="Διαγραφή θέσης;"/>
+        <string key="resume_button" value="Κουμπί 'Συνέχειας'"/>
+        <string key="filters" value="Φίλτρα"/>
+        <string key="completed" value="Ολοκληρώθηκε"/>
+        <string key="historical" value="Ιστορικό"/>
+        <string key="temp_slot" value="Προσωρινή θέση"/>
+        <string key="can_skip_level" value="Μπορείς να παραλείψεις αυτό το επίπεδο"/>
+        <string key="reason" value="Λόγος"/>
+        <string key="friends_with_everybody" value="φιλία με όλα τα βασίλεια"/>
+        <string key="hex_purchase" value="Αγορά εξαγώνου"/>
+        <string key="confirm_buy_hexes" value="Αγόρασε εξάγωνα;"/>
+        <string key="price" value="Τιμή"/>
+        <string key="gift" value="Δώρο"/>
+        <string key="gift_received" value="Δώρο παρελήφθη"/>
+        <string key="confirm_sell_hexes" value="Πούλησε εξάγωνο;"/>
+        <string key="confirm_skip_level" value="Παράλειψη επιπέδου;"/>
+        <string key="ok" value="Ok"/>
+        <string key="money" value="Λεφτά"/>
+        <string key="quantity" value="Ποσότητα"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
+
+
+
+    </language>
+
 
 
 

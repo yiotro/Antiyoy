@@ -1,7 +1,6 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.gameplay.DebugFlags;
-import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -65,10 +64,10 @@ public class SceneSecretScreen extends AbstractScene{
             public void perform(ButtonYio buttonYio) {
                 if (!DebugFlags.cheatsEnabled) {
                     DebugFlags.cheatsEnabled = true;
-                    Scenes.sceneNotification.showNotification("Cheats are now enabled");
+                    Scenes.sceneNotification.show("Cheats are now enabled");
                 } else {
                     DebugFlags.cheatsEnabled = false;
-                    Scenes.sceneNotification.showNotification("Cheats disabled");
+                    Scenes.sceneNotification.show("Cheats disabled");
                 }
             }
         };

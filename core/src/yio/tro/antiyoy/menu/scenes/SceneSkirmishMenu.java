@@ -95,7 +95,7 @@ public class SceneSkirmishMenu extends AbstractScene {
         RectangleYio pos = generateRectangle((1 - sWidth) / 2, 0, sWidth, 0);
 
         difficultySlider = new SliderYio(menuControllerYio, -1);
-        difficultySlider.setValues(0.33, 1, 5, Animation.SOLID);
+        difficultySlider.setValues(0.33, 1, 5, Animation.NONE);
         difficultySlider.setPosition(pos);
         difficultySlider.setParentElement(topLabel, 0.2);
         difficultySlider.setTitle("difficulty");
@@ -108,7 +108,7 @@ public class SceneSkirmishMenu extends AbstractScene {
         sliders.add(difficultySlider);
 
         mapSizeSlider = new SliderYio(menuControllerYio, -1);
-        mapSizeSlider.setValues(0.5, 1, 3, Animation.SOLID);
+        mapSizeSlider.setValues(0.5, 1, 3, Animation.NONE);
         mapSizeSlider.setPosition(pos);
         mapSizeSlider.setParentElement(topLabel, 0.05);
         mapSizeSlider.setTitle("map_size");
@@ -121,7 +121,7 @@ public class SceneSkirmishMenu extends AbstractScene {
         sliders.add(mapSizeSlider);
 
         playersSlider = new SliderYio(menuControllerYio, -1);
-        playersSlider.setValues(0.2, 0, 5, Animation.SOLID);
+        playersSlider.setValues(0.2, 0, 5, Animation.NONE);
         playersSlider.setPosition(pos);
         playersSlider.setParentElement(bottomLabel, 0.24);
         playersSlider.setTitle("player_number");
@@ -142,7 +142,7 @@ public class SceneSkirmishMenu extends AbstractScene {
         sliders.add(playersSlider);
 
         colorsSlider = new SliderYio(menuControllerYio, -1);
-        colorsSlider.setValues(0.6, 2, 6, Animation.SOLID);
+        colorsSlider.setValues(0.6, 2, 6, Animation.NONE);
         colorsSlider.setPosition(pos);
         colorsSlider.setParentElement(bottomLabel, 0.09);
         colorsSlider.setTitle("color_number");

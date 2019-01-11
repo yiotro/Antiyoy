@@ -22,7 +22,7 @@ public class Fonts {
         CustomLanguageLoader.loadLanguage();
 
         long time1 = System.currentTimeMillis();
-        FileHandle fontFile = Gdx.files.internal("font.otf");
+        FileHandle fontFile = loadFontFile();
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         FONT_SIZE = (int) (0.041 * Gdx.graphics.getHeight());
@@ -52,6 +52,16 @@ public class Fonts {
         initFontChinese();
 
         YioGdxGame.say("time to generate fonts: " + (System.currentTimeMillis() - time1));
+    }
+
+
+    private static FileHandle loadFontFile() {
+        if (LanguagesManager.getInstance().getLanguage().equals("el_GR")) {
+            System.out.println("Greek font loaded");
+            return Gdx.files.internal("font_greek.ttf");
+        }
+
+        return Gdx.files.internal("font.otf");
     }
 
 

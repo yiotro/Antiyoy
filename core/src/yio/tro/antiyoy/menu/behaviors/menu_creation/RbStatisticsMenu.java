@@ -11,6 +11,6 @@ public class RbStatisticsMenu extends Reaction {
 
     @Override
     public void perform(ButtonYio buttonYio) {
-        Scenes.sceneStatisticsMenu.create(getGameController(buttonYio).matchStatistics);
+        Scenes.sceneMatchStatistics.create(getGameController(buttonYio).matchStatistics);
     }
 }

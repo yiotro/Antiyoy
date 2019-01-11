@@ -88,4 +88,9 @@ public abstract class InterfaceElement {
         if (touchY > y + height + offset) return false;
         return true;
     }
+
+
+    public boolean isAnotherSceneCreationIgnored() {
+        return false;
+    }
 }

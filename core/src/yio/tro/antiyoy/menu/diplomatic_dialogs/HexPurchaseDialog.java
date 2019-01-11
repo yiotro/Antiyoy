@@ -81,8 +81,13 @@ public class HexPurchaseDialog extends AbstractDiplomaticDialog{
         addLabel(instance.getString("quantity") + ": " + hexesToBuy.size(), Fonts.smallerMenuFont, leftOffset, y);
         y -= lineOffset;
 
-        addLabel(instance.getString("price") + ": $" + getPrice(), Fonts.smallerMenuFont, leftOffset, y);
+        addLabel(instance.getString("price") + ": $" + getMoneyString(), Fonts.smallerMenuFont, leftOffset, y);
         y -= lineOffset;
+    }
+
+
+    private String getMoneyString() {
+        return getPrice() + "   [$" + sender.getStateFullMoney() + "]";
     }
 
 
@@ -98,7 +103,7 @@ public class HexPurchaseDialog extends AbstractDiplomaticDialog{
 
     @Override
     protected void onYesButtonPressed() {
-        getDiplomacyManager().onUserRequestedBuyHexes(sender, recipient, hexesToBuy, getPrice());
+        getDiplomacyManager().onEntityRequestedHexPurchase(sender, recipient, hexesToBuy, getPrice());
         destroy();
     }
 

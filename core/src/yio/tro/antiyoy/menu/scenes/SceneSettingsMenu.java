@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import com.badlogic.gdx.Gdx;
+import yio.tro.antiyoy.MusicManager;
 import yio.tro.antiyoy.Settings;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.stuff.GraphicsYio;
@@ -16,20 +17,54 @@ public class SceneSettingsMenu extends AbstractScene{
 
     private double labelHeight;
     private double labelTopY;
-    Reaction soundChkReaction;
+    Reaction rbChkSound;
     private CheckButtonYio chkSound;
     private ButtonYio mainLabel;
+    private CheckButtonYio chkAutosave;
+    private CheckButtonYio chkMusic;
+    private CheckButtonYio chkTurnEnd;
+    private CheckButtonYio chkCityNames;
+    private Reaction rbBack;
+    private Reaction rbChkMusic;
 
 
     public SceneSettingsMenu(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
-        soundChkReaction = new Reaction() {
+        initReactions();
+    }
+
+
+    private void initReactions() {
+        rbChkSound = new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
-                Settings.soundEnabled = chkSound.isChecked();
+                applyValues();
+                MusicManager.getInstance().onMusicStatusChanged();
             }
         };
+
+        rbChkMusic = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                applyValues();
+                MusicManager.getInstance().onMusicStatusChanged();
+            }
+        };
+
+        rbBack = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                onDestroy();
+                Scenes.sceneMainMenu.create();
+            }
+        };
+    }
+
+
+    public void onDestroy() {
+        applyValues();
+        Settings.getInstance().saveMainSettings();
     }
 
 
@@ -39,14 +74,14 @@ public class SceneSettingsMenu extends AbstractScene{
 
         menuControllerYio.getYioGdxGame().beginBackgroundChange(1, false, true);
 
-        menuControllerYio.spawnBackButton(190, Reaction.rbCloseSettingsMenu);
+        menuControllerYio.spawnBackButton(190, rbBack);
 
         createInfoButton();
         createMainLabel();
         createCheckButtons();
         createMoreSettingsButton();
 
-        Settings.getInstance().loadSettings();
+        loadValues();
 
         menuControllerYio.endMenuCreation();
     }
@@ -69,25 +104,26 @@ public class SceneSettingsMenu extends AbstractScene{
         double chkX = 0.9 - checkButtonSize;
         double chkY = labelTopY - 0.07;
 
-        CheckButtonYio chkAutosave = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 1);
+        chkAutosave = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 1);
         chkAutosave.setTouchPosition(generateRectangle(0.04, chkY - hSize * 1.5, 0.92, hSize * 3));
 
         chkY -= 0.086;
-        CheckButtonYio chkMusic = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 2);
+        chkMusic = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 2);
         chkMusic.setTouchPosition(generateRectangle(0.04, chkY - hSize * 1.5, 0.92, hSize * 3));
+        chkMusic.setReaction(rbChkMusic);
 
         chkY -= 0.086;
-        CheckButtonYio chkTurnEnd = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 3);
+        chkTurnEnd = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 3);
         chkTurnEnd.setTouchPosition(generateRectangle(0.04, chkY - hSize * 1.5, 0.92, hSize * 3));
 
         chkY -= 0.086;
-        CheckButtonYio chkCityNames = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 4);
+        chkCityNames = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 4);
         chkCityNames.setTouchPosition(generateRectangle(0.04, chkY - hSize * 1.5, 0.92, hSize * 3));
 
         chkY -= 0.086;
         chkSound = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 5);
-        chkSound.setReaction(soundChkReaction);
         chkSound.setTouchPosition(generateRectangle(0.04, chkY - hSize * 1.5, 0.92, hSize * 3));
+        chkSound.setReaction(rbChkSound);
 
         for (int i = 1; i <= 5; i++) {
             menuControllerYio.getCheckButtonById(i).setAnimation(Animation.FROM_CENTER);
@@ -134,5 +170,23 @@ public class SceneSettingsMenu extends AbstractScene{
         infoButton.setTouchOffset(0.05f * GraphicsYio.width);
         infoButton.setReaction(Reaction.RB_ABOUT_GAME);
         infoButton.disableTouchAnimation();
+    }
+
+
+    public void loadValues() {
+        chkAutosave.setChecked(Settings.autosave);
+        chkMusic.setChecked(Settings.musicEnabled);
+        chkCityNames.setChecked(Settings.cityNamesEnabled);
+        chkTurnEnd.setChecked(Settings.askToEndTurn);
+        chkSound.setChecked(Settings.soundEnabled);
+    }
+
+
+    public void applyValues() {
+        Settings.autosave = chkAutosave.isChecked();
+        Settings.musicEnabled = chkMusic.isChecked();
+        Settings.cityNamesEnabled = chkCityNames.isChecked();
+        Settings.askToEndTurn = chkTurnEnd.isChecked();
+        Settings.soundEnabled = chkSound.isChecked();
     }
 }

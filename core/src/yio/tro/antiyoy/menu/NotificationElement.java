@@ -168,6 +168,12 @@ public class NotificationElement extends InterfaceElement{
 
 
     @Override
+    public boolean isAnotherSceneCreationIgnored() {
+        return true;
+    }
+
+
+    @Override
     public MenuRender getRenderSystem() {
         return MenuRender.renderNotificationElement;
     }

@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.menu.scenes.gameplay;
 
 import yio.tro.antiyoy.Settings;
-import yio.tro.antiyoy.SoundControllerYio;
+import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -35,7 +35,7 @@ public class SceneFastConstructionPanel extends AbstractGameplayScene {
         if (coinButton == null) { // init
             coinButton = buttonFactory.getButton(generateSquare(0, 0.93, 0.07), 610, null);
             coinButton.setAnimation(Animation.UP);
-            coinButton.setPressSound(SoundControllerYio.soundCoin);
+            coinButton.setPressSound(SoundManagerYio.soundCoin);
             coinButton.enableRectangularMask();
             coinButton.disableTouchAnimation();
         }
@@ -48,7 +48,7 @@ public class SceneFastConstructionPanel extends AbstractGameplayScene {
 
 
     public void checkToReappear() {
-        if (!Settings.fastConstruction) return;
+        if (!Settings.fastConstructionEnabled) return;
         if (fastConstructionPanel.getFactor().get() == 1) return;
 
         create();

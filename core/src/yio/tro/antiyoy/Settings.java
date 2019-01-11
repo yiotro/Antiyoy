@@ -4,10 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
-import yio.tro.antiyoy.menu.CheckButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.scenes.Scenes;
-import yio.tro.antiyoy.menu.slider.SliderYio;
 
 public class Settings {
 
@@ -18,16 +16,18 @@ public class Settings {
     public static boolean longTapToMove;
     public static boolean soundEnabled = true;
     public static float sensitivity;
-    public static boolean waterTexture;
+    public static boolean waterTextureChosen;
     private MenuControllerYio menuControllerYio;
     private GameView gameView;
     private GameController gameController;
     public static int skinIndex;
     public static boolean replaysEnabled;
-    public static boolean fastConstruction;
+    public static boolean fastConstructionEnabled;
     public static boolean musicEnabled;
     public static boolean leftHandMode;
     public static boolean resumeButtonEnabled;
+    public static boolean cityNamesEnabled;
+    public static boolean fullScreenMode;
 
 
     public static void initialize() {
@@ -52,131 +52,102 @@ public class Settings {
     }
 
 
-    public void loadSettings() {
-        Preferences prefs = Gdx.app.getPreferences("settings");
+    public void loadAllSettings() {
+        loadMainSettings();
+        loadMoreSettings();
+    }
 
-        // sound
-        int soundIndex = prefs.getInteger("sound", 0);
-        soundEnabled = (soundIndex != 0);
-        menuControllerYio.getCheckButtonById(5).setChecked(soundEnabled);
 
-        // skin
+    private void loadMoreSettings() {
+        Preferences prefs = getPrefs();
+
         skinIndex = prefs.getInteger("skin", 0);
         gameView.loadSkin(skinIndex);
 
-        // autosave
-        int AS = prefs.getInteger("autosave", 1);
-        autosave = (AS == 1);
-        menuControllerYio.getCheckButtonById(1).setChecked(autosave);
+        setSensitivity(prefs.getInteger("sensitivity", 6));
 
-        // sensitivity
-        sensitivity = prefs.getInteger("sensitivity", 6);
-        sensitivity = Math.max(0.1f, sensitivity / 6f);
-
-        // ask to end turn
-        int ATET = prefs.getInteger("ask_to_end_turn", 0);
-        askToEndTurn = (ATET == 1);
-        menuControllerYio.getCheckButtonById(3).setChecked(askToEndTurn);
-
-        // show city names
-        int cityNames = prefs.getInteger("city_names", 0);
-        gameController.setCityNamesEnabled(cityNames);
-        menuControllerYio.getCheckButtonById(4).setChecked(cityNames == 1);
-
-        // long tap to move
         longTapToMove = prefs.getBoolean("long_tap_to_move", true);
-        applyCheckButtonIfNotNull(menuControllerYio.getCheckButtonById(7), longTapToMove);
-
-        // water texture
-        waterTexture = prefs.getBoolean("water_texture", false);
-        applyCheckButtonIfNotNull(menuControllerYio.getCheckButtonById(10), waterTexture);
-        gameView.loadBackgroundTexture();
-
+        waterTextureChosen = prefs.getBoolean("water_texture", false);
         replaysEnabled = prefs.getBoolean("replays_enabled", true);
-        applyCheckButtonIfNotNull(menuControllerYio.getCheckButtonById(8), replaysEnabled);
-
-        fastConstruction = prefs.getBoolean("fast_construction", false);
-        applyCheckButtonIfNotNull(menuControllerYio.getCheckButtonById(9), fastConstruction);
-
-        musicEnabled = prefs.getBoolean("music", false);
-        applyCheckButtonIfNotNull(menuControllerYio.getCheckButtonById(2), musicEnabled);
-
+        fastConstructionEnabled = prefs.getBoolean("fast_construction", false);
         leftHandMode = prefs.getBoolean("left_hand_mode", false);
-        applyCheckButtonIfNotNull(menuControllerYio.getCheckButtonById(12), leftHandMode);
+        resumeButtonEnabled = prefs.getBoolean("resume_button", getResumeButtonDefaultValue());
+        fullScreenMode = prefs.getBoolean("full_screen", false);
+    }
 
-        resumeButtonEnabled = prefs.getBoolean("resume_button", false);
-        applyCheckButtonIfNotNull(menuControllerYio.getCheckButtonById(13), resumeButtonEnabled);
+
+    public void setSensitivity(int sliderIndex) {
+        sensitivity = Math.max(0.1f, sliderIndex / 6f);
+    }
+
+
+    private void loadMainSettings() {
+        Preferences prefs = getPrefs();
+
+        autosave = convertToBoolean(prefs.getInteger("autosave", 1));
+        musicEnabled = prefs.getBoolean("music", false);
+        askToEndTurn = convertToBoolean(prefs.getInteger("ask_to_end_turn", 0));
+        cityNamesEnabled = convertToBoolean(prefs.getInteger("city_names", 0));
+        soundEnabled = convertToBoolean(prefs.getInteger("sound", 0));
 
         MusicManager.getInstance().onMusicStatusChanged();
     }
 
 
-    public boolean saveSettings() {
-        Preferences prefs = Gdx.app.getPreferences("settings");
+    private Preferences getPrefs() {
+        return Gdx.app.getPreferences("settings");
+    }
 
-        prefs.putInteger("sound", boolToInteger(menuControllerYio.getCheckButtonById(5).isChecked()));
-        prefs.putInteger("autosave", boolToInteger(menuControllerYio.getCheckButtonById(1).isChecked()));
-        prefs.putInteger("ask_to_end_turn", boolToInteger(menuControllerYio.getCheckButtonById(3).isChecked()));
-        prefs.putInteger("city_names", boolToInteger(menuControllerYio.getCheckButtonById(4).isChecked()));
-        prefs.putBoolean("music", menuControllerYio.getCheckButtonById(2).isChecked());
+
+    private boolean convertToBoolean(int value) {
+        return value == 1;
+    }
+
+
+    private boolean getResumeButtonDefaultValue() {
+        if (YioGdxGame.IOS) return true;
+
+        return false;
+    }
+
+
+    public boolean saveMainSettings() {
+        Preferences prefs = getPrefs();
+
+        prefs.putInteger("sound", convertToInteger(soundEnabled));
+        prefs.putInteger("autosave", convertToInteger(autosave));
+        prefs.putInteger("ask_to_end_turn", convertToInteger(askToEndTurn));
+        prefs.putInteger("city_names", convertToInteger(cityNamesEnabled));
+        prefs.putBoolean("music", musicEnabled);
 
         prefs.flush();
-
-        MusicManager.getInstance().onMusicStatusChanged();
 
         return false;
     }
 
 
     public void saveMoreSettings() {
-        Preferences prefs = Gdx.app.getPreferences("settings");
+        Preferences prefs = getPrefs();
 
-        saveSkin(prefs);
-        prefs.putInteger("sensitivity", Scenes.sceneMoreSettingsMenu.sensitivitySlider.getCurrentRunnerIndex());
-        saveWaterTexture(prefs);
-        prefs.putBoolean("long_tap_to_move", menuControllerYio.getCheckButtonById(7).isChecked());
-        prefs.putBoolean("replays_enabled", menuControllerYio.getCheckButtonById(8).isChecked());
-        prefs.putBoolean("fast_construction", menuControllerYio.getCheckButtonById(9).isChecked());
-        prefs.putBoolean("left_hand_mode", menuControllerYio.getCheckButtonById(12).isChecked());
-        prefs.putBoolean("resume_button", menuControllerYio.getCheckButtonById(13).isChecked());
-
-        MusicManager.getInstance().onMusicStatusChanged();
+        prefs.putInteger("skin", skinIndex);
+        prefs.putInteger("sensitivity", (int) (sensitivity * 6));
+        prefs.putBoolean("water_texture", waterTextureChosen);
+        prefs.putBoolean("long_tap_to_move", longTapToMove);
+        prefs.putBoolean("replays_enabled", replaysEnabled);
+        prefs.putBoolean("fast_construction", fastConstructionEnabled);
+        prefs.putBoolean("left_hand_mode", leftHandMode);
+        prefs.putBoolean("resume_button", resumeButtonEnabled);
+        prefs.putBoolean("full_screen", fullScreenMode);
 
         prefs.flush();
     }
 
 
-    private void applyCheckButtonIfNotNull(CheckButtonYio checkButtonYio, boolean value) {
-        if (checkButtonYio == null) return;
+    public void setSkin(int index) {
+        if (index == skinIndex) return;
 
-        checkButtonYio.setChecked(value);
-    }
-
-
-    private void saveWaterTexture(Preferences prefs) {
-        CheckButtonYio chkWaterTexture = menuControllerYio.getCheckButtonById(10);
-        if (chkWaterTexture != null) {
-            prefs.putBoolean("water_texture", chkWaterTexture.isChecked());
-        }
-    }
-
-
-    private boolean saveSkin(Preferences prefs) {
-        int lastIndex = skinIndex;
-        SliderYio skinSlider = Scenes.sceneMoreSettingsMenu.skinSlider;
-        skinIndex = skinSlider.getCurrentRunnerIndex();
-        if (skinIndex == lastIndex) return false;
-
-        prefs.putInteger("skin", skinIndex);
-
+        skinIndex = index;
         Scenes.sceneSelectionOverlay.onSkinChanged();
-
-        // shroom arts
-        if (lastIndex != skinIndex && (lastIndex == 3 || skinIndex == 3)) {
-            return true; // restart app
-        }
-
-        return false;
     }
 
 
@@ -185,8 +156,10 @@ public class Settings {
     }
 
 
-    private int boolToInteger(boolean b) {
-        if (b) return 1;
+    private int convertToInteger(boolean value) {
+        if (value) {
+            return 1;
+        }
         return 0;
     }
 }

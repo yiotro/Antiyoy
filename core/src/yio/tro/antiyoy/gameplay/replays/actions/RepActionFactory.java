@@ -16,6 +16,7 @@ public class RepActionFactory {
             case RepAction.CITY_SPAWNED: return new RaCitySpawned(null);
             case RepAction.UNIT_DIED_FROM_STARVATION: return new RaUnitDiedFromStarvation(null);
             case RepAction.HEX_CHANGED_COLOR: return new RaHexColorChanged(null, -1);
+            case RepAction.UNIT_SPAWNED: return new RaUnitSpawned(null, -1);
         }
     }
 

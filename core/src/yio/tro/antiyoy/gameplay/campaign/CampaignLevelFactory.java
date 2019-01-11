@@ -28,6 +28,7 @@ public class CampaignLevelFactory {
     private final LevelPackFour levelPackFour;
     private final LevelPackFive levelPackFive;
     private final LevelPackSix levelPackSix;
+    private final LevelPackSeven levelPackSeven;
 
 
     public CampaignLevelFactory(GameController gameController) {
@@ -39,6 +40,7 @@ public class CampaignLevelFactory {
         levelPackFour = new LevelPackFour(this);
         levelPackFive = new LevelPackFive(this);
         levelPackSix = new LevelPackSix(this);
+        levelPackSeven = new LevelPackSeven(this);
         index = -1;
     }
 
@@ -61,6 +63,7 @@ public class CampaignLevelFactory {
         if (levelPackFour.check()) return true;
         if (levelPackFive.check()) return true;
         if (levelPackSix.check()) return true;
+        if (levelPackSeven.check()) return true;
 
         createLevelWithPredictableRandom();
 

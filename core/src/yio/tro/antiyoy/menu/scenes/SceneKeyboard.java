@@ -21,6 +21,7 @@ public class SceneKeyboard extends AbstractGameplayScene{
     public void create() {
         initKeyboardElement();
         keyboardElement.appear();
+        forceElementToTop(keyboardElement);
     }
 
 

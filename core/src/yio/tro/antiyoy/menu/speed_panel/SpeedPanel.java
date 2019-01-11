@@ -265,7 +265,7 @@ public class SpeedPanel extends InterfaceElement {
         GameController gameController = menuControllerYio.yioGdxGame.gameController;
         gameController.replayManager.saveCurrentReplay();
 
-        Scenes.sceneNotification.showNotification("replay_saved");
+        Scenes.sceneNotification.show("replay_saved");
     }
 
 

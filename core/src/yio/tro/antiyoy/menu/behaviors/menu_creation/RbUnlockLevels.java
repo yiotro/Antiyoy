@@ -13,6 +13,6 @@ public class RbUnlockLevels extends Reaction {
 
         Scenes.sceneCampaignMenu.create();
 
-        Scenes.sceneNotification.showNotification("Levels unlocked");
+        Scenes.sceneNotification.show("Levels unlocked");
     }
 }

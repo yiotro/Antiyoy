@@ -99,7 +99,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
 
 
     private void showMessage(String key) {
-        Scenes.sceneNotification.showNotification(languagesManager.getString(key), false);
+        Scenes.sceneNotification.show(languagesManager.getString(key), false);
     }
 
 

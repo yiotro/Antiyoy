@@ -98,12 +98,17 @@ public class Hex implements ReusableYio{
     void addUnit(int strength) {
         unit = new Unit(gameController, this, strength);
         gameController.unitList.add(unit);
-        gameController.matchStatistics.unitWasProduced();
+        gameController.matchStatistics.onUnitProduced();
     }
 
 
     public boolean isFree() {
         return !containsObject() && !containsUnit();
+    }
+
+
+    public boolean isEmpty() {
+        return isFree();
     }
 
 

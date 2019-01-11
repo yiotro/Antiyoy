@@ -2,10 +2,7 @@ package yio.tro.antiyoy.menu.scenes.gameplay;
 
 import yio.tro.antiyoy.menu.*;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
-import yio.tro.antiyoy.menu.scenes.AbstractScene;
 import yio.tro.antiyoy.stuff.GraphicsYio;
-
-import java.util.Arrays;
 
 public class SceneConfirmEndTurn extends AbstractGameplayScene {
 
@@ -36,7 +33,7 @@ public class SceneConfirmEndTurn extends AbstractGameplayScene {
         invisibleButton = buttonFactory.getButton(generateRectangle(-0.1, -0.1, 0.01, 0.01), 323, " ");
         invisibleButton.setReaction(Reaction.rbNothing);
         invisibleButton.setShadow(false);
-        invisibleButton.setAnimation(Animation.SOLID);
+        invisibleButton.setAnimation(Animation.NONE);
         invisibleButton.setTouchOffset(2 * GraphicsYio.height);
     }
 

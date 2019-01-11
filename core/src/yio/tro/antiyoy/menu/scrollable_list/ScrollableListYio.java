@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.menu.scrollable_list;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import yio.tro.antiyoy.SoundControllerYio;
+import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.ClickDetector;
 import yio.tro.antiyoy.menu.InterfaceElement;
@@ -438,7 +438,7 @@ public class ScrollableListYio extends InterfaceElement {
     private void onItemClicked(ListItemYio item) {
         clickedItem = item;
 
-        SoundControllerYio.playSound(SoundControllerYio.soundPressButton);
+        SoundManagerYio.playSound(SoundManagerYio.soundPressButton);
     }
 
 

@@ -23,7 +23,7 @@ public class LevelEditor {
     public static final String EDITOR_PREFS = "editor";
     public static final String SLOT_NAME = "slot";
     public static final int TEMPORARY_SLOT_NUMBER = 12345; // to edit campaign levels
-    public static final int MAX_ACCEPTABLE_DELTA = 27;
+    public static final int MAX_ACCEPTABLE_DELTA = 22;
     public GameController gameController;
     private final EditorAutomationManager editorAutomationManager;
     private int inputMode, inputColor, inputObject;
@@ -285,40 +285,17 @@ public class LevelEditor {
 
         Clipboard clipboard = Gdx.app.getClipboard();
         fromClipboard = clipboard.getContents();
+        if (!isValidLevelString(fromClipboard)) return;
 
-//        if (YioGdxGame.ANDROID) {
-//            GetAndroidClipboardContents getAndroidClipboardContents = new GetAndroidClipboardContents();
-//            getAndroidClipboardContents.run();
-//            while (!getAndroidClipboardContents.isComplete()) {
-//                try {
-//                    Thread.holdsLock(Thread.currentThread());
-//                    Thread.currentThread().wait(100);
-//                    System.out.println("waiting!!!!!");
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            System.out.println("--------------------- 2");
-//            fromClipboard = getAndroidClipboardContents.getResult();
-//        } else {
-//            Clipboard clipboard = Gdx.app.getClipboard();
-//            fromClipboard = clipboard.getContents();
-//        }
-
-        if (isValidLevelString(fromClipboard)) {
-            LoadingParameters instance = LoadingParameters.getInstance();
-            instance.mode = LoadingMode.EDITOR_LOAD;
-            instance.applyFullLevel(fromClipboard);
-            instance.colorOffset = 0;
-            LoadingManager.getInstance().startGame(instance);
-        }
+        LoadingParameters instance = LoadingParameters.getInstance();
+        instance.mode = LoadingMode.EDITOR_LOAD;
+        instance.applyFullLevel(fromClipboard);
+        instance.colorOffset = 0;
+        LoadingManager.getInstance().startGame(instance);
     }
 
 
     public void exportLevel() {
-        // this was not working properly
-//        String fullLevel = getFullLevelString();
-
         Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
         String fullLevel = prefs.getString(SLOT_NAME + currentSlotNumber, "");
         System.out.println("Level exported to clipboard.");
@@ -329,28 +306,42 @@ public class LevelEditor {
             Scenes.sceneMapTooBig.create();
         }
 
-        Scenes.sceneNotification.showNotification("exported");
+        Scenes.sceneNotification.show("exported");
     }
 
 
     public boolean isLevelAcceptableForUserLevels(String fullLevel) {
         String innerString = fullLevel.substring(fullLevel.indexOf("/") + 1);
-        int min = -1;
-        int max = -1;
+        float min = -1;
+        float max = -1;
+        FieldController fieldController = gameController.fieldController;
         for (String token : innerString.split("#")) {
             String[] split = token.split(" ");
             int index1 = Integer.valueOf(split[0]);
-            if (min == -1 || index1 < min) {
-                min = index1;
+            int index2 = Integer.valueOf(split[1]);
+            float y = fieldController.hexStep1 * index1 + fieldController.hexStep2 * index2 * (float) Math.cos(Math.PI / 3d);
+            if (min == -1 || y < min) {
+                min = y;
             }
-            if (max == -1 || index1 > max) {
-                max = index1;
+            if (max == -1 || y > max) {
+                max = y;
             }
         }
 
-        int delta = max - min;
+        float delta = max - min;
+        delta /= fieldController.hexStep1;
+        delta += 1;
 
         return delta <= MAX_ACCEPTABLE_DELTA;
+    }
+
+
+    public void doTestSizeMeasureFeature() {
+        saveSlot();
+        Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
+        String fullLevel = prefs.getString(SLOT_NAME + currentSlotNumber, "");
+        boolean levelAcceptableForUserLevels = isLevelAcceptableForUserLevels(fullLevel);
+        System.out.println("levelAcceptableForUserLevels = " + levelAcceptableForUserLevels);
     }
 
 

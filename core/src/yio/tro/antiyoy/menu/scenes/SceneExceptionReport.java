@@ -76,7 +76,7 @@ public class SceneExceptionReport extends AbstractScene{
                 getYioGdxGame(buttonYio).setGamePaused(true);
                 Scenes.sceneMainMenu.create();
 
-                Scenes.sceneNotification.showNotification("restart_app");
+                Scenes.sceneNotification.show("restart_app");
             }
         });
 

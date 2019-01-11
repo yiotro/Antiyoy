@@ -4,6 +4,7 @@ import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 
 public class SceneHelpIndex extends AbstractScene{
 
@@ -24,7 +25,7 @@ public class SceneHelpIndex extends AbstractScene{
         rbMyGames = new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
-                Scenes.sceneAboutGame.create(getString("article_my_games") + " #- Achikaps #- Bleentoro", Reaction.rbHelpIndex, 18);
+                createMyGamesArticle();
             }
         };
 
@@ -41,6 +42,11 @@ public class SceneHelpIndex extends AbstractScene{
                 Scenes.sceneAboutGame.create("article_diplomacy_2", Reaction.rbHelpIndex, 18);
             }
         };
+    }
+
+
+    public static void createMyGamesArticle() {
+        Scenes.sceneAboutGame.create(LanguagesManager.getInstance().getString("article_my_games") + " #- Achikaps #- Bleentoro #- Shmatoosto", Reaction.rbHelpIndex, 18);
     }
 
 

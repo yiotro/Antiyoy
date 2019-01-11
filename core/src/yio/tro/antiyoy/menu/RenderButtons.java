@@ -49,7 +49,7 @@ public class RenderButtons {
         renderShadows();
         drawMasks();
         renderButtons();
-        renderSelection();
+        renderCircularSelections();
     }
 
 
@@ -63,12 +63,14 @@ public class RenderButtons {
     }
 
 
-    void renderSelection() {
+    void renderCircularSelections() {
         for (ButtonYio buttonYio : buttons) {
             if (!buttonYio.isVisible()) continue;
             if (!buttonYio.isCurrentlyTouched()) continue;
             if (!buttonYio.touchAnimation) continue;
             if (buttonYio.selectionFactor.get() >= 1) continue;
+            if (!buttonYio.renderable) continue;
+            if (!buttonYio.selectionRenderable) continue;
 
             if (((renderAliveButtons && buttonYio.appearFactor.getDy() >= 0) || (renderDyingButtons && buttonYio.appearFactor.getDy() < 0) || buttonYio.selectionFactor.hasToMove())) {
                 OldMasking.begin();
@@ -139,26 +141,45 @@ public class RenderButtons {
 
     void renderSingleButton(ButtonYio buttonYio) {
         if (cutEndConditions(buttonYio)) return;
+        if (!buttonYio.renderable) return;
+        if (!isButtonCurrentlyVisible(buttonYio)) return;
 
-        FactorYio appearFactor = buttonYio.appearFactor;
-        if (!buttonYio.isVisible() || buttonYio.onlyShadow ||
-                ((!renderAliveButtons || appearFactor.getGravity() < 0) && (!renderDyingButtons || appearFactor.getGravity() > 0))) {
-            return;
-        }
-
-        if (appearFactor.get() <= 1) {
-            GraphicsYio.setBatchAlpha(batch, appearFactor.get());
-        } else {
-            GraphicsYio.setBatchAlpha(batch, 1);
-        }
-
+        updateBatchAlphaForSingleButton(buttonYio);
         updateVp(buttonYio);
         GraphicsYio.drawByRectangle(batch, buttonYio.textureRegion, visualPosition);
 
-        if (buttonYio.isCurrentlyTouched() && (!buttonYio.touchAnimation || buttonYio.selectionFactor.get() > 0.99) && appearFactor.get() > 0.35) {
+        if (isUsualSelectionVisibleCurrently(buttonYio)) {
             GraphicsYio.setBatchAlpha(batch, getSelectionAlpha(buttonYio));
             GraphicsYio.drawByRectangle(batch, buttonPixel, visualPosition);
         }
+    }
+
+
+    private void updateBatchAlphaForSingleButton(ButtonYio buttonYio) {
+        if (buttonYio.appearFactor.get() <= 1) {
+            GraphicsYio.setBatchAlpha(batch, buttonYio.appearFactor.get());
+        } else {
+            GraphicsYio.setBatchAlpha(batch, 1);
+        }
+    }
+
+
+    private boolean isButtonCurrentlyVisible(ButtonYio buttonYio) {
+        if (!buttonYio.isVisible()) return false;
+        if (buttonYio.onlyShadow) return false;
+        if (renderAliveButtons && buttonYio.appearFactor.getGravity() >= 0) return true;
+        if (renderDyingButtons && buttonYio.appearFactor.getGravity() <= 0) return true;
+        return false;
+    }
+
+
+    private boolean isUsualSelectionVisibleCurrently(ButtonYio buttonYio) {
+        if (!buttonYio.isCurrentlyTouched()) return false;
+        if (buttonYio.touchAnimation && buttonYio.selectionFactor.get() <= 0.99) return false;
+        if (buttonYio.appearFactor.get() <= 0.35) return false;
+        if (!buttonYio.selectionRenderable) return false;
+
+        return true;
     }
 
 
@@ -228,6 +249,7 @@ public class RenderButtons {
         for (ButtonYio buttonYio : buttons) {
             if (!buttonYio.isVisible()) continue;
             if (checkForSpecialMask(buttonYio)) continue;
+            if (!buttonYio.renderable) continue;
 
             if (buttonYio.rectangularMask &&
                     ((renderAliveButtons && buttonYio.appearFactor.getGravity() >= 0) || (renderDyingButtons && buttonYio.appearFactor.getGravity() <= 0))) {
@@ -247,6 +269,7 @@ public class RenderButtons {
             if (!buttonYio.isVisible()) continue;
             if (!buttonYio.hasShadow) continue;
             if (buttonYio.appearFactor.get() <= 0.25) continue;
+            if (!buttonYio.renderable) continue;
             if ((!renderAliveButtons || buttonYio.appearFactor.getGravity() < 0) && (!renderDyingButtons || buttonYio.appearFactor.getGravity() > 0))
                 continue;
 

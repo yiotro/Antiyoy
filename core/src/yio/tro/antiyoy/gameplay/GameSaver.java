@@ -71,62 +71,46 @@ public class GameSaver {
     private String getHexString(Hex hex) {
         // index1 - index2 - colorIndex - objectInside - unitStrength - unitReadyToMove - money
 
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("" + hex.index1);
-        stringBuffer.append(" " + hex.index2);
-        stringBuffer.append(" " + hex.colorIndex);
-        stringBuffer.append(" " + hex.objectInside);
+        StringBuilder builder = new StringBuilder();
+        builder.append(hex.index1);
+        builder.append(" ").append(hex.index2);
+        builder.append(" ").append(hex.colorIndex);
+        builder.append(" ").append(hex.objectInside);
 
         if (hex.containsUnit()) {
-            stringBuffer.append(" " + hex.unit.strength);
+            builder.append(" ").append(hex.unit.strength);
             if (hex.unit.isReadyToMove()) {
-                stringBuffer.append(" " + 1);
+                builder.append(" " + 1);
             } else {
-                stringBuffer.append(" " + 0);
+                builder.append(" " + 0);
             }
         } else {
-            stringBuffer.append(" " + 0);
-            stringBuffer.append(" " + 0);
+            builder.append(" " + 0);
+            builder.append(" " + 0);
         }
 
         Province province = gameController.getProvinceByHex(hex);
         if (province != null) {
-            stringBuffer.append(" " + province.money);
+            builder.append(" ").append(province.money);
         } else {
-            stringBuffer.append(" " + 10);
+            builder.append(" " + 10);
         }
 
-        return stringBuffer.toString();
+        return builder.toString();
     }
 
 
     public String getActiveHexesString() {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder builder = new StringBuilder();
         for (Hex activeHex : gameController.fieldController.activeHexes) {
             String hexString = getHexString(activeHex);
-            stringBuffer.append(hexString);
-            stringBuffer.append(tokenSeparator);
+            builder.append(hexString);
+            builder.append(tokenSeparator);
         }
-        if (stringBuffer.length() > 0) {
-            stringBuffer.delete(stringBuffer.length() - 1, stringBuffer.length());
+        if (builder.length() > 0) {
+            builder.delete(builder.length() - 1, builder.length());
         }
-        return stringBuffer.toString();
-    }
-
-
-    public void saveGameToSlot(int slotIndex) {
-        // this is for old save slots menu
-
-//        saveGame("save_slot" + slotIndex);
-//        String dateString = Yio.getDate();
-//        prefs.putString("date", dateString);
-//        prefs.flush();
-//        Scenes.sceneSaveSlotsOld.updateSaveSlotButton(slotIndex);
-    }
-
-
-    void saveGame() {
-        saveGame("save"); // default save prefs
+        return builder.toString();
     }
 
 

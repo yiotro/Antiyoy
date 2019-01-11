@@ -5,14 +5,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
-import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.menu.scenes.*;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.stuff.RectangleYio;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ListIterator;
 import java.util.StringTokenizer;
 
@@ -26,7 +24,6 @@ public class MenuControllerYio {
     private final ButtonFactory buttonFactory;
     public ButtonRenderer buttonRenderer;
     TextureRegion unlockedLevelIcon, lockedLevelIcon, openedLevelIcon;
-    public FactorYio infoPanelFactor;
     public final ArrayList<ButtonYio> buttons;
     public ArrayList<CheckButtonYio> checkButtons;
     public SpecialActionController specialActionController;
@@ -38,7 +35,6 @@ public class MenuControllerYio {
         buttonFactory = new ButtonFactory(this);
         buttons = new ArrayList<ButtonYio>();
         buttonRenderer = new ButtonRenderer();
-        infoPanelFactor = new FactorYio();
         specialActionController = new SpecialActionController(this);
         unlockedLevelIcon = GameView.loadTextureRegion("unlocked_level_icon.png", true);
         lockedLevelIcon = GameView.loadTextureRegion("locked_level_icon.png", true);
@@ -77,7 +73,6 @@ public class MenuControllerYio {
 
 
     public void move() {
-        infoPanelFactor.move();
         specialActionController.move();
 
         for (CheckButtonYio checkButton : checkButtons) {
@@ -173,7 +168,7 @@ public class MenuControllerYio {
 
 
     public ButtonYio getCoinButton() {
-        if (Settings.fastConstruction) {
+        if (Settings.fastConstructionEnabled) {
             return getButtonById(610);
         } else {
             return getButtonById(37);
@@ -244,10 +239,8 @@ public class MenuControllerYio {
 
 
     public void beginMenuCreation() {
-        infoPanelFactor.setValues(1, 0);
-        infoPanelFactor.destroy(1, 3);
-
         for (InterfaceElement interfaceElement : interfaceElements) {
+            if (interfaceElement.isAnotherSceneCreationIgnored()) continue;
             interfaceElement.destroy();
         }
 
@@ -270,7 +263,10 @@ public class MenuControllerYio {
                 buttonYio.appearFactor.destroy(1, 1);
             }
         }
-        if (yioGdxGame.gameView != null) yioGdxGame.gameView.beginDestroyProcess();
+
+        if (yioGdxGame.gameView != null) {
+            yioGdxGame.gameView.beginDestroyProcess();
+        }
     }
 
 

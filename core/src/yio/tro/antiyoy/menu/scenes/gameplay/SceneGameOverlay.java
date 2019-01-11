@@ -4,7 +4,7 @@ import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.scenes.AbstractScene;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.GraphicsYio;
-import yio.tro.antiyoy.SoundControllerYio;
+import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
@@ -46,7 +46,7 @@ public class SceneGameOverlay extends AbstractScene {
         endTurnButton.setAnimation(Animation.DOWN);
         endTurnButton.enableRectangularMask();
         endTurnButton.disableTouchAnimation();
-        endTurnButton.setPressSound(SoundControllerYio.soundEndTurn);
+        endTurnButton.setPressSound(SoundManagerYio.soundEndTurn);
 
         ButtonYio undoButton = buttonFactory.getButton(generateSquare(0, 0, 0.07), 32, null);
         menuControllerYio.loadButtonOnce(undoButton, "undo.png");

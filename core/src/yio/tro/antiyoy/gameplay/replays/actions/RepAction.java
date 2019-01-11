@@ -19,6 +19,7 @@ public abstract class RepAction {
     public static final int CITY_SPAWNED = 7;
     public static final int UNIT_DIED_FROM_STARVATION = 8;
     public static final int HEX_CHANGED_COLOR = 9;
+    public static final int UNIT_SPAWNED = 10;
 
     public int type;
 

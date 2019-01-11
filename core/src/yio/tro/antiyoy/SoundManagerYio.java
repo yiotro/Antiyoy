@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
 
-public class SoundControllerYio {
+public class SoundManagerYio {
 
     public static Sound soundPressButton;
     public static Sound soundSelectUnit;

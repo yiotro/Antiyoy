@@ -45,7 +45,7 @@ public class SceneLanguages extends AbstractScene{
 
         CustomLanguageLoader.setAndSaveLanguage(key);
 
-        Settings.getInstance().loadSettings();
+        Settings.getInstance().loadAllSettings();
         Scenes.createScenes(menuControllerYio);
         Scenes.sceneMainMenu.create();
     }

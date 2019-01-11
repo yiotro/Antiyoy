@@ -3,7 +3,7 @@ package yio.tro.antiyoy.menu.save_slot_selector;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import yio.tro.antiyoy.SoundControllerYio;
+import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.ClickDetector;
 import yio.tro.antiyoy.menu.ButtonYio;
@@ -536,7 +536,7 @@ public class SaveSlotSelector extends InterfaceElement {
     private void onItemClicked(SsItem item) {
         clickedItem = item;
 
-        SoundControllerYio.playSound(SoundControllerYio.soundPressButton);
+        SoundManagerYio.playSound(SoundManagerYio.soundPressButton);
     }
 
 

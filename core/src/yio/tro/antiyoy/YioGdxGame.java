@@ -41,6 +41,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     public MenuViewYio menuViewYio;
     private static GlyphLayout glyphLayout = new GlyphLayout();
     public static boolean ANDROID = false;
+    public static boolean IOS = false;
     TextureRegion mainBackground, infoBackground, settingsBackground, pauseBackground;
     TextureRegion currentBackground;
     TextureRegion lastBackground;
@@ -107,7 +108,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         screenVerySmall = Gdx.graphics.getDensity() < 1.2;
         initializeSingletons();
         loadSomeTextures();
-        SoundControllerYio.loadAllSounds();
+        SoundManagerYio.loadAllSounds();
         MusicManager.getInstance().load();
         transitionFactor = new FactorYio();
         splatController.splatTransparencyFactor = new FactorYio();
@@ -141,10 +142,8 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         initBlackoutFactor();
 
         Settings.getInstance().setYioGdxGame(this);
-        Settings.getInstance().loadSettings();
+        Settings.getInstance().loadAllSettings();
         Scenes.sceneMainMenu.checkToCreateResumeButton();
-
-        ReplaySaveSystem.resetInstance();
         ReplaySaveSystem.getInstance().setGameController(gameController);
 
         YioGdxGame.say("full loading time: " + (System.currentTimeMillis() - time1));
@@ -160,11 +159,11 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
 
     private void checkForSingleMessageOnStart() {
-        if (OneTimeInfo.getInstance().iosPortDone) {
+        if (OneTimeInfo.getInstance().iosPortDone && !YioGdxGame.IOS) {
             OneTimeInfo.getInstance().iosPortDone = false;
             OneTimeInfo.getInstance().save();
 
-            Scenes.sceneNotification.showNotification("available_on_ios");
+            Scenes.sceneNotification.show("available_on_ios");
         }
     }
 
@@ -181,6 +180,8 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         Settings.initialize();
         UserLevelFactory.initialize();
         UserLevelProgressManager.initialize();
+        GlobalStatistics.initialize();
+        ReplaySaveSystem.initialize();
     }
 
 

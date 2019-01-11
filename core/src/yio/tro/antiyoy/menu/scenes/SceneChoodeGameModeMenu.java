@@ -1,6 +1,8 @@
 package yio.tro.antiyoy.menu.scenes;
 
+import yio.tro.antiyoy.gameplay.GlobalStatistics;
 import yio.tro.antiyoy.menu.Animation;
+import yio.tro.antiyoy.menu.SingleMessages;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
@@ -47,10 +49,30 @@ public class SceneChoodeGameModeMenu extends AbstractScene{
         createEditorButton();
 
         createInvisibleButton();
+        createMyOtherGamesButton();
 
         menuControllerYio.spawnBackButton(76, Reaction.rbMainMenu);
 
         menuControllerYio.endMenuCreation();
+    }
+
+
+    private void createMyOtherGamesButton() {
+        if (SingleMessages.checkOutMyOtherGames) return;
+        if (GlobalStatistics.getInstance().timeInGame < 8 * 60 * 60 * 60) return; // 8 hours
+
+        ButtonYio myOtherGamesButton = buttonFactory.getButton(generateRectangle(0.2, 0.05, 0.6, 0.06), 79, getString("my_games"));
+        myOtherGamesButton.setAnimation(Animation.DOWN);
+        myOtherGamesButton.disableTouchAnimation();
+        myOtherGamesButton.setReaction(new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                SceneHelpIndex.createMyGamesArticle();
+
+                SingleMessages.checkOutMyOtherGames = true;
+                SingleMessages.save();
+            }
+        });
     }
 
 

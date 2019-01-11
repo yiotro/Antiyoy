@@ -30,7 +30,11 @@ public class RulesetGeneric extends Ruleset{
             return;
         }
 
-        gameController.fieldController.getProvinceByHex(hex).money += GameRules.TREE_CUT_REWARD;
+        Province provinceByHex = gameController.fieldController.getProvinceByHex(hex);
+        if (provinceByHex != null) {
+            provinceByHex.money += GameRules.TREE_CUT_REWARD;
+        }
+
         gameController.fieldController.updateSelectedProvinceMoney();
     }
 
@@ -104,7 +108,11 @@ public class RulesetGeneric extends Ruleset{
     public void onUnitMoveToHex(Unit unit, Hex hex) {
         if (!hex.containsTree()) return;
 
-        gameController.getProvinceByHex(hex).money += GameRules.TREE_CUT_REWARD;
+        Province provinceByHex = gameController.getProvinceByHex(hex);
+        if (provinceByHex != null) {
+            provinceByHex.money += GameRules.TREE_CUT_REWARD;
+        }
+
         gameController.selectionController.updateSelectedProvinceMoney();
     }
 

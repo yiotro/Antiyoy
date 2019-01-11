@@ -38,6 +38,8 @@ public class RaUnitMoved extends RepAction{
     @Override
     public void perform(GameController gameController) {
         Unit unit = src.unit;
+        if (unit == null) return;
+
         Province provinceByHex = gameController.fieldController.getProvinceByHex(src);
 
         if (!dst.sameColor(src) && !dst.isNeutral() && !dst.canBeAttackedBy(unit)) {

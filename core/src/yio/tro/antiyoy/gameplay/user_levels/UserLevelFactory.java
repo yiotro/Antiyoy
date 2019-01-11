@@ -3,6 +3,7 @@ package yio.tro.antiyoy.gameplay.user_levels;
 import yio.tro.antiyoy.gameplay.user_levels.pack_five.*;
 import yio.tro.antiyoy.gameplay.user_levels.pack_four.*;
 import yio.tro.antiyoy.gameplay.user_levels.pack_one.*;
+import yio.tro.antiyoy.gameplay.user_levels.pack_six.*;
 import yio.tro.antiyoy.gameplay.user_levels.pack_three.*;
 import yio.tro.antiyoy.gameplay.user_levels.pack_two.*;
 
@@ -36,6 +37,42 @@ public class UserLevelFactory {
 
 
     private void initLevels() {
+        // 6
+        add(new UlevEleventhTimesTheCharm());
+        add(new UlevUnbeatable());
+        add(new UlevSquid());
+        add(new UlevATwo());
+        add(new UlevAThree());
+        add(new UlevLightsGoOut());
+        add(new UlevWaaaaaay());
+        add(new UlevYouShallNotPass());
+        add(new UlevHardBunker());
+        add(new UlevBunkerMap());
+        add(new UlevGraySquare());
+        add(new UlevHexahedronAdventures());
+        add(new UlevMoneyIsPower());
+        add(new UlevKaerMorhen());
+        add(new UlevProject25());
+        add(new UlevFlintWaterCrisis());
+        add(new UlevMuertos());
+        add(new UlevHunterVsGatherer());
+        add(new UlevForKettles());
+        add(new UlevNeverQuit());
+        add(new UlevBunker1());
+        add(new UlevBunker2());
+        add(new UlevBunker3());
+        add(new UlevBunker4());
+        add(new UlevBunker5());
+        add(new UlevTriangle());
+        add(new UlevGates());
+        add(new UlevOleg4());
+        add(new UlevTemporaryDifficulties());
+        add(new UlevHardBunker3());
+        add(new UlevJapanKingdom());
+        add(new UlevXisumaIsland());
+        add(new Ulev1939Diacharik());
+        add(new UlevScandinavia());
+
         // 5
         add(new UlevSeventhTimesTheCharm());
         add(new UlevHexahedron());
@@ -58,6 +95,7 @@ public class UserLevelFactory {
         add(new UlevCatan());
         add(new UlevTahaFidan());
         add(new UlevDna());
+        add(new UlevMarketPower());
         add(new UlevJustinSullivan());
         add(new UlevHoneyComb());
         add(new UlevWagonWheel());
@@ -74,6 +112,7 @@ public class UserLevelFactory {
         add(new UlevDoubleTrouble());
         add(new UlevOttomanEmpire());
         add(new UlevForbiddenForest());
+        add(new UlevA1());
         add(new UlevAmplob());
         add(new UlevRainbow());
         add(new UlevEpicenter());

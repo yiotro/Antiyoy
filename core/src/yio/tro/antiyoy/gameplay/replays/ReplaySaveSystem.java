@@ -24,7 +24,7 @@ public class ReplaySaveSystem {
     }
 
 
-    public static void resetInstance() {
+    public static void initialize() {
         instance = null;
     }
 

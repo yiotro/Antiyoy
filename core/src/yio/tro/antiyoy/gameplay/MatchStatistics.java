@@ -1,9 +1,12 @@
 package yio.tro.antiyoy.gameplay;
 
 
+import yio.tro.antiyoy.stuff.Yio;
+
 public class MatchStatistics {
 
     public int turnsMade, unitsDied, unitsProduced, moneySpent;
+    public int firstPlayerMoneySpent;
     public int timeCount;
 
 
@@ -18,6 +21,7 @@ public class MatchStatistics {
         unitsProduced = 0;
         moneySpent = 0;
         timeCount = 0;
+        firstPlayerMoneySpent = 0;
     }
 
 
@@ -27,40 +31,41 @@ public class MatchStatistics {
         unitsProduced = source.unitsProduced;
         moneySpent = source.moneySpent;
         timeCount = source.timeCount;
+        firstPlayerMoneySpent = source.firstPlayerMoneySpent;
     }
 
 
-    void moneyWereSpent(int amount) {
+    void onMoneySpent(int who, int amount) {
         moneySpent += amount;
+
+        if (who == 0) {
+            onFirstPlayerSpentMoney(amount);
+        }
     }
 
 
-    void unitWasProduced() {
+    void onUnitProduced() {
         unitsProduced++;
     }
 
 
-    void unitWasKilled() {
+    void onUnitKilled() {
         unitsDied++;
     }
 
 
-    void turnWasMade() {
+    void onTurnMade() {
         turnsMade++;
     }
 
 
+    void onFirstPlayerSpentMoney(int amount) {
+        firstPlayerMoneySpent += amount;
+    }
+
+
     public String getTimeString() {
-        int currentCountDown = timeCount;
-        currentCountDown /= 60; // seconds
-        int min = 0;
-        while (currentCountDown >= 60) {
-            min++;
-            currentCountDown -= 60;
-        }
-        String zero = "";
-        if (currentCountDown < 10) zero = "0";
-        return min + ":" + zero + currentCountDown;
+        return Yio.convertTime(timeCount);
     }
 
 

@@ -114,7 +114,7 @@ public class Unit {
     }
 
 
-    void startJumping() {
+    public void startJumping() {
         if (GameRules.replayMode) return;
 
         jumpPos = 0;

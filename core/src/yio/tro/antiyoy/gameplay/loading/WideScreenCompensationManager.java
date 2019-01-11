@@ -3,6 +3,7 @@ package yio.tro.antiyoy.gameplay.loading;
 import yio.tro.antiyoy.gameplay.FieldController;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.stuff.PointYio;
 
 public class WideScreenCompensationManager {
@@ -28,7 +29,7 @@ public class WideScreenCompensationManager {
         updateTopAndBottom();
         updateDeltas();
 
-        if (isSomethingWrong()) {
+        if (needVerticalFieldPosFix()) {
             doFix();
         }
     }
@@ -41,8 +42,6 @@ public class WideScreenCompensationManager {
 
 
     private void applyFixDelta() {
-        System.out.println("applied widescreen fix");
-
         gameController.fieldController.compensatoryOffset = fixDelta;
         gameController.fieldController.updateHexPositions();
     }
@@ -54,11 +53,12 @@ public class WideScreenCompensationManager {
     }
 
 
-    private boolean isSomethingWrong() {
+    private boolean needVerticalFieldPosFix() {
         if (deltaTop < 0) return true;
         if (deltaBottom < 0) return true;
+        if (GameRules.inEditorMode) return false;
 
-        return false;
+        return true;
     }
 
 

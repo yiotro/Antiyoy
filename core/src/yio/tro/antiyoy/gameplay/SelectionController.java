@@ -2,13 +2,12 @@ package yio.tro.antiyoy.gameplay;
 
 import com.badlogic.gdx.Gdx;
 import yio.tro.antiyoy.Settings;
-import yio.tro.antiyoy.SoundControllerYio;
+import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.keyboard.AbstractKbReaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.GraphicsYio;
-import yio.tro.antiyoy.stuff.RectangleYio;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -228,7 +227,7 @@ public class SelectionController {
 
 
     private void hideBuildOverlay() {
-        if (Settings.fastConstruction) {
+        if (Settings.fastConstructionEnabled) {
             Scenes.sceneFastConstructionPanel.hide();
         } else {
             Scenes.sceneSelectionOverlay.hide();
@@ -305,7 +304,7 @@ public class SelectionController {
             return;
         }
 
-        updateIsSomethingSelected();
+        updateIsSomethingSelectedState();
 
         if (isReadyToBuild()) {
             reactionBuildStuff();
@@ -388,7 +387,7 @@ public class SelectionController {
         if (!selectedUnit.canMoveToFriendlyHex(focusedHex)) return;
 
         gameController.takeSnapshot();
-        SoundControllerYio.playSound(SoundControllerYio.soundWalk);
+        SoundManagerYio.playSound(SoundManagerYio.soundWalk);
         gameController.moveUnit(selectedUnit, focusedHex, gameController.fieldController.selectedProvince);
         selectedUnit = null;
     }
@@ -401,7 +400,7 @@ public class SelectionController {
         if (!focusedHex.unit.isReadyToMove()) return true;
 
         selectedUnit = focusedHex.unit;
-        SoundControllerYio.playSound(SoundControllerYio.soundSelectUnit);
+        SoundManagerYio.playSound(SoundManagerYio.soundSelectUnit);
         gameController.fieldController.moveZoneManager.detectAndShowMoveZone(selectedUnit.currentHex, selectedUnit.strength, GameRules.UNIT_MOVE_LIMIT);
         selUnitFactor.setValues(0, 0);
         selUnitFactor.appear(3, 2);
@@ -428,7 +427,7 @@ public class SelectionController {
 
         gameController.takeSnapshot();
         gameController.moveUnit(selectedUnit, focusedHex, gameController.fieldController.selectedProvince);
-        SoundControllerYio.playSound(SoundControllerYio.soundAttack);
+        SoundManagerYio.playSound(SoundManagerYio.soundAttack);
         selectedUnit = null;
     }
 
@@ -436,7 +435,9 @@ public class SelectionController {
     private void reactionInsideSelection() {
         if (!isSomethingSelected) return;
 
-        if (!focusedHex.selected && !focusedHex.inMoveZone) deselectAll();
+        if (!focusedHex.selected && !focusedHex.inMoveZone) {
+            deselectAll();
+        }
 
         if (getMoveZone().size() > 0 && !focusedHex.inMoveZone) {
             selectedUnit = null;
@@ -495,7 +496,7 @@ public class SelectionController {
                 fieldController.selectedProvince = fieldController.getProvinceByHex(focusedHex); // when uniting provinces, selected province object may change
                 fieldController.selectAdjacentHexes(focusedHex);
                 resetTipType();
-                SoundControllerYio.playSound(SoundControllerYio.soundBuild);
+                SoundManagerYio.playSound(SoundManagerYio.soundBuild);
             } else {
                 fieldController.setResponseAnimHex(focusedHex);
             }
@@ -524,7 +525,7 @@ public class SelectionController {
     }
 
 
-    private void updateIsSomethingSelected() {
+    private void updateIsSomethingSelectedState() {
         isSomethingSelected = gameController.fieldController.selectedHexes.size() > 0;
     }
 
@@ -583,7 +584,7 @@ public class SelectionController {
 
         resetTipType();
         gameController.fieldController.setResponseAnimHex(focusedHex);
-        SoundControllerYio.playSound(SoundControllerYio.soundBuild);
+        SoundManagerYio.playSound(SoundManagerYio.soundBuild);
     }
 
 

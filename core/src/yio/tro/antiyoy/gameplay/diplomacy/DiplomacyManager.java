@@ -11,6 +11,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.object_pool.ObjectPoolYio;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class DiplomacyManager {
@@ -23,6 +24,10 @@ public class DiplomacyManager {
     public ArrayList<DiplomaticCooldown> cooldowns;
     ObjectPoolYio<DiplomaticCooldown> poolCooldowns;
     public DiplomaticLog log;
+    HashMap<Hex, Integer> tempMap;
+    private ArrayList<Hex> tempHexList;
+    private ArrayList<Province> tempProvinceList;
+    private ArrayList<Hex> propagationList;
 
 
     public DiplomacyManager(FieldController fieldController) {
@@ -32,6 +37,10 @@ public class DiplomacyManager {
         contracts = new ArrayList<>();
         cooldowns = new ArrayList<>();
         log = new DiplomaticLog(this);
+        tempMap = new HashMap<>();
+        tempHexList = new ArrayList<>();
+        tempProvinceList = new ArrayList<>();
+        propagationList = new ArrayList<>();
 
         initPools();
     }
@@ -68,6 +77,7 @@ public class DiplomacyManager {
         clearContracts();
         clearCooldowns();
         log.clear();
+        updateAllAliveStatuses();
 
         DiplomacyElement diplomacyElement = Scenes.sceneDiplomacy.diplomacyElement;
         if (diplomacyElement != null) {
@@ -381,33 +391,40 @@ public class DiplomacyManager {
     }
 
 
-    public void onUserRequestedBuyHexes(DiplomaticEntity initiator, DiplomaticEntity entity, ArrayList<Hex> hexList, int price) {
-        if (initiator.getStateFullMoney() < price) return;
+    public void applyHexPurchase(DiplomaticMessage message) {
+        ArrayList<Hex> hexesToBuy = convertStringToPurchaseList(message.arg1);
+        int price = Integer.valueOf(message.arg2);
+        applyHexPurchase(message.sender, message.recipient, hexesToBuy, price);
+    }
+
+
+    public void applyHexPurchase(DiplomaticEntity buyer, DiplomaticEntity seller, ArrayList<Hex> hexList, int price) {
+        if (buyer.getStateFullMoney() < price) return;
 
         fieldController.gameController.takeSnapshot();
-        transferMoney(initiator, entity, price);
+        updateTempMap(hexList);
+        transferMoney(buyer, seller, price);
 
         for (Hex hex : hexList) {
-            int objectInside = hex.objectInside;
+            if (!hex.sameColor(seller.color)) continue;
+
+            int objectInside = tempMap.get(hex);
             int unitStrength = -1;
             if (hex.containsUnit()) {
                 unitStrength = hex.unit.strength;
             }
 
-            fieldController.setHexColor(hex, initiator.color);
+            fieldController.setHexColor(hex, buyer.color);
             ReplayManager replayManager = fieldController.gameController.replayManager;
             replayManager.onHexChangedColorWithoutObviousReason(hex);
-            Province provinceByHex = fieldController.getProvinceByHex(hex);
 
             if (unitStrength > 0) {
                 fieldController.addUnit(hex, unitStrength);
-                if (provinceByHex != null) {
-                    replayManager.onUnitBuilt(provinceByHex, hex, unitStrength);
-                }
+                replayManager.onUnitSpawned(hex, unitStrength);
                 continue;
             }
 
-            if (objectInside > 0) {
+            if (objectInside > 0 && objectInside != Obj.TOWN) {
                 fieldController.addSolidObject(hex, objectInside);
 
                 switch (objectInside) {
@@ -429,14 +446,56 @@ public class DiplomacyManager {
                     case Obj.TOWER:
                         replayManager.onTowerBuilt(hex, false);
                         break;
-                    case Obj.TOWN:
-                        replayManager.onCitySpawned(hex);
-                        break;
                 }
             }
         }
 
         fieldController.tryToDetectAddiotionalProvinces();
+    }
+
+
+    public void onEntityRequestedHexPurchase(DiplomaticEntity initiator, DiplomaticEntity entity, ArrayList<Hex> hexList, int price) {
+        if (initiator.getStateFullMoney() < price) return;
+
+        log.addMessage(DipMessageType.hex_purchase, initiator, entity)
+                .setArg1(convertPurchaseListToString(hexList))
+                .setArg2("" + price);
+
+        showLetterSentNotification();
+    }
+
+
+    public ArrayList<Hex> convertStringToPurchaseList(String source) {
+        tempHexList.clear();
+
+        for (String token : source.split(",")) {
+            String[] split = token.split(" ");
+            int index1 = Integer.valueOf(split[0]);
+            int index2 = Integer.valueOf(split[1]);
+            tempHexList.add(fieldController.getHex(index1, index2));
+        }
+
+        return tempHexList;
+    }
+
+
+    private String convertPurchaseListToString(ArrayList<Hex> hexList) {
+        StringBuilder builder = new StringBuilder();
+
+        for (Hex hex : hexList) {
+            builder.append(hex.index1).append(" ").append(hex.index2).append(",");
+        }
+
+        return builder.toString();
+    }
+
+
+    private void updateTempMap(ArrayList<Hex> hexList) {
+        tempMap.clear();
+
+        for (Hex hex : hexList) {
+            tempMap.put(hex, hex.objectInside);
+        }
     }
 
 
@@ -538,6 +597,13 @@ public class DiplomacyManager {
     }
 
 
+    public void updateAllAliveStatuses() {
+        for (DiplomaticEntity entity : entities) {
+            entity.updateAlive();
+        }
+    }
+
+
     public void onTurnStarted() {
         if (!GameRules.diplomacyEnabled) return;
 
@@ -618,10 +684,72 @@ public class DiplomacyManager {
                 case stop_war:
                     onEntityRequestedToStopWar(message.sender, message.recipient);
                     break;
+                case hex_purchase:
+                    if (doesAiAllowToBuyHisHexes(message)) {
+                        applyHexPurchase(message);
+                    }
+                    break;
             }
 
             log.removeMessage(message);
         }
+    }
+
+
+    private boolean doesAiAllowToBuyHisHexes(DiplomaticMessage message) {
+        DiplomaticEntity buyer = message.sender;
+        DiplomaticEntity seller = message.recipient;
+        ArrayList<Hex> hexList = convertStringToPurchaseList(message.arg1);
+
+        tempProvinceList.clear();
+        for (Hex hex : hexList) {
+            Province provinceByHex = fieldController.getProvinceByHex(hex);
+            if (tempProvinceList.contains(provinceByHex)) continue;
+            tempProvinceList.add(provinceByHex);
+        }
+
+        for (Province province : tempProvinceList) {
+            if (doesHexListSplitProvince(province, hexList)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    private boolean doesHexListSplitProvince(Province province, ArrayList<Hex> restrictionList) {
+        for (Hex hex : province.hexList) {
+            hex.flag = false;
+        }
+
+        propagationList.clear();
+        propagationList.add(province.hexList.get(0));
+
+        while (propagationList.size() > 0) {
+            Hex hex = propagationList.get(0);
+            propagationList.remove(0);
+            hex.flag = true;
+
+            for (int dir = 0; dir < 6; dir++) {
+                Hex adjacentHex = hex.getAdjacentHex(dir);
+                if (adjacentHex == null) continue;
+                if (!adjacentHex.active) continue;
+                if (!adjacentHex.sameColor(hex)) continue;
+                if (adjacentHex.flag) continue;
+                if (restrictionList.contains(adjacentHex)) continue;
+
+                propagationList.add(adjacentHex);
+            }
+        }
+
+        for (Hex hex : province.hexList) {
+            if (hex.flag) continue;
+            if (restrictionList.contains(hex)) continue;
+            return true;
+        }
+
+        return false;
     }
 
 
@@ -778,7 +906,15 @@ public class DiplomacyManager {
 
         int relation = one.getRelation(two);
 
-        return relation == DiplomaticRelation.ENEMY;
+        switch (relation) {
+            default:
+            case DiplomaticRelation.ENEMY:
+                return fieldController.gameController.ruleset.canUnitAttackHex(unitStrength, hex);
+            case DiplomaticRelation.NEUTRAL:
+                return false;
+            case DiplomaticRelation.FRIEND:
+                return false;
+        }
     }
 
 
@@ -914,7 +1050,7 @@ public class DiplomacyManager {
 
 
     public void showLetterSentNotification() {
-        Scenes.sceneNotification.showNotification("letter_sent");
+        Scenes.sceneNotification.show("letter_sent");
     }
 
 

@@ -40,6 +40,20 @@ public class Yio {
     }
 
 
+    public static String convertTime(long time) {
+        long currentCountDown = time;
+        currentCountDown /= 60; // seconds
+        int min = 0;
+        while (currentCountDown >= 60) {
+            min++;
+            currentCountDown -= 60;
+        }
+        String zero = "";
+        if (currentCountDown < 10) zero = "0";
+        return min + ":" + zero + currentCountDown;
+    }
+
+
     public static void removeByIterator(ArrayList<?> list, Object object) {
         ListIterator iterator = list.listIterator();
         while (iterator.hasNext()) {

@@ -54,7 +54,7 @@ public class SceneCheatsMenu extends AbstractScene{
             @Override
             public void perform(ButtonYio buttonYio) {
                 doCaptureRandomHexes();
-                Scenes.sceneNotification.showNotification("Captured some nearby hexes (" + getPercentageOfCapturedLands() + "%)");
+                Scenes.sceneNotification.show("Captured some nearby hexes (" + getPercentageOfCapturedLands() + "%)");
             }
         };
 
@@ -62,7 +62,7 @@ public class SceneCheatsMenu extends AbstractScene{
             @Override
             public void perform(ButtonYio buttonYio) {
                 doGiveSomeMoneyToPlayer();
-                Scenes.sceneNotification.showNotification("All your provinces got $1000");
+                Scenes.sceneNotification.show("All your provinces got $1000");
             }
         };
 
@@ -78,10 +78,10 @@ public class SceneCheatsMenu extends AbstractScene{
             public void perform(ButtonYio buttonYio) {
                 if (!DebugFlags.cheatCharisma) {
                     DebugFlags.cheatCharisma = true;
-                    Scenes.sceneNotification.showNotification("Charisma enabled");
+                    Scenes.sceneNotification.show("Charisma enabled");
                 } else {
                     DebugFlags.cheatCharisma = false;
-                    Scenes.sceneNotification.showNotification("Charisma disabled");
+                    Scenes.sceneNotification.show("Charisma disabled");
                 }
             }
         };

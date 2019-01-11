@@ -29,12 +29,12 @@ public class Scenes {
     public static SceneGameOverlay sceneGameOverlay;
     public static SceneSelectionOverlay sceneSelectionOverlay;
     public static ScenePauseMenu scenePauseMenu;
-    public static SceneColorStats sceneColorStats;
+    public static SceneIncomeGraph sceneIncomeGraph;
     public static SceneTutorialTip sceneTutorialTip;
     public static SceneSurrenderDialog sceneSurrenderDialog;
     public static SceneNotification sceneNotification;
     public static SceneAfterGameMenu sceneAfterGameMenu;
-    public static SceneStatisticsMenu sceneStatisticsMenu;
+    public static SceneMatchStatistics sceneMatchStatistics;
     public static SceneSingleMessage sceneSingleMessage;
     public static SceneExceptionReport sceneExceptionReport;
     public static SceneEditorAutomationPanel sceneEditorAutomationPanel;
@@ -75,6 +75,8 @@ public class Scenes {
     public static SceneTransferMoneyDialog sceneTransferMoneyDialog;
     public static SceneAreaSelectionUI sceneAreaSelectionUI;
     public static SceneHexPurchaseDialog sceneHexPurchaseDialog;
+    public static SceneGlobalStatistics sceneGlobalStatistics;
+    public static SceneConfirmSellHexes sceneConfirmSellHexes;
 
 
     public static void createScenes(MenuControllerYio menuController) {
@@ -101,12 +103,12 @@ public class Scenes {
         sceneGameOverlay = new SceneGameOverlay(menuController);
         sceneSelectionOverlay = new SceneSelectionOverlay(menuController);
         scenePauseMenu = new ScenePauseMenu(menuController);
-        sceneColorStats = new SceneColorStats(menuController);
+        sceneIncomeGraph = new SceneIncomeGraph(menuController);
         sceneTutorialTip = new SceneTutorialTip(menuController);
         sceneSurrenderDialog = new SceneSurrenderDialog(menuController);
         sceneNotification = new SceneNotification(menuController);
         sceneAfterGameMenu = new SceneAfterGameMenu(menuController);
-        sceneStatisticsMenu = new SceneStatisticsMenu(menuController);
+        sceneMatchStatistics = new SceneMatchStatistics(menuController);
         sceneSingleMessage = new SceneSingleMessage(menuController);
         sceneExceptionReport = new SceneExceptionReport(menuController);
         sceneEditorAutomationPanel = new SceneEditorAutomationPanel(menuController);
@@ -148,5 +150,7 @@ public class Scenes {
         sceneTransferMoneyDialog = new SceneTransferMoneyDialog(menuController);
         sceneAreaSelectionUI = new SceneAreaSelectionUI(menuController);
         sceneHexPurchaseDialog = new SceneHexPurchaseDialog(menuController);
+        sceneGlobalStatistics = new SceneGlobalStatistics(menuController);
+        sceneConfirmSellHexes = new SceneConfirmSellHexes(menuController);
     }
 }

@@ -5,6 +5,9 @@ import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.ai.AiFactory;
 import yio.tro.antiyoy.ai.ArtificialIntelligence;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticRelation;
 import yio.tro.antiyoy.gameplay.editor.LevelEditor;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
@@ -48,7 +51,6 @@ public class GameController {
     public float boundHeight;
     boolean readyToEndTurn;
     private boolean proposedSurrender;
-    private boolean cityNamesEnabled;
     public boolean backgroundVisible;
     private ArrayList<ArtificialIntelligence> aiList;
     public ArrayList<Unit> unitList;
@@ -464,6 +466,10 @@ public class GameController {
     private void endGame(int winColor) {
         onGameFinished(winColor);
 
+        if (winColor == 0) {
+            GlobalStatistics.getInstance().onGameWon();
+        }
+
         Scenes.sceneAfterGameMenu.create(winColor, isPlayerTurn(winColor));
     }
 
@@ -525,7 +531,10 @@ public class GameController {
         selectionController.deselectAll();
 
         if (isCurrentTurn(0)) {
-            matchStatistics.turnWasMade();
+            matchStatistics.onTurnMade();
+            if (playersNumber == 1) {
+                GlobalStatistics.getInstance().updateByMatchStatistics(matchStatistics);
+            }
             fieldController.expandTrees();
         }
 
@@ -666,7 +675,7 @@ public class GameController {
 
 
     public void initTutorial() {
-        Settings.fastConstruction = false;
+        Settings.fastConstructionEnabled = false;
 
         if (GameRules.slayRules) {
             tutorialScript = new TutorialScriptSlayRules(this);
@@ -763,16 +772,7 @@ public class GameController {
 
 
     public boolean areCityNamesEnabled() {
-        return cityNamesEnabled;
-    }
-
-
-    public void setCityNamesEnabled(int cityNames) {
-        if (cityNames == 1) {
-            cityNamesEnabled = true;
-        } else {
-            cityNamesEnabled = false;
-        }
+        return Settings.cityNamesEnabled;
     }
 
 
@@ -838,7 +838,7 @@ public class GameController {
             return ruleset.canUnitAttackHex(unitStrength, hex);
         }
 
-        return ruleset.canUnitAttackHex(unitStrength, hex) && fieldController.diplomacyManager.canUnitAttackHex(unitStrength, unitColor, hex);
+        return fieldController.diplomacyManager.canUnitAttackHex(unitStrength, unitColor, hex);
     }
 
 
@@ -1014,14 +1014,11 @@ public class GameController {
     public void moveUnit(Unit unit, Hex toWhere, Province unitProvince) {
         if (!unit.isReadyToMove()) {
             System.out.println("Someone tried to move unit that is not ready to move: " + unit);
-//            Yio.printStackTrace();
-            if (!GameRules.replayMode) {
-                return;
-            }
+            if (!GameRules.replayMode) return;
         }
 
         replayManager.onUnitMoved(unit.currentHex, toWhere);
-        if (unit.currentHex.sameColor(toWhere)) { // move peacefully
+        if (isMovementPeaceful(unit, toWhere)) {
             moveUnitPeacefully(unit, toWhere);
         } else {
             moveUnitWithAttack(unit, toWhere, unitProvince);
@@ -1031,6 +1028,11 @@ public class GameController {
             fieldController.moveZoneManager.hide();
             updateBalanceString();
         }
+    }
+
+
+    private boolean isMovementPeaceful(Unit unit, Hex toWhere) {
+        return unit.currentHex.sameColor(toWhere);
     }
 
 
@@ -1083,7 +1085,6 @@ public class GameController {
 
         Hex focusedHex = fieldController.focusedHex;
         YioGdxGame.say("Hex: " + SceneSkirmishMenu.getColorStringBySliderIndex(focusedHex.colorIndex + 1) + " " + focusedHex.index1 + " " + focusedHex.index2);
-        System.out.println("focusedHex.colorIndex = " + focusedHex.colorIndex);
     }
 
 

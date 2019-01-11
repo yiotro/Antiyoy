@@ -1,8 +1,7 @@
 package yio.tro.antiyoy.menu.diplomacy_element;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import yio.tro.antiyoy.SoundControllerYio;
-import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.ClickDetector;
 import yio.tro.antiyoy.gameplay.GameController;
@@ -589,7 +588,7 @@ public class DiplomacyElement extends InterfaceElement {
 
 
     private void onIconClicked(DeIcon icon) {
-        SoundControllerYio.playSound(SoundControllerYio.soundPressButton);
+        SoundManagerYio.playSound(SoundManagerYio.soundPressButton);
 
         clickedIcon = icon;
     }
@@ -609,7 +608,7 @@ public class DiplomacyElement extends InterfaceElement {
 
 
     private void onItemClicked(DeItem item) {
-        SoundControllerYio.playSound(SoundControllerYio.soundPressButton);
+        SoundManagerYio.playSound(SoundManagerYio.soundPressButton);
 
         if (item.keepSelection) {
             resetToLabel();
@@ -668,14 +667,13 @@ public class DiplomacyElement extends InterfaceElement {
                     enableIcon(DeIcon.ACTION_BLACK_MARK);
                 }
                 enableIcon(DeIcon.ACTION_INFO);
+                enableIcon(DeIcon.ACTION_TRANSFER_MONEY);
                 break;
             case DiplomaticRelation.FRIEND:
                 enableIcon(DeIcon.ACTION_TRANSFER_MONEY);
                 enableIcon(DeIcon.ACTION_DISLIKE);
                 enableIcon(DeIcon.ACTION_INFO);
-                if (!selectedEntity.isHuman()) {
-                    enableIcon(DeIcon.ACTION_BUY_HEXES);
-                }
+                enableIcon(DeIcon.ACTION_BUY_HEXES);
                 break;
             case DiplomaticRelation.ENEMY:
                 enableIcon(DeIcon.ACTION_LIKE);

@@ -29,6 +29,29 @@ public class DebugActionsManager {
     }
 
 
+    private void doKillRandomFriend() {
+        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomaticEntity mainEntity = diplomacyManager.getMainEntity();
+
+        DiplomaticEntity friend = null;
+        for (DiplomaticEntity entity : diplomacyManager.entities) {
+            if (entity == mainEntity) continue;
+            if (mainEntity.getRelation(entity) != DiplomaticRelation.FRIEND) continue;
+
+            friend = entity;
+            break;
+        }
+
+        if (friend == null) return;
+
+        for (Hex activeHex : gameController.fieldController.activeHexes) {
+            if (activeHex.colorIndex != friend.color) continue;
+
+            gameController.fieldController.setHexColor(activeHex, FieldController.NEUTRAL_LANDS_INDEX);
+        }
+    }
+
+
     private void doTestAreaSelectionMode() {
         gameController.fieldController.diplomacyManager.enableAreaSelectionMode(-1);
     }
@@ -41,7 +64,7 @@ public class DebugActionsManager {
         if (randomAiDiplomaticEntity == null) return;
 
         doForceWinForDiplomaticEntity(randomAiDiplomaticEntity);
-        Scenes.sceneNotification.showNotification("Forced diplomatic loss");
+        Scenes.sceneNotification.show("Forced diplomatic loss");
     }
 
 
@@ -69,7 +92,7 @@ public class DebugActionsManager {
 
     private void doForceLevelSkipAvailability() {
         gameController.skipLevelManager.forceSkipAvailability();
-        Scenes.sceneNotification.showNotification("Level skip forced");
+        Scenes.sceneNotification.show("Level skip forced");
     }
 
 
@@ -231,7 +254,7 @@ public class DebugActionsManager {
 
 
     private void doShowNotification() {
-        Scenes.sceneNotification.showNotification("debug notification");
+        Scenes.sceneNotification.show("debug notification");
     }
 
 
@@ -263,11 +286,10 @@ public class DebugActionsManager {
     }
 
 
-    private void doReplaySystemStuff() {
+    private void doSaveReplay() {
         ReplaySaveSystem instance = ReplaySaveSystem.getInstance();
-        instance.clearKeys();
-
         instance.saveReplay(gameController.replayManager.getReplay());
+        Scenes.sceneNotification.show("Debug replay saved");
     }
 
 
@@ -356,6 +378,6 @@ public class DebugActionsManager {
 
 
     private void doShowActiveHexesString() {
-        System.out.println("" + gameController.getGameSaver().getActiveHexesString());
+        System.out.println("gameController.gameSaver.getActiveHexesString() = " + gameController.gameSaver.getActiveHexesString());
     }
 }

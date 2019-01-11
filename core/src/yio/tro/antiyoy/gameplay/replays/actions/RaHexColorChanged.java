@@ -42,6 +42,7 @@ public class RaHexColorChanged extends RepAction{
     @Override
     public void perform(GameController gameController) {
         gameController.fieldController.setHexColor(hex, newColor);
+        gameController.fieldController.tryToDetectAddiotionalProvinces();
     }
 
 

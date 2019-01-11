@@ -20,6 +20,36 @@ public class SceneEditorConfirmClear extends AbstractScene {
 
         menuControllerYio.getYioGdxGame().beginBackgroundChange(3, true, true);
 
+        createInvisibleButton();
+        createBasePanel();
+        createYesButton();
+        createCancelButton();
+    }
+
+
+    private void createInvisibleButton() {
+        ButtonYio invisibleButton = buttonFactory.getButton(generateRectangle(0, 0, 1, 1), 363, null);
+        invisibleButton.setRenderable(false);
+    }
+
+
+    private void createCancelButton() {
+        ButtonYio cancelButton = buttonFactory.getButton(generateRectangle(0.025, 0.15, 0.475, 0.06), 362, getString("cancel"));
+        cancelButton.setReaction(EditorReactions.rbEditorHideConfirmClearLevelMenu);
+        cancelButton.setShadow(false);
+        cancelButton.setAnimation(Animation.FIXED_DOWN);
+    }
+
+
+    private void createYesButton() {
+        ButtonYio yesButton = buttonFactory.getButton(generateRectangle(0.5, 0.15, 0.475, 0.06), 361, getString("editor_clear"));
+        yesButton.setReaction(EditorReactions.rbClearEditorLevel);
+        yesButton.setShadow(false);
+        yesButton.setAnimation(Animation.FIXED_DOWN);
+    }
+
+
+    private void createBasePanel() {
         ButtonYio basePanel = buttonFactory.getButton(generateRectangle(0.025, 0.15, 0.95, 0.2), 360, null);
         if (basePanel.notRendered()) {
             basePanel.addTextLine(getString("confirm_clear_level"));
@@ -29,23 +59,10 @@ public class SceneEditorConfirmClear extends AbstractScene {
         }
         basePanel.setTouchable(false);
         basePanel.setAnimation(Animation.FIXED_DOWN);
-
-        ButtonYio clearButton = buttonFactory.getButton(generateRectangle(0.5, 0.15, 0.475, 0.06), 361, getString("editor_clear"));
-        clearButton.setReaction(EditorReactions.rbClearEditorLevel);
-        clearButton.setShadow(false);
-        clearButton.setAnimation(Animation.FIXED_DOWN);
-
-        ButtonYio cancelButton = buttonFactory.getButton(generateRectangle(0.025, 0.15, 0.475, 0.06), 362, getString("cancel"));
-        cancelButton.setReaction(EditorReactions.rbEditorHideConfirmClearLevelMenu);
-        cancelButton.setShadow(false);
-        cancelButton.setAnimation(Animation.FIXED_DOWN);
     }
 
 
     public void hide() {
-        for (int i = 360; i <= 362; i++) {
-            ButtonYio buttonById = menuControllerYio.getButtonById(i);
-            buttonById.destroy();
-        }
+        destroyByIndex(360, 369);
     }
 }

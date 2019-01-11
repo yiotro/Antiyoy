@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.menu.keyboard;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import yio.tro.antiyoy.SoundControllerYio;
+import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.render.MenuRender;
@@ -311,7 +311,7 @@ public class KeyboardElement extends InterfaceElement {
 
         lastSelectedButton = kbButton;
         kbButton.select();
-        SoundControllerYio.playSound(SoundControllerYio.soundKeyboardPress);
+        SoundManagerYio.playSound(SoundManagerYio.soundKeyboardPress);
         onButtonPressed(kbButton);
 
         return true;
