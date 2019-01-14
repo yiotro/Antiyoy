@@ -38,7 +38,7 @@
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Reset data"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -449,7 +449,7 @@
         #Игру сделал yiotro
 		"/>
         <string key="reset_campaign_data" value="Стереть данные"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Отдельное спасибо"/>
 
         <!-- Choose game mode menu-->
@@ -846,7 +846,7 @@
         #Гру зробив yiotro
 		"/>
         <string key="reset_campaign_data" value="Стерти данi"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Дякую"/>
 
         <!-- Choose game mode menu-->
@@ -1250,7 +1250,7 @@
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Daten zurücksetzen"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas #BY: Anton Zhmodikov #"/>
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/>
         <string key="special_thanks_title" value="Besonderer Dank"/>
 
         <!-- Choose game mode menu-->
@@ -1695,7 +1695,7 @@
         #Vytvořil yiotro
         "/>
         <string key="reset_campaign_data" value="Resetovat data"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -2129,7 +2129,7 @@
         #Auteur : yiotro
 		"/>
         <string key="reset_campaign_data" value="Effacer données"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Remerciements"/>
 
         <!-- Choose game mode menu-->
@@ -2571,7 +2571,7 @@
     #Wykonane przez yiotro
     "/>
         <string key="reset_campaign_data" value="Resetuj kampanie"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
 
@@ -3014,7 +3014,7 @@
         "/>
 
         <string key="reset_campaign_data" value="Resetta campagna"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -3417,7 +3417,7 @@
        #Reddit: /r/yiotro_games
        #E-mail: yiotro93@gmail.com #Creado por yiotro"/>
         <string key="reset_campaign_data" value="Borrar datos"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu -->
@@ -3853,7 +3853,7 @@
         #Vytvořil yiotro
         "/>
         <string key="reset_campaign_data" value="Resetovať údaje"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -4302,7 +4302,7 @@
         #yiotro出品
 		"/>
         <string key="reset_campaign_data" value="重置数据"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -4746,7 +4746,7 @@
         #Yiotro tarafından yapıldı.
 		"/>
         <string key="reset_campaign_data" value="Verileri sıfırla"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Özel Teşekkürler"/>
 
         <!-- Choose game mode menu-->
@@ -5197,7 +5197,7 @@
         #Направена от yiotro
 		"/>
         <string key="reset_campaign_data" value="Рестартирай всички данни"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -5651,7 +5651,7 @@
         #Feito por yiotro
         "/>
         <string key="reset_campaign_data" value="Resetar progresso"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -6072,7 +6072,7 @@
         #Gemaakt door yiotro
         "/>
         <string key="reset_campaign_data" value="Gegevens initialiseren"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxasvid - Takacs David #"/>
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/>
         <string key="special_thanks_title" value="Speciale dank"/>
 
         <!-- Choose game mode menu-->
@@ -6504,7 +6504,7 @@
         #Készítette: yiotro
         "/>
         <string key="reset_campaign_data" value="Kampány Újrakezdése"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -6969,7 +6969,7 @@
         #Гульню зрабіў yiotro
 		"/>
         <string key="reset_campaign_data" value="Глядзець даныя"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Асоба дзякую"/>
 
         <!-- Choose game mode menu-->
@@ -7370,7 +7370,7 @@
         #Dibuat oleh yiotro
         "/>
         <string key="reset_campaign_data" value="Atur ulang data"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Terima kasih"/>
 
         <!-- Choose game mode menu-->
@@ -7749,7 +7749,7 @@
 
     <language name="el_GR" title="Greek" author="Nikos Loxas">
         <!-- All characters -->
-        <string key="lang_characters" value="αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΤΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩάέήίόύώΆΈΉΊΌΎΏ;"/>
+        <string key="lang_characters" value="αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΤΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩάέήίόύώΆΈΉΊΌΎΏς;"/>
 
         <!-- Main menu -->
         <string key="main_menu_info" value="Πληροφορίες"/>
@@ -7782,7 +7782,7 @@
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Επαναφορά δεδομένων"/>
-        <string key="special_thanks" value="Special thanks to these people: #GER: Rebecca Nöll #CZ: Jirka Justra #PL: Aleksander Jabłoński #IT: Andrea Rinaldi #FR: Louis Philibert-Morrissette #SP: Hilda Julieta Lacaze #SK: neviemaky #Skin: ShroomArts #Ch: Jim Chen #TR: Kaan Aydeniz #Bg: Vassil Antonov #Fix ENG: Vassil Antonov #Music: Derek Bryant #PT: Matheus Kote #NL: Kees Prutsaer #HUN: Berki David - Takacs David #BY: Anton Zhmodikov #ID: Jawad Yuwono #GR: Nikos Loxas"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Ιδιαίτερες ευχαριστίες"/>
 
         <!-- Choose game mode menu-->
@@ -8135,6 +8135,408 @@
 
 
     </language>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <language name="no_NO" title="Norwegian Bokmal" author="Toby W-M">
+        <!-- All characters -->
+        <string key="lang_characters" value="öåæø"/>
+
+        <!-- Main menu -->
+        <string key="main_menu_info" value="Info"/>
+        <string key="main_menu_exit" value="Exit"/>
+        <string key="main_menu_something" value="Hvit tekst om ingenting"/>
+
+        <!-- Random stuff -->
+        <string key="menu_level" value="Nivå"/>
+        <string key="menu_reset" value="Tilbakestille"/>
+        <string key="game_saved" value="Spillet er lagret"/>
+        <string key="restart_app" value="Start appen på nytt"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
+
+        <!-- Info -->
+        <string key="info_back" value="Tilbake"/>
+        <string key="info_array" value="Dette er et enkelt strategispill i minimalistisk stil.
+        #Det er gratis og har ingen annonser eller donasjoner.
+        #Hvis du er ny i spillet, vennligst se veiledningen eller hjelpemenyen.
+        #
+        #Dette Spillet ble inspirert av Slay av Sean O'Connor
+        #
+        #
+        #
+        #
+        #
+        #
+        #Reddit: /r/yiotro_games
+        #E-post: yiotro93@gmail.com
+        #Laget av yiotro
+        "/>
+        <string key="reset_campaign_data" value="Tilbakestill data"/>
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Spesiell Takk"/>
+
+        <!-- Choose game mode menu-->
+        <string key="choose_game_mode_skirmish" value="Skirmish"/>
+        <string key="choose_game_mode_tutorial" value="Opplæringen"/>
+        <string key="choose_game_mode_campaign" value="Kampanje"/>
+        <string key="choose_game_mode_load" value="Last Spill"/>
+        <string key="user_levels" value="User levels"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Legg til kartet mitt"/>
+        <string key="how_add_my_map" value="Slik får du kartet ditt her: #1. Gjør det i redaktør #2. Pass på at det er interessant og beatable. #3. Trykk på 'eksporter'. #4a. Legg det på pastebin.com og send meg lenken til meg email yiotro93@gmail.com #4b. Eller sett det på min subreddit /r/yiotro_games # #Også, hvis kartet ditt er veldig vanskelig, så ville det være fint hvis du inkluderte noe video som viser hvordan du kan slå den."/>
+
+
+        <!-- Skirmish menu -->
+        <string key="game_settings_main_menu" value="Hovedmeny"/>
+        <string key="game_settings_tutorial" value="Opplæringen"/>
+        <string key="game_settings_start" value="Start"/>
+        <string key="map_size" value="Kartstørrelse"/>
+        <string key="color_number" value="Farger"/>
+        <string key="player_number" value="Spillere"/>
+        <string key="small" value="liten"/>
+        <string key="medium" value="medium"/>
+        <string key="big" value="stor"/>
+        <string key="ai_only" value="AI bare"/>
+        <string key="single_player" value="enkelt-spiller"/>
+        <string key="multiplayer" value="flere-spiller"/>
+        <string key="colors" value="fargers"/>
+        <string key="color" value="fargers"/>
+        <string key="difficulty" value="Vanskelighet"/>
+        <string key="easy" value="enkel"/>
+        <string key="normal" value="middels"/>
+        <string key="hard" value="hard"/>
+        <string key="expert" value="ekspert"/>
+        <string key="balancer" value="balanserte"/>
+        <string key="player_color" value="Spillerfarge"/>
+        <string key="fog_of_war" value="Tåke av krig"/>
+        <string key="diplomacy" value="Diplomati"/>
+
+        <!-- In game menu -->
+        <string key="in_game_menu_resume" value="Gjenoppta"/>
+        <string key="in_game_menu_save" value="Lagre spillet"/>
+        <string key="in_game_menu_surrender" value="Overgivelse"/>
+        <string key="in_game_menu_main_menu" value="Hovedmeny"/>
+        <string key="in_game_menu_restart" value="Omstart"/>
+        <string key="confirm_restart" value="Omstart spillet?"/>
+        <string key="cancel" value="Nei"/>
+        <string key="confirm_end_turn" value="Slutt sving?"/>
+        <string key="yes" value="Ja"/>
+        <string key="confirm_import" value="Bekreft importen"/>
+        <string key="filter_no" value="Ingen filter"/>
+        <string key="filter_only_land" value="Bare land"/>
+
+        <!-- End game menu -->
+        <string key="end_game_ok" value="Ok"/>
+        <string key="end_game_okay" value="Okay..."/>
+        <string key="player" value="spiller"/>
+        <string key="ai" value="AI"/>
+        <string key="won" value="vant"/>
+        <string key="statistics" value="Statistikk"/>
+        <string key="next" value="Neste"/>
+        <string key="level_complete" value="Nivå fullført"/>
+        <string key="win_game" value="Vinne"/>
+        <string key="win_or_continue" value="Vinn nå#eller fortsett?"/>
+        <string key="continue" value="Fortsette"/>
+
+        <!-- Colors -->
+        <string key="green_player" value="Grønn"/>
+        <string key="red_player" value="Rød"/>
+        <string key="magenta_player" value="Magenta"/>
+        <string key="cyan_player" value="Cyan"/>
+        <string key="yellow_player" value="Gul"/>
+        <string key="gray_player" value="Grå"/>
+        <string key="green_ai" value="Grønn"/>
+        <string key="red_ai" value="Rød"/>
+        <string key="magenta_ai" value="Magenta"/>
+        <string key="cyan_ai" value="Cyan"/>
+        <string key="yellow_ai" value="Gul"/>
+        <string key="gray_ai" value="Grå"/>
+        <string key="green_menu" value="Grønn"/>
+        <string key="red_menu" value="Rød"/>
+        <string key="magenta_menu" value="Magenta"/>
+        <string key="cyan_menu" value="Cyan"/>
+        <string key="yellow_menu" value="Gul"/>
+        <string key="gray_menu" value="Grå"/>
+
+        <!-- Tutorial -->
+        <string key="normal_rules" value="Normale regler"/>
+        <string key="how_to_play" value="Hvordan spille?"/>
+        <string key="tutorial_ok" value="Greit"/>
+        <string key="tut_select_unit" value="Velg en enhet"/>
+        <string key="tut_tap_on_hex" value="Trykk på sekskanten"/>
+        <string key="tut_press_button" value="Trykk to ganger på knappen"/>
+        <string key="tut_build_tower" value="Bygg et tårn"/>
+        <string key="tut_again" value="En gang til"/>
+        <string key="tut_build_spearman" value="Bygg en spydmann"/>
+        <string key="tut_tap_to_undo" value="Trykk på 'angre'"/>
+        <string key="tut_tap_to_end_turn" value="Trykk for å avslutte sving"/>
+        <string key="tut_hold_hex" value="Trykk og hold"/>
+        <string key="tut_merge_units" value="Merge enheter"/>
+        <string key="tut_good_luck" value="Lykke til!"/>
+
+        <!-- Tutorial tips -->
+        <string key="tip_capture_with_units" value="Angre med enhetene dine#for å fange territorier"/>
+        <string key="tip_about_money" value="Jo større ditt territorium#desto mer penger får du"/>
+        <string key="tip_build_towers" value="Bygg tårn for å beskytte#nærliggende celler"/>
+        <string key="tip_about_taxes" value="Sterkere enheter forbruker#mer penger"/>
+        <string key="tip_about_defense" value="Enheter og hus forsvarer #også nærliggende celler"/>
+        <string key="tip_hold_to_march" value="To quickly move armies#use 'hold to march'"/>
+        <string key="tip_about_unit_death" value="Hvis pengene går ut,#vil alle enheter dø.#Så vær forsiktig"/>
+        <string key="tip_merging" value="Slå sammen enheter for#å få en kraftigere enhet"/>
+        <string key="tip_trees" value="Trær reduserer inntektene,#så det er bedre å kutte dem"/>
+        <string key="tip_help" value="For å hoppe over resten av opplæringen trykk 'hjelp'"/>
+
+        <!-- Generic Tutorial -->
+        <string key="gen_greetings" value="Hei. Denne opplæringen vil forklare reglene i dette spillet."/>
+        <string key="gen_select_province" value="Trykk på byen for å velge den."/>
+        <string key="gen_select_unit" value="Godt jobbet. Du har flere enheter. Trykk på en av dem."/>
+        <string key="gen_move_unit" value="Hver enhet beveger seg en gang per tur. Ta en nøytral sekskanter i nærheten av den valgte enheten ved å trykke der."/>
+        <string key="gen_income" value="Ved å fange nye hekser, forstørrer du byinntektene dine. Flere sekskanter - mer inntekt."/>
+        <string key="gen_lets_build_farm" value="La oss bygge en gård for å få enda høyere inntekt."/>
+        <string key="gen_press_button_twice" value="Trykk to ganger på knappen"/>
+        <string key="gen_build_farm" value="Gårder kan kun bygges ved siden av hovedstaden eller andre gårder."/>
+        <string key="gen_about_farms" value="Hver gård gir 3 mynter per sving. Hver ny gård koster 2 mer enn den forrige."/>
+        <string key="gen_lets_build_peasant" value="La oss bygge en ny enhet og fange en nøytral sekskant."/>
+        <string key="gen_press_button" value="Trykk på knappen nederst"/>
+        <string key="gen_build_peasant" value="Plasser enheten på en sekskant i nærheten av byens grenser."/>
+        <string key="gen_capture_peasant" value="Nå, ta en nøytral sekskant ved å velge enhet og peke på hvor du skal dra."/>
+        <string key="gen_capture_hex" value="Capture neutral hex"/>
+        <string key="gen_lets_build_tower" value="Du må forsvare landene dine. Tårnene er gode for dette."/>
+        <string key="gen_build_tower" value="Bygg et tårn ved å trykke på uthevet sekskant."/>
+        <string key="gen_about_towers" value="Tårnene forsvarer tilstøtende heksagoner fra bønder og spearmen hvis disse sekskantene er under din kontroll."/>
+        <string key="gen_lets_build_spearman" value="En spearman er sterkere enn noen bonde. La oss bygge ham."/>
+        <string key="gen_build_spearman" value="Trykk på en sekskant for å bygge spearman."/>
+        <string key="gen_units_consume_money" value="Enheter bruker penger til å leve. Sterkere enheter trenger mer penger."/>
+        <string key="gen_undo_spearman" value="Nå er inntekten din -1. Dette er dårlig, så la oss angre en spearman."/>
+        <string key="gen_why_units_die" value="Alle enheter dør når byen din går tom for penger. Så du må være forsiktig med inntektene dine"/>
+        <string key="gen_about_trees_one" value="Trær er også et problem. sekskanter med trær produserer ikke noen penger."/>
+        <string key="gen_about_trees_two" value="Klipp ut trær så snart som mulig når de er i lavt antall."/>
+        <string key="gen_end_turn" value="For å avslutte, trykk på knappen i nederste høyre hjørne."/>
+        <string key="gen_choose_to_merge" value="Du kan også slå sammen enheter. Velg den nederste bonden."/>
+        <string key="gen_merge_units" value="Nå, når bonden er valgt, trykker du på en annen bonde for å slå sammen dem."/>
+        <string key="gen_long_tap" value="Hvis du har for mange enheter, kan du flytte dem alle samtidig med lang trykk."/>
+        <string key="gen_several_provinces" value="Du kan ha flere byer, hver med sin egen økonomi."/>
+
+        <!-- Tutorial help -->
+        <string key="help" value="Hjelp"/>Enheter"/>
+        <string key="help_about_trees" value="Trær"/>
+        <string key="help_about_towers" value="Tårn"/>
+        <string key="help_about_money" value="Penger"/>
+        <string key="help_about_tactics" value="Taktikk"/>
+        <string key="help_about_rules" value="Regler"/>
+
+        <string key="help_units_article" value="Det er 4 enhetstyper.
+        #De varierer bare med styrke.
+        #I stigende rekkefølge av styrke:
+        #[1] bonde
+        #[2] spearman
+        #[3] baron
+        #[4] ridder
+        #
+        #Enheter gir tilstøtende celler under din kontrollbeskyttelse lik styrke.
+        #
+        #For å fange en celle må enhetens styrke være større enn beskyttelse.
+        #
+        #Hver enhet bruker 2, 6, 18 eller 54 mynter per sving.
+        "/>
+
+        <string key="help_trees_article" value="Trær leker etter døde enheter.
+        #
+        #En celle med et tre gir ingen inntekt. Det betyr at trær skader økonomien.
+        #
+        #Du må kutte dem. Ellers vil de vokse og drepe økonomien din.
+        #
+        #Palmer gyter på kysten og vokser veldig raskt. De må kuttes veldig raskt.
+        "/>
+
+        <string key="help_towers_article" value="Tårnene brukes til å beskytte tilstøtende celler.
+        #
+        #Towers give protection [2]. Derfor, kan bare baroner og riddere kjempe mot det.
+        #
+        #Hytter gir beskyttelse [1].
+        #
+        #I begynnelsen av spillet er dette den beste måten å beskytte territoriet på.
+        #Tårnprisen er lav og de spiser ikke penger.
+        "/>
+
+        <string key="help_money_article" value="Inntekt avhenger av antall celler.
+        #Større territorium har større inntekt.
+        #Trær reduserer inntektene.
+        #
+        #Enheter bruker penger. Kraftige enheter forbruker mer penger.
+        #
+        #Når pengene går tom, dør alle enhetene dine.
+        #
+        #Inntekt vises i øverste senter på skjermen.
+        "/>
+
+        <string key="help_tactics_article" value="I begynnelsen av spillet fanger nøytrale celler.
+        #Deretter forsvare alle cellene dine.
+        #
+        #Pass på at inntektene dine er gode nok før du bygger enheter.
+        #
+        #Klipp fiendtlige territorier i stykker for å ødelegge økonomien.
+        "/>
+
+        <string key="article_rules" value="Det er 2 regler i spillet: Normale regler og Slay regler. Normale regler er aktivert som standard.
+        #
+        #I utgangspunktet hadde spillet bare døde regler. Derfor beskriver hjelpen dem i stedet for vanlige regler.
+        #
+        #For å endre regler i skirmish må du trykke på 'more' før du starter nytt spill.
+        #
+        #For å endre regler i kampanjen må du trykke på '...' øverst til høyre på nivået, velg menyen."/>
+
+        <string key="article_diplomacy_1" value="For å vinne i diplomati må du være venner med alle på kartet.
+        #
+        #For å åpne diplomati-brukergrensesnitt, velg bare ditt land og trykk på ikonet 'flagg'.
+        #
+        #Trykk på et hvilket som helst land i listen, og du vil se hva du kan gjøre.
+        #
+        #'Like' og 'dislike' -knapper kan gjøre forholdet til det landet bedre eller verre."/>
+
+        <string key="article_diplomacy_2" value="Ideen om svart merke er enkelt: et annet land kan ikke være venner med dere begge. Det er en slags diplomatisk press.
+        #
+        #Også, du vil ikke kunne bli venn med alle enkelt. Siste land vil alltid nekte din vennsforespørsel."/>
+
+        <!-- Statistics -->
+        <string key="turns_made" value="Slår:"/>
+        <string key="units_died" value="Enheter døde:"/>
+        <string key="units_produced" value="Produserte enheter:"/>
+        <string key="money_spent" value="Penger brukt:"/>
+        <string key="time" value="Tid:"/>
+
+        <!-- Editor -->
+        <string key="editor" value="Redaktør"/>
+        <string key="slot" value="Slot"/>
+        <string key="slots" value="Lagre spor"/>
+        <string key="import" value="Importere"/>
+        <string key="export" value="Eksport"/>
+        <string key="empty" value="tømme"/>
+        <string key="play" value="Spille"/>
+        <string key="edit" value="Redigere"/>
+        <string key="random" value="Tilfeldig"/>
+        <string key="exported" value="Kart i utklippstavlen"/>
+        <string key="editor_clear" value="Tilbakestille"/>
+        <string key="no" value="Nei"/>
+        <string key="yes" value="Ja"/>
+        <string key="confirm_import" value="Bekreft importen"/>
+        <string key="filter_no" value="Ingen filter"/>
+        <string key="filter_only_land" value="Bare land"/>
+        <string key="confirm_clear_level" value="Klar kart?"/>
+        <string key="confirm_randomize" value="Generer tilfeldig kart?"/>
+        <string key="randomize" value="Tilfeldig"/>
+
+        <!-- Settings -->
+        <string key="autosave" value="Automatisk lagring"/>
+        <string key="ask_to_end_turn" value="Spør sluttenden"/>
+        <string key="city_names" value="Bynavn"/>
+        <string key="sound" value="Lyd"/>
+        <string key="limited_turns" value="Begrensede svinger"/>
+        <string key="hold_to_march" value="Langt trykk for å flytte"/>
+        <string key="skin" value="Stil"/>
+        <string key="original" value="opprinnelig"/>
+        <string key="points" value="punkter"/>
+        <string key="grid" value="Nett"/>
+        <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
+        <string key="anim_style" value="Følsomhet"/>
+        <string key="more" value="Mer"/>
+        <string key="camera_offset" value="Kameraforskyvning"/>
+        <string key="slay_rules" value="Slay regler"/>
+        <string key="language" value="Språk"/>
+        <string key="more_settings_checks" value="# #Vanntekstur # # "/>
+        <string key="water_texture" value="Vanntekstur "/>
+        <string key="confirm_reset" value="Tilbakestill fremdrift?"/>
+        <string key="replays" value="Replays"/>
+        <string key="save_replay" value="Lagre replay"/>
+        <string key="replay" value="Replay"/>
+        <string key="replay_saved" value="Replay lagret"/>
+        <string key="fast_construction" value="Rask konstruksjon"/>
+        <string key="music" value="Musikk"/>
+        <string key="left_handed" value="Venstrehånds modus"/>
+
+        <!-- Single messages -->
+        <string key="level_24" value="Dette er det første 'harde' -nivået. Vær mer oppmerksom på forsvaret."/>
+        <string key="bleentoro_release" value="Hei.#Jeg har laget et nytt spill. Det heter 'Bleentoro'. Du kan finne den i App Store.#Jeg håper du vil like det :)"/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="venner"/>
+        <string key="mutual_friends" value="Gjensidig"/>
+        <string key="dotations" value="subsidier"/>
+        <string key="treaty_of_friendship" value="Vennskapstraktat"/>
+        <string key="state" value="Stat"/>
+        <string key="duration" value="Varighet"/>
+        <string key="refuse_friendship" value="Beklager, jeg kan ikke godta ditt vennskapsprosjekt."/>
+        <string key="friend" value="venn"/>
+        <string key="enemy" value="fiende"/>
+        <string key="neutral" value="nøytral"/>
+        <string key="dead" value="død"/>
+        <string key="confirm_cancel_friendship" value="Avbryt vennskap?"/>
+        <string key="confirm_start_war" value="Startkrig?"/>
+        <string key="peace_treaty" value="fredsavtale"/>
+        <string key="pay" value="Betale"/>
+        <string key="reparations" value="oppreisning"/>
+        <string key="refuse_stop_war" value="Jeg vil kjempe til slutten!"/>
+        <string key="win_conditions" value="Betingelser for seier"/>
+        <string key="diplomatic_win_conditions" value="For å vinne diplomatisk må du være venner med alle."/>
+        <string key="confirm_black_mark" value="Sett svart merke?"/>
+        <string key="black_mark_description" value="
+150/5000
+Ved å sette et svart merke på spilleren forbyr du at andre skal være venner med dere begge samtidig. Fungerer ikke på allerede inngåtte kontrakter."/>
+        <string key="player_turn" value="Spiller sving"/>
+        <string key="fine" value="straff"/>
+        <string key="log" value="bokstaver"/>
+        <string key="friendship_proposal" value="Vennskapsprosjekt"/>
+        <string key="war_declaration" value="Krigsdeklarasjon"/>
+        <string key="stop_war" value="Stopp krigen"/>
+        <string key="friendship_ended" value="Vennskapet avsluttet"/>
+        <string key="friendship_canceled" value="Vennskap avbrutt"/>
+        <string key="black_marked" value="Sort merket"/>
+        <string key="letter_sent" value="Brev sendt"/>
+
+
+
+    </language>
+
+
+
+
+
+
+
+
+
 
 
 
