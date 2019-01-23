@@ -7119,7 +7119,7 @@
         <string key="help_about_money" value="Грошы"/>
         <string key="help_about_tactics" value="Тактыка"/>
         <string key="help_about_rules" value="Правілы"/>
-        <string key="my_games" value="My games"/>  <!-- Same as english -->
+        <string key="my_games" value="Мае гульні"/>  <!-- Same as english -->
 
         <string key="help_units_article" value="Ёсць 4 тыпы юнітаў. Адрозніваюцца яны толькі сілай. В парадку ўзрастання сілы:
         #[1] сяляне
@@ -7196,7 +7196,7 @@
         <string key="units_produced" value="Юнітаў пабудавана"/>
         <string key="money_spent" value="Грошаў выдаткавана"/>
         <string key="time" value="Час"/>
-        <string key="wins" value="Wins"/>
+        <string key="wins" value="Перамог"/>
 
         <!-- Editor -->
         <string key="editor" value="Рэдактар"/>
@@ -7246,7 +7246,7 @@
         <string key="fast_construction" value="Хуткая пабудова"/>
         <string key="music" value="Музыка"/>
         <string key="left_handed" value="Леварукі рэжым"/>
-        <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="full_screen_mode" value="Паўнаэкранны рэжым"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Гэта першы 'цяжкі' узровень. Удзяляй больш увагі абароне."/>
@@ -7306,8 +7306,8 @@
         <string key="ok" value="Добра"/>
         <string key="money" value="Грошы"/>
         <string key="quantity" value="Колькасць"/>
-        <string key="income" value="Income"/>
-        <string key="by_name" value="By name"/>
+        <string key="income" value="Даход"/>
+        <string key="by_name" value="Па імені"/>
     </language>
 
 
@@ -8351,11 +8351,13 @@
 
         <!-- Tutorial help -->
         <string key="help" value="Hjelp"/>Enheter"/>
+        <string key="help_about_units" value="Units"/>
         <string key="help_about_trees" value="Trær"/>
         <string key="help_about_towers" value="Tårn"/>
         <string key="help_about_money" value="Penger"/>
         <string key="help_about_tactics" value="Taktikk"/>
         <string key="help_about_rules" value="Regler"/>
+        <string key="my_games" value="My games"/>
 
         <string key="help_units_article" value="Det er 4 enhetstyper.
         #De varierer bare med styrke.
@@ -8430,12 +8432,15 @@
         #
         #Også, du vil ikke kunne bli venn med alle enkelt. Siste land vil alltid nekte din vennsforespørsel."/>
 
+        <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
+
         <!-- Statistics -->
         <string key="turns_made" value="Slår:"/>
         <string key="units_died" value="Enheter døde:"/>
         <string key="units_produced" value="Produserte enheter:"/>
         <string key="money_spent" value="Penger brukt:"/>
         <string key="time" value="Tid:"/>
+        <string key="wins" value="Wins"/>
 
         <!-- Editor -->
         <string key="editor" value="Redaktør"/>
@@ -8485,9 +8490,12 @@
         <string key="fast_construction" value="Rask konstruksjon"/>
         <string key="music" value="Musikk"/>
         <string key="left_handed" value="Venstrehånds modus"/>
+        <string key="full_screen_mode" value="Full screen mode"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Dette er det første 'harde' -nivået. Vær mer oppmerksom på forsvaret."/>
+        <string key="map_too_big_for_user_levels" value="Map was successfully exported, but if you want to send it as user level then please make it smaller."/>
+        <string key="available_on_ios" value="Now available on iOS"/>
         <string key="bleentoro_release" value="Hei.#Jeg har laget et nytt spill. Det heter 'Bleentoro'. Du kan finne den i App Store.#Jeg håper du vil like det :)"/>
 
         <!-- Gameplay -->
@@ -8524,6 +8532,29 @@ Ved å sette et svart merke på spilleren forbyr du at andre skal være venner m
         <string key="friendship_canceled" value="Vennskap avbrutt"/>
         <string key="black_marked" value="Sort merket"/>
         <string key="letter_sent" value="Brev sendt"/>
+        <string key="delete" value="Delete"/>
+        <string key="rename" value="Rename"/>
+        <string key="confirm_delete_slot" value="Delete slot?"/>
+        <string key="resume_button" value="'Resume' button"/>
+        <string key="filters" value="Filters"/>
+        <string key="completed" value="Completed"/>
+        <string key="historical" value="Historical"/>
+        <string key="temp_slot" value="Temporary slot"/>
+        <string key="can_skip_level" value="You can skip this level"/>
+        <string key="reason" value="Reason"/>
+        <string key="friends_with_everybody" value="friendship with all kingdoms"/>
+        <string key="hex_purchase" value="Hex purchase"/>
+        <string key="confirm_buy_hexes" value="Buy hexes?"/>
+        <string key="price" value="Price"/>
+        <string key="gift" value="Gift"/>
+        <string key="gift_received" value="Gift received"/>
+        <string key="confirm_sell_hexes" value="Sell hexes?"/>
+        <string key="confirm_skip_level" value="Skip level?"/>
+        <string key="ok" value="Ok"/>
+        <string key="money" value="Money"/>
+        <string key="quantity" value="Quantity"/>
+        <string key="income" value="Income"/>
+        <string key="by_name" value="By name"/>
 
 
 

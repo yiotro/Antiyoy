@@ -282,17 +282,33 @@ public class FastConstructionPanel extends InterfaceElement{
 
 
     private boolean checkToClickItems() {
-        for (FcpItem item : items) {
-            if (!item.isVisible()) continue;
-
-            if (item.isTouched(currentTouch)) {
-                item.select();
-                onItemClicked(item);
-                return true;
-            }
+        FcpItem closestItem = getClosestItem(currentTouch);
+        if (closestItem != null && closestItem.isTouched(currentTouch)) {
+            closestItem.select();
+            onItemClicked(closestItem);
+            return true;
         }
 
         return false;
+    }
+
+
+    private FcpItem getClosestItem(PointYio touchPoint) {
+        FcpItem closestItem = null;
+        double minDistance = 0;
+        double currentDistance;
+
+        for (FcpItem item : items) {
+            if (!item.isVisible()) continue;
+
+            currentDistance = touchPoint.distanceTo(item.position);
+            if (closestItem == null || currentDistance < minDistance) {
+                closestItem = item;
+                minDistance = currentDistance;
+            }
+        }
+
+        return closestItem;
     }
 
 

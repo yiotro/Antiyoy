@@ -3,6 +3,7 @@ package yio.tro.antiyoy.gameplay.diplomacy;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class DiplomacyInfoCondensed implements ReusableYio {
@@ -154,9 +155,9 @@ public class DiplomacyInfoCondensed implements ReusableYio {
         DipMessageType type = DipMessageType.valueOf(split[0]);
         int color1 = Integer.valueOf(split[1]);
         int color2 = Integer.valueOf(split[2]);
-        String arg1 = split[3];
-        String arg2 = split[4];
-        String arg3 = split[5];
+        String arg1 = getSplitPart(split, 3);
+        String arg2 = getSplitPart(split, 4);
+        String arg3 = getSplitPart(split, 5);
 
         DiplomaticEntity entity1 = diplomacyManager.getEntity(color1);
         DiplomaticEntity entity2 = diplomacyManager.getEntity(color2);
@@ -168,6 +169,13 @@ public class DiplomacyInfoCondensed implements ReusableYio {
         diplomaticMessage.setArg1(arg1);
         diplomaticMessage.setArg2(arg2);
         diplomaticMessage.setArg3(arg3);
+    }
+
+
+    private String getSplitPart(String[] split, int index) {
+        if (index >= split.length) return "";
+
+        return split[index];
     }
 
 

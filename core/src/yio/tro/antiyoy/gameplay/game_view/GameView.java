@@ -101,6 +101,7 @@ public class GameView {
 
     private void loadTextures() {
         loadBackgroundTexture();
+        loadSkin();
         blackCircleTexture = loadTextureRegion("black_circle.png", true);
         shadowHexTexture = loadTextureRegion("shadow_hex.png", true);
         gradientShadow = loadTextureRegion("gradient_shadow.png", false);
@@ -162,8 +163,8 @@ public class GameView {
     }
 
 
-    public void loadSkin(int skin) {
-        switch (skin) {
+    public void loadSkin() {
+        switch (Settings.skinIndex) {
             default:
             case 0: // original
                 loadOriginalSkin();

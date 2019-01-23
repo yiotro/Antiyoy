@@ -65,7 +65,7 @@ public class UserLevelFactory {
         add(new UlevBunker5());
         add(new UlevTriangle());
         add(new UlevGates());
-        add(new UlevOleg4());
+        add(new UlevOleg3());
         add(new UlevTemporaryDifficulties());
         add(new UlevHardBunker3());
         add(new UlevJapanKingdom());
@@ -210,8 +210,8 @@ public class UserLevelFactory {
         add(new UlevSixFlags());
         add(new UlevCoastalCrescent());
         add(new UlevSteveUpsideDown());
-        add(new UlevOlegDonskih1());
-        add(new UlevOlegDonskih2());
+        add(new UlevOleg1());
+        add(new UlevOleg2());
         add(new UlevMirage212());
         add(new UlevConquestOfItalicPeninsula());
     }

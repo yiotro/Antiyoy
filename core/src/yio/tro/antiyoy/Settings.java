@@ -2,9 +2,6 @@ package yio.tro.antiyoy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import yio.tro.antiyoy.gameplay.GameController;
-import yio.tro.antiyoy.gameplay.game_view.GameView;
-import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
 public class Settings {
@@ -17,9 +14,6 @@ public class Settings {
     public static boolean soundEnabled = true;
     public static float sensitivity;
     public static boolean waterTextureChosen;
-    private MenuControllerYio menuControllerYio;
-    private GameView gameView;
-    private GameController gameController;
     public static int skinIndex;
     public static boolean replaysEnabled;
     public static boolean fastConstructionEnabled;
@@ -46,9 +40,6 @@ public class Settings {
 
     public void setYioGdxGame(YioGdxGame yioGdxGame) {
         this.yioGdxGame = yioGdxGame;
-        menuControllerYio = yioGdxGame.menuControllerYio;
-        gameView = yioGdxGame.gameView;
-        gameController = yioGdxGame.gameController;
     }
 
 
@@ -62,7 +53,6 @@ public class Settings {
         Preferences prefs = getPrefs();
 
         skinIndex = prefs.getInteger("skin", 0);
-        gameView.loadSkin(skinIndex);
 
         setSensitivity(prefs.getInteger("sensitivity", 6));
 

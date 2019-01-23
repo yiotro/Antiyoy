@@ -281,7 +281,7 @@ public class DiplomacyManager {
 
     public void enableAreaSelectionMode(int filterColor) {
         GameController gameController = fieldController.gameController;
-        Province province = gameController.fieldController.findProvince(0);
+        Province province = gameController.fieldController.findProvince(gameController.turn);
         Hex capital = province.getCapital();
         gameController.selectionController.setAreaSelectionMode(true);
         gameController.selectionController.setAsFilterColor(filterColor);
@@ -468,8 +468,9 @@ public class DiplomacyManager {
     public ArrayList<Hex> convertStringToPurchaseList(String source) {
         tempHexList.clear();
 
-        for (String token : source.split(",")) {
-            String[] split = token.split(" ");
+        for (String token : source.split("@")) {
+            String[] split = token.split("%");
+            if (split.length < 2) continue;
             int index1 = Integer.valueOf(split[0]);
             int index2 = Integer.valueOf(split[1]);
             tempHexList.add(fieldController.getHex(index1, index2));
@@ -483,7 +484,7 @@ public class DiplomacyManager {
         StringBuilder builder = new StringBuilder();
 
         for (Hex hex : hexList) {
-            builder.append(hex.index1).append(" ").append(hex.index2).append(",");
+            builder.append(hex.index1).append("%").append(hex.index2).append("@");
         }
 
         return builder.toString();
@@ -685,7 +686,7 @@ public class DiplomacyManager {
                     onEntityRequestedToStopWar(message.sender, message.recipient);
                     break;
                 case hex_purchase:
-                    if (doesAiAllowToBuyHisHexes(message)) {
+                    if (doesAiAllowToBuyHexes(message)) {
                         applyHexPurchase(message);
                     }
                     break;
@@ -696,7 +697,7 @@ public class DiplomacyManager {
     }
 
 
-    private boolean doesAiAllowToBuyHisHexes(DiplomaticMessage message) {
+    private boolean doesAiAllowToBuyHexes(DiplomaticMessage message) {
         DiplomaticEntity buyer = message.sender;
         DiplomaticEntity seller = message.recipient;
         ArrayList<Hex> hexList = convertStringToPurchaseList(message.arg1);
@@ -704,6 +705,7 @@ public class DiplomacyManager {
         tempProvinceList.clear();
         for (Hex hex : hexList) {
             Province provinceByHex = fieldController.getProvinceByHex(hex);
+            if (provinceByHex == null) continue;
             if (tempProvinceList.contains(provinceByHex)) continue;
             tempProvinceList.add(provinceByHex);
         }
@@ -898,6 +900,7 @@ public class DiplomacyManager {
 
     public boolean canUnitAttackHex(int unitStrength, int unitColor, Hex hex) {
         if (isHexSingle(hex)) return true;
+        if (hex.isNeutral()) return fieldController.gameController.ruleset.canUnitAttackHex(unitStrength, hex);
 
         DiplomaticEntity one = getEntity(unitColor);
         DiplomaticEntity two = getEntity(hex.colorIndex);

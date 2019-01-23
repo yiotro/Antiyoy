@@ -2,7 +2,7 @@ package yio.tro.antiyoy.gameplay.user_levels.pack_six;
 
 import yio.tro.antiyoy.gameplay.user_levels.AbstractUserLevel;
 
-public class UlevOleg4 extends AbstractUserLevel{
+public class UlevOleg3 extends AbstractUserLevel{
 
     @Override
     public String getFullLevelString() {
@@ -12,7 +12,7 @@ public class UlevOleg4 extends AbstractUserLevel{
 
     @Override
     public String getMapName() {
-        return "Oleg4";
+        return "Oleg 3";
     }
 
 

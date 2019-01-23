@@ -33,7 +33,7 @@ import java.util.StringTokenizer;
 public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
     final SplatController splatController;
-    private final OnKeyActions onKeyActions;
+    private final OnKeyReactions onKeyReactions;
     public SpriteBatch batch;
     public ShapeRenderer shapeRenderer;
     public int w, h;
@@ -77,7 +77,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
     public YioGdxGame() {
         splatController = new SplatController(this);
-        onKeyActions = new OnKeyActions(this);
+        onKeyReactions = new OnKeyReactions(this);
     }
 
 
@@ -114,6 +114,8 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         splatController.splatTransparencyFactor = new FactorYio();
         splatController.initSplats();
 
+        Settings.getInstance().setYioGdxGame(this);
+        Settings.getInstance().loadAllSettings();
         Fonts.initFonts();
         CityNameGenerator.getInstance().load();
         DiplomacyInfoCondensed.onGeneralInitialization();
@@ -141,8 +143,6 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         initBlackoutFactor();
 
-        Settings.getInstance().setYioGdxGame(this);
-        Settings.getInstance().loadAllSettings();
         Scenes.sceneMainMenu.checkToCreateResumeButton();
         ReplaySaveSystem.getInstance().setGameController(gameController);
 
@@ -606,7 +606,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        return onKeyActions.onKeyPressed(keycode);
+        return onKeyReactions.onKeyPressed(keycode);
     }
 
 

@@ -143,6 +143,7 @@ public class RenderButtons {
         if (cutEndConditions(buttonYio)) return;
         if (!buttonYio.renderable) return;
         if (!isButtonCurrentlyVisible(buttonYio)) return;
+        if (buttonYio.textureRegion == null) return;
 
         updateBatchAlphaForSingleButton(buttonYio);
         updateVp(buttonYio);

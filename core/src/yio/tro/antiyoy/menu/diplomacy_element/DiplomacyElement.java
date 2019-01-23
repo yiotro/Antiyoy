@@ -266,7 +266,6 @@ public class DiplomacyElement extends InterfaceElement {
 
         switch (relation) {
             default:
-                Yio.printStackTrace();
                 return DeItem.STATUS_DEAD;
             case DiplomaticRelation.NEUTRAL:
                 return DeItem.STATUS_NEUTRAL;

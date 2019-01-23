@@ -269,15 +269,14 @@ public class RenderDiplomacyElement extends MenuRender {
     private TextureRegion getItemStatusIcon(DeItem item) {
         switch (item.status) {
             default:
-                return null;
+            case DeItem.STATUS_DEAD:
+                return deadIcon;
             case DeItem.STATUS_NEUTRAL:
                 return neutralIcon;
             case DeItem.STATUS_FRIEND:
                 return friendIcon;
             case DeItem.STATUS_ENEMY:
                 return enemyIcon;
-            case DeItem.STATUS_DEAD:
-                return deadIcon;
         }
     }
 

@@ -1,5 +1,9 @@
 package yio.tro.antiyoy.gameplay.user_levels.pack_six;
 
+import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.Hex;
+import yio.tro.antiyoy.gameplay.Province;
+import yio.tro.antiyoy.gameplay.Unit;
 import yio.tro.antiyoy.gameplay.user_levels.AbstractUserLevel;
 
 public class UlevHunterVsGatherer extends AbstractUserLevel{
@@ -24,7 +28,22 @@ public class UlevHunterVsGatherer extends AbstractUserLevel{
 
     @Override
     public String getAuthor() {
-        return "admin_reddot";
+        return "admin_reddot & antiyoy_addict";
+    }
+
+
+    @Override
+    public void onLevelLoaded(GameController gameController) {
+        super.onLevelLoaded(gameController);
+
+        for (Unit unit : gameController.unitList) {
+            if (unit.getColor() == 0) {
+                unit.setReadyToMove(true);
+                unit.startJumping();
+            } else {
+                unit.stopJumping();
+            }
+        }
     }
 
 

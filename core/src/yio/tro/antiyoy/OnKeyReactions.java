@@ -3,19 +3,22 @@ package yio.tro.antiyoy;
 import com.badlogic.gdx.Input;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.fast_construction.FastConstructionPanel;
+import yio.tro.antiyoy.menu.keyboard.KeyboardElement;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
-public class OnKeyActions {
+public class OnKeyReactions {
 
     private final YioGdxGame yioGdxGame;
 
 
-    public OnKeyActions(YioGdxGame yioGdxGame) {
+    public OnKeyReactions(YioGdxGame yioGdxGame) {
         this.yioGdxGame = yioGdxGame;
     }
 
 
     boolean onKeyPressed(int keycode) {
+        if (checkForKeyboardElement(keycode)) return true;
+
         if (keycode == Input.Keys.BACK || keycode == Input.Keys.ESCAPE) {
             onBackButtonPressed();
         }
@@ -76,6 +79,15 @@ public class OnKeyActions {
         checkFastConstructionPanel(keycode);
 
         return false;
+    }
+
+
+    private boolean checkForKeyboardElement(int keycode) {
+        KeyboardElement keyboardElement = Scenes.sceneKeyboard.keyboardElement;
+        if (keyboardElement == null) return false;
+        if (keyboardElement.getFactor().get() < 0.2) return false;
+
+        return keyboardElement.onPcKeyPressed(keycode);
     }
 
 

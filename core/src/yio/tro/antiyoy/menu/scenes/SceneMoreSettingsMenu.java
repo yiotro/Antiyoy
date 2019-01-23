@@ -137,6 +137,7 @@ public class SceneMoreSettingsMenu extends AbstractScene{
         }
 
         menuControllerYio.yioGdxGame.gameView.loadBackgroundTexture();
+        menuControllerYio.yioGdxGame.gameView.loadSkin();
 
         if (needRestart) {
             Scenes.sceneNotification.show("restart_app");

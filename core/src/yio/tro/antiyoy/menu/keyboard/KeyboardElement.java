@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.menu.keyboard;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
@@ -368,6 +369,27 @@ public class KeyboardElement extends InterfaceElement {
         }
 
         destroy();
+    }
+
+
+    public boolean onPcKeyPressed(int keycode) {
+        String key = Input.Keys.toString(keycode).toLowerCase();
+
+        if (key.equals("enter")) {
+            key = "ok";
+        }
+
+        if (key.equals("delete")) {
+            key = "backspace";
+        }
+
+        KbButton button = getButton(key);
+        if (button == null) return false;
+
+        button.select();
+        onButtonPressed(button);
+
+        return true;
     }
 
 

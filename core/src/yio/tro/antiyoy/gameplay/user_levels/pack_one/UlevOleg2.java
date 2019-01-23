@@ -2,7 +2,7 @@ package yio.tro.antiyoy.gameplay.user_levels.pack_one;
 
 import yio.tro.antiyoy.gameplay.user_levels.AbstractUserLevel;
 
-public class UlevOlegDonskih2 extends AbstractUserLevel{
+public class UlevOleg2 extends AbstractUserLevel{
 
     @Override
     public String getFullLevelString() {
@@ -18,7 +18,7 @@ public class UlevOlegDonskih2 extends AbstractUserLevel{
 
     @Override
     public String getAuthor() {
-        return "Oleg Donskih";
+        return "Oleg";
     }
 
 
