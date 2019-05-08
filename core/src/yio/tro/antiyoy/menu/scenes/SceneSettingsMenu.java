@@ -2,7 +2,7 @@ package yio.tro.antiyoy.menu.scenes;
 
 import com.badlogic.gdx.Gdx;
 import yio.tro.antiyoy.MusicManager;
-import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.YioGdxGame;
@@ -64,7 +64,7 @@ public class SceneSettingsMenu extends AbstractScene{
 
     public void onDestroy() {
         applyValues();
-        Settings.getInstance().saveMainSettings();
+        SettingsManager.getInstance().saveMainSettings();
     }
 
 
@@ -174,19 +174,19 @@ public class SceneSettingsMenu extends AbstractScene{
 
 
     public void loadValues() {
-        chkAutosave.setChecked(Settings.autosave);
-        chkMusic.setChecked(Settings.musicEnabled);
-        chkCityNames.setChecked(Settings.cityNamesEnabled);
-        chkTurnEnd.setChecked(Settings.askToEndTurn);
-        chkSound.setChecked(Settings.soundEnabled);
+        chkAutosave.setChecked(SettingsManager.autosave);
+        chkMusic.setChecked(SettingsManager.musicEnabled);
+        chkCityNames.setChecked(SettingsManager.cityNamesEnabled);
+        chkTurnEnd.setChecked(SettingsManager.askToEndTurn);
+        chkSound.setChecked(SettingsManager.soundEnabled);
     }
 
 
     public void applyValues() {
-        Settings.autosave = chkAutosave.isChecked();
-        Settings.musicEnabled = chkMusic.isChecked();
-        Settings.cityNamesEnabled = chkCityNames.isChecked();
-        Settings.askToEndTurn = chkTurnEnd.isChecked();
-        Settings.soundEnabled = chkSound.isChecked();
+        SettingsManager.autosave = chkAutosave.isChecked();
+        SettingsManager.musicEnabled = chkMusic.isChecked();
+        SettingsManager.cityNamesEnabled = chkCityNames.isChecked();
+        SettingsManager.askToEndTurn = chkTurnEnd.isChecked();
+        SettingsManager.soundEnabled = chkSound.isChecked();
     }
 }

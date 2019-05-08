@@ -42,19 +42,30 @@ public class ColorStatsRenderer {
 
     public ColorStatsRenderer(MenuControllerYio menuControllerYio) {
         this.menuControllerYio = menuControllerYio;
-        gameController = menuControllerYio.yioGdxGame.gameController;
+        gameController = null; // updated in perform()
 
         batch = new SpriteBatch();
-        backgroundTexture = GameView.loadTextureRegion("diplomacy/background.png", false);
-        greenPixel = GameView.loadTextureRegion("pixels/pixel_green.png", false);
-        redPixel = GameView.loadTextureRegion("pixels/pixel_red.png", false);
-        bluePixel = GameView.loadTextureRegion("pixels/pixel_blue.png", false);
-        cyanPixel = GameView.loadTextureRegion("pixels/pixel_cyan.png", false);
-        yellowPixel = GameView.loadTextureRegion("pixels/pixel_yellow.png", false);
-        pixelColor1 = GameView.loadTextureRegion("pixels/pixel_color1.png", false);
-        pixelColor2 = GameView.loadTextureRegion("pixels/pixel_color2.png", false);
-        pixelColor3 = GameView.loadTextureRegion("pixels/pixel_color3.png", false);
-        blackPixel = GameView.loadTextureRegion("black_pixel.png", false);
+        backgroundTexture = GraphicsYio.loadTextureRegion("diplomacy/background.png", false);
+        loadColors();
+        blackPixel = GraphicsYio.loadTextureRegion("black_pixel.png", false);
+    }
+
+
+    public void loadColors() {
+        greenPixel = loadColorPixel("pixel_green");
+        redPixel = loadColorPixel("pixel_red");
+        bluePixel = loadColorPixel("pixel_blue");
+        cyanPixel = loadColorPixel("pixel_cyan");
+        yellowPixel = loadColorPixel("pixel_yellow");
+        pixelColor1 = loadColorPixel("pixel_color1");
+        pixelColor2 = loadColorPixel("pixel_color2");
+        pixelColor3 = loadColorPixel("pixel_color3");
+    }
+
+
+    private TextureRegion loadColorPixel(String name) {
+        String pixelsFolderPath = menuControllerYio.yioGdxGame.skinManager.getPixelsFolderPath();
+        return GraphicsYio.loadTextureRegion(pixelsFolderPath + "/" + name + ".png", false);
     }
 
 
@@ -82,39 +93,10 @@ public class ColorStatsRenderer {
     }
 
 
-    public static void setFontColorByIndex(BitmapFont font, int colorIndex) {
-        switch (colorIndex) {
-            case 0:
-                font.setColor(0.37f, 0.7f, 0.36f, 1);
-                break;
-            case 1:
-                font.setColor(0.7f, 0.36f, 0.46f, 1);
-                break;
-            case 2:
-                font.setColor(0.45f, 0.36f, 0.7f, 1);
-                break;
-            case 3:
-                font.setColor(0.36f, 0.7f, 0.69f, 1);
-                break;
-            case 4:
-                font.setColor(0.7f, 0.71f, 0.39f, 1);
-                break;
-            case 5:
-                font.setColor(0.68f, 0.22f, 0, 1);
-                break;
-            case 6:
-                font.setColor(0.13f, 0.44f, 0.1f, 1);
-                break;
-            case 7:
-                font.setColor(0.4f, 0.4f, 0.4f, 1);
-                break;
-        }
-    }
-
-
     void performRendering(ButtonYio statButton, int quantityArray[]) {
         this.statButton = statButton;
         this.quantityArray = quantityArray;
+        this.gameController = menuControllerYio.yioGdxGame.gameController;
         font = Fonts.buttonFont;
 
         beginRender();

@@ -1,11 +1,11 @@
 package yio.tro.antiyoy.menu.fast_construction;
 
 import com.badlogic.gdx.Input;
-import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Obj;
-import yio.tro.antiyoy.gameplay.SelectionController;
+import yio.tro.antiyoy.gameplay.SelectionTipType;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -191,7 +191,7 @@ public class FastConstructionPanel extends InterfaceElement{
 
 
     private float getSpecialItemAnimDelta() {
-        if (Settings.leftHandMode) {
+        if (SettingsManager.leftHandMode) {
             return itemTouchOffset;
         } else {
             return -itemTouchOffset;
@@ -200,7 +200,7 @@ public class FastConstructionPanel extends InterfaceElement{
 
 
     private float getSpecialItemHorPos() {
-        if (Settings.leftHandMode) {
+        if (SettingsManager.leftHandMode) {
             return GraphicsYio.width - itemTouchOffset;
         } else {
             return itemTouchOffset;
@@ -377,20 +377,20 @@ public class FastConstructionPanel extends InterfaceElement{
         int tipType = -1;
         switch (strength) {
             case 1:
-                tipType = SelectionController.TIP_INDEX_UNIT_1;
+                tipType = SelectionTipType.UNIT_1;
                 break;
             case 2:
-                tipType = SelectionController.TIP_INDEX_UNIT_2;
+                tipType = SelectionTipType.UNIT_2;
                 break;
             case 3:
-                tipType = SelectionController.TIP_INDEX_UNIT_3;
+                tipType = SelectionTipType.UNIT_3;
                 break;
             case 4:
-                tipType = SelectionController.TIP_INDEX_UNIT_4;
+                tipType = SelectionTipType.UNIT_4;
                 break;
         }
 
-        gameController.selectionController.awakeTip(tipType);
+        gameController.selectionManager.awakeTip(tipType);
         gameController.detectAndShowMoveZoneForBuildingUnit(tipType);
     }
 
@@ -401,18 +401,18 @@ public class FastConstructionPanel extends InterfaceElement{
         int tipType = -1;
         switch (type) {
             case Obj.FARM:
-                tipType = SelectionController.TIP_INDEX_FARM;
+                tipType = SelectionTipType.FARM;
                 break;
             case Obj.TOWER:
-                tipType = SelectionController.TIP_INDEX_TOWER;
+                tipType = SelectionTipType.TOWER;
                 break;
             case Obj.STRONG_TOWER:
-                tipType = SelectionController.TIP_INDEX_STRONG_TOWER;
+                tipType = SelectionTipType.STRONG_TOWER;
                 break;
         }
 
-        gameController.selectionController.awakeTip(tipType);
-        if (tipType == SelectionController.TIP_INDEX_FARM) {
+        gameController.selectionManager.awakeTip(tipType);
+        if (tipType == SelectionTipType.FARM) {
             gameController.detectAndShowMoveZoneForFarm();
         }
     }

@@ -42,7 +42,7 @@ public class Scenes {
     public static SceneSecretScreen sceneSecretScreen;
     public static SceneEditorMoneyPanel sceneEditorMoneyPanel;
     public static SceneMoreCampaignOptions sceneMoreCampaignOptions;
-    public static SceneAiOnlyOverlay sceneReplayOverlay;
+    public static SceneAiOnlyOverlay sceneAiOnlyOverlay;
     public static SceneReplays sceneReplays;
     public static SceneFastConstructionPanel sceneFastConstructionPanel;
     public static SceneFireworks sceneFireworks;
@@ -76,7 +76,13 @@ public class Scenes {
     public static SceneAreaSelectionUI sceneAreaSelectionUI;
     public static SceneHexPurchaseDialog sceneHexPurchaseDialog;
     public static SceneGlobalStatistics sceneGlobalStatistics;
-    public static SceneConfirmSellHexes sceneConfirmSellHexes;
+    public static SceneAgreeToSellHexes sceneAgreeToSellHexes;
+    public static SceneDebugTests sceneDebugTests;
+    public static SceneTestResults sceneTestResults;
+    public static SceneHexSaleDialog sceneHexSaleDialog;
+    public static SceneAgreeToBuyHexes sceneAgreeToBuyHexes;
+    public static SceneLoadingScreen sceneLoadingScreen;
+    public static SceneEditorCreate sceneEditorCreate;
 
 
     public static void createScenes(MenuControllerYio menuController) {
@@ -116,7 +122,7 @@ public class Scenes {
         sceneSecretScreen = new SceneSecretScreen(menuController);
         sceneEditorMoneyPanel = new SceneEditorMoneyPanel(menuController);
         sceneMoreCampaignOptions = new SceneMoreCampaignOptions(menuController);
-        sceneReplayOverlay = new SceneAiOnlyOverlay(menuController);
+        sceneAiOnlyOverlay = new SceneAiOnlyOverlay(menuController);
         sceneReplays = new SceneReplays(menuController);
         sceneFastConstructionPanel = new SceneFastConstructionPanel(menuController);
         sceneFireworks = new SceneFireworks(menuController);
@@ -151,6 +157,12 @@ public class Scenes {
         sceneAreaSelectionUI = new SceneAreaSelectionUI(menuController);
         sceneHexPurchaseDialog = new SceneHexPurchaseDialog(menuController);
         sceneGlobalStatistics = new SceneGlobalStatistics(menuController);
-        sceneConfirmSellHexes = new SceneConfirmSellHexes(menuController);
+        sceneAgreeToSellHexes = new SceneAgreeToSellHexes(menuController);
+        sceneDebugTests = new SceneDebugTests(menuController);
+        sceneTestResults = new SceneTestResults(menuController);
+        sceneHexSaleDialog = new SceneHexSaleDialog(menuController);
+        sceneAgreeToBuyHexes = new SceneAgreeToBuyHexes(menuController);
+        sceneLoadingScreen = new SceneLoadingScreen(menuController);
+        sceneEditorCreate = new SceneEditorCreate(menuController);
     }
 }

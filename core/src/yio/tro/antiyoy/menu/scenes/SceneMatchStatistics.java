@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.gameplay.MatchStatistics;
@@ -56,7 +56,7 @@ public class SceneMatchStatistics extends AbstractScene{
 
 
     private void createReplayButton() {
-        if (!Settings.replaysEnabled) return;
+        if (!SettingsManager.replaysEnabled) return;
 
         replayButton = buttonFactory.getButton(generateRectangle(0.55, 0.9, 0.4, 0.07), 113, getString("replay"));
         replayButton.setReaction(Reaction.rbStartInstantReplay);

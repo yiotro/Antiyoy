@@ -1,0 +1,34 @@
+package yio.tro.antiyoy.gameplay.game_view;
+
+import com.badlogic.gdx.graphics.Color;
+import yio.tro.antiyoy.stuff.GraphicsYio;
+
+public class RenderBlackout extends GameRender{
+
+    public RenderBlackout(GameRendersList gameRendersList) {
+        super(gameRendersList);
+    }
+
+
+    @Override
+    public void loadTextures() {
+
+    }
+
+
+    @Override
+    public void render() {
+        if (gameController.fieldController.moveZoneManager.appearFactor.get() < 0.01) return;
+
+        Color c = batchMovable.getColor();
+        batchMovable.setColor(c.r, c.g, c.b, 0.5f * gameController.selectionManager.getBlackoutFactor().get());
+        GraphicsYio.drawByRectangle(batchMovable, getBlackPixel(), gameController.cameraController.frame);
+        batchMovable.setColor(c.r, c.g, c.b, c.a);
+    }
+
+
+    @Override
+    public void disposeTextures() {
+
+    }
+}

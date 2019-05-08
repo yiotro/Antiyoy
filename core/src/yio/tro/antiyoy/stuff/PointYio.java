@@ -3,7 +3,7 @@ package yio.tro.antiyoy.stuff;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
 /**
- * Created by ivan on 28.08.2014.
+ * Created by yiotro on 28.08.2014.
  */
 public class PointYio implements ReusableYio{
     public float x, y;

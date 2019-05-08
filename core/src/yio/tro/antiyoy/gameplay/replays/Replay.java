@@ -2,7 +2,7 @@ package yio.tro.antiyoy.gameplay.replays;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.replays.actions.RepAction;
 import yio.tro.antiyoy.gameplay.replays.actions.RepActionFactory;
@@ -52,7 +52,7 @@ public class Replay {
 
 
     public void updateInitialLevelString() {
-        if (!Settings.replaysEnabled) return;
+        if (!SettingsManager.replaysEnabled) return;
 
         initialLevelString = gameController.fieldController.getFullLevelString();
     }

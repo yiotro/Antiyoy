@@ -8,7 +8,7 @@ import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
 /**
- * Created by ivan on 29.12.2015.
+ * Created by yiotro on 29.12.2015.
  */
 public class RbShowColorStats extends Reaction {
 
@@ -16,10 +16,15 @@ public class RbShowColorStats extends Reaction {
 
     @Override
     public void perform(ButtonYio buttonYio) {
+        GameController gameController = getGameController(buttonYio);
+        if (gameController.playersNumber == 0) {
+            gameController.speedManager.applyPause();
+        }
+
         Scenes.sceneIncomeGraph.create();
 
-        ColorStatsRenderer colorStatsRenderer = new ColorStatsRenderer(buttonYio.menuControllerYio);
-        colorStatsRenderer.performRendering(Scenes.sceneIncomeGraph.showPanel, getIncomeArray(getGameController(buttonYio)));
+        ColorStatsRenderer colorStatsRenderer = buttonYio.menuControllerYio.colorStatsRenderer;
+        colorStatsRenderer.performRendering(Scenes.sceneIncomeGraph.showPanel, getIncomeArray(gameController));
     }
 
 

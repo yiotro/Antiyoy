@@ -30,8 +30,8 @@ public class RenderCityNames extends GameRender{
     private float eiSize;
 
 
-    public RenderCityNames(GrManager grManager) {
-        super(grManager);
+    public RenderCityNames(GameRendersList gameRendersList) {
+        super(gameRendersList);
 
         pos = new RectangleYio();
         trianglePos = new RectangleYio();
@@ -51,10 +51,26 @@ public class RenderCityNames extends GameRender{
     @Override
     public void render() {
         if (!gameController.areCityNamesEnabled()) return;
-        if (!gameController.isPlayerTurn()) return;
-
         hvSize = gameView.hexViewSize;
 
+//        if (gameController.isInEditorMode()) {
+//            renderInEditorMode();
+//            return;
+//        }
+
+        if (!gameController.isPlayerTurn()) return;
+        renderInNormalMode();
+    }
+
+
+    private void renderInEditorMode() {
+        for (Province province : gameController.fieldController.provinces) {
+            renderSingleCityName(province);
+        }
+    }
+
+
+    private void renderInNormalMode() {
         for (Province province : gameController.fieldController.provinces) {
             if (gameController.isCurrentTurn(province.getColor()) && province.isSelected()) {
                 renderSingleCityName(province);
@@ -149,7 +165,7 @@ public class RenderCityNames extends GameRender{
 
 
     private void renderInternalBackground() {
-        GraphicsYio.drawByRectangle(batchMovable, gameView.blackPixel, pos);
+        GraphicsYio.drawByRectangle(batchMovable, getBlackPixel(), pos);
     }
 
 

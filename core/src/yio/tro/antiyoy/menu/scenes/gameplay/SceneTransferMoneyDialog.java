@@ -1,6 +1,5 @@
 package yio.tro.antiyoy.menu.scenes.gameplay;
 
-import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.diplomatic_dialogs.TransferMoneyDialog;
@@ -8,8 +7,6 @@ import yio.tro.antiyoy.menu.slider.SliderBehavior;
 import yio.tro.antiyoy.menu.slider.SliderYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
-
-import java.util.HashMap;
 
 public class SceneTransferMoneyDialog extends AbstractGameplayScene{
 
@@ -43,7 +40,7 @@ public class SceneTransferMoneyDialog extends AbstractGameplayScene{
         dialog.appear();
         moneySlider.appear();
 
-        moneySlider.setCurrentRunnerIndex(4);
+        moneySlider.setValueIndex(4);
     }
 
 
@@ -71,7 +68,7 @@ public class SceneTransferMoneyDialog extends AbstractGameplayScene{
         moneySlider.setBehavior(new SliderBehavior() {
             @Override
             public String getValueString(SliderYio sliderYio) {
-                return "$" + convertSliderIndexIntoMoneyValue(sliderYio.getCurrentRunnerIndex());
+                return "$" + convertSliderIndexIntoMoneyValue(sliderYio.getValueIndex());
             }
         });
     }

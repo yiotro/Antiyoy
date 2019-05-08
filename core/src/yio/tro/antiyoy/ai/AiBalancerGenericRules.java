@@ -62,23 +62,8 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         while (province.money >= GameRules.PRICE_UNIT && province.getBalance() >= 0) {
             Unit unitWithMaxStrengh = findUnitWithMaxStrenghExceptKnight(province);
             if (unitWithMaxStrengh == null) break;
-            gameController.fieldController.buildUnit(province, unitWithMaxStrengh.currentHex, 1);
+            buildUnit(province, unitWithMaxStrengh.currentHex, 1);
         }
-
-        // attack something before dying
-        // this causes comodification exception
-//        unitsReadyToMove.clear();
-//        for (Hex hex : province.hexList) {
-//            if (hex.containsUnit() && hex.unit.isReadyToMove()) {
-//                unitsReadyToMove.add(hex.unit);
-//            }
-//        }
-//
-//        for (Unit unit : unitsReadyToMove) {
-//            ArrayList<Hex> moveZone = gameController.fieldController.detectMoveZone(unit.currentHex, unit.strength);
-//            ArrayList<Hex> attackableHexes = findAttackableHexes(province.getColor(), moveZone);
-//            tryToAttackSomething(unit, province, attackableHexes);
-//        }
     }
 
 
@@ -248,6 +233,11 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
             if (adjHex.active && adjHex.sameColor(color)) c++;
             if (adjHex.active && adjHex.sameColor(color) && adjHex.objectInside == Obj.TOWN) c += 5;
         }
+
+        if (hex.objectInside == Obj.FARM) {
+            c *= 2;
+        }
+
         return c;
     }
 
@@ -275,7 +265,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
             if (!hex.containsUnit()) continue;
             Unit unit = hex.unit;
             if (unitHasToBeReinforced(unit) && province.canAiAffordUnit(unit.strength + 1)) {
-                gameController.fieldController.buildUnit(province, hex, 1);
+                buildUnit(province, hex, 1);
             }
         }
     }

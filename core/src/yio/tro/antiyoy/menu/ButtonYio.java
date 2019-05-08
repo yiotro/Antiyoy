@@ -489,7 +489,7 @@ public class ButtonYio implements SliderParentElement{
     }
 
 
-    private void reloadTexture() {
+    public void reloadTexture() {
         resetTexture();
 
         boolean sh = hasShadow;

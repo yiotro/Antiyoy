@@ -27,8 +27,8 @@ public class RenderFogOfWar extends GameRender {
     private float hexStep1;
 
 
-    public RenderFogOfWar(GrManager grManager) {
-        super(grManager);
+    public RenderFogOfWar(GameRendersList gameRendersList) {
+        super(gameRendersList);
     }
 
 
@@ -76,7 +76,7 @@ public class RenderFogOfWar extends GameRender {
         batchMovable.begin();
         GraphicsYio.drawByRectangle(
                 batchMovable,
-                gameView.blackPixel,
+                getBlackPixel(),
                 gameController.cameraController.frame
         );
         batchMovable.end();
@@ -95,16 +95,6 @@ public class RenderFogOfWar extends GameRender {
 
 
     private void drawShapeRendererStuff() {
-//        float hexSize = fogOfWarManager.fieldController.hexSize;
-//        for (FogSlice viewSlice : fogOfWarManager.viewSlices) {
-//            shapeRenderer.rect(
-//                    viewSlice.bottomPoint.position.x - hexSize,
-//                    viewSlice.bottomPoint.position.y - hexSize,
-//                    2 * hexSize,
-//                    viewSlice.topPoint.position.y - viewSlice.bottomPoint.position.y + 2 * hexSize
-//            );
-//        }
-
         hexSize = fogOfWarManager.fieldController.hexSize;
         hexStep1 = fogOfWarManager.fieldController.hexStep1;
         PointYio pos;
@@ -176,7 +166,7 @@ public class RenderFogOfWar extends GameRender {
     private void renderSingleBlock(RectangleYio block) {
         GraphicsYio.drawByRectangle(
                 batchMovable,
-                gameView.blackPixel,
+                getBlackPixel(),
                 block
         );
     }

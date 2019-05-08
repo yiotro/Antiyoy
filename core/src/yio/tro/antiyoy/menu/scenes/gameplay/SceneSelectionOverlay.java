@@ -2,9 +2,10 @@ package yio.tro.antiyoy.menu.scenes.gameplay;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
+import yio.tro.antiyoy.gameplay.skins.SkinManager;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.stuff.GraphicsYio;
-import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
@@ -76,7 +77,9 @@ public class SceneSelectionOverlay extends AbstractGameplayScene {
 
 
     private void createCoinButton() {
-        // important: there is another coin button on SceneFastConstruction
+        // important: there is another coin button in SceneFastConstruction
+        // important: there is another coin button in SceneAiOnlyOverlay
+
         coinButton = menuControllerYio.getButtonById(37);
         if (coinButton == null) { // init
             coinButton = buttonFactory.getButton(generateSquare(0, 0.93, 0.07), 37, null);
@@ -145,42 +148,27 @@ public class SceneSelectionOverlay extends AbstractGameplayScene {
 
 
     void loadFarmButtonTexture() {
-        if (Settings.isShroomArtsEnabled()) {
-            menuControllerYio.loadButtonOnce(towerButton, "skins/ant/field_elements/house.png");
-            return;
-        }
-
-        menuControllerYio.loadButtonOnce(towerButton, "field_elements/house.png");
+        menuControllerYio.loadButtonOnce(towerButton, getSkinManager().getFarmTexturePath());
     }
 
 
     void loadTowerButtonTexture() {
-        if (Settings.isShroomArtsEnabled()) {
-            menuControllerYio.loadButtonOnce(towerButton, "skins/ant/field_elements/tower.png");
-            return;
-        }
-
-        menuControllerYio.loadButtonOnce(towerButton, "field_elements/tower.png");
+        menuControllerYio.loadButtonOnce(towerButton, getSkinManager().getTowerTexturePath());
     }
 
 
     void loadUnitButtonTexture() {
-        if (Settings.isShroomArtsEnabled()) {
-            menuControllerYio.loadButtonOnce(unitButton, "skins/ant/field_elements/man0.png");
-            return;
-        }
-
-        menuControllerYio.loadButtonOnce(unitButton, "field_elements/man0.png");
+        menuControllerYio.loadButtonOnce(unitButton, getSkinManager().getPeasantTexturePath());
     }
 
 
     void loadCoinButtonTexture() {
-        if (Settings.isShroomArtsEnabled()) {
-            menuControllerYio.loadButtonOnce(coinButton, "skins/ant/coin.png");
-            return;
-        }
+        menuControllerYio.loadButtonOnce(coinButton, getSkinManager().getCoinTexturePath());
+    }
 
-        menuControllerYio.loadButtonOnce(coinButton, "coin.png");
+
+    private SkinManager getSkinManager() {
+        return menuControllerYio.yioGdxGame.skinManager;
     }
 
 
@@ -190,6 +178,6 @@ public class SceneSelectionOverlay extends AbstractGameplayScene {
         menuControllerYio.destroyButton(38);
         menuControllerYio.destroyButton(37);
         menuControllerYio.destroyButton(36);
-        menuControllerYio.getYioGdxGame().gameController.selectionController.getSelMoneyFactor().destroy(2, 8);
+        menuControllerYio.getYioGdxGame().gameController.selectionManager.getSelMoneyFactor().destroy(2, 8);
     }
 }

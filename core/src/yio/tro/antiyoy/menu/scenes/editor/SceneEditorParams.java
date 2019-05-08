@@ -98,9 +98,9 @@ public class SceneEditorParams extends AbstractEditorPanel {
 
 
     private void loadValues() {
-        playersSlider.setCurrentRunnerIndex(getGameController().playersNumber);
-        difficultySlider.setCurrentRunnerIndex(GameRules.difficulty);
-        colorSlider.setCurrentRunnerIndex(GameRules.editorChosenColor);
+        playersSlider.setValueIndex(getGameController().playersNumber);
+        difficultySlider.setValueIndex(GameRules.difficulty);
+        colorSlider.setValueIndex(GameRules.editorChosenColor);
     }
 
 
@@ -124,7 +124,7 @@ public class SceneEditorParams extends AbstractEditorPanel {
         playersSlider.setBehavior(new SliderBehavior() {
             @Override
             public String getValueString(SliderYio sliderYio) {
-                return SceneSkirmishMenu.getHumansString(sliderYio.getCurrentRunnerIndex());
+                return SceneSkirmishMenu.getHumansString(sliderYio.getValueIndex());
             }
 
 
@@ -144,7 +144,7 @@ public class SceneEditorParams extends AbstractEditorPanel {
         difficultySlider.setBehavior(new SliderBehavior() {
             @Override
             public String getValueString(SliderYio sliderYio) {
-                return SceneSkirmishMenu.getDifficultyStringBySliderIndex(sliderYio.getCurrentRunnerIndex());
+                return SceneSkirmishMenu.getDifficultyStringBySliderIndex(sliderYio.getValueIndex());
             }
 
 
@@ -164,7 +164,7 @@ public class SceneEditorParams extends AbstractEditorPanel {
         colorSlider.setBehavior(new SliderBehavior() {
             @Override
             public String getValueString(SliderYio sliderYio) {
-                return SceneSkirmishMenu.getColorStringBySliderIndex(sliderYio.getCurrentRunnerIndex());
+                return SceneSkirmishMenu.getColorStringBySliderIndex(sliderYio.getValueIndex());
             }
 
 
@@ -185,17 +185,17 @@ public class SceneEditorParams extends AbstractEditorPanel {
 
 
     void onPlayersNumberChanged() {
-        getGameController().setPlayersNumber(playersSlider.getCurrentRunnerIndex());
+        getGameController().setPlayersNumber(playersSlider.getValueIndex());
     }
 
 
     void onDifficultyChanged() {
-        GameRules.setDifficulty(difficultySlider.getCurrentRunnerIndex());
+        GameRules.setDifficulty(difficultySlider.getValueIndex());
     }
 
 
     void onColorOffsetChanged() {
-        GameRules.setEditorChosenColor(colorSlider.getCurrentRunnerIndex());
+        GameRules.setEditorChosenColor(colorSlider.getValueIndex());
     }
 
 

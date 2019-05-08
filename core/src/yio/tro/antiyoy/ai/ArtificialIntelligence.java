@@ -9,12 +9,6 @@ import java.util.Random;
 
 public abstract class ArtificialIntelligence {
 
-    public static final int DIFFICULTY_EASY = 0;
-    public static final int DIFFICULTY_NORMAL = 1;
-    public static final int DIFFICULTY_HARD = 2;
-    public static final int DIFFICULTY_EXPERT = 3;
-    public static final int DIFFICULTY_BALANCER = 4;
-
     final GameController gameController;
     final Random random;
     protected int color;
@@ -22,6 +16,7 @@ public abstract class ArtificialIntelligence {
     protected ArrayList<Unit> unitsReadyToMove;
     private ArrayList<Hex> tempResultList;
     private ArrayList<Hex> junkList;
+    int numberOfUnitsBuiltThisTurn;
 
 
     ArtificialIntelligence(GameController gameController, int color) {
@@ -29,9 +24,9 @@ public abstract class ArtificialIntelligence {
         this.color = color;
         random = gameController.random;
         nearbyProvinces = new ArrayList<>();
-        unitsReadyToMove = new ArrayList<Unit>();
-        tempResultList = new ArrayList<Hex>();
-        junkList = new ArrayList<Hex>();
+        unitsReadyToMove = new ArrayList<>();
+        tempResultList = new ArrayList<>();
+        junkList = new ArrayList<>();
     }
 
 
@@ -94,6 +89,12 @@ public abstract class ArtificialIntelligence {
                 moveAfkUnit(province, unit);
             }
         }
+    }
+
+
+    public void perform() {
+        numberOfUnitsBuiltThisTurn = 0;
+        makeMove();
     }
 
 
@@ -235,35 +236,62 @@ public abstract class ArtificialIntelligence {
 
     boolean tryToBuiltUnitInsideProvince(Province province, int strength) {
         for (Hex hex : province.hexList) {
-            if (hex.nothingBlocksWayForUnit()) {
-                gameController.fieldController.buildUnit(province, hex, strength);
-                return true;
-            }
+            if (!hex.nothingBlocksWayForUnit()) continue;
+            if (!isAllowedToBuildNewUnit(province)) continue;
+
+            buildUnit(province, hex, strength);
+            return true;
         }
         return false;
     }
 
 
+    protected boolean isAllowedToBuildNewUnit(Province province) {
+        if (!GameRules.diplomacyEnabled) return true;
+        if (gameController.playersNumber == 0) return true;
+        if (numberOfUnitsBuiltThisTurn < getBuildLimitForProvince(province)) return true;
+        return false;
+    }
+
+
+    private  int getBuildLimitForProvince(Province province) {
+        int bottom = Math.max(3, province.hexList.size() / 4);
+        return Math.min(bottom, 10);
+    }
+
+
+    protected void buildUnit(Province province, Hex hex, int strength) {
+        boolean success = gameController.fieldController.buildUnit(province, hex, strength);
+
+        if (success) {
+            numberOfUnitsBuiltThisTurn++;
+        }
+    }
+
+
     boolean tryToAttackWithStrength(Province province, int strength) {
+        if (!isAllowedToBuildNewUnit(province)) return false;
+
         ArrayList<Hex> moveZone = gameController.detectMoveZone(province.getCapital(), strength);
         ArrayList<Hex> attackableHexes = findAttackableHexes(province.getColor(), moveZone);
         if (attackableHexes.size() == 0) return false;
+
         Hex bestHexForAttack = findMostAttractiveHex(attackableHexes, province, strength);
-        gameController.fieldController.buildUnit(province, bestHexForAttack, strength);
+        buildUnit(province, bestHexForAttack, strength);
         return true;
     }
 
 
     void tryToBuildUnitsOnPalms(Province province) {
         if (!province.canAiAffordUnit(1)) return;
+
         while (province.canBuildUnit(1)) {
             ArrayList<Hex> moveZone = gameController.detectMoveZone(province.getCapital(), 1);
             boolean killedPalm = false;
             for (Hex hex : moveZone) {
-                if (hex.objectInside == Obj.PALM && hex.sameColor(province)) {
-                    gameController.fieldController.buildUnit(province, hex, 1);
-                    killedPalm = true;
-                }
+                if (hex.objectInside != Obj.PALM || !hex.sameColor(province)) continue;
+                buildUnit(province, hex, 1);
+                killedPalm = true;
             }
             if (!killedPalm) break;
         }
@@ -346,7 +374,9 @@ public abstract class ArtificialIntelligence {
         int c = 0;
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.getAdjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(color)) c++;
+            if (adjHex.active && adjHex.sameColor(color)) {
+                c++;
+            }
         }
         return c;
     }

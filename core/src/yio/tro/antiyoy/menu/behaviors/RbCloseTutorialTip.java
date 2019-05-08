@@ -4,7 +4,7 @@ import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
 /**
- * Created by ivan on 05.10.2014.
+ * Created by yiotro on 05.10.2014.
  */
 public class RbCloseTutorialTip extends Reaction {
 

@@ -119,7 +119,7 @@ public class RenderDiplomacyElement extends MenuRender {
 
                 GraphicsYio.drawFromCenter(
                         batch,
-                        getGameView().blackPixel,
+                        getBlackPixel(),
                         icon.position.x,
                         icon.position.y,
                         icon.radius

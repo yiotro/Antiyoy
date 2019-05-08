@@ -3,6 +3,7 @@ package yio.tro.antiyoy.gameplay.user_levels;
 import yio.tro.antiyoy.gameplay.user_levels.pack_five.*;
 import yio.tro.antiyoy.gameplay.user_levels.pack_four.*;
 import yio.tro.antiyoy.gameplay.user_levels.pack_one.*;
+import yio.tro.antiyoy.gameplay.user_levels.pack_seven.*;
 import yio.tro.antiyoy.gameplay.user_levels.pack_six.*;
 import yio.tro.antiyoy.gameplay.user_levels.pack_three.*;
 import yio.tro.antiyoy.gameplay.user_levels.pack_two.*;
@@ -37,6 +38,29 @@ public class UserLevelFactory {
 
 
     private void initLevels() {
+        // 7
+        add(new UlevSpaghettiMonster());
+        add(new UlevRelax());
+        add(new UlevStarship());
+        add(new UlevWorld());
+        add(new UlevSerdechko());
+        add(new UlevAF1());
+        add(new UlevGuynneDaSteve());
+        add(new UlevBaseball());
+        add(new UlevNotStalemate());
+        add(new UlevMedievalAgeEurope());
+        add(new UlevUnderpressure());
+        add(new UlevEurope1770());
+        add(new UlevGoncharov());
+        add(new UlevMini1v1());
+        add(new UlevEurope1914());
+        add(new UlevItaly1494());
+        add(new UlevBundeslaender());
+        add(new UlevLatinAmerica());
+        add(new UlevEnterprise());
+        add(new UlevStindoWar());
+        add(new UlevUnifyGermany());
+
         // 6
         add(new UlevEleventhTimesTheCharm());
         add(new UlevUnbeatable());
@@ -127,7 +151,7 @@ public class UserLevelFactory {
         add(new UlevForest());
         add(new UlevPrisonBreak());
         add(new UlevNinoAlo());
-        add(new UlevBreakUpOfYugoslavia());
+//        add(new UlevBreakUpOfYugoslavia()); // temporarily removed
         add(new UlevTurkey1919());
         add(new UlevStar());
         add(new UlevALotToKeepTrackOf());

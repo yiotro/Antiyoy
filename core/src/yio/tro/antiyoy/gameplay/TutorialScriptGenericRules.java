@@ -312,7 +312,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
                 if (gameController.fieldController.selectedProvince != null) return true;
                 return false;
             case STEP_SELECT_UNIT:
-                if (gameController.selectionController.selectedUnit != null) return true;
+                if (gameController.selectionManager.selectedUnit != null) return true;
                 return false;
             case STEP_MOVE_UNIT:
                 if (getHex(17, 9).containsUnit()) return true;
@@ -320,7 +320,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
             case STEP_INCOME:
                 return true;
             case STEP_CHOOSE_FARM:
-                if (gameController.selectionController.getTipType() == SelectionController.TIP_INDEX_FARM) return true;
+                if (gameController.selectionManager.getTipType() == SelectionTipType.FARM) return true;
                 return false;
             case STEP_BUILD_FARM:
                 if (getHex(18, 11).objectInside == Obj.FARM) return true;
@@ -328,7 +328,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
             case STEP_ABOUT_FARM:
                 return true;
             case STEP_CHOOSE_PEASANT:
-                if (gameController.selectionController.getTipType() == SelectionController.TIP_INDEX_UNIT_1) return true;
+                if (gameController.selectionManager.getTipType() == SelectionTipType.UNIT_1) return true;
                 return false;
             case STEP_BUILD_PEASANT:
                 if (getHex(19, 9).containsUnit()) return true;
@@ -337,7 +337,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
                 if (getHex(20, 9).containsUnit()) return true;
                 return false;
             case STEP_CHOOSE_TOWER:
-                if (gameController.selectionController.getTipType() == SelectionController.TIP_INDEX_TOWER) return true;
+                if (gameController.selectionManager.getTipType() == SelectionTipType.TOWER) return true;
                 return false;
             case STEP_BUILD_TOWER:
                 if (getHex(18, 10).objectInside == Obj.TOWER) return true;
@@ -345,7 +345,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
             case STEP_ABOUT_TOWERS:
                 return true;
             case STEP_CHOOSE_SPEARMAN:
-                if (gameController.selectionController.getTipType() == SelectionController.TIP_INDEX_UNIT_2) return true;
+                if (gameController.selectionManager.getTipType() == SelectionTipType.UNIT_2) return true;
                 return false;
             case STEP_BUILD_SPEARMAN:
                 if (getHex(19, 8).containsUnit()) return true;
@@ -365,7 +365,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
                 if (menuControllerYio.getButtonById(31).isCurrentlyTouched()) return true;
                 return false;
             case STEP_CHOOSE_TO_MERGE:
-                if (gameController.selectionController.selectedUnit != null) return true;
+                if (gameController.selectionManager.selectedUnit != null) return true;
                 return false;
             case STEP_MERGE_UNITS:
                 if (getHex(20, 9).unit.strength == 2) return true;

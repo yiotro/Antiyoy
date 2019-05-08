@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.CustomLanguageLoader;
-import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
@@ -45,7 +45,7 @@ public class SceneLanguages extends AbstractScene{
 
         CustomLanguageLoader.setAndSaveLanguage(key);
 
-        Settings.getInstance().loadAllSettings();
+        SettingsManager.getInstance().loadAllSettings();
         Scenes.createScenes(menuControllerYio);
         Scenes.sceneMainMenu.create();
     }

@@ -1,12 +1,12 @@
 package yio.tro.antiyoy.menu.behaviors.gameplay;
 
-import yio.tro.antiyoy.gameplay.SelectionController;
+import yio.tro.antiyoy.gameplay.SelectionTipType;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 
 /**
- * Created by ivan on 31.05.2015.
+ * Created by yiotro on 31.05.2015.
  */
 public class RbBuildSolidObject extends Reaction {
 
@@ -15,9 +15,9 @@ public class RbBuildSolidObject extends Reaction {
 
     public RbBuildSolidObject() {
         chain = new int[]{
-                SelectionController.TIP_INDEX_FARM,
-                SelectionController.TIP_INDEX_TOWER,
-                SelectionController.TIP_INDEX_STRONG_TOWER
+                SelectionTipType.FARM,
+                SelectionTipType.TOWER,
+                SelectionTipType.STRONG_TOWER
         };
     }
 
@@ -25,9 +25,9 @@ public class RbBuildSolidObject extends Reaction {
     @Override
     public void perform(ButtonYio buttonYio) {
         if (GameRules.slayRules) {
-            getGameController(buttonYio).selectionController.awakeTip(SelectionController.TIP_INDEX_TOWER);
+            getGameController(buttonYio).selectionManager.awakeTip(SelectionTipType.TOWER);
         } else {
-            int tipType = getGameController(buttonYio).selectionController.getTipType();
+            int tipType = getGameController(buttonYio).selectionManager.getTipType();
             int newTipType = -1;
 
             for (int i = 0; i < chain.length; i++) {
@@ -46,8 +46,8 @@ public class RbBuildSolidObject extends Reaction {
 
             tipType = newTipType;
 
-            getGameController(buttonYio).selectionController.awakeTip(tipType);
-            if (tipType == SelectionController.TIP_INDEX_FARM) {
+            getGameController(buttonYio).selectionManager.awakeTip(tipType);
+            if (tipType == SelectionTipType.FARM) {
                 getGameController(buttonYio).detectAndShowMoveZoneForFarm();
             }
         }

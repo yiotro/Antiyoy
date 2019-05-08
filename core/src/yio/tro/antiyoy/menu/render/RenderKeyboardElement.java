@@ -59,7 +59,7 @@ public class RenderKeyboardElement extends MenuRender{
 
     private void renderBlackout() {
         GraphicsYio.setBatchAlpha(batch, 0.15 * f);
-        GraphicsYio.drawByRectangle(batch, getGameView().blackPixel, keyboardElement.blackoutPosition);
+        GraphicsYio.drawByRectangle(batch, getBlackPixel(), keyboardElement.blackoutPosition);
     }
 
 
@@ -78,7 +78,7 @@ public class RenderKeyboardElement extends MenuRender{
 
         GraphicsYio.setBatchAlpha(batch, Math.min(f * f, textArea.caretFactor.get()));
         GraphicsYio.drawLine(
-                batch, getGameView().blackPixel, textArea.caretEndPos, textArea.caretPosition,
+                batch, getBlackPixel(), textArea.caretEndPos, textArea.caretPosition,
                 GraphicsYio.borderThickness
         );
 
@@ -108,7 +108,7 @@ public class RenderKeyboardElement extends MenuRender{
         if (!kbButton.isSelected()) return;
 
         GraphicsYio.setBatchAlpha(batch, 0.25 * kbButton.selectionFactor.get());
-        GraphicsYio.drawByRectangle(batch, getGameView().blackPixel, kbButton.position);
+        GraphicsYio.drawByRectangle(batch, getBlackPixel(), kbButton.position);
         resetBatchAlpha();
     }
 
@@ -154,7 +154,7 @@ public class RenderKeyboardElement extends MenuRender{
 
     private void renderButtonBorder(KbButton kbButton) {
         GraphicsYio.renderBorder(
-                batch, getGameView().blackPixel, kbButton.position
+                batch, getBlackPixel(), kbButton.position
         );
     }
 

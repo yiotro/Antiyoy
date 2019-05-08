@@ -4,7 +4,7 @@ import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 
 /**
- * Created by ivan on 31.05.2015.
+ * Created by yiotro on 31.05.2015.
  */
 public class RbUndo extends Reaction {
 

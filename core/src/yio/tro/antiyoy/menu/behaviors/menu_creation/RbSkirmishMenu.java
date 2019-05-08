@@ -5,7 +5,7 @@ import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
 /**
- * Created by ivan on 15.08.2015.
+ * Created by yiotro on 15.08.2015.
  */
 public class RbSkirmishMenu extends Reaction {
 

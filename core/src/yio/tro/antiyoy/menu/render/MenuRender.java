@@ -2,9 +2,11 @@ package yio.tro.antiyoy.menu.render;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.MenuViewYio;
+import yio.tro.antiyoy.menu.RenderLoadingScreenElement;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -32,6 +34,7 @@ public abstract class MenuRender {
     public static RenderContextListMenuElement renderContextListMenuElement = new RenderContextListMenuElement();
     public static RenderShadow renderShadow = new RenderShadow();
     public static RenderTextViewElement renderTextViewElement = new RenderTextViewElement();
+    public static RenderLoadingScreenElement renderLoadingScreenElement = new RenderLoadingScreenElement();
 
     protected MenuViewYio menuViewYio;
     protected SpriteBatch batch;
@@ -77,5 +80,10 @@ public abstract class MenuRender {
 
     public GameView getGameView() {
         return menuViewYio.yioGdxGame.gameView;
+    }
+
+
+    protected TextureRegion getBlackPixel() {
+        return getGameView().texturesManager.blackPixel;
     }
 }

@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.factor_yio;
 
 /**
- * Created by ivan on 23.04.2015.
+ * Created by yiotro on 23.04.2015.
  */
 public class MoveBehaviorLighty extends MoveBehavior {
 

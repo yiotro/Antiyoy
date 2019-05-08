@@ -34,13 +34,13 @@ public class ButtonRenderer {
 
     public ButtonRenderer() {
         batch = new SpriteBatch();
-        buttonBackground1 = GameView.loadTextureRegion("button_background_1.png", true);
+        buttonBackground1 = GraphicsYio.loadTextureRegion("button_background_1.png", true);
         buttonBackground1.flip(false, true);
-        buttonBackground2 = GameView.loadTextureRegion("button_background_2.png", true);
+        buttonBackground2 = GraphicsYio.loadTextureRegion("button_background_2.png", true);
         buttonBackground2.flip(false, true);
-        buttonBackground3 = GameView.loadTextureRegion("button_background_3.png", true);
+        buttonBackground3 = GraphicsYio.loadTextureRegion("button_background_3.png", true);
         buttonBackground3.flip(false, true);
-        bigButtonBackground = GameView.loadTextureRegion("big_button_background.png", true);
+        bigButtonBackground = GraphicsYio.loadTextureRegion("big_button_background.png", true);
         bigButtonBackground.flip(false, true);
         pos = new RectangleYio();
         singleLineDeltaOffset = 0.05f * GraphicsYio.width;

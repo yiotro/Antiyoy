@@ -5,7 +5,7 @@ import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
 /**
- * Created by ivan on 05.08.14.
+ * Created by yiotro on 05.08.14.
  */
 public class RbAboutGame extends Reaction {
 

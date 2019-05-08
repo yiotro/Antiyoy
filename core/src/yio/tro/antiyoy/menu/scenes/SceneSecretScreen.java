@@ -9,7 +9,7 @@ import yio.tro.antiyoy.menu.behaviors.Reaction;
 public class SceneSecretScreen extends AbstractScene{
 
 
-    private Reaction rbFireworks;
+    private Reaction rbDebugTests;
     double curY;
     private ButtonYio label;
     private Reaction rbCheats;
@@ -42,7 +42,7 @@ public class SceneSecretScreen extends AbstractScene{
         curY = 0.42;
         createButton(572, "Unlock levels", Reaction.rbUnlockLevels);
         createButton(573, "Show FPS", Reaction.rbShowFps);
-        createButton(574, "Fireworks", rbFireworks);
+        createButton(574, "Debug tests", rbDebugTests);
         createButton(575, "Cheats on/off", rbCheats);
 
         menuControllerYio.spawnBackButton(579, Reaction.rbMainMenu);
@@ -52,10 +52,10 @@ public class SceneSecretScreen extends AbstractScene{
 
 
     private void initReactions() {
-        rbFireworks = new Reaction() {
+        rbDebugTests = new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
-                Scenes.sceneFireworks.create();
+                Scenes.sceneDebugTests.create();
             }
         };
 

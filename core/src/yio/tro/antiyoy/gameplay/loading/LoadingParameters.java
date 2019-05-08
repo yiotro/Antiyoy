@@ -32,6 +32,7 @@ public class LoadingParameters {
     public boolean userLevelMode;
     public String ulKey;
     public boolean editorColorFixApplied;
+    public boolean forceNoLoadingScreen;
 
 
     void defaultValues() {
@@ -51,6 +52,7 @@ public class LoadingParameters {
         diplomacy = false;
         ulKey = null;
         editorColorFixApplied = false;
+        forceNoLoadingScreen = false;
     }
 
 
@@ -72,6 +74,7 @@ public class LoadingParameters {
         userLevelMode = src.userLevelMode;
         ulKey = src.ulKey;
         editorColorFixApplied = src.editorColorFixApplied;
+//        forceNoLoadingScreen = src.forceNoLoadingScreen;
     }
 
 
@@ -109,6 +112,7 @@ public class LoadingParameters {
         System.out.println("userLevelMode = " + userLevelMode);
         System.out.println("ulKey = " + ulKey);
         System.out.println("editorColorFixApplied = " + editorColorFixApplied);
+        System.out.println("forceNoLoadingScreen = " + forceNoLoadingScreen);
 
         System.out.println();
     }

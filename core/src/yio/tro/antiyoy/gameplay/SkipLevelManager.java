@@ -16,7 +16,7 @@ public class SkipLevelManager {
     public static final String PREFS = "yio.tro.antiyoy.skip_campaign";
     public static final int FRAMES_IN_ONE_MINUTE = 60 * 60;
     public static final int MINUTES_TO_WAIT_FOR_SKIP = 60;
-    public static final int MINUTES_TO_STOP_REMIND = 90;
+    public static final int MINUTES_TO_STOP_REMIND = 65;
     GameController gameController;
     HashMap<Integer, Integer> timeTable;
     RepeatYio<SkipLevelManager> repeatIncreaseTimer;
@@ -53,11 +53,16 @@ public class SkipLevelManager {
 
         int value = timeTable.get(currentLevelIndex);
         timeTable.put(currentLevelIndex, value + 1);
-        if (canSkipCurrentLevel()) {
+        if (isTimeToRemindAboutSkipping()) {
             readyToShowNotificationAboutSkip = true;
         }
 
         save();
+    }
+
+
+    private boolean isTimeToRemindAboutSkipping() {
+        return canSkipCurrentLevel() && timeTable.get(getCurrentLevelIndex()) <= MINUTES_TO_STOP_REMIND;
     }
 
 
@@ -71,7 +76,6 @@ public class SkipLevelManager {
         if (levelIndex > CampaignProgressManager.INDEX_OF_LAST_LEVEL - 1) return false; // last level can't be skipped
         if (CampaignProgressManager.getInstance().isLevelComplete(levelIndex)) return false;
         if (timeTable.get(levelIndex) < MINUTES_TO_WAIT_FOR_SKIP) return false;
-        if (timeTable.get(levelIndex) > MINUTES_TO_STOP_REMIND) return false;
 
         return true;
     }
@@ -106,8 +110,7 @@ public class SkipLevelManager {
     void onEndCreation() {
         if (!GameRules.campaignMode) return;
 
-        int currentLevelIndex = getCurrentLevelIndex();
-        if (!canSkipLevel(currentLevelIndex)) return;
+        if (!isTimeToRemindAboutSkipping()) return;
 
         readyToShowNotificationAboutSkip = true;
     }

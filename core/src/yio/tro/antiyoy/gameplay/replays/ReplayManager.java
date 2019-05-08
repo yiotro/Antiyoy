@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.gameplay.replays;
 
-import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
@@ -64,7 +64,7 @@ public class ReplayManager {
     private boolean canAddAction() {
         if (replay == null) return false;
         if (GameRules.replayMode) return false;
-        if (!Settings.replaysEnabled) return false;
+        if (!SettingsManager.replaysEnabled) return false;
 
         return true;
     }
@@ -141,7 +141,7 @@ public class ReplayManager {
 
         LoadingManager.getInstance().startGame(loadingParameters);
 
-        Scenes.sceneReplayOverlay.speedPanel.showSaveIcon();
+        Scenes.sceneAiOnlyOverlay.speedPanel.showSaveIcon();
     }
 
 

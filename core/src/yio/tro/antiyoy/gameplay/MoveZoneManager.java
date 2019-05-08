@@ -86,7 +86,7 @@ public class MoveZoneManager {
         checkToForceMoveZoneAnims();
         appearFactor.setValues(0, 0);
         appearFactor.appear(3, 1.5);
-        getGameController().selectionController.getBlackoutFactor().appear(3, 1.5);
+        getGameController().selectionManager.getBlackoutFactor().appear(3, 1.5);
     }
 
 
@@ -95,8 +95,8 @@ public class MoveZoneManager {
     }
 
 
-    private SelectionController getSelectionController() {
-        return getGameController().selectionController;
+    private SelectionManager getSelectionController() {
+        return getGameController().selectionManager;
     }
 
 

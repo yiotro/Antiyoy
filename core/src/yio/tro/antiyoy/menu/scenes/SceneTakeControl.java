@@ -61,7 +61,7 @@ public class SceneTakeControl extends AbstractScene{
     private void loadValues() {
         GameController gameController = getGameController();
         int colorIndexWithOffset = gameController.getColorIndexWithOffset(0);
-        colorSlider.setCurrentRunnerIndex(colorIndexWithOffset + 1);
+        colorSlider.setValueIndex(colorIndexWithOffset + 1);
     }
 
 
@@ -90,7 +90,7 @@ public class SceneTakeControl extends AbstractScene{
         YioGdxGame yioGdxGame = menuControllerYio.yioGdxGame;
         GameController gameController = yioGdxGame.gameController;
 
-        int currentRunnerIndex = colorSlider.getCurrentRunnerIndex();
+        int currentRunnerIndex = colorSlider.getValueIndex();
         int desiredColor = currentRunnerIndex - 1;
         if (currentRunnerIndex == 0) {
             desiredColor = YioGdxGame.random.nextInt(GameRules.MAX_COLOR_NUMBER);
@@ -163,7 +163,7 @@ public class SceneTakeControl extends AbstractScene{
         colorSlider.setBehavior(new SliderBehavior() {
             @Override
             public String getValueString(SliderYio sliderYio) {
-                return SceneSkirmishMenu.getColorStringBySliderIndex(sliderYio.getCurrentRunnerIndex());
+                return SceneSkirmishMenu.getColorStringBySliderIndex(sliderYio.getValueIndex());
             }
         });
 

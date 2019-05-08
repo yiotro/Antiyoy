@@ -74,7 +74,7 @@ public class SceneMoreCampaignOptions extends AbstractScene{
         Preferences prefs = Gdx.app.getPreferences("campaign_options");
 
         int colorOffset = prefs.getInteger("color_offset", 0);
-        colorOffsetSlider.setCurrentRunnerIndex(colorOffset);
+        colorOffsetSlider.setValueIndex(colorOffset);
 
         chkSlayRules.setChecked(prefs.getBoolean("slay_rules", false));
     }
@@ -83,7 +83,7 @@ public class SceneMoreCampaignOptions extends AbstractScene{
     public void saveValues() {
         Preferences prefs = Gdx.app.getPreferences("campaign_options");
 
-        prefs.putInteger("color_offset", colorOffsetSlider.getCurrentRunnerIndex());
+        prefs.putInteger("color_offset", colorOffsetSlider.getValueIndex());
         prefs.putBoolean("slay_rules", chkSlayRules.isChecked());
 
         prefs.flush();
@@ -102,7 +102,7 @@ public class SceneMoreCampaignOptions extends AbstractScene{
         colorOffsetSlider.setBehavior(new SliderBehavior() {
             @Override
             public String getValueString(SliderYio sliderYio) {
-                return SceneSkirmishMenu.getColorStringBySliderIndex(sliderYio.getCurrentRunnerIndex());
+                return SceneSkirmishMenu.getColorStringBySliderIndex(sliderYio.getValueIndex());
             }
         });
 

@@ -31,7 +31,7 @@ public class GameSaver {
     private void saveBasicInfo() {
         prefs.putInteger("save_turn", gameController.turn);
         prefs.putInteger("save_color_number", GameRules.colorNumber);
-        prefs.putInteger("save_level_size", gameController.fieldController.levelSize);
+        prefs.putInteger("save_level_size", gameController.fieldController.getLevelSize());
         prefs.putInteger("save_player_number", gameController.playersNumber);
         prefs.putBoolean("save_campaign_mode", GameRules.campaignMode);
         prefs.putInteger("save_current_level", getCurrentLevelIndexForSave());

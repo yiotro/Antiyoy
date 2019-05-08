@@ -27,7 +27,7 @@ public class SceneGameOverlay extends AbstractScene {
         }
 
         if (GameRules.aiOnlyMode) {
-            Scenes.sceneReplayOverlay.create();
+            Scenes.sceneAiOnlyOverlay.create();
             return;
         }
 

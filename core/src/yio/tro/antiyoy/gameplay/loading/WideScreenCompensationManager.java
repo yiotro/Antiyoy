@@ -49,7 +49,11 @@ public class WideScreenCompensationManager {
 
     private void updateFixDelta() {
         float hexMedium = (top + bottom) / 2;
-        fixDelta = (gameController.boundHeight / 2 - hexMedium);
+        fixDelta = (gameController.levelSizeManager.boundHeight / 2 - hexMedium);
+
+        // to keep water texture aligned with hexes
+        int rv = (int) (fixDelta / fieldController.hexStep1);
+        fixDelta = rv * fieldController.hexStep1;
     }
 
 
@@ -63,7 +67,7 @@ public class WideScreenCompensationManager {
 
 
     private void updateDeltas() {
-        deltaTop = gameController.boundHeight - 2 * fieldController.hexSize - top;
+        deltaTop = gameController.levelSizeManager.boundHeight - 2 * fieldController.hexSize - top;
         deltaBottom = bottom - 2 * fieldController.hexSize;
     }
 

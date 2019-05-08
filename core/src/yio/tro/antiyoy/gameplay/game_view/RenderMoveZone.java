@@ -25,14 +25,15 @@ public class RenderMoveZone extends GameRender{
     private FactorYio appearFactor;
 
 
-    public RenderMoveZone(GrManager grManager) {
-        super(grManager);
+    public RenderMoveZone(GameRendersList gameRendersList) {
+        super(gameRendersList);
     }
 
 
     @Override
     public void loadTextures() {
-        moveZonePixel = loadTextureRegion("move_zone_pixel.png", false);
+        String moveZoneTexturePath = gameRendersList.gameView.yioGdxGame.skinManager.getMoveZoneTexturePath();
+        moveZonePixel = loadTextureRegion(moveZoneTexturePath, false);
     }
 
 
@@ -42,7 +43,7 @@ public class RenderMoveZone extends GameRender{
 
         renderHexBackgrounds();
         renderBuildingsAndBlackLines();
-        gameView.renderResponseAnimHex();
+        gameView.rList.renderResponseAnimHex.render();
         renderMoveZoneBorderAndSomeObjects();
         renderSelectionBorder();
 
@@ -69,11 +70,9 @@ public class RenderMoveZone extends GameRender{
                 Hex adj = hex.getAdjacentHex(dir);
                 if (adj == null || adj.isNullHex() || (adj.active && adj.sameColor(hex))) continue;
 
-                gameView.renderLineBetweenHexesWithOffset(hex,
+                renderLineBetweenHexesWithOffset(batchMovable, gameView.texturesManager.selectionBorder, hex,
                         adj,
-                        batchMovable,
                         hex.selectionFactor.get() * 0.01 * GraphicsYio.width,
-                        gameView.selectionBorder,
                         -(1d - hex.selectionFactor.get()) * 0.01 * GraphicsYio.width,
                         dir,
                         hex.selectionFactor.get()
@@ -84,7 +83,7 @@ public class RenderMoveZone extends GameRender{
 
 
     private void renderMoveZoneBorderAndSomeObjects() {
-        if (gameController.selectionController.selectedUnit == null && gameController.selectionController.tipFactor.get() <= 0 && appearFactor.get() <= 0)
+        if (gameController.selectionManager.selectedUnit == null && gameController.selectionManager.tipFactor.get() <= 0 && appearFactor.get() <= 0)
             return;
 
         for (Hex hex : moveZone) {
@@ -92,11 +91,9 @@ public class RenderMoveZone extends GameRender{
                 Hex adj = hex.getAdjacentHex(dir);
                 if (adj == null || adj.isNullHex() || (adj.active && adj.inMoveZone == hex.inMoveZone)) continue;
 
-                gameView.renderLineBetweenHexesWithOffset(hex,
+                renderLineBetweenHexesWithOffset(batchMovable, moveZonePixel, hex,
                         adj,
-                        batchMovable,
                         appearFactor.get() * 0.02 * GraphicsYio.width,
-                        moveZonePixel,
                         -(1d - appearFactor.get()) * 0.01 * GraphicsYio.width,
                         dir,
                         appearFactor.get()
@@ -104,11 +101,11 @@ public class RenderMoveZone extends GameRender{
             }
 
             if (hex.containsUnit()) {
-                gameView.renderUnit(batchMovable, hex.unit);
+                gameView.rList.renderUnits.renderUnit(batchMovable, hex.unit);
             }
 
             if (hex.containsTree()) {
-                gameView.renderSolidObject(batchMovable, hex.pos, hex);
+                renderSolidObject(batchMovable, hex.pos, hex);
             }
         }
     }
@@ -119,17 +116,17 @@ public class RenderMoveZone extends GameRender{
 
         for (Hex hex : moveZone) {
             pos = hex.getPos();
-            if (!gameView.isPosInViewFrame(pos, hvSize)) continue;
+            if (!isPosInViewFrame(pos, hvSize)) continue;
 
             for (int dir = 0; dir < 6; dir++) {
                 Hex adjacentHex = hex.getAdjacentHex(dir);
                 if (adjacentHex == null || (adjacentHex.active && adjacentHex.sameColor(hex))) continue;
 
-                gameView.renderLineBetweenHexes(adjacentHex, hex, batchMovable, gameView.borderLineThickness, dir);
+                renderLineBetweenHexes(batchMovable, adjacentHex, hex, gameView.borderLineThickness, dir);
             }
 
             if (hex.containsBuilding() || hex.objectInside == Obj.GRAVE) {
-                gameView.renderSolidObject(batchMovable, pos, hex);
+                renderSolidObject(batchMovable, pos, hex);
             }
         }
     }
@@ -138,22 +135,22 @@ public class RenderMoveZone extends GameRender{
     private void renderHexBackgrounds() {
         for (Hex hex : moveZone) {
             pos = hex.getPos();
-            if (!gameView.isPosInViewFrame(pos, hvSize)) continue;
+            if (!isPosInViewFrame(pos, hvSize)) continue;
 
             if (gameController.isPlayerTurn(hex.colorIndex) && hex.animFactor.get() < 1 && hex.animFactor.getDy() > 0) {
                 if (hex.animFactor.get() < 1) {
-                    currentHexLastTexture = gameView.getHexTextureByColor(hex.lastColorIndex);
+                    currentHexLastTexture = gameView.texturesManager.getHexTextureByColor(hex.lastColorIndex);
                     batchMovable.setColor(c.r, c.g, c.b, 1f - hex.animFactor.get());
                     batchMovable.draw(currentHexLastTexture, pos.x - hvSize, pos.y - hvSize, 2 * hvSize, 2 * hvSize);
                 }
-                currentHexTexture = gameView.getHexTextureByColor(hex.colorIndex);
+                currentHexTexture = gameView.texturesManager.getHexTextureByColor(hex.colorIndex);
                 batchMovable.setColor(c.r, c.g, c.b, hex.animFactor.get());
                 batchMovable.draw(currentHexTexture, pos.x - hvSize, pos.y - hvSize, 2 * hvSize, 2 * hvSize);
                 continue;
             }
 
             batchMovable.setColor(c.r, c.g, c.b, 1);
-            currentHexTexture = gameView.getHexTextureByColor(hex.colorIndex);
+            currentHexTexture = gameView.texturesManager.getHexTextureByColor(hex.colorIndex);
             batchMovable.draw(currentHexTexture, pos.x - hvSize, pos.y - hvSize, 2 * hvSize, 2 * hvSize);
         }
     }

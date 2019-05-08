@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.menu.behaviors;
 
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.LevelSize;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
@@ -10,7 +10,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.menu.slider.SliderYio;
 
 /**
- * Created by ivan on 05.08.14.
+ * Created by yiotro on 05.08.14.
  */
 public class RbStartSkirmishGame extends Reaction {
 
@@ -27,11 +27,11 @@ public class RbStartSkirmishGame extends Reaction {
 
         instance.mode = LoadingMode.SKIRMISH;
         instance.levelSize = getLevelSizeBySliderPos(Scenes.sceneSkirmishMenu.mapSizeSlider);
-        instance.playersNumber = Scenes.sceneSkirmishMenu.playersSlider.getCurrentRunnerIndex();
-        instance.colorNumber = Scenes.sceneSkirmishMenu.colorsSlider.getCurrentRunnerIndex() + 2;
-        instance.difficulty = Scenes.sceneSkirmishMenu.difficultySlider.getCurrentRunnerIndex();
+        instance.playersNumber = Scenes.sceneSkirmishMenu.playersSlider.getValueIndex();
+        instance.colorNumber = Scenes.sceneSkirmishMenu.colorsSlider.getValueIndex() + 2;
+        instance.difficulty = Scenes.sceneSkirmishMenu.difficultySlider.getValueIndex();
         instance.colorOffset = getGameController(buttonYio).getColorOffsetBySliderIndex(
-                Scenes.sceneMoreSkirmishOptions.colorOffsetSlider.getCurrentRunnerIndex(), instance.colorNumber);
+                Scenes.sceneMoreSkirmishOptions.colorOffsetSlider.getValueIndex(), instance.colorNumber);
         instance.slayRules = Scenes.sceneMoreSkirmishOptions.chkSlayRules.isChecked();
         instance.fogOfWar = Scenes.sceneMoreSkirmishOptions.chkFogOfWar.isChecked();
         instance.diplomacy = Scenes.sceneMoreSkirmishOptions.chkDiplomacy.isChecked();
@@ -42,15 +42,17 @@ public class RbStartSkirmishGame extends Reaction {
     }
 
 
-    public int getLevelSizeBySliderPos(SliderYio sliderYio) {
-        switch (sliderYio.getCurrentRunnerIndex()) {
+    public static int getLevelSizeBySliderPos(SliderYio sliderYio) {
+        switch (sliderYio.getValueIndex()) {
             default:
             case 0:
-                return FieldController.SIZE_SMALL;
+                return LevelSize.SMALL;
             case 1:
-                return FieldController.SIZE_MEDIUM;
+                return LevelSize.MEDIUM;
             case 2:
-                return FieldController.SIZE_BIG;
+                return LevelSize.BIG;
+            case 3:
+                return LevelSize.HUGE;
         }
     }
 

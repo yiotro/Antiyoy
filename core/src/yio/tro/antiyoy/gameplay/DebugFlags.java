@@ -14,6 +14,10 @@ public class DebugFlags {
     public static boolean showFocusedHexInConsole = false;
     public static boolean cheatsEnabled = false;
     public static boolean cheatCharisma = false;
+    public static boolean testMode = false;
+    public static int testWinner = -1;
+    public static boolean renderDebug = false;
+    public static boolean showSliderBorder = false;
 
 
 }

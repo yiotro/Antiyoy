@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.factor_yio;
 
 /**
- * Created by ivan on 24.07.2015.
+ * Created by yiotro on 24.07.2015.
  */
 public class MoveBehaviorPlayful extends MoveBehavior {
 

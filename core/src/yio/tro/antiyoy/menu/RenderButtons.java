@@ -38,8 +38,8 @@ public class RenderButtons {
 
 
     void loadTextures() {
-        buttonPixel = GameView.loadTextureRegion("button_pixel.png", false);
-        blackCircle = GameView.loadTextureRegion("anim_circle_high_res.png", false);
+        buttonPixel = GraphicsYio.loadTextureRegion("button_pixel.png", false);
+        blackCircle = GraphicsYio.loadTextureRegion("anim_circle_high_res.png", false);
     }
 
 

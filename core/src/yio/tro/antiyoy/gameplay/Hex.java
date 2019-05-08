@@ -49,7 +49,7 @@ public class Hex implements ReusableYio{
 
 
     void updateCanContainsObjects() {
-        canContainObjects = fieldController.isPointInsideLevelBoundsHorizontally(pos);
+        canContainObjects = fieldController.gameController.levelSizeManager.isPointInsideLevelBoundsHorizontally(pos);
     }
 
 
@@ -180,8 +180,13 @@ public class Hex implements ReusableYio{
         int c = 0;
         for (int i = 0; i < 6; i++) {
             Hex adjHex = getAdjacentHex(i);
-            if (adjHex.colorIndex == FieldController.NEUTRAL_LANDS_INDEX) continue;
-            if (adjHex.active && adjHex.sameColor(this)) c++;
+            if (adjHex == null) continue;
+            if (adjHex.isNullHex()) continue;
+            if (adjHex.isNeutral()) continue;
+            if (!adjHex.active) continue;
+            if (!adjHex.sameColor(this)) continue;
+
+            c++;
         }
         return c;
     }

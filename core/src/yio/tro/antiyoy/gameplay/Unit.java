@@ -3,11 +3,12 @@ package yio.tro.antiyoy.gameplay;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.ArrayList;
 
 /**
- * Created by ivan on 24.05.2015.
+ * Created by yiotro on 24.05.2015.
  */
 public class Unit {
     public Hex lastHex, currentHex;

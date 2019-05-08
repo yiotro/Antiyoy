@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
- * Created by ivan on 13.08.2014.
+ * Created by yiotro on 13.08.2014.
  */
 public class Splat {
 

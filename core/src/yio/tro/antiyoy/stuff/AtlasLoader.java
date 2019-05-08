@@ -32,7 +32,7 @@ public class AtlasLoader {
 
 
     private void loadEverything() {
-        atlasRegion = GameView.loadTextureRegion(srcName, antialias);
+        atlasRegion = GraphicsYio.loadTextureRegion(srcName, antialias);
         FileHandle fileHandle = Gdx.files.internal(txtFileName);
         String atlasStructure = fileHandle.readString();
         ArrayList<String> lines = new ArrayList<String>();

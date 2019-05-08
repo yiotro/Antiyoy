@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.factor_yio;
 
 /**
- * Created by ivan on 21.04.2015.
+ * Created by yiotro on 21.04.2015.
  */
 class MoveBehaviorSimple extends MoveBehavior {
 

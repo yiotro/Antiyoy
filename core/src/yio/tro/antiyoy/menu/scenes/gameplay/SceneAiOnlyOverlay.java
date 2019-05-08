@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.menu.scenes.gameplay;
 
+import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
@@ -13,12 +14,14 @@ public class SceneAiOnlyOverlay extends AbstractScene {
 
     public SpeedPanel speedPanel;
     public ButtonYio inGameMenuButton;
+    public ButtonYio coinButton;
 
 
     public SceneAiOnlyOverlay(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
         speedPanel = null;
+        coinButton = null;
     }
 
 
@@ -30,6 +33,7 @@ public class SceneAiOnlyOverlay extends AbstractScene {
 
         createSpeedPanel();
         speedPanel.appear();
+        createCoinButton();
 
         menuControllerYio.endMenuCreation();
     }
@@ -50,5 +54,34 @@ public class SceneAiOnlyOverlay extends AbstractScene {
 
         speedPanel = new SpeedPanel(menuControllerYio, -1);
         menuControllerYio.addElementToScene(speedPanel);
+    }
+
+
+    private void createCoinButton() {
+        // important: there is another coin button on SceneFastConstruction
+        coinButton = menuControllerYio.getButtonById(531);
+        if (coinButton == null) { // init
+            coinButton = buttonFactory.getButton(generateSquare(0, 0.93, 0.07), 531, null);
+            coinButton.setAnimation(Animation.UP);
+            coinButton.setPressSound(SoundManagerYio.soundCoin);
+            coinButton.enableRectangularMask();
+            coinButton.disableTouchAnimation();
+        }
+        loadCoinButtonTexture();
+        coinButton.appearFactor.appear(3, 2);
+        coinButton.setTouchable(true);
+        coinButton.setReaction(Reaction.rbShowColorStats);
+    }
+
+
+    public void onSkinChanged() {
+        if (coinButton != null) {
+            coinButton.resetTexture();
+        }
+    }
+
+
+    void loadCoinButtonTexture() {
+        menuControllerYio.loadButtonOnce(coinButton, menuControllerYio.yioGdxGame.skinManager.getCoinTexturePath());
     }
 }

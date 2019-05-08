@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.menu.scenes.gameplay;
 
-import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
@@ -11,11 +11,13 @@ import yio.tro.antiyoy.menu.fast_construction.FastConstructionPanel;
 public class SceneFastConstructionPanel extends AbstractGameplayScene {
 
     public FastConstructionPanel fastConstructionPanel;
+    private ButtonYio coinButton;
 
 
     public SceneFastConstructionPanel(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
+        coinButton = null;
         fastConstructionPanel = null;
     }
 
@@ -30,7 +32,7 @@ public class SceneFastConstructionPanel extends AbstractGameplayScene {
 
 
     private void createCoinButton() {
-        ButtonYio coinButton = menuControllerYio.getButtonById(610);
+        coinButton = menuControllerYio.getButtonById(610);
 
         if (coinButton == null) { // init
             coinButton = buttonFactory.getButton(generateSquare(0, 0.93, 0.07), 610, null);
@@ -47,8 +49,15 @@ public class SceneFastConstructionPanel extends AbstractGameplayScene {
     }
 
 
+    public void onSkinChanged() {
+        if (coinButton != null) {
+            coinButton.resetTexture();
+        }
+    }
+
+
     public void checkToReappear() {
-        if (!Settings.fastConstructionEnabled) return;
+        if (!SettingsManager.fastConstructionEnabled) return;
         if (fastConstructionPanel.getFactor().get() == 1) return;
 
         create();
@@ -56,12 +65,7 @@ public class SceneFastConstructionPanel extends AbstractGameplayScene {
 
 
     void loadCoinButtonTexture(ButtonYio coinButton) {
-        if (Settings.isShroomArtsEnabled()) {
-            menuControllerYio.loadButtonOnce(coinButton, "skins/ant/coin.png");
-            return;
-        }
-
-        menuControllerYio.loadButtonOnce(coinButton, "coin.png");
+        menuControllerYio.loadButtonOnce(coinButton, menuControllerYio.yioGdxGame.skinManager.getCoinTexturePath());
     }
 
 

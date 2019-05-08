@@ -130,7 +130,7 @@ public class SliderYio extends InterfaceElement implements SliderListener {
 
 
     void setValueByX(float x) {
-        int lastIndex = getCurrentRunnerIndex();
+        int lastIndex = getValueIndex();
 
         x -= pos.x;
         runnerValue = (float) (x / pos.width);
@@ -142,7 +142,7 @@ public class SliderYio extends InterfaceElement implements SliderListener {
             runnerValue = 1;
         }
 
-        if (lastIndex != getCurrentRunnerIndex()) {
+        if (lastIndex != getValueIndex()) {
             behavior.onValueChanged(this);
             updateValueString();
         }
@@ -150,7 +150,7 @@ public class SliderYio extends InterfaceElement implements SliderListener {
 
 
     void pullRunnerToCenterOfSegment() {
-        double cx = getCurrentRunnerIndex() * segmentSize;
+        double cx = getValueIndex() * segmentSize;
         double delta = cx - runnerValue;
         runnerValue += 0.2 * delta;
         limitRunnerValue();
@@ -366,13 +366,13 @@ public class SliderYio extends InterfaceElement implements SliderListener {
     }
 
 
-    public void setCurrentRunnerIndex(int index) {
+    public void setValueIndex(int index) {
         setRunnerValue((float) index / numberOfSegments);
         updateValueString();
     }
 
 
-    public int getCurrentRunnerIndex() {
+    public int getValueIndex() {
         return (int) (runnerValue / segmentSize + 0.5);
     }
 

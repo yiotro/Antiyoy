@@ -5,7 +5,7 @@ import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.menu.ButtonYio;
 
 /**
- * Created by ivan on 05.08.14.
+ * Created by yiotro on 05.08.14.
  */
 public class RbExit extends Reaction {
 

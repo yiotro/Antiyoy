@@ -71,14 +71,14 @@ public class RenderContextListMenuElement extends MenuRender{
     private void renderItemSelection(ClmItem item) {
         GraphicsYio.setBatchAlpha(batch, 0.2 * item.selectionFactor.get());
 
-        GraphicsYio.drawByRectangle(batch, getGameView().blackPixel, item.position);
+        GraphicsYio.drawByRectangle(batch, getBlackPixel(), item.position);
 
         GraphicsYio.setBatchAlpha(batch, f);
     }
 
 
     private void renderBlackout() {
-        GraphicsYio.drawByRectangle(batch, getGameView().blackPixel, contextListMenuElement.blackoutPosition);
+        GraphicsYio.drawByRectangle(batch, getBlackPixel(), contextListMenuElement.blackoutPosition);
     }
 
 

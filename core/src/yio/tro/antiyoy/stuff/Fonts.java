@@ -35,7 +35,7 @@ public class Fonts {
         parameter.size = FONT_SIZE;
         parameter.flip = false;
         gameFont = generator.generateFont(parameter);
-        gameFont.setColor(Color.BLACK);
+        gameFont.setColor(Color.WHITE);
 
         parameter.size = (int) (0.5 * FONT_SIZE);
         parameter.flip = false;

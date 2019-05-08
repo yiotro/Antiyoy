@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.factor_yio;
 
 /**
- * Created by ivan on 09.04.2016.
+ * Created by yiotro on 09.04.2016.
  */
 public class MoveBehaviorMaterial extends MoveBehavior {
 

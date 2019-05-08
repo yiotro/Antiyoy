@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.SettingsManager;
+import yio.tro.antiyoy.gameplay.skins.SkinType;
 import yio.tro.antiyoy.menu.*;
 import yio.tro.antiyoy.menu.slider.SliderBehavior;
 import yio.tro.antiyoy.menu.slider.SliderYio;
@@ -69,7 +70,7 @@ public class SceneMoreSettingsMenu extends AbstractScene{
 
     public void onDestroy() {
         applyValues();
-        Settings.getInstance().saveMoreSettings();
+        SettingsManager.getInstance().saveMoreSettings();
     }
 
 
@@ -105,39 +106,38 @@ public class SceneMoreSettingsMenu extends AbstractScene{
 
 
     private void loadValues() {
-        skinSlider.setCurrentRunnerIndex(Settings.skinIndex);
-        sensitivitySlider.setCurrentRunnerIndex((int) (6f * Settings.sensitivity));
+        skinSlider.setValueIndex(SettingsManager.skinIndex);
+        sensitivitySlider.setValueIndex((int) (6f * SettingsManager.sensitivity));
 
-        chkLongTapToMove.setChecked(Settings.longTapToMove);
-        chkWaterTexture.setChecked(Settings.waterTextureChosen);
-        chkReplays.setChecked(Settings.replaysEnabled);
-        chkFastConstruction.setChecked(Settings.fastConstructionEnabled);
-        chkLeftHanded.setChecked(Settings.leftHandMode);
-        chkResumeButton.setChecked(Settings.resumeButtonEnabled);
-        chkFullScreen.setChecked(Settings.fullScreenMode);
+        chkLongTapToMove.setChecked(SettingsManager.longTapToMove);
+        chkWaterTexture.setChecked(SettingsManager.waterTextureEnabled);
+        chkReplays.setChecked(SettingsManager.replaysEnabled);
+        chkFastConstruction.setChecked(SettingsManager.fastConstructionEnabled);
+        chkLeftHanded.setChecked(SettingsManager.leftHandMode);
+        chkResumeButton.setChecked(SettingsManager.resumeButtonEnabled);
+        chkFullScreen.setChecked(SettingsManager.fullScreenMode);
     }
 
 
     public void applyValues() {
         boolean needRestart = false;
 
-        Settings.getInstance().setSkin(skinSlider.getCurrentRunnerIndex());
-        Settings.getInstance().setSensitivity(sensitivitySlider.getCurrentRunnerIndex());
+        SettingsManager.getInstance().setSkin(skinSlider.getValueIndex());
+        SettingsManager.getInstance().setSensitivity(sensitivitySlider.getValueIndex());
 
-        Settings.longTapToMove = chkLongTapToMove.isChecked();
-        Settings.waterTextureChosen = chkWaterTexture.isChecked();
-        Settings.replaysEnabled = chkReplays.isChecked();
-        Settings.fastConstructionEnabled = chkFastConstruction.isChecked();
-        Settings.leftHandMode = chkLeftHanded.isChecked();
-        Settings.resumeButtonEnabled = chkResumeButton.isChecked();
+        SettingsManager.longTapToMove = chkLongTapToMove.isChecked();
+        SettingsManager.waterTextureEnabled = chkWaterTexture.isChecked();
+        SettingsManager.replaysEnabled = chkReplays.isChecked();
+        SettingsManager.fastConstructionEnabled = chkFastConstruction.isChecked();
+        SettingsManager.leftHandMode = chkLeftHanded.isChecked();
+        SettingsManager.resumeButtonEnabled = chkResumeButton.isChecked();
 
-        if (Settings.fullScreenMode != chkFullScreen.isChecked()) {
-            Settings.fullScreenMode = chkFullScreen.isChecked();
+        if (SettingsManager.fullScreenMode != chkFullScreen.isChecked()) {
+            SettingsManager.fullScreenMode = chkFullScreen.isChecked();
             needRestart = true;
         }
 
-        menuControllerYio.yioGdxGame.gameView.loadBackgroundTexture();
-        menuControllerYio.yioGdxGame.gameView.loadSkin();
+        menuControllerYio.yioGdxGame.gameView.onMoreSettingsChanged();
 
         if (needRestart) {
             Scenes.sceneNotification.show("restart_app");
@@ -162,14 +162,14 @@ public class SceneMoreSettingsMenu extends AbstractScene{
         RectangleYio pos = generateRectangle((1 - sWidth) / 2, 0, sWidth, 0);
 
         skinSlider = new SliderYio(menuControllerYio, -1);
-        skinSlider.setValues(0, 0, 3, Animation.UP);
+        skinSlider.setValues(0, 0, SkinType.values().length - 1, Animation.UP);
         skinSlider.setPosition(pos);
         skinSlider.setParentElement(topLabel, 0.05);
         skinSlider.setTitle("skin");
         skinSlider.setBehavior(new SliderBehavior() {
             @Override
             public String getValueString(SliderYio sliderYio) {
-                return getSkinStringBySliderIndex(sliderYio.getCurrentRunnerIndex());
+                return getSkinStringBySliderIndex(sliderYio.getValueIndex());
             }
         });
         sliders.add(skinSlider);
@@ -182,7 +182,7 @@ public class SceneMoreSettingsMenu extends AbstractScene{
         sensitivitySlider.setBehavior(new SliderBehavior() {
             @Override
             public String getValueString(SliderYio sliderYio) {
-                return "" + (sliderYio.getCurrentRunnerIndex() + 1);
+                return "" + (sliderYio.getValueIndex() + 1);
             }
         });
         sliders.add(sensitivitySlider);
@@ -205,6 +205,10 @@ public class SceneMoreSettingsMenu extends AbstractScene{
                 return LanguagesManager.getInstance().getString("grid");
             case 3:
                 return LanguagesManager.getInstance().getString("skin_shroomarts");
+            case 4:
+                return LanguagesManager.getInstance().getString("skin_bubbles");
+            case 5:
+                return "Jannes Peters";
         }
     }
 

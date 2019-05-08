@@ -216,7 +216,6 @@ public class LevelEditor {
 
     public String getFullLevelString() {
         GameRules.colorNumber = countUpColorNumber();
-        gameController.fieldController.detectProvinces();
         return gameController.fieldController.getFullLevelString();
     }
 
@@ -232,24 +231,41 @@ public class LevelEditor {
     }
 
 
+    public boolean isCurrentSlotEmpty() {
+        Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
+        String fullLevel = prefs.getString(SLOT_NAME + currentSlotNumber, "");
+        return fullLevel.length() < 12;
+    }
+
+
+    public void createNewLevel(int levelSize) {
+        Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
+        LoadingParameters instance = LoadingParameters.getInstance();
+        instance.mode = LoadingMode.EDITOR_NEW;
+        instance.levelSize = levelSize;
+        instance.playersNumber = 1;
+        instance.colorNumber = 5;
+        instance.colorOffset = 0;
+        instance.difficulty = 1;
+
+        LoadingManager.getInstance().startGame(instance);
+        GameRules.editorChosenColor = prefs.getInteger("chosen_color" + currentSlotNumber);
+        GameRules.editorFog = prefs.getBoolean("editor_fog" + currentSlotNumber, false);
+        GameRules.editorDiplomacy = prefs.getBoolean("editor_diplomacy" + currentSlotNumber, false);
+
+        defaultValues();
+    }
+
+
     public void loadSlot() {
         Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
         String fullLevel = prefs.getString(SLOT_NAME + currentSlotNumber, "");
 
         LoadingParameters instance = LoadingParameters.getInstance();
 
-        if (fullLevel.length() < 3) {
-            instance.mode = LoadingMode.EDITOR_NEW;
-            instance.levelSize = FieldController.SIZE_BIG;
-            instance.playersNumber = 1;
-            instance.colorNumber = 5;
-            instance.colorOffset = 0;
-            instance.difficulty = 1;
-        } else {
-            instance.mode = LoadingMode.EDITOR_LOAD;
-            instance.applyFullLevel(fullLevel);
-            instance.colorOffset = 0;
-        }
+        instance.mode = LoadingMode.EDITOR_LOAD;
+        instance.applyFullLevel(fullLevel);
+        instance.colorOffset = 0;
 
         LoadingManager.getInstance().startGame(instance);
         GameRules.editorChosenColor = prefs.getInteger("chosen_color" + currentSlotNumber);
@@ -311,6 +327,8 @@ public class LevelEditor {
 
 
     public boolean isLevelAcceptableForUserLevels(String fullLevel) {
+        if (getLevelSize(fullLevel) >= LevelSize.HUGE) return false;
+
         String innerString = fullLevel.substring(fullLevel.indexOf("/") + 1);
         float min = -1;
         float max = -1;
@@ -333,6 +351,13 @@ public class LevelEditor {
         delta += 1;
 
         return delta <= MAX_ACCEPTABLE_DELTA;
+    }
+
+
+    private int getLevelSize(String fullLevel) {
+        String basicInfoString = fullLevel.substring(0, fullLevel.indexOf("/"));
+        String[] split = basicInfoString.split(" ");
+        return Integer.valueOf(split[1]);
     }
 
 
@@ -395,7 +420,7 @@ public class LevelEditor {
             unit.stopJumping();
         }
 
-        gameController.fieldController.provinces.clear();
+        gameController.fieldController.clearProvincesList();
     }
 
 
@@ -423,7 +448,7 @@ public class LevelEditor {
 
     private boolean updateFocusedHex() {
         Hex lastFocHex = gameController.fieldController.focusedHex;
-        gameController.selectionController.updateFocusedHex(scrX, scrY);
+        gameController.selectionManager.updateFocusedHex(scrX, scrY);
         if (gameController.fieldController.focusedHex == lastFocHex) return false; // focused hex is same
         return true; // focused hex updated
     }

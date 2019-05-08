@@ -2,7 +2,6 @@ package yio.tro.antiyoy.gameplay.diplomacy;
 
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
-import yio.tro.antiyoy.gameplay.MatchStatistics;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.object_pool.ObjectPoolYio;
 
@@ -56,6 +55,7 @@ public class DiplomaticLog {
         DiplomaticMessage message = findMessage(key);
         if (message == null) return;
 
+        int price;
         switch (message.type) {
             case friendship_proposal:
                 Scenes.sceneFriendshipDialog.create();
@@ -83,13 +83,43 @@ public class DiplomaticLog {
                 break;
             case hex_purchase:
                 ArrayList<Hex> hexesToBuy = diplomacyManager.convertStringToPurchaseList(message.arg1);
-                int price = Integer.valueOf(message.arg2);
-                Scenes.sceneConfirmSellHexes.create();
-                Scenes.sceneConfirmSellHexes.dialog.setData(message.sender, hexesToBuy, price);
+                price = Integer.valueOf(message.arg2);
+                Scenes.sceneAgreeToSellHexes.create();
+                Scenes.sceneAgreeToSellHexes.dialog.setData(message.sender, hexesToBuy, price);
+                break;
+            case hex_sale:
+                ArrayList<Hex> hexList = diplomacyManager.convertStringToPurchaseList(message.arg1);
+                price = Integer.valueOf(message.arg2);
+                Scenes.sceneAgreeToBuyHexes.create();
+                Scenes.sceneAgreeToBuyHexes.dialog.setData(message.recipient, hexList, price);
                 break;
         }
 
         removeMessage(message);
+    }
+
+
+    void checkToClearMutuallyExclusiveMessages() {
+        for (int i = messages.size() - 1; i >= 0; i--) {
+            DiplomaticMessage diplomaticMessage = messages.get(i);
+            if (!isFriendshipProposalToMainEntity(diplomaticMessage)) continue;
+
+            int senderColor = diplomaticMessage.getSenderColor();
+            DiplomaticMessage warMessage = findMessage(DipMessageType.war_declaration, senderColor);
+            if (warMessage == null) continue;
+
+            removeMessage(diplomaticMessage);
+        }
+    }
+
+
+    DiplomaticMessage findMessage(DipMessageType type, int senderColor) {
+        for (DiplomaticMessage message : messages) {
+            if (message.type != type) continue;
+            if (message.getSenderColor() != senderColor) continue;
+            return message;
+        }
+        return null;
     }
 
 

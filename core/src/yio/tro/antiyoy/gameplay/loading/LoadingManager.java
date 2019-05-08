@@ -1,10 +1,7 @@
 package yio.tro.antiyoy.gameplay.loading;
 
 import yio.tro.antiyoy.YioGdxGame;
-import yio.tro.antiyoy.gameplay.FieldController;
-import yio.tro.antiyoy.gameplay.GameController;
-import yio.tro.antiyoy.gameplay.GameSaver;
-import yio.tro.antiyoy.gameplay.Hex;
+import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.scenes.Scenes;
@@ -51,8 +48,21 @@ public class LoadingManager {
     }
 
 
+    private boolean checkForLoadingScreen() {
+        if (parameters.forceNoLoadingScreen) return false;
+        if (parameters.levelSize < LevelSize.HUGE) return false;
+
+        Scenes.sceneLoadingScreen.create();
+        Scenes.sceneLoadingScreen.loadingScreenElement.setLoadingParameters(parameters);
+
+        return true;
+    }
+
+
     public void startGame(LoadingParameters loadingParameters) {
         parameters = loadingParameters;
+//        if (checkForLoadingScreen()) return;
+
         beginCreation();
 
         switch (loadingParameters.mode) {
@@ -127,9 +137,9 @@ public class LoadingManager {
 
 
     private void createEditorLoaded() {
+        GameRules.inEditorMode = true;
         recreateActiveHexesFromParameter();
         gameSaver.detectRules();
-        GameRules.inEditorMode = true;
     }
 
 
@@ -268,14 +278,16 @@ public class LoadingManager {
         Scenes.sceneGameOverlay.create();
 
         if (GameRules.diplomacyEnabled) {
-            gameController.fieldController.diplomacyManager.checkForSingleMessage();
+            gameController.fieldController.diplomacyManager.checkForWinConditionsMessage();
         }
     }
 
 
     private void beginCreation() {
-        System.out.println();
-        System.out.println("Loading level...");
+        if (!DebugFlags.testMode) {
+            System.out.println();
+            System.out.println("Loading level...");
+        }
 
         gameSaver = gameController.gameSaver;
         gameController.defaultValues();
@@ -291,7 +303,7 @@ public class LoadingManager {
 
 
     private void applyLoadingParameters() {
-        gameController.setLevelSize(parameters.levelSize);
+        gameController.levelSizeManager.setLevelSize(parameters.levelSize);
         gameController.setPlayersNumber(parameters.playersNumber);
         GameRules.setColorNumber(parameters.colorNumber);
         GameRules.setDifficulty(parameters.difficulty);

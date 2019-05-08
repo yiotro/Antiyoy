@@ -5,7 +5,7 @@ import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
 /**
- * Created by ivan on 24.03.2016.
+ * Created by yiotro on 24.03.2016.
  */
 public class RbNextLevel extends Reaction {
 

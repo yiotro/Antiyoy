@@ -5,7 +5,7 @@ import yio.tro.antiyoy.gameplay.editor.LevelEditor;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 
 /**
- * Created by ivan on 27.11.2015.
+ * Created by yiotro on 27.11.2015.
  */
 public class RbInputModeSetObject extends Reaction {
 

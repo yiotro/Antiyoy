@@ -17,8 +17,7 @@ public class GraphicsYio {
     public static TextureRegion loadTextureRegion(String name, boolean antialias) {
         Texture texture = new Texture(Gdx.files.internal(name));
         if (antialias) texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        TextureRegion region = new TextureRegion(texture);
-        return region;
+        return new TextureRegion(texture);
     }
 
 
@@ -31,6 +30,16 @@ public class GraphicsYio {
     static public float getTextHeight(BitmapFont font, String text) {
         glyphLayout.setText(font, text);
         return glyphLayout.height;
+    }
+
+
+    public static void renderText(SpriteBatch spriteBatch, RenderableTextYio rText) {
+        renderText(spriteBatch, rText.font, rText.string, rText.position);
+    }
+
+
+    public static void renderText(SpriteBatch spriteBatch, BitmapFont font, String text, PointYio position) {
+        font.draw(spriteBatch, text, position.x, position.y);
     }
 
 
@@ -54,6 +63,11 @@ public class GraphicsYio {
         drawLine(batch, pixel, viewPos.x, viewPos.y, viewPos.x + viewPos.width, viewPos.y, thickness);
         drawLine(batch, pixel, viewPos.x, viewPos.y + viewPos.height, viewPos.x + viewPos.width, viewPos.y + viewPos.height, thickness);
         drawLine(batch, pixel, viewPos.x + viewPos.width, viewPos.y, viewPos.x + viewPos.width, viewPos.y + viewPos.height, thickness);
+    }
+
+
+    public static void drawByCircle(Batch batch, TextureRegion textureRegion, CircleYio circleYio) {
+        drawFromCenterRotated(batch, textureRegion, circleYio.center.x, circleYio.center.y, circleYio.radius, circleYio.angle);
     }
 
 

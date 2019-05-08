@@ -38,7 +38,7 @@
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Reset data"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -63,6 +63,7 @@
         <string key="small" value="small"/>
         <string key="medium" value="medium"/>
         <string key="big" value="big"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="AI only"/>
         <string key="single_player" value="single player"/>
         <string key="multiplayer" value="multiplayer"/>
@@ -297,6 +298,7 @@
         <string key="confirm_clear_level" value="Clear map?"/>
         <string key="confirm_randomize" value="Generate random map?"/>
         <string key="randomize" value="Randomize"/>
+        <string key="create" value="Create"/>
 
         <!-- Settings -->
         <string key="autosave" value="Autosave"/>
@@ -326,6 +328,7 @@
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
         <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -387,6 +390,10 @@
         <string key="quantity" value="Quantity"/>
         <string key="income" value="Income"/>
         <string key="by_name" value="By name"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
 
 
 
@@ -449,7 +456,7 @@
         #Игру сделал yiotro
 		"/>
         <string key="reset_campaign_data" value="Стереть данные"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Отдельное спасибо"/>
 
         <!-- Choose game mode menu-->
@@ -473,6 +480,7 @@
         <string key="small" value="маленькая"/>
         <string key="medium" value="средняя"/>
         <string key="big" value="большая"/>
+        <string key="huge" value="огромная"/>
         <string key="ai_only" value="битва роботов"/>
         <string key="single_player" value="один игрок"/>
         <string key="multiplayer" value="мультиплеер"/>
@@ -698,6 +706,7 @@
         <string key="confirm_clear_level" value="Очистить карту?"/>
         <string key="confirm_randomize" value="Сгенерировать случайную карту?"/>
         <string key="randomize" value="Случайная карта"/>
+        <string key="create" value="Создать"/>
 
         <!-- Settings -->
         <string key="autosave" value="Автосохранение"/>
@@ -727,6 +736,7 @@
         <string key="music" value="Музыка"/>
         <string key="left_handed" value="Леворукий режим"/>
         <string key="full_screen_mode" value="Полноэкранный режим"/>
+        <string key="skin_bubbles" value="Пузыри"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Это первый 'сложный' уровень. Уделяй больше внимания защите."/>
@@ -788,6 +798,11 @@
         <string key="quantity" value="Количество"/>
         <string key="income" value="Доход"/>
         <string key="by_name" value="По имени"/>
+        <string key="hex_trade" value="Торговля клетками"/>
+        <string key="hex_sale" value="Продажа клеток"/>
+        <string key="buyer_not_enough_money" value="У покупателя недостаточно денег"/>
+        <string key="loading" value="Загрузка"/>
+
     </language>
 
 
@@ -846,7 +861,7 @@
         #Гру зробив yiotro
 		"/>
         <string key="reset_campaign_data" value="Стерти данi"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Дякую"/>
 
         <!-- Choose game mode menu-->
@@ -870,7 +885,8 @@
         <string key="small" value="маленька"/>
         <string key="medium" value="середня"/>
         <string key="big" value="велика"/>
-        <string key="ai_only" value="Битва роботiв"/>
+        <string key="huge" value="величезна"/>
+        <string key="ai_only" value="битва роботiв"/>
         <string key="single_player" value="один гравець"/>
         <string key="multiplayer" value="мультиплеер"/>
         <string key="colors" value="кольорiв"/>
@@ -1095,6 +1111,7 @@
         <string key="confirm_clear_level" value="Очистити карту?"/>
         <string key="confirm_randomize" value="Сгенерувати карту?"/>
         <string key="randomize" value="Сгенерувати"/>
+        <string key="create" value="Створити"/>
 
         <!-- Settings -->
         <string key="autosave" value="Автозбереження"/>
@@ -1124,6 +1141,7 @@
         <string key="music" value="Музика"/>
         <string key="left_handed" value="Режим лівої руки"/>
         <string key="full_screen_mode" value="Повний екран"/>
+        <string key="skin_bubbles" value="Міхури"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Це перший 'складний' рівень. Приділяй більше уваги захисту."/>
@@ -1185,6 +1203,10 @@
         <string key="quantity" value="Кількість"/>
         <string key="income" value="Дохід"/>
         <string key="by_name" value="По імені"/>
+        <string key="hex_trade" value="Торгівля клітинами"/>
+        <string key="hex_sale" value="Продаж клітин"/>
+        <string key="buyer_not_enough_money" value="У покупця недостатньо грошей"/>
+        <string key="loading" value="Завантаження"/>
 
     </language>
 
@@ -1250,7 +1272,7 @@
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Daten zurücksetzen"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/>
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Besonderer Dank"/>
 
         <!-- Choose game mode menu-->
@@ -1279,6 +1301,7 @@
         <string key="small" value="klein"/>
         <string key="medium" value="mittel"/>
         <string key="big" value="groß"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="nur AI"/>
         <string key="single_player" value="Einzelspieler"/>
         <string key="multiplayer" value="Mehrspieler"/>
@@ -1546,6 +1569,7 @@
         <string key="confirm_clear_level" value="Karte zurücksetzen?"/>
         <string key="confirm_randomize" value="Zufällige Karte generieren?"/>
         <string key="randomize" value="Zufall"/>
+        <string key="create" value="Create"/>
 
         <!-- Settings -->
         <string key="autosave" value="Autosave"/>
@@ -1575,6 +1599,7 @@
         <string key="music" value="Musik"/>
         <string key="left_handed" value="Linkshänder"/>
         <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Dies ist das erste 'schwere' Level. Achte besonders auf Deine Verteidigung."/>
@@ -1636,6 +1661,10 @@
         <string key="quantity" value="Quantity"/>
         <string key="income" value="Income"/>
         <string key="by_name" value="By name"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
     </language>
 
 
@@ -1695,7 +1724,7 @@
         #Vytvořil yiotro
         "/>
         <string key="reset_campaign_data" value="Resetovat data"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -1719,6 +1748,7 @@
         <string key="small" value="malá"/>
         <string key="medium" value="střední"/>
         <string key="big" value="velká"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="pouze počítač"/>
         <string key="single_player" value="sólová hra"/>
         <string key="multiplayer" value="více hráčů"/>
@@ -1979,6 +2009,7 @@
         <string key="confirm_clear_level" value="Clear map?"/>
         <string key="confirm_randomize" value="Generate random map?"/>
         <string key="randomize" value="Randomize"/>
+        <string key="create" value="Create"/>
 
         <!-- Settings -->
         <string key="autosave" value="Auto ukládání"/>
@@ -2008,6 +2039,7 @@
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
         <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -2069,6 +2101,10 @@
         <string key="quantity" value="Quantity"/>
         <string key="income" value="Income"/>
         <string key="by_name" value="By name"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
     </language>
 
 
@@ -2129,7 +2165,7 @@
         #Auteur : yiotro
 		"/>
         <string key="reset_campaign_data" value="Effacer données"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Remerciements"/>
 
         <!-- Choose game mode menu-->
@@ -2153,6 +2189,7 @@
         <string key="small" value="petite"/>
         <string key="medium" value="moyenne"/>
         <string key="big" value="grande"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="IA uniquement"/>
         <string key="single_player" value="solo"/>
         <string key="multiplayer" value="multijoueur"/>
@@ -2419,6 +2456,7 @@
         <string key="confirm_clear_level" value="Redémarer?"/>
         <string key="confirm_randomize" value="Carte aléatoire?"/>
         <string key="randomize" value="Aléatoire"/>
+        <string key="create" value="Create"/>
 
         <!-- Settings -->
         <string key="autosave" value="Sauvegarde auto"/>
@@ -2448,6 +2486,7 @@
         <string key="music" value="Musique"/>
         <string key="left_handed" value="Gaucher"/>
         <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="C'est le premier niveau difficile, attention à vos défenses."/>  <!-- Same as english -->
@@ -2510,6 +2549,10 @@
         <string key="quantity" value="Quantity"/>
         <string key="income" value="Income"/>
         <string key="by_name" value="By name"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
     </language>
 
 
@@ -2571,7 +2614,7 @@
     #Wykonane przez yiotro
     "/>
         <string key="reset_campaign_data" value="Resetuj kampanie"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
 
@@ -2596,6 +2639,7 @@
         <string key="small" value="mała"/>
         <string key="medium" value="średnia"/>
         <string key="big" value="duża"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="tylko AI"/>
         <string key="single_player" value="tryb jednoosobowy"/>
         <string key="multiplayer" value="tryb wieloosobowy"/>
@@ -2864,6 +2908,7 @@
         <string key="confirm_clear_level" value="Clear map?"/>
         <string key="confirm_randomize" value="Generate random map?"/>
         <string key="randomize" value="Randomize"/>
+        <string key="create" value="Create"/>
 
         <!-- Settings -->
         <string key="autosave" value="Autozapis"/>
@@ -2893,6 +2938,7 @@
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
         <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -2954,6 +3000,10 @@
         <string key="quantity" value="Quantity"/>
         <string key="income" value="Income"/>
         <string key="by_name" value="By name"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
     </language>
 
 
@@ -3014,7 +3064,7 @@
         "/>
 
         <string key="reset_campaign_data" value="Resetta campagna"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -3038,6 +3088,7 @@
         <string key="small" value="Piccola"/>
         <string key="medium" value="Media"/>
         <string key="big" value="Grande"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="Solo AI"/>
         <string key="single_player" value="Giocatore singolo"/>
         <string key="multiplayer" value="Più giocatori"/>
@@ -3270,6 +3321,7 @@
         <string key="confirm_clear_level" value="Clear map?"/>
         <string key="confirm_randomize" value="Generate random map?"/>
         <string key="randomize" value="Randomize"/>
+        <string key="create" value="Create"/>
 
         <!-- Settings -->
         <string key="autosave" value="Autosalvataggio"/>
@@ -3299,6 +3351,7 @@
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
         <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -3360,6 +3413,10 @@
         <string key="quantity" value="Quantity"/>
         <string key="income" value="Income"/>
         <string key="by_name" value="By name"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
     </language>
 
 
@@ -3417,7 +3474,7 @@
        #Reddit: /r/yiotro_games
        #E-mail: yiotro93@gmail.com #Creado por yiotro"/>
         <string key="reset_campaign_data" value="Borrar datos"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu -->
@@ -3441,6 +3498,7 @@
         <string key="small" value="pequeño"/>
         <string key="medium" value="mediano"/>
         <string key="big" value="grande"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="Sólo IA"/>
         <string key="single_player" value="Un jugador"/>
         <string key="multiplayer" value="Multijugador"/>
@@ -3472,6 +3530,7 @@
         <string key="confirm_clear_level" value="Clear map?"/>
         <string key="confirm_randomize" value="Generate random map?"/>
         <string key="randomize" value="Randomize"/>
+        <string key="create" value="Create"/>
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Ok"/>
@@ -3733,6 +3792,7 @@
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
         <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -3794,6 +3854,10 @@
         <string key="quantity" value="Quantity"/>
         <string key="income" value="Income"/>
         <string key="by_name" value="By name"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
     </language>
 
 
@@ -3853,7 +3917,7 @@
         #Vytvořil yiotro
         "/>
         <string key="reset_campaign_data" value="Resetovať údaje"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -3877,6 +3941,7 @@
         <string key="small" value="malá"/>
         <string key="medium" value="stredná"/>
         <string key="big" value="velká"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="iba počítač"/>
         <string key="single_player" value="sólová hra"/>
         <string key="multiplayer" value="viac hráčov"/>
@@ -4138,6 +4203,7 @@
         <string key="confirm_clear_level" value="potvrď_vyčistenie_levelu"/>
         <string key="confirm_randomize" value="potvrď_náhodne"/>
         <string key="randomize" value="náhodne"/>
+        <string key="create" value="Create"/>
 
         <!-- Settings -->
         <string key="autosave" value="Auto ukladanie"/>
@@ -4167,6 +4233,7 @@
         <string key="music" value="hudba"/>
         <string key="left_handed" value="ľavoruký"/>
         <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -4228,6 +4295,10 @@
         <string key="quantity" value="Quantity"/>
         <string key="income" value="Income"/>
         <string key="by_name" value="By name"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
     </language>
 
 
@@ -4302,7 +4373,7 @@
         #yiotro出品
 		"/>
         <string key="reset_campaign_data" value="重置数据"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -4326,6 +4397,7 @@
         <string key="small" value="小型"/>
         <string key="medium" value="中型"/>
         <string key="big" value="大型"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="只有AI"/>
         <string key="single_player" value="单人游戏"/>
         <string key="multiplayer" value="多人游戏"/>
@@ -4591,6 +4663,7 @@
         <string key="confirm_clear_level" value="Clear map?"/>
         <string key="confirm_randomize" value="Generate random map?"/>
         <string key="randomize" value="Randomize"/>
+        <string key="create" value="Create"/>
 
         <!-- Settings -->
         <string key="autosave" value="自动保存"/>
@@ -4620,6 +4693,7 @@
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
         <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="这是第一个'困难' 关卡。 注意防守！"/>
@@ -4681,6 +4755,10 @@
         <string key="quantity" value="Quantity"/>
         <string key="income" value="Income"/>
         <string key="by_name" value="By name"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
     </language>
 
 
@@ -4746,7 +4824,7 @@
         #Yiotro tarafından yapıldı.
 		"/>
         <string key="reset_campaign_data" value="Verileri sıfırla"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Özel Teşekkürler"/>
 
         <!-- Choose game mode menu-->
@@ -4770,6 +4848,7 @@
         <string key="small" value="küçük"/>
         <string key="medium" value="orta"/>
         <string key="big" value="büyük"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="sadece yapay zeka"/>
         <string key="single_player" value="tek oyunculu"/>
         <string key="multiplayer" value="çok oyunculu"/>
@@ -5036,6 +5115,7 @@
         <string key="confirm_clear_level" value="Haritayı temizle?"/>
         <string key="confirm_randomize" value="Rastgele harita oluştur?"/>
         <string key="randomize" value="Rastgele"/>
+        <string key="create" value="Create"/>
 
         <!-- Settings -->
         <string key="autosave" value="Otomatik Kayıt"/>
@@ -5065,6 +5145,7 @@
         <string key="music" value="Müzik"/>
         <string key="left_handed" value="Sol el modu"/>
         <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Bu ilk 'zor' seviye. Savunmaya daha fazla önem ver."/>
@@ -5126,6 +5207,10 @@
         <string key="quantity" value="Quantity"/>
         <string key="income" value="Income"/>
         <string key="by_name" value="By name"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
     </language>
 
 
@@ -5197,7 +5282,7 @@
         #Направена от yiotro
 		"/>
         <string key="reset_campaign_data" value="Рестартирай всички данни"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -5221,6 +5306,7 @@
         <string key="small" value="малък"/>
         <string key="medium" value="среден"/>
         <string key="big" value="голям"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="само AI"/>
         <string key="single_player" value="единствен играч"/>
         <string key="multiplayer" value="няколко играча"/>
@@ -5252,6 +5338,7 @@
         <string key="confirm_clear_level" value="Clear map?"/>
         <string key="confirm_randomize" value="Generate random map?"/>
         <string key="randomize" value="Randomize"/>
+        <string key="create" value="Create"/>
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Ок"/>
@@ -5516,6 +5603,7 @@
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
         <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -5577,6 +5665,10 @@
         <string key="quantity" value="Quantity"/>
         <string key="income" value="Income"/>
         <string key="by_name" value="By name"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
 
     </language>
 
@@ -5651,7 +5743,7 @@
         #Feito por yiotro
         "/>
         <string key="reset_campaign_data" value="Resetar progresso"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -5675,6 +5767,7 @@
         <string key="small" value="pequeno"/>
         <string key="medium" value="médio"/>
         <string key="big" value="grande"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="apenas IA"/>
         <string key="single_player" value="um jogador"/>
         <string key="multiplayer" value="multijogadores"/>
@@ -5909,6 +6002,7 @@
         <string key="confirm_clear_level" value="Limpar mapa?"/>
         <string key="confirm_randomize" value="Gerar mapa aleatório?"/>
         <string key="randomize" value="Randomizar"/>
+        <string key="create" value="Create"/>
 
         <!-- Settings -->
         <string key="autosave" value="Salvar automaticamente"/>
@@ -5938,6 +6032,7 @@
         <string key="music" value="Música"/>
         <string key="left_handed" value="Mão esquerda"/>
         <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Esse é o primeiro nível 'difícil'. Preste mais atenção na defesa."/>
@@ -5999,6 +6094,10 @@
         <string key="quantity" value="Quantity"/>
         <string key="income" value="Income"/>
         <string key="by_name" value="By name"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
 
 
     </language>
@@ -6072,7 +6171,7 @@
         #Gemaakt door yiotro
         "/>
         <string key="reset_campaign_data" value="Gegevens initialiseren"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/>
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Speciale dank"/>
 
         <!-- Choose game mode menu-->
@@ -6096,6 +6195,7 @@
         <string key="small" value="klein"/>
         <string key="medium" value="middel"/>
         <string key="big" value="groot"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="Alleen AI"/>
         <string key="single_player" value="één speler"/>
         <string key="multiplayer" value="meerdere spelers"/>
@@ -6330,6 +6430,7 @@
         <string key="confirm_clear_level" value="Kaart verwijderen?"/>
         <string key="confirm_randomize" value="Willekeurige kaart aanmaken?"/>
         <string key="randomize" value="Randomiseren"/>
+        <string key="create" value="Create"/>
 
         <!-- Settings -->
         <string key="autosave" value="Automatisch opslaan"/>
@@ -6359,6 +6460,7 @@
         <string key="music" value="Muziek"/>
         <string key="left_handed" value="Linkshandig"/>
         <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Dit is het eerste level in categorie 'moeilijk'. Let meer op verdediging."/>
@@ -6420,6 +6522,10 @@
         <string key="quantity" value="Hoeveelheid"/>
         <string key="income" value="Income"/>
         <string key="by_name" value="By name"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
 
 
     </language>
@@ -6504,7 +6610,7 @@
         #Készítette: yiotro
         "/>
         <string key="reset_campaign_data" value="Kampány Újrakezdése"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -6528,6 +6634,7 @@
         <string key="small" value="Kicsi"/>
         <string key="medium" value="Közepes"/>
         <string key="big" value="Nagy"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="Csak AI"/>
         <string key="single_player" value="Egyjátékos"/>
         <string key="multiplayer" value="Többjátékos"/>
@@ -6797,6 +6904,7 @@
         <string key="confirm_clear_level" value="Törlöd a térképet?"/>
         <string key="confirm_randomize" value="Legenerálsz egy véletlenszerű térképet?"/>
         <string key="randomize" value="Véletlenszerűsítés"/>
+        <string key="create" value="Create"/>
 
         <!-- Settings -->
         <string key="autosave" value="Automatikus Mentés"/>
@@ -6826,6 +6934,7 @@
         <string key="music" value="Zene"/>
         <string key="left_handed" value="Bal kezes"/>
         <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Ez az első nehéz szint, fordíts nagyobb figyelmet a védelemre."/>
@@ -6887,6 +6996,10 @@
         <string key="quantity" value="Quantity"/>
         <string key="income" value="Income"/>
         <string key="by_name" value="By name"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
 
 
     </language>
@@ -6969,7 +7082,7 @@
         #Гульню зрабіў yiotro
 		"/>
         <string key="reset_campaign_data" value="Глядзець даныя"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Асоба дзякую"/>
 
         <!-- Choose game mode menu-->
@@ -6993,6 +7106,7 @@
         <string key="small" value="маленькая"/>
         <string key="medium" value="сярэдняя"/>
         <string key="big" value="вялікая"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="бітва робатаў"/>
         <string key="single_player" value="адзін гулец"/>
         <string key="multiplayer" value="мультыплэер"/>
@@ -7218,6 +7332,7 @@
         <string key="confirm_clear_level" value="Ачысціць карту?"/>
         <string key="confirm_randomize" value="Сгенерыраваць выпадковую карту?"/>
         <string key="randomize" value="Выпадковая карта"/>
+        <string key="create" value="Create"/>
 
         <!-- Settings -->
         <string key="autosave" value="Аўтазахаванне"/>
@@ -7247,6 +7362,7 @@
         <string key="music" value="Музыка"/>
         <string key="left_handed" value="Леварукі рэжым"/>
         <string key="full_screen_mode" value="Паўнаэкранны рэжым"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Гэта першы 'цяжкі' узровень. Удзяляй больш увагі абароне."/>
@@ -7308,6 +7424,10 @@
         <string key="quantity" value="Колькасць"/>
         <string key="income" value="Даход"/>
         <string key="by_name" value="Па імені"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
     </language>
 
 
@@ -7370,7 +7490,7 @@
         #Dibuat oleh yiotro
         "/>
         <string key="reset_campaign_data" value="Atur ulang data"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Terima kasih"/>
 
         <!-- Choose game mode menu-->
@@ -7395,6 +7515,7 @@
         <string key="small" value="kecil"/>
         <string key="medium" value="sedang"/>
         <string key="big" value="besar"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="AI saja"/>
         <string key="single_player" value="satu pemain"/>
         <string key="multiplayer" value="multipemain"/>
@@ -7629,6 +7750,7 @@
         <string key="confirm_clear_level" value="Kosongkan peta?"/>
         <string key="confirm_randomize" value="Buat peta secara acak?"/>
         <string key="randomize" value="Acak"/>
+        <string key="create" value="Create"/>
 
         <!-- Settings -->
         <string key="autosave" value="Autosimpan"/>
@@ -7658,6 +7780,7 @@
         <string key="music" value="Musik"/>
         <string key="left_handed" value="Kidal"/>
         <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Ini level tingkat 'hard' pertama. Beri perhatian lebih pada pertahanan."/>
@@ -7719,6 +7842,10 @@
         <string key="quantity" value="Jumlah"/>
         <string key="income" value="Income"/>
         <string key="by_name" value="By name"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
 
 
 
@@ -7782,7 +7909,7 @@
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Επαναφορά δεδομένων"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Ιδιαίτερες ευχαριστίες"/>
 
         <!-- Choose game mode menu-->
@@ -7807,6 +7934,7 @@
         <string key="small" value="μικρός"/>
         <string key="medium" value="μεσαίος"/>
         <string key="big" value="μεγάλος"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="Μόνο τεχνητή νοημοσύνη"/>
         <string key="single_player" value="Ένας παίχτης"/>
         <string key="multiplayer" value="Πολλοί παίχτες"/>
@@ -8041,6 +8169,7 @@
         <string key="confirm_clear_level" value="Καθαρισμός χάρτη;"/>
         <string key="confirm_randomize" value="Δημιουργία τυχαίου χάρτη;"/>
         <string key="randomize" value="Τυχαιοποίηση"/>
+        <string key="create" value="Create"/>
 
         <!-- Settings -->
         <string key="autosave" value="Αυτόματη αποθήκευση"/>
@@ -8070,6 +8199,7 @@
         <string key="music" value="Μουσική"/>
         <string key="left_handed" value="Αριστερόχειρας"/>
         <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Αυτός είναι το πρώτο 'δύσκολο' επίπεδο. Δώσε μεγαλύτερη προσοχή στην άμυνα."/>
@@ -8131,6 +8261,10 @@
         <string key="quantity" value="Ποσότητα"/>
         <string key="income" value="Income"/>
         <string key="by_name" value="By name"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
 
 
 
@@ -8203,7 +8337,7 @@
         #Laget av yiotro
         "/>
         <string key="reset_campaign_data" value="Tilbakestill data"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Spesiell Takk"/>
 
         <!-- Choose game mode menu-->
@@ -8228,6 +8362,7 @@
         <string key="small" value="liten"/>
         <string key="medium" value="medium"/>
         <string key="big" value="stor"/>
+        <string key="huge" value="huge"/>
         <string key="ai_only" value="AI bare"/>
         <string key="single_player" value="enkelt-spiller"/>
         <string key="multiplayer" value="flere-spiller"/>
@@ -8462,6 +8597,7 @@
         <string key="confirm_clear_level" value="Klar kart?"/>
         <string key="confirm_randomize" value="Generer tilfeldig kart?"/>
         <string key="randomize" value="Tilfeldig"/>
+        <string key="create" value="Create"/>
 
         <!-- Settings -->
         <string key="autosave" value="Automatisk lagring"/>
@@ -8491,6 +8627,7 @@
         <string key="music" value="Musikk"/>
         <string key="left_handed" value="Venstrehånds modus"/>
         <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Dette er det første 'harde' -nivået. Vær mer oppmerksom på forsvaret."/>
@@ -8519,9 +8656,7 @@
         <string key="win_conditions" value="Betingelser for seier"/>
         <string key="diplomatic_win_conditions" value="For å vinne diplomatisk må du være venner med alle."/>
         <string key="confirm_black_mark" value="Sett svart merke?"/>
-        <string key="black_mark_description" value="
-150/5000
-Ved å sette et svart merke på spilleren forbyr du at andre skal være venner med dere begge samtidig. Fungerer ikke på allerede inngåtte kontrakter."/>
+        <string key="black_mark_description" value="Ved å sette et svart merke på spilleren forbyr du at andre skal være venner med dere begge samtidig. Fungerer ikke på allerede inngåtte kontrakter."/>
         <string key="player_turn" value="Spiller sving"/>
         <string key="fine" value="straff"/>
         <string key="log" value="bokstaver"/>
@@ -8555,6 +8690,10 @@ Ved å sette et svart merke på spilleren forbyr du at andre skal være venner m
         <string key="quantity" value="Quantity"/>
         <string key="income" value="Income"/>
         <string key="by_name" value="By name"/>
+        <string key="hex_trade" value="Hex trade"/>
+        <string key="hex_sale" value="Hex sale"/>
+        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="loading" value="Loading"/>
 
 
 

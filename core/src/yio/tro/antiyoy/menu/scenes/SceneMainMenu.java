@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.campaign.CampaignLevelFactory;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
@@ -80,7 +80,7 @@ public class SceneMainMenu extends AbstractScene{
 
 
     public void checkToCreateResumeButton() {
-        if (!Settings.resumeButtonEnabled) return;
+        if (!SettingsManager.resumeButtonEnabled) return;
 
         resumeButton = buttonFactory.getButton(generateRectangle(0.2, 0.05, 0.6, 0.055), 5, getString("in_game_menu_resume"));
         resumeButton.setAnimation(Animation.DOWN);

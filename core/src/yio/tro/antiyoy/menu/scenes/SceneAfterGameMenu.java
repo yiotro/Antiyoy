@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
@@ -164,7 +164,7 @@ public class SceneAfterGameMenu extends AbstractScene {
 
 
     private void createReplayButton() {
-        if (!Settings.replaysEnabled) return;
+        if (!SettingsManager.replaysEnabled) return;
 
         replayButton = buttonFactory.getButton(generateRectangle(0.6, 0.9, 0.35, 0.055), 63, getString("replay"));
         replayButton.setReaction(Reaction.rbStartInstantReplay);

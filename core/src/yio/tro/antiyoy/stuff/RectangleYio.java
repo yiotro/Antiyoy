@@ -3,9 +3,10 @@ package yio.tro.antiyoy.stuff;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
 /**
- * Created by ivan on 22.07.14.
+ * Created by yiotro on 22.07.14.
  */
-public class RectangleYio implements ReusableYio{
+public class RectangleYio implements ReusableYio {
+
     public double x;
     public double y;
     public double width;
@@ -43,6 +44,15 @@ public class RectangleYio implements ReusableYio{
 
     public void setBy(RectangleYio src) {
         set(src.x, src.y, src.width, src.height);
+    }
+
+
+    public boolean isInCollisionWith(RectangleYio rect) {
+        if (rect.x > x + width) return false;
+        if (rect.x + rect.width < x) return false;
+        if (rect.y > y + height) return false;
+        if (rect.y + rect.height < y) return false;
+        return true;
     }
 
 

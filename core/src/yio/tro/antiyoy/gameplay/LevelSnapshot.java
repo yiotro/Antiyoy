@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.gameplay;
 
-import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyInfoCondensed;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.gameplay.replays.Replay;
@@ -35,7 +35,7 @@ public class LevelSnapshot {
         provincesCopy = new ArrayList<>();
         activeHexesCopy = new ArrayList<>();
         matchStatistics = new MatchStatistics();
-        if (Settings.replaysEnabled) {
+        if (SettingsManager.replaysEnabled) {
             replayBuffer = new ArrayList<>();
         }
 
@@ -93,7 +93,7 @@ public class LevelSnapshot {
 
 
     private void updateReplayBuffer() {
-        if (!Settings.replaysEnabled) return;
+        if (!SettingsManager.replaysEnabled) return;
 
         replayBuffer.clear();
         ReplayManager replayManager = gameController.replayManager;
@@ -149,7 +149,7 @@ public class LevelSnapshot {
     private void updateSelectionHex() {
         selectionHex = null;
 
-        if (!gameController.selectionController.isSomethingSelected()) return;
+        if (!gameController.selectionManager.isSomethingSelected()) return;
 
         Province selectedProvince = gameController.fieldController.selectedProvince;
         if (selectedProvince == null) return;
@@ -197,11 +197,12 @@ public class LevelSnapshot {
         DiplomacyInfoCondensed instance = DiplomacyInfoCondensed.getInstance();
         instance.setFull(diplomacyInfo);
         instance.apply(diplomacyManager);
+        diplomacyManager.updateAllAliveStatuses();
     }
 
 
     private void recreateReplayBuffer() {
-        if (!Settings.replaysEnabled) return;
+        if (!SettingsManager.replaysEnabled) return;
         if (GameRules.replayMode) return;
 
         gameController.replayManager.getReplay().recreateBufferFromSnapshot(replayBuffer);
@@ -214,7 +215,7 @@ public class LevelSnapshot {
 
 
     private void recreateSelection() {
-        gameController.selectionController.deselectAll();
+        gameController.selectionManager.deselectAll();
 
         if (selectionHex != null) {
             gameController.selectAdjacentHexes(selectionHex);

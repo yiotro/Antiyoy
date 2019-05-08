@@ -4,12 +4,13 @@ import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
 import yio.tro.antiyoy.stuff.Fonts;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.*;
 
 /**
- * Created by ivan on 27.05.2015.
+ * Created by yiotro on 27.05.2015.
  */
 public class Province {
 
@@ -19,6 +20,7 @@ public class Province {
     private GameController gameController;
     public String name;
     public float nameWidth;
+    PointYio tempPoint;
 
 
     public Province(GameController gameController, ArrayList<Hex> hexList) {
@@ -26,6 +28,7 @@ public class Province {
         this.hexList = new ArrayList<>(hexList);
         tempList = new ArrayList<>();
         money = DEFAULT_MONEY;
+        tempPoint = new PointYio();
     }
 
 
@@ -76,7 +79,7 @@ public class Province {
     }
 
 
-    private Hex getRandomHex() {
+    public Hex getRandomHex() {
         return hexList.get(gameController.random.nextInt(hexList.size()));
     }
 
@@ -291,6 +294,21 @@ public class Province {
 
     boolean containsHex(Hex hex) {
         return hexList.contains(hex);
+    }
+
+
+    public void focusCameraOnThis() {
+        tempPoint.reset();
+
+        for (Hex hex : hexList) {
+            tempPoint.x += hex.pos.x;
+            tempPoint.y += hex.pos.y;
+        }
+
+        tempPoint.x /= hexList.size();
+        tempPoint.y /= hexList.size();
+
+        gameController.cameraController.focusOnPoint(tempPoint);
     }
 
 

@@ -128,7 +128,7 @@ public class RenderLevelSelector extends MenuRender {
         selX *= pos.width / selector.defPos.width;
 
         batch.draw(
-                getGameView().blackPixel,
+                getBlackPixel(),
                 (float) pos.x + selector.horOffset + selX,
                 (float) pos.y + selector.verOffset + selY,
                 2 * selector.iconRadius, 2 * selector.iconRadius

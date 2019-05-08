@@ -1,6 +1,10 @@
 package yio.tro.antiyoy.menu.scenes.gameplay;
 
 import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.Hex;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -9,7 +13,9 @@ import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
-public class SceneAreaSelectionUI extends AbstractGameplayScene{
+import java.util.ArrayList;
+
+public class SceneAreaSelectionUI extends AbstractGameplayScene {
 
 
     private Reaction rbCancel;
@@ -47,16 +53,24 @@ public class SceneAreaSelectionUI extends AbstractGameplayScene{
 
 
     private void onApplyButtonPressed() {
-        FieldController fieldController = menuControllerYio.yioGdxGame.gameController.fieldController;
-        fieldController.diplomacyManager.disableAreaSelectionMode();
+        GameController gameController = menuControllerYio.yioGdxGame.gameController;
+        FieldController fieldController = gameController.fieldController;
+        DiplomacyManager diplomacyManager = fieldController.diplomacyManager;
+        diplomacyManager.disableAreaSelectionMode();
 
-        if (fieldController.moveZoneManager.moveZone.size() == 0) return;
+        ArrayList<Hex> moveZone = fieldController.moveZoneManager.moveZone;
+        if (moveZone.size() == 0) return;
 
-        Scenes.sceneHexPurchaseDialog.create();
-        Scenes.sceneHexPurchaseDialog.dialog.setData(
-                fieldController.diplomacyManager.getMainEntity(),
-                fieldController.moveZoneManager.moveZone
-        );
+        if (moveZone.get(0).colorIndex == gameController.turn) {
+            int asFilterColor = gameController.selectionManager.getAsFilterColor();
+            DiplomaticEntity entity = diplomacyManager.getEntity(asFilterColor);
+
+            Scenes.sceneHexSaleDialog.create();
+            Scenes.sceneHexSaleDialog.dialog.setData(entity, moveZone);
+        } else {
+            Scenes.sceneHexPurchaseDialog.create();
+            Scenes.sceneHexPurchaseDialog.dialog.setData(diplomacyManager.getMainEntity(), moveZone);
+        }
     }
 
 
@@ -79,7 +93,7 @@ public class SceneAreaSelectionUI extends AbstractGameplayScene{
 
         textViewTitle = new TextViewElement();
         textViewTitle.setPosition(generateRectangle(0.45, 0.95, 0.1, 0.02));
-        textViewTitle.setTextValue(getString("hex_purchase"));
+        textViewTitle.setTextValue(getString("hex_trade"));
         textViewTitle.setAnimation(Animation.UP);
         menuControllerYio.addElementToScene(textViewTitle);
     }

@@ -7,6 +7,7 @@ import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.behaviors.editor.EditorReactions;
 import yio.tro.antiyoy.menu.scenes.AbstractScene;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 
 public class SceneEditorActions extends AbstractScene{
 
@@ -14,6 +15,10 @@ public class SceneEditorActions extends AbstractScene{
     double bHeight, y;
     private ButtonYio basePanel;
     int lastSlotNumber;
+    public ButtonYio playButton;
+    public ButtonYio exportButton;
+    public ButtonYio importButton;
+    public ButtonYio editButton;
 
 
     public SceneEditorActions(MenuControllerYio menuControllerYio) {
@@ -41,10 +46,11 @@ public class SceneEditorActions extends AbstractScene{
         basePanel.setTouchable(false);
         basePanel.setIgnorePauseResume(true);
 
-        addInternalButton(182, "play", EditorReactions.rbEditorPlay);
-        addInternalButton(183, "export", EditorReactions.rbEditorExport);
-        addInternalButton(184, "import", EditorReactions.rbEditorImportConfirmMenu);
-        addInternalButton(185, "edit", EditorReactions.rbStartEditorMode);
+        playButton = addInternalButton(182, "play", EditorReactions.rbEditorPlay);
+        exportButton = addInternalButton(183, "export", EditorReactions.rbEditorExport);
+        importButton = addInternalButton(184, "import", EditorReactions.rbEditorImportConfirmMenu);
+        editButton = addInternalButton(185, "edit", EditorReactions.rbStartEditorMode);
+        updateEditButtonText();
 
         for (int i = 181; i <= 185; i++) {
             ButtonYio buttonYio = menuControllerYio.getButtonById(i);
@@ -53,6 +59,20 @@ public class SceneEditorActions extends AbstractScene{
         }
 
         menuControllerYio.endMenuCreation();
+    }
+
+
+    private void updateEditButtonText() {
+        editButton.cleatText();
+
+        LevelEditor levelEditor = menuControllerYio.yioGdxGame.gameController.getLevelEditor();
+        if (levelEditor.isCurrentSlotEmpty()) {
+            editButton.addTextLine(LanguagesManager.getInstance().getString("create"));
+        } else {
+            editButton.addTextLine(LanguagesManager.getInstance().getString("edit"));
+        }
+
+        menuControllerYio.buttonRenderer.renderButton(editButton);
     }
 
 
@@ -82,12 +102,14 @@ public class SceneEditorActions extends AbstractScene{
     }
 
 
-    private void addInternalButton(int id, String key, Reaction reaction) {
+    private ButtonYio addInternalButton(int id, String key, Reaction reaction) {
         ButtonYio button = buttonFactory.getButton(generateRectangle(0.1, y, 0.8, bHeight), id, getString(key));
         button.setReaction(reaction);
         button.setShadow(false);
         button.setVisualHook(basePanel);
 
         y += bHeight;
+
+        return button;
     }
 }

@@ -2,7 +2,7 @@ package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.stuff.LanguagesManager;
-import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
@@ -10,7 +10,7 @@ import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
 /**
- * Created by ivan on 12.11.2015.
+ * Created by yiotro on 12.11.2015.
  */
 public class TutorialScriptSlayRules extends TutorialScript{
 
@@ -79,7 +79,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
 
 
     private void enableLongTapToMoveInSettings() {
-        Settings.longTapToMove = true;
+        SettingsManager.longTapToMove = true;
     }
 
 
@@ -260,28 +260,28 @@ public class TutorialScriptSlayRules extends TutorialScript{
         switch (currentStep) {
             default:
             case STEP_SELECT_SPEARMAN:
-                if (gameController.selectionController.selectedUnit != null) return true;
+                if (gameController.selectionManager.selectedUnit != null) return true;
                 return false;
             case STEP_ATTACK_WITH_SPEARMAN:
                 if (getHex(19, 7).colorIndex == 0) return true;
                 return false;
             case STEP_SELECT_MAN:
-                if (gameController.selectionController.selectedUnit != null) return true;
+                if (gameController.selectionManager.selectedUnit != null) return true;
                 return false;
             case STEP_ATTACK_WITH_MAN:
                 if (getHex(18, 8).colorIndex == 0) return true;
                 return false;
             case STEP_PRESS_BUILD_TOWER_BUTTON:
-                if (gameController.selectionController.tipFactor.get() > 0) return true;
+                if (gameController.selectionManager.tipFactor.get() > 0) return true;
                 return false;
             case STEP_BUILD_TOWER:
                 if (getHex(21, 5).objectInside == Obj.TOWER) return true;
                 return false;
             case STEP_PRESS_BUILD_UNIT_BUTTON_FIRST_TIME:
-                if (gameController.selectionController.tipFactor.get() > 0) return true;
+                if (gameController.selectionManager.tipFactor.get() > 0) return true;
                 return false;
             case STEP_PRESS_BUILD_UNIT_BUTTON_SECOND_TIME:
-                if (gameController.selectionController.getTipType() == SelectionController.TIP_INDEX_UNIT_2) return true;
+                if (gameController.selectionManager.getTipType() == SelectionTipType.UNIT_2) return true;
                 return false;
             case STEP_BUILD_SPEARMAN:
                 if (getHex(20, 5).colorIndex == 0) return true;
@@ -296,7 +296,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
                 if (menuControllerYio.getButtonById(31).isCurrentlyTouched()) return true;
                 return false;
             case STEP_SELECT_PROVINCE:
-                if (gameController.selectionController.isSomethingSelected()) return true;
+                if (gameController.selectionManager.isSomethingSelected()) return true;
                 return false;
             case STEP_HOLD_TO_MARCH:
                 if (!getHex(19, 8).containsUnit()) return true;
@@ -305,7 +305,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
                 if (getHex(19, 8).containsUnit()) return true;
                 return false;
             case STEP_SELECT_UNIT_TO_MERGE:
-                if (gameController.selectionController.selectedUnit != null) return true;
+                if (gameController.selectionManager.selectedUnit != null) return true;
                 return false;
             case STEP_MERGE_UNITS:
                 if (getHex(18, 8).unit.strength == 2) return true;

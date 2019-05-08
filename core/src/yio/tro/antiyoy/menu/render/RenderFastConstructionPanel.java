@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.menu.render;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.fast_construction.FastConstructionPanel;
 import yio.tro.antiyoy.menu.fast_construction.FcpItem;
@@ -23,13 +23,6 @@ public class RenderFastConstructionPanel extends MenuRender{
     private TextureRegion tower;
     private TextureRegion strongTower;
     private TextureRegion house;
-    private TextureRegion shrMan0;
-    private TextureRegion shrMan1;
-    private TextureRegion shrMan2;
-    private TextureRegion shrMan3;
-    private TextureRegion shrTower;
-    private TextureRegion shrStrongTower;
-    private TextureRegion shrHouse;
     private TextureRegion sideShadow;
     private float smDelta;
     private TextureRegion endTurnIcon;
@@ -48,21 +41,29 @@ public class RenderFastConstructionPanel extends MenuRender{
         diplomacyIcon = GraphicsYio.loadTextureRegion("diplomacy/flag.png", true);
         diplomacyRedIcon = GraphicsYio.loadTextureRegion("diplomacy/flag_red.png", true);
 
-        man0 = GraphicsYio.loadTextureRegion("field_elements/man0.png", true);
-        man1 = GraphicsYio.loadTextureRegion("field_elements/man1.png", true);
-        man2 = GraphicsYio.loadTextureRegion("field_elements/man2.png", true);
-        man3 = GraphicsYio.loadTextureRegion("field_elements/man3.png", true);
-        tower = GraphicsYio.loadTextureRegion("field_elements/tower.png", true);
-        strongTower = GraphicsYio.loadTextureRegion("field_elements/strong_tower.png", true);
-        house = GraphicsYio.loadTextureRegion("field_elements/house.png", true);
+        loadSkinDependentTextures();
+    }
 
-        shrMan0 = GraphicsYio.loadTextureRegion("skins/ant/field_elements/man0.png", true);
-        shrMan1 = GraphicsYio.loadTextureRegion("skins/ant/field_elements/man1.png", true);
-        shrMan2 = GraphicsYio.loadTextureRegion("skins/ant/field_elements/man2.png", true);
-        shrMan3 = GraphicsYio.loadTextureRegion("skins/ant/field_elements/man3.png", true);
-        shrTower = GraphicsYio.loadTextureRegion("skins/ant/field_elements/tower.png", true);
-        shrStrongTower = GraphicsYio.loadTextureRegion("skins/ant/field_elements/strong_tower.png", true);
-        shrHouse = GraphicsYio.loadTextureRegion("skins/ant/field_elements/house.png", true);
+
+    private void loadSkinDependentTextures() {
+        man0 = loadFromFieldElements("man0");
+        man1 = loadFromFieldElements("man1");
+        man2 = loadFromFieldElements("man2");
+        man3 = loadFromFieldElements("man3");
+        tower = loadFromFieldElements("tower");
+        strongTower = loadFromFieldElements("strong_tower");
+        house = loadFromFieldElements("house");
+    }
+
+
+    public void onSkinChanged() {
+        loadSkinDependentTextures();
+    }
+
+
+    private TextureRegion loadFromFieldElements(String name) {
+        String fieldElementsFolderPath = menuViewYio.yioGdxGame.skinManager.getFieldElementsFolderPath();
+        return GraphicsYio.loadTextureRegion(fieldElementsFolderPath + "/" + name + ".png", true);
     }
 
 
@@ -149,15 +150,11 @@ public class RenderFastConstructionPanel extends MenuRender{
             }
         }
 
-        if (Settings.isShroomArtsEnabled()) {
-            return getShroomItemTexture(item);
-        } else {
-            return getDefaultItemTexture(item);
-        }
+        return getSkinDependentItemTexture(item);
     }
 
 
-    private TextureRegion getDefaultItemTexture(FcpItem item) {
+    private TextureRegion getSkinDependentItemTexture(FcpItem item) {
         switch (item.action) {
             default: return null;
             case FcpItem.ACTION_UNIT_1: return man0;
@@ -167,20 +164,6 @@ public class RenderFastConstructionPanel extends MenuRender{
             case FcpItem.ACTION_FARM: return house;
             case FcpItem.ACTION_TOWER: return tower;
             case FcpItem.ACTION_STRONG_TOWER: return strongTower;
-        }
-    }
-
-
-    private TextureRegion getShroomItemTexture(FcpItem item) {
-        switch (item.action) {
-            default: return null;
-            case FcpItem.ACTION_UNIT_1: return shrMan0;
-            case FcpItem.ACTION_UNIT_2: return shrMan1;
-            case FcpItem.ACTION_UNIT_3: return shrMan2;
-            case FcpItem.ACTION_UNIT_4: return shrMan3;
-            case FcpItem.ACTION_FARM: return shrHouse;
-            case FcpItem.ACTION_TOWER: return shrTower;
-            case FcpItem.ACTION_STRONG_TOWER: return shrStrongTower;
         }
     }
 

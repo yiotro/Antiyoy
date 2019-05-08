@@ -1,13 +1,10 @@
 package yio.tro.antiyoy.gameplay;
 
-import yio.tro.antiyoy.Settings;
+import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.ai.AiFactory;
 import yio.tro.antiyoy.ai.ArtificialIntelligence;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
-import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
-import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
-import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticRelation;
 import yio.tro.antiyoy.gameplay.editor.LevelEditor;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
@@ -34,7 +31,7 @@ public class GameController {
     private final DebugActionsManager debugActionsManager;
     public YioGdxGame yioGdxGame;
 
-    public final SelectionController selectionController;
+    public final SelectionManager selectionManager;
     public final FieldController fieldController;
     public CameraController cameraController;
     public final AiFactory aiFactory;
@@ -47,8 +44,6 @@ public class GameController {
     public boolean ignoreMarch;
     public int turn;
     private long timeToUpdateCache;
-    public float boundWidth;
-    public float boundHeight;
     boolean readyToEndTurn;
     private boolean proposedSurrender;
     public boolean backgroundVisible;
@@ -62,7 +57,7 @@ public class GameController {
     LoadingParameters initialParameters;
     public float priceStringWidth;
     public MapGenerator mapGeneratorSlay;
-    public MapGenerator mapGeneratorGeneric;
+    public MapGeneratorGeneric mapGeneratorGeneric;
     public Unit jumperUnit;
     public MatchStatistics matchStatistics;
     public GameSaver gameSaver;
@@ -79,6 +74,7 @@ public class GameController {
     public ReplayManager replayManager;
     public NamingManager namingManager;
     public SkipLevelManager skipLevelManager;
+    public LevelSizeManager levelSizeManager;
 
 
     public GameController(YioGdxGame yioGdxGame) {
@@ -86,7 +82,7 @@ public class GameController {
         random = new Random();
         predictableRandom = new Random(0);
         CampaignProgressManager.getInstance();
-        selectionController = new SelectionController(this);
+        selectionManager = new SelectionManager(this);
         marchDelay = 500;
         cameraController = new CameraController(this);
         unitList = new ArrayList<>();
@@ -103,6 +99,7 @@ public class GameController {
         speedManager = new SpeedManager(this);
         replayManager = new ReplayManager(this);
         namingManager = new NamingManager(this);
+        levelSizeManager = new LevelSizeManager(this);
 
         matchStatistics = new MatchStatistics();
         gameSaver = new GameSaver(this);
@@ -172,15 +169,15 @@ public class GameController {
         moveCheckToMarch();
         moveUnits();
         fieldController.moveAnimHexes();
-        selectionController.moveSelections();
+        selectionManager.moveSelections();
 
         jumperUnit.moveJumpAnim();
         fieldController.moveZoneManager.move();
-        selectionController.getBlackoutFactor().move();
-        selectionController.moveDefenseTips();
+        selectionManager.getBlackoutFactor().move();
+        selectionManager.moveDefenseTips();
 
         fieldController.moveZoneManager.checkToClear();
-        selectionController.tipFactor.move();
+        selectionManager.tipFactor.move();
 
         fieldController.moveResponseAnimHex();
         moveTutorialStuff();
@@ -220,7 +217,7 @@ public class GameController {
         }
 
         if (!isPlayerTurn()) {
-            aiList.get(turn).makeMove();
+            aiList.get(turn).perform();
             updateCacheOnceAfterSomeTime();
             applyReadyToEndTurn();
         }
@@ -253,14 +250,14 @@ public class GameController {
 
 
     private void moveCheckToMarch() {
-        if (!Settings.longTapToMove) return;
+        if (!SettingsManager.longTapToMove) return;
         if (ignoreMarch) return;
         if (!checkToMarch) return;
         if (!checkConditionsToMarch()) return;
 
         checkToMarch = false;
         fieldController.updateFocusedHex();
-        selectionController.setSelectedUnit(null);
+        selectionManager.setSelectedUnit(null);
         if (fieldController.focusedHex != null && fieldController.focusedHex.active) {
             fieldController.marchUnitsToHex(fieldController.focusedHex);
         }
@@ -277,14 +274,24 @@ public class GameController {
 
 
     private void checkToUpdateCacheByAnim() {
-        if (letsUpdateCacheByAnim && currentTime > timeToUpdateCache && (doesCurrentTurnEndDependOnAnimHexes()) && !isSomethingMoving()) {
-            letsUpdateCacheByAnim = false;
+        if (!isReadyToUpdateCache()) return;
 
-            updateCache();
-            updateFogOfWar();
+        letsUpdateCacheByAnim = false;
 
-            updateWholeCache = false;
-        }
+        updateCache();
+        updateFogOfWar();
+
+        updateWholeCache = false;
+    }
+
+
+    private boolean isReadyToUpdateCache() {
+        if (!letsUpdateCacheByAnim) return false;
+        if (currentTime <= timeToUpdateCache) return false;
+        if (!doesCurrentTurnEndDependOnAnimHexes()) return false;
+        if (isSomethingMoving()) return false;
+
+        return true;
     }
 
 
@@ -319,6 +326,7 @@ public class GameController {
 
 
     private boolean doesCurrentTurnEndDependOnAnimHexes() {
+        if (DebugFlags.testMode) return false;
         if (isPlayerTurn()) return true;
 
         if (speedManager.getSpeed() == SpeedManager.SPEED_FAST_FORWARD) {
@@ -332,17 +340,17 @@ public class GameController {
     public boolean haveToAskToEndTurn() {
         if (GameRules.tutorialMode) return false;
 
-        return Settings.askToEndTurn && fieldController.atLeastOneUnitIsReadyToMove();
+        return SettingsManager.askToEndTurn && fieldController.atLeastOneUnitIsReadyToMove();
     }
 
 
     private void checkToEndTurn() {
-        if (canEndTurn()) {
-            readyToEndTurn = false;
-            endTurnActions();
-            turn = getNextTurnIndex();
-            turnStartActions();
-        }
+        if (!canEndTurn()) return;
+
+        readyToEndTurn = false;
+        endTurnActions();
+        turn = getNextTurnIndex();
+        turnStartActions();
     }
 
 
@@ -449,7 +457,7 @@ public class GameController {
             }
         }
 
-        fieldController.provinces.clear();
+        fieldController.clearProvincesList();
         ArrayList<Hex> hexList = new ArrayList<>();
         for (Hex activeHex : fieldController.activeHexes) {
             if (activeHex.colorIndex == maxColor) {
@@ -464,11 +472,19 @@ public class GameController {
 
 
     private void endGame(int winColor) {
+        if (DebugFlags.testMode) {
+            DebugFlags.testWinner = winColor;
+            return;
+        }
+
         onGameFinished(winColor);
 
         if (winColor == 0) {
             GlobalStatistics.getInstance().onGameWon();
         }
+
+        System.out.println("GameController.endGame");
+        System.out.println("yioGdxGame.gamePaused = " + yioGdxGame.gamePaused);
 
         Scenes.sceneAfterGameMenu.create(winColor, isPlayerTurn(winColor));
     }
@@ -528,7 +544,7 @@ public class GameController {
 
 
     private void turnStartActions() {
-        selectionController.deselectAll();
+        selectionManager.deselectAll();
 
         if (isCurrentTurn(0)) {
             matchStatistics.onTurnMade();
@@ -558,6 +574,7 @@ public class GameController {
         }
 
         fieldController.diplomacyManager.onTurnStarted();
+        fieldController.checkToFocusCameraOnCurrentPlayer();
 
         checkToAutoSave();
     }
@@ -586,7 +603,7 @@ public class GameController {
 
 
     public void checkToAutoSave() {
-        if (!Settings.autosave) return;
+        if (!SettingsManager.autosave) return;
         if (turn != 0) return;
         if (playersNumber <= 0) return;
 
@@ -623,7 +640,7 @@ public class GameController {
 
 
     private void endTurnInMultiplayerMode() {
-        if (!Settings.askToEndTurn) {
+        if (!SettingsManager.askToEndTurn) {
             applyReadyToEndTurn();
             return;
         }
@@ -652,7 +669,7 @@ public class GameController {
         ignoreMarch = false;
         readyToEndTurn = false;
         fieldController.defaultValues();
-        selectionController.setSelectedUnit(null);
+        selectionManager.setSelectedUnit(null);
         turn = 0;
         jumperUnit.startJumping();
 
@@ -675,7 +692,7 @@ public class GameController {
 
 
     public void initTutorial() {
-        Settings.fastConstructionEnabled = false;
+        SettingsManager.fastConstructionEnabled = false;
 
         if (GameRules.slayRules) {
             tutorialScript = new TutorialScriptSlayRules(this);
@@ -703,7 +720,7 @@ public class GameController {
         createCamera();
         fieldController.onEndCreation();
         aiFactory.createAiList(GameRules.difficulty);
-        selectionController.deselectAll();
+        selectionManager.deselectAll();
         replayManager.onEndCreation();
         namingManager.onEndCreation();
         skipLevelManager.onEndCreation();
@@ -736,48 +753,18 @@ public class GameController {
     }
 
 
-    public void setLevelSize(int size) {
-        cameraController.init(size);
-        switch (size) {
-            case FieldController.SIZE_SMALL:
-                boundWidth = GraphicsYio.width;
-                boundHeight = GraphicsYio.height;
-                break;
-            case FieldController.SIZE_MEDIUM:
-                boundWidth = 2 * GraphicsYio.width;
-                boundHeight = GraphicsYio.height;
-                break;
-            case FieldController.SIZE_BIG:
-                boundWidth = 2 * GraphicsYio.width;
-                boundHeight = 2 * GraphicsYio.height;
-                break;
-            default:
-                // to avoid some bugs maybe?
-                return;
-        }
-        cameraController.setBounds(boundWidth, boundHeight);
-        fieldController.setLevelSize(size);
-        yioGdxGame.gameView.createLevelCacheTextures();
-    }
-
-
-    public GameSaver getGameSaver() {
-        return gameSaver;
-    }
-
-
     public void debugActions() {
         debugActionsManager.debugActions();
     }
 
 
     public boolean areCityNamesEnabled() {
-        return Settings.cityNamesEnabled;
+        return SettingsManager.cityNamesEnabled;
     }
 
 
     void selectAdjacentHexes(Hex startHex) {
-        selectionController.selectAdjacentHexes(startHex);
+        selectionManager.selectAdjacentHexes(startHex);
     }
 
 
@@ -895,7 +882,7 @@ public class GameController {
 
 
     void updateCurrentPriceString() {
-        currentPriceString = "$" + selectionController.getCurrentTipPrice();
+        currentPriceString = "$" + selectionManager.getCurrentTipPrice();
         priceStringWidth = GraphicsYio.getTextWidth(Fonts.gameFont, currentPriceString);
     }
 
@@ -1069,10 +1056,10 @@ public class GameController {
 
     public void onClick() {
         fieldController.updateFocusedHex();
-        selectionController.setFocusedHex(fieldController.focusedHex);
+        selectionManager.setFocusedHex(fieldController.focusedHex);
         showFocusedHexInConsole();
 
-        if (selectionController.checkForCityNameReaction()) return;
+        if (selectionManager.checkForCityNameReaction()) return;
 
         if (fieldController.focusedHex != null && isPlayerTurn()) {
             focusedHexActions(fieldController.focusedHex);
@@ -1089,7 +1076,7 @@ public class GameController {
 
 
     public void focusedHexActions(Hex focusedHex) {
-        selectionController.focusedHexActions(focusedHex);
+        selectionManager.focusedHexActions(focusedHex);
     }
 
 
@@ -1186,7 +1173,7 @@ public class GameController {
     }
 
 
-    public MapGenerator getMapGeneratorGeneric() {
+    public MapGeneratorGeneric getMapGeneratorGeneric() {
         return mapGeneratorGeneric;
     }
 

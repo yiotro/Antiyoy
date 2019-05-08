@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.menu.render.MenuRender;
+import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
 
 import java.util.ArrayList;
@@ -37,10 +38,10 @@ public class MenuViewYio {
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
         cornerSize = (int) (0.02 * Gdx.graphics.getHeight());
-        shadowCorner = GameView.loadTextureRegion("corner_shadow.png", true);
-        shadowSide = GameView.loadTextureRegion("side_shadow.png", true);
-        scrollerCircle = GameView.loadTextureRegion("scroller_circle.png", false);
-        grayTransCircle = GameView.loadTextureRegion("gray_transition_circle.png", false);
+        shadowCorner = GraphicsYio.loadTextureRegion("corner_shadow.png", true);
+        shadowSide = GraphicsYio.loadTextureRegion("side_shadow.png", true);
+        scrollerCircle = GraphicsYio.loadTextureRegion("scroller_circle.png", false);
+        grayTransCircle = GraphicsYio.loadTextureRegion("gray_transition_circle.png", false);
         renderButtons = new RenderButtons(this);
         tempRectangle = new RectangleYio();
         createOrthoCam();

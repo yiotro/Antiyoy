@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.stuff.Yio;
@@ -21,26 +22,21 @@ public class MapGenerator {
     protected ArrayList<PointYio> islandCenters;
     static int SMALL_PROVINCE_SIZE = 4;
     protected ArrayList<Link> links;
+    private ArrayList<Hex> tempList;
+    PointYio tempPoint;
 
 
     public MapGenerator(GameController gameController) {
         this.gameController = gameController;
         detectorProvince = new DetectorProvince();
-    }
-
-
-    protected void templateLoop() {
-        for (int i = 0; i < fWidth; i++) {
-            for (int j = 0; j < fHeight; j++) {
-
-            }
-        }
+        tempList = new ArrayList<>();
+        tempPoint = new PointYio();
     }
 
 
     protected void setValues(Random random, Hex field[][]) {
-        boundWidth = gameController.boundWidth;
-        boundHeight = gameController.boundHeight;
+        boundWidth = gameController.levelSizeManager.boundWidth;
+        boundHeight = gameController.levelSizeManager.boundHeight;
         fWidth = gameController.fieldController.fWidth;
         fHeight = gameController.fieldController.fHeight;
         w = (int) GraphicsYio.width;
@@ -75,7 +71,7 @@ public class MapGenerator {
         spawnManySmallProvinces();
         cutProvincesToSmallSizes();
         achieveFairNumberOfProvincesForEveryPlayer();
-        giveLastPlayersSlightAdvantage();
+        applyBalanceMeasures();
     }
 
 
@@ -166,7 +162,7 @@ public class MapGenerator {
     }
 
 
-    protected void giveLastPlayersSlightAdvantage() {
+    protected void applyBalanceMeasures() {
         giveAdvantageToPlayer(GameRules.colorNumber - 1, 0.053); // last
         giveAdvantageToPlayer(GameRules.colorNumber - 2, 0.033);
         if (GameRules.colorNumber >= 5) {
@@ -411,7 +407,7 @@ public class MapGenerator {
         }
 
         gameController.fieldController.clearActiveHexesList();
-        clearHexes();
+        deactivateHexes();
 
         for (int i = 0; i < fWidth; i++) {
             for (int j = 0; j < fHeight; j++) {
@@ -428,7 +424,7 @@ public class MapGenerator {
 
 
     protected boolean isGood() {
-        return isLinked() && gameController.fieldController.activeHexes.size() > 0.3 * numberOfAvailableHexes();
+        return isLinked() && gameController.fieldController.activeHexes.size() > 0.25 * numberOfAvailableHexes();
     }
 
 
@@ -450,7 +446,7 @@ public class MapGenerator {
         if (activeHex == null) return false;
 
         // flood
-        ArrayList<Hex> tempList = new ArrayList<Hex>();
+        tempList.clear();
         tempList.add(activeHex);
         while (tempList.size() > 0) {
             Hex hex = tempList.get(0);
@@ -507,10 +503,12 @@ public class MapGenerator {
     }
 
 
-    protected void clearHexes() {
+    protected void deactivateHexes() {
         for (int i = 0; i < fWidth; i++) {
             for (int j = 0; j < fHeight; j++) {
-                if (field[i][j].active) deactivateHex(field[i][j]);
+                if (!field[i][j].active) continue;
+
+                deactivateHex(field[i][j]);
             }
         }
     }
@@ -552,10 +550,20 @@ public class MapGenerator {
     }
 
 
-    protected Hex getRandomHex() {
+    protected Hex getRandomHexInsideBounds() {
         while (true) {
-            Hex hex = field[random.nextInt(fWidth)][random.nextInt(fHeight)];
-            if (isHexInsideBounds(hex)) return hex;
+            Hex hex;
+            if (gameController.levelSizeManager.levelSize <= LevelSize.MEDIUM) {
+                hex = field[random.nextInt(fWidth)][random.nextInt(fHeight)];
+            } else {
+                tempPoint.set(boundWidth / 2, boundHeight / 2);
+                tempPoint.relocateRadial(random.nextDouble() * random.nextDouble() * 0.5 * boundHeight, getRandomAngle());
+                hex = gameController.fieldController.getHexByPos(tempPoint.x, tempPoint.y);
+            }
+
+            if (!isHexInsideBounds(hex)) continue;
+
+            return hex;
         }
     }
 
@@ -675,30 +683,40 @@ public class MapGenerator {
 
 
     protected boolean isHexInsideBounds(Hex hex) {
+        if (hex == null) return false;
+
         PointYio pos = hex.getPos();
-        return pos.x > 0.1 * w && pos.x < boundWidth - 0.1 * w && pos.y > 0.15 * h && pos.y < boundHeight - 0.1 * h;
+
+        if (pos.x <= 0.1 * w) return false;
+        if (pos.x >= boundWidth - 0.1 * w) return false;
+        if (pos.y <= 0.15 * h) return false;
+        if (pos.y >= boundHeight - 0.1 * h) return false;
+
+        return true;
     }
 
 
     protected int numberOfIslandsByLevelSize() {
-        switch (gameController.fieldController.levelSize) {
+        switch (gameController.levelSizeManager.levelSize) {
             default:
-            case FieldController.SIZE_SMALL:
+            case LevelSize.SMALL:
                 return 2;
-            case FieldController.SIZE_MEDIUM:
+            case LevelSize.MEDIUM:
                 return 4;
-            case FieldController.SIZE_BIG:
-                return 7;
+            case LevelSize.BIG:
+                return 12;
+            case LevelSize.HUGE:
+                return 25;
         }
     }
 
 
     protected void createLand() {
         while (!isGood()) {
-            clearHexes();
+            deactivateHexes();
             int N = numberOfIslandsByLevelSize();
             for (int i = 0; i < N; i++) {
-                Hex hex = getRandomHex();
+                Hex hex = getRandomHexInsideBounds();
                 islandCenters.add(hex.getPos());
                 spawnIsland(hex, 7);
             }
@@ -716,12 +734,13 @@ public class MapGenerator {
 
     protected void beginGeneration() {
         gameController.fieldController.createFieldMatrix();
-        islandCenters = new ArrayList<PointYio>();
-        links = new ArrayList<Link>();
+        islandCenters = new ArrayList<>();
+        links = new ArrayList<>();
     }
 
 
     class Link {
+
         PointYio p1, p2;
 
 

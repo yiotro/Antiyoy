@@ -1,8 +1,8 @@
 package yio.tro.antiyoy.gameplay.campaign;
 
-import yio.tro.antiyoy.ai.ArtificialIntelligence;
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.ai.Difficulty;
 import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.LevelSize;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
@@ -29,6 +29,7 @@ public class CampaignLevelFactory {
     private final LevelPackFive levelPackFive;
     private final LevelPackSix levelPackSix;
     private final LevelPackSeven levelPackSeven;
+    private final LevelPackEight levelPackEight;
 
 
     public CampaignLevelFactory(GameController gameController) {
@@ -41,6 +42,7 @@ public class CampaignLevelFactory {
         levelPackFive = new LevelPackFive(this);
         levelPackSix = new LevelPackSix(this);
         levelPackSeven = new LevelPackSeven(this);
+        levelPackEight = new LevelPackEight(this);
         index = -1;
     }
 
@@ -64,6 +66,7 @@ public class CampaignLevelFactory {
         if (levelPackFive.check()) return true;
         if (levelPackSix.check()) return true;
         if (levelPackSeven.check()) return true;
+        if (levelPackEight.check()) return true;
 
         createLevelWithPredictableRandom();
 
@@ -104,7 +107,7 @@ public class CampaignLevelFactory {
 
 
     public int readColorOffsetFromSlider(int colorNumber) {
-        return gameController.getColorOffsetBySliderIndex(getColorOffsetSlider().getCurrentRunnerIndex(), colorNumber);
+        return gameController.getColorOffsetBySliderIndex(getColorOffsetSlider().getValueIndex(), colorNumber);
     }
 
 
@@ -129,10 +132,10 @@ public class CampaignLevelFactory {
 
 
     public static int getDifficultyByIndex(int index) {
-        if (index <= 8) return ArtificialIntelligence.DIFFICULTY_EASY;
-        if (index <= 23) return ArtificialIntelligence.DIFFICULTY_NORMAL;
-        if (index >= 60) return ArtificialIntelligence.DIFFICULTY_EXPERT;
-        return ArtificialIntelligence.DIFFICULTY_HARD;
+        if (index <= 8) return Difficulty.EASY;
+        if (index <= 23) return Difficulty.NORMAL;
+        if (index >= 60) return Difficulty.EXPERT;
+        return Difficulty.HARD;
     }
 
 
@@ -145,18 +148,18 @@ public class CampaignLevelFactory {
 
 
     private int getLevelSizeByIndex(int index) {
-        if (index == 4 || index == 7) return FieldController.SIZE_MEDIUM;
-        if (index == 15) return FieldController.SIZE_SMALL;
-        if (index == 20 || index == 30 || index == 35) return FieldController.SIZE_BIG;
-        if (index >= 60 && index <= 64) return FieldController.SIZE_MEDIUM;
-        if (index > 50 && index <= 53) return FieldController.SIZE_MEDIUM;
+        if (index == 4 || index == 7) return LevelSize.MEDIUM;
+        if (index == 15) return LevelSize.SMALL;
+        if (index == 20 || index == 30 || index == 35) return LevelSize.BIG;
+        if (index >= 60 && index <= 64) return LevelSize.MEDIUM;
+        if (index > 50 && index <= 53) return LevelSize.MEDIUM;
 
         if (index <= 10) {
-            return FieldController.SIZE_SMALL;
+            return LevelSize.SMALL;
         } else if (index <= 40) {
-            return FieldController.SIZE_MEDIUM;
+            return LevelSize.MEDIUM;
         } else {
-            return FieldController.SIZE_BIG;
+            return LevelSize.BIG;
         }
     }
 

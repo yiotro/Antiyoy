@@ -1,9 +1,6 @@
 package yio.tro.antiyoy.gameplay.fog_of_war;
 
-import yio.tro.antiyoy.gameplay.FieldController;
-import yio.tro.antiyoy.gameplay.Hex;
-import yio.tro.antiyoy.gameplay.Obj;
-import yio.tro.antiyoy.gameplay.Province;
+import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticRelation;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
@@ -202,17 +199,27 @@ public class FogOfWarManager {
 
         rightBlock.setBy(visibleArea);
         rightBlock.x = visibleArea.x + visibleArea.width;
-        rightBlock.width = fieldController.gameController.boundWidth - rightBlock.x;
+        rightBlock.width = getBoundWidth() - rightBlock.x;
 
         bottomBlock.x = 0;
         bottomBlock.y = 0;
-        bottomBlock.width = fieldController.gameController.boundWidth;
+        bottomBlock.width = getBoundWidth();
         bottomBlock.height = visibleArea.y;
 
         topBlock.x = 0;
         topBlock.y = visibleArea.y + visibleArea.height;
-        topBlock.width = fieldController.gameController.boundWidth;
-        topBlock.height = fieldController.gameController.boundHeight - topBlock.y;
+        topBlock.width = getBoundWidth();
+        topBlock.height = getLevelSizeManager().boundHeight - topBlock.y;
+    }
+
+
+    private float getBoundWidth() {
+        return getLevelSizeManager().boundWidth;
+    }
+
+
+    private LevelSizeManager getLevelSizeManager() {
+        return fieldController.gameController.levelSizeManager;
     }
 
 
@@ -352,7 +359,7 @@ public class FogOfWarManager {
 
 
     private boolean isFogPointValid(FogPoint next) {
-        return fieldController.isPointInsideLevelBoundsWithOffset(next.position, 2 * fieldController.hexSize);
+        return getLevelSizeManager().isPointInsideLevelBoundsWithOffset(next.position, 2 * fieldController.hexSize);
     }
 
 

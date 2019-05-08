@@ -5,14 +5,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
-import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
-import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticRelation;
 import yio.tro.antiyoy.gameplay.fog_of_war.FogOfWarManager;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.PointYio;
+import yio.tro.antiyoy.stuff.TimeMeasureYio;
 import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.ArrayList;
@@ -22,9 +21,6 @@ public class FieldController {
 
     public final GameController gameController;
     public static int NEUTRAL_LANDS_INDEX = 7;
-    public static final int SIZE_SMALL = 1;
-    public static final int SIZE_MEDIUM = 2;
-    public static final int SIZE_BIG = 4;
     public boolean letsCheckAnimHexes;
     public float hexSize;
     public float hexStep1;
@@ -35,7 +31,6 @@ public class FieldController {
     public ArrayList<Hex> animHexes;
     public int fWidth;
     public int fHeight;
-    public int levelSize;
     public PointYio fieldPos;
     public float cos60;
     public float sin60;
@@ -69,11 +64,11 @@ public class FieldController {
         fieldPos = new PointYio();
         compensatoryOffset = 0;
         updateFieldPos();
-        hexSize = 0.05f * Gdx.graphics.getWidth();
-        hexStep1 = (float) Math.sqrt(3) * hexSize;
+        hexSize = 0.05f * Gdx.graphics.getWidth(); // radius
+        hexStep1 = (float) Math.sqrt(3) * hexSize; // height
         hexStep2 = (float) Yio.distance(0, 0, 1.5 * hexSize, 0.5 * hexStep1);
-        fWidth = 46;
-        fHeight = 30;
+        fWidth = 85;
+        fHeight = 55;
         activeHexes = new ArrayList<>();
         selectedHexes = new ArrayList<>();
         animHexes = new ArrayList<>();
@@ -89,13 +84,13 @@ public class FieldController {
         fogOfWarManager = new FogOfWarManager(this);
         diplomacyManager = new DiplomacyManager(this);
         initialLevelString = null;
-        tempList = new ArrayList<Hex>();
-        propagationList = new ArrayList<Hex>();
+        tempList = new ArrayList<>();
+        propagationList = new ArrayList<>();
     }
 
 
     private void updateFieldPos() {
-        fieldPos.y = -0.5f * GraphicsYio.height + compensatoryOffset;
+        fieldPos.y = -1.1f * GraphicsYio.height + compensatoryOffset;
     }
 
 
@@ -109,7 +104,7 @@ public class FieldController {
 
 
     public void clearField() {
-        gameController.selectionController.setSelectedUnit(null);
+        gameController.selectionManager.setSelectedUnit(null);
         solidObjects.clear();
         gameController.getUnitList().clear();
         clearProvincesList();
@@ -168,7 +163,7 @@ public class FieldController {
         }
 
         detectProvinces();
-        gameController.selectionController.deselectAll();
+        gameController.selectionManager.deselectAll();
         detectNeutralLands();
         gameController.takeAwaySomeMoneyToAchieveBalance();
     }
@@ -293,10 +288,15 @@ public class FieldController {
     private String getBasicInfoString() {
         StringBuilder builder = new StringBuilder();
         builder.append(GameRules.difficulty).append(" ");
-        builder.append(levelSize).append(" ");
+        builder.append(getLevelSize()).append(" ");
         builder.append(gameController.playersNumber).append(" ");
         builder.append(GameRules.colorNumber).append("");
         return builder.toString();
+    }
+
+
+    public int getLevelSize() {
+        return gameController.levelSizeManager.levelSize;
     }
 
 
@@ -384,9 +384,9 @@ public class FieldController {
         }
 
         for (Province province : provinces) {
-            if (!province.hasCapital()) {
-                province.placeCapitalInRandomPlace(gameController.predictableRandom);
-            }
+            if (province.hasCapital()) continue;
+
+            province.placeCapitalInRandomPlace(gameController.predictableRandom);
         }
     }
 
@@ -630,7 +630,7 @@ public class FieldController {
 
 
     public void marchUnitsToHex(Hex toWhere) {
-        if (!gameController.selectionController.isSomethingSelected()) return;
+        if (!gameController.selectionManager.isSomethingSelected()) return;
         if (!toWhere.isSelected()) return;
         if (selectedProvince.hasSomeoneReadyToMove()) {
             gameController.takeSnapshot();
@@ -667,7 +667,7 @@ public class FieldController {
 
 
     private void showBuildOverlay() {
-        if (Settings.fastConstructionEnabled) {
+        if (SettingsManager.fastConstructionEnabled) {
             Scenes.sceneFastConstructionPanel.create();
         } else {
             Scenes.sceneSelectionOverlay.create();
@@ -680,8 +680,8 @@ public class FieldController {
         if (selectedProvince == null) return;
 
         selectedProvinceMoney = selectedProvince.money;
-        gameController.selectionController.getSelMoneyFactor().setDy(0);
-        gameController.selectionController.getSelMoneyFactor().appear(3, 2);
+        gameController.selectionManager.getSelMoneyFactor().setDy(0);
+        gameController.selectionManager.getSelMoneyFactor().appear(3, 2);
     }
 
 
@@ -734,27 +734,6 @@ public class FieldController {
         if (i < 0 || i > fWidth - 1 || j < 0 || j > fHeight - 1) return null;
 
         return field[i][j];
-    }
-
-
-    public boolean isPointInsideLevelBoundsHorizontally(PointYio pointYio) {
-        if (pointYio.x < fieldPos.x + hexSize / 2) return false;
-        if (pointYio.x > fieldPos.x + gameController.boundWidth) return false;
-//        if (pointYio.y < fieldPos.y) return false;
-//        if (pointYio.y > fieldPos.y + gameController.boundHeight) return false;
-
-        return true;
-    }
-
-
-    public boolean isPointInsideLevelBoundsWithOffset(PointYio pointYio, float offset) {
-        // bigger offset -> bigger bounds
-        if (pointYio.x < fieldPos.x + hexSize / 2 - offset) return false;
-        if (pointYio.x > fieldPos.x + gameController.boundWidth + offset) return false;
-        if (pointYio.y < hexSize / 2 - offset) return false;
-        if (pointYio.y > gameController.boundHeight + offset) return false;
-
-        return true;
     }
 
 
@@ -1061,6 +1040,7 @@ public class FieldController {
 
     public void addAnimHex(Hex hex) {
         if (animHexes.contains(hex)) return;
+        if (DebugFlags.testMode) return;
 
         animHexes.listIterator().add(hex);
 
@@ -1091,6 +1071,23 @@ public class FieldController {
         }
 
         return null;
+    }
+
+
+    public Province getRandomProvince() {
+        int index = YioGdxGame.random.nextInt(provinces.size());
+        return provinces.get(index);
+    }
+
+
+    public void checkToFocusCameraOnCurrentPlayer() {
+        if (gameController.playersNumber < 2) return;
+        if (!gameController.isPlayerTurn()) return;
+
+        Province province = findProvince(gameController.turn);
+        if (province == null) return;
+
+        province.focusCameraOnThis();
     }
 
 
@@ -1167,7 +1164,7 @@ public class FieldController {
         if (provincesAdded.size() > 0 && !(hex.objectInside == Obj.TOWN)) {
             getMaxProvinceFromList(provincesAdded).money = oldProvince.money;
         }
-        provinces.remove(oldProvince);
+        removeProvince(oldProvince);
         diplomacyManager.updateEntityAliveStatus(color);
     }
 
@@ -1187,13 +1184,18 @@ public class FieldController {
             for (Province province : adjacentProvinces) {
                 sum += province.money;
                 hexArrayList.addAll(province.hexList);
-                provinces.remove(province);
+                removeProvince(province);
             }
             Province unitedProvince = new Province(gameController, hexArrayList);
             unitedProvince.money = sum;
             unitedProvince.setCapital(capital);
             addProvince(unitedProvince);
         }
+    }
+
+
+    private void removeProvince(Province province) {
+        provinces.remove(province);
     }
 
 
@@ -1211,11 +1213,6 @@ public class FieldController {
                 return;
             }
         }
-    }
-
-
-    public void setLevelSize(int levelSize) {
-        this.levelSize = levelSize;
     }
 
 
@@ -1263,15 +1260,15 @@ public class FieldController {
 
     public void updateFocusedHex(float screenX, float screenY) {
         OrthographicCamera orthoCam = gameController.cameraController.orthoCam;
-        SelectionController selectionController = gameController.selectionController;
+        SelectionManager selectionManager = gameController.selectionManager;
 
-        selectionController.selectX = (screenX - 0.5f * GraphicsYio.width) * orthoCam.zoom + orthoCam.position.x;
-        selectionController.selectY = (screenY - 0.5f * GraphicsYio.height) * orthoCam.zoom + orthoCam.position.y;
-        gameController.convertedTouchPoint.set(selectionController.selectX, selectionController.selectY);
+        selectionManager.selectX = (screenX - 0.5f * GraphicsYio.width) * orthoCam.zoom + orthoCam.position.x;
+        selectionManager.selectY = (screenY - 0.5f * GraphicsYio.height) * orthoCam.zoom + orthoCam.position.y;
+        gameController.convertedTouchPoint.set(selectionManager.selectX, selectionManager.selectY);
 
         GameView gameView = gameController.getYioGdxGame().gameView;
-        float x = selectionController.selectX + gameView.hexViewSize;
-        float y = selectionController.selectY + gameView.hexViewSize;
+        float x = selectionManager.selectX + gameView.hexViewSize;
+        float y = selectionManager.selectY + gameView.hexViewSize;
 
         focusedHex = getHexByPos(x, y);
 

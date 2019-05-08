@@ -31,12 +31,21 @@ public class SoundManagerYio {
 
 
     private static Sound loadSound(String name) {
-        return Gdx.audio.newSound(Gdx.files.internal("sound/" + name + ".ogg"));
+        return Gdx.audio.newSound(Gdx.files.internal("sound/" + name + getExtention()));
+    }
+
+
+    private static String getExtention() {
+        if (YioGdxGame.IOS) {
+            return ".mp3";
+        }
+
+        return ".ogg";
     }
 
 
     public static void playSound(Sound sound) {
-        if (!Settings.soundEnabled) return;
+        if (!SettingsManager.soundEnabled) return;
 
         sound.play();
     }

@@ -4,7 +4,7 @@ import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
 /**
- * Created by ivan on 11.11.2015.
+ * Created by yiotro on 11.11.2015.
  */
 public class RbRestartGame extends Reaction {
 

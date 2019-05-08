@@ -1,6 +1,5 @@
 package yio.tro.antiyoy.ai;
 
-import yio.tro.antiyoy.gameplay.DebugFlags;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 
@@ -27,66 +26,80 @@ public class AiFactory {
     }
 
 
-    private void addAiToList(int difficulty, int i) {
+    public void createCustomAiList(int difficulties[]) {
+        if (GameRules.colorNumber != difficulties.length) {
+            System.out.println("AiFactory.createCustomAiList(): problem");
+        }
+
+        aiList = gameController.getAiList();
+        aiList.clear();
+
+        for (int i = 0; i < GameRules.colorNumber; i++) {
+            addAiToList(difficulties[i], i);
+        }
+    }
+
+
+    private void addAiToList(int difficulty, int colorIndex) {
         switch (difficulty) {
             default:
-            case ArtificialIntelligence.DIFFICULTY_EASY:
-                aiList.add(getEasyAi(i));
+            case Difficulty.EASY:
+                aiList.add(getEasyAi(colorIndex));
                 break;
-            case ArtificialIntelligence.DIFFICULTY_NORMAL:
-                aiList.add(getNormalAi(i));
+            case Difficulty.NORMAL:
+                aiList.add(getNormalAi(colorIndex));
                 break;
-            case ArtificialIntelligence.DIFFICULTY_HARD:
-                aiList.add(getHardAi(i));
+            case Difficulty.HARD:
+                aiList.add(getHardAi(colorIndex));
                 break;
-            case ArtificialIntelligence.DIFFICULTY_EXPERT:
-                aiList.add(getExpertAi(i));
+            case Difficulty.EXPERT:
+                aiList.add(getExpertAi(colorIndex));
                 break;
-            case ArtificialIntelligence.DIFFICULTY_BALANCER:
-                aiList.add(getBalancerAi(i));
+            case Difficulty.BALANCER:
+                aiList.add(getBalancerAi(colorIndex));
                 break;
         }
     }
 
 
-    private ArtificialIntelligence getBalancerAi(int i) {
+    private ArtificialIntelligence getBalancerAi(int colorIndex) {
         if (GameRules.slayRules) {
-            return new AiBalancerSlayRules(gameController, i);
+            return new AiBalancerSlayRules(gameController, colorIndex);
         }
 
-        return new AiBalancerGenericRules(gameController, i);
+        return new AiBalancerGenericRules(gameController, colorIndex);
     }
 
 
-    private ArtificialIntelligence getExpertAi(int i) {
+    private ArtificialIntelligence getExpertAi(int colorIndex) {
         if (GameRules.slayRules) {
-            return new AiExpertSlayRules(gameController, i);
+            return new AiExpertSlayRules(gameController, colorIndex);
         }
 
-        return new AiExpertGenericRules(gameController, i);
+        return new AiExpertGenericRules(gameController, colorIndex);
     }
 
 
-    private ArtificialIntelligence getHardAi(int i) {
+    private ArtificialIntelligence getHardAi(int colorIndex) {
         if (GameRules.slayRules) {
-            return new AiHardSlayRules(gameController, i);
+            return new AiHardSlayRules(gameController, colorIndex);
         }
 
-        return new AiHardGenericRules(gameController, i);
+        return new AiHardGenericRules(gameController, colorIndex);
     }
 
 
-    private ArtificialIntelligence getNormalAi(int i) {
+    private ArtificialIntelligence getNormalAi(int colorIndex) {
         if (GameRules.slayRules) {
-            return new AiNormalSlayRules(gameController, i);
+            return new AiNormalSlayRules(gameController, colorIndex);
         }
 
-        return new AiNormalGenericRules(gameController, i);
+        return new AiNormalGenericRules(gameController, colorIndex);
     }
 
 
-    private ArtificialIntelligence getEasyAi(int i) {
-        return new AiEasy(gameController, i);
+    private ArtificialIntelligence getEasyAi(int colorIndex) {
+        return new AiEasy(gameController, colorIndex);
     }
 
 }

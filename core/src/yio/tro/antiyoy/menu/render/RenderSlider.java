@@ -2,8 +2,10 @@ package yio.tro.antiyoy.menu.render;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import yio.tro.antiyoy.gameplay.DebugFlags;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.slider.SliderYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
@@ -78,28 +80,29 @@ public class RenderSlider extends MenuRender {
         renderTitle();
 
         // used only for debug
-//        renderBorder();
+        renderTouchBorder();
 
         GraphicsYio.setBatchAlpha(batch, 1);
     }
 
 
     private void renderTitle() {
-        Color color = slider.titleFont.getColor();
-        slider.titleFont.setColor(Color.BLACK);
+        BitmapFont titleFont = slider.titleFont;
+        Color color = titleFont.getColor();
+        titleFont.setColor(Color.BLACK);
 
-        GraphicsYio.setFontAlpha(slider.titleFont, slider.getFactor().get());
+        GraphicsYio.setFontAlpha(titleFont, slider.getFactor().get());
 
-        slider.titleFont.draw(
+        titleFont.draw(
                 batch,
                 slider.title,
                 slider.titlePosition.x,
                 slider.titlePosition.y
         );
 
-        GraphicsYio.setFontAlpha(slider.titleFont, 1);
+        GraphicsYio.setFontAlpha(titleFont, 1);
 
-        slider.titleFont.setColor(color);
+        titleFont.setColor(color);
     }
 
 
@@ -124,9 +127,11 @@ public class RenderSlider extends MenuRender {
     }
 
 
-    private void renderBorder() {
+    private void renderTouchBorder() {
+        if (!DebugFlags.showSliderBorder) return;
+
         GraphicsYio.setBatchAlpha(batch, 1);
-        GraphicsYio.renderBorder(batch, getGameView().blackPixel, slider.getTouchRectangle());
+        GraphicsYio.renderBorder(batch, getBlackPixel(), slider.getTouchRectangle());
     }
 
 
@@ -188,7 +193,7 @@ public class RenderSlider extends MenuRender {
 
     private void renderBlackLine() {
         batch.draw(
-                getGameView().blackPixel,
+                getBlackPixel(),
                 slider.getViewX(),
                 slider.currentVerticalPos - sliderLineHeightHalved,
                 slider.getViewWidth(),

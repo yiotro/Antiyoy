@@ -9,7 +9,7 @@ import yio.tro.antiyoy.menu.behaviors.help.*;
 import yio.tro.antiyoy.menu.behaviors.menu_creation.*;
 
 /**
- * Created by ivan on 05.08.14.
+ * Created by yiotro on 05.08.14.
  */
 public abstract class Reaction {
 

@@ -51,8 +51,13 @@ public class OnKeyReactions {
             case Input.Keys.Z:
                 yioGdxGame.gameController.cameraController.setTargetZoomLevel(0.9f);
                 break;
-            case Input.Keys.NUM_0:
+            case Input.Keys.NUM_9:
                 onEditLevelButtonPressed();
+                break;
+            case Input.Keys.NUM_0:
+                yioGdxGame.setGamePaused(true);
+                yioGdxGame.gameView.destroy();
+                Scenes.sceneDebugTests.create();
                 break;
             case Input.Keys.C:
                 openCheatScreen();
@@ -156,7 +161,7 @@ public class OnKeyReactions {
         if (yioGdxGame.menuControllerYio == null) return;
 
         if (!yioGdxGame.gamePaused) {
-            pressIfVisible(Scenes.sceneReplayOverlay.inGameMenuButton);
+            pressIfVisible(Scenes.sceneAiOnlyOverlay.inGameMenuButton);
             ButtonYio pauseButton = yioGdxGame.menuControllerYio.getButtonById(30);
             if (pauseButton != null && pauseButton.isVisible()) {
                 pauseButton.press();

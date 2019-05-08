@@ -49,7 +49,7 @@ public class SpeedManager {
     }
 
 
-    private void applyTacticalPause() {
+    public void applyPause() {
         setSpeed(SPEED_PAUSED);
     }
 
@@ -63,7 +63,7 @@ public class SpeedManager {
         if (speed == SPEED_PAUSED) {
             setSpeed(SPEED_NORMAL);
         } else {
-            applyTacticalPause();
+            applyPause();
         }
     }
 

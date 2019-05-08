@@ -33,7 +33,7 @@ public class SceneIncomeGraph extends AbstractGameplayScene {
 
     @Override
     public void create() {
-        menuControllerYio.getYioGdxGame().gameController.selectionController.deselectAll();
+        menuControllerYio.getYioGdxGame().gameController.selectionManager.deselectAll();
 
         createCloseButton();
         createShowPanel();
@@ -55,6 +55,7 @@ public class SceneIncomeGraph extends AbstractGameplayScene {
         showPanel = buttonFactory.getButton(generateRectangle(0, 0.15, 1, 0.41), 56321, null);
         showPanel.setTouchable(false);
         showPanel.setAnimation(Animation.FIXED_DOWN);
+        showPanel.setIgnorePauseResume(true);
     }
 
 

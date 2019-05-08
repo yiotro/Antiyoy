@@ -4,7 +4,7 @@ public class SbDefault extends SliderBehavior{
 
     @Override
     public String getValueString(SliderYio sliderYio) {
-        return "" + sliderYio.getCurrentRunnerIndex();
+        return "" + sliderYio.getValueIndex();
     }
 
 }

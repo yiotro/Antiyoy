@@ -79,7 +79,7 @@ public class RenderShadow extends MenuRender{
 
         GraphicsYio.drawByRectangle(
                 batch,
-                getGameView().blackPixel,
+                getBlackPixel(),
                 internalFill
         );
     }

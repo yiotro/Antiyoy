@@ -8,6 +8,7 @@ import yio.tro.antiyoy.menu.slider.SliderYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.stuff.RectangleYio;
+import yio.tro.antiyoy.stuff.Yio;
 
 public class SceneMoreSkirmishOptions extends AbstractScene{
 
@@ -68,7 +69,7 @@ public class SceneMoreSkirmishOptions extends AbstractScene{
         Preferences prefs = Gdx.app.getPreferences("skirmish");
 
         int colorOffset = prefs.getInteger("color_offset", 0);
-        colorOffsetSlider.setCurrentRunnerIndex(colorOffset);
+        colorOffsetSlider.setValueIndex(colorOffset);
 
         chkSlayRules.setChecked(prefs.getBoolean("slay_rules", false));
         chkFogOfWar.setChecked(prefs.getBoolean("fog_of_war", false));
@@ -79,7 +80,7 @@ public class SceneMoreSkirmishOptions extends AbstractScene{
     public void saveValues() {
         Preferences prefs = Gdx.app.getPreferences("skirmish");
 
-        prefs.putInteger("color_offset", colorOffsetSlider.getCurrentRunnerIndex());
+        prefs.putInteger("color_offset", colorOffsetSlider.getValueIndex());
         prefs.putBoolean("slay_rules", chkSlayRules.isChecked());
         prefs.putBoolean("fog_of_war", chkFogOfWar.isChecked());
         prefs.putBoolean("diplomacy", chkDiplomacy.isChecked());
@@ -100,7 +101,7 @@ public class SceneMoreSkirmishOptions extends AbstractScene{
         colorOffsetSlider.setBehavior(new SliderBehavior() {
             @Override
             public String getValueString(SliderYio sliderYio) {
-                return SceneSkirmishMenu.getColorStringBySliderIndex(sliderYio.getCurrentRunnerIndex());
+                return SceneSkirmishMenu.getColorStringBySliderIndex(sliderYio.getValueIndex());
             }
         });
 

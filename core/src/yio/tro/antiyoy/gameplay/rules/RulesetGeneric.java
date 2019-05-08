@@ -113,7 +113,7 @@ public class RulesetGeneric extends Ruleset{
             provinceByHex.money += GameRules.TREE_CUT_REWARD;
         }
 
-        gameController.selectionController.updateSelectedProvinceMoney();
+        gameController.selectionManager.updateSelectedProvinceMoney();
     }
 
 

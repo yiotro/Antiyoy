@@ -59,7 +59,8 @@ public class CameraController {
         zoomValues = new double[][]{
                 {0.8, 1.3, 1.1},
                 {0.8, 1.3, 2.0},
-                {0.8, 1.3, 2.1}
+                {0.8, 1.3, 2.1},
+                {0.8, 1.3, 3.2}
         };
 
         updateUpperZoomLimit(levelSize);
@@ -69,14 +70,17 @@ public class CameraController {
     public void updateUpperZoomLimit(int levelSize) {
         int zIndex = 0;
         switch (levelSize) {
-            case 1:
+            case LevelSize.SMALL:
                 zIndex = 0;
                 break;
-            case 2:
+            case LevelSize.MEDIUM:
                 zIndex = 1;
                 break;
-            case 4:
+            case LevelSize.BIG:
                 zIndex = 2;
+                break;
+            case LevelSize.HUGE:
+                zIndex = 3;
                 break;
         }
 
@@ -132,7 +136,7 @@ public class CameraController {
 
 
     void touchDrag(int x, int y) {
-        sensitivityModifier = 1.4f * Settings.sensitivity;
+        sensitivityModifier = 1.4f * SettingsManager.sensitivity;
         delta.x = sensitivityModifier * (touchPos.x - x) * viewZoomLevel;
         delta.y = sensitivityModifier * (touchPos.y - y) * viewZoomLevel;
 
@@ -329,7 +333,12 @@ public class CameraController {
     void createCamera() {
         gameController.yioGdxGame.gameView.createOrthoCam();
         orthoCam = gameController.yioGdxGame.gameView.orthoCam;
-        orthoCam.translate((gameController.boundWidth - GraphicsYio.width) / 2, (gameController.boundHeight - GraphicsYio.height) / 2); // focus camera of center
+
+        orthoCam.translate(
+                (gameController.levelSizeManager.boundWidth - GraphicsYio.width) / 2,
+                (gameController.levelSizeManager.boundHeight - GraphicsYio.height) / 2
+        ); // focus camera of center
+
         gameController.yioGdxGame.gameView.updateCam();
         updateFrame();
 
@@ -380,6 +389,7 @@ public class CameraController {
 
 
     boolean checkConditionsToEndTurn() {
+        if (DebugFlags.testMode) return true;
         if (camDx > 0.01) return false;
         if (camDy > 0.01) return false;
 
@@ -405,8 +415,8 @@ public class CameraController {
 
 
     public void focusOnPoint(double x, double y) {
-        position.x = (float) (x - gameController.boundWidth / 2);
-        position.y = (float) (y - gameController.boundHeight / 2);
+        position.x = (float) (x - gameController.levelSizeManager.boundWidth / 2);
+        position.y = (float) (y - gameController.levelSizeManager.boundHeight / 2);
     }
 
 

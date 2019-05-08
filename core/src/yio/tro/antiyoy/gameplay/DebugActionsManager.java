@@ -183,11 +183,6 @@ public class DebugActionsManager {
     }
 
 
-    private void doGetSomeFriendshipProposals() {
-        getDiplomacyManager().performAiToHumanFriendshipProposal();
-    }
-
-
     private void doShowTurnStartDialog() {
         Scenes.sceneTurnStartDialog.create();
         Scenes.sceneTurnStartDialog.dialog.setColor(0);

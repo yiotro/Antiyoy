@@ -2,7 +2,7 @@ package yio.tro.antiyoy.menu.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import yio.tro.antiyoy.ai.ArtificialIntelligence;
+import yio.tro.antiyoy.ai.Difficulty;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
@@ -40,10 +40,10 @@ public class SceneSkirmishMenu extends AbstractScene {
     public void saveValues() {
         Preferences prefs = Gdx.app.getPreferences("skirmish");
 
-        prefs.putInteger("difficulty", difficultySlider.getCurrentRunnerIndex());
-        prefs.putInteger("map_size", mapSizeSlider.getCurrentRunnerIndex());
-        prefs.putInteger("player_number", playersSlider.getCurrentRunnerIndex());
-        prefs.putInteger("color_number", colorsSlider.getCurrentRunnerIndex());
+        prefs.putInteger("difficulty", difficultySlider.getValueIndex());
+        prefs.putInteger("map_size", mapSizeSlider.getValueIndex());
+        prefs.putInteger("player_number", playersSlider.getValueIndex());
+        prefs.putInteger("color_number", colorsSlider.getValueIndex());
 
         prefs.flush();
     }
@@ -52,10 +52,10 @@ public class SceneSkirmishMenu extends AbstractScene {
     public void loadValues() {
         Preferences prefs = Gdx.app.getPreferences("skirmish");
 
-        difficultySlider.setCurrentRunnerIndex(prefs.getInteger("difficulty", 1));
-        mapSizeSlider.setCurrentRunnerIndex(prefs.getInteger("map_size", 1));
-        colorsSlider.setCurrentRunnerIndex(prefs.getInteger("color_number", 2));
-        playersSlider.setCurrentRunnerIndex(prefs.getInteger("player_number", 1));
+        difficultySlider.setValueIndex(prefs.getInteger("difficulty", 1));
+        mapSizeSlider.setValueIndex(prefs.getInteger("map_size", 1));
+        colorsSlider.setValueIndex(prefs.getInteger("color_number", 2));
+        playersSlider.setValueIndex(prefs.getInteger("player_number", 1));
     }
 
 
@@ -102,20 +102,20 @@ public class SceneSkirmishMenu extends AbstractScene {
         difficultySlider.setBehavior(new SliderBehavior() {
             @Override
             public String getValueString(SliderYio sliderYio) {
-                return getDifficultyStringBySliderIndex(sliderYio.getCurrentRunnerIndex());
+                return getDifficultyStringBySliderIndex(sliderYio.getValueIndex());
             }
         });
         sliders.add(difficultySlider);
 
         mapSizeSlider = new SliderYio(menuControllerYio, -1);
-        mapSizeSlider.setValues(0.5, 1, 3, Animation.NONE);
+        mapSizeSlider.setValues(0.5, 1, 4, Animation.NONE);
         mapSizeSlider.setPosition(pos);
         mapSizeSlider.setParentElement(topLabel, 0.05);
         mapSizeSlider.setTitle("map_size");
         mapSizeSlider.setBehavior(new SliderBehavior() {
             @Override
             public String getValueString(SliderYio sliderYio) {
-                return getMapSizeStringBySliderIndex(sliderYio.getCurrentRunnerIndex());
+                return getMapSizeStringBySliderIndex(sliderYio.getValueIndex());
             }
         });
         sliders.add(mapSizeSlider);
@@ -128,15 +128,15 @@ public class SceneSkirmishMenu extends AbstractScene {
         playersSlider.setBehavior(new SliderBehavior() {
             @Override
             public String getValueString(SliderYio sliderYio) {
-                return getHumansString(sliderYio.getCurrentRunnerIndex());
+                return getHumansString(sliderYio.getValueIndex());
             }
 
 
             @Override
             public void onAnotherSliderValueChanged(SliderYio sliderYio, SliderYio anotherSlider) {
-                int currentRunnerIndex = sliderYio.getCurrentRunnerIndex();
-                sliderYio.setNumberOfSegments(anotherSlider.getCurrentRunnerIndex() + anotherSlider.getMinNumber());
-                sliderYio.setCurrentRunnerIndex(currentRunnerIndex);
+                int currentRunnerIndex = sliderYio.getValueIndex();
+                sliderYio.setNumberOfSegments(anotherSlider.getValueIndex() + anotherSlider.getMinNumber());
+                sliderYio.setValueIndex(currentRunnerIndex);
             }
         });
         sliders.add(playersSlider);
@@ -149,7 +149,7 @@ public class SceneSkirmishMenu extends AbstractScene {
         colorsSlider.setBehavior(new SliderBehavior() {
             @Override
             public String getValueString(SliderYio sliderYio) {
-                int currentRunnerIndex = sliderYio.getCurrentRunnerIndex();
+                int currentRunnerIndex = sliderYio.getValueIndex();
                 if (currentRunnerIndex + sliderYio.getMinNumber() <= 4) {
                     return (currentRunnerIndex + sliderYio.getMinNumber()) + " " + LanguagesManager.getInstance().getString("color");
                 } else {
@@ -161,15 +161,15 @@ public class SceneSkirmishMenu extends AbstractScene {
             @Override
             public void onAnotherSliderValueChanged(SliderYio sliderYio, SliderYio anotherSlider) {
                 int s = 3;
-                if (anotherSlider.getCurrentRunnerIndex() == 1) {
+                if (anotherSlider.getValueIndex() == 1) {
                     s = GameRules.MAX_COLOR_NUMBER - 3;
                 }
-                if (anotherSlider.getCurrentRunnerIndex() == 2) {
+                if (anotherSlider.getValueIndex() >= 2) {
                     s = GameRules.MAX_COLOR_NUMBER - 2;
                 }
-                int currentRunnerIndex = sliderYio.getCurrentRunnerIndex();
+                int currentRunnerIndex = sliderYio.getValueIndex();
                 sliderYio.setNumberOfSegments(s);
-                sliderYio.setCurrentRunnerIndex(currentRunnerIndex);
+                sliderYio.setValueIndex(currentRunnerIndex);
             }
         });
         sliders.add(colorsSlider);
@@ -258,15 +258,15 @@ public class SceneSkirmishMenu extends AbstractScene {
     public static String getDifficultyStringBySliderIndex(int sliderIndex) {
         switch (sliderIndex) {
             default:
-            case ArtificialIntelligence.DIFFICULTY_EASY:
+            case Difficulty.EASY:
                 return LanguagesManager.getInstance().getString("easy");
-            case ArtificialIntelligence.DIFFICULTY_NORMAL:
+            case Difficulty.NORMAL:
                 return LanguagesManager.getInstance().getString("normal");
-            case ArtificialIntelligence.DIFFICULTY_HARD:
+            case Difficulty.HARD:
                 return LanguagesManager.getInstance().getString("hard");
-            case ArtificialIntelligence.DIFFICULTY_EXPERT:
+            case Difficulty.EXPERT:
                 return LanguagesManager.getInstance().getString("expert");
-            case ArtificialIntelligence.DIFFICULTY_BALANCER:
+            case Difficulty.BALANCER:
                 return LanguagesManager.getInstance().getString("balancer");
         }
     }
@@ -281,6 +281,8 @@ public class SceneSkirmishMenu extends AbstractScene {
                 return LanguagesManager.getInstance().getString("medium");
             case 2:
                 return LanguagesManager.getInstance().getString("big");
+            case 3:
+                return LanguagesManager.getInstance().getString("huge");
         }
     }
 }

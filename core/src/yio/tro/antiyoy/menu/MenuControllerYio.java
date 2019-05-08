@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
+import yio.tro.antiyoy.menu.behaviors.gameplay.ColorStatsRenderer;
 import yio.tro.antiyoy.menu.scenes.*;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.LanguagesManager;
@@ -28,6 +29,7 @@ public class MenuControllerYio {
     public ArrayList<CheckButtonYio> checkButtons;
     public SpecialActionController specialActionController;
     public ArrayList<InterfaceElement> interfaceElements;
+    public ColorStatsRenderer colorStatsRenderer;
 
 
     public MenuControllerYio(YioGdxGame yioGdxGame) {
@@ -36,10 +38,11 @@ public class MenuControllerYio {
         buttons = new ArrayList<ButtonYio>();
         buttonRenderer = new ButtonRenderer();
         specialActionController = new SpecialActionController(this);
-        unlockedLevelIcon = GameView.loadTextureRegion("unlocked_level_icon.png", true);
-        lockedLevelIcon = GameView.loadTextureRegion("locked_level_icon.png", true);
-        openedLevelIcon = GameView.loadTextureRegion("opened_level_icon.png", true);
+        unlockedLevelIcon = GraphicsYio.loadTextureRegion("unlocked_level_icon.png", true);
+        lockedLevelIcon = GraphicsYio.loadTextureRegion("locked_level_icon.png", true);
+        openedLevelIcon = GraphicsYio.loadTextureRegion("opened_level_icon.png", true);
         interfaceElements = new ArrayList<>();
+        colorStatsRenderer = new ColorStatsRenderer(this);
         initCheckButtons();
         applyAnimStyle();
 
@@ -168,7 +171,7 @@ public class MenuControllerYio {
 
 
     public ButtonYio getCoinButton() {
-        if (Settings.fastConstructionEnabled) {
+        if (SettingsManager.fastConstructionEnabled) {
             return getButtonById(610);
         } else {
             return getButtonById(37);
@@ -265,7 +268,7 @@ public class MenuControllerYio {
         }
 
         if (yioGdxGame.gameView != null) {
-            yioGdxGame.gameView.beginDestroyProcess();
+            yioGdxGame.gameView.checkToDestroy();
         }
     }
 
@@ -472,6 +475,11 @@ public class MenuControllerYio {
 
     public ButtonRenderer getButtonRenderer() {
         return buttonRenderer;
+    }
+
+
+    public void onSkinChanged() {
+        colorStatsRenderer.loadColors();
     }
 
 
