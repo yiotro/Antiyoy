@@ -1243,9 +1243,9 @@
 
         <!-- Random stuff -->
         <string key="menu_level" value="Level"/>  <!-- Same as english -->
-        <string key="menu_reset" value="Reset"/>  <!-- Same as english -->
+        <string key="menu_reset" value="Zurücksetzen"/>
         <string key="game_saved" value="Spiel gespeichert"/>
-        <string key="restart_app" value="Restart app"/>
+        <string key="restart_app" value="App neustarten"/>
         <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
         <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
@@ -1280,7 +1280,7 @@
         <string key="choose_game_mode_tutorial" value="Tutorial"/>  <!-- Same as english -->
         <string key="choose_game_mode_campaign" value="Kampagne"/>
         <string key="choose_game_mode_load" value="Spiel laden"/>
-        <string key="user_levels" value="User-Level"/>
+        <string key="user_levels" value="Benutzer-Level"/>
 
         <!-- User levels -->
         <string key="add_my_map" value="Meine Karte hinzufügen"/>
@@ -1301,8 +1301,8 @@
         <string key="small" value="klein"/>
         <string key="medium" value="mittel"/>
         <string key="big" value="groß"/>
-        <string key="huge" value="huge"/>
-        <string key="ai_only" value="nur AI"/>
+        <string key="huge" value="riesig"/>
+        <string key="ai_only" value="nur KI"/>
         <string key="single_player" value="Einzelspieler"/>
         <string key="multiplayer" value="Mehrspieler"/>
         <string key="colors" value="Farben"/>
@@ -1332,14 +1332,14 @@
         <string key="end_game_ok" value="Ok"/>  <!-- Same as english -->
         <string key="end_game_okay" value="Okay..."/>  <!-- Same as english -->
         <string key="player" value="Spieler"/>
-        <string key="ai" value="AI"/>
+        <string key="ai" value="KI"/>
         <string key="won" value="hat gewonnen"/>
         <string key="statistics" value="Statistik"/>
         <string key="next" value="Weiter"/>
         <string key="level_complete" value="Level abgeschlossen"/>
         <string key="win_game" value="Gewinnen"/>
         <string key="win_or_continue" value="Jetzt gewinnen#oder weiterspielen?"/>
-        <string key="continue" value="Continue"/>
+        <string key="continue" value="Weiterspielen"/>
 
         <!-- Colors -->
         <string key="green_player" value="Grüner"/>
@@ -1569,7 +1569,7 @@
         <string key="confirm_clear_level" value="Karte zurücksetzen?"/>
         <string key="confirm_randomize" value="Zufällige Karte generieren?"/>
         <string key="randomize" value="Zufall"/>
-        <string key="create" value="Create"/>
+        <string key="create" value="Erzeugen"/>
 
         <!-- Settings -->
         <string key="autosave" value="Autosave"/>
@@ -1598,7 +1598,7 @@
         <string key="fast_construction" value="Schnelles Bauen"/>
         <string key="music" value="Musik"/>
         <string key="left_handed" value="Linkshänder"/>
-        <string key="full_screen_mode" value="Full screen mode"/>
+        <string key="full_screen_mode" value="Vollbildmodus"/>
         <string key="skin_bubbles" value="Bubbles"/>
 
         <!-- Single messages -->
@@ -1646,7 +1646,7 @@
         <string key="completed" value="Abgeschlossen"/>
         <string key="historical" value="Historisch"/>
         <string key="temp_slot" value="Temporärer Slot"/>
-        <string key="can_skip_level" value="Du kannst diesen Level überspringen"/>
+        <string key="can_skip_level" value="Du kannst dieses Level überspringen"/>
         <string key="reason" value="Grund"/>
         <string key="friends_with_everybody" value="Freundschaft mit allen Königreichen"/>
         <string key="hex_purchase" value="Felder kaufen"/>
@@ -1655,16 +1655,16 @@
         <string key="gift" value="Geschenk"/>
         <string key="gift_received" value="Geschenk erhalten"/>
         <string key="confirm_sell_hexes" value="Felder verkaufen?"/>
-        <string key="confirm_skip_level" value="Skip level?"/>
+        <string key="confirm_skip_level" value="Level überspringen?"/>
         <string key="ok" value="Ok"/>
-        <string key="money" value="Money"/>
-        <string key="quantity" value="Quantity"/>
-        <string key="income" value="Income"/>
+        <string key="money" value="Geld"/>
+        <string key="quantity" value="Quantität"/>
+        <string key="income" value="Einnahmen"/>
         <string key="by_name" value="By name"/>
         <string key="hex_trade" value="Hex trade"/>
         <string key="hex_sale" value="Hex sale"/>
-        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="buyer_not_enough_money" value="Käufer hat nicht genug Geld."/>
+        <string key="loading" value="Lade"/>
     </language>
 
 
