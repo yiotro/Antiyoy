@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.stuff.PointYio;
 
 public class LevelSizeManager {

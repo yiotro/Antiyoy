@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.gameplay.data_storage.EncodeableYio;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.gameplay.fog_of_war.FogOfWarManager;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
@@ -11,16 +12,14 @@ import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.PointYio;
-import yio.tro.antiyoy.stuff.TimeMeasureYio;
 import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-public class FieldController {
+public class FieldController implements EncodeableYio{
 
     public final GameController gameController;
-    public static int NEUTRAL_LANDS_INDEX = 7;
     public boolean letsCheckAnimHexes;
     public float hexSize;
     public float hexStep1;
@@ -185,7 +184,7 @@ public class FieldController {
         for (Hex activeHex : activeHexes) {
             if (activeHex.genFlag) continue;
 
-            activeHex.setColorIndex(NEUTRAL_LANDS_INDEX);
+            activeHex.setFraction(GameRules.NEUTRAL_FRACTION);
         }
     }
 
@@ -230,17 +229,17 @@ public class FieldController {
 
 
     public boolean isThereOnlyOneKingdomOnMap() {
-        // kingdom can be multiple provinces of same color
-        int activeColor = -1;
+        // kingdom can be multiple provinces of same fraction
+        int fraction = -1;
         for (Province province : provinces) {
             if (province.hexList.get(0).isNeutral()) continue;
 
-            if (activeColor == -1) {
-                activeColor = province.getColor();
+            if (fraction == -1) {
+                fraction = province.getFraction();
                 continue;
             }
 
-            if (province.getColor() != activeColor) {
+            if (province.getFraction() != fraction) {
                 return false;
             }
         }
@@ -266,32 +265,12 @@ public class FieldController {
 
         for (Hex activeHex : activeHexes) {
             if (activeHex.isNeutral()) continue;
-            if (activeHex.isInProvince() && activeHex.colorIndex >= 0 && activeHex.colorIndex < playerHexCount.length) {
-                playerHexCount[activeHex.colorIndex]++;
+            if (activeHex.isInProvince() && activeHex.fraction >= 0 && activeHex.fraction < playerHexCount.length) {
+                playerHexCount[activeHex.fraction]++;
             }
         }
 
         return playerHexCount;
-    }
-
-
-    public String getFullLevelString() {
-//        detectProvinces();
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(getBasicInfoString());
-        stringBuffer.append("/");
-        stringBuffer.append(gameController.gameSaver.getActiveHexesString());
-        return stringBuffer.toString();
-    }
-
-
-    private String getBasicInfoString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(GameRules.difficulty).append(" ");
-        builder.append(getLevelSize()).append(" ");
-        builder.append(gameController.playersNumber).append(" ");
-        builder.append(GameRules.colorNumber).append("");
-        return builder.toString();
     }
 
 
@@ -318,11 +297,6 @@ public class FieldController {
         if (!checkRefuseStatistics()) return -1;
 
         int numberOfAllHexes = activeHexes.size();
-//        for (Province province : provinces) {
-//            if (province.hexList.size() > 0.52 * numberOfAllHexes) {
-//                return province.getColor();
-//            }
-//        }
 
         int playerHexCount[] = getPlayerHexCount();
         for (int i = 0; i < playerHexCount.length; i++) {
@@ -340,11 +314,11 @@ public class FieldController {
     }
 
 
-    public int numberOfProvincesWithColor(int color) {
+    public int numberOfProvincesWithFraction(int fraction) {
         int count = 0;
         for (Province province : provinces) {
-            if (province.getColor() == color)
-                count++;
+            if (province.getFraction() != fraction) continue;
+            count++;
         }
         return count;
     }
@@ -352,7 +326,7 @@ public class FieldController {
 
     public void transformGraves() {
         for (Hex hex : activeHexes) {
-            if (gameController.isCurrentTurn(hex.colorIndex) && hex.objectInside == Obj.GRAVE) {
+            if (gameController.isCurrentTurn(hex.fraction) && hex.objectInside == Obj.GRAVE) {
                 spawnTree(hex);
                 hex.blockToTreeFromExpanding = true;
             }
@@ -435,7 +409,7 @@ public class FieldController {
                 adjHex = tempHex.getAdjacentHex(dir);
 
                 if (!adjHex.active) continue;
-                if (!adjHex.sameColor(tempHex)) continue;
+                if (!adjHex.sameFraction(tempHex)) continue;
                 if (adjHex.flag) continue;
 
                 propagationList.add(adjHex);
@@ -528,7 +502,7 @@ public class FieldController {
 
 
     public void createPlayerHexCount() {
-        playerHexCount = new int[GameRules.colorNumber];
+        playerHexCount = new int[GameRules.fractionsQuantity];
     }
 
 
@@ -545,7 +519,7 @@ public class FieldController {
         while (iterator.hasNext()) {
             Hex h = (Hex) iterator.next();
             if (h.animFactor.get() > 0.99 && !(h.containsUnit() && h.unit.moveFactor.get() < 1) && System.currentTimeMillis() > h.animStartTime + 250) {
-                h.changingColor = false;
+                h.changingFraction = false;
                 iterator.remove();
             }
         }
@@ -562,10 +536,10 @@ public class FieldController {
 
 
     public int getPredictionForWinner() {
-        int numbers[] = new int[GameRules.colorNumber];
+        int numbers[] = new int[GameRules.fractionsQuantity];
         for (Hex activeHex : activeHexes) {
             if (activeHex.isNeutral()) continue;
-            numbers[activeHex.colorIndex]++;
+            numbers[activeHex.fraction]++;
         }
 
         int max = numbers[0];
@@ -582,10 +556,10 @@ public class FieldController {
 
 
     public boolean areConditionsGoodForPlayer() {
-        int numbers[] = new int[GameRules.colorNumber];
+        int numbers[] = new int[GameRules.fractionsQuantity];
         for (Hex activeHex : activeHexes) {
             if (activeHex.isNeutral()) continue;
-            numbers[activeHex.colorIndex]++;
+            numbers[activeHex.fraction]++;
         }
 
         int max = GameController.maxNumberFromArray(numbers);
@@ -605,7 +579,12 @@ public class FieldController {
 
 
     private void updateInitialLevelString() {
-        initialLevelString = getFullLevelString();
+        initialLevelString = gameController.gameSaver.legacyExportManager.getFullLevelString();
+    }
+
+
+    public void onUserLevelLoaded() {
+        updateInitialLevelString();
     }
 
 
@@ -682,11 +661,6 @@ public class FieldController {
         selectedProvinceMoney = selectedProvince.money;
         gameController.selectionManager.getSelMoneyFactor().setDy(0);
         gameController.selectionManager.getSelMoneyFactor().appear(3, 2);
-    }
-
-
-    public String getColorName(int colorIndex) {
-        return gameController.yioGdxGame.menuControllerYio.getColorNameByIndexWithOffset(colorIndex, "_player");
     }
 
 
@@ -816,16 +790,12 @@ public class FieldController {
         if (province == null || hex == null) return false;
 
         if (!province.canBuildUnit(strength)) {
-            if (gameController.isPlayerTurn()) {
-                gameController.tickleMoneySign();
-            }
+            tickleMoneySign();
             return false;
         }
 
         // check for unmergeable situation
-        if (hex.sameColor(province) && hex.containsUnit() && !gameController.canMergeUnits(strength, hex.unit.strength)) {
-            return false;
-        }
+        if (isUnmergeableSituationDetected(province, hex, strength)) return false;
 
         gameController.takeSnapshot();
         province.money -= GameRules.PRICE_UNIT * strength;
@@ -833,31 +803,54 @@ public class FieldController {
         gameController.replayManager.onUnitBuilt(province, hex, strength);
         updateSelectedProvinceMoney();
 
-        if (isUnitBuildingPeaceful(province, hex)) { // build unit peacefully
-            if (hex.containsUnit()) { // merge units
-                Unit bUnit = new Unit(gameController, hex, strength);
-                bUnit.setReadyToMove(true);
-                gameController.matchStatistics.unitsDied++;
-                gameController.mergeUnits(hex, bUnit, hex.unit);
-            } else {
-                addUnit(hex, strength);
-            }
-        } else { // attack
-            setHexColor(hex, province.getColor()); // must be called before object in hex destroyed
-            addUnit(hex, strength);
-            hex.unit.setReadyToMove(false);
-            hex.unit.stopJumping();
-            province.addHex(hex);
-            addAnimHex(hex);
-            gameController.updateCacheOnceAfterSomeTime();
+        if (canUnitBeBuiltPeacefully(province, hex)) {
+            buildUnitPeacefully(hex, strength);
+        } else {
+            buildUnitByAttack(province, hex, strength);
         }
         gameController.updateBalanceString();
         return true;
     }
 
 
-    private boolean isUnitBuildingPeaceful(Province province, Hex hex) {
-        return hex.sameColor(province);
+    private void buildUnitByAttack(Province province, Hex hex, int strength) {
+        setHexFraction(hex, province.getFraction()); // must be called before object in hex destroyed
+        addUnit(hex, strength);
+        hex.unit.setReadyToMove(false);
+        hex.unit.stopJumping();
+        province.addHex(hex);
+        addAnimHex(hex);
+        gameController.updateCacheOnceAfterSomeTime();
+    }
+
+
+    private void buildUnitPeacefully(Hex hex, int strength) {
+        if (!hex.containsUnit()) {
+            addUnit(hex, strength);
+            return;
+        }
+
+        // merge units
+        Unit newUnit = new Unit(gameController, hex, strength);
+        newUnit.setReadyToMove(true);
+        gameController.matchStatistics.unitsDied++;
+        gameController.mergeUnits(hex, newUnit, hex.unit);
+    }
+
+
+    private boolean isUnmergeableSituationDetected(Province province, Hex hex, int strength) {
+        return hex.sameFraction(province) && hex.containsUnit() && !gameController.canMergeUnits(strength, hex.unit.strength);
+    }
+
+
+    private void tickleMoneySign() {
+        if (!gameController.isPlayerTurn()) return;
+        gameController.tickleMoneySign();
+    }
+
+
+    private boolean canUnitBeBuiltPeacefully(Province province, Hex hex) {
+        return hex.sameFraction(province);
     }
 
 
@@ -876,7 +869,7 @@ public class FieldController {
         }
 
         // can't build tower
-        if (gameController.isPlayerTurn()) gameController.tickleMoneySign();
+        tickleMoneySign();
         return false;
     }
 
@@ -897,7 +890,7 @@ public class FieldController {
         }
 
         // can't build tower
-        if (gameController.isPlayerTurn()) gameController.tickleMoneySign();
+        tickleMoneySign();
         return false;
     }
 
@@ -922,7 +915,7 @@ public class FieldController {
         }
 
         // can't build farm
-        if (gameController.isPlayerTurn()) gameController.tickleMoneySign();
+        tickleMoneySign();
         return false;
     }
 
@@ -941,7 +934,7 @@ public class FieldController {
         }
 
         // can't build tree
-        if (gameController.isPlayerTurn()) gameController.tickleMoneySign();
+        tickleMoneySign();
         return false;
     }
 
@@ -963,7 +956,7 @@ public class FieldController {
             hex.addUnit(strength);
         } else {
             hex.addUnit(strength);
-            if (gameController.isCurrentTurn(hex.colorIndex)) {
+            if (gameController.isCurrentTurn(hex.fraction)) {
                 hex.unit.setReadyToMove(true);
                 hex.unit.startJumping();
             }
@@ -1021,18 +1014,18 @@ public class FieldController {
 
     public void giveMoneyToPlayerProvinces(int amount) {
         for (Province province : provinces) {
-            if (province.getColor() == 0) {
+            if (province.getFraction() == 0) {
                 province.money += amount;
             }
         }
     }
 
 
-    public boolean hexHasNeighbourWithColor(Hex hex, int color) {
+    public boolean hexHasNeighbourWithFraction(Hex hex, int fraction) {
         Hex neighbour;
         for (int i = 0; i < 6; i++) {
             neighbour = hex.getAdjacentHex(i);
-            if (neighbour != null && neighbour.active && neighbour.sameColor(color)) return true;
+            if (neighbour != null && neighbour.active && neighbour.sameFraction(fraction)) return true;
         }
         return false;
     }
@@ -1063,10 +1056,9 @@ public class FieldController {
     }
 
 
-    public Province findProvince(int color) {
+    public Province findProvince(int fraction) {
         for (Province province : provinces) {
-            if (province.getColor() != color) continue;
-
+            if (province.getFraction() != fraction) continue;
             return province;
         }
 
@@ -1120,7 +1112,7 @@ public class FieldController {
     }
 
 
-    public void splitProvince(Hex hex, int color) {
+    public void splitProvince(Hex hex, int fraction) {
         Province oldProvince = getProvinceByHex(hex);
         if (oldProvince == null) return;
         MoveZoneDetection.unFlagAllHexesInArrayList(oldProvince.hexList);
@@ -1132,7 +1124,7 @@ public class FieldController {
         gameController.getPredictableRandom().setSeed(hex.index1 + hex.index2);
         for (int k = 0; k < 6; k++) {
             startHex = hex.getAdjacentHex(k);
-            if (!startHex.active || startHex.colorIndex != color || startHex.flag) continue;
+            if (!startHex.active || startHex.fraction != fraction || startHex.flag) continue;
             tempList.clear();
             propagationList.clear();
             propagationList.add(startHex);
@@ -1143,7 +1135,7 @@ public class FieldController {
                 propagationList.remove(0);
                 for (int i = 0; i < 6; i++) {
                     adjHex = tempHex.getAdjacentHex(i);
-                    if (adjHex.active && adjHex.sameColor(tempHex) && !adjHex.flag) {
+                    if (adjHex.active && adjHex.sameFraction(tempHex) && !adjHex.flag) {
                         propagationList.add(adjHex);
                         adjHex.flag = true;
                     }
@@ -1165,7 +1157,7 @@ public class FieldController {
             getMaxProvinceFromList(provincesAdded).money = oldProvince.money;
         }
         removeProvince(oldProvince);
-        diplomacyManager.updateEntityAliveStatus(color);
+        diplomacyManager.updateEntityAliveStatus(fraction);
     }
 
 
@@ -1174,7 +1166,7 @@ public class FieldController {
         Province p;
         for (int i = 0; i < 6; i++) {
             p = getProvinceByHex(hex.getAdjacentHex(i));
-            if (p != null && hex.sameColor(p) && !adjacentProvinces.contains(p)) adjacentProvinces.add(p);
+            if (p != null && hex.sameFraction(p) && !adjacentProvinces.contains(p)) adjacentProvinces.add(p);
         }
         if (adjacentProvinces.size() >= 2) {
             int sum = 0;
@@ -1203,12 +1195,12 @@ public class FieldController {
         Province p;
         for (int i = 0; i < 6; i++) {
             p = getProvinceByHex(hex.getAdjacentHex(i));
-            if (p != null && hex.sameColor(p)) {
+            if (p != null && hex.sameFraction(p)) {
                 p.addHex(hex);
                 Hex h;
                 for (int j = 0; j < 6; j++) {
                     h = adjacentHex(hex, j);
-                    if (h.active && h.sameColor(hex) && getProvinceByHex(h) == null) p.addHex(h);
+                    if (h.active && h.sameFraction(hex) && getProvinceByHex(h) == null) p.addHex(h);
                 }
                 return;
             }
@@ -1222,27 +1214,27 @@ public class FieldController {
     }
 
 
-    public void setHexColor(Hex hex, int color) {
+    public void setHexFraction(Hex hex, int fraction) {
         cleanOutHex(hex);
-        int oldColor = hex.colorIndex;
-        hex.setColorIndex(color);
-        splitProvince(hex, oldColor);
+        int previousFraction = hex.fraction;
+        hex.setFraction(fraction);
+        splitProvince(hex, previousFraction);
         checkToUniteProvinces(hex);
         joinHexToAdjacentProvince(hex);
         ListIterator animIterator = animHexes.listIterator();
 
         for (int dir = 0; dir < 6; dir++) {
             Hex adj = hex.getAdjacentHex(dir);
-            if (adj != null && adj.active && adj.sameColor(hex)) {
+            if (adj != null && adj.active && adj.sameFraction(hex)) {
                 if (!animHexes.contains(adj)) {
                     animIterator.add(adj);
                 }
-                if (!adj.changingColor) {
+                if (!adj.changingFraction) {
                     adj.animFactor.setValues(1, 0);
                 }
             }
         }
-        hex.changingColor = true;
+        hex.changingFraction = true;
         if (!animHexes.contains(hex)) animIterator.add(hex);
         hex.animFactor.setValues(0, 0);
         hex.animFactor.appear(1, 1);
@@ -1275,4 +1267,27 @@ public class FieldController {
     }
 
 
+    @Override
+    public String encode() {
+        StringBuilder builder = new StringBuilder();
+        for (Hex activeHex : activeHexes) {
+            builder.append(activeHex.encode()).append(",");
+        }
+        return builder.toString();
+    }
+
+
+    @Override
+    public void decode(String source) {
+        for (String token : source.split(",")) {
+            String[] split = token.split(" ");
+            int index1 = Integer.valueOf(split[0]);
+            int index2 = Integer.valueOf(split[1]);
+            Hex hex = field[index1][index2];
+            hex.active = true;
+            setHexFraction(hex, Integer.valueOf(split[2]));
+            hex.decode(token);
+            activeHexes.add(0, hex);
+        }
+    }
 }

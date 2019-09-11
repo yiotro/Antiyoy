@@ -3,10 +3,7 @@ package yio.tro.antiyoy.menu.slider;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import yio.tro.antiyoy.factor_yio.FactorYio;
-import yio.tro.antiyoy.menu.Animation;
-import yio.tro.antiyoy.menu.ButtonYio;
-import yio.tro.antiyoy.menu.InterfaceElement;
-import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.*;
 import yio.tro.antiyoy.menu.render.MenuRender;
 import yio.tro.antiyoy.stuff.*;
 
@@ -19,7 +16,8 @@ public class SliderYio extends InterfaceElement implements SliderListener {
     boolean isCurrentlyPressed, internalSegmentsHidden, solidWidth, accentVisible, touchable;
     boolean listenersEnabled;
     public int numberOfSegments;
-    int minNumber, animType;
+    int minNumber;
+    Animation animType;
     public float runnerValue, currentVerticalPos, circleSize, segmentSize, textWidth;
     float viewMagnifier, circleDefaultSize, verticalTouchOffset, linkedDelta, viewX, viewWidth;
     float circleSizeDelta;
@@ -173,18 +171,18 @@ public class SliderYio extends InterfaceElement implements SliderListener {
             return;
         }
         switch (animType) {
-            case Animation.UP:
+            case up:
                 animUp();
                 break;
-            case Animation.DOWN:
+            case down:
                 animDown();
                 break;
-            case Animation.FROM_CENTER:
+            case from_center:
                 animFromCenter();
                 break;
             default:
-            case Animation.DEFAULT:
-            case Animation.NONE:
+            case def:
+            case none:
                 animNone();
                 break;
         }
@@ -332,13 +330,7 @@ public class SliderYio extends InterfaceElement implements SliderListener {
     }
 
 
-    @Override
-    public boolean isButton() {
-        return false;
-    }
-
-
-    public void setValues(double runnerValue, int minNumber, int maxNumber, int animType) {
+    public void setValues(double runnerValue, int minNumber, int maxNumber, Animation animType) {
         setRunnerValue((float) runnerValue);
         setNumberOfSegments(maxNumber - minNumber);
         this.animType = animType;

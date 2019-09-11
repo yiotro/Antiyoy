@@ -5,17 +5,14 @@ import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
-import yio.tro.antiyoy.menu.Animation;
-import yio.tro.antiyoy.menu.ButtonYio;
-import yio.tro.antiyoy.menu.MenuControllerYio;
-import yio.tro.antiyoy.menu.TextViewElement;
+import yio.tro.antiyoy.menu.*;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
 import java.util.ArrayList;
 
-public class SceneAreaSelectionUI extends AbstractGameplayScene {
+public class SceneAreaSelectionUI extends AbstractModalScene {
 
 
     private Reaction rbCancel;
@@ -38,8 +35,7 @@ public class SceneAreaSelectionUI extends AbstractGameplayScene {
         rbCancel = new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
-                FieldController fieldController = menuControllerYio.yioGdxGame.gameController.fieldController;
-                fieldController.diplomacyManager.disableAreaSelectionMode();
+                onCancelButtonPressed();
             }
         };
 
@@ -52,8 +48,14 @@ public class SceneAreaSelectionUI extends AbstractGameplayScene {
     }
 
 
+    private void onCancelButtonPressed() {
+        FieldController fieldController = getGameController().fieldController;
+        fieldController.diplomacyManager.disableAreaSelectionMode();
+    }
+
+
     private void onApplyButtonPressed() {
-        GameController gameController = menuControllerYio.yioGdxGame.gameController;
+        GameController gameController = getGameController();
         FieldController fieldController = gameController.fieldController;
         DiplomacyManager diplomacyManager = fieldController.diplomacyManager;
         diplomacyManager.disableAreaSelectionMode();
@@ -61,15 +63,15 @@ public class SceneAreaSelectionUI extends AbstractGameplayScene {
         ArrayList<Hex> moveZone = fieldController.moveZoneManager.moveZone;
         if (moveZone.size() == 0) return;
 
-        if (moveZone.get(0).colorIndex == gameController.turn) {
-            int asFilterColor = gameController.selectionManager.getAsFilterColor();
+        if (moveZone.get(0).fraction == gameController.turn) {
+            int asFilterColor = gameController.selectionManager.getAsFilterFraction();
             DiplomaticEntity entity = diplomacyManager.getEntity(asFilterColor);
 
             Scenes.sceneHexSaleDialog.create();
-            Scenes.sceneHexSaleDialog.dialog.setData(entity, moveZone);
+            Scenes.sceneHexSaleDialog.setData(entity, moveZone);
         } else {
             Scenes.sceneHexPurchaseDialog.create();
-            Scenes.sceneHexPurchaseDialog.dialog.setData(diplomacyManager.getMainEntity(), moveZone);
+            Scenes.sceneHexPurchaseDialog.setData(diplomacyManager.getMainEntity(), moveZone);
         }
     }
 
@@ -94,7 +96,7 @@ public class SceneAreaSelectionUI extends AbstractGameplayScene {
         textViewTitle = new TextViewElement();
         textViewTitle.setPosition(generateRectangle(0.45, 0.95, 0.1, 0.02));
         textViewTitle.setTextValue(getString("hex_trade"));
-        textViewTitle.setAnimation(Animation.UP);
+        textViewTitle.setAnimation(Animation.up);
         menuControllerYio.addElementToScene(textViewTitle);
     }
 
@@ -104,15 +106,13 @@ public class SceneAreaSelectionUI extends AbstractGameplayScene {
 
         cancelButton = buttonFactory.getButton(generateRectangle(0.5 - bw - bw / 2, 0.86, bw, GraphicsYio.convertToHeight(bw)), 870, null);
         menuControllerYio.loadButtonOnce(cancelButton, "game/cancel.png");
-        cancelButton.setAnimation(Animation.UP);
-        cancelButton.disableTouchAnimation();
+        cancelButton.setAnimation(Animation.up);
         cancelButton.setTouchOffset(0.01f * GraphicsYio.width);
         cancelButton.setReaction(rbCancel);
 
         applyButton = buttonFactory.getButton(generateRectangle(0.5 + bw - bw / 2, 0.86, bw, GraphicsYio.convertToHeight(bw)), 871, null);
         menuControllerYio.loadButtonOnce(applyButton, "game/ok_icon.png");
-        applyButton.setAnimation(Animation.UP);
-        applyButton.disableTouchAnimation();
+        applyButton.setAnimation(Animation.up);
         applyButton.setTouchOffset(0.01f * GraphicsYio.width);
         applyButton.setReaction(rbApply);
     }
@@ -121,6 +121,8 @@ public class SceneAreaSelectionUI extends AbstractGameplayScene {
     @Override
     public void hide() {
         destroyByIndex(870, 879);
-        textViewTitle.destroy();
+        if (textViewTitle != null) {
+            textViewTitle.destroy();
+        }
     }
 }

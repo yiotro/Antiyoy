@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.GameController;
-import yio.tro.antiyoy.gameplay.GameSaver;
+import yio.tro.antiyoy.gameplay.data_storage.GameSaver;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.stuff.Yio;
 

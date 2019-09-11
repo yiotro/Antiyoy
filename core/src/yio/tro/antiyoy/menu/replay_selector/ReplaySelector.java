@@ -3,9 +3,11 @@ package yio.tro.antiyoy.menu.replay_selector;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.ClickDetector;
+import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.data_storage.LegacyImportManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
-import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
+import yio.tro.antiyoy.gameplay.loading.LoadingType;
 import yio.tro.antiyoy.gameplay.replays.RepSlot;
 import yio.tro.antiyoy.gameplay.replays.Replay;
 import yio.tro.antiyoy.gameplay.replays.ReplaySaveSystem;
@@ -329,8 +331,10 @@ public class ReplaySelector extends InterfaceElement {
         replay.loadFromPreferences(slotByKey.key);
 
         LoadingParameters loadingParameters = new LoadingParameters();
-        loadingParameters.mode = LoadingMode.LOAD_REPLAY;
-        loadingParameters.applyFullLevel(replay.initialLevelString);
+        loadingParameters.loadingType = LoadingType.load_replay;
+        GameController gameController = menuControllerYio.yioGdxGame.gameController;
+        LegacyImportManager legacyImportManager = gameController.gameSaver.legacyImportManager;
+        legacyImportManager.applyFullLevel(loadingParameters, replay.initialLevelString);
         loadingParameters.replay = replay;
         loadingParameters.playersNumber = 0;
         loadingParameters.colorOffset = replay.tempColorOffset;
@@ -360,8 +364,8 @@ public class ReplaySelector extends InterfaceElement {
         touched = (screenY < position.y + position.height);
 
         if (touched) {
-            clickDetector.touchDown(currentTouch);
-            scrollEngineYio.updateCanSoftCorrect(false);
+            clickDetector.onTouchDown(currentTouch);
+            scrollEngineYio.onTouchDown();
 
             longTapDetector.onTouchDown(currentTouch);
 
@@ -388,7 +392,7 @@ public class ReplaySelector extends InterfaceElement {
 
             scrollEngineYio.setSpeed(currentTouch.y - lastTouch.y);
 
-            clickDetector.touchDrag(currentTouch);
+            clickDetector.onTouchDrag(currentTouch);
             longTapDetector.onTouchDrag(currentTouch);
         }
 
@@ -399,11 +403,11 @@ public class ReplaySelector extends InterfaceElement {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         updateCurrentTouch(screenX, screenY);
-        scrollEngineYio.updateCanSoftCorrect(true);
+        scrollEngineYio.onTouchUp();
 
         if (touched) {
             touched = false;
-            clickDetector.touchUp(currentTouch);
+            clickDetector.onTouchUp(currentTouch);
 
             if (clickDetector.isClicked()) {
                 onClick();
@@ -464,12 +468,6 @@ public class ReplaySelector extends InterfaceElement {
     @Override
     public void setTouchable(boolean touchable) {
 
-    }
-
-
-    @Override
-    public boolean isButton() {
-        return false;
     }
 
 

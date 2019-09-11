@@ -62,7 +62,7 @@ public class SceneDebugTests extends AbstractScene{
     private void createQuantitySlider() {
         ButtonYio label = buttonFactory.getButton(generateRectangle(0.1, 0.63, 0.8, 0.15), 731, " ");
         label.setTouchable(false);
-        label.setAnimation(Animation.UP);
+        label.setAnimation(Animation.up);
 
         initQuantitySlider(label);
         quantitySlider.appear();
@@ -76,7 +76,7 @@ public class SceneDebugTests extends AbstractScene{
         RectangleYio pos = generateRectangle((1 - sWidth) / 2, 0, sWidth, 0);
 
         quantitySlider = new SliderYio(menuControllerYio, -1);
-        quantitySlider.setValues(0, 0, quantities.length - 1, Animation.NONE);
+        quantitySlider.setValues(0, 0, quantities.length - 1, Animation.none);
         quantitySlider.setPosition(pos);
         quantitySlider.setParentElement(label, 0.05);
         quantitySlider.setTitle("Quantity");
@@ -115,7 +115,7 @@ public class SceneDebugTests extends AbstractScene{
     private ButtonYio createTestButton(int id, String key, Reaction reaction) {
         ButtonYio button = buttonFactory.getButton(generateRectangle(0.1, curY, 0.8, 0.07), id, getString(key));
         button.setReaction(reaction);
-        button.setAnimation(Animation.FIXED_DOWN);
+        button.setAnimation(Animation.fixed_down);
 
         curY -= 0.09;
 

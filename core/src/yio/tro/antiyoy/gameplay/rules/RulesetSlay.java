@@ -94,21 +94,4 @@ public class RulesetSlay extends Ruleset{
     }
 
 
-    @Override
-    public int getColorIndexWithOffset(int srcIndex) {
-        srcIndex += gameController.colorIndexViewOffset;
-
-        // this variant leads to problems when colorViewOffset if bigger or equal to colorNumber
-//        if (srcIndex >= GameRules.colorNumber) {
-//            srcIndex -= GameRules.colorNumber;
-//        }
-
-        if (srcIndex >= FieldController.NEUTRAL_LANDS_INDEX) {
-            srcIndex -= FieldController.NEUTRAL_LANDS_INDEX;
-        }
-
-        return srcIndex;
-    }
-
-
 }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.campaign.CampaignLevelFactory;
@@ -73,6 +74,8 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     public SaveSystem saveSystem;
     FactorYio blackoutFactor;
     public SkinManager skinManager;
+    public Stage stage; // for keyboard input
+    public InputMultiplexer inputMultiplexer;
 
 
     public YioGdxGame() {
@@ -95,9 +98,10 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         frameSkipCount = 50; // >= 2
         screenRatio = (float) w / (float) h;
         frameBuffer = FrameBufferYio.getInstance(Pixmap.Format.RGB565, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-        balanceIndicator = new int[GameRules.colorNumber];
+        balanceIndicator = new int[GameRules.fractionsQuantity];
         backButtonIds = new ArrayList<Integer>();
         useMenuMasks = true;
+        stage = new Stage();
     }
 
 
@@ -140,7 +144,10 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         defaultBubbleRadius = 0.02f * w;
         bubbleGravity = 0.00025 * w;
         splatController.revealSplats();
-        Gdx.input.setInputProcessor(this);
+        inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(this);
+        inputMultiplexer.addProcessor(stage);
+        Gdx.input.setInputProcessor(inputMultiplexer);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         initBlackoutFactor();
 
@@ -160,12 +167,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
 
     private void checkForSingleMessageOnStart() {
-        if (OneTimeInfo.getInstance().iosPortDone && !YioGdxGame.IOS) {
-            OneTimeInfo.getInstance().iosPortDone = false;
-            OneTimeInfo.getInstance().save();
-
-            Scenes.sceneNotification.show("available_on_ios");
-        }
+        //
     }
 
 
@@ -183,6 +185,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         UserLevelProgressManager.initialize();
         GlobalStatistics.initialize();
         ReplaySaveSystem.initialize();
+        KeyboardManager.initialize();
     }
 
 
@@ -191,7 +194,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         infoBackground = GraphicsYio.loadTextureRegion("info_background.png", true);
         settingsBackground = GraphicsYio.loadTextureRegion("settings_background.png", true);
         pauseBackground = GraphicsYio.loadTextureRegion("pause_background.png", true);
-        splatController.splatTexture = GraphicsYio.loadTextureRegion("splat.png", true);
+        splatController.loadTextures();
     }
 
 
@@ -297,6 +300,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         checkToUseMenuMasks();
 
         splatController.moveSplats();
+        stage.act();
     }
 
 
@@ -357,13 +361,13 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             drawBackground(currentBackground);
         } else {
             float f = (0 + transitionFactor.get());
-            OldMasking.begin();
+            LegacyMasking.begin();
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.circle(animX, animY, f * animRadius, 32);
             shapeRenderer.end();
-            OldMasking.continueAfterBatchBegin();
+            LegacyMasking.continueAfterBatchBegin();
             drawBackground(currentBackground);
-            OldMasking.end();
+            LegacyMasking.end();
         }
 
         batch.begin();
@@ -467,6 +471,8 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             batch.draw(frameBuffer.getColorBufferTexture(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false, true);
             batch.end();
         }
+
+        stage.draw();
     }
 
 
@@ -636,7 +642,9 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             } else {
                 ignoreDrag = false;
             }
-            if (!gamePaused) gameController.touchDown(screenX, Gdx.graphics.getHeight() - screenY, pointer, button);
+            if (!gamePaused) {
+                gameController.touchDown(screenX, Gdx.graphics.getHeight() - screenY, pointer, button);
+            }
         } catch (Exception exception) {
             if (!alreadyShownErrorMessageOnce) {
                 exception.printStackTrace();
@@ -653,8 +661,9 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         try {
             menuControllerYio.touchUp(screenX, Gdx.graphics.getHeight() - screenY, pointer, button);
             // System.currentTimeMillis() > lastTimeButtonPressed + 300
-            if (!gamePaused && gameView.coversAllScreen())
+            if (!gamePaused && gameView.coversAllScreen()) {
                 gameController.touchUp(screenX, Gdx.graphics.getHeight() - screenY, pointer, button);
+            }
         } catch (Exception exception) {
             if (!alreadyShownErrorMessageOnce) {
                 exception.printStackTrace();
@@ -669,8 +678,9 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         menuControllerYio.touchDragged(screenX, Gdx.graphics.getHeight() - screenY, pointer);
-        if (!ignoreDrag && !gamePaused && gameView.coversAllScreen())
+        if (!ignoreDrag && !gamePaused && gameView.coversAllScreen()) {
             gameController.touchDragged(screenX, Gdx.graphics.getHeight() - screenY, pointer);
+        }
         return false;
     }
 
@@ -687,7 +697,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     private String getBalanceIndicatorAsString(int array[]) {
         StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append("[");
-        for (int i = 0; i < GameRules.colorNumber; i++) {
+        for (int i = 0; i < GameRules.fractionsQuantity; i++) {
             stringBuffer.append(" ").append(array[i]);
         }
         stringBuffer.append(" ]");
@@ -698,7 +708,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     public String getBalanceIndicatorString() {
         double D = 0;
         int max = balanceIndicator[0], min = balanceIndicator[0];
-        for (int i = 0; i < GameRules.colorNumber; i++) {
+        for (int i = 0; i < GameRules.fractionsQuantity; i++) {
             if (balanceIndicator[i] > max) max = balanceIndicator[i];
             if (balanceIndicator[i] < min) min = balanceIndicator[i];
         }

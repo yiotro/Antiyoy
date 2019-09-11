@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.menu;
 
+import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.menu.speed_panel.SpeedPanel;
 import yio.tro.antiyoy.stuff.GraphicsYio;
@@ -22,6 +23,17 @@ public class SpecialActionController {
 
 
     public void perform() {
+        GameController gameController = menuControllerYio.yioGdxGame.gameController;
+        if (gameController.isInEditorMode()) {
+            Scenes.sceneEditorDiplomacy.create();
+            return;
+        }
+
+        if (getDiplomacyManager().log.hasSomethingToRead()) {
+            getDiplomacyManager().onDiplomaticLogButtonPressed();
+            return;
+        }
+
         getDiplomacyManager().onDiplomacyButtonPressed();
     }
 

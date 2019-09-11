@@ -4,7 +4,7 @@ import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.diplomatic_dialogs.StopWarDialog;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
-public class SceneStopWarDialog extends AbstractGameplayScene{
+public class SceneStopWarDialog extends AbstractModalScene {
 
     public StopWarDialog dialog;
 

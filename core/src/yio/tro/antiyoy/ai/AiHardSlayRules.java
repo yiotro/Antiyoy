@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class AiHardSlayRules extends ArtificialIntelligence {
 
-    public AiHardSlayRules(GameController gameController, int color) {
-        super(gameController, color);
+    public AiHardSlayRules(GameController gameController, int fraction) {
+        super(gameController, fraction);
     }
 
 

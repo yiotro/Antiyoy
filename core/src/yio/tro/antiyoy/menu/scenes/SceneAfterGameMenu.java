@@ -3,14 +3,14 @@ package yio.tro.antiyoy.menu.scenes;
 import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Province;
+import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.Animation;
-import yio.tro.antiyoy.menu.behaviors.Reaction;
-import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
 
@@ -20,7 +20,7 @@ public class SceneAfterGameMenu extends AbstractScene {
 
 
     private ButtonYio replayButton;
-    int winnerColor;
+    int winnerFraction;
     boolean playerIsWinner;
     private ButtonYio textPanel;
     private ButtonYio okButton;
@@ -32,13 +32,13 @@ public class SceneAfterGameMenu extends AbstractScene {
         super(menuControllerYio);
 
         pos = new RectangleYio(0.05, 0.35, 0.9, 0.2);
-        winnerColor = 0;
+        winnerFraction = 0;
         playerIsWinner = true;
     }
 
 
-    public void create(int whoWon, boolean playerIsWinner) {
-        this.winnerColor = whoWon;
+    public void create(int winFraction, boolean playerIsWinner) {
+        this.winnerFraction = winFraction;
         this.playerIsWinner = playerIsWinner;
 
         menuControllerYio.beginMenuCreation();
@@ -63,7 +63,7 @@ public class SceneAfterGameMenu extends AbstractScene {
         textPanel.applyNumberOfLines(4);
         menuControllerYio.getButtonRenderer().renderButton(textPanel);
         textPanel.setTouchable(false);
-        textPanel.setAnimation(Animation.FROM_CENTER);
+        textPanel.setAnimation(Animation.from_center);
     }
 
 
@@ -79,9 +79,9 @@ public class SceneAfterGameMenu extends AbstractScene {
     private boolean isVictoryDiplomatic() {
         if (!areThereAtLeastTwoDifferentAliveColorsOnMap()) return false;
 
-        GameController gameController = menuControllerYio.yioGdxGame.gameController;
+        GameController gameController = getGameController();
         DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
-        DiplomaticEntity winner = diplomacyManager.getEntity(winnerColor);
+        DiplomaticEntity winner = diplomacyManager.getEntity(winnerFraction);
         if (!winner.hasOnlyFriends()) return false;
 
         return true;
@@ -89,14 +89,14 @@ public class SceneAfterGameMenu extends AbstractScene {
 
 
     private boolean areThereAtLeastTwoDifferentAliveColorsOnMap() {
-        GameController gameController = menuControllerYio.yioGdxGame.gameController;
+        GameController gameController = getGameController();
         ArrayList<Province> provinces = gameController.fieldController.provinces;
         if (provinces.size() < 2) return false;
 
-        int firstColor = provinces.get(0).getColor();
+        int firstColor = provinces.get(0).getFraction();
 
         for (Province province : provinces) {
-            if (province.getColor() != firstColor) return true;
+            if (province.getFraction() != firstColor) return true;
         }
 
         return false;
@@ -104,17 +104,17 @@ public class SceneAfterGameMenu extends AbstractScene {
 
 
     private String getTextPanelMessage() {
-        if (CampaignProgressManager.getInstance().areCampaignLevelCompletionConditionsSatisfied(winnerColor)) {
+        if (CampaignProgressManager.getInstance().areCampaignLevelCompletionConditionsSatisfied(winnerFraction)) {
             return getString("level_complete");
         }
 
         if (playerIsWinner) {
-            return menuControllerYio.getColorNameByIndexWithOffset(winnerColor, "_player") + " " +
+            return menuControllerYio.getColorsManager().getColorNameByFraction(winnerFraction, "_player") + " " +
                     getString("player") + " " +
                     getString("won") + ".";
         }
 
-        return menuControllerYio.getColorNameByIndexWithOffset(winnerColor, "_ai") + " " +
+        return menuControllerYio.getColorsManager().getColorNameByFraction(winnerFraction, "_ai") + " " +
                 getString("ai") + " " +
                 getString("won") + ".";
     }
@@ -128,12 +128,12 @@ public class SceneAfterGameMenu extends AbstractScene {
         okButton.setShadow(false);
         okButton.setReaction(getOkButtonReaction());
         okButton.setVisualHook(textPanel);
-        okButton.setAnimation(Animation.FROM_CENTER);
+        okButton.setAnimation(Animation.from_center);
     }
 
 
     private Reaction getOkButtonReaction() {
-        if (CampaignProgressManager.getInstance().areCampaignLevelCompletionConditionsSatisfied(winnerColor)) {
+        if (CampaignProgressManager.getInstance().areCampaignLevelCompletionConditionsSatisfied(winnerFraction)) {
             return Reaction.rbNextLevel;
         }
 
@@ -142,7 +142,7 @@ public class SceneAfterGameMenu extends AbstractScene {
 
 
     private String getOkButtonTextKey() {
-        if (CampaignProgressManager.getInstance().areCampaignLevelCompletionConditionsSatisfied(winnerColor)) {
+        if (CampaignProgressManager.getInstance().areCampaignLevelCompletionConditionsSatisfied(winnerFraction)) {
             return "next";
         }
 
@@ -159,7 +159,7 @@ public class SceneAfterGameMenu extends AbstractScene {
         statisticsButton.setShadow(false);
         statisticsButton.setReaction(Reaction.rbStatisticsMenu);
         statisticsButton.setVisualHook(textPanel);
-        statisticsButton.setAnimation(Animation.FROM_CENTER);
+        statisticsButton.setAnimation(Animation.from_center);
     }
 
 
@@ -168,14 +168,13 @@ public class SceneAfterGameMenu extends AbstractScene {
 
         replayButton = buttonFactory.getButton(generateRectangle(0.6, 0.9, 0.35, 0.055), 63, getString("replay"));
         replayButton.setReaction(Reaction.rbStartInstantReplay);
-        replayButton.setAnimation(Animation.UP);
+        replayButton.setAnimation(Animation.up);
         replayButton.setTouchOffset(0.05f * GraphicsYio.width);
-        replayButton.disableTouchAnimation();
     }
 
 
     @Override
     public void create() {
-        create(winnerColor, playerIsWinner);
+        create(winnerFraction, playerIsWinner);
     }
 }

@@ -5,9 +5,9 @@ import yio.tro.antiyoy.gameplay.SkipLevelManager;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.Animation;
-import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
 public class ScenePauseMenu extends AbstractScene{
@@ -56,31 +56,28 @@ public class ScenePauseMenu extends AbstractScene{
     @Override
     public void create() {
         menuControllerYio.beginMenuCreation();
-
         menuControllerYio.getYioGdxGame().beginBackgroundChange(3, true, true);
 
         initMetrics();
         basePanel = buttonFactory.getButton(generateRectangle(x, bottomY, bWidth, 4 * bHeight), 40, null);
         basePanel.setTouchable(false);
         basePanel.onlyShadow = true;
-        basePanel.setAnimation(Animation.FROM_CENTER);
+        basePanel.setAnimation(Animation.from_center);
 
         y = bottomY;
 
         mainMenuButton = buttonFactory.getButton(generateRectangle(x, y, bWidth, bHeight), 42, getString("in_game_menu_main_menu"));
         mainMenuButton.setReaction(Reaction.rbMainMenu);
         mainMenuButton.setShadow(false);
-        mainMenuButton.setAnimation(Animation.FROM_CENTER);
+        mainMenuButton.setAnimation(Animation.from_center);
         mainMenuButton.setVisualHook(basePanel);
-        mainMenuButton.disableTouchAnimation();
         y += bHeight;
 
         chooseLevelButton = buttonFactory.getButton(generateRectangle(x, y, bWidth, bHeight), 43, getString("in_game_menu_save"));
         chooseLevelButton.setReaction(Reaction.rbSaveGame);
         chooseLevelButton.setShadow(false);
-        chooseLevelButton.setAnimation(Animation.FROM_CENTER);
+        chooseLevelButton.setAnimation(Animation.from_center);
         chooseLevelButton.setVisualHook(basePanel);
-        chooseLevelButton.disableTouchAnimation();
         y += bHeight;
 
         createThirdButton();
@@ -88,13 +85,13 @@ public class ScenePauseMenu extends AbstractScene{
         resumeButton = buttonFactory.getButton(generateRectangle(x, y, bWidth, bHeight), 45, getString("in_game_menu_resume"));
         resumeButton.setReaction(Reaction.rbResumeGame);
         resumeButton.setShadow(false);
-        resumeButton.setAnimation(Animation.FROM_CENTER);
+        resumeButton.setAnimation(Animation.from_center);
         resumeButton.setVisualHook(basePanel);
-        resumeButton.disableTouchAnimation();
         y += bHeight;
 
         checkToAddCheatsStuff();
 
+        menuControllerYio.yioGdxGame.gameController.resetTouchMode();
         menuControllerYio.endMenuCreation();
     }
 
@@ -105,7 +102,7 @@ public class ScenePauseMenu extends AbstractScene{
             return;
         }
 
-        SkipLevelManager skipLevelManager = menuControllerYio.yioGdxGame.gameController.skipLevelManager;
+        SkipLevelManager skipLevelManager = getGameController().skipLevelManager;
         int currentLevelIndex = CampaignProgressManager.getInstance().currentLevelIndex;
         if (GameRules.campaignMode && skipLevelManager.canSkipLevel(currentLevelIndex)) {
             createSkipLevelButton();
@@ -115,9 +112,8 @@ public class ScenePauseMenu extends AbstractScene{
         restartButton = buttonFactory.getButton(generateRectangle(x, y, bWidth, bHeight), 44, getString("in_game_menu_restart"));
         restartButton.setReaction(Reaction.rbRestartGame);
         restartButton.setShadow(false);
-        restartButton.setAnimation(Animation.FROM_CENTER);
+        restartButton.setAnimation(Animation.from_center);
         restartButton.setVisualHook(basePanel);
-        restartButton.disableTouchAnimation();
         y += bHeight;
     }
 
@@ -128,9 +124,8 @@ public class ScenePauseMenu extends AbstractScene{
         specialActionButton.setReaction(rbSkipLevelMenu);
         menuControllerYio.buttonRenderer.renderButton(specialActionButton);
         specialActionButton.setShadow(false);
-        specialActionButton.setAnimation(Animation.FROM_CENTER);
+        specialActionButton.setAnimation(Animation.from_center);
         specialActionButton.setVisualHook(basePanel);
-        specialActionButton.disableTouchAnimation();
         y += bHeight;
     }
 
@@ -147,31 +142,34 @@ public class ScenePauseMenu extends AbstractScene{
             specialActionButton.setReaction(new Reaction() {
                 @Override
                 public void perform(ButtonYio buttonYio) {
-                    menuControllerYio.yioGdxGame.gameController.getLevelEditor().launchEditLevelMode();
+                    onSpecialActionButtonPressed();
                 }
             });
         }
         menuControllerYio.buttonRenderer.renderButton(specialActionButton);
         specialActionButton.setShadow(false);
-        specialActionButton.setAnimation(Animation.FROM_CENTER);
+        specialActionButton.setAnimation(Animation.from_center);
         specialActionButton.setVisualHook(basePanel);
-        specialActionButton.disableTouchAnimation();
         y += bHeight;
+    }
+
+
+    private void onSpecialActionButtonPressed() {
+        getGameController().getLevelEditor().launchEditLevelMode();
     }
 
 
     private void checkToAddCheatsStuff() {
         if (!DebugFlags.cheatsEnabled) return;
         if (GameRules.replayMode) return;
-        if (menuControllerYio.yioGdxGame.gameController.playersNumber != 1) return;
+        if (getGameController().playersNumber != 1) return;
 
         double oieWidth = 0.4;
         double oieHeight = 0.055;
         cheatsButton = buttonFactory.getButton(generateRectangle(0.5 - oieWidth / 2, 0.02, oieWidth, oieHeight), 46, "Cheats");
         cheatsButton.setReaction(rbCheats);
-        cheatsButton.setAnimation(Animation.FIXED_DOWN);
+        cheatsButton.setAnimation(Animation.fixed_down);
         cheatsButton.setTouchOffset(0.05f * GraphicsYio.width);
-        cheatsButton.disableTouchAnimation();
     }
 
 

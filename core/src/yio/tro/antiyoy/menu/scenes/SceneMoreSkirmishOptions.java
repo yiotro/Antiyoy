@@ -2,13 +2,13 @@ package yio.tro.antiyoy.menu.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import yio.tro.antiyoy.gameplay.ColorsManager;
 import yio.tro.antiyoy.menu.*;
 import yio.tro.antiyoy.menu.slider.SliderBehavior;
 import yio.tro.antiyoy.menu.slider.SliderYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.stuff.RectangleYio;
-import yio.tro.antiyoy.stuff.Yio;
 
 public class SceneMoreSkirmishOptions extends AbstractScene{
 
@@ -24,6 +24,7 @@ public class SceneMoreSkirmishOptions extends AbstractScene{
         super(menuControllerYio);
 
         colorOffsetSlider = null;
+        chkSlayRules = null;
     }
 
 
@@ -58,9 +59,6 @@ public class SceneMoreSkirmishOptions extends AbstractScene{
 
     private int getNumberOfSegmentsForColorOffset() {
         SliderYio colorsSlider = Scenes.sceneSkirmishMenu.colorsSlider;
-
-//        return colorsSlider.getCurrentRunnerIndex() + colorsSlider.getMinNumber();
-
         return 5 + colorsSlider.getMinNumber();
     }
 
@@ -94,14 +92,14 @@ public class SceneMoreSkirmishOptions extends AbstractScene{
         RectangleYio pos = generateRectangle((1 - sWidth) / 2, 0, sWidth, 0);
 
         colorOffsetSlider = new SliderYio(menuControllerYio, -1);
-        colorOffsetSlider.setValues(0, 0, 6, Animation.UP);
+        colorOffsetSlider.setValues(0, 0, 6, Animation.up);
         colorOffsetSlider.setPosition(pos);
         colorOffsetSlider.setParentElement(label, 0.37);
         colorOffsetSlider.setTitle("player_color");
         colorOffsetSlider.setBehavior(new SliderBehavior() {
             @Override
             public String getValueString(SliderYio sliderYio) {
-                return SceneSkirmishMenu.getColorStringBySliderIndex(sliderYio.getValueIndex());
+                return ColorsManager.getMenuColorNameByIndex(sliderYio.getValueIndex());
             }
         });
 
@@ -112,50 +110,40 @@ public class SceneMoreSkirmishOptions extends AbstractScene{
 
 
     private void createCheckButtons() {
-        double checkButtonSize = 0.045;
-        double hSize = GraphicsYio.convertToHeight(checkButtonSize);
-        double chkX = 0.88 - checkButtonSize;
-        double chkY = 0.6;
-        double delta = hSize + 0.062;
+        initChecks();
+        chkSlayRules.appear();
+        chkFogOfWar.appear();
+        chkDiplomacy.appear();
+    }
 
-        chkSlayRules = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 16);
-        chkSlayRules.setTouchPosition(generateRectangle(0.05, chkY - hSize * 1.5, 0.9, hSize * 3));
-        chkSlayRules.setAnimation(Animation.FIXED_UP);
-        chkY -= delta;
 
-        chkFogOfWar = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 19);
-        chkFogOfWar.setTouchPosition(generateRectangle(0.05, chkY - hSize * 1.5, 0.9, hSize * 3));
-        chkFogOfWar.setAnimation(Animation.FIXED_UP);
-        chkY -= delta;
+    private void initChecks() {
+        if (chkSlayRules != null) return;
 
-        chkDiplomacy = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 20);
-        chkDiplomacy.setTouchPosition(generateRectangle(0.05, chkY - hSize * 1.5, 0.9, hSize * 3));
-        chkDiplomacy.setAnimation(Animation.FIXED_UP);
-        chkY -= delta;
+        chkSlayRules = CheckButtonYio.getFreshCheckButton(menuControllerYio);
+        chkSlayRules.setParent(label);
+        chkSlayRules.alignTop(0.2);
+        chkSlayRules.setTitle(getString("slay_rules"));
+        chkSlayRules.centerHorizontal(0.05);
+
+        chkFogOfWar = CheckButtonYio.getFreshCheckButton(menuControllerYio);
+        chkFogOfWar.setParent(label);
+        chkFogOfWar.alignUnderPreviousElement();
+        chkFogOfWar.setTitle(getString("fog_of_war"));
+        chkFogOfWar.centerHorizontal(0.05);
+
+        chkDiplomacy = CheckButtonYio.getFreshCheckButton(menuControllerYio);
+        chkDiplomacy.setParent(label);
+        chkDiplomacy.alignUnderPreviousElement();
+        chkDiplomacy.setTitle(getString("diplomacy"));
+        chkDiplomacy.centerHorizontal(0.05);
     }
 
 
     private void createLabel() {
-        label = buttonFactory.getButton(generateRectangle(0.05, 0.35, 0.9, 0.5), 232, null);
-        if (label.notRendered()) {
-            label.cleatText();
-            label.addTextLine(" ");
-            label.addTextLine(" ");
-            label.addTextLine(" ");
-            label.addTextLine(" ");
-            label.addTextLine(" ");
-            label.addTextLine(getString("slay_rules"));
-            label.addTextLine(" ");
-            label.addTextLine(getString("fog_of_war"));
-            label.addTextLine(" ");
-            label.addTextLine(getString("diplomacy"));
-            label.addTextLine(" ");
-
-            label.setTextOffset(0.09f * GraphicsYio.width);
-            menuControllerYio.getButtonRenderer().renderButton(label);
-        }
+        label = buttonFactory.getButton(generateRectangle(0.05, 0.35, 0.9, 0.5), 232, " ");
         label.setTouchable(false);
-        label.setAnimation(Animation.FIXED_UP);
+        label.setAnimation(Animation.fixed_up);
     }
 
 

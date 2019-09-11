@@ -1,8 +1,8 @@
 package yio.tro.antiyoy.menu.render;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import yio.tro.antiyoy.menu.FireworksElement.FeParticle;
-import yio.tro.antiyoy.menu.FireworksElement.FireworksElement;
+import yio.tro.antiyoy.menu.fireworks_element.FeParticle;
+import yio.tro.antiyoy.menu.fireworks_element.FireworksElement;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 

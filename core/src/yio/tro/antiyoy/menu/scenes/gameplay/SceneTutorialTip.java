@@ -2,14 +2,14 @@ package yio.tro.antiyoy.menu.scenes.gameplay;
 
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.menu.Animation;
-import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
 import java.util.ArrayList;
 
-public class SceneTutorialTip extends AbstractGameplayScene {
+public class SceneTutorialTip extends AbstractModalScene {
 
 
     private final ArrayList<String> text;
@@ -35,15 +35,14 @@ public class SceneTutorialTip extends AbstractGameplayScene {
         textPanel.addManyLines(text);
         menuControllerYio.getButtonRenderer().renderButton(textPanel);
         textPanel.setTouchable(false);
-        textPanel.setAnimation(Animation.FIXED_DOWN);
+        textPanel.setAnimation(Animation.fixed_down);
         textPanel.appearFactor.appear(3, 1);
 
         ButtonYio okButton = buttonFactory.getButton(generateRectangle(0.6, 0.1, 0.4, 0.07), 53, getString("end_game_ok"));
         okButton.setShadow(false);
         okButton.setReaction(Reaction.rbCloseTutorialTip);
-        okButton.setAnimation(Animation.FIXED_DOWN);
+        okButton.setAnimation(Animation.fixed_down);
         okButton.appearFactor.appear(3, 1);
-        okButton.disableTouchAnimation();
     }
 
 
@@ -61,15 +60,14 @@ public class SceneTutorialTip extends AbstractGameplayScene {
         }
         menuControllerYio.getButtonRenderer().renderButton(textPanel);
         textPanel.setTouchable(false);
-        textPanel.setAnimation(Animation.FIXED_DOWN);
+        textPanel.setAnimation(Animation.fixed_down);
         textPanel.appearFactor.appear(3, 1);
 
         ButtonYio okButton = buttonFactory.getButton(generateRectangle(0.6, 0.1, 0.4, 0.07), 53, getString("end_game_ok"));
         okButton.setShadow(false);
         okButton.setReaction(Reaction.rbCloseTutorialTip);
-        okButton.setAnimation(Animation.FIXED_DOWN);
+        okButton.setAnimation(Animation.fixed_down);
         okButton.appearFactor.appear(3, 1);
-        okButton.disableTouchAnimation();
     }
 
 
@@ -108,9 +106,8 @@ public class SceneTutorialTip extends AbstractGameplayScene {
                 Scenes.sceneHelpIndex.create();
             }
         });
-        helpButton.setAnimation(Animation.FIXED_DOWN);
+        helpButton.setAnimation(Animation.fixed_down);
         helpButton.appearFactor.appear(3, 1);
-        helpButton.disableTouchAnimation();
     }
 
 

@@ -3,7 +3,7 @@ package yio.tro.antiyoy.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.*;
-import yio.tro.antiyoy.gameplay.game_view.GameView;
+import yio.tro.antiyoy.gameplay.ColorsManager;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.behaviors.gameplay.ColorStatsRenderer;
 import yio.tro.antiyoy.menu.scenes.*;
@@ -26,7 +26,6 @@ public class MenuControllerYio {
     public ButtonRenderer buttonRenderer;
     TextureRegion unlockedLevelIcon, lockedLevelIcon, openedLevelIcon;
     public final ArrayList<ButtonYio> buttons;
-    public ArrayList<CheckButtonYio> checkButtons;
     public SpecialActionController specialActionController;
     public ArrayList<InterfaceElement> interfaceElements;
     public ColorStatsRenderer colorStatsRenderer;
@@ -43,7 +42,6 @@ public class MenuControllerYio {
         openedLevelIcon = GraphicsYio.loadTextureRegion("opened_level_icon.png", true);
         interfaceElements = new ArrayList<>();
         colorStatsRenderer = new ColorStatsRenderer(this);
-        initCheckButtons();
         applyAnimStyle();
 
         Scenes.createScenes(this);
@@ -55,44 +53,29 @@ public class MenuControllerYio {
 
     private void checkToCreateSingleMessage() {
 
-
-//        if (SingleMessages.achikapsRelease) {
-//            SingleMessages.achikapsRelease = false;
-//            SingleMessages.save();
-//            createSingleMessageMenu("achikaps_release");
-//            return;
-//        }
-    }
-
-
-    private void initCheckButtons() {
-        checkButtons = new ArrayList<>();
-
-        for (int i = 0; i < 30; i++) {
-            CheckButtonYio.getCheckButton(this, generateRectangle(0, 0, 0, 0), i + 1);
-            getCheckButtonById(i + 1).destroy();
-        }
     }
 
 
     public void move() {
         specialActionController.move();
+        moveButtons();
+        moveInterfaceElements();
+        checkToPerformAction();
+    }
 
-        for (CheckButtonYio checkButton : checkButtons) {
-            checkButton.move();
-        }
 
+    private void moveButtons() {
         for (ButtonYio buttonYio : buttons) {
             buttonYio.move();
         }
+    }
 
+
+    private void moveInterfaceElements() {
         for (InterfaceElement interfaceElement : interfaceElements) {
-            if (interfaceElement.isVisible()) {
-                interfaceElement.move();
-            }
+            if (!interfaceElement.isVisible()) continue;
+            interfaceElement.move();
         }
-
-        checkToPerformAction();
     }
 
 
@@ -179,18 +162,17 @@ public class MenuControllerYio {
     }
 
 
+    public InterfaceElement getPreviouslyAddedElement() {
+        return interfaceElements.get(interfaceElements.size() - 2);
+    }
+
+
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         for (int i = interfaceElements.size() - 1; i >= 0; i--) {
             InterfaceElement interfaceElement = interfaceElements.get(i);
             if (interfaceElement.isTouchable() && interfaceElement.isVisible()) {
                 if (interfaceElement.touchDown(screenX, screenY, pointer, button)) return true;
             }
-        }
-
-        for (CheckButtonYio checkButton : checkButtons) {
-            if (!checkButton.isTouchable()) continue;
-
-            if (checkButton.checkTouch(screenX, screenY, pointer, button)) return true;
         }
 
         for (int i = buttons.size() - 1; i >= 0; i--) {
@@ -245,10 +227,6 @@ public class MenuControllerYio {
         for (InterfaceElement interfaceElement : interfaceElements) {
             if (interfaceElement.isAnotherSceneCreationIgnored()) continue;
             interfaceElement.destroy();
-        }
-
-        for (CheckButtonYio checkButton : checkButtons) {
-            checkButton.destroy();
         }
 
         for (ButtonYio buttonYio : buttons) {
@@ -328,8 +306,8 @@ public class MenuControllerYio {
         Scenes.sceneEditorObjectPanel.hide();
         Scenes.sceneEditorParams.hide();
         Scenes.sceneEditorAutomationPanel.hide();
-        Scenes.sceneEditorMoneyPanel.hide();
-        Scenes.sceneEditorChecks.hide();
+        Scenes.sceneEditorGameRulesPanel.hide();
+        Scenes.sceneEditorDiplomacy.hide();
 
         yioGdxGame.gameController.getLevelEditor().onAllPanelsHide();
     }
@@ -351,30 +329,8 @@ public class MenuControllerYio {
     }
 
 
-    public String getColorNameByIndexWithOffset(int index, String keyModifier) {
-        index = yioGdxGame.gameController.getColorIndexWithOffset(index);
-        return getColorNameWithoutOffset(index, keyModifier);
-    }
-
-
-    public String getColorNameWithoutOffset(int index, String keyModifier) {
-        switch (index) {
-            default:
-            case 6:
-            case 0:
-                return getString("green" + keyModifier);
-            case 1:
-            case 5:
-                return getString("red" + keyModifier);
-            case 2:
-                return getString("magenta" + keyModifier);
-            case 3:
-                return getString("cyan" + keyModifier);
-            case 4:
-                return getString("yellow" + keyModifier);
-            case 7:
-                return getString("gray" + keyModifier);
-        }
+    public ColorsManager getColorsManager() {
+        return yioGdxGame.gameController.colorsManager;
     }
 
 
@@ -396,35 +352,20 @@ public class MenuControllerYio {
         ButtonYio backButton = buttonFactory.getButton(generateRectangle(x, y, width, height), id, null);
         loadButtonOnce(backButton, "menu/back_icon.png");
         backButton.setShadow(true);
-        backButton.setAnimation(Animation.UP);
+        backButton.setAnimation(Animation.up);
         backButton.setReaction(reaction);
         backButton.setTouchOffset(0.05f * Gdx.graphics.getHeight());
-        yioGdxGame.registerBackButtonId(id);
+        backButton.tagAsBackButton();
 
         double arrowVerSize = 0.07;
         RectangleYio position = generateSquare(x + width / 2 - GraphicsYio.convertToWidth(arrowVerSize) / 2, y + height / 2 - arrowVerSize / 2, arrowVerSize);
         ButtonYio arrowIcon = buttonFactory.getButton(position, id + 317263313, null);
         loadButtonOnce(arrowIcon, "menu/arrow.png");
         arrowIcon.setShadow(false);
-        arrowIcon.setAnimation(Animation.UP);
+        arrowIcon.setAnimation(Animation.up);
         arrowIcon.setTouchable(false);
 
         return backButton;
-    }
-
-
-    public void addCheckButtonToArray(CheckButtonYio checkButtonYio) {
-        checkButtons.listIterator().add(checkButtonYio);
-    }
-
-
-    public CheckButtonYio getCheckButtonById(int id) {
-        for (CheckButtonYio checkButton : checkButtons) {
-            if (checkButton.id == id) {
-                return checkButton;
-            }
-        }
-        return null;
     }
 
 

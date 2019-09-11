@@ -14,8 +14,8 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
     private ArrayList<Hex> result;
 
 
-    public AiBalancerGenericRules(GameController gameController, int color) {
-        super(gameController, color);
+    public AiBalancerGenericRules(GameController gameController, int fraction) {
+        super(gameController, fraction);
         result = new ArrayList<Hex>();
     }
 
@@ -114,7 +114,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         boolean cleanedTrees = checkToCleanSomeTrees(unit, moveZone, province);
         if (cleanedTrees) return;
 
-        ArrayList<Hex> attackableHexes = findAttackableHexes(unit.getColor(), moveZone);
+        ArrayList<Hex> attackableHexes = findAttackableHexes(unit.getFraction(), moveZone);
         if (attackableHexes.size() > 0) { // attack something
             tryToAttackSomething(unit, province, attackableHexes);
         } else { // nothing to attack
@@ -134,7 +134,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         for (int i = 0; i < 6; i++) {
             Hex adjHex = unit.currentHex.getAdjacentHex(i);
             if (!adjHex.active) continue;
-            if (!adjHex.sameColor(unit.currentHex)) continue;
+            if (!adjHex.sameFraction(unit.currentHex)) continue;
             if (!adjHex.isFree()) continue;
 
             if (predictDefenseGainWithUnit(adjHex, unit) < 3) continue;
@@ -154,7 +154,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         for (int i = 0; i < 6; i++) {
             Hex adjHex = unit.currentHex.getAdjacentHex(i);
             if (!adjHex.active) continue;
-            if (!adjHex.sameColor(unit.currentHex)) continue;
+            if (!adjHex.sameFraction(unit.currentHex)) continue;
 
             defenseGain -= adjHex.getDefenseNumber();
             defenseGain += unit.strength;
@@ -201,9 +201,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         Hex result = null;
         int currMax = -1;
         for (Hex attackableHex : attackableHexes) {
-            // this doesn't fucking work...
-//            if (!hasSafePathToTown(getNearbyHexWithColor(attackableHex, unit.getColor()), unit)) continue;
-            int currNum = getAttackAllure(attackableHex, unit.getColor());
+            int currNum = getAttackAllure(attackableHex, unit.getFraction());
             if (currNum > currMax) {
                 currMax = currNum;
                 result = attackableHex;
@@ -213,25 +211,17 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
     }
 
 
-    protected Hex getNearbyHexWithColor(Hex src, int color) {
-        for (int i = 0; i < 6; i++) {
-            Hex adjHex = src.getAdjacentHex(i);
-            if (!adjHex.active) continue;
-            if (!adjHex.sameColor(color)) continue;
-            if (adjHex.numberOfFriendlyHexesNearby() == 0) continue;
-            return adjHex;
-        }
-        return null;
-    }
-
-
     @Override
-    int getAttackAllure(Hex hex, int color) {
+    int getAttackAllure(Hex hex, int fraction) {
         int c = 0;
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.getAdjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(color)) c++;
-            if (adjHex.active && adjHex.sameColor(color) && adjHex.objectInside == Obj.TOWN) c += 5;
+            if (adjHex.active && adjHex.sameFraction(fraction)) {
+                c++;
+            }
+            if (adjHex.active && adjHex.sameFraction(fraction) && adjHex.objectInside == Obj.TOWN) {
+                c += 5;
+            }
         }
 
         if (hex.objectInside == Obj.FARM) {
@@ -275,18 +265,18 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         if (unit.strength == 4) return false;
 
         ArrayList<Hex> moveZone = gameController.detectMoveZone(unit.currentHex, unit.strength);
-        if (!moveZoneContainsEnemyHexes(moveZone, unit.getColor())) return false;
+        if (!moveZoneContainsEnemyHexes(moveZone, unit.getFraction())) return false;
 
-        ArrayList<Hex> attackableHexes = findAttackableHexes(unit.getColor(), moveZone);
+        ArrayList<Hex> attackableHexes = findAttackableHexes(unit.getFraction(), moveZone);
         if (attackableHexes.size() > 0) return false;
 
         return true;
     }
 
 
-    private boolean moveZoneContainsEnemyHexes(ArrayList<Hex> moveZone, int unitColor) {
+    private boolean moveZoneContainsEnemyHexes(ArrayList<Hex> moveZone, int unitFraction) {
         for (Hex hex : moveZone) {
-            if (!hex.sameColor(unitColor)) return true;
+            if (!hex.sameFraction(unitFraction)) return true;
         }
         return false;
     }
@@ -307,7 +297,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         for (int i = 0; i < 6; i++) {
             Hex adjHex = unit.currentHex.getAdjacentHex(i);
             if (!adjHex.active) continue;
-            if (!adjHex.sameColor(unit.currentHex)) continue;
+            if (!adjHex.sameFraction(unit.currentHex)) continue;
             defenseLoss += adjHex.getDefenseNumber() - adjHex.getDefenseNumber(unit);
         }
 
@@ -332,7 +322,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
             for (int i = 0; i < 6; i++) {
                 Hex adjHex = hex.getAdjacentHex(i);
                 if (!adjHex.active) continue;
-                if (!adjHex.sameColor(startHex)) continue;
+                if (!adjHex.sameFraction(startHex)) continue;
                 if (adjHex.flag) continue;
                 if (adjHex.getDefenseNumber(attackUnit) == 0) continue;
                 adjHex.flag = true;
@@ -345,10 +335,11 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
 
 
     @Override
-    ArrayList<Hex> findAttackableHexes(int attackerColor, ArrayList<Hex> moveZone) {
+    ArrayList<Hex> findAttackableHexes(int attackerFraction, ArrayList<Hex> moveZone) {
         result.clear();
         for (Hex hex : moveZone) {
-            if (hex.colorIndex != attackerColor) result.add(hex);
+            if (hex.fraction == attackerFraction) continue;
+            result.add(hex);
         }
 
         updateSortConditions();
@@ -365,7 +356,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.getAdjacentHex(i);
             if (!adjHex.active) continue;
-            if (!adjHex.sameColor(color)) continue;
+            if (!adjHex.sameFraction(fraction)) continue;
             if (!adjHex.containsUnit() || !adjHex.containsTower()) continue;
             c++;
         }
@@ -380,7 +371,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         int bDefense = unitsNearby(b);
 
         if (aDefense == bDefense) {
-            return getHexCount(b.colorIndex) - getHexCount(a.colorIndex);
+            return getHexCount(b.fraction) - getHexCount(a.fraction);
         }
 
         return bDefense - aDefense;

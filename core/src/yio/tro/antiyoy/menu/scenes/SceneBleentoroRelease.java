@@ -31,7 +31,7 @@ public class SceneBleentoroRelease extends AbstractScene{
         }
         menuControllerYio.buttonRenderer.renderButton(panel);
         panel.setTouchable(false);
-        panel.setAnimation(Animation.FROM_CENTER);
+        panel.setAnimation(Animation.from_center);
 
         okButton = buttonFactory.getButton(generateRectangle(0.55, 0.33, 0.4, 0.05), 831, LanguagesManager.getInstance().getString("end_game_ok"));
         okButton.setTouchOffset(0.1f * GraphicsYio.width);
@@ -42,7 +42,7 @@ public class SceneBleentoroRelease extends AbstractScene{
                 Scenes.sceneMainMenu.create();
             }
         });
-        okButton.setAnimation(Animation.FROM_CENTER);
+        okButton.setAnimation(Animation.from_center);
 
         menuControllerYio.endMenuCreation();
     }

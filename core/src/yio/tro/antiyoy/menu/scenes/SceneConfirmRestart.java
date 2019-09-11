@@ -1,9 +1,9 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.menu.Animation;
-import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 
 public class SceneConfirmRestart extends AbstractScene{
 
@@ -32,21 +32,19 @@ public class SceneConfirmRestart extends AbstractScene{
             menuControllerYio.getButtonRenderer().renderButton(basePanel);
         }
         basePanel.setTouchable(false);
-        basePanel.setAnimation(Animation.FROM_CENTER);
+        basePanel.setAnimation(Animation.from_center);
 
         restartButton = buttonFactory.getButton(generateRectangle(0.5, 0.4, 0.45, 0.05), 221, getString("in_game_menu_restart"));
         restartButton.setReaction(Reaction.rbRestartGame);
         restartButton.setShadow(false);
-        restartButton.disableTouchAnimation();
         restartButton.setVisualHook(basePanel);
-        restartButton.setAnimation(Animation.FROM_CENTER);
+        restartButton.setAnimation(Animation.from_center);
 
         cancelButton = buttonFactory.getButton(generateRectangle(0.05, 0.4, 0.45, 0.05), 222, getString("cancel"));
         cancelButton.setReaction(Reaction.rbPauseMenu);
         cancelButton.setShadow(false);
-        cancelButton.disableTouchAnimation();
         cancelButton.setVisualHook(basePanel);
-        cancelButton.setAnimation(Animation.FROM_CENTER);
+        cancelButton.setAnimation(Animation.from_center);
 
         menuControllerYio.endMenuCreation();
     }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.stuff.CircleYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.Yio;
 
@@ -21,10 +22,26 @@ public class SplatController {
     int currentSplatIndex;
     long timeToHideSplats;
     boolean needToHideSplats;
+    private TextureRegion snowflakeTexture;
+    boolean newYearMode;
+    CircleYio tempCircle;
 
 
     public SplatController(YioGdxGame yioGdxGame) {
         this.yioGdxGame = yioGdxGame;
+        tempCircle = new CircleYio();
+        updateNewYearMode();
+    }
+
+
+    private void updateNewYearMode() {
+        newYearMode = Yio.isNewYearNear();
+    }
+
+
+    public void loadTextures() {
+        splatTexture = GraphicsYio.loadTextureRegion("splat.png", true);
+        snowflakeTexture = GraphicsYio.loadTextureRegion("menu/snowflake.png", true);
     }
 
 
@@ -93,7 +110,8 @@ public class SplatController {
         if (splatTransparencyFactor.get() == 1) {
             yioGdxGame.batch.setColor(c.r, c.g, c.b, splatTransparencyFactor.get());
             for (Splat splat : splats) {
-                yioGdxGame.batch.draw(splatTexture, splat.x - splat.r / 2, splat.y - splat.r / 2, splat.r, splat.r);
+                splat.applyToCircle(tempCircle, 1);
+                GraphicsYio.drawByCircle(yioGdxGame.batch, getSplatTexture(), tempCircle);
             }
         } else if (splatTransparencyFactor.get() > 0) {
             yioGdxGame.batch.setColor(c.r, c.g, c.b, splatTransparencyFactor.get());
@@ -103,9 +121,19 @@ public class SplatController {
                 d = (float) Yio.distance(GraphicsYio.width / 2, GraphicsYio.height / 2, splat.x, splat.y);
                 d = 0.5f * GraphicsYio.height - d;
                 d *= 1 - splatTransparencyFactor.get();
-                yioGdxGame.batch.draw(splatTexture, splat.x - splat.r / 2 + d * (float) Math.cos(a), splat.y - splat.r / 2 + d * (float) Math.sin(a), splat.r, splat.r);
+                splat.applyToCircle(tempCircle, splatTransparencyFactor.get());
+                tempCircle.center.relocateRadial(d, a);
+                GraphicsYio.drawByCircle(yioGdxGame.batch, getSplatTexture(), tempCircle);
             }
         }
+    }
+
+
+    private TextureRegion getSplatTexture() {
+        if (newYearMode) {
+            return snowflakeTexture;
+        }
+        return splatTexture;
     }
 
 
@@ -120,6 +148,6 @@ public class SplatController {
     void revealSplats() {
         needToHideSplats = false;
         splatTransparencyFactor.setDy(0);
-        splatTransparencyFactor.appear(0, 0.5);
+        splatTransparencyFactor.appear(0, 0.7);
     }
 }

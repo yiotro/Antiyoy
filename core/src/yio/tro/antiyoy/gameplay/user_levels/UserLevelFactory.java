@@ -1,12 +1,6 @@
 package yio.tro.antiyoy.gameplay.user_levels;
 
-import yio.tro.antiyoy.gameplay.user_levels.pack_five.*;
-import yio.tro.antiyoy.gameplay.user_levels.pack_four.*;
-import yio.tro.antiyoy.gameplay.user_levels.pack_one.*;
-import yio.tro.antiyoy.gameplay.user_levels.pack_seven.*;
-import yio.tro.antiyoy.gameplay.user_levels.pack_six.*;
-import yio.tro.antiyoy.gameplay.user_levels.pack_three.*;
-import yio.tro.antiyoy.gameplay.user_levels.pack_two.*;
+import yio.tro.antiyoy.gameplay.user_levels.pack.*;
 
 import java.util.ArrayList;
 
@@ -14,7 +8,7 @@ public class UserLevelFactory {
 
 
     private static UserLevelFactory instance;
-    ArrayList<AbstractUserLevel> levels;
+    ArrayList<AbstractLegacyUserLevel> levels;
 
 
     public static void initialize() {
@@ -38,27 +32,54 @@ public class UserLevelFactory {
 
 
     private void initLevels() {
+        // 8
+        add(new UlevBackyardSale());
+        add(new UlevForJasmin());
+        add(new UlevAf3());
+        add(new UlevInDilemma());
+        add(new UlevDota());
+        add(new UlevHardhex());
+        add(new UlevDrunken());
+        add(new UlevLockedIn());
+        add(new UlevLuckyGreenOne());
+        add(new UlevIslandOfUnity());
+        add(new UlevAf2());
+        add(new UlevTripleThreat());
+        add(new UlevYellowBarrier());
+        add(new UlevDominicAjducic());
+        add(new UlevUsa1793());
+
         // 7
         add(new UlevSpaghettiMonster());
         add(new UlevRelax());
         add(new UlevStarship());
         add(new UlevWorld());
         add(new UlevSerdechko());
+        add(new UlevBigCheese());
         add(new UlevAF1());
         add(new UlevGuynneDaSteve());
+        add(new UlevPizza());
         add(new UlevBaseball());
+        add(new UlevBetweenTwoFires());
         add(new UlevNotStalemate());
         add(new UlevMedievalAgeEurope());
+        add(new UlevLabyrinth());
         add(new UlevUnderpressure());
+        add(new UlevBlackAndWhiteOne());
+        add(new UlevBlackAndWhiteTwo());
         add(new UlevEurope1770());
         add(new UlevGoncharov());
         add(new UlevMini1v1());
         add(new UlevEurope1914());
         add(new UlevItaly1494());
+        add(new UlevColonisationOfAustralia());
+        add(new UlevSkyrim());
         add(new UlevBundeslaender());
         add(new UlevLatinAmerica());
         add(new UlevEnterprise());
         add(new UlevStindoWar());
+        add(new UlevCantBeEasier());
+        add(new UlevDmitryPodduba());
         add(new UlevUnifyGermany());
 
         // 6
@@ -153,7 +174,6 @@ public class UserLevelFactory {
         add(new UlevNinoAlo());
 //        add(new UlevBreakUpOfYugoslavia()); // temporarily removed
         add(new UlevTurkey1919());
-        add(new UlevStar());
         add(new UlevALotToKeepTrackOf());
         add(new Ulev1940());
         add(new UlevJustinSullivanII());
@@ -241,18 +261,18 @@ public class UserLevelFactory {
     }
 
 
-    private void add(AbstractUserLevel level) {
+    private void add(AbstractLegacyUserLevel level) {
         levels.add(level);
     }
 
 
-    public ArrayList<AbstractUserLevel> getLevels() {
+    public ArrayList<AbstractLegacyUserLevel> getLevels() {
         return levels;
     }
 
 
-    public AbstractUserLevel getLevel(String key) {
-        for (AbstractUserLevel level : levels) {
+    public AbstractLegacyUserLevel getLevel(String key) {
+        for (AbstractLegacyUserLevel level : levels) {
             if (level.getKey().equals(key)) {
                 return level;
             }

@@ -42,7 +42,7 @@ public class RaUnitMoved extends RepAction{
 
         Province provinceByHex = gameController.fieldController.getProvinceByHex(src);
 
-        if (!dst.sameColor(src) && !dst.isNeutral() && !dst.canBeAttackedBy(unit)) {
+        if (!dst.sameFraction(src) && !dst.isNeutral() && !dst.canBeAttackedBy(unit)) {
             System.out.println();
             System.out.println("Problem in RaUnitMoved.perform(), forbidden attack");
             System.out.println("src = " + src);

@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 public class AnalyzeBalanceResults {
 
     private ArrayList<String> results, distributions;
-    private final int N = 5; // number of colors
+    private final int N = 5; // number of fractions
 
 
     public static void main(String[] args) {

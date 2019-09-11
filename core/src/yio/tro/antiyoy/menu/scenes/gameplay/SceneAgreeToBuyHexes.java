@@ -4,7 +4,7 @@ import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.diplomatic_dialogs.AgreeToBuyHexesDialog;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
-public class SceneAgreeToBuyHexes extends AbstractGameplayScene{
+public class SceneAgreeToBuyHexes extends AbstractModalScene {
 
     public AgreeToBuyHexesDialog dialog;
 

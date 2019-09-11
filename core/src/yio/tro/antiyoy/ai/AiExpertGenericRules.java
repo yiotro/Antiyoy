@@ -12,8 +12,8 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
     private ArrayList<Hex> hexesInPerimeter;
 
 
-    public AiExpertGenericRules(GameController gameController, int color) {
-        super(gameController, color);
+    public AiExpertGenericRules(GameController gameController, int fraction) {
+        super(gameController, fraction);
         tempHex = new Hex(0, 0, new PointYio(), gameController.fieldController);
         hexesInPerimeter = new ArrayList<Hex>();
     }
@@ -34,7 +34,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
         // cleaning palms has highest priority
         if (unit.strength <= 2 && checkToCleanSomePalms(unit, moveZone, province)) return;
 
-        ArrayList<Hex> attackableHexes = findAttackableHexes(unit.getColor(), moveZone);
+        ArrayList<Hex> attackableHexes = findAttackableHexes(unit.getFraction(), moveZone);
         if (attackableHexes.size() > 0) { // attack something
             tryToAttackSomething(unit, province, attackableHexes);
         } else { // nothing to attack
@@ -51,7 +51,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
     protected boolean isHexDefendedBySomethingElse(Hex hex, Unit unit) {
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.getAdjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(hex)) {
+            if (adjHex.active && adjHex.sameFraction(hex)) {
                 if (adjHex.containsBuilding()) return true;
                 if (adjHex.containsUnit() && adjHex.unit != unit) return true;
             }
@@ -64,7 +64,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
         int leftBehindNumber = 0;
         for (int i = 0; i < 6; i++) {
             Hex adjHex = unit.currentHex.getAdjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(unit.currentHex) && !isHexDefendedBySomethingElse(adjHex, unit) && adjHex.isInPerimeter())
+            if (adjHex.active && adjHex.sameFraction(unit.currentHex) && !isHexDefendedBySomethingElse(adjHex, unit) && adjHex.isInPerimeter())
                 leftBehindNumber++;
         }
         return leftBehindNumber <= 3;
@@ -81,7 +81,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
     boolean hexHasFriendlyBuildingNearby(Hex hex) {
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.getAdjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(hex) && adjHex.containsBuilding()) return true;
+            if (adjHex.active && adjHex.sameFraction(hex) && adjHex.containsBuilding()) return true;
         }
         return false;
     }
@@ -106,7 +106,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
         Hex result = null;
         int currMax = -1;
         for (Hex attackableHex : attackableHexes) {
-            int currNum = getAttackAllure(attackableHex, province.getColor());
+            int currNum = getAttackAllure(attackableHex, province.getFraction());
             if (currNum > currMax) {
                 currMax = currNum;
                 result = attackableHex;

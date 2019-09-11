@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.gameplay.*;
+import yio.tro.antiyoy.gameplay.data_storage.GameSaver;
 import yio.tro.antiyoy.gameplay.replays.actions.RepAction;
 import yio.tro.antiyoy.gameplay.replays.actions.RepActionFactory;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
@@ -54,7 +55,7 @@ public class Replay {
     public void updateInitialLevelString() {
         if (!SettingsManager.replaysEnabled) return;
 
-        initialLevelString = gameController.fieldController.getFullLevelString();
+        initialLevelString = gameController.gameSaver.legacyExportManager.getFullLevelString();
     }
 
 

@@ -288,12 +288,6 @@ public class SpeedPanel extends InterfaceElement {
 
 
     @Override
-    public boolean isButton() {
-        return false;
-    }
-
-
-    @Override
     public void setPosition(RectangleYio position) {
         this.position.setBy(position);
     }

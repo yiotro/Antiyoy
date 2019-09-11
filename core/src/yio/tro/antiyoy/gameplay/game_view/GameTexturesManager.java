@@ -3,7 +3,6 @@ package yio.tro.antiyoy.gameplay.game_view;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.Storage3xTexture;
-import yio.tro.antiyoy.gameplay.FieldController;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Unit;
 import yio.tro.antiyoy.gameplay.skins.SkinManager;
@@ -22,6 +21,7 @@ public class GameTexturesManager {
     TextureRegion sideShadow, responseAnimHexTexture, selectionBorder, defenseIcon;
     public Storage3xTexture manTextures[], palmTexture, houseTexture, towerTexture, graveTexture, pineTexture;
     public Storage3xTexture castleTexture, strongTowerTexture, farmTexture[];
+    TextureRegion hexColor4, hexColor5, hexColor6;
     public AtlasLoader atlasLoader;
 
 
@@ -60,6 +60,9 @@ public class GameTexturesManager {
         hexColor1 = skinManager.loadHexTexture("color1");
         hexColor2 = skinManager.loadHexTexture("color2");
         hexColor3 = skinManager.loadHexTexture("color3");
+        hexColor4 = skinManager.loadHexTexture("color4");
+        hexColor5 = skinManager.loadHexTexture("color5");
+        hexColor6 = skinManager.loadHexTexture("color6");
     }
 
 
@@ -139,11 +142,8 @@ public class GameTexturesManager {
     }
 
 
-    TextureRegion getHexTextureByColor(int colorIndex) {
-        if (getGameController().colorIndexViewOffset > 0 && colorIndex != FieldController.NEUTRAL_LANDS_INDEX) {
-            colorIndex = getGameController().getColorIndexWithOffset(colorIndex);
-        }
-        switch (colorIndex) {
+    public TextureRegion getHexTexture(int color) {
+        switch (color) {
             default:
             case 0:
                 return hexGreen;
@@ -161,7 +161,18 @@ public class GameTexturesManager {
                 return hexColor2;
             case 7:
                 return hexColor3;
+            case 8:
+                return hexColor4;
+            case 9:
+                return hexColor5;
+            case 10:
+                return hexColor6;
         }
+    }
+
+
+    public TextureRegion getHexTextureByFraction(int fraction) {
+        return getHexTexture(getGameController().getColorByFraction(fraction));
     }
 
 

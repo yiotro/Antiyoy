@@ -65,9 +65,8 @@ public class SceneConfirmSkipLevel extends AbstractScene{
         noButton = buttonFactory.getButton(generateRectangle(0.05, 0.4, 0.45, 0.05), 862, getString("no"));
         noButton.setReaction(rbNo);
         noButton.setShadow(false);
-        noButton.disableTouchAnimation();
         noButton.setVisualHook(basePanel);
-        noButton.setAnimation(Animation.FROM_CENTER);
+        noButton.setAnimation(Animation.from_center);
     }
 
 
@@ -75,9 +74,8 @@ public class SceneConfirmSkipLevel extends AbstractScene{
         yesButton = buttonFactory.getButton(generateRectangle(0.5, 0.4, 0.45, 0.05), 861, getString("yes"));
         yesButton.setReaction(rbSkipLevel);
         yesButton.setShadow(false);
-        yesButton.disableTouchAnimation();
         yesButton.setVisualHook(basePanel);
-        yesButton.setAnimation(Animation.FROM_CENTER);
+        yesButton.setAnimation(Animation.from_center);
     }
 
 
@@ -90,14 +88,13 @@ public class SceneConfirmSkipLevel extends AbstractScene{
             menuControllerYio.getButtonRenderer().renderButton(basePanel);
         }
         basePanel.setTouchable(false);
-        basePanel.setAnimation(Animation.FROM_CENTER);
+        basePanel.setAnimation(Animation.from_center);
     }
 
 
     private void createRestartButton() {
         restartButton = buttonFactory.getButton(generateRectangle(0.55, 0.9, 0.4, 0.07), 863, getString("in_game_menu_restart"));
         restartButton.setReaction(Reaction.rbRestartGame);
-        restartButton.setAnimation(Animation.UP);
-        restartButton.disableTouchAnimation();
+        restartButton.setAnimation(Animation.up);
     }
 }

@@ -3,7 +3,8 @@ package yio.tro.antiyoy;
 import com.badlogic.gdx.Input;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.fast_construction.FastConstructionPanel;
-import yio.tro.antiyoy.menu.keyboard.KeyboardElement;
+import yio.tro.antiyoy.menu.keyboard.BasicKeyboardElement;
+import yio.tro.antiyoy.menu.keyboard.NativeKeyboardElement;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
 public class OnKeyReactions {
@@ -17,7 +18,8 @@ public class OnKeyReactions {
 
 
     boolean onKeyPressed(int keycode) {
-        if (checkForKeyboardElement(keycode)) return true;
+        if (checkForBasicKeyboardElement(keycode)) return true;
+        if (checkForNativeKeyboardElement(keycode)) return true;
 
         if (keycode == Input.Keys.BACK || keycode == Input.Keys.ESCAPE) {
             onBackButtonPressed();
@@ -65,19 +67,28 @@ public class OnKeyReactions {
             case Input.Keys.S:
                 yioGdxGame.menuControllerYio.specialActionController.perform();
                 break;
+            case Input.Keys.T:
+                Scenes.sceneTestScreen.create();
+                break;
             case Input.Keys.L:
                 yioGdxGame.saveSystem.loadTopSlot();
                 break;
             case Input.Keys.I:
-                yioGdxGame.gameController.getLevelEditor().importFromClipboardToExtraSlot();
+                yioGdxGame.gameController.importManager.launchGameFromClipboard();
                 break;
             case Input.Keys.X:
                 Scenes.sceneCampaignMenu.create();
                 yioGdxGame.setGamePaused(true);
                 break;
+            case Input.Keys.K:
+                yioGdxGame.gameController.editorSaveSystem.loadTopSlot();
+                break;
             case Input.Keys.U:
                 Scenes.sceneUserLevels.create();
                 yioGdxGame.setGamePaused(true);
+                break;
+            case Input.Keys.Q:
+                yioGdxGame.pressButtonIfVisible(145);
                 break;
         }
 
@@ -87,12 +98,22 @@ public class OnKeyReactions {
     }
 
 
-    private boolean checkForKeyboardElement(int keycode) {
-        KeyboardElement keyboardElement = Scenes.sceneKeyboard.keyboardElement;
+    private boolean checkForBasicKeyboardElement(int keycode) {
+        BasicKeyboardElement basicKeyboardElement = Scenes.sceneBasicKeyboard.basicKeyboardElement;
+        if (basicKeyboardElement == null) return false;
+        if (basicKeyboardElement.getFactor().get() < 0.2) return false;
+
+        return basicKeyboardElement.onPcKeyPressed(keycode);
+    }
+
+
+    private boolean checkForNativeKeyboardElement(int keycode) {
+        NativeKeyboardElement keyboardElement = Scenes.sceneNativeKeyboard.nativeKeyboardElement;
         if (keyboardElement == null) return false;
         if (keyboardElement.getFactor().get() < 0.2) return false;
 
-        return keyboardElement.onPcKeyPressed(keycode);
+        keyboardElement.onPcKeyPressed(keycode);
+        return true;
     }
 
 
@@ -139,12 +160,21 @@ public class OnKeyReactions {
 
 
     private void onBuildObjectButtonPressed() {
-        if (!yioGdxGame.gamePaused) yioGdxGame.pressButtonIfVisible(38);
+        if (!yioGdxGame.gamePaused) {
+            yioGdxGame.pressButtonIfVisible(38);
+        }
     }
 
 
     private void onBuildUnitButtonPressed() {
-        if (!yioGdxGame.gamePaused) yioGdxGame.pressButtonIfVisible(39);
+        if (yioGdxGame.gameController.isInEditorMode()) {
+            yioGdxGame.pressButtonIfVisible(142);
+            return;
+        }
+
+        if (!yioGdxGame.gamePaused) {
+            yioGdxGame.pressButtonIfVisible(39);
+        }
     }
 
 

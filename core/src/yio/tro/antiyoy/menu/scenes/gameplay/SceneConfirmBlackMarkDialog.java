@@ -4,7 +4,7 @@ import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.diplomatic_dialogs.ConfirmBlackMarkDialog;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
-public class SceneConfirmBlackMarkDialog extends AbstractGameplayScene{
+public class SceneConfirmBlackMarkDialog extends AbstractModalScene {
 
     public ConfirmBlackMarkDialog dialog;
 

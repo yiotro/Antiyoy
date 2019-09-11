@@ -28,7 +28,7 @@ public class RenderFastConstructionPanel extends MenuRender{
     private TextureRegion endTurnIcon;
     private TextureRegion undoIcon;
     private TextureRegion diplomacyIcon;
-    private TextureRegion diplomacyRedIcon;
+    private TextureRegion mailIconTexture;
 
 
     @Override
@@ -39,7 +39,7 @@ public class RenderFastConstructionPanel extends MenuRender{
         endTurnIcon = GraphicsYio.loadTextureRegion("end_turn.png", true);
         undoIcon = GraphicsYio.loadTextureRegion("undo.png", true);
         diplomacyIcon = GraphicsYio.loadTextureRegion("diplomacy/flag.png", true);
-        diplomacyRedIcon = GraphicsYio.loadTextureRegion("diplomacy/flag_red.png", true);
+        mailIconTexture = GraphicsYio.loadTextureRegion("diplomacy/mail_icon.png", true);
 
         loadSkinDependentTextures();
     }
@@ -143,11 +143,11 @@ public class RenderFastConstructionPanel extends MenuRender{
         }
 
         if (item.action == FcpItem.ACTION_DIPLOMACY) {
-            if (menuViewYio.yioGdxGame.gameController.fieldController.diplomacyManager.log.hasSomethingToRead()) {
-                return diplomacyRedIcon;
-            } else {
-                return diplomacyIcon;
-            }
+            return diplomacyIcon;
+        }
+
+        if (item.action == FcpItem.ACTION_LOG) {
+            return mailIconTexture;
         }
 
         return getSkinDependentItemTexture(item);

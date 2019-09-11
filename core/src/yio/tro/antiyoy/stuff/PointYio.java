@@ -6,6 +6,7 @@ import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
  * Created by yiotro on 28.08.2014.
  */
 public class PointYio implements ReusableYio{
+
     public float x, y;
 
 

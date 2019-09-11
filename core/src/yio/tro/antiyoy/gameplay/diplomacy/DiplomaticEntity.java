@@ -13,7 +13,7 @@ public class DiplomaticEntity implements ReusableYio {
 
 
     DiplomacyManager diplomacyManager;
-    public int color;
+    public int fraction;
     public String capitalName;
     public HashMap<DiplomaticEntity, Integer> relations;
     public boolean human;
@@ -29,7 +29,7 @@ public class DiplomaticEntity implements ReusableYio {
 
     @Override
     public void reset() {
-        color = -1;
+        fraction = -1;
         capitalName = null;
         relations.clear();
         human = false;
@@ -48,13 +48,13 @@ public class DiplomaticEntity implements ReusableYio {
     }
 
 
-    public void setColor(int color) {
-        this.color = color;
+    public void setFraction(int fraction) {
+        this.fraction = fraction;
     }
 
 
     public boolean isMain() {
-        return color == diplomacyManager.fieldController.gameController.turn;
+        return fraction == diplomacyManager.fieldController.gameController.turn;
     }
 
 
@@ -84,7 +84,7 @@ public class DiplomaticEntity implements ReusableYio {
         int balance = 0;
 
         for (Province province : diplomacyManager.fieldController.provinces) {
-            if (province.getColor() != color) continue;
+            if (province.getFraction() != fraction) continue;
 
             balance += province.getBalance();
         }
@@ -97,7 +97,7 @@ public class DiplomaticEntity implements ReusableYio {
         int money = 0;
 
         for (Province province : diplomacyManager.fieldController.provinces) {
-            if (province.getColor() != color) continue;
+            if (province.getFraction() != fraction) continue;
 
             money += province.money;
         }
@@ -108,7 +108,7 @@ public class DiplomaticEntity implements ReusableYio {
 
     public void pay(int amount) {
         for (Province province : diplomacyManager.fieldController.provinces) {
-            if (province.getColor() != color) continue;
+            if (province.getFraction() != fraction) continue;
 
             float incomeCoefficient = province.getIncomeCoefficient();
             province.money -= incomeCoefficient * amount;
@@ -151,7 +151,7 @@ public class DiplomaticEntity implements ReusableYio {
 
 
     public void updateCapitalName() {
-        Province largestProvince = getLargestProvince(color);
+        Province largestProvince = getLargestProvince(fraction);
 
         Hex capital;
         if (largestProvince == null) {
@@ -164,11 +164,11 @@ public class DiplomaticEntity implements ReusableYio {
     }
 
 
-    private Province getLargestProvince(int colorIndex) {
+    private Province getLargestProvince(int fraction) {
         Province largestProvince = null;
 
         for (Province province : diplomacyManager.fieldController.provinces) {
-            if (province.getColor() != colorIndex) continue;
+            if (province.getFraction() != fraction) continue;
 
             if (largestProvince == null || province.hexList.size() > largestProvince.hexList.size()) {
                 largestProvince = province;
@@ -243,7 +243,7 @@ public class DiplomaticEntity implements ReusableYio {
         alive = false;
 
         for (Province province : diplomacyManager.fieldController.provinces) {
-            if (province.getColor() == color) {
+            if (province.getFraction() == fraction) {
                 alive = true;
                 break;
             }
@@ -370,7 +370,7 @@ public class DiplomaticEntity implements ReusableYio {
         int c = 0;
 
         for (Province province : diplomacyManager.fieldController.provinces) {
-            if (province.getColor() != color) continue;
+            if (province.getFraction() != fraction) continue;
 
             c += province.hexList.size();
         }
@@ -401,7 +401,7 @@ public class DiplomaticEntity implements ReusableYio {
     public String toString() {
         return "[Entity: " +
                 capitalName + " " +
-                "(" + diplomacyManager.fieldController.getColorName(color) + ")" +
+                "(" + diplomacyManager.getColorsManager().getColorNameForPlayerByFraction(fraction) + ")" +
                 "]";
     }
 }

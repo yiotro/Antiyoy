@@ -138,7 +138,7 @@ public class RenderDiplomaticLogPanel extends MenuRender{
 
 
     protected TextureRegion getItemBackgroundTexture(ListItemYio item) {
-        return MenuRender.renderDiplomacyElement.getBackgroundPixel(item.bckViewType);
+        return MenuRender.renderDiplomacyElement.getBackgroundPixelByColor(item.bckViewType);
     }
 
 

@@ -34,7 +34,7 @@ public class SceneTestResults extends AbstractScene{
     private void createLabel() {
         label = buttonFactory.getButton(generateRectangle(0.1, 0.15, 0.8, 0.6), 741, " ");
         label.setTouchable(false);
-        label.setAnimation(Animation.FROM_CENTER);
+        label.setAnimation(Animation.from_center);
     }
 
 

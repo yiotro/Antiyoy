@@ -14,11 +14,12 @@ import yio.tro.antiyoy.stuff.Fonts;
 import yio.tro.antiyoy.stuff.FrameBufferYio;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.GameController;
-import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.LanguagesManager;
+
+import java.util.Arrays;
 
 public class ColorStatsRenderer {
 
@@ -38,6 +39,9 @@ public class ColorStatsRenderer {
     private float y;
     private int[] quantityArray;
     private ButtonYio statButton;
+    private TextureRegion pixelColor4;
+    private TextureRegion pixelColor5;
+    private TextureRegion pixelColor6;
 
 
     public ColorStatsRenderer(MenuControllerYio menuControllerYio) {
@@ -60,6 +64,9 @@ public class ColorStatsRenderer {
         pixelColor1 = loadColorPixel("pixel_color1");
         pixelColor2 = loadColorPixel("pixel_color2");
         pixelColor3 = loadColorPixel("pixel_color3");
+        pixelColor4 = loadColorPixel("pixel_color4");
+        pixelColor5 = loadColorPixel("pixel_color5");
+        pixelColor6 = loadColorPixel("pixel_color6");
     }
 
 
@@ -69,9 +76,9 @@ public class ColorStatsRenderer {
     }
 
 
-    TextureRegion getPixelByIndex(int colorIndex) {
-        int colorIndexWithOffset = gameController.getColorIndexWithOffset(colorIndex);
-        switch (colorIndexWithOffset) {
+    TextureRegion getPixelByFraction(int fraction) {
+        int color = gameController.getColorByFraction(fraction);
+        switch (color) {
             default:
             case 0:
                 return greenPixel;
@@ -89,6 +96,12 @@ public class ColorStatsRenderer {
                 return pixelColor2;
             case 7:
                 return pixelColor3;
+            case 8:
+                return pixelColor4;
+            case 9:
+                return pixelColor5;
+            case 10:
+                return pixelColor6;
         }
     }
 
@@ -121,7 +134,7 @@ public class ColorStatsRenderer {
             currentColumnHeight *= maxColumnHeight;
 
             font.draw(batch, "" + this.quantityArray[i], columnX - stringWidth / 2, y + 0.04f * h);
-            batch.draw(getPixelByIndex(i), columnX - columnWidth / 2, 0.01f * h + y - currentColumnHeight, columnWidth, currentColumnHeight);
+            batch.draw(getPixelByFraction(i), columnX - columnWidth / 2, 0.01f * h + y - currentColumnHeight, columnWidth, currentColumnHeight);
         }
         batch.draw(blackPixel, 0.025f * w, 0.0125f * h + y, 0.95f * w, 0.005f * h);
 

@@ -1,11 +1,14 @@
 package yio.tro.antiyoy.gameplay.replays;
 
 import yio.tro.antiyoy.SettingsManager;
-import yio.tro.antiyoy.gameplay.*;
+import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.Hex;
+import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
-import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
+import yio.tro.antiyoy.gameplay.loading.LoadingType;
 import yio.tro.antiyoy.gameplay.replays.actions.*;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.scenes.Scenes;
@@ -110,13 +113,6 @@ public class ReplayManager {
         replay.recreateInitialSituation();
         replay.prepare();
         gameController.onInitialSnapshotRecreated();
-
-//        Replay newReplay = new Replay(gameController);
-//        replay.saveToPreferences("temp");
-//        newReplay.loadFromPreferences("temp");
-//
-//        setReplay(newReplay);
-//        newReplay.prepare();
     }
 
 
@@ -126,11 +122,11 @@ public class ReplayManager {
         copyReplay.loadFromPreferences("temp");
 
         LoadingParameters loadingParameters = new LoadingParameters();
-        loadingParameters.mode = LoadingMode.LOAD_REPLAY;
-        loadingParameters.applyFullLevel(copyReplay.initialLevelString);
+        loadingParameters.loadingType = LoadingType.load_replay;
+        gameController.gameSaver.legacyImportManager.applyFullLevel(loadingParameters, copyReplay.initialLevelString);
         loadingParameters.replay = copyReplay;
         loadingParameters.playersNumber = 0;
-        loadingParameters.colorOffset = gameController.colorIndexViewOffset;
+        loadingParameters.colorOffset = gameController.colorsManager.colorOffset;
         loadingParameters.slayRules = GameRules.slayRules;
 
         if (GameRules.campaignMode) {
@@ -169,8 +165,8 @@ public class ReplayManager {
     }
 
 
-    public void onHexChangedColorWithoutObviousReason(Hex hex) {
-        replay.addAction(new RaHexColorChanged(hex, hex.colorIndex));
+    public void onHexChangedFractionWithoutObviousReason(Hex hex) {
+        replay.addAction(new RaHexFractionChanged(hex, hex.fraction));
     }
 
 

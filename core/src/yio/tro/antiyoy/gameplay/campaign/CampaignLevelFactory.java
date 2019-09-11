@@ -4,8 +4,8 @@ import yio.tro.antiyoy.ai.Difficulty;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.LevelSize;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
-import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
+import yio.tro.antiyoy.gameplay.loading.LoadingType;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.scenes.Scenes;
@@ -21,28 +21,25 @@ public class CampaignLevelFactory {
     public static final int NORMAL_LEVELS_START = 9;
     public static final int HARD_LEVELS_START = 24;
     public static final int EXPERT_LEVELS_START = 60;
-    private final LevelPackOne levelPackOne;
-    private final LevelPackTwo levelPackTwo;
-    private final LevelPackThree levelPackThree;
     int index;
-    private final LevelPackFour levelPackFour;
-    private final LevelPackFive levelPackFive;
-    private final LevelPackSix levelPackSix;
-    private final LevelPackSeven levelPackSeven;
-    private final LevelPackEight levelPackEight;
+    AbstractLevelPack levelPacks[];
+    private final LevelPackOne levelPackOne; // pack one is special
 
 
     public CampaignLevelFactory(GameController gameController) {
         this.gameController = gameController;
 
         levelPackOne = new LevelPackOne(this);
-        levelPackTwo = new LevelPackTwo(this);
-        levelPackThree = new LevelPackThree(this);
-        levelPackFour = new LevelPackFour(this);
-        levelPackFive = new LevelPackFive(this);
-        levelPackSix = new LevelPackSix(this);
-        levelPackSeven = new LevelPackSeven(this);
-        levelPackEight = new LevelPackEight(this);
+        levelPacks = new AbstractLevelPack[]{
+                new LevelPackTwo(this),
+                new LevelPackThree(this),
+                new LevelPackFour(this),
+                new LevelPackFive(this),
+                new LevelPackSix(this),
+                new LevelPackSeven(this),
+                new LevelPackEight(this),
+                new LevelPackNine(this),
+        };
         index = -1;
     }
 
@@ -60,13 +57,9 @@ public class CampaignLevelFactory {
         if (checkForTutorial()) return true;
         if (CampaignProgressManager.getInstance().isLevelLocked(index)) return false;
         if (levelPackOne.check()) return true;
-        if (levelPackTwo.check()) return true;
-        if (levelPackThree.check()) return true;
-        if (levelPackFour.check()) return true;
-        if (levelPackFive.check()) return true;
-        if (levelPackSix.check()) return true;
-        if (levelPackSeven.check()) return true;
-        if (levelPackEight.check()) return true;
+        for (AbstractLevelPack levelPack : levelPacks) {
+            if (levelPack.check()) return true;
+        }
 
         createLevelWithPredictableRandom();
 
@@ -75,15 +68,13 @@ public class CampaignLevelFactory {
 
 
     private void updateRules() {
-        GameRules.setSlayRules(gameController.yioGdxGame.menuControllerYio.getCheckButtonById(17).isChecked());
+        System.out.println("CampaignLevelFactory.updateRules: should set slay rules as chosen in more campaign options scene");
     }
 
 
     private boolean checkForTutorial() {
-        if (index == 0) { // tutorial level
-//            GameRules.setSlayRules(false);
+        if (index == 0) {
             gameController.initTutorial();
-//            GameRules.campaignMode = true;
             return true;
         }
         return false;
@@ -92,12 +83,12 @@ public class CampaignLevelFactory {
 
     private void createLevelWithPredictableRandom() {
         LoadingParameters instance = LoadingParameters.getInstance();
-        instance.mode = LoadingMode.CAMPAIGN_RANDOM;
+        instance.loadingType = LoadingType.campaign_random;
         instance.levelSize = getLevelSizeByIndex(index);
         instance.playersNumber = 1;
-        instance.colorNumber = getColorNumberByIndex(index);
+        instance.fractionsQuantity = getFractionsQuantityByIndex(index);
         instance.difficulty = getDifficultyByIndex(index);
-        instance.colorOffset = readColorOffsetFromSlider(instance.colorNumber);
+        instance.colorOffset = readColorOffsetFromSlider(instance.fractionsQuantity);
         instance.slayRules = GameRules.slayRules;
         instance.campaignLevelIndex = index;
         LoadingManager.getInstance().startGame(instance);
@@ -106,8 +97,8 @@ public class CampaignLevelFactory {
     }
 
 
-    public int readColorOffsetFromSlider(int colorNumber) {
-        return gameController.getColorOffsetBySliderIndex(getColorOffsetSlider().getValueIndex(), colorNumber);
+    public int readColorOffsetFromSlider(int fractionsQuantity) {
+        return gameController.convertSliderIndexToColorOffset(getColorOffsetSlider().getValueIndex(), fractionsQuantity);
     }
 
 
@@ -139,7 +130,7 @@ public class CampaignLevelFactory {
     }
 
 
-    private int getColorNumberByIndex(int index) {
+    private int getFractionsQuantityByIndex(int index) {
         if (index <= 4 || index == 20) return 3;
         if (index <= 7) return 4;
         if (index >= 10 && index <= 13) return 4;

@@ -57,19 +57,17 @@ public class SceneConfirmDeleteSlot extends AbstractScene{
             menuControllerYio.getButtonRenderer().renderButton(basePanel);
         }
         basePanel.setTouchable(false);
-        basePanel.setAnimation(Animation.FROM_CENTER);
+        basePanel.setAnimation(Animation.from_center);
 
         yesButton = buttonFactory.getButton(generateRectangle(0.5, 0.4, 0.45, 0.05), 851, getString("yes"));
         yesButton.setReaction(rbYes);
         yesButton.setShadow(false);
-        yesButton.disableTouchAnimation();
-        yesButton.setAnimation(Animation.FROM_CENTER);
+        yesButton.setAnimation(Animation.from_center);
 
         noButton = buttonFactory.getButton(generateRectangle(0.05, 0.4, 0.45, 0.05), 852, getString("no"));
         noButton.setReaction(rbNo);
         noButton.setShadow(false);
-        noButton.disableTouchAnimation();
-        noButton.setAnimation(Animation.FROM_CENTER);
+        noButton.setAnimation(Animation.from_center);
 
         menuControllerYio.endMenuCreation();
     }

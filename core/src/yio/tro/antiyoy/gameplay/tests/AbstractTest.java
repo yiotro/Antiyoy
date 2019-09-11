@@ -2,8 +2,6 @@ package yio.tro.antiyoy.gameplay.tests;
 
 import yio.tro.antiyoy.gameplay.DebugFlags;
 import yio.tro.antiyoy.gameplay.GameController;
-import yio.tro.antiyoy.gameplay.rules.GameRules;
-import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.stuff.Yio;
 
 public abstract class AbstractTest {
@@ -29,6 +27,7 @@ public abstract class AbstractTest {
 
     protected void disableTestMode() {
         DebugFlags.testMode = false;
+        gameController.yioGdxGame.gameView.rList.renderBackgroundCache.updateFullCache();
     }
 
 

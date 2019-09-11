@@ -13,6 +13,12 @@ public class FactorYio {
     }
 
 
+    public void reset() {
+        setValues(0, 0);
+        destroy(0, 1);
+    }
+
+
     public void move() {
         moveBehavior.move(this);
     }

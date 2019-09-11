@@ -11,7 +11,7 @@ public abstract class ArtificialIntelligence {
 
     final GameController gameController;
     final Random random;
-    protected int color;
+    protected int fraction;
     protected ArrayList<Province> nearbyProvinces;
     protected ArrayList<Unit> unitsReadyToMove;
     private ArrayList<Hex> tempResultList;
@@ -19,9 +19,9 @@ public abstract class ArtificialIntelligence {
     int numberOfUnitsBuiltThisTurn;
 
 
-    ArtificialIntelligence(GameController gameController, int color) {
+    ArtificialIntelligence(GameController gameController, int fraction) {
         this.gameController = gameController;
-        this.color = color;
+        this.fraction = fraction;
         random = gameController.random;
         nearbyProvinces = new ArrayList<>();
         unitsReadyToMove = new ArrayList<>();
@@ -33,7 +33,7 @@ public abstract class ArtificialIntelligence {
     void updateUnitsReadyToMove() {
         unitsReadyToMove.clear();
         for (Province province : gameController.fieldController.provinces) {
-            if (province.getColor() == color) {
+            if (province.getFraction() == fraction) {
                 searchForUnitsReadyToMoveInProvince(province);
             }
         }
@@ -71,7 +71,7 @@ public abstract class ArtificialIntelligence {
     void spendMoneyAndMergeUnits() {
         for (int i = 0; i < gameController.fieldController.provinces.size(); i++) {
             Province province = gameController.fieldController.provinces.get(i);
-            if (province.getColor() == color) {
+            if (province.getFraction() == fraction) {
                 spendMoney(province);
                 mergeUnits(province);
             }
@@ -133,7 +133,7 @@ public abstract class ArtificialIntelligence {
 
 
     protected boolean mergeConditions(Province province, Unit unit, Hex hex) {
-        return hex.sameColor(unit.currentHex) && hex.containsUnit() && hex.unit.isReadyToMove() && unit != hex.unit &&
+        return hex.sameFraction(unit.currentHex) && hex.containsUnit() && hex.unit.isReadyToMove() && unit != hex.unit &&
                 province.canAiAffordUnit(gameController.mergedUnitStrength(unit, hex.unit));
     }
 
@@ -176,7 +176,7 @@ public abstract class ArtificialIntelligence {
 
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.getAdjacentHex(i);
-            if (adjHex.active && hex.sameColor(adjHex) && !adjHex.isDefendedByTower()) c++;
+            if (adjHex.active && hex.sameFraction(adjHex) && !adjHex.isDefendedByTower()) c++;
             if (adjHex.containsTower()) c--;
         }
 
@@ -219,7 +219,7 @@ public abstract class ArtificialIntelligence {
     private void checkToAddNearbyProvince(Hex srcHex, Hex adjacentHex) {
         if (!adjacentHex.active) return;
         if (adjacentHex.isNeutral()) return;
-        if (adjacentHex.sameColor(srcHex)) return;
+        if (adjacentHex.sameFraction(srcHex)) return;
 
         Province provinceByHex = gameController.fieldController.getProvinceByHex(adjacentHex);
         addProvinceToNearbyProvines(provinceByHex);
@@ -273,7 +273,7 @@ public abstract class ArtificialIntelligence {
         if (!isAllowedToBuildNewUnit(province)) return false;
 
         ArrayList<Hex> moveZone = gameController.detectMoveZone(province.getCapital(), strength);
-        ArrayList<Hex> attackableHexes = findAttackableHexes(province.getColor(), moveZone);
+        ArrayList<Hex> attackableHexes = findAttackableHexes(province.getFraction(), moveZone);
         if (attackableHexes.size() == 0) return false;
 
         Hex bestHexForAttack = findMostAttractiveHex(attackableHexes, province, strength);
@@ -289,7 +289,7 @@ public abstract class ArtificialIntelligence {
             ArrayList<Hex> moveZone = gameController.detectMoveZone(province.getCapital(), 1);
             boolean killedPalm = false;
             for (Hex hex : moveZone) {
-                if (hex.objectInside != Obj.PALM || !hex.sameColor(province)) continue;
+                if (hex.objectInside != Obj.PALM || !hex.sameFraction(province)) continue;
                 buildUnit(province, hex, 1);
                 killedPalm = true;
             }
@@ -316,7 +316,7 @@ public abstract class ArtificialIntelligence {
 
     boolean checkToCleanSomeTrees(Unit unit, ArrayList<Hex> moveZone, Province province) {
         for (Hex hex : moveZone) {
-            if (hex.containsTree() && hex.sameColor(unit.currentHex)) {
+            if (hex.containsTree() && hex.sameFraction(unit.currentHex)) {
                 gameController.moveUnit(unit, hex, province);
                 return true;
             }
@@ -327,7 +327,7 @@ public abstract class ArtificialIntelligence {
 
     boolean checkToCleanSomePalms(Unit unit, ArrayList<Hex> moveZone, Province province) {
         for (Hex hex : moveZone) {
-            if (hex.objectInside == Obj.PALM && hex.sameColor(unit.currentHex)) {
+            if (hex.objectInside == Obj.PALM && hex.sameFraction(unit.currentHex)) {
                 gameController.moveUnit(unit, hex, province);
                 return true;
             }
@@ -339,7 +339,7 @@ public abstract class ArtificialIntelligence {
     void decideAboutUnit(Unit unit, ArrayList<Hex> moveZone, Province province) {
         // cleaning palms has highest priority
         if (unit.strength <= 2 && checkToCleanSomePalms(unit, moveZone, province)) return;
-        ArrayList<Hex> attackableHexes = findAttackableHexes(unit.getColor(), moveZone);
+        ArrayList<Hex> attackableHexes = findAttackableHexes(unit.getFraction(), moveZone);
         if (attackableHexes.size() > 0) { // attack something
             Hex mostAttackableHex = findMostAttractiveHex(attackableHexes, province, unit.strength);
             gameController.moveUnit(unit, mostAttackableHex, province);
@@ -362,7 +362,7 @@ public abstract class ArtificialIntelligence {
     void pushUnitToBetterDefense(Unit unit, Province province) {
         for (int i = 0; i < 6; i++) {
             Hex adjHex = unit.currentHex.getAdjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(unit.currentHex) && adjHex.isFree() && adjHex.howManyEnemyHexesNear() == 0) {
+            if (adjHex.active && adjHex.sameFraction(unit.currentHex) && adjHex.isFree() && adjHex.howManyEnemyHexesNear() == 0) {
                 gameController.moveUnit(unit, adjHex, province);
                 break;
             }
@@ -370,11 +370,11 @@ public abstract class ArtificialIntelligence {
     }
 
 
-    int getAttackAllure(Hex hex, int color) {
+    int getAttackAllure(Hex hex, int fraction) {
         int c = 0;
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.getAdjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(color)) {
+            if (adjHex.active && adjHex.sameFraction(fraction)) {
                 c++;
             }
         }
@@ -403,7 +403,7 @@ public abstract class ArtificialIntelligence {
         Hex result = null;
         int currMax = -1;
         for (Hex attackableHex : attackableHexes) {
-            int currNum = getAttackAllure(attackableHex, province.getColor());
+            int currNum = getAttackAllure(attackableHex, province.getFraction());
             if (currNum > currMax) {
                 currMax = currNum;
                 result = attackableHex;
@@ -413,10 +413,11 @@ public abstract class ArtificialIntelligence {
     }
 
 
-    ArrayList<Hex> findAttackableHexes(int attackerColor, ArrayList<Hex> moveZone) {
+    ArrayList<Hex> findAttackableHexes(int attackerFraction, ArrayList<Hex> moveZone) {
         tempResultList.clear();
         for (Hex hex : moveZone) {
-            if (hex.colorIndex != attackerColor) tempResultList.add(hex);
+            if (hex.fraction == attackerFraction) continue;
+            tempResultList.add(hex);
         }
         return tempResultList;
     }
@@ -425,7 +426,7 @@ public abstract class ArtificialIntelligence {
     private void excludeFriendlyBuildingsFromMoveZone(ArrayList<Hex> moveZone) {
         junkList.clear();
         for (Hex hex : moveZone) {
-            if (hex.sameColor(color)) {
+            if (hex.sameFraction(fraction)) {
                 if (hex.containsBuilding()) junkList.add(hex);
             }
         }
@@ -436,7 +437,7 @@ public abstract class ArtificialIntelligence {
     private void excludeFriendlyUnitsFromMoveZone(ArrayList<Hex> moveZone) {
         junkList.clear();
         for (Hex hex : moveZone) {
-            if (hex.sameColor(color)) {
+            if (hex.sameFraction(fraction)) {
                 if (hex.containsUnit()) junkList.add(hex);
             }
         }
@@ -458,18 +459,18 @@ public abstract class ArtificialIntelligence {
     }
 
 
-    public int getColor() {
-        return color;
+    public int getFraction() {
+        return fraction;
     }
 
 
-    public void setColor(int color) {
-        this.color = color;
+    public void setFraction(int fraction) {
+        this.fraction = fraction;
     }
 
 
     @Override
     public String toString() {
-        return "[AI: " + color + "]";
+        return "[AI: " + fraction + "]";
     }
 }

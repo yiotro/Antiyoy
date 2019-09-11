@@ -5,19 +5,11 @@ import yio.tro.antiyoy.stuff.PointYio;
 
 public class DeIcon {
 
-    public static final int ACTION_LIKE = 0;
-    public static final int ACTION_DISLIKE = 1;
-    public static final int ACTION_BLACK_MARK = 2;
-    public static final int ACTION_INFO = 3;
-    public static final int ACTION_TRANSFER_MONEY = 4;
-    public static final int ACTION_BUY_HEXES = 5;
-
-
     DiplomacyElement diplomacyElement;
     public PointYio position, delta, touchDelta;
     public float radius, touchOffset;
     public FactorYio selectionFactor, appearFactor;
-    public int action;
+    public DipActionType action;
     boolean visible;
 
 
@@ -32,7 +24,7 @@ public class DeIcon {
         selectionFactor = new FactorYio();
         appearFactor = new FactorYio();
         visible = false;
-        action = -1;
+        action = null;
     }
 
 
@@ -87,7 +79,7 @@ public class DeIcon {
     }
 
 
-    public void setAction(int action) {
+    public void setAction(DipActionType action) {
         this.action = action;
     }
 

@@ -8,7 +8,6 @@ public class GameRendersList {
     GameView gameView;
     public ArrayList<GameRender> list;
 
-    public RenderLevelEditorStuff renderLevelEditorStuff;
     public RenderFogOfWar renderFogOfWar;
     public RenderCityNames renderCityNames;
     public RenderMoveZone renderMoveZone;
@@ -27,6 +26,8 @@ public class GameRendersList {
     public RenderSolidObjects renderSolidObjects;
     public RenderHexLines renderHexLines;
     public RenderDebug renderDebug;
+    public RenderTmEditProvinces renderTmEditProvinces;
+    public RenderHighlights renderHighlights;
     // init them lower
 
 
@@ -38,7 +39,6 @@ public class GameRendersList {
 
 
     public void create() {
-        renderLevelEditorStuff = new RenderLevelEditorStuff(this);
         renderFogOfWar = new RenderFogOfWar(this);
         renderCityNames = new RenderCityNames(this);
         renderMoveZone = new RenderMoveZone(this);
@@ -57,12 +57,8 @@ public class GameRendersList {
         renderSolidObjects = new RenderSolidObjects(this);
         renderHexLines = new RenderHexLines(this);
         renderDebug = new RenderDebug(this);
-    }
-
-
-    public void render() {
-        renderLevelEditorStuff.render();
-        renderFogOfWar.render();
+        renderTmEditProvinces = new RenderTmEditProvinces(this);
+        renderHighlights = new RenderHighlights(this);
     }
 
 

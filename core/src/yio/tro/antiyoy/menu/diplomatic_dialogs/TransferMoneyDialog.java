@@ -38,12 +38,12 @@ public class TransferMoneyDialog extends AbstractDiplomaticDialog{
         this.recipient = recipient;
 
         updateAll();
-        updateTagColor();
+        updateTagFraction();
     }
 
 
-    private void updateTagColor() {
-        setTagColor(recipient.color);
+    private void updateTagFraction() {
+        setTagFraction(recipient.fraction);
     }
 
 
@@ -74,6 +74,7 @@ public class TransferMoneyDialog extends AbstractDiplomaticDialog{
 
     @Override
     protected void onYesButtonPressed() {
+        if (appearFactor.getGravity() < 0) return;
         performMoneyTransfer();
 
         Scenes.sceneTransferMoneyDialog.hide();

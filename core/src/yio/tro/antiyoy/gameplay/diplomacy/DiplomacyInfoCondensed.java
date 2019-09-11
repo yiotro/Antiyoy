@@ -3,8 +3,6 @@ package yio.tro.antiyoy.gameplay.diplomacy;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.StringTokenizer;
 
 public class DiplomacyInfoCondensed implements ReusableYio {
 
@@ -79,7 +77,7 @@ public class DiplomacyInfoCondensed implements ReusableYio {
 
 
     private String getSingleMessageCode(DiplomaticMessage message) {
-        return message.type + " " + message.getSenderColor() + " " + message.getRecipientColor() + " " + message.arg1 + " " + message.arg2 + " " + message.arg3;
+        return message.type + " " + message.getSenderFraction() + " " + message.getRecipientFraction() + " " + message.arg1 + " " + message.arg2 + " " + message.arg3;
     }
 
 
@@ -99,7 +97,7 @@ public class DiplomacyInfoCondensed implements ReusableYio {
 
 
     private String getSingleCooldownCode(DiplomaticCooldown cooldown) {
-        return cooldown.type + " " + cooldown.counter + " " + cooldown.getOneColor() + " " + cooldown.getTwoColor();
+        return cooldown.type + " " + cooldown.counter + " " + cooldown.getOneFraction() + " " + cooldown.getTwoFraction();
     }
 
 
@@ -119,7 +117,7 @@ public class DiplomacyInfoCondensed implements ReusableYio {
 
 
     private String getSingleContractCode(DiplomaticContract contract) {
-        return contract.type + " " + contract.getOneColor() + " " + contract.getTwoColor() + " " + contract.dotations + " " + contract.expireCountDown;
+        return contract.type + " " + contract.getOneFraction() + " " + contract.getTwoFraction() + " " + contract.dotations + " " + contract.expireCountDown;
     }
 
 
@@ -153,14 +151,14 @@ public class DiplomacyInfoCondensed implements ReusableYio {
         if (split.length == 0) return;
 
         DipMessageType type = DipMessageType.valueOf(split[0]);
-        int color1 = Integer.valueOf(split[1]);
-        int color2 = Integer.valueOf(split[2]);
+        int fraction1 = Integer.valueOf(split[1]);
+        int fraction2 = Integer.valueOf(split[2]);
         String arg1 = getSplitPart(split, 3);
         String arg2 = getSplitPart(split, 4);
         String arg3 = getSplitPart(split, 5);
 
-        DiplomaticEntity entity1 = diplomacyManager.getEntity(color1);
-        DiplomaticEntity entity2 = diplomacyManager.getEntity(color2);
+        DiplomaticEntity entity1 = diplomacyManager.getEntity(fraction1);
+        DiplomaticEntity entity2 = diplomacyManager.getEntity(fraction2);
         if (entity1 == null || entity2 == null) return;
 
         DiplomaticMessage diplomaticMessage = diplomacyManager.log.addMessage(type, entity1, entity2);
@@ -195,11 +193,11 @@ public class DiplomacyInfoCondensed implements ReusableYio {
 
         int type = Integer.valueOf(split[0]);
         int counter = Integer.valueOf(split[1]);
-        int color1 = Integer.valueOf(split[2]);
-        int color2 = Integer.valueOf(split[3]);
+        int fraction1 = Integer.valueOf(split[2]);
+        int fraction2 = Integer.valueOf(split[3]);
 
-        DiplomaticEntity entity1 = diplomacyManager.getEntity(color1);
-        DiplomaticEntity entity2 = diplomacyManager.getEntity(color2);
+        DiplomaticEntity entity1 = diplomacyManager.getEntity(fraction1);
+        DiplomaticEntity entity2 = diplomacyManager.getEntity(fraction2);
         if (entity1 == null || entity2 == null) return;
 
         diplomacyManager.addCooldown(type, counter, entity1, entity2);
@@ -219,13 +217,13 @@ public class DiplomacyInfoCondensed implements ReusableYio {
         if (split.length == 0) return;
 
         int type = Integer.valueOf(split[0]);
-        int color1 = Integer.valueOf(split[1]);
-        int color2 = Integer.valueOf(split[2]);
+        int fraction1 = Integer.valueOf(split[1]);
+        int fraction2 = Integer.valueOf(split[2]);
         int dotations = Integer.valueOf(split[3]);
         int expire = Integer.valueOf(split[4]);
 
-        DiplomaticEntity entity1 = diplomacyManager.getEntity(color1);
-        DiplomaticEntity entity2 = diplomacyManager.getEntity(color2);
+        DiplomaticEntity entity1 = diplomacyManager.getEntity(fraction1);
+        DiplomaticEntity entity2 = diplomacyManager.getEntity(fraction2);
         if (entity1 == null || entity2 == null) return;
 
         DiplomaticContract contract = diplomacyManager.findContract(type, entity1, entity2);
@@ -289,7 +287,7 @@ public class DiplomacyInfoCondensed implements ReusableYio {
 
 
     String getSingleRelationCode(DiplomaticEntity one, DiplomaticEntity two) {
-        return one.color + " " + two.color + " " + one.getRelation(two);
+        return one.fraction + " " + two.fraction + " " + one.getRelation(two);
     }
 
 
@@ -303,12 +301,12 @@ public class DiplomacyInfoCondensed implements ReusableYio {
     void applySingleRelation(String token) {
         String[] split = token.split(" ");
 
-        int color1 = Integer.valueOf(split[0]);
-        int color2 = Integer.valueOf(split[1]);
+        int fraction1 = Integer.valueOf(split[0]);
+        int fraction2 = Integer.valueOf(split[1]);
         int relation = Integer.valueOf(split[2]);
 
-        DiplomaticEntity entity1 = diplomacyManager.getEntity(color1);
-        DiplomaticEntity entity2 = diplomacyManager.getEntity(color2);
+        DiplomaticEntity entity1 = diplomacyManager.getEntity(fraction1);
+        DiplomaticEntity entity2 = diplomacyManager.getEntity(fraction2);
         diplomacyManager.setRelation(entity1, entity2, relation);
     }
 

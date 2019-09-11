@@ -19,7 +19,7 @@ public class AcButton {
     public PointYio textPosition;
     PointYio textDelta;
     public FactorYio selectionFactor;
-    public int action;
+    public AcActionType actionType;
     float touchOffset;
 
 
@@ -33,7 +33,7 @@ public class AcButton {
         textPosition = new PointYio();
         textDelta = new PointYio();
         selectionFactor = new FactorYio();
-        action = -1;
+        actionType = null;
         touchOffset = 0;
     }
 
@@ -94,8 +94,8 @@ public class AcButton {
     }
 
 
-    public void setAction(int action) {
-        this.action = action;
+    public void setAction(AcActionType type) {
+        actionType = type;
     }
 
 

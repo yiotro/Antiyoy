@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.gameplay;
 
 import com.badlogic.gdx.Gdx;
-import yio.tro.antiyoy.SettingsManager;
+import yio.tro.antiyoy.KeyboardManager;
 import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
@@ -31,7 +31,7 @@ public class SelectionManager {
     boolean readyToRenameCity;
     Hex focusedHex;
     boolean areaSelectionMode;
-    int asFilterColor; // area selection
+    int asFilterFraction; // area selection
 
 
     public SelectionManager(GameController gameController) {
@@ -45,7 +45,7 @@ public class SelectionManager {
         tipFactor = new FactorYio();
         readyToRenameCity = false;
         areaSelectionMode = false;
-        asFilterColor = -1;
+        asFilterFraction = -1;
     }
 
 
@@ -69,9 +69,7 @@ public class SelectionManager {
 
         String name = selectedProvince.getName();
 
-        Scenes.sceneKeyboard.create();
-        Scenes.sceneKeyboard.setValue(name);
-        Scenes.sceneKeyboard.setReaction(new AbstractKbReaction() {
+        KeyboardManager.getInstance().apply(name, new AbstractKbReaction() {
             @Override
             public void onInputFromKeyboardReceived(String input) {
                 if (input.length() == 0) return;
@@ -139,7 +137,7 @@ public class SelectionManager {
         if (focusedHex == null) return false;
         if (focusedHex.objectInside != Obj.TOWN) return false;
         if (!focusedHex.active) return false;
-        if (focusedHex.colorIndex != gameController.turn) return false;
+        if (!gameController.isCurrentTurn(focusedHex.fraction)) return false;
         if (!focusedHex.isSelected()) return false;
 
         readyToRenameCity = true;
@@ -213,18 +211,16 @@ public class SelectionManager {
         tipFactor.setValues(0, 0);
         tipFactor.destroy(1, 1);
         hideMoveZone();
-        hideBuildOverlay();
+        hideMenuOverlay();
         resetTipType();
         areaSelectionMode = false;
     }
 
 
-    private void hideBuildOverlay() {
-        if (SettingsManager.fastConstructionEnabled) {
-            Scenes.sceneFastConstructionPanel.hide();
-        } else {
-            Scenes.sceneSelectionOverlay.hide();
-        }
+    private void hideMenuOverlay() {
+        Scenes.sceneFastConstructionPanel.hide();
+        Scenes.sceneSelectionOverlay.hide();
+        Scenes.sceneAreaSelectionUI.hide();
     }
 
 
@@ -248,7 +244,7 @@ public class SelectionManager {
 
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.getAdjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(hex)) {
+            if (adjHex.active && adjHex.sameFraction(hex)) {
                 defenseTips.add(adjHex);
             }
         }
@@ -264,7 +260,7 @@ public class SelectionManager {
             Hex adjacentHex = hex.getAdjacentHex(i);
             if (adjacentHex == null) continue;
             if (!adjacentHex.active) continue;
-            if (adjacentHex.colorIndex != hex.colorIndex) continue;
+            if (adjacentHex.fraction != hex.fraction) continue;
             if (!isHexGoodForDefenseTip(adjacentHex)) continue;
 
             return adjacentHex;
@@ -305,11 +301,8 @@ public class SelectionManager {
         }
 
         reactionInsideSelection();
-
         reactionAttackEnemy();
-
         reactionSelectProvince();
-
         reactionSelectOrMovePeacefully();
     }
 
@@ -331,19 +324,18 @@ public class SelectionManager {
         if (hex.isNeutral()) return false;
         if (!hex.active) return false;
 
-        if (asFilterColor == -1) return true;
+        if (asFilterFraction == -1) return true;
 
-        if (hex.colorIndex != asFilterColor && hex.colorIndex != gameController.turn) return false;
+        if (hex.fraction != asFilterFraction && hex.fraction != gameController.turn) return false;
         if (gameController.fieldController.getProvinceByHex(hex) == null) return false;
-        if (getMoveZone().size() > 0 && hex.colorIndex != getMoveZone().get(0).colorIndex) return false;
+        if (getMoveZone().size() > 0 && hex.fraction != getMoveZone().get(0).fraction) return false;
 
         return true;
     }
 
 
     private void debug() {
-//        showDebugHexColors(focusedHex);
-//        showProvinceHexListInConsole(focusedHex);
+
     }
 
 
@@ -360,15 +352,6 @@ public class SelectionManager {
     }
 
 
-    private void showDebugHexColors(Hex focusedHex) {
-        System.out.println();
-        System.out.println("focusedHex.colorIndex = " + focusedHex.colorIndex);
-        System.out.println("gameController.colorIndexViewOffset = " + gameController.colorIndexViewOffset);
-        int colorIndexWithOffset = gameController.ruleset.getColorIndexWithOffset(focusedHex.colorIndex);
-        System.out.println("colorIndexWithOffset = " + colorIndexWithOffset);
-    }
-
-
     private void reactionSelectOrMovePeacefully() {
         if (!isSomethingSelected) return;
 
@@ -376,7 +359,7 @@ public class SelectionManager {
 
         // unit is selected at this point
         if (!focusedHex.inMoveZone) return;
-        if (!gameController.isCurrentTurn(focusedHex.colorIndex)) return;
+        if (!gameController.isCurrentTurn(focusedHex.fraction)) return;
         if (!selectedUnit.canMoveToFriendlyHex(focusedHex)) return;
 
         gameController.takeSnapshot();
@@ -403,8 +386,8 @@ public class SelectionManager {
 
 
     private void reactionSelectProvince() {
-        if (!gameController.isCurrentTurn(focusedHex.colorIndex)) return;
-        if (!gameController.fieldController.hexHasNeighbourWithColor(focusedHex, gameController.getTurn())) return;
+        if (!gameController.isCurrentTurn(focusedHex.fraction)) return;
+        if (!gameController.fieldController.hexHasNeighbourWithFraction(focusedHex, gameController.getTurn())) return;
 
         gameController.fieldController.selectAdjacentHexes(focusedHex);
         if (gameController.fieldController.selectedProvince == null) return;
@@ -414,7 +397,7 @@ public class SelectionManager {
 
 
     private void reactionAttackEnemy() {
-        if (focusedHex.colorIndex == gameController.getTurn()) return;
+        if (gameController.isCurrentTurn(focusedHex.fraction)) return;
         if (!focusedHex.inMoveZone) return;
         if (selectedUnit == null) return;
 
@@ -505,7 +488,7 @@ public class SelectionManager {
 
     private boolean unitBuildConditions() {
         if (!focusedHex.isInMoveZone()) return false;
-        if (focusedHex.colorIndex == gameController.getTurn()) return false;
+        if (gameController.isCurrentTurn(focusedHex.fraction)) return false;
         if (!isTipTypeUnit()) return false;
         if (!gameController.fieldController.selectedProvince.canBuildUnit(tipType)) return false;
 
@@ -600,13 +583,13 @@ public class SelectionManager {
     }
 
 
-    public void setAsFilterColor(int asFilterColor) {
-        this.asFilterColor = asFilterColor;
+    public void setAsFilterFraction(int asFilterFraction) {
+        this.asFilterFraction = asFilterFraction;
     }
 
 
-    public int getAsFilterColor() {
-        return asFilterColor;
+    public int getAsFilterFraction() {
+        return asFilterFraction;
     }
 
 

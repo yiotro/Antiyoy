@@ -231,7 +231,7 @@ public class LevelSnapshot {
 //                province.name = "Bugged province";
                 System.out.println();
                 System.out.println("Problem in level snapshot.");
-                System.out.println("Wasn't been able to find province by hex. Color = " + copy.getColor());
+                System.out.println("Wasn't been able to find province by hex. Color = " + copy.getFraction());
                 System.out.println("copy.getCapital() = " + copy.getCapital());
             } else {
                 province.money = copy.money;
@@ -257,8 +257,8 @@ public class LevelSnapshot {
                 currHex = gameController.fieldController.field[i][j];
                 if (!currHex.active) continue;
 
-                if (!currHex.sameColor(fieldCopy[i][j])) {
-                    currHex.colorIndex = fieldCopy[i][j].colorIndex;
+                if (!currHex.sameFraction(fieldCopy[i][j])) {
+                    currHex.fraction = fieldCopy[i][j].fraction;
                     gameController.addAnimHex(currHex);
                 }
 

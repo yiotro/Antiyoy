@@ -52,9 +52,6 @@ public abstract class InterfaceElement {
     public abstract void setTouchable(boolean touchable);
 
 
-    public abstract boolean isButton();
-
-
     public boolean onMouseWheelScrolled(int amount) {
         return false;
     }

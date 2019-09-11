@@ -42,8 +42,24 @@ public class RectangleYio implements ReusableYio {
     }
 
 
+    public void setBy(CircleYio circleYio) {
+        x = circleYio.center.x - circleYio.radius;
+        y = circleYio.center.y - circleYio.radius;
+        width = 2 * circleYio.radius;
+        height = 2 * circleYio.radius;
+    }
+
+
     public void setBy(RectangleYio src) {
         set(src.x, src.y, src.width, src.height);
+    }
+
+
+    public void increase(double delta) {
+        x -= delta;
+        y -= delta;
+        width += 2 * delta;
+        height += 2 * delta;
     }
 
 
@@ -52,6 +68,15 @@ public class RectangleYio implements ReusableYio {
         if (rect.x + rect.width < x) return false;
         if (rect.y > y + height) return false;
         if (rect.y + rect.height < y) return false;
+        return true;
+    }
+
+
+    public boolean isPointInside(PointYio pointYio) {
+        if (pointYio.x < x) return false;
+        if (pointYio.y < y) return false;
+        if (pointYio.x > x + width) return false;
+        if (pointYio.y > y + height) return false;
         return true;
     }
 

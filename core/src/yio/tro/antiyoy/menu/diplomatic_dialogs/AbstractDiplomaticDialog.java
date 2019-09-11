@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.menu.diplomatic_dialogs;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -32,8 +33,9 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
     protected AcButton yesButton;
     protected AcButton noButton;
     AcButton clickedButton;
-    int tagColor;
+    int tagFraction;
     public RectangleYio tagPosition;
+    protected RectangleYio tempRectangle;
 
 
     public AbstractDiplomaticDialog(MenuControllerYio menuControllerYio) {
@@ -48,8 +50,9 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
         currentTouch = new PointYio();
         touched = false;
         resetClickedButton();
-        tagColor = -1;
+        tagFraction = -1;
         tagPosition = new RectangleYio();
+        tempRectangle = new RectangleYio();
 
         initPools();
         initMetrics();
@@ -69,15 +72,30 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
         yesButton.setFont(Fonts.smallerMenuFont);
         yesButton.setText(getYesButtonString());
         yesButton.setTouchOffset(0.05f * GraphicsYio.width);
-        yesButton.setAction(AcButton.ACTION_YES);
+        yesButton.setAction(AcActionType.yes);
         buttons.add(yesButton);
 
         noButton = new AcButton(this);
         noButton.setFont(Fonts.smallerMenuFont);
         noButton.setText(LanguagesManager.getInstance().getString("no"));
         noButton.setTouchOffset(0.05f * GraphicsYio.width);
-        noButton.setAction(AcButton.ACTION_NO);
+        noButton.setAction(AcActionType.no);
         buttons.add(noButton);
+
+        makeCustomButtons();
+    }
+
+
+    protected void addButton(String string, AcActionType acActionType, RectangleYio deltaPos) {
+        AcButton customButton = new AcButton(this);
+        customButton.setFont(Fonts.smallerMenuFont);
+        customButton.setText(string);
+        customButton.setTouchOffset(0.02f * GraphicsYio.width);
+        customButton.setAction(acActionType);
+        customButton.position.set(0, 0, deltaPos.width, deltaPos.height);
+        customButton.delta.set(deltaPos.x, deltaPos.y);
+        customButton.updateTextDelta();
+        buttons.add(customButton);
     }
 
 
@@ -230,6 +248,11 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
     }
 
 
+    protected void makeCustomButtons() {
+
+    }
+
+
     protected abstract void makeLabels();
 
 
@@ -267,11 +290,15 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
     @Override
     public boolean checkToPerformAction() {
         if (clickedButton != null) {
-            switch (clickedButton.action) {
-                case AcButton.ACTION_YES:
+            SoundManagerYio.playSound(SoundManagerYio.soundPressButton);
+            switch (clickedButton.actionType) {
+                default:
+                    onCustomActionButtonPressed(clickedButton);
+                    break;
+                case yes:
                     onYesButtonPressed();
                     break;
-                case AcButton.ACTION_NO:
+                case no:
                     onNoButtonPressed();
                     break;
             }
@@ -282,6 +309,11 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
         }
 
         return false;
+    }
+
+
+    protected void onCustomActionButtonPressed(AcButton acButton) {
+
     }
 
 
@@ -339,7 +371,7 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
         if (!areButtonsEnabled()) return false;
 
         for (AcButton button : buttons) {
-            if (isInSingleButtonMode() && button.action != AcButton.ACTION_YES) continue;
+            if (isInSingleButtonMode() && button.actionType != AcActionType.yes) continue;
 
             if (button.isTouched(currentTouch)) {
                 button.select();
@@ -352,13 +384,13 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
     }
 
 
-    public int getTagColor() {
-        return tagColor;
+    public int getTagFraction() {
+        return tagFraction;
     }
 
 
-    public void setTagColor(int tagColor) {
-        this.tagColor = tagColor;
+    public void setTagFraction(int tagFraction) {
+        this.tagFraction = tagFraction;
     }
 
 
@@ -386,12 +418,6 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
     @Override
     public void setTouchable(boolean touchable) {
 
-    }
-
-
-    @Override
-    public boolean isButton() {
-        return false;
     }
 
 

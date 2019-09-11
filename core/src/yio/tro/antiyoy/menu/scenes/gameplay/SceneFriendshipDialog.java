@@ -1,12 +1,10 @@
 package yio.tro.antiyoy.menu.scenes.gameplay;
 
-import yio.tro.antiyoy.gameplay.GameController;
-import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.diplomatic_dialogs.FriendshipDialog;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
-public class SceneFriendshipDialog extends AbstractGameplayScene{
+public class SceneFriendshipDialog extends AbstractModalScene {
 
     public FriendshipDialog dialog;
 

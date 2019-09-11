@@ -1,11 +1,9 @@
 package yio.tro.antiyoy.gameplay;
 
-import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
 import yio.tro.antiyoy.stuff.Fonts;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.stuff.PointYio;
-import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.*;
 
@@ -44,7 +42,7 @@ public class Province {
         gameController.replayManager.onCitySpawned(randomPlace);
         gameController.addAnimHex(randomPlace);
         gameController.updateCacheOnceAfterSomeTime();
-        randomPlace.lastColorIndex = randomPlace.colorIndex;
+        randomPlace.previousFraction = randomPlace.fraction;
         randomPlace.animFactor.setValues(0, 0);
         randomPlace.animFactor.appear(1, 2);
         updateName();
@@ -157,10 +155,10 @@ public class Province {
 
     public float getIncomeCoefficient() {
         int n = 0;
-        int color = getColor();
+        int fraction = getFraction();
 
         for (Province province : gameController.fieldController.provinces) {
-            if (province.getColor() != color) continue;
+            if (province.getFraction() != fraction) continue;
 
             n++;
         }
@@ -312,9 +310,9 @@ public class Province {
     }
 
 
-    public int getColor() {
+    public int getFraction() {
         if (hexList.size() == 0) return -1;
-        return hexList.get(0).colorIndex;
+        return hexList.get(0).fraction;
     }
 
 
@@ -338,7 +336,8 @@ public class Province {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("[Province" + "(").append(gameController.fieldController.getColorName(getColor())).append(")").append(":");
+        String colorName = gameController.colorsManager.getColorNameForPlayerByFraction(getFraction());
+        builder.append("[Province" + "(").append(colorName).append(")").append(":");
         for (Hex hex : hexList) {
             builder.append(" ").append(hex);
         }

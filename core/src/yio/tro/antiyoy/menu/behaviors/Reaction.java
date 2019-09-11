@@ -27,7 +27,7 @@ public abstract class Reaction {
 
 
     public static final RbExit rbExit = new RbExit();
-    public static final RbAboutGame RB_ABOUT_GAME = new RbAboutGame();
+    public static final RbAboutGame rbAboutGame = new RbAboutGame();
     public static final RbMainMenu rbMainMenu = new RbMainMenu();
     public static final RbCampaignMenu rbCampaignMenu = new RbCampaignMenu();
     public static final RbStartSkirmishGame rbStartSkirmishGame = new RbStartSkirmishGame();

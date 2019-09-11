@@ -8,7 +8,7 @@ import yio.tro.antiyoy.stuff.RectangleYio;
 public class KbTextArea {
 
 
-    KeyboardElement keyboardElement;
+    BasicKeyboardElement basicKeyboardElement;
     public RectangleYio position, viewPosition;
     private float f;
     public PointYio textPosition;
@@ -22,8 +22,8 @@ public class KbTextArea {
     public float mainPartDelta;
 
 
-    public KbTextArea(KeyboardElement keyboardElement) {
-        this.keyboardElement = keyboardElement;
+    public KbTextArea(BasicKeyboardElement basicKeyboardElement) {
+        this.basicKeyboardElement = basicKeyboardElement;
 
         position = new RectangleYio();
         viewPosition = new RectangleYio();
@@ -62,7 +62,7 @@ public class KbTextArea {
 
 
     private void updateTextWidth() {
-        textWidth = GraphicsYio.getTextWidth(keyboardElement.font, value);
+        textWidth = GraphicsYio.getTextWidth(basicKeyboardElement.font, value);
     }
 
 
@@ -109,6 +109,6 @@ public class KbTextArea {
 
     private void updateViewPosition() {
         viewPosition.setBy(position);
-        viewPosition.y = keyboardElement.viewPosition.y + keyboardElement.viewPosition.height + mainPartDelta;
+        viewPosition.y = basicKeyboardElement.viewPosition.y + basicKeyboardElement.viewPosition.height + mainPartDelta;
     }
 }

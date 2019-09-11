@@ -32,7 +32,7 @@ public class SceneLanguages extends AbstractScene{
 
         menuControllerYio.getYioGdxGame().beginBackgroundChange(1, false, true);
 
-        backButton = menuControllerYio.spawnBackButton(330, Reaction.rbMoreSettings);
+        backButton = menuControllerYio.spawnBackButton(330, Reaction.rbSettingsMenu);
 
         createList();
 

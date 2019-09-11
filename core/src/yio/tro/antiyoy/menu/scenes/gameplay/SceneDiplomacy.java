@@ -3,7 +3,7 @@ package yio.tro.antiyoy.menu.scenes.gameplay;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.diplomacy_element.DiplomacyElement;
 
-public class SceneDiplomacy extends AbstractGameplayScene{
+public class SceneDiplomacy extends AbstractModalScene {
 
     public DiplomacyElement diplomacyElement;
 

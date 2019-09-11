@@ -1,8 +1,8 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.gameplay.ColorsManager;
 import yio.tro.antiyoy.gameplay.GameController;
-import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
@@ -13,7 +13,7 @@ import yio.tro.antiyoy.menu.slider.SliderYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
 
-public class SceneTakeControl extends AbstractScene{
+public class SceneTakeControl extends AbstractScene {
 
 
     private ButtonYio label;
@@ -60,16 +60,15 @@ public class SceneTakeControl extends AbstractScene{
 
     private void loadValues() {
         GameController gameController = getGameController();
-        int colorIndexWithOffset = gameController.getColorIndexWithOffset(0);
-        colorSlider.setValueIndex(colorIndexWithOffset + 1);
+        int color = gameController.getColorByFraction(0);
+        colorSlider.setValueIndex(color + 1);
     }
 
 
     private void createOkButton() {
         double bw = 0.3;
         okButton = buttonFactory.getButton(generateRectangle(pos.x + pos.width - bw, pos.y, bw, 0.055), 824, getString("Apply"));
-        okButton.setAnimation(Animation.FROM_CENTER);
-        okButton.disableTouchAnimation();
+        okButton.setAnimation(Animation.from_center);
         okButton.setShadow(false);
         okButton.setVisualHook(label);
         okButton.setReaction(new Reaction() {
@@ -93,51 +92,16 @@ public class SceneTakeControl extends AbstractScene{
         int currentRunnerIndex = colorSlider.getValueIndex();
         int desiredColor = currentRunnerIndex - 1;
         if (currentRunnerIndex == 0) {
-            desiredColor = YioGdxGame.random.nextInt(GameRules.MAX_COLOR_NUMBER);
+            desiredColor = YioGdxGame.random.nextInt(GameRules.MAX_FRACTIONS_QUANTITY);
         }
 
-        int invertedDesiredColor = gameController.getInvertedColor(desiredColor);
-
-        shiftColors(-invertedDesiredColor);
-        gameController.colorIndexViewOffset = desiredColor;
+        gameController.colorsManager.takeControlOverColor(desiredColor);
 
         yioGdxGame.gameView.updateCacheLevelTextures();
         gameController.replayManager.defaultValues();
         gameController.replayManager.getReplay().updateInitialLevelString();
 
         Reaction.rbResumeGame.perform(okButton);
-    }
-
-
-    private void shiftColors(int delta) {
-        GameController gameController = getGameController();
-
-        for (Hex activeHex : gameController.fieldController.activeHexes) {
-            if (!GameRules.slayRules && activeHex.isNeutral()) continue;
-
-            activeHex.colorIndex = getShiftedColor(activeHex.colorIndex, delta);
-        }
-    }
-
-
-    private int getShiftedColor(int color, int delta) {
-        color += delta;
-
-        if (color >= GameRules.colorNumber) {
-            color -= GameRules.colorNumber;
-        }
-
-        if (color < 0) {
-            color += GameRules.colorNumber;
-        }
-
-        return color;
-    }
-
-
-
-    private GameController getGameController() {
-        return menuControllerYio.yioGdxGame.gameController;
     }
 
 
@@ -155,7 +119,7 @@ public class SceneTakeControl extends AbstractScene{
         RectangleYio pos = generateRectangle((1 - sWidth) / 2, 0, sWidth, 0);
 
         colorSlider = new SliderYio(menuControllerYio, -1);
-        colorSlider.setValues(0, 0, GameRules.MAX_COLOR_NUMBER, Animation.NONE);
+        colorSlider.setValues(0, 0, GameRules.MAX_FRACTIONS_QUANTITY, Animation.none);
         colorSlider.setPosition(pos);
         colorSlider.setParentElement(label, 0.1);
         colorSlider.setTitle("player_color");
@@ -163,7 +127,7 @@ public class SceneTakeControl extends AbstractScene{
         colorSlider.setBehavior(new SliderBehavior() {
             @Override
             public String getValueString(SliderYio sliderYio) {
-                return SceneSkirmishMenu.getColorStringBySliderIndex(sliderYio.getValueIndex());
+                return ColorsManager.getMenuColorNameByIndex(sliderYio.getValueIndex());
             }
         });
 
@@ -176,6 +140,6 @@ public class SceneTakeControl extends AbstractScene{
     private void createLabel() {
         label = buttonFactory.getButton(generateRectangle(pos.x, pos.y, pos.width, pos.height), 821, " ");
         label.setTouchable(false);
-        label.setAnimation(Animation.FROM_CENTER);
+        label.setAnimation(Animation.from_center);
     }
 }

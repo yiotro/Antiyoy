@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class AiHardGenericRules extends ArtificialIntelligenceGeneric{
 
 
-    public AiHardGenericRules(GameController gameController, int color) {
-        super(gameController, color);
+    public AiHardGenericRules(GameController gameController, int fraction) {
+        super(gameController, fraction);
     }
 
 

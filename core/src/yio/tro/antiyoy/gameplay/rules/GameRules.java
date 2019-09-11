@@ -2,7 +2,8 @@ package yio.tro.antiyoy.gameplay.rules;
 
 public class GameRules {
 
-    public static final int MAX_COLOR_NUMBER = 7;
+    public static final int MAX_FRACTIONS_QUANTITY = 10;
+    public static final int NEUTRAL_FRACTION = 7;
     public static final int UNIT_MOVE_LIMIT = 4;
 
     public static final int PRICE_UNIT = 10;
@@ -21,7 +22,7 @@ public class GameRules {
     public static final int TAX_UNIT_GENERIC_3 = 18;
     public static final int TAX_UNIT_GENERIC_4 = 36;
 
-    public static int colorNumber = 5;
+    public static int fractionsQuantity = 5;
     public static boolean slayRules = false;
     public static boolean tutorialMode;
     public static boolean campaignMode;
@@ -37,6 +38,7 @@ public class GameRules {
     public static boolean editorFog;
     public static boolean editorDiplomacy;
     public static boolean editorColorFixApplied;
+    public static int editorSlotNumber;
 
 
     public static void defaultValues() {
@@ -48,20 +50,21 @@ public class GameRules {
         fogOfWarEnabled = false;
         diplomacyEnabled = false;
         userLevelMode = false;
-        editorChosenColor = 0; // random
+        editorChosenColor = 1;
         ulKey = null;
         editorFog = false;
         editorDiplomacy = false;
         editorColorFixApplied = false;
+        editorSlotNumber = -1;
     }
 
 
-    public static void setColorNumber(int colorNumber) {
-        if (colorNumber < 0) {
-            colorNumber = 0;
+    public static void setFractionsQuantity(int fractionsQuantity) {
+        if (fractionsQuantity < 0) {
+            fractionsQuantity = 0;
         }
 
-        GameRules.colorNumber = colorNumber;
+        GameRules.fractionsQuantity = fractionsQuantity;
     }
 
 

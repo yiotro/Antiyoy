@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.menu.scenes;
 
+import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.stuff.LanguagesManager;
@@ -56,5 +57,11 @@ public abstract class AbstractScene {
         menuControllerYio.removeButtonById(buttonYio.id);
         menuControllerYio.addButtonToArray(buttonYio);
     }
+
+
+    public GameController getGameController() {
+        return menuControllerYio.yioGdxGame.gameController;
+    }
+
 
 }

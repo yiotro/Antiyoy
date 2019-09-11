@@ -4,6 +4,7 @@ import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.Fonts;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 
@@ -40,18 +41,18 @@ public class HexPurchaseDialog extends AbstractDiplomaticDialog{
         this.sender = sender;
 
         Hex firstHex = hexesToBuy.get(0);
-        recipient = getDiplomacyManager().getEntity(firstHex.colorIndex);
+        recipient = getDiplomacyManager().getEntity(firstHex.fraction);
 
         this.hexesToBuy.clear();
         this.hexesToBuy.addAll(hexesToBuy);
 
         updateAll();
-        updateTagColor();
+        updateTagFraction();
     }
 
 
-    private void updateTagColor() {
-        setTagColor(recipient.color);
+    private void updateTagFraction() {
+        setTagFraction(recipient.fraction);
     }
 
 
@@ -81,13 +82,6 @@ public class HexPurchaseDialog extends AbstractDiplomaticDialog{
         addLabel(instance.getString("quantity") + ": " + hexesToBuy.size(), Fonts.smallerMenuFont, leftOffset, y);
         y -= lineOffset;
 
-        addLabel(instance.getString("price") + ": $" + getMoneyString(), Fonts.smallerMenuFont, leftOffset, y);
-        y -= lineOffset;
-    }
-
-
-    private String getMoneyString() {
-        return getPrice() + "   [$" + sender.getStateFullMoney() + "]";
     }
 
 
@@ -103,7 +97,14 @@ public class HexPurchaseDialog extends AbstractDiplomaticDialog{
 
     @Override
     protected void onYesButtonPressed() {
-        getDiplomacyManager().onEntityRequestedHexPurchase(sender, recipient, hexesToBuy, getPrice());
+        int valueIndex = Scenes.sceneHexPurchaseDialog.moneySlider.getValueIndex();
+        int moneyValue = Scenes.sceneHexPurchaseDialog.moneyValues[valueIndex];
+        getDiplomacyManager().onEntityRequestedHexPurchase(
+                sender,
+                recipient,
+                hexesToBuy,
+                moneyValue
+        );
         destroy();
     }
 
@@ -117,6 +118,11 @@ public class HexPurchaseDialog extends AbstractDiplomaticDialog{
     @Override
     public boolean isInSingleButtonMode() {
         return true;
+    }
+
+
+    public ArrayList<Hex> getHexesToBuy() {
+        return hexesToBuy;
     }
 
 

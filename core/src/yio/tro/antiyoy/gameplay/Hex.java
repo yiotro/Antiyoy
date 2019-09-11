@@ -1,20 +1,21 @@
 package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.gameplay.data_storage.EncodeableYio;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
 
-public class Hex implements ReusableYio{
+public class Hex implements ReusableYio, EncodeableYio{
 
-    public boolean active, selected, changingColor, flag, inMoveZone, genFlag, ignoreTouch;
-    public int index1, index2, moveZoneNumber, genPotential, viewDiversityIndex;
+    public boolean active, selected, changingFraction, flag, inMoveZone, genFlag, ignoreTouch;
+    public int index1, index2, moveZoneNumber, genPotential, visualDiversityIndex;
     public PointYio pos, fieldPos;
     private GameController gameController;
     FieldController fieldController;
     float cos60, sin60;
-    public int colorIndex, lastColorIndex, objectInside;
+    public int fraction, previousFraction, objectInside;
     long animStartTime;
     boolean blockToTreeFromExpanding, canContainObjects;
     public FactorYio animFactor, selectionFactor;
@@ -36,7 +37,7 @@ public class Hex implements ReusableYio{
         animFactor = new FactorYio();
         selectionFactor = new FactorYio();
         unit = null;
-        viewDiversityIndex = (101 * index1 * index2 + 7 * index2) % 3;
+        visualDiversityIndex = (101 * index1 * index2 + 7 * index2) % 3;
         canContainObjects = true;
         updatePos();
     }
@@ -63,7 +64,7 @@ public class Hex implements ReusableYio{
         Hex adjHex;
         for (int i = 0; i < 6; i++) {
             adjHex = getAdjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(this)) return true;
+            if (adjHex.active && adjHex.sameFraction(this)) return true;
         }
         return false;
     }
@@ -78,9 +79,9 @@ public class Hex implements ReusableYio{
     }
 
 
-    public void setColorIndex(int colorIndex) {
-        lastColorIndex = this.colorIndex;
-        this.colorIndex = colorIndex;
+    public void setFraction(int fraction) {
+        previousFraction = this.fraction;
+        this.fraction = fraction;
         animFactor.appear(1, 1);
         animFactor.setValues(0, 0);
     }
@@ -143,7 +144,7 @@ public class Hex implements ReusableYio{
     public Hex getSnapshotCopy() {
         Hex record = new Hex(index1, index2, fieldPos, fieldController);
         record.active = active;
-        record.colorIndex = colorIndex;
+        record.fraction = fraction;
         record.objectInside = objectInside;
         record.selected = selected;
         if (unit != null) record.unit = unit.getSnapshotCopy();
@@ -158,6 +159,11 @@ public class Hex implements ReusableYio{
 
     public boolean containsUnit() {
         return unit != null;
+    }
+
+
+    public boolean hasUnit() {
+        return containsUnit();
     }
 
 
@@ -184,7 +190,7 @@ public class Hex implements ReusableYio{
             if (adjHex.isNullHex()) continue;
             if (adjHex.isNeutral()) continue;
             if (!adjHex.active) continue;
-            if (!adjHex.sameColor(this)) continue;
+            if (!adjHex.sameFraction(this)) continue;
 
             c++;
         }
@@ -206,7 +212,7 @@ public class Hex implements ReusableYio{
         Hex neighbour;
         for (int i = 0; i < 6; i++) {
             neighbour = getAdjacentHex(i);
-            if (!(neighbour.active && neighbour.sameColor(this))) continue;
+            if (!(neighbour.active && neighbour.sameFraction(this))) continue;
             if (neighbour.objectInside == Obj.TOWN) defenseNumber = Math.max(defenseNumber, 1);
             if (neighbour.objectInside == Obj.TOWER) defenseNumber = Math.max(defenseNumber, 2);
             if (neighbour.objectInside == Obj.STRONG_TOWER) defenseNumber = Math.max(defenseNumber, 3);
@@ -221,7 +227,7 @@ public class Hex implements ReusableYio{
         Hex adjHex;
         for (int i = 0; i < 6; i++) {
             adjHex = getAdjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(this) && adjHex.objectInside == Obj.TOWN) return true;
+            if (adjHex.active && adjHex.sameFraction(this) && adjHex.objectInside == Obj.TOWN) return true;
         }
         return false;
     }
@@ -240,7 +246,7 @@ public class Hex implements ReusableYio{
         Hex adjHex;
         for (int i = 0; i < 6; i++) {
             adjHex = getAdjacentHex(i);
-            if (adjHex.active && !adjHex.sameColor(this) && adjHex.isInProvince()) return true;
+            if (adjHex.active && !adjHex.sameFraction(this) && adjHex.isInProvince()) return true;
         }
         return false;
     }
@@ -250,7 +256,7 @@ public class Hex implements ReusableYio{
         if (objectInside == objectIndex) return true;
         for (int i = 0; i < 6; i++) {
             Hex adjHex = getAdjacentHex(i);
-            if (adjHex.colorIndex != colorIndex) continue;
+            if (adjHex.fraction != fraction) continue;
             if (adjHex.active && adjHex.objectInside == objectIndex) {
                 return true;
             }
@@ -277,18 +283,18 @@ public class Hex implements ReusableYio{
     }
 
 
-    public boolean sameColor(int color) {
-        return colorIndex == color;
+    public boolean sameFraction(int fraction) {
+        return this.fraction == fraction;
     }
 
 
-    public boolean sameColor(Province province) {
-        return colorIndex == province.getColor();
+    public boolean sameFraction(Province province) {
+        return fraction == province.getFraction();
     }
 
 
-    public boolean sameColor(Hex hex) {
-        return colorIndex == hex.colorIndex;
+    public boolean sameFraction(Hex hex) {
+        return fraction == hex.fraction;
     }
 
 
@@ -296,7 +302,7 @@ public class Hex implements ReusableYio{
         int c = 0;
         for (int i = 0; i < 6; i++) {
             Hex adjHex = getAdjacentHex(i);
-            if (adjHex.active && !adjHex.sameColor(this)) c++;
+            if (adjHex.active && !adjHex.sameFraction(this)) c++;
         }
         return c;
     }
@@ -316,7 +322,7 @@ public class Hex implements ReusableYio{
     public boolean isDefendedByTower() {
         for (int i = 0; i < 6; i++) {
             Hex adjHex = getAdjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(this) && adjHex.containsTower()) return true;
+            if (adjHex.active && adjHex.sameFraction(this) && adjHex.containsTower()) return true;
         }
         return false;
     }
@@ -357,16 +363,14 @@ public class Hex implements ReusableYio{
 
 
     public boolean isNeutral() {
-        if (GameRules.slayRules) return false;
-
-        return colorIndex == FieldController.NEUTRAL_LANDS_INDEX;
+        return fraction == GameRules.NEUTRAL_FRACTION;
     }
 
 
     public boolean canBeAttackedBy(Unit unit) {
         if (unit == null) return false; // normally this shouldn't happen, but it happened once in replay
 
-        boolean canUnitAttackHex = gameController.canUnitAttackHex(unit.strength, unit.getColor(), this);
+        boolean canUnitAttackHex = gameController.canUnitAttackHex(unit.strength, unit.getFraction(), this);
 
         if (GameRules.replayMode) {
             if (!canUnitAttackHex) {
@@ -391,6 +395,22 @@ public class Hex implements ReusableYio{
 
     @Override
     public String toString() {
-        return "[Hex: c" + colorIndex + " (" + index1 + ", " + index2 + ")]";
+        return "[Hex: f" + fraction + " (" + index1 + ", " + index2 + ")]";
+    }
+
+
+    @Override
+    public String encode() {
+        return index1 + " " + index2 + " " + fraction + " " + objectInside;
+    }
+
+
+    @Override
+    public void decode(String source) {
+        String[] split = source.split(" ");
+        int obj = Integer.valueOf(split[3]);
+        if (obj > 0) {
+            fieldController.addSolidObject(this, obj);
+        }
     }
 }

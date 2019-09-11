@@ -28,7 +28,6 @@ public class ButtonFactory {
         buttonYio.setTouchable(true);
         buttonYio.appearFactor.appear(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
         buttonYio.appearFactor.setValues(0, 0.001);
-        buttonYio.touchAnimation = true;
         return buttonYio;
     }
 }

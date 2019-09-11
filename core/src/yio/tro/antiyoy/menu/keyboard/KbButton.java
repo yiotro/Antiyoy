@@ -8,7 +8,7 @@ import yio.tro.antiyoy.stuff.RectangleYio;
 public class KbButton {
 
 
-    KeyboardElement keyboardElement;
+    BasicKeyboardElement basicKeyboardElement;
     public RectangleYio position;
     PointYio delta;
     public String value, key;
@@ -18,8 +18,8 @@ public class KbButton {
     boolean isIcon;
 
 
-    public KbButton(KeyboardElement keyboardElement) {
-        this.keyboardElement = keyboardElement;
+    public KbButton(BasicKeyboardElement basicKeyboardElement) {
+        this.basicKeyboardElement = basicKeyboardElement;
         position = new RectangleYio();
         delta = new PointYio();
         key = null;
@@ -77,8 +77,8 @@ public class KbButton {
 
 
     private void updatePosition() {
-        position.x = keyboardElement.viewPosition.x + delta.x;
-        position.y = keyboardElement.viewPosition.y + delta.y;
+        position.x = basicKeyboardElement.viewPosition.x + delta.x;
+        position.y = basicKeyboardElement.viewPosition.y + delta.y;
     }
 
 
@@ -90,8 +90,8 @@ public class KbButton {
 
     public void setValue(String value) {
         this.value = value;
-        textWidth = GraphicsYio.getTextWidth(keyboardElement.font, value);
-        textHeight = GraphicsYio.getTextHeight(keyboardElement.font, value);
+        textWidth = GraphicsYio.getTextWidth(basicKeyboardElement.font, value);
+        textHeight = GraphicsYio.getTextHeight(basicKeyboardElement.font, value);
     }
 
 

@@ -352,7 +352,7 @@ public class LevelSelector extends InterfaceElement {
         touchDownY = screenY;
         if (!checkTouchableConditions()) return false;
 
-        clickDetector.touchDown(currentTouch);
+        clickDetector.onTouchDown(currentTouch);
         tabsEngineYio.onTouchDown();
 
         lastTouchX = screenX;
@@ -369,7 +369,7 @@ public class LevelSelector extends InterfaceElement {
         if (!checkTouchableConditions()) return false;
 
         tabsEngineYio.setSpeed(lastTouchX - screenX);
-        clickDetector.touchDrag(currentTouch);
+        clickDetector.onTouchDrag(currentTouch);
 
         lastTouchX = screenX;
         return true;
@@ -382,7 +382,7 @@ public class LevelSelector extends InterfaceElement {
         updateCurrentTouch(screenX, screenY);
         if (!checkTouchableConditions()) return false;
 
-        clickDetector.touchUp(currentTouch);
+        clickDetector.onTouchUp(currentTouch);
         tabsEngineYio.onTouchUp();
 
         if (clickDetector.isClicked()) {
@@ -447,12 +447,6 @@ public class LevelSelector extends InterfaceElement {
     @Override
     public void setTouchable(boolean touchable) {
 
-    }
-
-
-    @Override
-    public boolean isButton() {
-        return false;
     }
 
 

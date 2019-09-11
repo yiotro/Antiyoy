@@ -1,9 +1,9 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.menu.Animation;
-import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 
 public class SceneHelpIndex extends AbstractScene{
@@ -46,7 +46,7 @@ public class SceneHelpIndex extends AbstractScene{
 
 
     public static void createMyGamesArticle() {
-        Scenes.sceneAboutGame.create(LanguagesManager.getInstance().getString("article_my_games") + " #- Achikaps #- Bleentoro #- Shmatoosto", Reaction.rbHelpIndex, 18);
+        Scenes.sceneAboutGame.create(LanguagesManager.getInstance().getString("article_my_games") + " #- Achikaps #- Bleentoro #- Shmatoosto #- Opacha-mda", Reaction.rbHelpIndex, 18);
     }
 
 
@@ -91,7 +91,7 @@ public class SceneHelpIndex extends AbstractScene{
             menuControllerYio.getButtonRenderer().renderButton(basePanel);
         }
         basePanel.setTouchable(false);
-        basePanel.setAnimation(Animation.FROM_CENTER);
+        basePanel.setAnimation(Animation.from_center);
     }
 
 
@@ -100,7 +100,7 @@ public class SceneHelpIndex extends AbstractScene{
         topicButton.setReaction(reaction);
         topicButton.setShadow(false);
         topicButton.setVisualHook(basePanel);
-        topicButton.setAnimation(Animation.FROM_CENTER);
+        topicButton.setAnimation(Animation.from_center);
 
         y -= tHeight;
     }

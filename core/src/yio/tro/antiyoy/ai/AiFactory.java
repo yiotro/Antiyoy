@@ -20,86 +20,86 @@ public class AiFactory {
         aiList = gameController.getAiList();
         aiList.clear();
 
-        for (int i = 0; i < GameRules.colorNumber; i++) {
+        for (int i = 0; i < GameRules.fractionsQuantity; i++) {
             addAiToList(difficulty, i);
         }
     }
 
 
     public void createCustomAiList(int difficulties[]) {
-        if (GameRules.colorNumber != difficulties.length) {
+        if (GameRules.fractionsQuantity != difficulties.length) {
             System.out.println("AiFactory.createCustomAiList(): problem");
         }
 
         aiList = gameController.getAiList();
         aiList.clear();
 
-        for (int i = 0; i < GameRules.colorNumber; i++) {
+        for (int i = 0; i < GameRules.fractionsQuantity; i++) {
             addAiToList(difficulties[i], i);
         }
     }
 
 
-    private void addAiToList(int difficulty, int colorIndex) {
+    private void addAiToList(int difficulty, int fraction) {
         switch (difficulty) {
             default:
             case Difficulty.EASY:
-                aiList.add(getEasyAi(colorIndex));
+                aiList.add(getEasyAi(fraction));
                 break;
             case Difficulty.NORMAL:
-                aiList.add(getNormalAi(colorIndex));
+                aiList.add(getNormalAi(fraction));
                 break;
             case Difficulty.HARD:
-                aiList.add(getHardAi(colorIndex));
+                aiList.add(getHardAi(fraction));
                 break;
             case Difficulty.EXPERT:
-                aiList.add(getExpertAi(colorIndex));
+                aiList.add(getExpertAi(fraction));
                 break;
             case Difficulty.BALANCER:
-                aiList.add(getBalancerAi(colorIndex));
+                aiList.add(getBalancerAi(fraction));
                 break;
         }
     }
 
 
-    private ArtificialIntelligence getBalancerAi(int colorIndex) {
+    private ArtificialIntelligence getBalancerAi(int fraction) {
         if (GameRules.slayRules) {
-            return new AiBalancerSlayRules(gameController, colorIndex);
+            return new AiBalancerSlayRules(gameController, fraction);
         }
 
-        return new AiBalancerGenericRules(gameController, colorIndex);
+        return new AiBalancerGenericRules(gameController, fraction);
     }
 
 
-    private ArtificialIntelligence getExpertAi(int colorIndex) {
+    private ArtificialIntelligence getExpertAi(int fraction) {
         if (GameRules.slayRules) {
-            return new AiExpertSlayRules(gameController, colorIndex);
+            return new AiExpertSlayRules(gameController, fraction);
         }
 
-        return new AiExpertGenericRules(gameController, colorIndex);
+        return new AiExpertGenericRules(gameController, fraction);
     }
 
 
-    private ArtificialIntelligence getHardAi(int colorIndex) {
+    private ArtificialIntelligence getHardAi(int fraction) {
         if (GameRules.slayRules) {
-            return new AiHardSlayRules(gameController, colorIndex);
+            return new AiHardSlayRules(gameController, fraction);
         }
 
-        return new AiHardGenericRules(gameController, colorIndex);
+        return new AiHardGenericRules(gameController, fraction);
     }
 
 
-    private ArtificialIntelligence getNormalAi(int colorIndex) {
+    private ArtificialIntelligence getNormalAi(int fraction) {
         if (GameRules.slayRules) {
-            return new AiNormalSlayRules(gameController, colorIndex);
+            return new AiNormalSlayRules(gameController, fraction);
         }
 
-        return new AiNormalGenericRules(gameController, colorIndex);
+        return new AiNormalGenericRules(gameController, fraction);
     }
 
 
-    private ArtificialIntelligence getEasyAi(int colorIndex) {
-        return new AiEasy(gameController, colorIndex);
+    private ArtificialIntelligence getEasyAi(int fraction) {
+        return new AiEasy(gameController, fraction);
     }
 
 }

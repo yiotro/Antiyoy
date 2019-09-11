@@ -190,7 +190,7 @@ public class TurnStartDialog extends InterfaceElement{
     public void setColor(int color) {
         this.color = color;
 
-        descString = menuControllerYio.getColorNameWithoutOffset(color, "_player");
+        descString = menuControllerYio.getColorsManager().getColorName(color, "_player");
         float textWidth = GraphicsYio.getTextWidth(descFont, descString);
         descPosition.x = GraphicsYio.width / 2 - textWidth / 2;
         descPosition.y = 0.55f * GraphicsYio.height;
@@ -206,7 +206,7 @@ public class TurnStartDialog extends InterfaceElement{
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         updateCurrentTouch(screenX, screenY);
 
-        clickDetector.touchDown(currentTouch);
+        clickDetector.onTouchDown(currentTouch);
 
         return true;
     }
@@ -216,7 +216,7 @@ public class TurnStartDialog extends InterfaceElement{
     public boolean touchDrag(int screenX, int screenY, int pointer) {
         updateCurrentTouch(screenX, screenY);
 
-        clickDetector.touchDrag(currentTouch);
+        clickDetector.onTouchDrag(currentTouch);
 
         return true;
     }
@@ -226,7 +226,7 @@ public class TurnStartDialog extends InterfaceElement{
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         updateCurrentTouch(screenX, screenY);
 
-        clickDetector.touchUp(currentTouch);
+        clickDetector.onTouchUp(currentTouch);
 
         if (clickDetector.isClicked() && !circleModeEnabled) {
             onClick();
@@ -245,12 +245,6 @@ public class TurnStartDialog extends InterfaceElement{
     @Override
     public void setTouchable(boolean touchable) {
 
-    }
-
-
-    @Override
-    public boolean isButton() {
-        return false;
     }
 
 

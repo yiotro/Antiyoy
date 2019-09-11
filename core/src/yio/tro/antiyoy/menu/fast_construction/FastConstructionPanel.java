@@ -2,10 +2,12 @@ package yio.tro.antiyoy.menu.fast_construction;
 
 import com.badlogic.gdx.Input;
 import yio.tro.antiyoy.SettingsManager;
+import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Obj;
 import yio.tro.antiyoy.gameplay.SelectionTipType;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -17,7 +19,7 @@ import yio.tro.antiyoy.stuff.RectangleYio;
 
 import java.util.ArrayList;
 
-public class FastConstructionPanel extends InterfaceElement{
+public class FastConstructionPanel extends InterfaceElement {
 
     MenuControllerYio menuControllerYio;
     public RectangleYio position, viewPosition;
@@ -57,6 +59,7 @@ public class FastConstructionPanel extends InterfaceElement{
         addItem(FcpItem.ACTION_UNDO);
         addItem(FcpItem.ACTION_END_TURN);
         addItem(FcpItem.ACTION_DIPLOMACY);
+        addItem(FcpItem.ACTION_LOG);
 
         for (FcpItem spItem : items) {
             spItem.setRadius(0.37f * height);
@@ -187,6 +190,16 @@ public class FastConstructionPanel extends InterfaceElement{
         diplomacyItem.delta.x = getSpecialItemHorPos();
         diplomacyItem.delta.y = 4.8f * height;
         diplomacyItem.animDelta.set(getSpecialItemAnimDelta(), height);
+
+        GameController gameController = menuControllerYio.yioGdxGame.gameController;
+        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        if (diplomacyManager.log.hasSomethingToRead()) {
+            FcpItem logItem = getItemByAction(FcpItem.ACTION_LOG);
+            logItem.visible = GameRules.diplomacyEnabled;
+            logItem.delta.x = getSpecialItemHorPos();
+            logItem.delta.y = 6.1f * height;
+            logItem.animDelta.set(getSpecialItemAnimDelta(), height);
+        }
     }
 
 
@@ -315,6 +328,8 @@ public class FastConstructionPanel extends InterfaceElement{
     private void onItemClicked(FcpItem item) {
         if (!menuControllerYio.yioGdxGame.gameController.fieldController.isSomethingSelected()) return;
 
+        SoundManagerYio.playSound(SoundManagerYio.soundPressButton);
+
         switch (item.action) {
             case FcpItem.ACTION_UNIT_1:
                 applyBuildUnit(1);
@@ -346,7 +361,15 @@ public class FastConstructionPanel extends InterfaceElement{
             case FcpItem.ACTION_DIPLOMACY:
                 applyOpenDiplomacy();
                 break;
+            case FcpItem.ACTION_LOG:
+                applyOpenDiplomaticLog();
+                break;
         }
+    }
+
+
+    private void applyOpenDiplomaticLog() {
+        menuControllerYio.yioGdxGame.gameController.fieldController.diplomacyManager.onDiplomaticLogButtonPressed();
     }
 
 
@@ -445,12 +468,6 @@ public class FastConstructionPanel extends InterfaceElement{
     @Override
     public void setTouchable(boolean touchable) {
 
-    }
-
-
-    @Override
-    public boolean isButton() {
-        return false;
     }
 
 

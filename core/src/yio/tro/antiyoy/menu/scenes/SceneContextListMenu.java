@@ -2,10 +2,10 @@ package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.context_list_menu.ContextListMenuElement;
-import yio.tro.antiyoy.menu.scenes.gameplay.AbstractGameplayScene;
+import yio.tro.antiyoy.menu.scenes.gameplay.AbstractModalScene;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
-public class SceneContextListMenu extends AbstractGameplayScene{
+public class SceneContextListMenu extends AbstractModalScene {
 
 
     public ContextListMenuElement contextListMenuElement;

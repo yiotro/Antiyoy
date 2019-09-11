@@ -1,11 +1,10 @@
 package yio.tro.antiyoy.menu.scenes.gameplay;
 
-import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.diplomatic_log.DiplomaticLogPanel;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 
-public class SceneDiplomaticLog extends AbstractGameplayScene{
+public class SceneDiplomaticLog extends AbstractModalScene {
 
     DiplomaticLogPanel logPanel;
 

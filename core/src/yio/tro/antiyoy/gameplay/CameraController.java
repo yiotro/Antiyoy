@@ -114,7 +114,7 @@ public class CameraController {
     }
 
 
-    void touchDown(int x, int y) {
+    public void onTouchDown(int x, int y) {
         touched = gameController.currentTouchCount > 0;
 
         // initial touch with one finger
@@ -135,7 +135,7 @@ public class CameraController {
     }
 
 
-    void touchDrag(int x, int y) {
+    public void onTouchDrag(int x, int y) {
         sensitivityModifier = 1.4f * SettingsManager.sensitivity;
         delta.x = sensitivityModifier * (touchPos.x - x) * viewZoomLevel;
         delta.y = sensitivityModifier * (touchPos.y - y) * viewZoomLevel;
@@ -189,7 +189,7 @@ public class CameraController {
     }
 
 
-    void touchUp(int x, int y) {
+    public void onTouchUp(int x, int y) {
         if (!touched) return;
         touched = gameController.currentTouchCount > 0;
 
@@ -292,6 +292,16 @@ public class CameraController {
         if (pos.x > frame.x + frame.width + offset) return false;
         if (pos.y < frame.y - offset) return false;
         if (pos.y > frame.y + frame.height + offset) return false;
+        return true;
+    }
+
+
+    public boolean isRectangleInViewFrame(RectangleYio pos, float offset) {
+        if (pos.x + pos.width < frame.x - offset) return false;
+        if (pos.x > frame.x + frame.width + offset) return false;
+        if (pos.y + pos.height < frame.y - offset) return false;
+        if (pos.y > frame.y + frame.height + offset) return false;
+
         return true;
     }
 

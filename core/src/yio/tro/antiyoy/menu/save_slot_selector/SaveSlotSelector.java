@@ -122,7 +122,7 @@ public class SaveSlotSelector extends InterfaceElement {
     }
 
 
-    private void updateItems() {
+    private void loadValues() {
         items.clear();
 
         SaveSystem saveSystem = menuControllerYio.yioGdxGame.saveSystem;
@@ -215,6 +215,12 @@ public class SaveSlotSelector extends InterfaceElement {
 
 
     private void updateEdgeRectangles() {
+        if (items.size() == 0) {
+            topEdge.setBy(position);
+            bottomEdge.setBy(position);
+            return;
+        }
+
         SsItem firstItem = items.get(0);
         topEdge.setBy(firstItem.position);
         topEdge.y += firstItem.position.height;
@@ -308,7 +314,7 @@ public class SaveSlotSelector extends InterfaceElement {
 
 
     public void updateAll() {
-        updateItems();
+        loadValues();
         updateMetrics();
         updateScrollEngineLimits();
     }
@@ -464,8 +470,8 @@ public class SaveSlotSelector extends InterfaceElement {
         if (touched) {
             readyToProcessLongTap = false;
             scrollLock = false;
-            clickDetector.touchDown(currentTouch);
-            scrollEngineYio.updateCanSoftCorrect(false);
+            clickDetector.onTouchDown(currentTouch);
+            scrollEngineYio.onTouchDown();
             longTapDetector.onTouchDown(currentTouch);
 
             checkToSelectItems();
@@ -493,7 +499,7 @@ public class SaveSlotSelector extends InterfaceElement {
                 scrollEngineYio.setSpeed(currentTouch.y - lastTouch.y);
             }
 
-            clickDetector.touchDrag(currentTouch);
+            clickDetector.onTouchDrag(currentTouch);
             longTapDetector.onTouchDrag(currentTouch);
         }
 
@@ -504,11 +510,11 @@ public class SaveSlotSelector extends InterfaceElement {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         updateCurrentTouch(screenX, screenY);
-        scrollEngineYio.updateCanSoftCorrect(true);
+        scrollEngineYio.onTouchUp();
 
         if (touched) {
             touched = false;
-            clickDetector.touchUp(currentTouch);
+            clickDetector.onTouchUp(currentTouch);
             longTapDetector.onTouchUp(currentTouch);
 
             if (clickDetector.isClicked()) {
@@ -567,12 +573,6 @@ public class SaveSlotSelector extends InterfaceElement {
 
     public boolean getOperationType() {
         return operationType;
-    }
-
-
-    @Override
-    public boolean isButton() {
-        return false;
     }
 
 

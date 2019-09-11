@@ -3,10 +3,10 @@ package yio.tro.antiyoy.gameplay.loading;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
+import yio.tro.antiyoy.gameplay.data_storage.GameSaver;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class LoadingManager {
@@ -48,53 +48,50 @@ public class LoadingManager {
     }
 
 
-    private boolean checkForLoadingScreen() {
-        if (parameters.forceNoLoadingScreen) return false;
-        if (parameters.levelSize < LevelSize.HUGE) return false;
-
-        Scenes.sceneLoadingScreen.create();
-        Scenes.sceneLoadingScreen.loadingScreenElement.setLoadingParameters(parameters);
-
-        return true;
-    }
-
-
     public void startGame(LoadingParameters loadingParameters) {
         parameters = loadingParameters;
-//        if (checkForLoadingScreen()) return;
 
         beginCreation();
 
-        switch (loadingParameters.mode) {
-            case LoadingMode.TUTORIAL:
+        switch (loadingParameters.loadingType) {
+            case tutorial:
                 createTutorial();
                 break;
-            case LoadingMode.SKIRMISH:
+            case skirmish:
                 createSkirmish();
                 break;
-            case LoadingMode.CAMPAIGN_CUSTOM:
-                createCustomCampaignLevel();
+            case campaign_custom_legacy:
+                createLegacyCustomCampaignLevel();
                 break;
-            case LoadingMode.CAMPAIGN_RANDOM:
+            case campaign_custom:
+                createCampaignCustom();
+                break;
+            case campaign_random:
                 createRandomCampaignLevel();
                 break;
-            case LoadingMode.LOAD_GAME:
+            case load_game:
                 createLoadedGame();
                 break;
-            case LoadingMode.EDITOR_LOAD:
+            case editor_load:
                 createEditorLoaded();
                 break;
-            case LoadingMode.EDITOR_PLAY:
+            case editor_play:
                 createEditorPlay();
                 break;
-            case LoadingMode.EDITOR_NEW:
+            case editor_new:
                 createEditorNew();
                 break;
-            case LoadingMode.LOAD_REPLAY:
+            case load_replay:
                 createLoadedReplay();
                 break;
-            case LoadingMode.USER_LEVEL:
+            case user_level_legacy:
+                createLegacyUserLevel();
+                break;
+            case user_level:
                 createUserLevel();
+                break;
+            case editor_import:
+                createEditorImport();
                 break;
         }
 
@@ -102,7 +99,47 @@ public class LoadingManager {
     }
 
 
+    private void createCampaignCustom() {
+        gameController.predictableRandom = new Random(parameters.campaignLevelIndex);
+        GameRules.campaignMode = true;
+        CampaignProgressManager.getInstance().setCurrentLevelIndex(parameters.campaignLevelIndex);
+
+        gameController.fieldController.createFieldMatrix();
+        gameController.decodeManager.perform(parameters.levelCode);
+        GameRules.fogOfWarEnabled = GameRules.editorFog;
+        GameRules.diplomacyEnabled = GameRules.editorDiplomacy;
+        gameController.fieldController.detectProvinces();
+        gameSaver.detectRules();
+    }
+
+
+    private void createEditorImport() {
+        GameRules.inEditorMode = true;
+        gameController.fieldController.createFieldMatrix();
+        gameController.decodeManager.perform(parameters.levelCode);
+    }
+
+
     private void createUserLevel() {
+        GameRules.campaignMode = false;
+        GameRules.userLevelMode = true;
+        gameController.fieldController.createFieldMatrix();
+        gameController.decodeManager.perform(parameters.levelCode);
+        GameRules.fogOfWarEnabled = GameRules.editorFog;
+        GameRules.diplomacyEnabled = GameRules.editorDiplomacy;
+        int colorOffset = 0;
+        if (GameRules.editorChosenColor > 0) {
+            colorOffset = gameController.convertSliderIndexToColorOffset(GameRules.editorChosenColor, GameRules.MAX_FRACTIONS_QUANTITY);
+        }
+        gameController.colorsManager.setColorOffset(colorOffset);
+        parameters.editorColorFixApplied = false;
+        applyEditorChosenColorFix();
+        gameSaver.detectRules();
+        gameController.fieldController.onUserLevelLoaded();
+    }
+
+
+    private void createLegacyUserLevel() {
         GameRules.campaignMode = false;
         GameRules.userLevelMode = true;
         GameRules.ulKey = parameters.ulKey;
@@ -151,23 +188,19 @@ public class LoadingManager {
     }
 
 
-    private void applyEditorChosenColorFix() {
-        if (gameController.colorIndexViewOffset == 0) return;
-        if (parameters.editorColorFixApplied) return;
-
-        parameters.editorColorFixApplied = true;
-        gameController.updateRuleset();
-
-        ArrayList<Hex> activeHexes = gameController.fieldController.activeHexes;
-        for (Hex activeHex : activeHexes) {
-            if (!GameRules.slayRules && activeHex.isNeutral()) continue;
-
-            activeHex.colorIndex = gameController.getInvertedColor(activeHex.colorIndex);
+    public void applyEditorChosenColorFix() {
+        if (gameController.colorsManager.colorOffset == 0) {
+            gameController.fieldController.detectProvinces();
+            return;
+        }
+        if (parameters.editorColorFixApplied) {
+            gameController.stopAllUnitsFromJumping();
+            gameController.prepareCertainUnitsToMove();
+            return;
         }
 
-        gameController.fieldController.detectProvinces();
-        gameController.stopAllUnitsFromJumping();
-        gameController.prepareCertainUnitsToMove();
+        parameters.editorColorFixApplied = true;
+        gameController.colorsManager.applyEditorChosenColorFix();
     }
 
 
@@ -231,7 +264,7 @@ public class LoadingManager {
     }
 
 
-    private void createCustomCampaignLevel() {
+    private void createLegacyCustomCampaignLevel() {
         gameController.predictableRandom = new Random(parameters.campaignLevelIndex);
         GameRules.campaignMode = true;
         CampaignProgressManager.getInstance().setCurrentLevelIndex(parameters.campaignLevelIndex);
@@ -263,7 +296,7 @@ public class LoadingManager {
     }
 
 
-    private void endCreation() {
+    public void endCreation() {
         compensationManager.setGameController(gameController);
         compensationManager.perform();
 
@@ -280,6 +313,9 @@ public class LoadingManager {
         if (GameRules.diplomacyEnabled) {
             gameController.fieldController.diplomacyManager.checkForWinConditionsMessage();
         }
+
+        gameController.levelEditor.checkToApplyAdditionalData();
+        gameController.messagesManager.checkToApplyAdditionalData();
     }
 
 
@@ -305,9 +341,9 @@ public class LoadingManager {
     private void applyLoadingParameters() {
         gameController.levelSizeManager.setLevelSize(parameters.levelSize);
         gameController.setPlayersNumber(parameters.playersNumber);
-        GameRules.setColorNumber(parameters.colorNumber);
+        GameRules.setFractionsQuantity(parameters.fractionsQuantity);
         GameRules.setDifficulty(parameters.difficulty);
-        gameController.colorIndexViewOffset = parameters.colorOffset;
+        gameController.colorsManager.setColorOffset(parameters.colorOffset);
         GameRules.setSlayRules(parameters.slayRules);
         GameRules.setFogOfWarEnabled(parameters.fogOfWar);
         GameRules.setDiplomacyEnabled(parameters.diplomacy);

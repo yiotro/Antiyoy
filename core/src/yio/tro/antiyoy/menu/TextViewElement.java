@@ -12,7 +12,7 @@ public class TextViewElement extends InterfaceElement {
 
     public RectangleYio position, viewPosition;
     public FactorYio appearFactor;
-    int animType;
+    Animation animType;
     public BitmapFont font;
     float textWidth, textHeight;
     public PointYio textPosition;
@@ -25,7 +25,7 @@ public class TextViewElement extends InterfaceElement {
         position = new RectangleYio();
         viewPosition = new RectangleYio();
         appearFactor = new FactorYio();
-        animType = Animation.NONE;
+        animType = Animation.none;
         font = Fonts.gameFont;
         textWidth = 0;
         textHeight = 0;
@@ -66,16 +66,16 @@ public class TextViewElement extends InterfaceElement {
 
         switch (animType) {
             default:
-            case Animation.NONE:
-            case Animation.DEFAULT:
+            case none:
+            case def:
                 // nothing
                 break;
-            case Animation.DOWN:
-            case Animation.FIXED_DOWN:
+            case down:
+            case fixed_down:
                 viewPosition.y -= (1 - appearFactor.get()) * 0.15f * GraphicsYio.height;
                 break;
-            case Animation.FIXED_UP:
-            case Animation.UP:
+            case fixed_up:
+            case up:
                 viewPosition.y += (1 - appearFactor.get()) * 0.15f * GraphicsYio.height;
                 break;
         }
@@ -88,7 +88,7 @@ public class TextViewElement extends InterfaceElement {
     }
 
 
-    public void setAnimation(int animType) {
+    public void setAnimation(Animation animType) {
         this.animType = animType;
     }
 
@@ -145,12 +145,6 @@ public class TextViewElement extends InterfaceElement {
     @Override
     public void setTouchable(boolean touchable) {
 
-    }
-
-
-    @Override
-    public boolean isButton() {
-        return false;
     }
 
 

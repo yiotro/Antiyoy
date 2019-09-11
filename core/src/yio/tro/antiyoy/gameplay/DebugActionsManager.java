@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.KeyboardManager;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
@@ -11,6 +12,7 @@ import yio.tro.antiyoy.gameplay.replays.ReplaySaveSystem;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.keyboard.AbstractKbReaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
+import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.ArrayList;
 
@@ -25,7 +27,22 @@ public class DebugActionsManager {
 
 
     public void debugActions() {
-        doShiftColorsInEditorMode();
+        doShowColorStuff();
+    }
+
+
+    private void doShowDipMessage() {
+        Scenes.sceneDipMessage.showMessage("Debug", "Some random message");
+    }
+
+
+    private void doShowEditorProvinces() {
+        gameController.levelEditor.editorProvinceManager.showProvincesInConsole();
+    }
+
+
+    private void doForceException() {
+        Yio.forceException();
     }
 
 
@@ -45,9 +62,9 @@ public class DebugActionsManager {
         if (friend == null) return;
 
         for (Hex activeHex : gameController.fieldController.activeHexes) {
-            if (activeHex.colorIndex != friend.color) continue;
+            if (activeHex.fraction != friend.fraction) continue;
 
-            gameController.fieldController.setHexColor(activeHex, FieldController.NEUTRAL_LANDS_INDEX);
+            gameController.fieldController.setHexFraction(activeHex, GameRules.NEUTRAL_FRACTION);
         }
     }
 
@@ -96,35 +113,13 @@ public class DebugActionsManager {
     }
 
 
-    private boolean areThereAnyProvincesWithThisColor(int color) {
-        for (Province province : gameController.fieldController.provinces) {
-            if (province.getColor() == color) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-
-    private void doShiftColorsInEditorMode() {
-        ArrayList<Hex> activeHexes = gameController.fieldController.activeHexes;
-        for (Hex activeHex : activeHexes) {
-            if (!GameRules.slayRules && activeHex.isNeutral()) continue;
-
-            activeHex.colorIndex++;
-            if (activeHex.colorIndex >= FieldController.NEUTRAL_LANDS_INDEX) {
-                activeHex.colorIndex -= FieldController.NEUTRAL_LANDS_INDEX;
-            }
-        }
-
-        gameController.yioGdxGame.gameView.updateCacheLevelTextures();
+    public void doShiftFractionsInEditorMode() {
+        gameController.colorsManager.doShiftFractionsInEditorMode();
     }
 
 
     private void doShowKeyboard() {
-        Scenes.sceneKeyboard.create();
-        Scenes.sceneKeyboard.setReaction(new AbstractKbReaction() {
+        KeyboardManager.getInstance().apply("Debug", new AbstractKbReaction() {
             @Override
             public void onInputFromKeyboardReceived(String input) {
                 System.out.println("input = " + input);
@@ -180,12 +175,6 @@ public class DebugActionsManager {
 
     private void doShowDiplomaticCooldownsInConsole() {
         getDiplomacyManager().showCooldownsInConsole(gameController.turn);
-    }
-
-
-    private void doShowTurnStartDialog() {
-        Scenes.sceneTurnStartDialog.create();
-        Scenes.sceneTurnStartDialog.dialog.setColor(0);
     }
 
 
@@ -311,25 +300,8 @@ public class DebugActionsManager {
     }
 
 
-    private void doShowAllProvincesMoney() {
-        System.out.println("DebugActionsManager.doShowAllProvincesMoney:");
-        for (Province province : gameController.fieldController.provinces) {
-            String colorName = gameController.fieldController.getColorName(province.getColor());
-            System.out.println(colorName + ": " + province.money + " + " + province.getBalance());
-        }
-        System.out.println();
-    }
-
-
     private void doShowColorStuff() {
-        System.out.println();
-        System.out.println("FieldController.NEUTRAL_LANDS_INDEX = " + FieldController.NEUTRAL_LANDS_INDEX);
-        System.out.println("colorIndexViewOffset = " + gameController.colorIndexViewOffset);
-        System.out.println("GameRules.colorNumber = " + GameRules.colorNumber);
-        for (int i = 0; i < GameRules.colorNumber; i++) {
-            int colorIndexWithOffset = gameController.ruleset.getColorIndexWithOffset(i);
-            System.out.println(i + " -> " + colorIndexWithOffset);
-        }
+        gameController.colorsManager.doShowInConsole();
     }
 
 
@@ -340,21 +312,6 @@ public class DebugActionsManager {
 
     private void doCaptureRandomHexes() {
         Scenes.sceneCheatsMenu.rbCaptureHexes.perform(null);
-
-//        ArrayList<Hex> list = new ArrayList<>();
-//
-//        for (Hex activeHex : gameController.fieldController.activeHexes) {
-//            if (activeHex.sameColor(0)) continue;
-//            if (!hasAtLeastOnePlayerHexNearby(activeHex)) continue;
-//            if (gameController.getRandom().nextDouble() < 0.25) continue;
-//
-//            list.add(activeHex);
-//        }
-//
-//        for (Hex hex : list) {
-//            gameController.fieldController.setHexColor(hex, 0);
-//        }
-//        list.clear();
     }
 
 
@@ -363,7 +320,7 @@ public class DebugActionsManager {
             Hex adjacentHex = hex.getAdjacentHex(dir);
             if (adjacentHex == null) continue;
             if (!adjacentHex.active) continue;
-            if (!adjacentHex.sameColor(0)) continue;
+            if (!adjacentHex.sameFraction(0)) continue;
 
             return true;
         }
@@ -371,8 +328,4 @@ public class DebugActionsManager {
         return false;
     }
 
-
-    private void doShowActiveHexesString() {
-        System.out.println("gameController.gameSaver.getActiveHexesString() = " + gameController.gameSaver.getActiveHexesString());
-    }
 }

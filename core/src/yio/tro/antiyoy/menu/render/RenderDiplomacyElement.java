@@ -2,13 +2,15 @@ package yio.tro.antiyoy.menu.render;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import yio.tro.antiyoy.SettingsManager;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.gameplay.skins.SkinType;
 import yio.tro.antiyoy.menu.InterfaceElement;
-import yio.tro.antiyoy.menu.diplomacy_element.DeIcon;
-import yio.tro.antiyoy.menu.diplomacy_element.DeItem;
-import yio.tro.antiyoy.menu.diplomacy_element.DeLabel;
-import yio.tro.antiyoy.menu.diplomacy_element.DiplomacyElement;
+import yio.tro.antiyoy.menu.diplomacy_element.*;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
+
+import java.util.HashMap;
 
 public class RenderDiplomacyElement extends MenuRender {
 
@@ -17,18 +19,13 @@ public class RenderDiplomacyElement extends MenuRender {
     DiplomacyElement diplomacyElement;
     private RectangleYio viewPosition;
     private float factor;
-    private TextureRegion neutralIcon;
-    private TextureRegion friendIcon;
-    private TextureRegion enemyIcon;
+    public TextureRegion neutralIcon;
+    public TextureRegion friendIcon;
+    public TextureRegion enemyIcon;
     private TextureRegion deadIcon;
     private TextureRegion bckColors[];
     private final float shadowThickness;
-    private TextureRegion likeIcon;
-    private TextureRegion dislikeIcon;
-    private TextureRegion skullIcon;
-    private TextureRegion infoIcon;
-    private TextureRegion transferMoneyIcon;
-    private TextureRegion buyHexesIcon;
+    HashMap<DipActionType, TextureRegion> mapIconTextures;
 
 
     public RenderDiplomacyElement() {
@@ -46,16 +43,30 @@ public class RenderDiplomacyElement extends MenuRender {
         enemyIcon = GraphicsYio.loadTextureRegion("diplomacy/face_enemy.png", true);
         deadIcon = GraphicsYio.loadTextureRegion("diplomacy/face_dead.png", true);
 
-        likeIcon = GraphicsYio.loadTextureRegion("diplomacy/like_icon.png", true);
-        dislikeIcon = GraphicsYio.loadTextureRegion("diplomacy/dislike_icon.png", true);
-        skullIcon = GraphicsYio.loadTextureRegion("diplomacy/skull_icon.png", true);
-        infoIcon = GraphicsYio.loadTextureRegion("diplomacy/info_icon.png", true);
-        transferMoneyIcon = GraphicsYio.loadTextureRegion("diplomacy/transfer_money_icon.png", true);
-        buyHexesIcon = GraphicsYio.loadTextureRegion("diplomacy/buy_hexes_icon.png", true);
+        mapIconTextures = new HashMap<>();
+        for (DipActionType dipActionType : DipActionType.values()) {
+            mapIconTextures.put(dipActionType, GraphicsYio.loadTextureRegion("diplomacy/" + dipActionType + "_icon.png", true));
+        }
 
-        bckColors = new TextureRegion[7];
+        loadBackgroundColors();
+    }
+
+
+    public void loadBackgroundColors() {
+        bckColors = new TextureRegion[GameRules.MAX_FRACTIONS_QUANTITY];
         for (int i = 0; i < bckColors.length; i++) {
-            bckColors[i] = GraphicsYio.loadTextureRegion("diplomacy/color" + (i + 1) + ".png", false);
+            bckColors[i] = GraphicsYio.loadTextureRegion(getDiplomacyFolderPath() + "color" + (i + 1) + ".png", false);
+        }
+    }
+
+
+    private String getDiplomacyFolderPath() {
+        SkinType skinType = SkinType.values()[SettingsManager.skinIndex];
+        switch (skinType) {
+            default:
+                return "diplomacy/";
+            case jannes_peters:
+                return "skins/jannes/diplomacy/";
         }
     }
 
@@ -132,22 +143,7 @@ public class RenderDiplomacyElement extends MenuRender {
 
 
     private TextureRegion getIconTexture(DeIcon deIcon) {
-        switch (deIcon.action) {
-            default:
-                return null;
-            case DeIcon.ACTION_LIKE:
-                return likeIcon;
-            case DeIcon.ACTION_DISLIKE:
-                return dislikeIcon;
-            case DeIcon.ACTION_BLACK_MARK:
-                return skullIcon;
-            case DeIcon.ACTION_INFO:
-                return infoIcon;
-            case DeIcon.ACTION_TRANSFER_MONEY:
-                return transferMoneyIcon;
-            case DeIcon.ACTION_BUY_HEXES:
-                return buyHexesIcon;
-        }
+        return mapIconTextures.get(deIcon.action);
     }
 
 
@@ -226,7 +222,7 @@ public class RenderDiplomacyElement extends MenuRender {
 
         GraphicsYio.drawFromCenter(
                 batch,
-                skullIcon,
+                mapIconTextures.get(DipActionType.black_mark),
                 item.blackMarkPosition.x,
                 item.blackMarkPosition.y,
                 item.blackMarkRadius
@@ -249,7 +245,7 @@ public class RenderDiplomacyElement extends MenuRender {
     private void renderItemBackground(DeItem item, RectangleYio pos) {
         GraphicsYio.drawByRectangle(
                 batch,
-                bckColors[menuViewYio.yioGdxGame.gameController.getColorIndexWithOffset(item.colorIndex)],
+                bckColors[menuViewYio.yioGdxGame.gameController.getColorByFraction(item.fraction)],
                 pos
         );
     }
@@ -308,8 +304,8 @@ public class RenderDiplomacyElement extends MenuRender {
     }
 
 
-    public TextureRegion getBackgroundPixel(int colorIndex) {
-        return bckColors[colorIndex];
+    public TextureRegion getBackgroundPixelByColor(int color) {
+        return bckColors[color];
     }
 
 

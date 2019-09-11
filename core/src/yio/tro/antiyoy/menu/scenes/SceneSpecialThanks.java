@@ -28,7 +28,7 @@ public class SceneSpecialThanks extends AbstractScene{
 
         menuControllerYio.getYioGdxGame().beginBackgroundChange(1, false, true);
 
-        backButton = menuControllerYio.spawnBackButton(900, Reaction.RB_ABOUT_GAME);
+        backButton = menuControllerYio.spawnBackButton(900, Reaction.rbAboutGame);
 
         createDialog();
 

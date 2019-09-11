@@ -50,7 +50,7 @@ public class RenderSelectedHexes extends GameRender{
 
 
     private boolean isSelectionBorderNeeded(Hex hex, Hex adj) {
-        return adj != null && !adj.isNullHex() && (!adj.active || !adj.sameColor(hex));
+        return adj != null && !adj.isNullHex() && (!adj.active || !adj.sameFraction(hex));
     }
 
 

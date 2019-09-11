@@ -1,5 +1,7 @@
 package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.gameplay.rules.GameRules;
+
 import java.util.ArrayList;
 
 public class DetectorProvince {
@@ -23,7 +25,7 @@ public class DetectorProvince {
         propagationList.clear();
         propagationList.add(startHex);
 
-        if (startHex.colorIndex == FieldController.NEUTRAL_LANDS_INDEX) {
+        if (startHex.fraction == GameRules.NEUTRAL_FRACTION) {
             provinceList.add(startHex);
             return provinceList;
         }
@@ -48,7 +50,7 @@ public class DetectorProvince {
     private boolean belongsToSameProvince(Hex adjHex) {
         if (adjHex == null) return false;
         if (!adjHex.active) return false;
-        if (!adjHex.sameColor(tempHex)) return false;
+        if (!adjHex.sameFraction(tempHex)) return false;
         if (propagationList.contains(adjHex)) return false;
         if (provinceList.contains(adjHex)) return false;
 

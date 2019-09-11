@@ -47,6 +47,7 @@ public class GameView {
         rList = new GameRendersList(this);
         rList.create();
 
+        rList.renderBackgroundCache.performInitialPreparation();
         texturesManager.loadTextures();
     }
 
@@ -74,7 +75,7 @@ public class GameView {
 
 
     public void updateCacheLevelTextures() {
-        rList.renderBackgroundCache.updateCacheLevelTextures();
+        rList.renderBackgroundCache.updateFullCache();
     }
 
 
@@ -149,16 +150,25 @@ public class GameView {
         rList.renderUnits.render();
         rList.renderBlackout.render();
         rList.renderMoveZone.render();
-        rList.renderLevelEditorStuff.render();
         rList.renderFogOfWar.render();
         rList.renderCityNames.render();
         rList.renderSelectedUnit.render();
         rList.renderDefenseTips.render();
         rList.renderDebug.render();
+        rList.renderHighlights.render();
+        renderCurrentTouchMode();
 
         batchMovable.end();
 
         rList.renderForefinger.render();
+    }
+
+
+    private void renderCurrentTouchMode() {
+        GameRender render = gameController.touchMode.getRender();
+        if (render == null) return;
+
+        render.render();
     }
 
 

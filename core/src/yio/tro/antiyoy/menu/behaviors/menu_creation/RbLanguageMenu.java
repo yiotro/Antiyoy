@@ -8,8 +8,7 @@ public class RbLanguageMenu extends Reaction {
 
     @Override
     public void perform(ButtonYio buttonYio) {
-
-        Scenes.sceneMoreSettingsMenu.onDestroy();
+        Scenes.sceneSettings.onDestroy();
         Scenes.sceneLanguages.create();
     }
 }

@@ -1,10 +1,12 @@
 package yio.tro.antiyoy.stuff.scroll_engine;
 
+import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
 public class ScrollEngineYio {
 
 
+    public static final int FAST_SWIPE_DELAY = 250;
     private SegmentYio limits;
     private SegmentYio slider;
     private double speed, maxSpeed;
@@ -13,6 +15,11 @@ public class ScrollEngineYio {
     private double cutSpeed, cutOffset;
     private double correction;
     private boolean canSoftCorrect, blockMovement;
+    private boolean targetEnabled;
+    private double target, tStart;
+    private FactorYio targetFactor;
+    private double localMinSpeed, localMaxSpeed;
+    private long touchDownTime;
 
 
     public ScrollEngineYio() {
@@ -27,6 +34,11 @@ public class ScrollEngineYio {
         canSoftCorrect = true;
         blockMovement = false;
         maxSpeed = 0.15 * GraphicsYio.width;
+
+        targetEnabled = false;
+        target = -1;
+        tStart = -1;
+        targetFactor = new FactorYio();
     }
 
 
@@ -35,10 +47,7 @@ public class ScrollEngineYio {
         correction = limits.a - slider.a;
         if (correction == 0) return;
 
-        boolean b = blockMovement;
-        blockMovement = false;
         relocate(correction);
-        blockMovement = b;
     }
 
 
@@ -47,10 +56,7 @@ public class ScrollEngineYio {
         correction = limits.b - slider.b;
         if (correction == 0) return;
 
-        boolean b = blockMovement;
-        blockMovement = false;
         relocate(correction);
-        blockMovement = b;
     }
 
 
@@ -73,6 +79,8 @@ public class ScrollEngineYio {
     public void move() {
         if (blockMovement) return;
 
+        moveTarget();
+
         if (speed == 0) {
             softCorrection();
             return;
@@ -82,6 +90,39 @@ public class ScrollEngineYio {
         relocate(speed);
         updateSpeed();
         hardCorrection();
+    }
+
+
+    private void moveTarget() {
+        if (!targetEnabled) return;
+
+        if (targetFactor.hasToMove()) {
+            targetFactor.move();
+            setSpeed(0);
+            double currentTarget = tStart + targetFactor.get() * (target - tStart);
+            relocate(currentTarget - slider.a);
+        } else {
+            targetEnabled = false;
+        }
+    }
+
+
+    public void setTarget(double target) {
+        this.target = target;
+
+        if (this.target > limits.b - slider.getLength()) {
+            this.target = limits.b - slider.getLength();
+        }
+
+        targetEnabled = true;
+        targetFactor.setValues(0, 0);
+        targetFactor.appear(6, 1.2);
+        tStart = slider.a;
+    }
+
+
+    public void cancelTarget() {
+        targetEnabled = false;
     }
 
 
@@ -194,8 +235,28 @@ public class ScrollEngineYio {
     }
 
 
-    public void updateCanSoftCorrect(boolean canSoftCorrect) {
-        this.canSoftCorrect = canSoftCorrect;
+    public void onTouchDown() {
+        canSoftCorrect = false;
+        localMinSpeed = 0;
+        localMaxSpeed = 0;
+        touchDownTime = System.currentTimeMillis();
+    }
+
+
+    public void onTouchUp() {
+        canSoftCorrect = true;
+        checkForFastSwipe();
+    }
+
+
+    private void checkForFastSwipe() {
+        if (System.currentTimeMillis() - touchDownTime > FAST_SWIPE_DELAY) return;
+
+        if (Math.abs(localMaxSpeed) > Math.abs(localMinSpeed)) {
+            setSpeed(localMaxSpeed);
+        } else {
+            setSpeed(localMinSpeed);
+        }
     }
 
 
@@ -211,6 +272,14 @@ public class ScrollEngineYio {
 
     public void setSpeed(double speed) {
         this.speed = speed;
+
+        if (speed > localMaxSpeed) {
+            localMaxSpeed = speed;
+        }
+
+        if (speed < localMinSpeed) {
+            localMinSpeed = speed;
+        }
     }
 
 
@@ -232,5 +301,4 @@ public class ScrollEngineYio {
                 " limit" + limits +
                 ", slider" + slider +
                 "]";
-    }
-}
+    }}

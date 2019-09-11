@@ -38,7 +38,7 @@
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Reset data"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -299,6 +299,8 @@
         <string key="confirm_randomize" value="Generate random map?"/>
         <string key="randomize" value="Randomize"/>
         <string key="create" value="Create"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- Settings -->
         <string key="autosave" value="Autosave"/>
@@ -328,7 +330,7 @@
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
         <string key="full_screen_mode" value="Full screen mode"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -393,7 +395,8 @@
         <string key="hex_trade" value="Hex trade"/>
         <string key="hex_sale" value="Hex sale"/>
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
 
 
 
@@ -456,7 +459,7 @@
         #Игру сделал yiotro
 		"/>
         <string key="reset_campaign_data" value="Стереть данные"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Отдельное спасибо"/>
 
         <!-- Choose game mode menu-->
@@ -707,6 +710,8 @@
         <string key="confirm_randomize" value="Сгенерировать случайную карту?"/>
         <string key="randomize" value="Случайная карта"/>
         <string key="create" value="Создать"/>
+        <string key="change" value="Изменить"/>
+        <string key="messages" value="Сообщения"/>
 
         <!-- Settings -->
         <string key="autosave" value="Автосохранение"/>
@@ -736,7 +741,7 @@
         <string key="music" value="Музыка"/>
         <string key="left_handed" value="Леворукий режим"/>
         <string key="full_screen_mode" value="Полноэкранный режим"/>
-        <string key="skin_bubbles" value="Пузыри"/>
+        <string key="system_keyboard" value="Системная клавиатура"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Это первый 'сложный' уровень. Уделяй больше внимания защите."/>
@@ -801,7 +806,8 @@
         <string key="hex_trade" value="Торговля клетками"/>
         <string key="hex_sale" value="Продажа клеток"/>
         <string key="buyer_not_enough_money" value="У покупателя недостаточно денег"/>
-        <string key="loading" value="Загрузка"/>
+        <string key="message" value="Сообщение"/>
+        <string key="show" value="Показать"/>
 
     </language>
 
@@ -861,7 +867,7 @@
         #Гру зробив yiotro
 		"/>
         <string key="reset_campaign_data" value="Стерти данi"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Дякую"/>
 
         <!-- Choose game mode menu-->
@@ -1112,6 +1118,8 @@
         <string key="confirm_randomize" value="Сгенерувати карту?"/>
         <string key="randomize" value="Сгенерувати"/>
         <string key="create" value="Створити"/>
+        <string key="change" value="Змінити"/>
+        <string key="messages" value="Повідомлення"/>
 
         <!-- Settings -->
         <string key="autosave" value="Автозбереження"/>
@@ -1141,7 +1149,7 @@
         <string key="music" value="Музика"/>
         <string key="left_handed" value="Режим лівої руки"/>
         <string key="full_screen_mode" value="Повний екран"/>
-        <string key="skin_bubbles" value="Міхури"/>
+        <string key="system_keyboard" value="Системна клавіатура"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Це перший 'складний' рівень. Приділяй більше уваги захисту."/>
@@ -1206,7 +1214,8 @@
         <string key="hex_trade" value="Торгівля клітинами"/>
         <string key="hex_sale" value="Продаж клітин"/>
         <string key="buyer_not_enough_money" value="У покупця недостатньо грошей"/>
-        <string key="loading" value="Завантаження"/>
+        <string key="message" value="Повідомлення"/>
+        <string key="show" value="Показати"/>
 
     </language>
 
@@ -1245,9 +1254,9 @@
         <string key="menu_level" value="Level"/>  <!-- Same as english -->
         <string key="menu_reset" value="Reset"/>  <!-- Same as english -->
         <string key="game_saved" value="Spiel gespeichert"/>
-        <string key="restart_app" value="Restart app"/>
-        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/>
-        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
+        <string key="restart_app" value="App neu starten"/>
+        <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/> <!-- Same as english -->
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/> <!-- Same as english -->
 
         <!-- Info -->
         <string key="info_back" value="Zurück"/>
@@ -1272,7 +1281,7 @@
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Daten zurücksetzen"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Besonderer Dank"/>
 
         <!-- Choose game mode menu-->
@@ -1301,7 +1310,7 @@
         <string key="small" value="klein"/>
         <string key="medium" value="mittel"/>
         <string key="big" value="groß"/>
-        <string key="huge" value="huge"/>
+        <string key="huge" value="riesig"/>
         <string key="ai_only" value="nur AI"/>
         <string key="single_player" value="Einzelspieler"/>
         <string key="multiplayer" value="Mehrspieler"/>
@@ -1339,7 +1348,7 @@
         <string key="level_complete" value="Level abgeschlossen"/>
         <string key="win_game" value="Gewinnen"/>
         <string key="win_or_continue" value="Jetzt gewinnen#oder weiterspielen?"/>
-        <string key="continue" value="Continue"/>
+        <string key="continue" value="Weiterspielen"/>
 
         <!-- Colors -->
         <string key="green_player" value="Grüner"/>
@@ -1569,7 +1578,9 @@
         <string key="confirm_clear_level" value="Karte zurücksetzen?"/>
         <string key="confirm_randomize" value="Zufällige Karte generieren?"/>
         <string key="randomize" value="Zufall"/>
-        <string key="create" value="Create"/>
+        <string key="create" value="Kreieren"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- Settings -->
         <string key="autosave" value="Autosave"/>
@@ -1591,15 +1602,15 @@
         <string key="more_settings_checks" value="# #Wasser-Textur # # "/>
         <string key="water_texture" value="Wasser-Textur "/>
         <string key="confirm_reset" value="Fortschritt zurücksetzen?"/>
-        <string key="replays" value="Replays"/>
+        <string key="replays" value="Replays"/>    <!-- Same as english -->
         <string key="save_replay" value="Replay speichern"/>
-        <string key="replay" value="Replay"/>
+        <string key="replay" value="Replay"/>    <!-- Same as english -->
         <string key="replay_saved" value="Replay gespeichert"/>
         <string key="fast_construction" value="Schnelles Bauen"/>
         <string key="music" value="Musik"/>
         <string key="left_handed" value="Linkshänder"/>
-        <string key="full_screen_mode" value="Full screen mode"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="full_screen_mode" value="Vollbildmodus"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Dies ist das erste 'schwere' Level. Achte besonders auf Deine Verteidigung."/>
@@ -1655,16 +1666,17 @@
         <string key="gift" value="Geschenk"/>
         <string key="gift_received" value="Geschenk erhalten"/>
         <string key="confirm_sell_hexes" value="Felder verkaufen?"/>
-        <string key="confirm_skip_level" value="Skip level?"/>
-        <string key="ok" value="Ok"/>
-        <string key="money" value="Money"/>
-        <string key="quantity" value="Quantity"/>
-        <string key="income" value="Income"/>
-        <string key="by_name" value="By name"/>
-        <string key="hex_trade" value="Hex trade"/>
-        <string key="hex_sale" value="Hex sale"/>
-        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="confirm_skip_level" value="Level überspringen?"/>
+        <string key="ok" value="Ok"/>    <!-- Same as english -->
+        <string key="money" value="Geld"/>
+        <string key="quantity" value="Menge"/>
+        <string key="income" value="Einkommen"/>
+        <string key="by_name" value="Nach Name filtern"/>
+        <string key="hex_trade" value="Feld handeln"/>
+        <string key="hex_sale" value="Feld verkaufen"/>
+        <string key="buyer_not_enough_money" value="Käufer hat nicht genug Geld"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
     </language>
 
 
@@ -1724,7 +1736,7 @@
         #Vytvořil yiotro
         "/>
         <string key="reset_campaign_data" value="Resetovat data"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -2010,6 +2022,8 @@
         <string key="confirm_randomize" value="Generate random map?"/>
         <string key="randomize" value="Randomize"/>
         <string key="create" value="Create"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- Settings -->
         <string key="autosave" value="Auto ukládání"/>
@@ -2039,7 +2053,7 @@
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
         <string key="full_screen_mode" value="Full screen mode"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -2104,7 +2118,8 @@
         <string key="hex_trade" value="Hex trade"/>
         <string key="hex_sale" value="Hex sale"/>
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
     </language>
 
 
@@ -2144,7 +2159,7 @@
         <string key="game_saved" value="Partie sauvegardée"/>
         <string key="restart_app" value="Redémarrer appli"/>
         <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/> <!-- Same as english -->
-        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/> <!-- Same as english -->
 
         <!-- Info -->
         <string key="info_back" value="Précédent"/>
@@ -2165,7 +2180,7 @@
         #Auteur : yiotro
 		"/>
         <string key="reset_campaign_data" value="Effacer données"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Remerciements"/>
 
         <!-- Choose game mode menu-->
@@ -2176,8 +2191,8 @@
         <string key="user_levels" value="Niveaux Custo."/>
 
         <!-- User levels -->
-        <string key="add_my_map" value="Add my map"/>
-        <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
+        <string key="add_my_map" value="Ajouter ma carte"/>
+        <string key="how_add_my_map" value="Pour ajouter une carte : #1. La créer dans l'éditeur. #2. Vérifier qu'elle soit sympa et faisable. #3. Faire 'export'. #4a. La mettre sur pastebin.com et m'envoyer un email à yiotro93@gmail.com #4b. Ou la poster sur mon subreddit /r/yiotro_games # #Si la difficultée est élevée, ajoutez un lien vers une video prouvant qu'elle est faisable."/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Menu principal"/>
@@ -2189,7 +2204,7 @@
         <string key="small" value="petite"/>
         <string key="medium" value="moyenne"/>
         <string key="big" value="grande"/>
-        <string key="huge" value="huge"/>
+        <string key="huge" value="immmense"/>
         <string key="ai_only" value="IA uniquement"/>
         <string key="single_player" value="solo"/>
         <string key="multiplayer" value="multijoueur"/>
@@ -2251,7 +2266,7 @@
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Règles normales"/>
-        <string key="how_to_play" value="Instructions"/>
+        <string key="how_to_play" value="How to play?"/>
         <string key="tutorial_ok" value="Ok"/>  <!-- Same as english -->
         <string key="tut_select_unit" value="Sélectionner l'unité"/>
         <string key="tut_tap_on_hex" value="Taper sur l'hexagone"/>
@@ -2434,7 +2449,7 @@
         <string key="units_produced" value="Unités produits durant la partie "/>
         <string key="money_spent" value="Argent dépensé "/>
         <string key="time" value="Temps passé"/>
-        <string key="wins" value="Wins"/>
+        <string key="wins" value="Victoires"/>
 
         <!-- Editor -->
         <string key="editor" value="Editeur"/>
@@ -2456,7 +2471,9 @@
         <string key="confirm_clear_level" value="Redémarer?"/>
         <string key="confirm_randomize" value="Carte aléatoire?"/>
         <string key="randomize" value="Aléatoire"/>
-        <string key="create" value="Create"/>
+        <string key="create" value="Créer"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- Settings -->
         <string key="autosave" value="Sauvegarde auto"/>
@@ -2478,15 +2495,15 @@
         <string key="more_settings_checks" value="# #Texture aquatique # # "/>
         <string key="water_texture" value="Texture aquatique "/>
         <string key="confirm_reset" value="Réinitialiser ?"/>
-        <string key="replays" value="Replays"/>
+        <string key="replays" value="Replays"/><!-- Same as english -->
         <string key="save_replay" value="Sauver replay"/>
-        <string key="replay" value="Replay"/>
-        <string key="replay_saved" value="Replay sauvé"/>
+        <string key="replay" value="Replay"/><!-- Same as english -->
+        <string key="replay_saved" value="Replay sauvé"/><!-- Same as english -->
         <string key="fast_construction" value="Construction rapide"/>
         <string key="music" value="Musique"/>
         <string key="left_handed" value="Gaucher"/>
-        <string key="full_screen_mode" value="Full screen mode"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="full_screen_mode" value="Plein écran"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
         <string key="level_24" value="C'est le premier niveau difficile, attention à vos défenses."/>  <!-- Same as english -->
@@ -2509,16 +2526,16 @@
         <string key="confirm_start_war" value="Déclarer la guerre?"/>
         <string key="peace_treaty" value="Traité de paix"/>
         <string key="pay" value="Payer"/>
-        <string key="reparations" value="Reparations"/>
+        <string key="reparations" value="Dédommagement"/>
         <string key="refuse_stop_war" value="Je vous combattrai jusqu'à la mort!"/>
         <string key="win_conditions" value="Conditions de victoire"/>
         <string key="diplomatic_win_conditions" value="Vous devez etre allié pour gagner diplomatiquement."/>
         <string key="confirm_black_mark" value="Comfirmer bannissement ?"/>
         <string key="black_mark_description" value="En bannissant un adversaire, vous interdisez les autres à s'allier à la fois à vous et au banni.
 		# Ne s'applique pas aux alliances existantes."/>
-        <string key="player_turn" value="Player turn"/><!-- contexte? -->
-        <string key="fine" value="Amende"/><!-- contexte? -->
-        <string key="log" value="Courrier"/><!-- contexte? -->
+        <string key="player_turn" value="Tour"/><!-- contexte? -->
+        <string key="fine" value="Amende"/>
+        <string key="log" value="Courrier"/>
         <string key="friendship_proposal" value="Proposition d'alliance"/>
         <string key="war_declaration" value="Déclaration de guerre"/>
         <string key="stop_war" value="Armistice"/>
@@ -2543,16 +2560,17 @@
         <string key="gift" value="Cadeau"/>
         <string key="gift_received" value="Cadeau recu"/>
         <string key="confirm_sell_hexes" value="Vendre case?"/>
-        <string key="confirm_skip_level" value="Skip level?"/>
+        <string key="confirm_skip_level" value="Niveau suivant?"/>
         <string key="ok" value="Ok"/>
-        <string key="money" value="Money"/>
-        <string key="quantity" value="Quantity"/>
-        <string key="income" value="Income"/>
-        <string key="by_name" value="By name"/>
-        <string key="hex_trade" value="Hex trade"/>
-        <string key="hex_sale" value="Hex sale"/>
-        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="money" value="Argent"/>
+        <string key="quantity" value="Quantité"/>
+        <string key="income" value="Revenu"/>
+        <string key="by_name" value="Par nom"/>
+        <string key="hex_trade" value="Echanger case"/>
+        <string key="hex_sale" value="Vendre case"/>
+        <string key="buyer_not_enough_money" value="Argent insufisant"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
     </language>
 
 
@@ -2586,7 +2604,7 @@
         <string key="menu_level" value="Poziom"/>
         <string key="menu_reset" value="Resetuj"/>
         <string key="game_saved" value="Gra zapisana"/>
-        <string key="restart_app" value="Restart app"/>
+        <string key="restart_app" value="zrestartuj aplikacje"/>
         <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/> <!-- Same as english -->
         <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
 
@@ -2614,7 +2632,7 @@
     #Wykonane przez yiotro
     "/>
         <string key="reset_campaign_data" value="Resetuj kampanie"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
 
@@ -2623,10 +2641,10 @@
         <string key="choose_game_mode_tutorial" value="Samouczek"/>
         <string key="choose_game_mode_campaign" value="Kampania"/>
         <string key="choose_game_mode_load" value="Wczytaj grę"/>
-        <string key="user_levels" value="User levels"/>
+        <string key="user_levels" value="poziomy użytkowników"/>
 
         <!-- User levels -->
-        <string key="add_my_map" value="Add my map"/>
+        <string key="add_my_map" value="dodaj moją mapę"/>
         <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
 
         <!-- Skirmish menu -->
@@ -2639,7 +2657,7 @@
         <string key="small" value="mała"/>
         <string key="medium" value="średnia"/>
         <string key="big" value="duża"/>
-        <string key="huge" value="huge"/>
+        <string key="huge" value="ogromna"/>
         <string key="ai_only" value="tylko AI"/>
         <string key="single_player" value="tryb jednoosobowy"/>
         <string key="multiplayer" value="tryb wieloosobowy"/>
@@ -2653,7 +2671,7 @@
         <string key="balancer" value="stabilizujący"/>
         <string key="player_color" value="Kolor gracza"/>
         <string key="fog_of_war" value="Fog of war"/>
-        <string key="diplomacy" value="Diplomacy"/>
+        <string key="diplomacy" value="dyplomacja"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Wznów"/>
@@ -2725,7 +2743,7 @@
         <string key="tip_about_unit_death" value="Jeśli pieniądze się skończą#jednostki umrą.#Uważaj!"/>
         <string key="tip_merging" value="Łącz jednostki by stały#się silniejsze."/>
         <string key="tip_trees" value="Drzewa zmniejszają zyski.#Lepiej je ściąć."/>
-        <string key="tip_help" value="To skip rest of tutorial press 'help'"/>
+        <string key="tip_help" value="żeby pominąć reszte samouczka kliknij pomoc"/>
 
         <!-- Generic Tutorial -->
         <string key="gen_greetings" value="Witaj. W tym samouczku poznasz podstawowe zasady gry."/>
@@ -2765,8 +2783,8 @@
         <string key="help_about_towers" value="Wieże"/>
         <string key="help_about_money" value="Pieniądze"/>
         <string key="help_about_tactics" value="Taktyki"/>
-        <string key="help_about_rules" value="Rules"/>
-        <string key="my_games" value="My games"/>
+        <string key="help_about_rules" value="zasady"/>
+        <string key="my_games" value="moje gry"/>
 
         <string key="help_units_article" value="Są 4 rodzaje jednostek.
     #Różnią się one tylko siłą.
@@ -2858,35 +2876,35 @@
     "/>
 
 
-        <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
+        <string key="article_rules" value="Są dwa rodzaje zasad normalne i zasady slaya zasady normalne są włączone automatycznie.
         #
-        #Initially game had only slay rules. That's why help describes them instead of normal rules.
+        #na początku gra miała tylko zasady slaya i to dlatego są one tu wytłumaczone zamiast normalnych.
         #
-        #To change rules in skirmish you have to tap 'more' before starting new game.
+        #żeby zmienić zasady potyczki musisz kliknąć więcej zanim zaczniesz grę.
         #
-        #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
+        #Żeby zmienić zasady kampani kliknij '...' w gornym rógu gdy wybierasz poziom."/>
 
-        <string key="article_diplomacy_1" value="To win in diplomacy mode you have to be in friendship with everyone on map.
+        <string key="article_diplomacy_1" value="Żeby wygrać dyplomatycznie musisz zawrzeć przyjaźń z wszystkimi królestwami na mapie.
         #
-        #To open diplomacy UI just select your country and tap little 'flag' icon.
+        #Żeby otworzyć menu dyplomacji po prostu wybierz swój kraj i kliknij małą ikonę flagi.
         #
-        #Tap on any country in list and you'll see what you can do.
+        #Kliknij na kraj z listy i zobacz co możesz zrobić.
         #
-        #'Like' and 'dislike' buttons can make relations with that country better or worse."/>
+        #przyciski łapki w góre i łapki w dół mogą polepszyć lub pogorszyć relacje z innym krajem."/>
 
-        <string key="article_diplomacy_2" value="The idea of black mark is simple: any other country can't be friends with both of you. It's a sort of diplomatical pressure.
+        <string key="article_diplomacy_2" value="Idea czarnej listy jest prosta: żaden kraj nie może być zaprzyjaźnowy z wami obojga.To coś w stylu dyplomatycznej presji.
         #
-        #Also, you won't be able to become friend with everyone easily. Last country will always refuse your friend request."/>
+        #Nie będziesz mógł zawrzeć przyjaźni z wszystkimi królestwami ostatnie królestwo zawsze odrzuci twoją propozycje"/>
 
-        <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
+        <string key="article_my_games" value="Jeśli polubiłeś tą gre to może polubisz moje inne gry:"/>
 
         <!-- Statistics -->
         <string key="turns_made" value="Wykonane ruchy"/>
         <string key="units_died" value="Zginęło jednostek"/>
         <string key="units_produced" value="Wynajęte jednostki"/>
         <string key="money_spent" value="Wydane pieniądze"/>
-        <string key="time" value="Time"/>
-        <string key="wins" value="Wins"/>
+        <string key="time" value="czas"/>
+        <string key="wins" value="wygrane"/>
 
         <!-- Editor -->
         <string key="editor" value="Edytor"/>
@@ -2903,12 +2921,14 @@
         <string key="no" value="Nie"/>
         <string key="yes" value="Tak"/>
         <string key="confirm_import" value="Czy chcesz importować?"/>
-        <string key="filter_no" value="No filter"/>
-        <string key="filter_only_land" value="Only land"/>
-        <string key="confirm_clear_level" value="Clear map?"/>
-        <string key="confirm_randomize" value="Generate random map?"/>
-        <string key="randomize" value="Randomize"/>
-        <string key="create" value="Create"/>
+        <string key="filter_no" value="bez filtrów"/>
+        <string key="filter_only_land" value="tylko teren"/>
+        <string key="confirm_clear_level" value="wyczyścić mapę?"/>
+        <string key="confirm_randomize" value="wygenerować losową mapę?"/>
+        <string key="randomize" value="wylosuj"/>
+        <string key="create" value="stwórz"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- Settings -->
         <string key="autosave" value="Autozapis"/>
@@ -2930,80 +2950,81 @@
         <string key="more_settings_checks" value="# #Tekstura wody # # "/>
         <string key="water_texture" value="Tekstura wody "/>
         <string key="confirm_reset" value="Clear progress?"/>
-        <string key="replays" value="Replays"/>
-        <string key="save_replay" value="Save replay"/>
-        <string key="replay" value="Replay"/>
-        <string key="replay_saved" value="Replay saved"/>
-        <string key="fast_construction" value="Fast construction"/>
-        <string key="music" value="Music"/>
-        <string key="left_handed" value="Left handed"/>
-        <string key="full_screen_mode" value="Full screen mode"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="replays" value="powtórki"/>
+        <string key="save_replay" value="zapisz powtórkę"/>
+        <string key="replay" value="powtórka"/>
+        <string key="replay_saved" value="powtórka zapisana"/>
+        <string key="fast_construction" value="szybka konstrukcja"/>
+        <string key="music" value="muzyka"/>
+        <string key="left_handed" value="leworęczny"/>
+        <string key="full_screen_mode" value="pełny ekran"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
-        <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
-        <string key="map_too_big_for_user_levels" value="Map was successfully exported, but if you want to send it as user level then please make it smaller."/>
-        <string key="available_on_ios" value="Now available on iOS"/>
+        <string key="level_24" value="To jest pierwszy trudny poziom więc uważaj na swoją obrone."/>
+        <string key="map_too_big_for_user_levels" value="mapa została exportowana, ale jest za duża by wysłać ją do poziomów użytkowników ."/>
+        <string key="available_on_ios" value="teraz dostępne na IOS"/>
 
         <!-- Gameplay -->
-        <string key="friends" value="Friends"/>
-        <string key="mutual_friends" value="Mutual"/>
-        <string key="dotations" value="Subsidies"/>
-        <string key="treaty_of_friendship" value="Treaty of friendship"/>
-        <string key="state" value="State"/>
-        <string key="duration" value="Duration"/>
-        <string key="refuse_friendship" value="Sorry, I can't accept your friendship proposition."/>
-        <string key="friend" value="friend"/>
-        <string key="enemy" value="enemy"/>
-        <string key="neutral" value="neutral"/>
-        <string key="dead" value="dead"/>
-        <string key="confirm_cancel_friendship" value="Cancel friendship?"/>
-        <string key="confirm_start_war" value="Start war?"/>
-        <string key="peace_treaty" value="Peace treaty"/>
-        <string key="pay" value="Pay"/>
-        <string key="reparations" value="Reparations"/>
-        <string key="refuse_stop_war" value="I will fight to the end!"/>
-        <string key="win_conditions" value="Conditions of victory"/>
-        <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
+        <string key="friends" value="przyjaciele"/>
+        <string key="mutual_friends" value="wspólni przyjaciele"/>
+        <string key="dotations" value="dotacje"/>
+        <string key="treaty_of_friendship" value="pakt przyjaźni"/>
+        <string key="state" value="stan"/>
+        <string key="duration" value="długość"/>
+        <string key="refuse_friendship" value="Przepraszam nie mogę przyjąć twojego paktu przyjaźni."/>
+        <string key="friend" value="przyjaciel"/>
+        <string key="enemy" value="wróg"/>
+        <string key="neutral" value="neutralny"/>
+        <string key="dead" value="nieżywy"/>
+        <string key="confirm_cancel_friendship" value="zakończyć przyjaźń?"/>
+        <string key="confirm_start_war" value="zacząć wojne?"/>
+        <string key="peace_treaty" value="pakt pokojowy"/>
+        <string key="pay" value="zapłać"/>
+        <string key="reparations" value="reparacje"/>
+        <string key="refuse_stop_war" value="Będę walczyć do końca"/>
+        <string key="win_conditions" value="warunki wygranej"/>
+        <string key="diplomatic_win_conditions" value="żeby wygrać dyplomatycznie musisz zawrzeć przyjaźń z wszystkimi."/>
         <string key="confirm_black_mark" value="Put black mark?"/>
-        <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
-        <string key="player_turn" value="Player turn"/>
+        <string key="black_mark_description" value="poprzez dodanie gracza do czarnej listy inni twoi przyjaciele nie mogą zawrzeć przyjaźni z wami obojga naraz.Nie działa na wcześnie zawartej przyjaźni."/>
+        <string key="player_turn" value="tura gracza"/>
         <string key="fine" value="Fine"/>
         <string key="log" value="Letters"/>
-        <string key="friendship_proposal" value="Friendship proposal"/>
-        <string key="war_declaration" value="War declaration"/>
-        <string key="stop_war" value="Stop war"/>
-        <string key="friendship_ended" value="Friendship ended"/>
-        <string key="friendship_canceled" value="Friendship canceled"/>
-        <string key="black_marked" value="Black marked"/>
-        <string key="letter_sent" value="Letter sent"/>
-        <string key="delete" value="Delete"/>
-        <string key="rename" value="Rename"/>
-        <string key="confirm_delete_slot" value="Delete slot?"/>
-        <string key="resume_button" value="'Resume' button"/>
-        <string key="filters" value="Filters"/>
-        <string key="completed" value="Completed"/>
-        <string key="historical" value="Historical"/>
-        <string key="temp_slot" value="Temporary slot"/>
-        <string key="can_skip_level" value="You can skip this level"/>
-        <string key="reason" value="Reason"/>
-        <string key="friends_with_everybody" value="friendship with all kingdoms"/>
-        <string key="hex_purchase" value="Hex purchase"/>
-        <string key="confirm_buy_hexes" value="Buy hexes?"/>
-        <string key="price" value="Price"/>
-        <string key="gift" value="Gift"/>
-        <string key="gift_received" value="Gift received"/>
-        <string key="confirm_sell_hexes" value="Sell hexes?"/>
-        <string key="confirm_skip_level" value="Skip level?"/>
+        <string key="friendship_proposal" value="propozycja przyjaźni"/>
+        <string key="war_declaration" value="wypowiedzenie wojny"/>
+        <string key="stop_war" value="zakończ wojne"/>
+        <string key="friendship_ended" value="przyjaźń zakończona"/>
+        <string key="friendship_canceled" value="Przyjaźń anulowana"/>
+        <string key="black_marked" value="zapisany na czarnej liście"/>
+        <string key="letter_sent" value="list wysłany"/>
+        <string key="delete" value="usuń"/>
+        <string key="rename" value="zmień nazwę"/>
+        <string key="confirm_delete_slot" value="usunąć slot?"/>
+        <string key="resume_button" value="przycisk wznów"/>
+        <string key="filters" value="filtry"/>
+        <string key="completed" value="skończona"/>
+        <string key="historical" value="historyczny"/>
+        <string key="temp_slot" value="slot tymczasowy"/>
+        <string key="can_skip_level" value="możesz pominąć ten poziom"/>
+        <string key="reason" value="przyczyna"/>
+        <string key="friends_with_everybody" value="przyjaźń z wszytkimi królestwami"/>
+        <string key="hex_purchase" value="zakup hexa"/>
+        <string key="confirm_buy_hexes" value="kupić hexa?"/>
+        <string key="price" value="cena"/>
+        <string key="gift" value="prezent"/>
+        <string key="gift_received" value="prezent otrzymany"/>
+        <string key="confirm_sell_hexes" value="sprzedać hexa?"/>
+        <string key="confirm_skip_level" value="pominąć poziom?"/>
         <string key="ok" value="Ok"/>
-        <string key="money" value="Money"/>
-        <string key="quantity" value="Quantity"/>
-        <string key="income" value="Income"/>
-        <string key="by_name" value="By name"/>
-        <string key="hex_trade" value="Hex trade"/>
-        <string key="hex_sale" value="Hex sale"/>
-        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="money" value="pieniądze"/>
+        <string key="quantity" value="ilość"/>
+        <string key="income" value="przychód"/>
+        <string key="by_name" value="nazwą"/>
+        <string key="hex_trade" value="wymiana hexów "/>
+        <string key="hex_sale" value="sprzedaż hexów"/>
+        <string key="buyer_not_enough_money" value="kupiec nie ma wystarczająco pieniędzy"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
     </language>
 
 
@@ -3026,7 +3047,7 @@
 
 
 
-    <language name="it_IT" title="Italian" author="Andrea Rinaldi">
+    <language name="it_IT" title="Italian" author="Andrea Rinaldi / Ivano Rocco">
         <!-- All characters -->
         <string key="lang_characters" value="öàèùìò"/>
 
@@ -3047,14 +3068,14 @@
         <string key="info_back" value="Indietro"/>
         <string key="info_array" value="E' un gioco di pura
         #strategia con uno stile minimale.
-        #E' gratis e non ha ads o donazioni.
+        #E' gratis e non ha pubblicità o donazioni.
         #
         #Se questa è la tua prima partita
         #e se sei nuovo al gioco
         #clicca su info o aiuto.
         #
         #Questo gioco si è ispirato a
-        #Slay from Sean O'Connor
+        #Slay di Sean O'Connor
         #
         #
         #
@@ -3064,19 +3085,19 @@
         "/>
 
         <string key="reset_campaign_data" value="Resetta campagna"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
-        <string key="special_thanks_title" value="Special thanks"/>
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Ringraziamenti speciali"/>
 
         <!-- Choose game mode menu-->
         <string key="choose_game_mode_skirmish" value="Schermaglia"/>
         <string key="choose_game_mode_tutorial" value="Tutorial"/>
         <string key="choose_game_mode_campaign" value="Campagna"/>
         <string key="choose_game_mode_load" value="Carica partita"/>
-        <string key="user_levels" value="User levels"/>
+        <string key="user_levels" value="Livelli creati da utenti"/>
 
         <!-- User levels -->
-        <string key="add_my_map" value="Add my map"/>
-        <string key="how_add_my_map" value="How to get your map here: #1. Make it in editor. #2. Make sure that it's interesting and beatable. #3. Press 'export'. #4a. Post it on pastebin.com and send me the link to my email yiotro93@gmail.com #4b. Or post it on my subreddit /r/yiotro_games # #Also, if your map is very hard, then would be nice if you included some video showing how to beat it."/>
+        <string key="add_my_map" value="Aggiungi la mia mappa"/>
+        <string key="how_add_my_map" value="Come aggiungere la tua mappa: #1. Creala con l'editor. #2. Assicurati che sia interessante e battibile. #3. Seleziona 'esporta'. #4a. Caricala su pastebin.com e mandami il link via e-mail a: yiotro93@gmail.com #4b. Oppure postala sul subreddit /r/yiotro_games # #Infine, se la tua mappa è molto difficile, sarebbe carino che tu includessi un video che mostra come risolverla."/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Menù principale"/>
@@ -3099,10 +3120,10 @@
         <string key="normal" value="Normale"/>
         <string key="hard" value="Difficile"/>
         <string key="expert" value="Esperto"/>
-        <string key="balancer" value="balancer"/>
+        <string key="balancer" value="Bilanciato"/>
         <string key="player_color" value="Colore giocatore"/>
-        <string key="fog_of_war" value="Fog of war"/>
-        <string key="diplomacy" value="Diplomacy"/>
+        <string key="fog_of_war" value="Nebbia di guerra"/>
+        <string key="diplomacy" value="Diplomazia"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Continua"/>
@@ -3149,7 +3170,7 @@
         <string key="gray_menu" value="Grigio"/>
 
         <!-- Tutorial -->
-        <string key="normal_rules" value="Normal rules"/>
+        <string key="normal_rules" value="Regole normali"/>
         <string key="how_to_play" value="Come giocare"/>
         <string key="tutorial_ok" value="Ok"/>
         <string key="tut_select_unit" value="Seleziona unità"/>
@@ -3170,11 +3191,11 @@
         <string key="tip_build_towers" value="Costruisci una torre per proteggere#il territorio vicino ad essa"/>
         <string key="tip_about_taxes" value="Unità più forti costano# più denaro ad ogni turno"/>
         <string key="tip_about_defense" value="Unità e case anche#difendono i territori vicini"/>
-        <string key="tip_hold_to_march" value="Per muovere velocemente le unità#usa 'tieni la direzione'"/>
+        <string key="tip_hold_to_march" value="Per muovere velocemente le unità#premi premuto in un punto della mappa"/>
         <string key="tip_about_unit_death" value="Se termini i soldi#le unità moriranno.#Fa attenzione!"/>
         <string key="tip_merging" value="Raggruppa le unità #per avere più forza"/>
         <string key="tip_trees" value="Gli alberi diminuiscono il reddito#quindi è meglio tagliarli"/>
-        <string key="tip_help" value="To skip rest of tutorial press 'help'"/>
+        <string key="tip_help" value="Per passare oltre il tutorial premi 'aiuto'"/>
 
         <!-- Generic Tutorial -->
         <string key="gen_greetings" value="Ciao! Questa guida ti illustra le regole del gioco."/>
@@ -3271,35 +3292,35 @@
         "/>
 
 
-        <string key="article_rules" value="There are 2 rulesets in game: Normal rules and Slay rules. Normal rules are enabled by default.
+        <string key="article_rules" value="Ci sono due regolamenti nel gioco: Modalità normale e Modalità distruzione. Le regole Normali sono abilitate di default.
         #
-        #Initially game had only slay rules. That's why help describes them instead of normal rules.
+        #Inizialmente il gioco aveva solamente la modalità distruzione. Questo è il motivo per cui vengono descritte al posto delle regole normali.
         #
-        #To change rules in skirmish you have to tap 'more' before starting new game.
+        #Per cambiare le regole in skirmish devi premere 'di più' prima di iniziare una nuova partita.
         #
-        #To change rules in campaign you have to tap '...' in top right corner of level choose menu."/>
+        #Per cambiare le regole nella Campagna devi premere '...' nell'angolo in alto a destra del menù di scelta del livello."/>
 
-        <string key="article_diplomacy_1" value="To win in diplomacy mode you have to be in friendship with everyone on map.
+        <string key="article_diplomacy_1" value="Per vincere in modalità diplomazia devi essere alleato con tutti sulla mappa.
         #
-        #To open diplomacy UI just select your country and tap little 'flag' icon.
+        #Per aprire l'interfaccia della diplomazia devi selezionare un tuo territorio e premere sull'icona della bandierina.
         #
-        #Tap on any country in list and you'll see what you can do.
+        #Tocca un qualsiasi altro territorio nella lista e vedrai cosa puoi fare..
         #
-        #'Like' and 'dislike' buttons can make relations with that country better or worse."/>
+        #I pulsanti 'Pollice su' e 'Pollice giù' possono migliorare o peggiorare le relazioni con tali avversari."/>
 
-        <string key="article_diplomacy_2" value="The idea of black mark is simple: any other country can't be friends with both of you. It's a sort of diplomatical pressure.
+        <string key="article_diplomacy_2" value="L'idea del segno nero è semplice: un avversario non può essere alleato di entrambi. E' una sorta di pressione psicologica sugli avversari.
         #
-        #Also, you won't be able to become friend with everyone easily. Last country will always refuse your friend request."/>
+        #Inoltre, non sarà facile diventare amici di tutti. L'ultimo avversario rifiuterà sempre una richiesta di alleanza."/>
 
-        <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
+        <string key="article_my_games" value="Se ti è piaciuto questo gioco, potrebbero piacerti gli altri miei giochi. Cercali sullo store."/>
 
         <!-- Statistics -->
         <string key="turns_made" value="Numero di turni"/>
         <string key="units_died" value="Unità uccise"/>
         <string key="units_produced" value="Unità prodotte"/>
         <string key="money_spent" value="Soldi spesi"/>
-        <string key="time" value="Time"/>
-        <string key="wins" value="Wins"/>
+        <string key="time" value="Tempo"/>
+        <string key="wins" value="Vittorie"/>
 
         <!-- Editor -->
         <string key="editor" value="Editor"/>
@@ -3314,22 +3335,24 @@
         <string key="exported" value="Mappe negli appunti"/>
         <string key="editor_clear" value="Cancella"/>
         <string key="no" value="No"/>
-        <string key="yes" value="Yes"/>
-        <string key="confirm_import" value="Confirm import"/>
-        <string key="filter_no" value="No filter"/>
-        <string key="filter_only_land" value="Only land"/>
-        <string key="confirm_clear_level" value="Clear map?"/>
-        <string key="confirm_randomize" value="Generate random map?"/>
-        <string key="randomize" value="Randomize"/>
-        <string key="create" value="Create"/>
+        <string key="yes" value="Sì"/>
+        <string key="confirm_import" value="Conferma importazione"/>
+        <string key="filter_no" value="Nessun filtro"/>
+        <string key="filter_only_land" value="Solo terra"/>
+        <string key="confirm_clear_level" value="Svuotare la mappa?"/>
+        <string key="confirm_randomize" value="Genera mappa casuale?"/>
+        <string key="randomize" value="Genera casualmente"/>
+        <string key="create" value="Crea"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- Settings -->
         <string key="autosave" value="Autosalvataggio"/>
         <string key="ask_to_end_turn" value="Conferma a fine turno"/>
         <string key="city_names" value="Nome città"/>
         <string key="sound" value="Audio"/>
-        <string key="limited_turns" value="Limited turns"/>
-        <string key="hold_to_march" value="Long tap to move"/>
+        <string key="limited_turns" value="Turni limitati"/>
+        <string key="hold_to_march" value="Premi a lungo per muovere"/>
         <string key="skin" value="Colore"/>
         <string key="original" value="originale"/>
         <string key="points" value="punti"/>
@@ -3338,85 +3361,86 @@
         <string key="anim_style" value="Sensibilità"/>
         <string key="more" value="di più"/>
         <string key="camera_offset" value="Camera offset"/>
-        <string key="slay_rules" value="Slay regole"/>
-        <string key="language" value="Language"/>
-        <string key="more_settings_checks" value="# #Water texture # # "/>
-        <string key="water_texture" value="Water texture "/>
-        <string key="confirm_reset" value="Clear progress?"/>
-        <string key="replays" value="Replays"/>
-        <string key="save_replay" value="Save replay"/>
+        <string key="language" value=""/>
+        <string key="slay_rules" value="Regolamento uccisioni"/>
+        <string key="more_settings_checks" value="# #texture Acqua# # "/>
+        <string key="water_texture" value="texture Acqua"/>
+        <string key="confirm_reset" value="Annullare i progressi?"/>
+        <string key="replays" value="Replay"/>
+        <string key="save_replay" value="Salva replay"/>
         <string key="replay" value="Replay"/>
-        <string key="replay_saved" value="Replay saved"/>
-        <string key="fast_construction" value="Fast construction"/>
-        <string key="music" value="Music"/>
-        <string key="left_handed" value="Left handed"/>
-        <string key="full_screen_mode" value="Full screen mode"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="replay_saved" value="Replay salvato"/>
+        <string key="fast_construction" value="Costuzione rapida"/>
+        <string key="music" value="Musica"/>
+        <string key="left_handed" value="Mano sinistra"/>
+        <string key="full_screen_mode" value="Modalità tutto schermo"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
-        <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
-        <string key="map_too_big_for_user_levels" value="Map was successfully exported, but if you want to send it as user level then please make it smaller."/>
-        <string key="available_on_ios" value="Now available on iOS"/>
+        <string key="level_24" value="Questo è il primo livello 'difficile'. Presta attenzione alle difese."/>
+        <string key="map_too_big_for_user_levels" value="La mappa è stata esportata con successo, ma se vuoi mandarla come mappa utente per favore riducine la dimensione."/>
+        <string key="available_on_ios" value="Ora disponibile su iOS"/>
 
         <!-- Gameplay -->
-        <string key="friends" value="Friends"/>
-        <string key="mutual_friends" value="Mutual"/>
-        <string key="dotations" value="Subsidies"/>
-        <string key="treaty_of_friendship" value="Treaty of friendship"/>
-        <string key="state" value="State"/>
-        <string key="duration" value="Duration"/>
-        <string key="refuse_friendship" value="Sorry, I can't accept your friendship proposition."/>
-        <string key="friend" value="friend"/>
-        <string key="enemy" value="enemy"/>
-        <string key="neutral" value="neutral"/>
-        <string key="dead" value="dead"/>
-        <string key="confirm_cancel_friendship" value="Cancel friendship?"/>
-        <string key="confirm_start_war" value="Start war?"/>
-        <string key="peace_treaty" value="Peace treaty"/>
-        <string key="pay" value="Pay"/>
-        <string key="reparations" value="Reparations"/>
-        <string key="refuse_stop_war" value="I will fight to the end!"/>
-        <string key="win_conditions" value="Conditions of victory"/>
-        <string key="diplomatic_win_conditions" value="To win diplomatically you need to be friends with everyone."/>
-        <string key="confirm_black_mark" value="Put black mark?"/>
-        <string key="black_mark_description" value="By putting a black mark on the player you forbid others to be friends with both of you at the same time. Does not work on already concluded contracts."/>
-        <string key="player_turn" value="Player turn"/>
-        <string key="fine" value="Fine"/>
-        <string key="log" value="Letters"/>
-        <string key="friendship_proposal" value="Friendship proposal"/>
-        <string key="war_declaration" value="War declaration"/>
-        <string key="stop_war" value="Stop war"/>
-        <string key="friendship_ended" value="Friendship ended"/>
-        <string key="friendship_canceled" value="Friendship canceled"/>
-        <string key="black_marked" value="Black marked"/>
-        <string key="letter_sent" value="Letter sent"/>
-        <string key="delete" value="Delete"/>
-        <string key="rename" value="Rename"/>
-        <string key="confirm_delete_slot" value="Delete slot?"/>
-        <string key="resume_button" value="'Resume' button"/>
-        <string key="filters" value="Filters"/>
-        <string key="completed" value="Completed"/>
-        <string key="historical" value="Historical"/>
-        <string key="temp_slot" value="Temporary slot"/>
-        <string key="can_skip_level" value="You can skip this level"/>
-        <string key="reason" value="Reason"/>
-        <string key="friends_with_everybody" value="friendship with all kingdoms"/>
-        <string key="hex_purchase" value="Hex purchase"/>
-        <string key="confirm_buy_hexes" value="Buy hexes?"/>
-        <string key="price" value="Price"/>
-        <string key="gift" value="Gift"/>
-        <string key="gift_received" value="Gift received"/>
-        <string key="confirm_sell_hexes" value="Sell hexes?"/>
-        <string key="confirm_skip_level" value="Skip level?"/>
+        <string key="friends" value="Alleati"/>
+        <string key="mutual_friends" value="Reciprochi"/>
+        <string key="dotations" value="Sussidi"/>
+        <string key="treaty_of_friendship" value="Trattato di alleanza"/>
+        <string key="state" value="Stato"/>
+        <string key="duration" value="Durata"/>
+        <string key="refuse_friendship" value="Mi dispiace, non posso accettare la tua richiesta di alleanza."/>
+        <string key="friend" value="alleato"/>
+        <string key="enemy" value="nemico"/>
+        <string key="neutral" value="neutrale"/>
+        <string key="dead" value="morto"/>
+        <string key="confirm_cancel_friendship" value="Cancellare alleanza?"/>
+        <string key="confirm_start_war" value="Dichiarare guerra?"/>
+        <string key="peace_treaty" value="Trattato di pace"/>
+        <string key="pay" value="Paga"/>
+        <string key="reparations" value="Riparazione"/>
+        <string key="refuse_stop_war" value="Combatterò fino alla fine!"/>
+        <string key="win_conditions" value="Condizioni di vittoria"/>
+        <string key="diplomatic_win_conditions" value="Per vincere diplomaticamente devi essere alleato con tutti."/>
+        <string key="confirm_black_mark" value="Impostare marchio nero?"/>
+        <string key="black_mark_description" value="Mettendo un marchio nero sull'avversario, proibisci agli altri di essere alleato di entrambi contemporaneamente. Non si applica sui trattati di alleanza già siglati."/>
+        <string key="player_turn" value="Turno del giocatore"/>
+        <string key="fine" value="Bene"/>
+        <string key="log" value="Lettere"/>
+        <string key="friendship_proposal" value="Richiesta di alleanza"/>
+        <string key="war_declaration" value="dichiarazione di guerra"/>
+        <string key="stop_war" value="Stop alla guerra"/>
+        <string key="friendship_ended" value="Alleanza terminata"/>
+        <string key="friendship_canceled" value="Alleanza cancellata"/>
+        <string key="black_marked" value="Impostato il marchio nero"/>
+        <string key="letter_sent" value="Lettera inviata"/>
+        <string key="delete" value="Cancella"/>
+        <string key="rename" value="Rinomina"/>
+        <string key="confirm_delete_slot" value="Cancellare lo slot?"/>
+        <string key="resume_button" value="bottone 'Riprendi'"/>
+        <string key="filters" value="Filtri"/>
+        <string key="completed" value="Completato"/>
+        <string key="historical" value="Storiche"/>
+        <string key="temp_slot" value="Slot temporaneo"/>
+        <string key="can_skip_level" value="Puoi passare al livello successivo"/>
+        <string key="reason" value="Ragione"/>
+        <string key="friends_with_everybody" value="alleanza con tutti gli avversari"/>
+        <string key="hex_purchase" value="Acquisto esagoni"/>
+        <string key="confirm_buy_hexes" value="Acquistare esagoni??"/>
+        <string key="price" value="Prezzo"/>
+        <string key="gift" value="Regalo"/>
+        <string key="gift_received" value="Regalo ricevuto"/>
+        <string key="confirm_sell_hexes" value="Vendere esagoni?"/>
+        <string key="confirm_skip_level" value="Passare al livello successivo?"/>
         <string key="ok" value="Ok"/>
-        <string key="money" value="Money"/>
-        <string key="quantity" value="Quantity"/>
-        <string key="income" value="Income"/>
-        <string key="by_name" value="By name"/>
-        <string key="hex_trade" value="Hex trade"/>
-        <string key="hex_sale" value="Hex sale"/>
-        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="money" value="Monete"/>
+        <string key="quantity" value="Quantità"/>
+        <string key="income" value="Entrate"/>
+        <string key="by_name" value="Per nome"/>
+        <string key="hex_trade" value="Commercio di esagoni"/>
+        <string key="hex_sale" value="Vendita di esagoni"/>
+        <string key="buyer_not_enough_money" value="L'acquirente non ha abbastanza monete"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
     </language>
 
 
@@ -3474,7 +3498,7 @@
        #Reddit: /r/yiotro_games
        #E-mail: yiotro93@gmail.com #Creado por yiotro"/>
         <string key="reset_campaign_data" value="Borrar datos"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu -->
@@ -3531,6 +3555,8 @@
         <string key="confirm_randomize" value="Generate random map?"/>
         <string key="randomize" value="Randomize"/>
         <string key="create" value="Create"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Ok"/>
@@ -3792,7 +3818,7 @@
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
         <string key="full_screen_mode" value="Full screen mode"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -3857,7 +3883,8 @@
         <string key="hex_trade" value="Hex trade"/>
         <string key="hex_sale" value="Hex sale"/>
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
     </language>
 
 
@@ -3917,7 +3944,7 @@
         #Vytvořil yiotro
         "/>
         <string key="reset_campaign_data" value="Resetovať údaje"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -4204,6 +4231,8 @@
         <string key="confirm_randomize" value="potvrď_náhodne"/>
         <string key="randomize" value="náhodne"/>
         <string key="create" value="Create"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- Settings -->
         <string key="autosave" value="Auto ukladanie"/>
@@ -4233,7 +4262,7 @@
         <string key="music" value="hudba"/>
         <string key="left_handed" value="ľavoruký"/>
         <string key="full_screen_mode" value="Full screen mode"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -4298,7 +4327,8 @@
         <string key="hex_trade" value="Hex trade"/>
         <string key="hex_sale" value="Hex sale"/>
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
     </language>
 
 
@@ -4373,7 +4403,7 @@
         #yiotro出品
 		"/>
         <string key="reset_campaign_data" value="重置数据"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -4664,6 +4694,8 @@
         <string key="confirm_randomize" value="Generate random map?"/>
         <string key="randomize" value="Randomize"/>
         <string key="create" value="Create"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- Settings -->
         <string key="autosave" value="自动保存"/>
@@ -4693,7 +4725,7 @@
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
         <string key="full_screen_mode" value="Full screen mode"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
         <string key="level_24" value="这是第一个'困难' 关卡。 注意防守！"/>
@@ -4758,7 +4790,8 @@
         <string key="hex_trade" value="Hex trade"/>
         <string key="hex_sale" value="Hex sale"/>
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
     </language>
 
 
@@ -4801,14 +4834,14 @@
         <string key="game_saved" value="Oyun kaydedildi"/>
         <string key="restart_app" value="Uygulamayı yeniden başlat"/>
         <string key="city_name_gen_masks" value="kama kakao kamao kakkao kakka amao amaka kamak kakaka kaakao akaka amakao"/> <!-- Same as english -->
-        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/>
+        <string key="city_name_gen_groups" value="k: r t p s d k b n m #m: rb kr tr br bn ko rt #a: o a ai e oi o e #o: vo va msk sk nsk -city rg ro"/> <!-- Same as english -->
 
         <!-- Info -->
         <string key="info_back" value="Geri Dön"/>
         <string key="info_array" value="Bu oyun minimalistik tarzda
         #bir strateji oyunudur.
-        #Bedavadır. Reklam içermez ve bağış almaz.
-        #Eğer bu oyunu ilk açışınsa ya da oyunda yeniysen
+        #Bedavadır. Reklam içermez ve bağış istemez.
+        #Eğer oyunu ilk kez açtıysan ya da oyunda yeniysen
         #rehbere veya 'yardım'a göz at.
         #
         #Bu oyun Sean O'Connor'ın
@@ -4824,7 +4857,7 @@
         #Yiotro tarafından yapıldı.
 		"/>
         <string key="reset_campaign_data" value="Verileri sıfırla"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Özel Teşekkürler"/>
 
         <!-- Choose game mode menu-->
@@ -4836,7 +4869,7 @@
 
         <!-- User levels -->
         <string key="add_my_map" value="Haritamı Ekle"/>
-        <string key="how_add_my_map" value="Buraya nasıl harita ekleyenir?: #1. Editörde haritanı yap. #2. Haritan ilgi çekici ve geçilebir olsun. #3. 'Dışarı aktar'a bas. #4a. pastebin.com'da paylaş ve ve linkini yiotro93@gmail.com'a gönder. #4b. Ya da /r/yiotro_games subreddit'inde paylaş. # #Ayrıca haritan çok zorsa, bölümün nasıl geçildiğini gösteren bir video paylaşman iyi olur."/>
+        <string key="how_add_my_map" value="Buraya nasıl harita ekleyebilirim?: #1. Editörde haritanı yap. #2. Haritan ilgi çekici ve geçilebilir olsun. #3. 'Dışarı aktar'a bas. #4a. pastebin.com'da paylaş ve ve linkini yiotro93@gmail.com'a gönder. #4b. Ya da /r/yiotro_games subreddit'inde paylaş. # #Ayrıca haritan çok zorsa, bölümün nasıl geçildiğini gösteren bir video paylaşman iyi olur."/>
 
         <!-- Skirmish menu -->
         <string key="game_settings_main_menu" value="Ana menü"/>
@@ -4848,7 +4881,7 @@
         <string key="small" value="küçük"/>
         <string key="medium" value="orta"/>
         <string key="big" value="büyük"/>
-        <string key="huge" value="huge"/>
+        <string key="huge" value="devasa"/>
         <string key="ai_only" value="sadece yapay zeka"/>
         <string key="single_player" value="tek oyunculu"/>
         <string key="multiplayer" value="çok oyunculu"/>
@@ -4975,7 +5008,7 @@
         <string key="help_about_money" value="Ekonomi"/>
         <string key="help_about_tactics" value="Taktikler"/>
         <string key="help_about_rules" value="Kurallar"/>
-        <string key="my_games" value="My games"/>
+        <string key="my_games" value="Diğer Oyunlarım"/>
 
         <string key="help_units_article" value="4 tane birlik türü vardır.
         #Tek farkları güçleridir.
@@ -5081,11 +5114,11 @@
         #
         #'Beğen' ve 'beğenme' tuşları ülkeyle ilişkilerini iyileştirir ya da kötüleştirir.."/>
 
-        <string key="article_diplomacy_2" value="Kara leke koymanın mantığı basittir: Herhangi başka bir ülke sizinle arkadaş olamaz. Yani kara liste bir nevi diplomasik bir baskıdır.
+        <string key="article_diplomacy_2" value="Kara leke koymanın mantığı basittir: Herhangi bir ülke sizinle arkadaş olamaz. Yani kara liste bir nevi diplomasik bir baskıdır.
         #
         #Ayrıca herkesle kolay arkadaş olamazsın. Son ülke her zaman arkadaşlık isteğini reddedecektir."/>
 
-        <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
+        <string key="article_my_games" value="Eğer bu oyunumu beğendiyseniz diğer oyunlarımı da beğenebilirsiniz:"/>
 
         <!-- Statistics -->
         <string key="turns_made" value="Yapılan hamle sayısı"/>
@@ -5093,14 +5126,14 @@
         <string key="units_produced" value="Üretilen birlik sayısı"/>
         <string key="money_spent" value="Harcanan para"/>
         <string key="time" value="Süre"/>
-        <string key="wins" value="Wins"/>
+        <string key="wins" value="Zafer sayısı"/>
 
         <!-- Editor -->
         <string key="editor" value="Düzenleyici"/>
-        <string key="slot" value="Kayıt Yeri"/>
-        <string key="slots" value="Kayıt yerleri"/>
-        <string key="import" value="İçeri aktar"/>
-        <string key="export" value="Dışarı aktar"/>
+        <string key="slot" value="Kayıt Dosyası"/>
+        <string key="slots" value="Kayıt dosyaları"/>
+        <string key="import" value="Yapıştır"/>
+        <string key="export" value="Kopyala"/>
         <string key="empty" value="boş"/>
         <string key="play" value="Oyna"/>
         <string key="edit" value="Düzenle"/>
@@ -5109,13 +5142,15 @@
         <string key="editor_clear" value="Temizle"/>
         <string key="no" value="Hayır"/>
         <string key="yes" value="Evet"/>
-        <string key="confirm_import" value="İçeri aktar?"/>
+        <string key="confirm_import" value="Yapıştırmak istediğine emin misin?"/>
         <string key="filter_no" value="Filtre yok"/>
         <string key="filter_only_land" value="Sadece kara"/>
         <string key="confirm_clear_level" value="Haritayı temizle?"/>
         <string key="confirm_randomize" value="Rastgele harita oluştur?"/>
         <string key="randomize" value="Rastgele"/>
-        <string key="create" value="Create"/>
+        <string key="create" value="Oluştur"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- Settings -->
         <string key="autosave" value="Otomatik Kayıt"/>
@@ -5126,7 +5161,7 @@
         <string key="hold_to_march" value="Toplu ilerleme için uzun bas"/>
         <string key="skin" value="Kaplama"/>
         <string key="original" value="orijinal"/>
-        <string key="points" value="noktalar"/>
+        <string key="points" value="nokta"/>
         <string key="grid" value="ızgara"/>
         <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
         <string key="anim_style" value="Hassaslık"/>
@@ -5137,24 +5172,24 @@
         <string key="more_settings_checks" value="# #Su grafiği # # "/>
         <string key="water_texture" value="Su grafiği "/>
         <string key="confirm_reset" value="İlerlemeyi sıfırla?"/>
-        <string key="replays" value="Kayıtlar"/>
-        <string key="save_replay" value="Video kaydet"/>
+        <string key="replays" value="Tekrarlar"/>
+        <string key="save_replay" value="Tekrarı kaydet"/>
         <string key="replay" value="Kayıt"/>
         <string key="replay_saved" value="Video kaydedildi"/>
         <string key="fast_construction" value="Hızlı inşaat"/>
         <string key="music" value="Müzik"/>
-        <string key="left_handed" value="Sol el modu"/>
-        <string key="full_screen_mode" value="Full screen mode"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="left_handed" value="Solak modu"/>
+        <string key="full_screen_mode" value="Tam ekran modu"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Bu ilk 'zor' seviye. Savunmaya daha fazla önem ver."/>
-        <string key="map_too_big_for_user_levels" value="Map was successfully exported, but if you want to send it as user level then please make it smaller."/>
-        <string key="available_on_ios" value="Now available on iOS"/>
+        <string key="map_too_big_for_user_levels" value="Harita başarıyla kopyalandı. Eğer haritanı kullanıcı bölümlerine göndereceksen lütfen haritanı daha küçük yap."/>
+        <string key="available_on_ios" value="Artık iOS'ta da var"/>
 
         <!-- Gameplay -->
         <string key="friends" value="Dostlar"/>
-        <string key="mutual_friends" value="Ortak"/>
+        <string key="mutual_friends" value="Ortak dostlar"/>
         <string key="dotations" value="Para desteği"/>
         <string key="treaty_of_friendship" value="Arkadaşlık teklifi"/>
         <string key="state" value="Devlet"/>
@@ -5171,10 +5206,10 @@
         <string key="reparations" value="Savaş tazminatları"/>
         <string key="refuse_stop_war" value="Sonuna kadar savaşacağım!"/>
         <string key="win_conditions" value="Zaferin şartları"/>
-        <string key="diplomatic_win_conditions" value="Diplomatik olarak kazanmak için herkesle arkadaş olmalısın."/>
+        <string key="diplomatic_win_conditions" value="Diplomatik yoldan kazanmak için herkesle arkadaş olmalısın."/>
         <string key="confirm_black_mark" value="Kara leke koy?"/>
-        <string key="black_mark_description" value="Devlete kara leke koyarak sizinle arkadaş olmasını engellersiniz. Zaten yapılmış antlaşmalarda kullanılamaz.."/>
-        <string key="player_turn" value="Oyuncunun sırası"/>
+        <string key="black_mark_description" value="Devlete kara leke koyarak sizinle arkadaş olmasını engellersiniz. Önceden yapılan antlaşmalarda kullanılamaz."/>
+        <string key="player_turn" value="Şu oyuncunun sırası"/>
         <string key="fine" value="Ceza"/>
         <string key="log" value="Uyarı"/>
         <string key="friendship_proposal" value="Arkadaşlık isteği"/>
@@ -5184,33 +5219,34 @@
         <string key="friendship_canceled" value="Dostluk iptal edildi"/>
         <string key="black_marked" value="Kara lekeli"/>
         <string key="letter_sent" value="İstek gönderildi"/>
-        <string key="delete" value="Delete"/>
-        <string key="rename" value="Rename"/>
-        <string key="confirm_delete_slot" value="Delete slot?"/>
-        <string key="resume_button" value="'Resume' button"/>
-        <string key="filters" value="Filters"/>
-        <string key="completed" value="Completed"/>
-        <string key="historical" value="Historical"/>
-        <string key="temp_slot" value="Temporary slot"/>
-        <string key="can_skip_level" value="You can skip this level"/>
-        <string key="reason" value="Reason"/>
-        <string key="friends_with_everybody" value="friendship with all kingdoms"/>
-        <string key="hex_purchase" value="Hex purchase"/>
-        <string key="confirm_buy_hexes" value="Buy hexes?"/>
-        <string key="price" value="Price"/>
-        <string key="gift" value="Gift"/>
-        <string key="gift_received" value="Gift received"/>
-        <string key="confirm_sell_hexes" value="Sell hexes?"/>
-        <string key="confirm_skip_level" value="Skip level?"/>
-        <string key="ok" value="Ok"/>
-        <string key="money" value="Money"/>
-        <string key="quantity" value="Quantity"/>
-        <string key="income" value="Income"/>
-        <string key="by_name" value="By name"/>
-        <string key="hex_trade" value="Hex trade"/>
-        <string key="hex_sale" value="Hex sale"/>
-        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="delete" value="Sil"/>
+        <string key="rename" value="Yeniden adlandır"/>
+        <string key="confirm_delete_slot" value="Kaydı silmek istediğine emin misin?"/>
+        <string key="resume_button" value="'Devam et' butonu"/>
+        <string key="filters" value="Filtreler"/>
+        <string key="completed" value="Tamamlanmış"/>
+        <string key="historical" value="Tarihi"/>
+        <string key="temp_slot" value="Geçici kayıt dosyası"/>
+        <string key="can_skip_level" value="Bu seviyeyi atlayabilirsin"/>
+        <string key="reason" value="Sebep"/>
+        <string key="friends_with_everybody" value="Bütün ülkelerle arkadaşlık"/>
+        <string key="hex_purchase" value="Hücre satın al"/>
+        <string key="confirm_buy_hexes" value="Satın alacak mısın?"/>
+        <string key="price" value="Fiyat"/>
+        <string key="gift" value="Hediye"/>
+        <string key="gift_received" value="Hediye alındı"/>
+        <string key="confirm_sell_hexes" value="Satacak mısın?"/>
+        <string key="confirm_skip_level" value="Atlayacak mısın?"/>
+        <string key="ok" value="Evet"/>
+        <string key="money" value="Para"/>
+        <string key="quantity" value="Miktar"/>
+        <string key="income" value="Gelir"/>
+        <string key="by_name" value="Adıyla ara"/>
+        <string key="hex_trade" value="Hücre ticareti"/>
+        <string key="hex_sale" value="Hücre sat"/>
+        <string key="buyer_not_enough_money" value="Alıcının yeteri kadar parası yok."/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
     </language>
 
 
@@ -5282,7 +5318,7 @@
         #Направена от yiotro
 		"/>
         <string key="reset_campaign_data" value="Рестартирай всички данни"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -5339,6 +5375,8 @@
         <string key="confirm_randomize" value="Generate random map?"/>
         <string key="randomize" value="Randomize"/>
         <string key="create" value="Create"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- End game menu -->
         <string key="end_game_ok" value="Ок"/>
@@ -5603,7 +5641,7 @@
         <string key="music" value="Music"/>
         <string key="left_handed" value="Left handed"/>
         <string key="full_screen_mode" value="Full screen mode"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -5668,7 +5706,8 @@
         <string key="hex_trade" value="Hex trade"/>
         <string key="hex_sale" value="Hex sale"/>
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
 
     </language>
 
@@ -5743,7 +5782,7 @@
         #Feito por yiotro
         "/>
         <string key="reset_campaign_data" value="Resetar progresso"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -6003,6 +6042,8 @@
         <string key="confirm_randomize" value="Gerar mapa aleatório?"/>
         <string key="randomize" value="Randomizar"/>
         <string key="create" value="Create"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- Settings -->
         <string key="autosave" value="Salvar automaticamente"/>
@@ -6032,7 +6073,7 @@
         <string key="music" value="Música"/>
         <string key="left_handed" value="Mão esquerda"/>
         <string key="full_screen_mode" value="Full screen mode"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Esse é o primeiro nível 'difícil'. Preste mais atenção na defesa."/>
@@ -6097,7 +6138,8 @@
         <string key="hex_trade" value="Hex trade"/>
         <string key="hex_sale" value="Hex sale"/>
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
 
 
     </language>
@@ -6171,7 +6213,7 @@
         #Gemaakt door yiotro
         "/>
         <string key="reset_campaign_data" value="Gegevens initialiseren"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Speciale dank"/>
 
         <!-- Choose game mode menu-->
@@ -6431,6 +6473,8 @@
         <string key="confirm_randomize" value="Willekeurige kaart aanmaken?"/>
         <string key="randomize" value="Randomiseren"/>
         <string key="create" value="Create"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- Settings -->
         <string key="autosave" value="Automatisch opslaan"/>
@@ -6460,7 +6504,7 @@
         <string key="music" value="Muziek"/>
         <string key="left_handed" value="Linkshandig"/>
         <string key="full_screen_mode" value="Full screen mode"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Dit is het eerste level in categorie 'moeilijk'. Let meer op verdediging."/>
@@ -6525,7 +6569,8 @@
         <string key="hex_trade" value="Hex trade"/>
         <string key="hex_sale" value="Hex sale"/>
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
 
 
     </language>
@@ -6610,7 +6655,7 @@
         #Készítette: yiotro
         "/>
         <string key="reset_campaign_data" value="Kampány Újrakezdése"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Special thanks"/>
 
         <!-- Choose game mode menu-->
@@ -6905,6 +6950,8 @@
         <string key="confirm_randomize" value="Legenerálsz egy véletlenszerű térképet?"/>
         <string key="randomize" value="Véletlenszerűsítés"/>
         <string key="create" value="Create"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- Settings -->
         <string key="autosave" value="Automatikus Mentés"/>
@@ -6934,7 +6981,7 @@
         <string key="music" value="Zene"/>
         <string key="left_handed" value="Bal kezes"/>
         <string key="full_screen_mode" value="Full screen mode"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Ez az első nehéz szint, fordíts nagyobb figyelmet a védelemre."/>
@@ -6999,7 +7046,8 @@
         <string key="hex_trade" value="Hex trade"/>
         <string key="hex_sale" value="Hex sale"/>
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
 
 
     </language>
@@ -7082,7 +7130,7 @@
         #Гульню зрабіў yiotro
 		"/>
         <string key="reset_campaign_data" value="Глядзець даныя"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Асоба дзякую"/>
 
         <!-- Choose game mode menu-->
@@ -7106,16 +7154,16 @@
         <string key="small" value="маленькая"/>
         <string key="medium" value="сярэдняя"/>
         <string key="big" value="вялікая"/>
-        <string key="huge" value="huge"/>
+        <string key="huge" value="велізарная"/>
         <string key="ai_only" value="бітва робатаў"/>
         <string key="single_player" value="адзін гулец"/>
         <string key="multiplayer" value="мультыплэер"/>
         <string key="colors" value="колераў"/>
         <string key="color" value="колеры"/>
         <string key="difficulty" value="Цяжкасць"/>
-        <string key="easy" value="лёгкі"/>
-        <string key="normal" value="звычайны"/>
-        <string key="hard" value="цяжкі"/>
+        <string key="easy" value="лёгкая"/>
+        <string key="normal" value="звычайная"/>
+        <string key="hard" value="цяжкая"/>
         <string key="expert" value="эксперт"/>
         <string key="balancer" value="балансіроўшчык"/>
         <string key="player_color" value="Колер гульца"/>
@@ -7333,6 +7381,8 @@
         <string key="confirm_randomize" value="Сгенерыраваць выпадковую карту?"/>
         <string key="randomize" value="Выпадковая карта"/>
         <string key="create" value="Create"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- Settings -->
         <string key="autosave" value="Аўтазахаванне"/>
@@ -7362,7 +7412,7 @@
         <string key="music" value="Музыка"/>
         <string key="left_handed" value="Леварукі рэжым"/>
         <string key="full_screen_mode" value="Паўнаэкранны рэжым"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Гэта першы 'цяжкі' узровень. Удзяляй больш увагі абароне."/>
@@ -7424,10 +7474,11 @@
         <string key="quantity" value="Колькасць"/>
         <string key="income" value="Даход"/>
         <string key="by_name" value="Па імені"/>
-        <string key="hex_trade" value="Hex trade"/>
-        <string key="hex_sale" value="Hex sale"/>
-        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="hex_trade" value="Гандаль клеткамі"/>
+        <string key="hex_sale" value="Продаж клетак"/>
+        <string key="buyer_not_enough_money" value="У пакупніка не хапае грошай"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
     </language>
 
 
@@ -7490,7 +7541,7 @@
         #Dibuat oleh yiotro
         "/>
         <string key="reset_campaign_data" value="Atur ulang data"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Terima kasih"/>
 
         <!-- Choose game mode menu-->
@@ -7751,6 +7802,8 @@
         <string key="confirm_randomize" value="Buat peta secara acak?"/>
         <string key="randomize" value="Acak"/>
         <string key="create" value="Create"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- Settings -->
         <string key="autosave" value="Autosimpan"/>
@@ -7780,7 +7833,7 @@
         <string key="music" value="Musik"/>
         <string key="left_handed" value="Kidal"/>
         <string key="full_screen_mode" value="Full screen mode"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Ini level tingkat 'hard' pertama. Beri perhatian lebih pada pertahanan."/>
@@ -7845,7 +7898,8 @@
         <string key="hex_trade" value="Hex trade"/>
         <string key="hex_sale" value="Hex sale"/>
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
 
 
 
@@ -7909,7 +7963,7 @@
         #Made by yiotro
         "/>
         <string key="reset_campaign_data" value="Επαναφορά δεδομένων"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Ιδιαίτερες ευχαριστίες"/>
 
         <!-- Choose game mode menu-->
@@ -8170,6 +8224,8 @@
         <string key="confirm_randomize" value="Δημιουργία τυχαίου χάρτη;"/>
         <string key="randomize" value="Τυχαιοποίηση"/>
         <string key="create" value="Create"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- Settings -->
         <string key="autosave" value="Αυτόματη αποθήκευση"/>
@@ -8199,7 +8255,7 @@
         <string key="music" value="Μουσική"/>
         <string key="left_handed" value="Αριστερόχειρας"/>
         <string key="full_screen_mode" value="Full screen mode"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Αυτός είναι το πρώτο 'δύσκολο' επίπεδο. Δώσε μεγαλύτερη προσοχή στην άμυνα."/>
@@ -8264,7 +8320,8 @@
         <string key="hex_trade" value="Hex trade"/>
         <string key="hex_sale" value="Hex sale"/>
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
 
 
 
@@ -8337,7 +8394,7 @@
         #Laget av yiotro
         "/>
         <string key="reset_campaign_data" value="Tilbakestill data"/>
-        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters"/> <!-- Same as english -->
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
         <string key="special_thanks_title" value="Spesiell Takk"/>
 
         <!-- Choose game mode menu-->
@@ -8598,6 +8655,8 @@
         <string key="confirm_randomize" value="Generer tilfeldig kart?"/>
         <string key="randomize" value="Tilfeldig"/>
         <string key="create" value="Create"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
 
         <!-- Settings -->
         <string key="autosave" value="Automatisk lagring"/>
@@ -8627,13 +8686,12 @@
         <string key="music" value="Musikk"/>
         <string key="left_handed" value="Venstrehånds modus"/>
         <string key="full_screen_mode" value="Full screen mode"/>
-        <string key="skin_bubbles" value="Bubbles"/>
+        <string key="system_keyboard" value="System keyboard"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Dette er det første 'harde' -nivået. Vær mer oppmerksom på forsvaret."/>
         <string key="map_too_big_for_user_levels" value="Map was successfully exported, but if you want to send it as user level then please make it smaller."/>
         <string key="available_on_ios" value="Now available on iOS"/>
-        <string key="bleentoro_release" value="Hei.#Jeg har laget et nytt spill. Det heter 'Bleentoro'. Du kan finne den i App Store.#Jeg håper du vil like det :)"/>
 
         <!-- Gameplay -->
         <string key="friends" value="venner"/>
@@ -8693,13 +8751,444 @@
         <string key="hex_trade" value="Hex trade"/>
         <string key="hex_sale" value="Hex sale"/>
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
-        <string key="loading" value="Loading"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
 
 
 
     </language>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <language name="sr_RS" title="Serbian" author="Nikola Radovanovic">
+        <!-- All characters -->
+        <string key="lang_characters" value="абвгдђежзијклљмнњопрстћуфхцчџшАБВГДЂЕЖЗИЈКЛЉМНЊОПРСТЋУФХЦЧЏШ"/>
+
+        <!-- Main menu -->
+        <string key="main_menu_info" value="Инфо"/>
+        <string key="main_menu_exit" value="Излаз"/>
+        <string key="main_menu_something" value="Бели текст ни о чему"/>
+
+        <!-- Random stuff -->
+        <string key="menu_level" value="Ниво"/>
+        <string key="menu_reset" value="Поништи све"/>
+        <string key="game_saved" value="Игра је сачувана"/>
+        <string key="restart_app" value="Поново покрени"/>
+        <string key="city_name_gen_masks" value="mmk kakao kamao kako amao amako kamao kakako akako amakao"/>
+        <string key="city_name_gen_groups" value="k: р т п с д к б н м #m: бре ео тр бр го ди ча ја је но #a: а е и о у #o: га ва ац град чак во ово вац нац"/>
+
+        <!-- Info -->
+        <string key="info_back" value="Назад"/>
+        <string key="info_array" value="Ово је једноставна стратегијска игра у минималистичком стилу.
+        #Потпуно је бесплатна, без реклама и захтева за донацијом.
+        #Ако први пут играте ову игру погледајте туторијал или потражите опцију 'помоћ' у менију.
+        #
+        #Игра је инспирисана игром Slay од Sean O'Connor.
+        #
+        #
+        #
+        #
+        #
+        #
+        #Reddit: /r/yiotro_games
+        #E-mail: yiotro93@gmail.com
+        #Made by yiotro
+        "/>
+        <string key="reset_campaign_data" value="Поништи податке"/>
+        <string key="special_thanks" value="#Skin: ShroomArts #Music: Derek Bryant #Bubbles: Alexandr Moiseev #Skin: Jannes Peters #Fix PL: Aleksander Zarzynski #Fix FR: Sebastien Duperrier #Fix IT: Ivano Rocco"/> <!-- Same as english -->
+        <string key="special_thanks_title" value="Посебна захвалност"/>
+
+        <!-- Choose game mode menu-->
+        <string key="choose_game_mode_skirmish" value="Насумична битка"/>
+        <string key="choose_game_mode_tutorial" value="Туторијал"/>
+        <string key="choose_game_mode_campaign" value="Кампања"/>
+        <string key="choose_game_mode_load" value="Учитај игру"/>
+        <string key="user_levels" value="Кориснички нивои"/>
+
+        <!-- User levels -->
+        <string key="add_my_map" value="Додај моју мапу"/>
+        <string key="how_add_my_map" value="Ево како да се ваша мапа нађе овде: #1. Направите мапу у уређивачу. #2. Обратите пажњу да она буде занимљива и да може да се пређе. #3. Притисните дугме 'Извоз', 'код' мапе ће бити запамћен у привременој меморији. #4a. Посетите сајт pastebin.com и тамо поставите код мапе и пошаљите везу на адресу ел. поште yiotro93@gmail.com #4b. Или поставите коментар са везом на reddit каналу /r/yiotro_games # #Такође, ако је ваша мапа много тешка било би добро да приложите и видео који демонстрира како може да се пређе."/>
+
+
+        <!-- Skirmish menu -->
+        <string key="game_settings_main_menu" value="Главни мени"/>
+        <string key="game_settings_tutorial" value="Туторијал"/>
+        <string key="game_settings_start" value="Покрени"/>
+        <string key="map_size" value="Величина мапе"/>
+        <string key="color_number" value="Боје"/>
+        <string key="player_number" value="Играчи"/>
+        <string key="small" value="мала"/>
+        <string key="medium" value="средња"/>
+        <string key="big" value="велика"/>
+        <string key="huge" value="огромна"/>
+        <string key="ai_only" value="само компјутер"/>
+        <string key="single_player" value="за једног играча"/>
+        <string key="multiplayer" value="за више играча"/>
+        <string key="colors" value="боја"/>
+        <string key="color" value="боје"/>
+        <string key="difficulty" value="Тежина"/>
+        <string key="easy" value="лако"/>
+        <string key="normal" value="нормално"/>
+        <string key="hard" value="тешко"/>
+        <string key="expert" value="стручњак"/>
+        <string key="balancer" value="тактичар"/>
+        <string key="player_color" value="Боја играча"/>
+        <string key="fog_of_war" value="Магла на бојишту"/>
+        <string key="diplomacy" value="Дипломатија"/>
+
+        <!-- In game menu -->
+        <string key="in_game_menu_resume" value="Наставак"/>
+        <string key="in_game_menu_save" value="Сачувај игру"/>
+        <string key="in_game_menu_surrender" value="Предаја"/>
+        <string key="in_game_menu_main_menu" value="Главни мени"/>
+        <string key="in_game_menu_restart" value="Поново покрени"/>
+        <string key="confirm_restart" value="Да ли сте сигурни?"/>
+        <string key="cancel" value="Одустани"/>
+        <string key="confirm_end_turn" value="Крај потеза?"/>
+        <string key="yes" value="Да"/>
+        <string key="confirm_import" value="Потврди увоз"/>
+        <string key="filter_no" value="Без филтера"/>
+        <string key="filter_only_land" value="Само земља"/>
+
+        <!-- End game menu -->
+        <string key="end_game_ok" value="У реду"/>
+        <string key="end_game_okay" value="Да ли је у реду?"/>
+        <string key="player" value="играч"/>
+        <string key="ai" value="компјутер"/>
+        <string key="won" value="је победио"/>
+        <string key="statistics" value="Статистика"/>
+        <string key="next" value="Следећи"/>
+        <string key="level_complete" value="Ниво је завршен"/>
+        <string key="win_game" value="Победа"/>
+        <string key="win_or_continue" value="Обајви победу#или настави борбу до истребљења?"/>
+        <string key="continue" value="Наставак"/>
+
+        <!-- Colors -->
+        <string key="green_player" value="Зелени"/>
+        <string key="red_player" value="Црвени"/>
+        <string key="magenta_player" value="Розе"/>
+        <string key="cyan_player" value="Плави"/>
+        <string key="yellow_player" value="Жути"/>
+        <string key="gray_player" value="Сиви"/>
+        <string key="green_ai" value="Зелени"/>
+        <string key="red_ai" value="Црвени"/>
+        <string key="magenta_ai" value="Розе"/>
+        <string key="cyan_ai" value="Плави"/>
+        <string key="yellow_ai" value="Жути"/>
+        <string key="gray_ai" value="Сиви"/>
+        <string key="green_menu" value="Зелена"/>
+        <string key="red_menu" value="Црвена"/>
+        <string key="magenta_menu" value="Розе"/>
+        <string key="cyan_menu" value="Плава"/>
+        <string key="yellow_menu" value="Жута"/>
+        <string key="gray_menu" value="Сива"/>
+
+        <!-- Tutorial -->
+        <string key="normal_rules" value="Основна правила"/>
+        <string key="how_to_play" value="Како играти?"/>
+        <string key="tutorial_ok" value="У реду"/>
+        <string key="tut_select_unit" value="Изабери јединицу"/>
+        <string key="tut_tap_on_hex" value="Кликните на поље"/>
+        <string key="tut_press_button" value="Притисните дугме два пута"/>
+        <string key="tut_build_tower" value="Изградите кулу"/>
+        <string key="tut_again" value="Поново"/>
+        <string key="tut_build_spearman" value="Направите копљоношу"/>
+        <string key="tut_tap_to_undo" value="Кликните на 'опозив'"/>
+        <string key="tut_tap_to_end_turn" value="Кликните за крај потеза"/>
+        <string key="tut_hold_hex" value="Кликните и задржите"/>
+        <string key="tut_merge_units" value="Спојите јединице"/>
+        <string key="tut_good_luck" value="Срећно!"/>
+
+        <!-- Tutorial tips -->
+        <string key="tip_capture_with_units" value="Нападните са вашим јединицама#да заузмете територије"/>
+        <string key="tip_about_money" value="Што вам је већа територија#биће вам већа и зарада"/>
+        <string key="tip_build_towers" value="Изградите кулу да заштитите#околна поља"/>
+        <string key="tip_about_taxes" value="Јаче јединице троше#више новца"/>
+        <string key="tip_about_defense" value="Јединице и куће такође#бране околна поља"/>
+        <string key="tip_hold_to_march" value="За брзо померање армије#користите дуги клик"/>
+        <string key="tip_about_unit_death" value="Ако понестане новца#све јединице ће умрети.#Тако да будите опрезни"/>
+        <string key="tip_merging" value="Спојите јединице да добијете#снажнију јединицу"/>
+        <string key="tip_trees" value="Дрвеће смањује приход#Тако да је боље да га исечете"/>
+        <string key="tip_help" value="Више информација можете пронаћи кликом на 'Помоћ'"/>
+
+        <!-- Generic Tutorial -->
+        <string key="gen_greetings" value="Здраво. Овај туторијал ће ти објаснити правила игре."/>
+        <string key="gen_select_province" value="Кликните на ваш град да га изаберете."/>
+        <string key="gen_select_unit" value="Одлично. Имате више јединица, кликните на неку од њих."/>
+        <string key="gen_move_unit" value="Свака јединица се помера једном по потезу. Сад заузмите неутрално поље поред изабране јединице тако што кликнете на њега."/>
+        <string key="gen_income" value="Заузимањем новог поља повећава се приход вашег града. Више поља значи већи приход."/>
+        <string key="gen_lets_build_farm" value="Хајде да направимо фарму и још више повећамо приход."/>
+        <string key="gen_press_button_twice" value="Притисните дугме два пута"/>
+        <string key="gen_build_farm" value="Фарме могу да се праве само на пољима која се граниче са градом или другим фармама."/>
+        <string key="gen_about_farms" value="Свака фарма доноси 3 новчића по потезу. Свака нова фарма кошта за 2 новчића више од претходне."/>
+        <string key="gen_lets_build_peasant" value="Хајде да направимо нову јединицу и заузмемо неутрално поље."/>
+        <string key="gen_press_button" value="Притисните дугме на дну"/>
+        <string key="gen_build_peasant" value="Поставите јединицу на поље близу границе."/>
+        <string key="gen_capture_peasant" value="Сад заузмите неутрално поље тако што изаберете јединицу и кликнете на поље где желите да идете."/>
+        <string key="gen_capture_hex" value="Заузмите неутрално поље"/>
+        <string key="gen_lets_build_tower" value="Морате да браните свој посед. Куле су добре за то."/>
+        <string key="gen_build_tower" value="Изградите кулу кликом на истакнуто поље."/>
+        <string key="gen_about_towers" value="Куле штите околна поља од сељака и копљоноша ако су ова поља под вашом контролом."/>
+        <string key="gen_lets_build_spearman" value="Копљоноша је јачи од сељака. Хајде да направимо једног."/>
+        <string key="gen_build_spearman" value="Кликните на поље да направите копљоношу."/>
+        <string key="gen_units_consume_money" value="Јединице троше новац за живот. Јачим јединицама треба више новца."/>
+        <string key="gen_undo_spearman" value="Сад је ваш приход -1. Ово је лоше, хајде да вратимо потез."/>
+        <string key="gen_why_units_die" value="Све јединице умиру ако град остане без новца. Тако да водите рачуна о буџету града."/>
+        <string key="gen_about_trees_one" value="Дрвеће је исто проблем. Поља са дрвећем не доносе приход."/>
+        <string key="gen_about_trees_two" value="Исеците дрвеће што је пре могуће да не прерасте у шуму."/>
+        <string key="gen_end_turn" value="За крај потеза притисните дугме у доњем десном углу."/>
+        <string key="gen_choose_to_merge" value="Такође можете да спојите јединице. Изаберите доњег сељака."/>
+        <string key="gen_merge_units" value="Док је он изабран кликните на другог сељака да их спојите."/>
+        <string key="gen_long_tap" value="Ако имате превише јединица можете дугим кликом да их све заједно померате."/>
+        <string key="gen_several_provinces" value="Можете имати и више градова са незавинсним буџетом."/>
+
+        <!-- Tutorial help -->
+        <string key="help" value="Помоћ"/>
+        <string key="help_about_units" value="Јединице"/>
+        <string key="help_about_trees" value="Дрвеће"/>
+        <string key="help_about_towers" value="Куле"/>
+        <string key="help_about_money" value="Новац"/>
+        <string key="help_about_tactics" value="Тактика"/>
+        <string key="help_about_rules" value="Правила"/>
+        <string key="my_games" value="Моје игре"/>
+
+        <string key="help_units_article" value="Постоји 4 врсте јединица.
+        #Оне се разликују по снази.
+        #Поређани од најслабије до најјаче:
+        #[1] сељак
+        #[2] копљоноша
+        #[3] барон
+        #[4] витез
+        #
+        #Јединице дају околним пољима које контролишу снагу сразмерну њиховој снази.
+        #
+        #Како би заузели поље снага јединице која напада мора да буде већа од снаге одбрамбене јединице.
+        #
+        #Свака јединица троши 2, 6, 18 или 54 новчића по потезу.
+        "/>
+
+        <string key="help_trees_article" value="Дрвеће се појављује након смрти јединица.
+        #
+        #Поља са дрвећем не доносе приход и самим тим штете вашем буџету.
+        #
+        #Морате га сећи, у противном оно ће заузети комплетну територију и свести буџет на минимум.
+        #
+        #Палме расту на ободима и расту врло брзо, тако да их морате брзо сећи.
+        "/>
+
+        <string key="help_towers_article" value="Куле служе да заштите околна поља.
+        #
+        #Куле бране [2] и само барони и витезови могу да се боре против кула.
+        #
+        #Кућа такође брани околна поља [1].
+        #
+        #На почетку игре ово је најбољи начин да заштитите територију.
+        #Цена кула је ниска и оне не троше новац за одржавање.
+        "/>
+
+        <string key="help_money_article" value="Приход зависи од броја поља.
+        #Што је већа територија већи су приходи.
+        #Дрвеће смањује приходе.
+        #
+        #Јединице троше новац. Јаче јединице троше више новца.
+        #
+        #Кад останете без новца све јединице умиру.
+        #
+        #Приход је приказан у средини горњег дела екрана.
+        "/>
+
+        <string key="help_tactics_article" value="На почетку заузмите неутрална поља.
+        #Након тога их браните.
+        #
+        #Проверите да ли ваш приход може да задовољи потрошњу пре него направите јединицу.
+        #
+        #Распарчајте територију непријатеља како би им ослабили буџет и лакше је заузели.
+        "/>
+
+        <string key="article_rules" value="Постоје 2 мода игре: нормални и преживљавање. Нормални је подразумевани.
+        #
+        #Првобитно игра је имала само мод преживљавања. Због тога се ова правила помиње више у помоћи уместо нормалних.
+        #
+        #Како би променили правила у насумичној битци кликните на дугме 'више' приликом покретања игре.
+        #
+        #Како би променили правила у кампањама кликните на дугме '...' у горњем десном углу у менију нивоа."/>
+
+        <string key="article_diplomacy_1" value="Како би победили у дипломатском моду морате бити у миру са свима на мапи.
+        #
+        #Како би отворили опције за дипломатију изаберите своју државу и кликните на иконицу 'заставе'.
+        #
+        #Кликните на било коју државу са листе и видећете шта можете да урадите.
+        #
+        #Дугмићи 'прст на горе' и 'прст на доле' ће побољшати или покварити однос са изабраном државом."/>
+
+        <string key="article_diplomacy_2" value="Идеја са заједничким непријатељем је једноставна: удруживање више држава око заједничког непријатеља. То је врста дипломатског притиска.
+        #
+        #Такође, није лако бити у миру са свима. Последња држава ће увек одбити да прихвати ваш мировни предлог."/>
+
+        <string key="article_my_games" value="Ако вам се свиђа ова игра, можда ће вам се свидети још нека од мојих игара:"/>
+
+        <!-- Statistics -->
+        <string key="turns_made" value="Број потеза"/>
+        <string key="units_died" value="Број умрлих јединица"/>
+        <string key="units_produced" value="Број направљених јединица"/>
+        <string key="money_spent" value="Потрошено новца"/>
+        <string key="time" value="Време"/>
+        <string key="wins" value="Број победа"/>
+
+        <!-- Editor -->
+        <string key="editor" value="Уређивач нивоа"/>
+        <string key="slot" value="Позиција"/>
+        <string key="slots" value="Сачуване позиције"/>
+        <string key="import" value="Увоз"/>
+        <string key="export" value="Извоз"/>
+        <string key="empty" value="празно"/>
+        <string key="play" value="Играј"/>
+        <string key="edit" value="Уреди"/>
+        <string key="random" value="Насумична"/>
+        <string key="exported" value="Мапа је у привременој меморији"/>
+        <string key="editor_clear" value="Очисти"/>
+        <string key="no" value="Не"/>
+        <string key="yes" value="Да"/>
+        <string key="confirm_import" value="Потврдите увоз"/>
+        <string key="filter_no" value="Без филтера"/>
+        <string key="filter_only_land" value="Само земља"/>
+        <string key="confirm_clear_level" value="Очисти мапу?"/>
+        <string key="confirm_randomize" value="Направи насумичну мапу?"/>
+        <string key="randomize" value="Измешај"/>
+        <string key="create" value="Направи"/>
+        <string key="change" value="Change"/>
+        <string key="messages" value="Messages"/>
+
+        <!-- Settings -->
+        <string key="autosave" value="Аутоматско чување"/>
+        <string key="ask_to_end_turn" value="Питај за крај потеза"/>
+        <string key="city_names" value="Имена градова"/>
+        <string key="sound" value="Звук"/>
+        <string key="limited_turns" value="Ограничен бр. потеза"/>
+        <string key="hold_to_march" value="Дуги клик за померање"/>
+        <string key="skin" value="Изглед"/>
+        <string key="original" value="оригинално"/>
+        <string key="points" value="тачке"/>
+        <string key="grid" value="мрежа"/>
+        <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
+        <string key="anim_style" value="Осетљивост"/>
+        <string key="more" value="Више"/>
+        <string key="camera_offset" value="Одстојање камере"/>
+        <string key="slay_rules" value="Мод преживљавања"/>
+        <string key="language" value="Језик"/>
+        <string key="more_settings_checks" value="# #Текстура воде # # "/>
+        <string key="water_texture" value="Текстура воде"/>
+        <string key="confirm_reset" value="Да ли сте сигурни да желите да поништите ваш напредак?"/>
+        <string key="replays" value="Снимци"/>
+        <string key="save_replay" value="Сачувај снимак"/>
+        <string key="replay" value="Снимак"/>
+        <string key="replay_saved" value="Снимак је сачуван"/>
+        <string key="fast_construction" value="Брза градња"/>
+        <string key="music" value="Музика"/>
+        <string key="left_handed" value="За леворуке"/>
+        <string key="full_screen_mode" value="Преко целог екрана"/>
+        <string key="system_keyboard" value="System keyboard"/>
+
+        <!-- Single messages -->
+        <string key="level_24" value="Ово је први 'тежак' ниво. Обрати посебну пажњу на одбрану."/>
+        <string key="map_too_big_for_user_levels" value="Мапа је успешно извежена, али је превелика да би била прихваћена као кориснички ниво."/>
+        <string key="available_on_ios" value="Од сад доступан и на iOS"/>
+
+        <!-- Gameplay -->
+        <string key="friends" value="Пријатељи"/>
+        <string key="mutual_friends" value="Обострано пријатељство"/>
+        <string key="dotations" value="Субвенције"/>
+        <string key="treaty_of_friendship" value="Пакт о пријатељству"/>
+        <string key="state" value="Држава"/>
+        <string key="duration" value="Трајање"/>
+        <string key="refuse_friendship" value="Жао ми је али не могу да прихватим твој предлог о пријатељству."/>
+        <string key="friend" value="пријатељ"/>
+        <string key="enemy" value="непријатељ"/>
+        <string key="neutral" value="неутралан"/>
+        <string key="dead" value="мртав"/>
+        <string key="confirm_cancel_friendship" value="Поништи пакт?"/>
+        <string key="confirm_start_war" value="Започни рат?"/>
+        <string key="peace_treaty" value="Мировни уговор"/>
+        <string key="pay" value="Плати"/>
+        <string key="reparations" value="Репарације"/>
+        <string key="refuse_stop_war" value="Нема предаје, борим се до последњег!"/>
+        <string key="win_conditions" value="Услови победе"/>
+        <string key="diplomatic_win_conditions" value="Да би победили у дипломатији морате постати пријатељ са свима."/>
+        <string key="confirm_black_mark" value="Заједнички непријатељ?"/>
+        <string key="black_mark_description" value="Означавањем играча као заједничког непријатеља, забрањујете другима да му буду у пријатељству са њим и са вама у исто време. Не утиче на постојеће договоре."/>
+        <string key="player_turn" value="Потез играча"/>
+        <string key="fine" value="У реду"/>
+        <string key="log" value="Писма"/>
+        <string key="friendship_proposal" value="Понуда пријатељства"/>
+        <string key="war_declaration" value="Објава рата"/>
+        <string key="stop_war" value="Прекини рат"/>
+        <string key="friendship_ended" value="Крај пријатељства"/>
+        <string key="friendship_canceled" value="Пријатељство је поништено"/>
+        <string key="black_marked" value="Ваш заједнички непријатељ"/>
+        <string key="letter_sent" value="Писмо је послато"/>
+        <string key="delete" value="Избриши"/>
+        <string key="rename" value="Преименуј"/>
+        <string key="confirm_delete_slot" value="Избриши позицију?"/>
+        <string key="resume_button" value="Дугме 'Наставак'"/>
+        <string key="filters" value="Филтери"/>
+        <string key="completed" value="Завршени"/>
+        <string key="historical" value="Историјски"/>
+        <string key="temp_slot" value="Привремена позиција"/>
+        <string key="can_skip_level" value="Можете прескочити овај ниво"/>
+        <string key="reason" value="Разлог"/>
+        <string key="friends_with_everybody" value="пријатељ са свима"/>
+        <string key="hex_purchase" value="Куповина поља"/>
+        <string key="confirm_buy_hexes" value="Куповина поља?"/>
+        <string key="price" value="Цена"/>
+        <string key="gift" value="Поклон"/>
+        <string key="gift_received" value="Добили сте поклон"/>
+        <string key="confirm_sell_hexes" value="Продаја поља?"/>
+        <string key="confirm_skip_level" value="Прескочи ниво?"/>
+        <string key="ok" value="У реду"/>
+        <string key="money" value="Новац"/>
+        <string key="quantity" value="Сума"/>
+        <string key="income" value="Приход"/>
+        <string key="by_name" value="По имену"/>
+        <string key="hex_trade" value="Трговина пољима"/>
+        <string key="hex_sale" value="Продаја поља"/>
+        <string key="buyer_not_enough_money" value="Купац нема довољно пара"/>
+        <string key="message" value="Message"/>
+        <string key="show" value="Show"/>
+    </language>
 
 
 

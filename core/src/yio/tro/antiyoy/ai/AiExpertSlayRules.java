@@ -15,8 +15,8 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
     private ArrayList<Hex> hexesInPerimeter;
 
 
-    public AiExpertSlayRules(GameController gameController, int color) {
-        super(gameController, color);
+    public AiExpertSlayRules(GameController gameController, int fraction) {
+        super(gameController, fraction);
         tempHex = new Hex(0, 0, new PointYio(), gameController.fieldController);
         hexesInPerimeter = new ArrayList<Hex>();
     }
@@ -37,7 +37,7 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
         // cleaning palms has highest priority
         if (unit.strength <= 2 && checkToCleanSomePalms(unit, moveZone, province)) return;
 
-        ArrayList<Hex> attackableHexes = findAttackableHexes(unit.getColor(), moveZone);
+        ArrayList<Hex> attackableHexes = findAttackableHexes(unit.getFraction(), moveZone);
         if (attackableHexes.size() > 0) { // attack something
             tryToAttackSomething(unit, province, attackableHexes);
         } else { // nothing to attack
@@ -54,7 +54,7 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
     protected boolean isHexDefendedBySomethingElse(Hex hex, Unit unit) {
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.getAdjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(hex)) {
+            if (adjHex.active && adjHex.sameFraction(hex)) {
                 if (adjHex.containsBuilding()) return true;
                 if (adjHex.containsUnit() && adjHex.unit != unit) return true;
             }
@@ -68,7 +68,7 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
         for (int i = 0; i < 6; i++) {
             Hex adjHex = unit.currentHex.getAdjacentHex(i);
             if (    adjHex.active &&
-                    adjHex.sameColor(unit.currentHex) &&
+                    adjHex.sameFraction(unit.currentHex) &&
                     !isHexDefendedBySomethingElse(adjHex, unit) &&
                     adjHex.isInPerimeter())
                 leftBehindNumber++;
@@ -87,7 +87,7 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
     boolean hexHasFriendlyBuildingNearby(Hex hex) {
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.getAdjacentHex(i);
-            if (adjHex.active && adjHex.sameColor(hex) && adjHex.containsBuilding()) return true;
+            if (adjHex.active && adjHex.sameFraction(hex) && adjHex.containsBuilding()) return true;
         }
         return false;
     }
@@ -112,7 +112,7 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
         Hex result = null;
         int currMax = -1;
         for (Hex attackableHex : attackableHexes) {
-            int currNum = getAttackAllure(attackableHex, province.getColor());
+            int currNum = getAttackAllure(attackableHex, province.getFraction());
             if (currNum > currMax) {
                 currMax = currNum;
                 result = attackableHex;

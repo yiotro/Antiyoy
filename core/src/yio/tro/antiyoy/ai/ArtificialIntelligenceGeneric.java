@@ -11,8 +11,8 @@ public abstract class ArtificialIntelligenceGeneric extends ArtificialIntelligen
     public static final int MAX_EXTRA_FARM_COST = 80;
 
 
-    ArtificialIntelligenceGeneric(GameController gameController, int color) {
-        super(gameController, color);
+    ArtificialIntelligenceGeneric(GameController gameController, int fraction) {
+        super(gameController, fraction);
     }
 
 

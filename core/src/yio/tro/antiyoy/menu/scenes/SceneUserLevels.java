@@ -1,9 +1,13 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import com.badlogic.gdx.Preferences;
+import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.data_storage.LegacyImportManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
-import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
+import yio.tro.antiyoy.gameplay.loading.LoadingType;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.gameplay.user_levels.AbstractLegacyUserLevel;
 import yio.tro.antiyoy.gameplay.user_levels.AbstractUserLevel;
 import yio.tro.antiyoy.gameplay.user_levels.UserLevelFactory;
 import yio.tro.antiyoy.gameplay.user_levels.UserLevelProgressManager;
@@ -15,6 +19,7 @@ import yio.tro.antiyoy.menu.scrollable_list.ListBehaviorYio;
 import yio.tro.antiyoy.menu.scrollable_list.ListItemYio;
 import yio.tro.antiyoy.menu.scrollable_list.ScrollableListYio;
 import yio.tro.antiyoy.stuff.LanguagesManager;
+import yio.tro.antiyoy.stuff.Yio;
 
 public class SceneUserLevels extends AbstractScene {
 
@@ -55,8 +60,7 @@ public class SceneUserLevels extends AbstractScene {
     private void createFiltersButton() {
         filtersButton = buttonFactory.getButton(generateRectangle(0.55, 0.9, 0.4, 0.07), 912, getString("filters"));
         filtersButton.setReaction(rbFilters);
-        filtersButton.setAnimation(Animation.UP);
-        filtersButton.disableTouchAnimation();
+        filtersButton.setAnimation(Animation.up);
     }
 
 
@@ -90,7 +94,8 @@ public class SceneUserLevels extends AbstractScene {
         multiplayerAllowed = filterPrefs.getBoolean("multiplayer", true);
         searchName = filterPrefs.getString("search_name", "");
 
-        for (AbstractUserLevel userLevel : UserLevelFactory.getInstance().getLevels()) {
+        for (AbstractLegacyUserLevel userLevel : UserLevelFactory.getInstance().getLevels()) {
+            userLevel.setGameController(getGameController());
             if (hasToSkipLevel(userLevel)) continue;
 
             addUserLevelToList(userLevel);
@@ -101,7 +106,7 @@ public class SceneUserLevels extends AbstractScene {
     }
 
 
-    private void addUserLevelToList(AbstractUserLevel userLevel) {
+    private void addUserLevelToList(AbstractLegacyUserLevel userLevel) {
         scrollableListYio.addItem(
                 userLevel.getKey(),
                 getMapTitle(userLevel),
@@ -113,12 +118,12 @@ public class SceneUserLevels extends AbstractScene {
     private void checkToAddOneLevel() {
         if (scrollableListYio.items.size() > 0) return;
 
-        AbstractUserLevel firstLevel = UserLevelFactory.getInstance().getLevels().get(0);
+        AbstractLegacyUserLevel firstLevel = UserLevelFactory.getInstance().getLevels().get(0);
         addUserLevelToList(firstLevel);
     }
 
 
-    private boolean hasToSkipLevel(AbstractUserLevel userLevel) {
+    private boolean hasToSkipLevel(AbstractLegacyUserLevel userLevel) {
         if (!completedAllowed) {
             boolean levelCompleted = UserLevelProgressManager.getInstance().isLevelCompleted(userLevel.getKey());
             if (levelCompleted) return true;
@@ -154,7 +159,7 @@ public class SceneUserLevels extends AbstractScene {
     }
 
 
-    private String getMapTitle(AbstractUserLevel userLevel) {
+    private String getMapTitle(AbstractLegacyUserLevel userLevel) {
         if (UserLevelProgressManager.getInstance().isLevelCompleted(userLevel.getKey())) {
             return "[+] " + userLevel.getMapName();
         }
@@ -196,18 +201,39 @@ public class SceneUserLevels extends AbstractScene {
             return;
         }
 
-        AbstractUserLevel level = UserLevelFactory.getInstance().getLevel(item.key);
+        AbstractLegacyUserLevel level = UserLevelFactory.getInstance().getLevel(item.key);
+        level.setGameController(getGameController());
+        if (level instanceof AbstractUserLevel) {
+            launchUserLevel(level);
+            return;
+        }
 
+        launchLegacyUserLevel(level);
+    }
+
+
+    private void launchLegacyUserLevel(AbstractLegacyUserLevel level) {
         LoadingParameters instance = LoadingParameters.getInstance();
-        instance.mode = LoadingMode.USER_LEVEL;
-        instance.applyFullLevel(level.getFullLevelString());
+        instance.loadingType = LoadingType.user_level_legacy;
+        GameController gameController = getGameController();
+        LegacyImportManager legacyImportManager = gameController.gameSaver.legacyImportManager;
+        legacyImportManager.applyFullLevel(instance, level.getFullLevelString());
         instance.colorOffset = level.getColorOffset();
         instance.fogOfWar = level.getFogOfWar();
         instance.diplomacy = level.getDiplomacy();
         instance.ulKey = level.getKey();
         LoadingManager.getInstance().startGame(instance);
 
-        level.onLevelLoaded(menuControllerYio.yioGdxGame.gameController);
+        level.onLevelLoaded(getGameController());
+        getGameController().fieldController.onUserLevelLoaded();
+    }
+
+
+    private void launchUserLevel(AbstractLegacyUserLevel level) {
+        AbstractUserLevel userLevel = (AbstractUserLevel) level;
+        getGameController().importManager.launchGame(LoadingType.user_level, userLevel.getLevelCode());
+        GameRules.ulKey = userLevel.getKey();
+        getGameController().fieldController.onUserLevelLoaded();
     }
 
 

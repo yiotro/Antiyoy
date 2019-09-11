@@ -7,12 +7,12 @@ import yio.tro.antiyoy.menu.scenes.gameplay.*;
 public class Scenes {
 
     public static SceneMainMenu sceneMainMenu;
-    public static SceneSettingsMenu sceneSettingsMenu;
-    public static SceneMoreSettingsMenu sceneMoreSettingsMenu;
+    public static SceneSettings sceneSettings;
+    public static SceneMoreSettings sceneMoreSettings;
     public static SceneAboutGame sceneAboutGame;
     public static SceneMoreSkirmishOptions sceneMoreSkirmishOptions;
     public static SceneSkirmishMenu sceneSkirmishMenu;
-    public static SceneTestMenu sceneTestMenu;
+    public static SceneTestScreen sceneTestScreen;
     public static SceneChoodeGameModeMenu sceneChoodeGameModeMenu;
     public static SceneTutorialIndex sceneTutorialIndex;
     public static SceneHelpIndex sceneHelpIndex;
@@ -21,11 +21,9 @@ public class Scenes {
     public static SceneConfirmReset sceneConfirmReset;
     public static SceneConfirmRestart sceneConfirmRestart;
     public static SceneEditorConfirmClear sceneEditorConfirmClear;
-    public static SceneEditorActions sceneEditorActions;
-    public static SceneEditorConfirmImport sceneEditorConfirmImport;
     public static SceneEditorObjectPanel sceneEditorObjectPanel;
     public static SceneEditorHexPanel sceneEditorHexPanel;
-    public static SceneEditorInstruments sceneEditorInstruments;
+    public static SceneEditorOverlay sceneEditorOverlay;
     public static SceneGameOverlay sceneGameOverlay;
     public static SceneSelectionOverlay sceneSelectionOverlay;
     public static ScenePauseMenu scenePauseMenu;
@@ -40,7 +38,6 @@ public class Scenes {
     public static SceneEditorAutomationPanel sceneEditorAutomationPanel;
     public static SceneEditorConfirmRandomize sceneEditorConfirmRandomize;
     public static SceneSecretScreen sceneSecretScreen;
-    public static SceneEditorMoneyPanel sceneEditorMoneyPanel;
     public static SceneMoreCampaignOptions sceneMoreCampaignOptions;
     public static SceneAiOnlyOverlay sceneAiOnlyOverlay;
     public static SceneReplays sceneReplays;
@@ -59,13 +56,12 @@ public class Scenes {
     public static SceneLanguages sceneLanguages;
     public static SceneSpecialThanks sceneSpecialThanks;
     public static SceneUserLevels sceneUserLevels;
-    public static SceneEditorSlots sceneEditorSlots;
-    public static SceneEditorChecks sceneEditorChecks;
+    public static SceneEditorGameRulesPanel sceneEditorGameRulesPanel;
     public static SceneTurnStartDialog sceneTurnStartDialog;
     public static SceneDiplomaticLog sceneDiplomaticLog;
     public static SceneBleentoroRelease sceneBleentoroRelease;
     public static SceneMapTooBig sceneMapTooBig;
-    public static SceneKeyboard sceneKeyboard;
+    public static SceneBasicKeyboard sceneBasicKeyboard;
     public static SceneContextListMenu sceneContextListMenu;
     public static SceneConfirmDeleteSlot sceneConfirmDeleteSlot;
     public static SceneCheatsMenu sceneCheatsMenu;
@@ -82,17 +78,27 @@ public class Scenes {
     public static SceneHexSaleDialog sceneHexSaleDialog;
     public static SceneAgreeToBuyHexes sceneAgreeToBuyHexes;
     public static SceneLoadingScreen sceneLoadingScreen;
-    public static SceneEditorCreate sceneEditorCreate;
+    public static SceneNativeKeyboard sceneNativeKeyboard;
+    public static SceneEditorLobby sceneEditorLobby;
+    public static SceneEditorLoad sceneEditorLoad;
+    public static SceneEditorPauseMenu sceneEditorPauseMenu;
+    public static SceneChooseSkin sceneChooseSkin;
+    public static SceneEditorProvincePanel sceneEditorProvincePanel;
+    public static SceneEditorDiplomacy sceneEditorDiplomacy;
+    public static SceneEditorEditRelation sceneEditorEditRelation;
+    public static SceneColorPicker sceneColorPicker;
+    public static SceneEditorMessages sceneEditorMessages;
+    public static SceneDiplomaticRelations sceneDiplomaticRelations;
 
 
     public static void createScenes(MenuControllerYio menuController) {
         sceneMainMenu = new SceneMainMenu(menuController);
-        sceneSettingsMenu = new SceneSettingsMenu(menuController);
-        sceneMoreSettingsMenu = new SceneMoreSettingsMenu(menuController);
+        sceneSettings = new SceneSettings(menuController);
+        sceneMoreSettings = new SceneMoreSettings(menuController);
         sceneAboutGame = new SceneAboutGame(menuController);
         sceneMoreSkirmishOptions = new SceneMoreSkirmishOptions(menuController);
         sceneSkirmishMenu = new SceneSkirmishMenu(menuController);
-        sceneTestMenu = new SceneTestMenu(menuController);
+        sceneTestScreen = new SceneTestScreen(menuController);
         sceneChoodeGameModeMenu = new SceneChoodeGameModeMenu(menuController);
         sceneTutorialIndex = new SceneTutorialIndex(menuController);
         sceneHelpIndex = new SceneHelpIndex(menuController);
@@ -101,11 +107,9 @@ public class Scenes {
         sceneConfirmReset = new SceneConfirmReset(menuController);
         sceneConfirmRestart = new SceneConfirmRestart(menuController);
         sceneEditorConfirmClear = new SceneEditorConfirmClear(menuController);
-        sceneEditorActions = new SceneEditorActions(menuController);
-        sceneEditorConfirmImport = new SceneEditorConfirmImport(menuController);
         sceneEditorObjectPanel = new SceneEditorObjectPanel(menuController);
         sceneEditorHexPanel = new SceneEditorHexPanel(menuController);
-        sceneEditorInstruments = new SceneEditorInstruments(menuController);
+        sceneEditorOverlay = new SceneEditorOverlay(menuController);
         sceneGameOverlay = new SceneGameOverlay(menuController);
         sceneSelectionOverlay = new SceneSelectionOverlay(menuController);
         scenePauseMenu = new ScenePauseMenu(menuController);
@@ -120,7 +124,6 @@ public class Scenes {
         sceneEditorAutomationPanel = new SceneEditorAutomationPanel(menuController);
         sceneEditorConfirmRandomize = new SceneEditorConfirmRandomize(menuController);
         sceneSecretScreen = new SceneSecretScreen(menuController);
-        sceneEditorMoneyPanel = new SceneEditorMoneyPanel(menuController);
         sceneMoreCampaignOptions = new SceneMoreCampaignOptions(menuController);
         sceneAiOnlyOverlay = new SceneAiOnlyOverlay(menuController);
         sceneReplays = new SceneReplays(menuController);
@@ -139,14 +142,12 @@ public class Scenes {
         sceneLanguages = new SceneLanguages(menuController);
         sceneSpecialThanks = new SceneSpecialThanks(menuController);
         sceneUserLevels = new SceneUserLevels(menuController);
-        sceneEditorSlots = new SceneEditorSlots(menuController);
-        sceneEditorSlots = new SceneEditorSlots(menuController);
-        sceneEditorChecks = new SceneEditorChecks(menuController);
+        sceneEditorGameRulesPanel = new SceneEditorGameRulesPanel(menuController);
         sceneTurnStartDialog = new SceneTurnStartDialog(menuController);
         sceneDiplomaticLog = new SceneDiplomaticLog(menuController);
         sceneBleentoroRelease = new SceneBleentoroRelease(menuController);
         sceneMapTooBig = new SceneMapTooBig(menuController);
-        sceneKeyboard = new SceneKeyboard(menuController);
+        sceneBasicKeyboard = new SceneBasicKeyboard(menuController);
         sceneContextListMenu = new SceneContextListMenu(menuController);
         sceneConfirmDeleteSlot = new SceneConfirmDeleteSlot(menuController);
         sceneCheatsMenu = new SceneCheatsMenu(menuController);
@@ -163,6 +164,16 @@ public class Scenes {
         sceneHexSaleDialog = new SceneHexSaleDialog(menuController);
         sceneAgreeToBuyHexes = new SceneAgreeToBuyHexes(menuController);
         sceneLoadingScreen = new SceneLoadingScreen(menuController);
-        sceneEditorCreate = new SceneEditorCreate(menuController);
+        sceneNativeKeyboard = new SceneNativeKeyboard(menuController);
+        sceneEditorLobby = new SceneEditorLobby(menuController);
+        sceneEditorLoad = new SceneEditorLoad(menuController);
+        sceneEditorPauseMenu = new SceneEditorPauseMenu(menuController);
+        sceneChooseSkin = new SceneChooseSkin(menuController);
+        sceneEditorProvincePanel = new SceneEditorProvincePanel(menuController);
+        sceneEditorDiplomacy = new SceneEditorDiplomacy(menuController);
+        sceneEditorEditRelation = new SceneEditorEditRelation(menuController);
+        sceneColorPicker = new SceneColorPicker(menuController);
+        sceneEditorMessages = new SceneEditorMessages(menuController);
+        sceneDiplomaticRelations = new SceneDiplomaticRelations(menuController);
     }
 }

@@ -1,75 +1,55 @@
 package yio.tro.antiyoy.gameplay.user_levels;
 
-import yio.tro.antiyoy.gameplay.FieldController;
 import yio.tro.antiyoy.gameplay.GameController;
-import yio.tro.antiyoy.gameplay.Hex;
-import yio.tro.antiyoy.gameplay.Province;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 
-public abstract class AbstractUserLevel {
+public abstract class AbstractUserLevel extends AbstractLegacyUserLevel{
 
 
-    public abstract String getFullLevelString();
+    private String mapName;
+    private int playersNumber;
+
+
+    @Override
+    public String getFullLevelString() {
+        return null;
+    }
+
+
+    public abstract String getLevelCode();
+
+
+    public String getMapNameFromLevelCode() {
+        return mapName;
+    }
 
 
     public abstract String getMapName();
 
 
-    public abstract String getAuthor();
-
-
     public abstract String getKey();
 
 
-    public int getColorOffset() {
-        return 0;
-    }
+    public abstract String getAuthor();
 
 
-    public boolean getFogOfWar() {
-        return false;
-    }
-
-
-    public boolean getDiplomacy() {
-        return false;
-    }
-
-
-    public boolean isHistorical() {
-        return false;
-    }
-
-
-    public void onLevelLoaded(GameController gameController) {
-        // nothing by default
-    }
-
-
+    @Override
     public boolean isSinglePlayer() {
-        String fullLevelString = getFullLevelString();
-        if (fullLevelString.length() < 10) return false;
-
-        String playersNumberString = fullLevelString.substring(0, 10).split(" ")[2];
-        int playersNumber = Integer.valueOf(playersNumberString);
         return playersNumber == 1;
     }
 
 
+    @Override
     public boolean isMultiplayer() {
-        String fullLevelString = getFullLevelString();
-        if (fullLevelString.length() < 10) return false;
-
-        String playersNumberString = fullLevelString.substring(0, 10).split(" ")[2];
-        int playersNumber = Integer.valueOf(playersNumberString);
         return playersNumber > 1;
     }
 
 
-    protected void setProvinceMoney(GameController gameController, int i, int j, int money) {
-        FieldController fieldController = gameController.fieldController;
-        Hex hex = fieldController.field[i][j];
-        Province provinceByHex = fieldController.getProvinceByHex(hex);
-        provinceByHex.money = money;
+    @Override
+    protected void onGameControllerSet() {
+        super.onGameControllerSet();
+        String levelCode = getLevelCode();
+        mapName = getDecodeManager().extractMapName(levelCode);
+        playersNumber = getDecodeManager().extractPlayersNumber(levelCode);
     }
-
 }

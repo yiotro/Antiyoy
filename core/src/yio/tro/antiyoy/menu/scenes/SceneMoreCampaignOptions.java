@@ -2,6 +2,7 @@ package yio.tro.antiyoy.menu.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import yio.tro.antiyoy.gameplay.ColorsManager;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.*;
 import yio.tro.antiyoy.menu.slider.SliderBehavior;
@@ -22,6 +23,7 @@ public class SceneMoreCampaignOptions extends AbstractScene{
         super(menuControllerYio);
 
         colorOffsetSlider = null;
+        chkSlayRules = null;
     }
 
 
@@ -58,7 +60,7 @@ public class SceneMoreCampaignOptions extends AbstractScene{
     private void createColorSlider() {
         checkToInitSlider();
 
-        colorOffsetSlider.setNumberOfSegments(GameRules.MAX_COLOR_NUMBER);
+        colorOffsetSlider.setNumberOfSegments(GameRules.MAX_FRACTIONS_QUANTITY);
         colorOffsetSlider.appear();
     }
 
@@ -95,14 +97,14 @@ public class SceneMoreCampaignOptions extends AbstractScene{
         RectangleYio pos = generateRectangle((1 - sWidth) / 2, 0, sWidth, 0);
 
         colorOffsetSlider = new SliderYio(menuControllerYio, -1);
-        colorOffsetSlider.setValues(0, 0, 6, Animation.UP);
+        colorOffsetSlider.setValues(0, 0, 6, Animation.up);
         colorOffsetSlider.setPosition(pos);
         colorOffsetSlider.setParentElement(label, 0.27);
         colorOffsetSlider.setTitle("player_color");
         colorOffsetSlider.setBehavior(new SliderBehavior() {
             @Override
             public String getValueString(SliderYio sliderYio) {
-                return SceneSkirmishMenu.getColorStringBySliderIndex(sliderYio.getValueIndex());
+                return ColorsManager.getMenuColorNameByIndex(sliderYio.getValueIndex());
             }
         });
 
@@ -113,34 +115,25 @@ public class SceneMoreCampaignOptions extends AbstractScene{
 
 
     private void createLabel() {
-        label = buttonFactory.getButton(generateRectangle(0.05, 0.45, 0.9, 0.4), 552, null);
-        if (label.notRendered()) {
-            label.cleatText();
-            label.addTextLine(" ");
-            label.addTextLine(" ");
-            label.addTextLine(" ");
-            label.addTextLine(" ");
-            label.addTextLine(" ");
-            label.addTextLine(" ");
-            label.addTextLine(getString("slay_rules"));
-            label.addTextLine(" ");
-
-            label.setTextOffset(0.09f * GraphicsYio.width);
-            menuControllerYio.getButtonRenderer().renderButton(label);
-        }
+        label = buttonFactory.getButton(generateRectangle(0.05, 0.45, 0.9, 0.4), 552, " ");
         label.setTouchable(false);
-        label.setAnimation(Animation.UP);
+        label.setAnimation(Animation.up);
     }
 
 
     private void createCheckButtons() {
-        double checkButtonSize = 0.05;
-        double hSize = GraphicsYio.convertToHeight(checkButtonSize);
-        double chkX = 0.88 - checkButtonSize;
-        double chkY = 0.53;
+        initChecks();
+        chkSlayRules.appear();
+    }
 
-        chkSlayRules = CheckButtonYio.getCheckButton(menuControllerYio, generateSquare(chkX, chkY - hSize / 2, hSize), 17);
-        chkSlayRules.setTouchPosition(generateRectangle(0.05, chkY - hSize * 1.5, 0.9, hSize * 3));
-        chkSlayRules.setAnimation(Animation.UP);
+
+    private void initChecks() {
+        if (chkSlayRules != null) return;
+
+        chkSlayRules = CheckButtonYio.getFreshCheckButton(menuControllerYio);
+        chkSlayRules.setParent(label);
+        chkSlayRules.alignTop(0.2);
+        chkSlayRules.setTitle(getString("slay_rules"));
+        chkSlayRules.centerHorizontal(0.05);
     }
 }

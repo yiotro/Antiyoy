@@ -5,7 +5,7 @@ import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
 public class RenderableTextYio implements ReusableYio{
 
-    public static final double OPTIMIZATION_CUT_OUT = 0.92;
+
     public BitmapFont font;
     public PointYio position;
     public float width;
@@ -14,12 +14,17 @@ public class RenderableTextYio implements ReusableYio{
     public RectangleYio bounds;
     public PointYio delta;
     public boolean centered; // for external use
+    RectangleYio previousBounds; // to detect speed
+    float lastTravelDistance;
+    private float speedOptiCut;
 
 
     public RenderableTextYio() {
         position = new PointYio();
         bounds = new RectangleYio();
         delta = new PointYio();
+        previousBounds = new RectangleYio();
+        speedOptiCut = 0.02f * GraphicsYio.height;
 
         reset();
     }
@@ -35,6 +40,8 @@ public class RenderableTextYio implements ReusableYio{
         delta.reset();
         bounds.reset();
         centered = false;
+        previousBounds.reset();
+        lastTravelDistance = 0;
     }
 
 
@@ -75,12 +82,29 @@ public class RenderableTextYio implements ReusableYio{
 
 
     public void updateBounds() {
+        previousBounds.setBy(bounds);
         bounds.set(
                 position.x,
                 position.y - height,
                 width,
                 height
         );
+        updateLastTravelDistance();
+    }
+
+
+    private void updateLastTravelDistance() {
+        lastTravelDistance = (float) (Math.abs(previousBounds.x - bounds.x) + Math.abs(previousBounds.y - bounds.y));
+    }
+
+
+    public boolean isMovingFast() {
+        return lastTravelDistance > speedOptiCut;
+    }
+
+
+    public float getLastTravelDistance() {
+        return lastTravelDistance;
     }
 
 
@@ -88,4 +112,11 @@ public class RenderableTextYio implements ReusableYio{
         this.centered = centered;
     }
 
+
+    @Override
+    public String toString() {
+        return "[" +
+                string +
+                "]";
+    }
 }

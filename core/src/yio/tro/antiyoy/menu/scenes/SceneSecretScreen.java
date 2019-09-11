@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.gameplay.DebugFlags;
+import yio.tro.antiyoy.gameplay.user_levels.UserLevelFactory;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -31,13 +32,13 @@ public class SceneSecretScreen extends AbstractScene{
         label = buttonFactory.getButton(generateRectangle(0.1, 0.55, 0.8, 0.3), 570, null);
         if (label.notRendered()) {
             label.cleatText();
-            label.addTextLine("This is secret screen.");
+            label.addTextLine("This is secret screen [" + UserLevelFactory.getInstance().getLevels().size() + "]");
             label.addTextLine("It's mostly used for debug purposes, but it also contains some stuff that can be useful for players.");
             label.addTextLine("For example, you can tap 'unlock levels' and you will be able to launch any campaign level.");
             menuControllerYio.buttonRenderer.renderButton(label);
         }
         label.setTouchable(false);
-        label.setAnimation(Animation.UP);
+        label.setAnimation(Animation.up);
 
         curY = 0.42;
         createButton(572, "Unlock levels", Reaction.rbUnlockLevels);
@@ -77,7 +78,7 @@ public class SceneSecretScreen extends AbstractScene{
     private ButtonYio createButton(int id, String key, Reaction reaction) {
         ButtonYio button = buttonFactory.getButton(generateRectangle(0.1, curY, 0.8, 0.07), id, getString(key));
         button.setReaction(reaction);
-        button.setAnimation(Animation.DOWN);
+        button.setAnimation(Animation.down);
 
         curY -= 0.09;
 

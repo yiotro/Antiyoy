@@ -1,6 +1,5 @@
 package yio.tro.antiyoy.gameplay;
 
-import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.stuff.Yio;
@@ -64,7 +63,7 @@ public class MapGenerator {
     protected void balanceMap() {
         checkToFixNoPlayerProblem();
 
-        if (GameRules.colorNumber < 4) {
+        if (GameRules.fractionsQuantity < 4) {
             return; // to prevent infinite loop
         }
 
@@ -79,13 +78,13 @@ public class MapGenerator {
         if (mapHasAtLeastOnePlayerProvince()) return;
 
         for (Hex activeHex : gameController.fieldController.activeHexes) {
-            if (activeHex.colorIndex != 0) continue;
+            if (activeHex.fraction != 0) continue;
 
             for (int i = 0; i < 6; i++) {
                 Hex adjacentHex = activeHex.getAdjacentHex(i);
                 if (!adjacentHex.active) continue;
 
-                adjacentHex.colorIndex = 0;
+                adjacentHex.fraction = 0;
                 break;
             }
 
@@ -96,7 +95,7 @@ public class MapGenerator {
 
     private boolean mapHasAtLeastOnePlayerProvince() {
         for (Hex activeHex : gameController.fieldController.activeHexes) {
-            if (activeHex.colorIndex != 0) continue;
+            if (activeHex.fraction != 0) continue;
 
             if (activeHex.numberOfFriendlyHexesNearby() > 0) {
                 return true;
@@ -111,8 +110,8 @@ public class MapGenerator {
         for (Hex hex : provinceList) {
             for (int i = 0; i < 6; i++) {
                 Hex adjHex = hex.getAdjacentHex(i);
-                if (adjHex.active && !adjHex.sameColor(hex) && random.nextDouble() < power) {
-                    adjHex.colorIndex = hex.colorIndex;
+                if (adjHex.active && !adjHex.sameFraction(hex) && random.nextDouble() < power) {
+                    adjHex.fraction = hex.fraction;
                 }
             }
         }
@@ -122,7 +121,7 @@ public class MapGenerator {
     protected boolean hexHasEnemiesNear(Hex hex) {
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.getAdjacentHex(i);
-            if (adjHex.active && !adjHex.sameColor(hex)) return true;
+            if (adjHex.active && !adjHex.sameFraction(hex)) return true;
         }
         return false;
     }
@@ -131,7 +130,7 @@ public class MapGenerator {
     protected void decreaseProvince(ArrayList<Hex> provinceList, double power) {
         for (Hex hex : provinceList) {
             if (hexHasEnemiesNear(hex) && random.nextDouble() < power) {
-                hex.colorIndex = getRandomColor();
+                hex.fraction = getRandomFraction();
             }
         }
     }
@@ -140,7 +139,7 @@ public class MapGenerator {
     protected void giveDisadvantageToPlayer(int index, double power) {
         clearGenFlags();
         for (Hex activeHex : gameController.fieldController.activeHexes) {
-            if (!activeHex.genFlag && activeHex.sameColor(index)) {
+            if (!activeHex.genFlag && activeHex.sameFraction(index)) {
                 ArrayList<Hex> provinceList = detectorProvince.detectProvince(activeHex);
                 tagProvince(provinceList);
                 decreaseProvince(provinceList, power);
@@ -152,7 +151,7 @@ public class MapGenerator {
     protected void giveAdvantageToPlayer(int index, double power) {
         clearGenFlags();
         for (Hex activeHex : gameController.fieldController.activeHexes) {
-            if (!activeHex.genFlag && activeHex.sameColor(index)) {
+            if (!activeHex.genFlag && activeHex.sameFraction(index)) {
                 ArrayList<Hex> provinceList = detectorProvince.detectProvince(activeHex);
                 increaseProvince(provinceList, power);
                 provinceList = detectorProvince.detectProvince(activeHex); // detect again because province increased
@@ -163,14 +162,13 @@ public class MapGenerator {
 
 
     protected void applyBalanceMeasures() {
-        giveAdvantageToPlayer(GameRules.colorNumber - 1, 0.053); // last
-        giveAdvantageToPlayer(GameRules.colorNumber - 2, 0.033);
-        if (GameRules.colorNumber >= 5) {
+        giveAdvantageToPlayer(GameRules.fractionsQuantity - 1, 0.053); // last
+        giveAdvantageToPlayer(GameRules.fractionsQuantity - 2, 0.033);
+        if (GameRules.fractionsQuantity >= 5) {
             giveAdvantageToPlayer(2, 0.0165);
-//            giveAdvantageToPlayer(1, 0.005);
-        } else { // if color number == 4
+        } else {
             giveAdvantageToPlayer(1, 0.0065);
-            giveAdvantageToPlayer(GameRules.colorNumber - 1, 0.01);
+            giveAdvantageToPlayer(GameRules.fractionsQuantity - 1, 0.01);
         }
         giveDisadvantageToPlayer(0, 0.048);
 
@@ -193,11 +191,11 @@ public class MapGenerator {
             Hex hex = propagationList.get(0);
             propagationList.remove(0);
             if (random.nextInt(startingPotential) > hex.genPotential) continue;
-            hex.colorIndex = spawnHex.colorIndex;
+            hex.fraction = spawnHex.fraction;
             if (hex.genPotential == 0) continue;
             for (int i = 0; i < 6; i++) {
                 Hex adjHex = hex.getAdjacentHex(i);
-                if (!propagationList.contains(adjHex) && adjHex.active && adjHex.colorIndex != spawnHex.colorIndex) {
+                if (!propagationList.contains(adjHex) && adjHex.active && adjHex.fraction != spawnHex.fraction) {
                     adjHex.genPotential = hex.genPotential - 1;
                     propagationList.add(adjHex);
                 }
@@ -227,10 +225,10 @@ public class MapGenerator {
     }
 
 
-    protected int getRandomColorExceptOne(int excludedColor) {
+    protected int getRandomFractionExceptOne(int excludedFraction) {
         while (true) {
-            int color = getRandomColor();
-            if (color != excludedColor) return color;
+            int fraction = getRandomFraction();
+            if (fraction != excludedFraction) return fraction;
         }
     }
 
@@ -251,11 +249,11 @@ public class MapGenerator {
 
 
     protected void reduceProvinceSize(ArrayList<Hex> provinceList) {
-        int provinceColor = provinceList.get(0).colorIndex;
+        int provinceFraction = provinceList.get(0).fraction;
         while (provinceList.size() > SMALL_PROVINCE_SIZE) {
             Hex hex = findHexToExcludeFromProvince(provinceList);
             provinceList.remove(hex);
-            hex.colorIndex = getRandomColorExceptOne(provinceColor);
+            hex.fraction = getRandomFractionExceptOne(provinceFraction);
         }
     }
 
@@ -269,7 +267,7 @@ public class MapGenerator {
             if (!activeHex.genFlag) {
                 ArrayList<Hex> provinceList = detectorProvince.detectProvince(activeHex);
                 if (provinceList.size() > 1) {
-                    numbers[provinceList.get(0).colorIndex]++;
+                    numbers[provinceList.get(0).fraction]++;
                     for (Hex hex : provinceList) {
                         hex.genFlag = true;
                     }
@@ -317,11 +315,11 @@ public class MapGenerator {
     }
 
 
-    protected boolean provinceHasNeighbourWithColor(ArrayList<Hex> provinceList, int color) {
+    protected boolean provinceHasNeighbourWithFraction(ArrayList<Hex> provinceList, int fraction) {
         for (Hex hex : provinceList) {
             for (int i = 0; i < 6; i++) {
                 Hex adjHex = hex.getAdjacentHex(i);
-                if (adjHex.active && adjHex.sameColor(color) && adjHex.numberOfFriendlyHexesNearby() > 0) return true;
+                if (adjHex.active && adjHex.sameFraction(fraction) && adjHex.numberOfFriendlyHexesNearby() > 0) return true;
             }
         }
         return false;
@@ -329,11 +327,11 @@ public class MapGenerator {
 
 
     protected boolean tryToGiveAwayProvince(ArrayList<Hex> provinceList) {
-        for (int i = 0; i < GameRules.colorNumber; i++) {
-            if (i == provinceList.get(0).colorIndex) continue;
-            if (!provinceHasNeighbourWithColor(provinceList, i)) {
+        for (int i = 0; i < GameRules.fractionsQuantity; i++) {
+            if (i == provinceList.get(0).fraction) continue;
+            if (!provinceHasNeighbourWithFraction(provinceList, i)) {
                 for (Hex hex : provinceList) {
-                    hex.colorIndex = i;
+                    hex.fraction = i;
                 }
                 return true;
             }
@@ -352,7 +350,7 @@ public class MapGenerator {
     protected boolean giveProvinceToSomeone(int giverIndex) {
         clearGenFlags();
         for (Hex activeHex : gameController.fieldController.activeHexes) {
-            if (activeHex.sameColor(giverIndex) && !activeHex.genFlag) {
+            if (activeHex.sameFraction(giverIndex) && !activeHex.genFlag) {
                 ArrayList<Hex> provinceList = detectorProvince.detectProvince(activeHex);
                 if (provinceList.size() > 1) {
                     tagProvince(provinceList);
@@ -365,7 +363,7 @@ public class MapGenerator {
 
 
     protected void achieveFairNumberOfProvincesForEveryPlayer() {
-        int numbers[] = new int[GameRules.colorNumber];
+        int numbers[] = new int[GameRules.fractionsQuantity];
         countProvinces(numbers);
         int loopLimit = 50;
         while (maxDifferenceInNumbers(numbers) > 1 && loopLimit > 0) {
@@ -402,7 +400,7 @@ public class MapGenerator {
         for (int i = 0; i < fWidth; i++) {
             for (int j = 0; j < fHeight; j++) {
                 field[i][j].genFlag = field[i][j].active;
-                field[i][j].lastColorIndex = field[i][j].colorIndex;
+                field[i][j].previousFraction = field[i][j].fraction;
             }
         }
 
@@ -414,7 +412,7 @@ public class MapGenerator {
                 int destX = i + deltaX;
                 int destY = j + deltaY;
                 if (destX >= 0 && destY >= 0 && destX < fWidth && deltaY < fHeight) {
-                    if (field[i][j].genFlag) activateHex(field[destX][destY], field[i][j].lastColorIndex);
+                    if (field[i][j].genFlag) activateHex(field[destX][destY], field[i][j].previousFraction);
                 } else {
                     deactivateHex(field[i][j]);
                 }
@@ -568,15 +566,15 @@ public class MapGenerator {
     }
 
 
-    protected int getRandomColor() {
-        return random.nextInt(GameRules.colorNumber);
+    protected int getRandomFraction() {
+        return random.nextInt(GameRules.fractionsQuantity);
     }
 
 
-    protected boolean activateHex(Hex hex, int color) {
+    protected boolean activateHex(Hex hex, int fraction) {
         if (hex.active) return false;
         hex.active = true;
-        hex.setColorIndex(color);
+        hex.setFraction(fraction);
         ListIterator activeIterator = gameController.fieldController.activeHexes.listIterator();
         activeIterator.add(hex);
         return true;
@@ -599,7 +597,7 @@ public class MapGenerator {
             propagationList.remove(0);
             hex.genFlag = true;
             if (random.nextInt(size) > hex.genPotential) continue;
-            boolean activated = activateHex(hex, getRandomColor());
+            boolean activated = activateHex(hex, getRandomFraction());
             if (hex.genPotential == 0 || !activated) continue;
             for (int i = 0; i < 6; i++) {
                 Hex adjHex = hex.getAdjacentHex(i);
@@ -675,7 +673,7 @@ public class MapGenerator {
         for (int i = 0; i < fWidth; i++) {
             for (int j = 0; j < fHeight; j++) {
                 if (!field[i][j].active && isHexInsideBounds(field[i][j]) && field[i][j].numberOfActiveHexesNearby() == 6) {
-                    activateHex(field[i][j], getRandomColor());
+                    activateHex(field[i][j], getRandomFraction());
                 }
             }
         }
@@ -704,9 +702,9 @@ public class MapGenerator {
             case LevelSize.MEDIUM:
                 return 4;
             case LevelSize.BIG:
-                return 12;
+                return 20;
             case LevelSize.HUGE:
-                return 25;
+                return 35;
         }
     }
 

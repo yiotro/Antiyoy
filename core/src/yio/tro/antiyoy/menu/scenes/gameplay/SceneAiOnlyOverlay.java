@@ -5,9 +5,9 @@ import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.scenes.AbstractScene;
 import yio.tro.antiyoy.menu.speed_panel.SpeedPanel;
-import yio.tro.antiyoy.menu.behaviors.Reaction;
 
 public class SceneAiOnlyOverlay extends AbstractScene {
 
@@ -43,9 +43,8 @@ public class SceneAiOnlyOverlay extends AbstractScene {
         inGameMenuButton = buttonFactory.getButton(generateSquare(1 - 0.07 / YioGdxGame.screenRatio, 0.93, 0.07), 530, null);
         menuControllerYio.loadButtonOnce(inGameMenuButton, "menu_icon.png");
         inGameMenuButton.setReaction(Reaction.rbPauseMenu);
-        inGameMenuButton.setAnimation(Animation.UP);
+        inGameMenuButton.setAnimation(Animation.up);
         inGameMenuButton.enableRectangularMask();
-        inGameMenuButton.disableTouchAnimation();
     }
 
 
@@ -62,10 +61,9 @@ public class SceneAiOnlyOverlay extends AbstractScene {
         coinButton = menuControllerYio.getButtonById(531);
         if (coinButton == null) { // init
             coinButton = buttonFactory.getButton(generateSquare(0, 0.93, 0.07), 531, null);
-            coinButton.setAnimation(Animation.UP);
+            coinButton.setAnimation(Animation.up);
             coinButton.setPressSound(SoundManagerYio.soundCoin);
             coinButton.enableRectangularMask();
-            coinButton.disableTouchAnimation();
         }
         loadCoinButtonTexture();
         coinButton.appearFactor.appear(3, 2);

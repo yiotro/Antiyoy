@@ -1,15 +1,12 @@
 package yio.tro.antiyoy.menu.loading_screen;
 
-import com.badlogic.gdx.graphics.Color;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.MenuControllerYio;
-import yio.tro.antiyoy.menu.behaviors.gameplay.ColorStatsRenderer;
 import yio.tro.antiyoy.menu.render.MenuRender;
 import yio.tro.antiyoy.stuff.*;
-import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
 public class LoadingScreenElement extends InterfaceElement{
 
@@ -33,7 +30,7 @@ public class LoadingScreenElement extends InterfaceElement{
 
         title = new RenderableTextYio();
         title.setFont(Fonts.gameFont);
-        title.setString(LanguagesManager.getInstance().getString("loading") + "...");
+        title.setString("...");
         title.updateMetrics();
     }
 
@@ -163,12 +160,6 @@ public class LoadingScreenElement extends InterfaceElement{
 
 
     @Override
-    public boolean isButton() {
-        return false;
-    }
-
-
-    @Override
     public void setPosition(RectangleYio position) {
 
     }
@@ -182,6 +173,5 @@ public class LoadingScreenElement extends InterfaceElement{
 
     public void setLoadingParameters(LoadingParameters srcParams) {
         loadingParameters.copyFrom(srcParams);
-        loadingParameters.forceNoLoadingScreen = true;
     }
 }

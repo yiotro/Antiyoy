@@ -40,17 +40,17 @@ public class FriendshipDialog extends AbstractDiplomaticDialog {
         this.recipient = recipient;
 
         updateAll();
-        updateTagColor();
+        updateTagFraction();
     }
 
 
-    private void updateTagColor() {
-        int color = sender.color;
+    private void updateTagFraction() {
+        int fraction = sender.fraction;
         if (sender.isMain()) {
-            color = recipient.color;
+            fraction = recipient.fraction;
         }
 
-        setTagColor(color);
+        setTagFraction(fraction);
     }
 
 

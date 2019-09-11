@@ -4,7 +4,7 @@ import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.diplomatic_dialogs.ConfirmDislikeDialog;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
-public class SceneConfirmDislike extends AbstractGameplayScene{
+public class SceneConfirmDislike extends AbstractModalScene {
 
     public ConfirmDislikeDialog dialog;
 

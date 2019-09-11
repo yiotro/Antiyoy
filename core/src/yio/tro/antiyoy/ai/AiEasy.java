@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class AiEasy extends ArtificialIntelligence {
 
-    public AiEasy(GameController gameController, int color) {
-        super(gameController, color);
+    public AiEasy(GameController gameController, int fraction) {
+        super(gameController, fraction);
     }
 
 

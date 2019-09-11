@@ -1,9 +1,9 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.menu.Animation;
-import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 
 public class SceneConfirmReset extends AbstractScene{
 
@@ -32,21 +32,19 @@ public class SceneConfirmReset extends AbstractScene{
             menuControllerYio.getButtonRenderer().renderButton(basePanel);
         }
         basePanel.setTouchable(false);
-        basePanel.setAnimation(Animation.FROM_CENTER);
+        basePanel.setAnimation(Animation.from_center);
 
         yesButton = buttonFactory.getButton(generateRectangle(0.5, 0.4, 0.45, 0.05), 411, getString("menu_reset"));
         yesButton.setReaction(Reaction.rbResetProgress);
         yesButton.setShadow(false);
-        yesButton.disableTouchAnimation();
         yesButton.setVisualHook(basePanel);
-        yesButton.setAnimation(Animation.FROM_CENTER);
+        yesButton.setAnimation(Animation.from_center);
 
         noButton = buttonFactory.getButton(generateRectangle(0.05, 0.4, 0.45, 0.05), 412, getString("cancel"));
         noButton.setReaction(Reaction.rbMoreSettings);
         noButton.setShadow(false);
-        noButton.disableTouchAnimation();
         noButton.setVisualHook(basePanel);
-        noButton.setAnimation(Animation.FROM_CENTER);
+        noButton.setAnimation(Animation.from_center);
 
         menuControllerYio.endMenuCreation();
     }

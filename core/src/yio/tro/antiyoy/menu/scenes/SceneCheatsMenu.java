@@ -92,7 +92,7 @@ public class SceneCheatsMenu extends AbstractScene{
         ArrayList<Hex> activeHexes = getGameController().fieldController.activeHexes;
         int c = 0;
         for (Hex activeHex : activeHexes) {
-            if (activeHex.colorIndex != getGameController().turn) continue;
+            if (!getGameController().isCurrentTurn(activeHex.fraction)) continue;
 
             c++;
         }
@@ -105,15 +105,10 @@ public class SceneCheatsMenu extends AbstractScene{
         GameController gameController = getGameController();
 
         for (Province province : gameController.fieldController.provinces) {
-            if (province.getColor() != gameController.turn) continue;
+            if (province.getFraction() != gameController.turn) continue;
 
             province.money += 1000;
         }
-    }
-
-
-    private GameController getGameController() {
-        return menuControllerYio.yioGdxGame.gameController;
     }
 
 
@@ -140,8 +135,7 @@ public class SceneCheatsMenu extends AbstractScene{
     private void addInnerButton(int id, String title, Reaction reaction) {
         ButtonYio button = buttonFactory.getButton(generateRectangle(0.15, y, 0.7, 0.06), id, title);
         button.setReaction(reaction);
-        button.setAnimation(Animation.FROM_CENTER);
-        button.disableTouchAnimation();
+        button.setAnimation(Animation.from_center);
         button.setTouchOffset(0.01f * GraphicsYio.height);
         y -= 0.08;
     }
@@ -152,7 +146,7 @@ public class SceneCheatsMenu extends AbstractScene{
         list.clear();
 
         for (Hex activeHex : gameController.fieldController.activeHexes) {
-            if (activeHex.sameColor(0)) continue;
+            if (activeHex.sameFraction(0)) continue;
             if (!hasAtLeastOnePlayerHexNearby(activeHex)) continue;
             if (gameController.getRandom().nextDouble() < 0.25) continue;
 
@@ -160,8 +154,8 @@ public class SceneCheatsMenu extends AbstractScene{
         }
 
         for (Hex hex : list) {
-            gameController.fieldController.setHexColor(hex, 0);
-            gameController.replayManager.onHexChangedColorWithoutObviousReason(hex);
+            gameController.fieldController.setHexFraction(hex, 0);
+            gameController.replayManager.onHexChangedFractionWithoutObviousReason(hex);
         }
         list.clear();
     }
@@ -172,7 +166,7 @@ public class SceneCheatsMenu extends AbstractScene{
             Hex adjacentHex = hex.getAdjacentHex(dir);
             if (adjacentHex == null) continue;
             if (!adjacentHex.active) continue;
-            if (!adjacentHex.sameColor(0)) continue;
+            if (!adjacentHex.sameFraction(0)) continue;
 
             return true;
         }

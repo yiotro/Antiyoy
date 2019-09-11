@@ -2,9 +2,9 @@ package yio.tro.antiyoy.menu.scenes;
 
 import com.badlogic.gdx.Gdx;
 import yio.tro.antiyoy.menu.Animation;
-import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 
 import java.util.ArrayList;
 
@@ -39,7 +39,7 @@ public class SceneAboutGame extends AbstractScene{
         menuControllerYio.getButtonRenderer().renderButton(infoPanel);
 
         infoPanel.setTouchable(false);
-        infoPanel.setAnimation(Animation.FROM_CENTER);
+        infoPanel.setAnimation(Animation.from_center);
         infoPanel.appearFactor.appear(2, 1.5);
 
         menuControllerYio.endMenuCreation();
@@ -52,14 +52,13 @@ public class SceneAboutGame extends AbstractScene{
 
         ButtonYio helpIndexButton = buttonFactory.getButton(generateRectangle(0.5, 0.9, 0.45, 0.07), 38123714, getString("help"));
         helpIndexButton.setReaction(Reaction.rbHelpIndex);
-        helpIndexButton.setAnimation(Animation.UP);
+        helpIndexButton.setAnimation(Animation.up);
 
         ButtonYio moreInfoButton = buttonFactory.getButton(generateRectangle(0.65, 0.1, 0.3, 0.04), 38123717, getString("more"));
         moreInfoButton.setReaction(Reaction.rbSpecialThanksMenu);
-        moreInfoButton.setAnimation(Animation.FROM_CENTER);
+        moreInfoButton.setAnimation(Animation.from_center);
         moreInfoButton.setShadow(false);
         moreInfoButton.setVisualHook(infoPanel);
-        moreInfoButton.disableTouchAnimation();
         moreInfoButton.setTouchOffset(0.05f * Gdx.graphics.getHeight());
     }
 }

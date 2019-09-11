@@ -24,7 +24,7 @@ public class RenderExclamationMarks extends GameRender{
         if (!gameController.isPlayerTurn()) return;
 
         for (Province province : gameController.fieldController.provinces) {
-            if (!gameController.isCurrentTurn(province.getColor())) continue;
+            if (!gameController.isCurrentTurn(province.getFraction())) continue;
             if (province.money < GameRules.PRICE_UNIT) continue;
 
             Hex capitalHex = province.getCapital();

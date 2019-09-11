@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.menu.context_list_menu;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import yio.tro.antiyoy.KeyboardManager;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.keyboard.AbstractKbReaction;
@@ -166,9 +167,7 @@ public class ContextListMenuElement extends InterfaceElement{
         }
 
         if (item.key.equals("rename")) {
-            Scenes.sceneKeyboard.create();
-            Scenes.sceneKeyboard.setValue(editableItem.getEditableName());
-            Scenes.sceneKeyboard.setReaction(new AbstractKbReaction() {
+            KeyboardManager.getInstance().apply(editableItem.getEditableName(), new AbstractKbReaction() {
                 @Override
                 public void onInputFromKeyboardReceived(String input) {
                     editableItem.rename(input);
@@ -249,12 +248,6 @@ public class ContextListMenuElement extends InterfaceElement{
     @Override
     public void setTouchable(boolean touchable) {
 
-    }
-
-
-    @Override
-    public boolean isButton() {
-        return false;
     }
 
 

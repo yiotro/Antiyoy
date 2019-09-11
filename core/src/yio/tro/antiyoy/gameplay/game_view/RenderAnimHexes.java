@@ -6,7 +6,7 @@ import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.PointYio;
 
-public class RenderAnimHexes extends GameRender{
+public class RenderAnimHexes extends GameRender {
 
 
     private PointYio pos;
@@ -55,7 +55,7 @@ public class RenderAnimHexes extends GameRender{
     private void renderBetweenHexesStuff(Hex hex) {
         for (int dir = 0; dir < 6; dir++) {
             Hex adj = hex.getAdjacentHex(dir);
-            if (adj == null || (adj.active && adj.sameColor(hex))) continue;
+            if (adj == null || (adj.active && adj.sameFraction(hex))) continue;
 
             if (isDirectionDown(dir)) {
                 renderGradientShadow(batchMovable, hex, adj);
@@ -68,18 +68,19 @@ public class RenderAnimHexes extends GameRender{
 
     private void renderHexesThatChangeColor() {
         TextureRegion previousTexture, targetTexture;
+        GameTexturesManager texturesManager = gameView.texturesManager;
 
         for (Hex hex : gameController.fieldController.animHexes) {
             pos = hex.getPos();
             if (!isPosInViewFrame(pos, hexViewSize)) continue;
 
             if (hex.animFactor.get() < 1) {
-                previousTexture = gameView.texturesManager.getHexTextureByColor(hex.lastColorIndex);
+                previousTexture = texturesManager.getHexTextureByFraction(hex.previousFraction);
                 batchMovable.setColor(c.r, c.g, c.b, 1f - hex.animFactor.get());
                 GraphicsYio.drawFromCenter(batchMovable, previousTexture, pos.x, pos.y, hexViewSize);
             }
 
-            targetTexture = gameView.texturesManager.getHexTextureByColor(hex.colorIndex);
+            targetTexture = texturesManager.getHexTextureByFraction(hex.fraction);
             batchMovable.setColor(c.r, c.g, c.b, hex.animFactor.get());
             GraphicsYio.drawFromCenter(batchMovable, targetTexture, pos.x, pos.y, hexViewSize);
         }

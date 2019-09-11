@@ -89,6 +89,7 @@ public class NotificationElement extends InterfaceElement{
     public void appear() {
         appearFactor.setValues(0.01, 0);
         appearFactor.appear(3, 1);
+        move();
     }
 
 
@@ -131,12 +132,6 @@ public class NotificationElement extends InterfaceElement{
     @Override
     public void setTouchable(boolean touchable) {
 
-    }
-
-
-    @Override
-    public boolean isButton() {
-        return false;
     }
 
 

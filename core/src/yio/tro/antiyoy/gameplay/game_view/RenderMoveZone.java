@@ -11,7 +11,7 @@ import yio.tro.antiyoy.stuff.PointYio;
 
 import java.util.ArrayList;
 
-public class RenderMoveZone extends GameRender{
+public class RenderMoveZone extends GameRender {
 
 
     private PointYio pos;
@@ -68,7 +68,7 @@ public class RenderMoveZone extends GameRender{
         for (Hex hex : moveZone) {
             for (int dir = 0; dir < 6; dir++) {
                 Hex adj = hex.getAdjacentHex(dir);
-                if (adj == null || adj.isNullHex() || (adj.active && adj.sameColor(hex))) continue;
+                if (adj == null || adj.isNullHex() || (adj.active && adj.sameFraction(hex))) continue;
 
                 renderLineBetweenHexesWithOffset(batchMovable, gameView.texturesManager.selectionBorder, hex,
                         adj,
@@ -120,7 +120,7 @@ public class RenderMoveZone extends GameRender{
 
             for (int dir = 0; dir < 6; dir++) {
                 Hex adjacentHex = hex.getAdjacentHex(dir);
-                if (adjacentHex == null || (adjacentHex.active && adjacentHex.sameColor(hex))) continue;
+                if (adjacentHex == null || (adjacentHex.active && adjacentHex.sameFraction(hex))) continue;
 
                 renderLineBetweenHexes(batchMovable, adjacentHex, hex, gameView.borderLineThickness, dir);
             }
@@ -133,24 +133,25 @@ public class RenderMoveZone extends GameRender{
 
 
     private void renderHexBackgrounds() {
+        GameTexturesManager texturesManager = gameView.texturesManager;
         for (Hex hex : moveZone) {
             pos = hex.getPos();
             if (!isPosInViewFrame(pos, hvSize)) continue;
 
-            if (gameController.isPlayerTurn(hex.colorIndex) && hex.animFactor.get() < 1 && hex.animFactor.getDy() > 0) {
+            if (gameController.isPlayerTurn(hex.fraction) && hex.animFactor.get() < 1 && hex.animFactor.getDy() > 0) {
                 if (hex.animFactor.get() < 1) {
-                    currentHexLastTexture = gameView.texturesManager.getHexTextureByColor(hex.lastColorIndex);
+                    currentHexLastTexture = texturesManager.getHexTextureByFraction(hex.previousFraction);
                     batchMovable.setColor(c.r, c.g, c.b, 1f - hex.animFactor.get());
                     batchMovable.draw(currentHexLastTexture, pos.x - hvSize, pos.y - hvSize, 2 * hvSize, 2 * hvSize);
                 }
-                currentHexTexture = gameView.texturesManager.getHexTextureByColor(hex.colorIndex);
+                currentHexTexture = texturesManager.getHexTextureByFraction(hex.fraction);
                 batchMovable.setColor(c.r, c.g, c.b, hex.animFactor.get());
                 batchMovable.draw(currentHexTexture, pos.x - hvSize, pos.y - hvSize, 2 * hvSize, 2 * hvSize);
                 continue;
             }
 
             batchMovable.setColor(c.r, c.g, c.b, 1);
-            currentHexTexture = gameView.texturesManager.getHexTextureByColor(hex.colorIndex);
+            currentHexTexture = texturesManager.getHexTextureByFraction(hex.fraction);
             batchMovable.draw(currentHexTexture, pos.x - hvSize, pos.y - hvSize, 2 * hvSize, 2 * hvSize);
         }
     }

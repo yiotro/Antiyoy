@@ -1,11 +1,11 @@
 package yio.tro.antiyoy.menu.scenes.gameplay;
 
 import yio.tro.antiyoy.menu.Animation;
-import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 
-public class SceneIncomeGraph extends AbstractGameplayScene {
+public class SceneIncomeGraph extends AbstractModalScene {
 
 
     public ButtonYio showPanel;
@@ -47,14 +47,14 @@ public class SceneIncomeGraph extends AbstractGameplayScene {
         }
         closeButton.setReaction(rbHide);
         closeButton.setSelectionRenderable(false);
-        closeButton.setAnimation(Animation.NONE);
+        closeButton.setAnimation(Animation.none);
     }
 
 
     private void createShowPanel() {
         showPanel = buttonFactory.getButton(generateRectangle(0, 0.15, 1, 0.41), 56321, null);
         showPanel.setTouchable(false);
-        showPanel.setAnimation(Animation.FIXED_DOWN);
+        showPanel.setAnimation(Animation.fixed_down);
         showPanel.setIgnorePauseResume(true);
     }
 

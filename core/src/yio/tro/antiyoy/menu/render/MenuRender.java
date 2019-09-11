@@ -16,7 +16,6 @@ public abstract class MenuRender {
     static ArrayList<MenuRender> list = new ArrayList<>();
 
     public static RenderLevelSelector renderLevelSelector = new RenderLevelSelector();
-    public static RenderCheckButton renderCheckButton = new RenderCheckButton();
     public static RenderSpeedPanel renderSpeedPanel = new RenderSpeedPanel();
     public static RenderReplaySelector renderReplaySelector = new RenderReplaySelector();
     public static RenderFastConstructionPanel renderFastConstructionPanel = new RenderFastConstructionPanel();
@@ -30,11 +29,22 @@ public abstract class MenuRender {
     public static RenderSpecialThanksDialog renderSpecialThanksDialog = new RenderSpecialThanksDialog();
     public static RenderTurnStartDialog renderTurnStartDialog = new RenderTurnStartDialog();
     public static RenderDiplomaticLogPanel renderDiplomaticLogPanel = new RenderDiplomaticLogPanel();
-    public static RenderKeyboardElement renderKeyboardElement = new RenderKeyboardElement();
+    public static RenderBasicKeyboardElement renderBasicKeyboardElement = new RenderBasicKeyboardElement();
     public static RenderContextListMenuElement renderContextListMenuElement = new RenderContextListMenuElement();
     public static RenderShadow renderShadow = new RenderShadow();
     public static RenderTextViewElement renderTextViewElement = new RenderTextViewElement();
     public static RenderLoadingScreenElement renderLoadingScreenElement = new RenderLoadingScreenElement();
+    public static RenderCheckButton renderCheckButton = new RenderCheckButton();
+    public static RenderNativeKeyboard renderNativeKeyboard = new RenderNativeKeyboard();
+    public static RenderCustomizableList renderCustomizableList = new RenderCustomizableList();
+    public static RenderSingleListItem renderSingleListItem = new RenderSingleListItem();
+    public static RenderTitleListItem renderTitleListItem = new RenderTitleListItem();
+    public static RenderSkinListItem renderSkinListItem = new RenderSkinListItem();
+    public static RenderTextLabel renderTextLabel = new RenderTextLabel();
+    public static RenderRelationListItem renderRelationListItem = new RenderRelationListItem();
+    public static RenderAddEditorRelationElement renderAddEditorRelationElement = new RenderAddEditorRelationElement();
+    public static RenderColorPickerElement renderColorPickerElement = new RenderColorPickerElement();
+    public static RenderEditLandElement renderEditLandElement = new RenderEditLandElement();
 
     protected MenuViewYio menuViewYio;
     protected SpriteBatch batch;

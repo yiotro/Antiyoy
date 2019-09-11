@@ -33,7 +33,7 @@ public class SceneMapTooBig extends AbstractScene{
         }
         menuControllerYio.buttonRenderer.renderButton(panel);
         panel.setTouchable(false);
-        panel.setAnimation(Animation.FROM_CENTER);
+        panel.setAnimation(Animation.from_center);
 
         okButton = buttonFactory.getButton(generateRectangle(0.55, 0.33, 0.4, 0.05), 841, LanguagesManager.getInstance().getString("end_game_ok"));
         okButton.setTouchOffset(0.1f * GraphicsYio.width);
@@ -41,10 +41,10 @@ public class SceneMapTooBig extends AbstractScene{
         okButton.setReaction(new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
-                Scenes.sceneEditorActions.create();
+                Scenes.sceneEditorPauseMenu.create();
             }
         });
-        okButton.setAnimation(Animation.FROM_CENTER);
+        okButton.setAnimation(Animation.from_center);
 
         menuControllerYio.endMenuCreation();
     }

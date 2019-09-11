@@ -11,6 +11,6 @@ public class RbSettingsMenu extends Reaction {
 
     @Override
     public void perform(ButtonYio buttonYio) {
-        Scenes.sceneSettingsMenu.create();
+        Scenes.sceneSettings.create();
     }
 }

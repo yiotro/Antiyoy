@@ -8,7 +8,7 @@ import yio.tro.antiyoy.menu.slider.SliderYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
 
-public class SceneTransferMoneyDialog extends AbstractGameplayScene{
+public class SceneTransferMoneyDialog extends AbstractModalScene {
 
     public TransferMoneyDialog dialog;
     public SliderYio moneySlider;
@@ -56,7 +56,7 @@ public class SceneTransferMoneyDialog extends AbstractGameplayScene{
         RectangleYio pos = generateRectangle((1 - sWidth) / 2, 0, sWidth, 0);
 
         moneySlider = new SliderYio(menuControllerYio, -1);
-        moneySlider.setValues(0, 0, moneyValues.length - 1, Animation.DOWN);
+        moneySlider.setValues(0, 0, moneyValues.length - 1, Animation.down);
         moneySlider.setPosition(pos);
         moneySlider.setParentElement(dialog, 0.15);
         moneySlider.setTitle("money");

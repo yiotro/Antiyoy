@@ -4,6 +4,7 @@ import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.Fonts;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 
@@ -40,18 +41,18 @@ public class HexSaleDialog extends AbstractDiplomaticDialog {
         this.recipient = recipient;
 
         Hex firstHex = hexesToSell.get(0);
-        sender = getDiplomacyManager().getEntity(firstHex.colorIndex);
+        sender = getDiplomacyManager().getEntity(firstHex.fraction);
 
         this.hexesToSell.clear();
         this.hexesToSell.addAll(hexesToSell);
 
         updateAll();
-        updateTagColor();
+        updateTagFraction();
     }
 
 
-    private void updateTagColor() {
-        setTagColor(recipient.color);
+    private void updateTagFraction() {
+        setTagFraction(recipient.fraction);
     }
 
 
@@ -80,14 +81,6 @@ public class HexSaleDialog extends AbstractDiplomaticDialog {
 
         addLabel(instance.getString("quantity") + ": " + hexesToSell.size(), Fonts.smallerMenuFont, leftOffset, y);
         y -= lineOffset;
-
-        addLabel(instance.getString("price") + ": $" + getMoneyString(), Fonts.smallerMenuFont, leftOffset, y);
-        y -= lineOffset;
-    }
-
-
-    private String getMoneyString() {
-        return getPrice() + "";
     }
 
 
@@ -103,7 +96,9 @@ public class HexSaleDialog extends AbstractDiplomaticDialog {
 
     @Override
     protected void onYesButtonPressed() {
-        getDiplomacyManager().onEntityRequestedHexSell(sender, recipient, hexesToSell, getPrice());
+        int valueIndex = Scenes.sceneHexSaleDialog.moneySlider.getValueIndex();
+        int moneyValue = Scenes.sceneHexSaleDialog.moneyValues[valueIndex];
+        getDiplomacyManager().onEntityRequestedHexSell(sender, recipient, hexesToSell, moneyValue);
         destroy();
     }
 
@@ -117,6 +112,11 @@ public class HexSaleDialog extends AbstractDiplomaticDialog {
     @Override
     public boolean isInSingleButtonMode() {
         return true;
+    }
+
+
+    public ArrayList<Hex> getHexesToSell() {
+        return hexesToSell;
     }
 
 

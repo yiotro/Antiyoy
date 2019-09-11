@@ -1,9 +1,9 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.menu.Animation;
-import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 
 public class SceneTutorialIndex extends AbstractScene{
 
@@ -35,7 +35,7 @@ public class SceneTutorialIndex extends AbstractScene{
         ButtonYio topicButton = buttonFactory.getButton(generateRectangle(0.05, y, 0.9, 0.08), id, getString(key));
         topicButton.setReaction(reaction);
         topicButton.setShadow(false);
-        topicButton.setAnimation(Animation.FROM_CENTER);
+        topicButton.setAnimation(Animation.from_center);
     }
 
 
@@ -49,6 +49,6 @@ public class SceneTutorialIndex extends AbstractScene{
             menuControllerYio.getButtonRenderer().renderButton(basePanel);
         }
         basePanel.setTouchable(false);
-        basePanel.setAnimation(Animation.FROM_CENTER);
+        basePanel.setAnimation(Animation.from_center);
     }
 }

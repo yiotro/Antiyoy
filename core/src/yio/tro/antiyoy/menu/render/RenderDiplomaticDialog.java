@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.diplomatic_dialogs.AbstractDiplomaticDialog;
+import yio.tro.antiyoy.menu.diplomatic_dialogs.AcActionType;
 import yio.tro.antiyoy.menu.diplomatic_dialogs.AcButton;
 import yio.tro.antiyoy.menu.diplomatic_dialogs.AcLabel;
 import yio.tro.antiyoy.stuff.GraphicsYio;
@@ -15,6 +16,7 @@ public class RenderDiplomaticDialog extends MenuRender{
     AbstractDiplomaticDialog dialog;
     private TextureRegion yesBckTexture;
     private TextureRegion noBckTexture;
+    private TextureRegion customBckTexture;
 
 
     @Override
@@ -24,6 +26,7 @@ public class RenderDiplomaticDialog extends MenuRender{
 
         yesBckTexture = GraphicsYio.loadTextureRegion("button_background_3.png", false);
         noBckTexture = GraphicsYio.loadTextureRegion("button_background_1.png", false);
+        customBckTexture = GraphicsYio.loadTextureRegion("button_background_2.png", false);
     }
 
 
@@ -48,10 +51,10 @@ public class RenderDiplomaticDialog extends MenuRender{
 
 
     private void renderColorTag() {
-        if (dialog.getTagColor() == -1) return;
+        if (dialog.getTagFraction() == -1) return;
 
-        int tagColor = menuViewYio.yioGdxGame.gameController.getColorIndexWithOffset(dialog.getTagColor());
-        TextureRegion tagPixel = MenuRender.renderDiplomacyElement.getBackgroundPixel(tagColor);
+        int color = menuViewYio.yioGdxGame.gameController.getColorByFraction(dialog.getTagFraction());
+        TextureRegion tagPixel = MenuRender.renderDiplomacyElement.getBackgroundPixelByColor(color);
 
         GraphicsYio.drawByRectangle(
                 batch,
@@ -65,7 +68,7 @@ public class RenderDiplomaticDialog extends MenuRender{
         if (!dialog.areButtonsEnabled()) return;
 
         for (AcButton button : dialog.buttons) {
-            if (dialog.isInSingleButtonMode() && button.action != AcButton.ACTION_YES) continue;
+            if (dialog.isInSingleButtonMode() && button.actionType != AcActionType.yes) continue;
 
             GraphicsYio.drawByRectangle(
                     batch,
@@ -101,10 +104,10 @@ public class RenderDiplomaticDialog extends MenuRender{
 
 
     private TextureRegion getButtonBackground(AcButton button) {
-        switch (button.action) {
-            default: return null;
-            case AcButton.ACTION_YES: return yesBckTexture;
-            case AcButton.ACTION_NO: return noBckTexture;
+        switch (button.actionType) {
+            default: return customBckTexture;
+            case yes: return yesBckTexture;
+            case no: return noBckTexture;
         }
     }
 

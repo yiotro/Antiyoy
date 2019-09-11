@@ -3,7 +3,7 @@ package yio.tro.antiyoy.menu.scenes.gameplay;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.TurnStartDialog;
 
-public class SceneTurnStartDialog extends AbstractGameplayScene{
+public class SceneTurnStartDialog extends AbstractModalScene {
 
     public TurnStartDialog dialog;
 

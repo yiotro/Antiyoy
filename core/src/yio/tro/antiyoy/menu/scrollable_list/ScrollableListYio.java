@@ -192,7 +192,11 @@ public class ScrollableListYio extends InterfaceElement {
 
 
     protected void updateEdgeRectangles() {
-        if (items.size() == 0) return;
+        if (items.size() == 0) {
+            topEdge.setBy(position);
+            bottomEdge.setBy(position);
+            return;
+        }
 
         ListItemYio firstItem = items.get(0);
         topEdge.setBy(firstItem.position);
@@ -359,8 +363,8 @@ public class ScrollableListYio extends InterfaceElement {
         if (touched) {
             readyToProcessLongTap = false;
             scrollLock = false;
-            clickDetector.touchDown(currentTouch);
-            scrollEngineYio.updateCanSoftCorrect(false);
+            clickDetector.onTouchDown(currentTouch);
+            scrollEngineYio.onTouchDown();
             longTapDetector.onTouchDown(currentTouch);
 
             checkToSelectItems();
@@ -395,7 +399,7 @@ public class ScrollableListYio extends InterfaceElement {
                 scrollEngineYio.setSpeed(currentTouch.y - lastTouch.y);
             }
 
-            clickDetector.touchDrag(currentTouch);
+            clickDetector.onTouchDrag(currentTouch);
             longTapDetector.onTouchDrag(currentTouch);
         }
 
@@ -406,11 +410,11 @@ public class ScrollableListYio extends InterfaceElement {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         updateCurrentTouch(screenX, screenY);
-        scrollEngineYio.updateCanSoftCorrect(true);
+        scrollEngineYio.onTouchUp();
 
         if (touched) {
             touched = false;
-            clickDetector.touchUp(currentTouch);
+            clickDetector.onTouchUp(currentTouch);
             longTapDetector.onTouchUp(currentTouch);
 
             if (clickDetector.isClicked()) {
@@ -457,12 +461,6 @@ public class ScrollableListYio extends InterfaceElement {
     @Override
     public void setTouchable(boolean touchable) {
 
-    }
-
-
-    @Override
-    public boolean isButton() {
-        return false;
     }
 
 

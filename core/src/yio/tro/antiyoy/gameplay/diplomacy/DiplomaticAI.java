@@ -5,6 +5,7 @@ import yio.tro.antiyoy.gameplay.DebugFlags;
 import yio.tro.antiyoy.gameplay.FieldController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 
 import java.util.ArrayList;
 
@@ -13,6 +14,7 @@ public class DiplomaticAI {
     DiplomacyManager diplomacyManager;
     private ArrayList<Province> tempProvinceList;
     private ArrayList<Hex> propagationList;
+    String customMessageKeys[];
 
 
     public DiplomaticAI(DiplomacyManager diplomacyManager) {
@@ -20,6 +22,29 @@ public class DiplomaticAI {
 
         tempProvinceList = new ArrayList<>();
         propagationList = new ArrayList<>();
+        initCustomMessageKeys();
+    }
+
+
+    private void initCustomMessageKeys() {
+        customMessageKeys = new String[]{
+                ":P",
+                ":D",
+                ">:D",
+                "o_O",
+                ":P",
+                ":D",
+                ">:D",
+                "o_O",
+                ":P",
+                "!!!",
+                ">:D",
+                ":)",
+                "gen_end_turn",
+                "gen_lets_build_farm",
+                "tut_good_luck",
+                "how_to_play",
+        };
     }
 
 
@@ -35,8 +60,8 @@ public class DiplomaticAI {
     void onAiTurnStarted() {
         if (!getMainEntity().alive) return;
 
-        aiProcessMessages();
         aiSendMessages();
+        aiProcessMessages();
     }
 
 
@@ -47,6 +72,10 @@ public class DiplomaticAI {
 
         if (YioGdxGame.random.nextInt(4) == 0) {
             performAiToHumanBlackMark();
+        }
+
+        if (YioGdxGame.random.nextInt(6) == 0) {
+            checkToProposePeace();
         }
 
         if (getMainEntity().getStateFullMoney() > 100 && YioGdxGame.random.nextInt(15) == 0) {
@@ -64,14 +93,59 @@ public class DiplomaticAI {
         if (getMainEntity().getStateBalance() < 9 && YioGdxGame.random.nextInt(4) == 0) {
             performAiToHumanHexSellProposal();
         }
+
+        if (YioGdxGame.random.nextInt(12) == 0 || doesLogContainMessageToMe()) {
+            sendCustomMessageToHuman();
+        }
+    }
+
+
+    private boolean doesLogContainMessageToMe() {
+        for (DiplomaticMessage message : getLog().messages) {
+            if (message.recipient != getMainEntity()) continue;
+            if (message.isNot(DipMessageType.message)) continue;
+            return true;
+        }
+        return false;
+    }
+
+
+    private void sendCustomMessageToHuman() {
+        DiplomaticEntity mainEntity = getMainEntity();
+
+        DiplomaticEntity randomHumanEntity = getRandomHumanEntity();
+        if (randomHumanEntity == null) return;
+        if (!randomHumanEntity.alive) return;
+
+        int index = YioGdxGame.random.nextInt(customMessageKeys.length);
+        String string = LanguagesManager.getInstance().getString(customMessageKeys[index]);
+
+        DiplomaticMessage diplomaticMessage = getLog().addMessage(DipMessageType.message, mainEntity, randomHumanEntity);
+        diplomaticMessage.setArg1(string);
+    }
+
+
+    private void checkToProposePeace() {
+        DiplomaticEntity mainEntity = getMainEntity();
+
+        DiplomaticEntity randomHumanEntity = getRandomHumanEntity();
+        if (randomHumanEntity == null) return;
+        if (!randomHumanEntity.alive) return;
+
+        int relation = mainEntity.getRelation(randomHumanEntity);
+        if (relation != DiplomaticRelation.ENEMY) return;
+        if (mainEntity.getNumberOfLands() > randomHumanEntity.getNumberOfLands()) return;
+
+        getLog().addMessage(DipMessageType.stop_war, mainEntity, randomHumanEntity);
     }
 
 
     private void performAiToHumanHexSellProposal() {
         DiplomaticEntity humanFriend = getRandomHumanFriend();
         if (humanFriend == null) return;
+        if (countHowManyHexSaleProposalsEntityHas(humanFriend) > 3) return;
 
-        Province province = getRandomProvinceToTradeHexes(getMainEntity().color);
+        Province province = getRandomProvinceToTradeHexes(getMainEntity().fraction);
         if (province == null) return;
 
         preparePropagationListToTrade(province);
@@ -82,18 +156,33 @@ public class DiplomaticAI {
     }
 
 
+    private int countHowManyHexSaleProposalsEntityHas(DiplomaticEntity diplomaticEntity) {
+        int c = 0;
+        for (DiplomaticMessage message : diplomacyManager.log.messages) {
+            if (message.recipient != diplomaticEntity) continue;
+            if (message.type != DipMessageType.hex_sale) continue;
+            c++;
+        }
+        return c;
+    }
+
+
     private void performAiToHumanHexBuyProposal() {
         DiplomaticEntity humanFriend = getRandomHumanFriend();
         if (humanFriend == null) return;
 
-        Province province = getRandomProvinceToTradeHexes(humanFriend.color);
+        Province province = getRandomProvinceToTradeHexes(humanFriend.fraction);
         if (province == null) return;
 
         preparePropagationListToTrade(province);
 
+        int price = diplomacyManager.calculatePriceForHexes(propagationList);
+        if (YioGdxGame.random.nextDouble() < 0.7) {
+            price /= 6 + YioGdxGame.random.nextInt(5);
+        }
         getLog().addMessage(DipMessageType.hex_purchase, getMainEntity(), humanFriend)
                 .setArg1(diplomacyManager.convertHexListToString(propagationList))
-                .setArg2("" + diplomacyManager.calculatePriceForHexes(propagationList));
+                .setArg2("" + price);
     }
 
 
@@ -140,14 +229,14 @@ public class DiplomaticAI {
     }
 
 
-    private Province getRandomProvinceToTradeHexes(int filterColor) {
+    private Province getRandomProvinceToTradeHexes(int filterFraction) {
         int c = 1000;
 
         while (c > 0) {
             c--;
 
             Province randomProvince = getFieldController().getRandomProvince();
-            if (randomProvince.getColor() != filterColor) continue;
+            if (randomProvince.getFraction() != filterFraction) continue;
 
             return randomProvince;
         }
@@ -220,6 +309,9 @@ public class DiplomaticAI {
                 case hex_purchase:
                     if (doesAiAllowToBuyItsHexes(message)) {
                         diplomacyManager.applyHexPurchase(message);
+                    } else {
+                        DiplomaticMessage diplomaticMessage = getLog().addMessage(DipMessageType.message, getMainEntity(), message.sender);
+                        diplomaticMessage.setArg1(":P");
                     }
                     break;
                 case hex_sale:
@@ -245,6 +337,10 @@ public class DiplomaticAI {
         DiplomaticEntity buyer = message.sender;
         DiplomaticEntity seller = message.recipient;
         ArrayList<Hex> hexList = diplomacyManager.convertStringToPurchaseList(message.arg1);
+
+        int realPrice = diplomacyManager.calculatePriceForHexes(hexList);
+        int price = Integer.valueOf(message.arg2);
+        if (price < 0.7 * realPrice) return false;
 
         tempProvinceList.clear();
         for (Hex hex : hexList) {
@@ -282,9 +378,10 @@ public class DiplomaticAI {
                 if (adjacentHex == null) continue;
                 if (adjacentHex == getFieldController().nullHex) continue;
                 if (!adjacentHex.active) continue;
-                if (!adjacentHex.sameColor(hex)) continue;
+                if (!adjacentHex.sameFraction(hex)) continue;
                 if (adjacentHex.flag) continue;
                 if (restrictionList.contains(adjacentHex)) continue;
+                if (propagationList.contains(adjacentHex)) continue;
 
                 propagationList.add(adjacentHex);
             }

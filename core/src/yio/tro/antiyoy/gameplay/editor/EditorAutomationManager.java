@@ -36,7 +36,7 @@ public class EditorAutomationManager {
                 if (YioGdxGame.random.nextDouble() > 0.1) continue;
 
                 objectInside = adjacentHex.objectInside;
-                getFieldController().setHexColor(adjacentHex, activeHex.colorIndex);
+                getFieldController().setHexFraction(adjacentHex, activeHex.fraction);
                 if (objectInside > 0) {
                     levelEditor.placeObject(adjacentHex, objectInside);
                 }
@@ -188,7 +188,7 @@ public class EditorAutomationManager {
 
             for (int j = 0; j < 6; j++) {
                 adj2 = adj1.getAdjacentHex(j);
-                if (adj2.active && adj2.colorIndex != hex.colorIndex) {
+                if (adj2.active && adj2.fraction != hex.fraction) {
                     return true;
                 }
             }
@@ -205,7 +205,7 @@ public class EditorAutomationManager {
 
         for (int i = 0; i < 6; i++) {
             Hex adjHex = hex.getAdjacentHex(i);
-            if (adjHex.active && hex.sameColor(adjHex) && !adjHex.isDefendedByTower()) c++;
+            if (adjHex.active && hex.sameFraction(adjHex) && !adjHex.isDefendedByTower()) c++;
             if (adjHex.containsTower()) c--;
         }
 

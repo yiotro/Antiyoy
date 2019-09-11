@@ -2,6 +2,10 @@ package yio.tro.antiyoy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import yio.tro.antiyoy.stuff.CircleYio;
+import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.PointYio;
+import yio.tro.antiyoy.stuff.Yio;
 
 /**
  * Created by yiotro on 13.08.2014.
@@ -9,13 +13,16 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Splat {
 
     final TextureRegion textureRegion;
-    float x, y, dx, dy, wind, r, speedMultiplier;
+    float x, y, dx, dy, wind, r, speedMultiplier, a;
+    PointYio screenCenter;
 
 
     public Splat(TextureRegion textureRegion, float x, float y) {
         this.textureRegion = textureRegion;
         this.x = x;
         this.y = y;
+        screenCenter = new PointYio(GraphicsYio.width / 2, GraphicsYio.height / 2);
+        a = (float) Yio.getRandomAngle();
     }
 
 
@@ -24,6 +31,13 @@ public class Splat {
         y += dy * speedMultiplier;
         dx += wind;
         if (Math.abs(dx) > 0.001f * Gdx.graphics.getWidth()) wind = -wind;
+    }
+
+
+    void applyToCircle(CircleYio circleYio, double factor) {
+        circleYio.center.set(x, y);
+        circleYio.setRadius(0.5 * r * factor);
+        circleYio.setAngle(a);
     }
 
 

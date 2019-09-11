@@ -17,6 +17,7 @@ public class RbShowColorStats extends Reaction {
     @Override
     public void perform(ButtonYio buttonYio) {
         GameController gameController = getGameController(buttonYio);
+
         if (gameController.playersNumber == 0) {
             gameController.speedManager.applyPause();
         }
@@ -29,14 +30,14 @@ public class RbShowColorStats extends Reaction {
 
 
     private int[] getIncomeArray(GameController gameController) {
-        int[] array = new int[GameRules.colorNumber];
+        int[] array = new int[GameRules.fractionsQuantity];
 
         for (int i = 0; i < array.length; i++) {
             array[i] = 0;
         }
 
         for (Province province : gameController.fieldController.provinces) {
-            array[province.getColor()] += province.getIncome();
+            array[province.getFraction()] += province.getIncome();
         }
 
         return array;

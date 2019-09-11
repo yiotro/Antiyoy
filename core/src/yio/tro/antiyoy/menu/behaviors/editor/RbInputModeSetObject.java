@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.menu.behaviors.editor;
 
+import yio.tro.antiyoy.gameplay.editor.LeInputMode;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.gameplay.editor.LevelEditor;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
@@ -11,7 +12,7 @@ public class RbInputModeSetObject extends Reaction {
 
     @Override
     public void perform(ButtonYio buttonYio) {
-        getGameController(buttonYio).getLevelEditor().setInputMode(LevelEditor.MODE_SET_OBJECT);
+        getGameController(buttonYio).getLevelEditor().setInputMode(LeInputMode.set_object);
         getGameController(buttonYio).getLevelEditor().setInputObject(buttonYio.id - 162);
     }
 }

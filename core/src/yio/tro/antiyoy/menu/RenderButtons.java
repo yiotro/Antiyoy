@@ -3,9 +3,7 @@ package yio.tro.antiyoy.menu;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import yio.tro.antiyoy.OldMasking;
-import yio.tro.antiyoy.factor_yio.FactorYio;
-import yio.tro.antiyoy.gameplay.game_view.GameView;
+import yio.tro.antiyoy.LegacyMasking;
 import yio.tro.antiyoy.menu.render.MenuRender;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.PointYio;
@@ -49,7 +47,6 @@ public class RenderButtons {
         renderShadows();
         drawMasks();
         renderButtons();
-        renderCircularSelections();
     }
 
 
@@ -63,36 +60,6 @@ public class RenderButtons {
     }
 
 
-    void renderCircularSelections() {
-        for (ButtonYio buttonYio : buttons) {
-            if (!buttonYio.isVisible()) continue;
-            if (!buttonYio.isCurrentlyTouched()) continue;
-            if (!buttonYio.touchAnimation) continue;
-            if (buttonYio.selectionFactor.get() >= 1) continue;
-            if (!buttonYio.renderable) continue;
-            if (!buttonYio.selectionRenderable) continue;
-
-            if (((renderAliveButtons && buttonYio.appearFactor.getDy() >= 0) || (renderDyingButtons && buttonYio.appearFactor.getDy() < 0) || buttonYio.selectionFactor.hasToMove())) {
-                OldMasking.begin();
-                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-                checkForSpecialAnimationMask(buttonYio);
-                updateVp(buttonYio);
-                menuViewYio.drawRoundRect(buttonYio.animPos);
-                shapeRenderer.end();
-
-                batch.begin();
-                OldMasking.continueAfterBatchBegin();
-                GraphicsYio.setBatchAlpha(batch, getSelectionAlpha(buttonYio));
-                float r = buttonYio.selectionFactor.get() * buttonYio.animR;
-                batch.draw(blackCircle, buttonYio.touchX - r, buttonYio.touchY - r, 2 * r, 2 * r);
-                batch.end();
-                GraphicsYio.setBatchAlpha(batch, 1);
-                OldMasking.end();
-            }
-        }
-    }
-
-
     private float getSelectionAlpha(ButtonYio buttonYio) {
         if (cutEndConditions(buttonYio)) return 0;
 
@@ -100,41 +67,27 @@ public class RenderButtons {
     }
 
 
-    private boolean checkForSpecialAnimationMask(ButtonYio buttonYio) { // mask when circle fill animation on press
-        RectangleYio pos = buttonYio.animPos;
-        switch (buttonYio.id) {
-            case 41: // main menu button
-                shapeRenderer.rect((float) pos.x, (float) (pos.y + 0.5 * pos.height), (float) pos.width, 0.5f * (float) pos.height);
-                return true;
-            case 42: // resume button
-                shapeRenderer.rect((float) pos.x, (float) pos.y, (float) pos.width, 0.5f * (float) pos.height);
-                return true;
-            case 43: // new game button
-                shapeRenderer.rect((float) pos.x, (float) pos.y, (float) pos.width, (float) pos.height);
-                return true;
-            case 44: // restart button
-                shapeRenderer.rect((float) pos.x, (float) pos.y, (float) pos.width, (float) pos.height);
-                return true;
-        }
-        return false;
-    }
-
-
     void renderButtons() {
         batch.begin();
         if (useMenuMasks) {
-            OldMasking.continueAfterBatchBegin();
+            LegacyMasking.continueAfterBatchBegin();
         }
 
         for (ButtonYio buttonYio : buttons) {
             renderSingleButton(buttonYio);
         }
 
+        for (InterfaceElement interfaceElement : menuViewYio.yioGdxGame.menuControllerYio.interfaceElements) {
+            if (!(interfaceElement instanceof CheckButtonYio)) continue;
+            if (!interfaceElement.isVisible()) continue;
+            MenuRender.renderCheckButton.renderElement(interfaceElement);
+        }
+
         GraphicsYio.setBatchAlpha(batch, 1);
         batch.end();
 
         if (useMenuMasks) {
-            OldMasking.end();
+            LegacyMasking.end();
         }
     }
 
@@ -149,7 +102,7 @@ public class RenderButtons {
         updateVp(buttonYio);
         GraphicsYio.drawByRectangle(batch, buttonYio.textureRegion, visualPosition);
 
-        if (isUsualSelectionVisibleCurrently(buttonYio)) {
+        if (isSelectionCurrentlyVisible(buttonYio)) {
             GraphicsYio.setBatchAlpha(batch, getSelectionAlpha(buttonYio));
             GraphicsYio.drawByRectangle(batch, buttonPixel, visualPosition);
         }
@@ -174,9 +127,8 @@ public class RenderButtons {
     }
 
 
-    private boolean isUsualSelectionVisibleCurrently(ButtonYio buttonYio) {
+    private boolean isSelectionCurrentlyVisible(ButtonYio buttonYio) {
         if (!buttonYio.isCurrentlyTouched()) return false;
-        if (buttonYio.touchAnimation && buttonYio.selectionFactor.get() <= 0.99) return false;
         if (buttonYio.appearFactor.get() <= 0.35) return false;
         if (!buttonYio.selectionRenderable) return false;
 
@@ -217,7 +169,7 @@ public class RenderButtons {
         }
 
         visualPosition.set(
-                buttonYio.position.x,
+                buttonYio.getVpX(),
                 buttonYio.animPos.y,
                 buttonYio.position.width,
                 buttonYio.position.height
@@ -244,7 +196,7 @@ public class RenderButtons {
     void drawMasks() {
         if (!useMenuMasks) return;
 
-        OldMasking.begin();
+        LegacyMasking.begin();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         for (ButtonYio buttonYio : buttons) {

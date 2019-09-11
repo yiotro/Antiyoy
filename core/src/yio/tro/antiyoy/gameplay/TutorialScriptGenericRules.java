@@ -1,13 +1,13 @@
 package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
-import yio.tro.antiyoy.gameplay.loading.LoadingMode;
-import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
-import yio.tro.antiyoy.menu.behaviors.Reaction;
+import yio.tro.antiyoy.gameplay.loading.LoadingType;
 import yio.tro.antiyoy.menu.ButtonYio;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 
 public class TutorialScriptGenericRules extends TutorialScript{
 
@@ -54,23 +54,15 @@ public class TutorialScriptGenericRules extends TutorialScript{
     @Override
     public void createTutorialGame() {
         LoadingParameters instance = LoadingParameters.getInstance();
-        instance.mode = LoadingMode.TUTORIAL;
+        instance.loadingType = LoadingType.tutorial;
         instance.activeHexes = map;
         instance.playersNumber = 1;
-        instance.colorNumber = 5;
+        instance.fractionsQuantity = 5;
         instance.levelSize = 1;
         instance.difficulty = 0;
         instance.colorOffset = 0;
         instance.slayRules = false;
         LoadingManager.getInstance().startGame(instance);
-
-//        GameSaver gameSaver = gameController.gameSaver;
-//        gameSaver.setActiveHexesString(map);
-//        gameSaver.beginRecreation();
-//        gameSaver.setBasicInfo(0, 1, 5, 1, 0);
-//        gameController.colorIndexViewOffset = 0;
-//        GameRules.setSlayRules(false);
-//        gameSaver.endRecreation();
 
         menuControllerYio = gameController.yioGdxGame.menuControllerYio;
         languagesManager = LanguagesManager.getInstance();
@@ -117,7 +109,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
                 CampaignProgressManager.getInstance().markLevelAsCompleted(0);
                 break;
             case STEP_SELECT_PROVINCE:
-                setHexToRespondByColor(0);
+                setHexToRespondByFraction(0);
                 pointToHex(19, 11);
                 break;
             case STEP_SELECT_UNIT:
@@ -428,10 +420,10 @@ public class TutorialScriptGenericRules extends TutorialScript{
     }
 
 
-    private void setHexToRespondByColor(int color) {
+    private void setHexToRespondByFraction(int fraction) {
         ignoreAll();
         for (Hex activeHex : gameController.fieldController.activeHexes) {
-            if (activeHex.colorIndex == color && !activeHex.containsUnit()) {
+            if (activeHex.fraction == fraction && !activeHex.containsUnit()) {
                 activeHex.setIgnoreTouch(false);
             }
         }

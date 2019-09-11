@@ -15,6 +15,7 @@ public class FcpItem {
     public static final int ACTION_UNDO = 8;
     public static final int ACTION_END_TURN = 9;
     public static final int ACTION_DIPLOMACY = 10;
+    public static final int ACTION_LOG = 11;
 
     FastConstructionPanel fastConstructionPanel;
     public PointYio position, delta, touchDelta, animDelta;

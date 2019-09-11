@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
 import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
@@ -64,7 +65,9 @@ public class NamingManager implements SavableYio{
 
 
     private void updateRelatedDiplomaticEntity(Hex hex) {
-        DiplomaticEntity entity = gameController.fieldController.diplomacyManager.getEntity(hex.colorIndex);
+        FieldController fieldController = gameController.fieldController;
+        DiplomacyManager diplomacyManager = fieldController.diplomacyManager;
+        DiplomaticEntity entity = diplomacyManager.getEntity(hex.fraction);
         if (entity == null) return;
         if (!entity.alive) return;
 

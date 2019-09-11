@@ -128,7 +128,7 @@ public class FogOfWarManager {
     boolean isFriendOfCurrentPlayer(Province province) {
         if (!GameRules.diplomacyEnabled) return false;
 
-        DiplomaticEntity entity = fieldController.diplomacyManager.getEntity(province.getColor());
+        DiplomaticEntity entity = fieldController.diplomacyManager.getEntity(province.getFraction());
         if (entity == null) return false;
 
         DiplomaticEntity currentEntity = fieldController.diplomacyManager.getEntity(fieldController.gameController.turn);
@@ -143,7 +143,7 @@ public class FogOfWarManager {
     boolean isFriendOfFirstPlayer(Province province) {
         if (!GameRules.diplomacyEnabled) return false;
 
-        DiplomaticEntity entity = fieldController.diplomacyManager.getEntity(province.getColor());
+        DiplomaticEntity entity = fieldController.diplomacyManager.getEntity(province.getFraction());
         if (entity == null) return false;
 
         DiplomaticEntity firstEntity = fieldController.diplomacyManager.getEntity(0);
@@ -156,12 +156,12 @@ public class FogOfWarManager {
 
 
     private boolean isCurrentPlayerProvince(Province province) {
-        return province.getColor() == fieldController.gameController.turn;
+        return province.getFraction() == fieldController.gameController.turn;
     }
 
 
     private boolean isFirstPlayerProvince(Province province) {
-        return province.getColor() == 0;
+        return province.getFraction() == 0;
     }
 
 

@@ -140,8 +140,8 @@ public class DiplomaticLogPanel extends ScrollableListYio {
             if (message.recipient != mainEntity) continue;
 
             ListItemYio listItemYio = addItem(message.getKey(), message.getListName(), " ");
-            int senderColor = gameController.getColorIndexWithOffset(message.getSenderColor());
-            listItemYio.setBckViewType(senderColor);
+            int color = gameController.getColorByFraction(message.getSenderFraction());
+            listItemYio.setBckViewType(color);
         }
 
         checkToAddClearAllItem();

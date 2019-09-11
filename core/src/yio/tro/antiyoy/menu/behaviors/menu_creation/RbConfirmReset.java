@@ -8,7 +8,7 @@ public class RbConfirmReset extends Reaction {
 
     @Override
     public void perform(ButtonYio buttonYio) {
-        Scenes.sceneMoreSettingsMenu.onDestroy();
+        Scenes.sceneMoreSettings.onDestroy();
         Scenes.sceneConfirmReset.create();
     }
 }

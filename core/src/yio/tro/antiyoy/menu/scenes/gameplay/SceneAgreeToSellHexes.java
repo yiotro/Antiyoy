@@ -4,7 +4,7 @@ import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.diplomatic_dialogs.AgreeToSellHexesDialog;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
-public class SceneAgreeToSellHexes extends AbstractGameplayScene{
+public class SceneAgreeToSellHexes extends AbstractModalScene {
 
     public AgreeToSellHexesDialog dialog;
 
@@ -18,7 +18,6 @@ public class SceneAgreeToSellHexes extends AbstractGameplayScene{
     @Override
     public void create() {
         initDialog();
-
         dialog.appear();
     }
 

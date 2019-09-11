@@ -86,6 +86,12 @@ public class Yio {
     }
 
 
+    public static void forceException() {
+        PointYio pointYio = null;
+        pointYio.x = 0;
+    }
+
+
     public static void printStackTrace() {
         try {
             throw new Exception();
@@ -112,10 +118,28 @@ public class Yio {
     }
 
 
+    public static void sleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public static String getDate() {
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy  HH:mm");
         Date date = new Date();
         return dateFormat.format(date);
+    }
+
+
+    public static boolean isNewYearNear() {
+        DateYio dateYio = new DateYio();
+        dateYio.applyCurrentDay();
+        if (dateYio.month != 12) return false;
+        if (dateYio.day < 26) return false;
+        return true;
     }
 
 

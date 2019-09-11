@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import yio.tro.antiyoy.gameplay.DebugFlags;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.LevelSize;
 import yio.tro.antiyoy.stuff.GraphicsYio;
@@ -56,6 +57,15 @@ public class RenderBackgroundCache extends GameRender {
     @Override
     public void loadTextures() {
 
+    }
+
+
+    public void performInitialPreparation() {
+        // this may help to avoid bug with frame buffers
+        for (int i = 0; i < LevelSize.HUGE; i++) {
+            addCacheItem(0, 0);
+        }
+        clearItems();
     }
 
 
@@ -116,6 +126,7 @@ public class RenderBackgroundCache extends GameRender {
 
 
     void updateCacheNearAnimHexes() {
+        if (DebugFlags.testMode) return;
         if (!isThereAtLeastOneAnimHex()) return;
 
         updateAnimBounds();
@@ -135,12 +146,27 @@ public class RenderBackgroundCache extends GameRender {
             batchCache.setProjectionMatrix(cacheCam.combined);
             renderCache();
 
-            Texture texture = frameBuffer.getColorBufferTexture();
-            texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-            item.textureRegion = new TextureRegion(texture, (int) GraphicsYio.width, (int) GraphicsYio.height);
-            item.textureRegion.flip(false, true);
+            applyFrameBuffer(item, frameBuffer);
             frameBuffer.end();
         }
+    }
+
+
+    private void applyFrameBuffer(CacheItem item, FrameBuffer frameBuffer) {
+        Texture texture = frameBuffer.getColorBufferTexture();
+        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+        // old variant
+        item.textureRegion = new TextureRegion(texture, (int) GraphicsYio.width, (int) GraphicsYio.height);
+
+        // new variant, may cause bugs
+//        if (item.textureRegion == null) {
+//            item.textureRegion = new TextureRegion(texture, (int) GraphicsYio.width, (int) GraphicsYio.height);
+//        } else {
+//            item.textureRegion.setTexture(texture);
+//        }
+
+        item.textureRegion.flip(false, true);
     }
 
 
@@ -177,13 +203,14 @@ public class RenderBackgroundCache extends GameRender {
     }
 
 
-    void updateCacheLevelTextures() {
+    public void updateFullCache() {
+        if (DebugFlags.testMode) return;
         gameController.letsUpdateCacheByAnim = false;
 
         cacheCam.position.set(0.5f * GraphicsYio.width, 0.5f * GraphicsYio.height, 0);
         for (CacheItem item : items) {
-            FrameBuffer cacheLevelFrameBuffer = item.frameBuffer;
-            cacheLevelFrameBuffer.begin();
+            FrameBuffer frameBuffer = item.frameBuffer;
+            frameBuffer.begin();
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -195,11 +222,8 @@ public class RenderBackgroundCache extends GameRender {
             batchCache.setProjectionMatrix(cacheCam.combined);
             renderCache();
 
-            Texture texture = cacheLevelFrameBuffer.getColorBufferTexture();
-            texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-            item.textureRegion = new TextureRegion(texture, (int) GraphicsYio.width, (int) GraphicsYio.height);
-            item.textureRegion.flip(false, true);
-            cacheLevelFrameBuffer.end();
+            applyFrameBuffer(item, frameBuffer);
+            frameBuffer.end();
         }
     }
 
@@ -241,11 +265,12 @@ public class RenderBackgroundCache extends GameRender {
 
     private void renderHexes() {
         TextureRegion currentHexTexture;
+        GameTexturesManager texturesManager = gameView.texturesManager;
         for (Hex hex : gameController.fieldController.activeHexes) {
             pos = hex.getPos();
             if (!isPosInCacheFrame(pos, hexViewSize)) continue;
 
-            currentHexTexture = gameView.texturesManager.getHexTextureByColor(hex.colorIndex);
+            currentHexTexture = texturesManager.getHexTextureByFraction(hex.fraction);
             batchCache.draw(currentHexTexture, pos.x - 0.99f * hexViewSize, pos.y - 0.99f * hexViewSize, 2 * 0.99f * hexViewSize, 2 * 0.99f * hexViewSize);
         }
     }
@@ -273,7 +298,7 @@ public class RenderBackgroundCache extends GameRender {
 
     private boolean isLineBetweenHexesNeeded(Hex hex, int dir, Hex adjacentHex) {
         if (!adjacentHex.active) return true;
-        if (!adjacentHex.sameColor(hex) && isDirectionDown(dir)) return true;
+        if (!adjacentHex.sameFraction(hex) && isDirectionDown(dir)) return true;
         return false;
     }
 

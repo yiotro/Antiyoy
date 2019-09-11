@@ -9,10 +9,18 @@ public abstract class ObjectPoolYio<ObjectType extends ReusableYio> {
 
 
     private ArrayList<ObjectType> freeObjects;
+    private ArrayList<ObjectType> externalList;
 
 
     public ObjectPoolYio() {
         freeObjects = new ArrayList<>();
+        externalList = null;
+    }
+
+
+    public ObjectPoolYio(ArrayList<ObjectType> externalList) {
+        freeObjects = new ArrayList<>();
+        setExternalList(externalList);
     }
 
 
@@ -56,6 +64,11 @@ public abstract class ObjectPoolYio<ObjectType extends ReusableYio> {
     }
 
 
+    public int getSize() {
+        return freeObjects.size();
+    }
+
+
     public void showInConsole() {
         System.out.println();
         if (freeObjects.size() == 0) {
@@ -80,5 +93,30 @@ public abstract class ObjectPoolYio<ObjectType extends ReusableYio> {
         }
 
         return false;
+    }
+
+
+    public void removeFromExternalList(ObjectType object) {
+        add(object);
+        externalList.remove(object);
+    }
+
+
+    public void clearExternalList() {
+        while (externalList.size() > 0) {
+            removeFromExternalList(externalList.get(0));
+        }
+    }
+
+
+    public ObjectType getFreshObject() {
+        ObjectType next = getNext();
+        externalList.add(next);
+        return next;
+    }
+
+
+    public void setExternalList(ArrayList<ObjectType> externalList) {
+        this.externalList = externalList;
     }
 }

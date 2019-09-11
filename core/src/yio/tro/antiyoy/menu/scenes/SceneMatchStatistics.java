@@ -1,11 +1,11 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.SettingsManager;
-import yio.tro.antiyoy.menu.Animation;
-import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.gameplay.MatchStatistics;
+import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
 public class SceneMatchStatistics extends AbstractScene{
@@ -47,7 +47,7 @@ public class SceneMatchStatistics extends AbstractScene{
         }
         menuControllerYio.getButtonRenderer().renderButton(textPanel);
         textPanel.setTouchable(false);
-        textPanel.setAnimation(Animation.FROM_CENTER);
+        textPanel.setAnimation(Animation.from_center);
 
         createReplayButton();
 
@@ -60,9 +60,8 @@ public class SceneMatchStatistics extends AbstractScene{
 
         replayButton = buttonFactory.getButton(generateRectangle(0.55, 0.9, 0.4, 0.07), 113, getString("replay"));
         replayButton.setReaction(Reaction.rbStartInstantReplay);
-        replayButton.setAnimation(Animation.UP);
+        replayButton.setAnimation(Animation.up);
         replayButton.setTouchOffset(0.05f * GraphicsYio.width);
-        replayButton.disableTouchAnimation();
     }
 
 

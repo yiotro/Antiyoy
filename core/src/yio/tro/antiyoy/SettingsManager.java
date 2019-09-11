@@ -7,10 +7,10 @@ public class SettingsManager {
 
     static SettingsManager instance = null;
     YioGdxGame yioGdxGame;
-    public static boolean askToEndTurn = false;
+    public static boolean askToEndTurn;
     public static boolean autosave;
     public static boolean longTapToMove;
-    public static boolean soundEnabled = true;
+    public static boolean soundEnabled;
     public static float sensitivity;
     public static boolean waterTextureEnabled;
     public static int skinIndex;
@@ -21,6 +21,7 @@ public class SettingsManager {
     public static boolean resumeButtonEnabled;
     public static boolean cityNamesEnabled;
     public static boolean fullScreenMode;
+    public static boolean nativeKeyboard;
 
 
     public static void initialize() {
@@ -57,11 +58,12 @@ public class SettingsManager {
 
         longTapToMove = prefs.getBoolean("long_tap_to_move", true);
         waterTextureEnabled = prefs.getBoolean("water_texture", false);
-        replaysEnabled = prefs.getBoolean("replays_enabled", true);
+        replaysEnabled = true;
         fastConstructionEnabled = prefs.getBoolean("fast_construction", false);
         leftHandMode = prefs.getBoolean("left_hand_mode", false);
-        resumeButtonEnabled = prefs.getBoolean("resume_button", getResumeButtonDefaultValue());
+        resumeButtonEnabled = prefs.getBoolean("resume_button", getDefaultValueForResumeButtonOption());
         fullScreenMode = prefs.getBoolean("full_screen", false);
+        nativeKeyboard = prefs.getBoolean("native_keyboard", true);
     }
 
 
@@ -93,7 +95,7 @@ public class SettingsManager {
     }
 
 
-    private boolean getResumeButtonDefaultValue() {
+    private boolean getDefaultValueForResumeButtonOption() {
         return YioGdxGame.IOS;
 
     }
@@ -121,11 +123,11 @@ public class SettingsManager {
         prefs.putInteger("sensitivity", (int) (sensitivity * 6));
         prefs.putBoolean("water_texture", waterTextureEnabled);
         prefs.putBoolean("long_tap_to_move", longTapToMove);
-        prefs.putBoolean("replays_enabled", replaysEnabled);
         prefs.putBoolean("fast_construction", fastConstructionEnabled);
         prefs.putBoolean("left_hand_mode", leftHandMode);
         prefs.putBoolean("resume_button", resumeButtonEnabled);
         prefs.putBoolean("full_screen", fullScreenMode);
+        prefs.putBoolean("native_keyboard", nativeKeyboard);
 
         prefs.flush();
     }

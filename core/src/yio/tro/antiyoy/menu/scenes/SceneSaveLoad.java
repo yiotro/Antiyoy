@@ -39,7 +39,7 @@ public class SceneSaveLoad extends AbstractScene{
     private void createReplaysButton() {
         replaysButton = buttonFactory.getButton(generateRectangle(0.55, 0.9, 0.4, 0.07), 581, getString("replays"));
         replaysButton.setReaction(Reaction.rbReplaysMenu);
-        replaysButton.setAnimation(Animation.UP);
+        replaysButton.setAnimation(Animation.up);
     }
 
 

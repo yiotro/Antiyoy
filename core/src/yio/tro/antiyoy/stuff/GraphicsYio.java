@@ -43,6 +43,20 @@ public class GraphicsYio {
     }
 
 
+    public static void renderTextOptimized(SpriteBatch spriteBatch, TextureRegion pixel, RenderableTextYio renderableTextYio, float alpha) {
+        if (renderableTextYio.isMovingFast()) {
+            GraphicsYio.setBatchAlpha(spriteBatch, 0.15 * alpha);
+            GraphicsYio.drawByRectangle(spriteBatch, pixel, renderableTextYio.bounds);
+            GraphicsYio.setBatchAlpha(spriteBatch, 1);
+            return;
+        }
+
+        GraphicsYio.setFontAlpha(renderableTextYio.font, alpha);
+        GraphicsYio.renderText(spriteBatch, renderableTextYio);
+        GraphicsYio.setFontAlpha(renderableTextYio.font, 1);
+    }
+
+
     public static void drawFromCenter(SpriteBatch batch, TextureRegion textureRegion, double cx, double cy, double r) {
         batch.draw(textureRegion, (float) (cx - r), (float) (cy - r), (float) (2d * r), (float) (2d * r));
     }

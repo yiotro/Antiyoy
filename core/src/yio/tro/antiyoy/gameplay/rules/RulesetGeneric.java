@@ -125,15 +125,4 @@ public class RulesetGeneric extends Ruleset{
     }
 
 
-    @Override
-    public int getColorIndexWithOffset(int srcIndex) {
-        srcIndex += gameController.colorIndexViewOffset;
-
-        // notice that last color index is for neutral lands
-        if (srcIndex >= FieldController.NEUTRAL_LANDS_INDEX) {
-            srcIndex -= FieldController.NEUTRAL_LANDS_INDEX;
-        }
-
-        return srcIndex;
-    }
 }

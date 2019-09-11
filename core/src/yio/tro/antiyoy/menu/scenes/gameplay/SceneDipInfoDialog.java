@@ -4,7 +4,7 @@ import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.diplomatic_dialogs.DipInfoDialog;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
-public class SceneDipInfoDialog extends AbstractGameplayScene{
+public class SceneDipInfoDialog extends AbstractModalScene {
 
     public DipInfoDialog dialog;
 

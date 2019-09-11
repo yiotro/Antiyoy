@@ -4,7 +4,7 @@ import yio.tro.antiyoy.menu.*;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
-public class SceneConfirmEndTurn extends AbstractGameplayScene {
+public class SceneConfirmEndTurn extends AbstractModalScene {
 
 
     private ButtonYio basePanel;
@@ -33,7 +33,7 @@ public class SceneConfirmEndTurn extends AbstractGameplayScene {
         invisibleButton = buttonFactory.getButton(generateRectangle(-0.1, -0.1, 0.01, 0.01), 323, " ");
         invisibleButton.setReaction(Reaction.rbNothing);
         invisibleButton.setShadow(false);
-        invisibleButton.setAnimation(Animation.NONE);
+        invisibleButton.setAnimation(Animation.none);
         invisibleButton.setTouchOffset(2 * GraphicsYio.height);
     }
 
@@ -49,8 +49,7 @@ public class SceneConfirmEndTurn extends AbstractGameplayScene {
         cancelButton = buttonFactory.getButton(generateRectangle(0.1, 0.12, 0.4, 0.06), 322, getString("cancel"));
         cancelButton.setReaction(Reaction.rbHideEndTurnConfirm);
         cancelButton.setShadow(false);
-        cancelButton.setAnimation(Animation.FIXED_DOWN);
-        cancelButton.disableTouchAnimation();
+        cancelButton.setAnimation(Animation.fixed_down);
     }
 
 
@@ -58,8 +57,7 @@ public class SceneConfirmEndTurn extends AbstractGameplayScene {
         confirmButton = buttonFactory.getButton(generateRectangle(0.5, 0.12, 0.4, 0.06), 321, getString("yes"));
         confirmButton.setReaction(Reaction.rbEndTurn);
         confirmButton.setShadow(false);
-        confirmButton.setAnimation(Animation.FIXED_DOWN);
-        confirmButton.disableTouchAnimation();
+        confirmButton.setAnimation(Animation.fixed_down);
     }
 
 
@@ -72,7 +70,7 @@ public class SceneConfirmEndTurn extends AbstractGameplayScene {
             menuControllerYio.getButtonRenderer().renderButton(basePanel);
         }
         basePanel.setTouchable(false);
-        basePanel.setAnimation(Animation.FIXED_DOWN);
+        basePanel.setAnimation(Animation.fixed_down);
     }
 
 

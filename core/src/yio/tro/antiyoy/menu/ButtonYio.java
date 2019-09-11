@@ -15,7 +15,7 @@ import yio.tro.antiyoy.factor_yio.FactorYio;
 import java.util.ArrayList;
 
 
-public class ButtonYio implements SliderParentElement{
+public class ButtonYio implements SliderParentElement, UiChildrenHolder {
 
     public static final int ACTION_DELAY = 50;
     public static final int DEFAULT_TOUCH_DELAY = 1000;
@@ -29,7 +29,8 @@ public class ButtonYio implements SliderParentElement{
     protected Reaction reaction;
     private long lastTimeTouched;
     public boolean currentlyTouched;
-    private int touchDelay, animType;
+    private int touchDelay;
+    private Animation animType;
     public final ArrayList<String> textLines;
     public final Color backColor;
     private boolean needToPerformAction;
@@ -69,6 +70,7 @@ public class ButtonYio implements SliderParentElement{
         visualHook = null;
         renderable = true;
         selectionRenderable = true;
+        animType = Animation.def;
     }
 
 
@@ -85,28 +87,28 @@ public class ButtonYio implements SliderParentElement{
         f = appearFactor.get();
 
         switch (animType) {
-            case Animation.DEFAULT:
+            case def:
                 animDefault();
                 break;
-            case Animation.UP:
+            case up:
                 animUp();
                 break;
-            case Animation.DOWN:
+            case down:
                 animDown();
                 break;
-            case Animation.NONE:
+            case none:
                 animSolid();
                 break;
-            case Animation.FROM_CENTER:
+            case from_center:
                 animFromCenter();
                 break;
-            case Animation.FIXED_DOWN:
+            case fixed_down:
                 animFixedDown();
                 break;
-            case Animation.FIXED_UP:
+            case fixed_up:
                 animFixedUp();
                 break;
-            case Animation.LEFT:
+            case left:
                 animLeft();
                 break;
         }
@@ -245,8 +247,16 @@ public class ButtonYio implements SliderParentElement{
     }
 
 
-    public void setAnimation(int animType) {
+    public void setAnimation(Animation animType) {
         this.animType = animType;
+    }
+
+
+    public double getVpX() {
+        if (animType == Animation.left) {
+            return animPos.x;
+        }
+        return position.x;
     }
 
 
@@ -356,11 +366,6 @@ public class ButtonYio implements SliderParentElement{
 
     public ArrayList<String> getText() {
         return textLines;
-    }
-
-
-    public void disableTouchAnimation() {
-        touchAnimation = false;
     }
 
 
@@ -544,7 +549,30 @@ public class ButtonYio implements SliderParentElement{
 
 
     @Override
+    public FactorYio getFactor() {
+        return appearFactor;
+    }
+
+
+    @Override
     public RectangleYio getViewPosition() {
         return animPos;
+    }
+
+
+    public void tagAsBackButton() {
+        menuControllerYio.yioGdxGame.registerBackButtonId(id);
+    }
+
+
+    @Override
+    public RectangleYio getHookPosition() {
+        return getViewPosition();
+    }
+
+
+    @Override
+    public RectangleYio getTargetPosition() {
+        return position;
     }
 }

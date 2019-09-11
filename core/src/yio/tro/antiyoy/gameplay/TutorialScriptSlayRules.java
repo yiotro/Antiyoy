@@ -1,13 +1,13 @@
 package yio.tro.antiyoy.gameplay;
 
-import yio.tro.antiyoy.gameplay.loading.LoadingMode;
-import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
-import yio.tro.antiyoy.menu.behaviors.Reaction;
+import yio.tro.antiyoy.gameplay.loading.LoadingType;
 import yio.tro.antiyoy.menu.ButtonYio;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 
 /**
  * Created by yiotro on 12.11.2015.
@@ -47,24 +47,15 @@ public class TutorialScriptSlayRules extends TutorialScript{
     @Override
     public void createTutorialGame() {
         LoadingParameters instance = LoadingParameters.getInstance();
-        instance.mode = LoadingMode.TUTORIAL;
+        instance.loadingType = LoadingType.tutorial;
         instance.activeHexes = map;
         instance.playersNumber = 1;
-        instance.colorNumber = 5;
+        instance.fractionsQuantity = 5;
         instance.levelSize = 1;
         instance.difficulty = 0;
         instance.colorOffset = 0;
         instance.slayRules = true;
         LoadingManager.getInstance().startGame(instance);
-
-//        GameSaver gameSaver = gameController.gameSaver;
-//        gameSaver.setActiveHexesString(map);
-//        gameSaver.beginRecreation();
-//        gameSaver.setBasicInfo(0, 1, 5, 1, 0);
-//        gameController.colorIndexViewOffset = 0;
-//        GameRules.setSlayRules(true);
-//        gameSaver.endRecreation();
-
 
         menuControllerYio = gameController.yioGdxGame.menuControllerYio;
         languagesManager = LanguagesManager.getInstance();
@@ -263,13 +254,13 @@ public class TutorialScriptSlayRules extends TutorialScript{
                 if (gameController.selectionManager.selectedUnit != null) return true;
                 return false;
             case STEP_ATTACK_WITH_SPEARMAN:
-                if (getHex(19, 7).colorIndex == 0) return true;
+                if (getHex(19, 7).fraction == 0) return true;
                 return false;
             case STEP_SELECT_MAN:
                 if (gameController.selectionManager.selectedUnit != null) return true;
                 return false;
             case STEP_ATTACK_WITH_MAN:
-                if (getHex(18, 8).colorIndex == 0) return true;
+                if (getHex(18, 8).fraction == 0) return true;
                 return false;
             case STEP_PRESS_BUILD_TOWER_BUTTON:
                 if (gameController.selectionManager.tipFactor.get() > 0) return true;
@@ -284,13 +275,13 @@ public class TutorialScriptSlayRules extends TutorialScript{
                 if (gameController.selectionManager.getTipType() == SelectionTipType.UNIT_2) return true;
                 return false;
             case STEP_BUILD_SPEARMAN:
-                if (getHex(20, 5).colorIndex == 0) return true;
+                if (getHex(20, 5).fraction == 0) return true;
                 return false;
             case STEP_ABOUT_UNIT_DEATH:
                 if (menuControllerYio.getButtonById(53).isCurrentlyTouched()) return true;
                 return false;
             case STEP_PRESS_UNDO:
-                if (getHex(20, 5).colorIndex != 0) return true;
+                if (getHex(20, 5).fraction != 0) return true;
                 return false;
             case STEP_PRESS_END_TURN:
                 if (menuControllerYio.getButtonById(31).isCurrentlyTouched()) return true;

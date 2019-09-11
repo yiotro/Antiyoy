@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.gameplay.diplomacy;
 
+import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
@@ -7,42 +8,34 @@ import java.util.ArrayList;
 
 public class DiplomaticMessage implements ReusableYio {
 
+    DiplomaticLog diplomaticLog;
     public DipMessageType type;
     public DiplomaticEntity sender;
     public DiplomaticEntity recipient;
     public String arg1, arg2, arg3;
 
 
-    public DiplomaticMessage() {
+    public DiplomaticMessage(DiplomaticLog diplomaticLog) {
+        this.diplomaticLog = diplomaticLog;
         reset();
     }
 
 
-    @Override
-    public String toString() {
-        return "[Message: " +
-                type.name() + " " +
-                sender + " " +
-                recipient +
-                "]";
-    }
-
-
-    public int getSenderColor() {
+    public int getSenderFraction() {
         if (sender == null) {
             return -1;
         }
 
-        return sender.color;
+        return sender.fraction;
     }
 
 
-    public int getRecipientColor() {
+    public int getRecipientFraction() {
         if (recipient == null) {
             return -1;
         }
 
-        return recipient.color;
+        return recipient.fraction;
     }
 
 
@@ -78,7 +71,7 @@ public class DiplomaticMessage implements ReusableYio {
 
 
     public String getKey() {
-        return type.name() + getSenderColor() + getRecipientColor();
+        return type.name() + getSenderFraction() + getRecipientFraction();
     }
 
 
@@ -112,5 +105,41 @@ public class DiplomaticMessage implements ReusableYio {
     public DiplomaticMessage setArg3(String arg3) {
         this.arg3 = arg3;
         return this;
+    }
+
+
+    public boolean containsLandOwnedByThirdParty() {
+        ArrayList<Hex> hexList = diplomaticLog.diplomacyManager.convertStringToPurchaseList(arg1);
+        for (Hex hex : hexList) {
+            if (hex.sameFraction(sender.fraction)) continue;
+            if (hex.sameFraction(recipient.fraction)) continue;
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean isNot(DipMessageType dipMessageType) {
+        return type != dipMessageType;
+    }
+
+
+    public boolean isImportant() {
+        switch (type) {
+            default:
+                return false;
+            case war_declaration:
+                return true;
+        }
+    }
+
+
+    @Override
+    public String toString() {
+        return "[Message: " +
+                type.name() + " " +
+                sender + " " +
+                recipient +
+                "]";
     }
 }

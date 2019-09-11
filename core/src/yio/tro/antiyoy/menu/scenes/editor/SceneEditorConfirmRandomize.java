@@ -37,7 +37,7 @@ public class SceneEditorConfirmRandomize extends AbstractScene {
         ButtonYio cancelButton = buttonFactory.getButton(generateRectangle(0.025, 0.15, 0.475, 0.06), 522, getString("cancel"));
         cancelButton.setReaction(EditorReactions.rbEditorHideConfirmRandomize);
         cancelButton.setShadow(false);
-        cancelButton.setAnimation(Animation.FIXED_DOWN);
+        cancelButton.setAnimation(Animation.fixed_down);
     }
 
 
@@ -45,7 +45,7 @@ public class SceneEditorConfirmRandomize extends AbstractScene {
         ButtonYio yesButton = buttonFactory.getButton(generateRectangle(0.5, 0.15, 0.475, 0.06), 521, getString("yes"));
         yesButton.setReaction(EditorReactions.rbEditorRandomize);
         yesButton.setShadow(false);
-        yesButton.setAnimation(Animation.FIXED_DOWN);
+        yesButton.setAnimation(Animation.fixed_down);
     }
 
 
@@ -59,7 +59,7 @@ public class SceneEditorConfirmRandomize extends AbstractScene {
             menuControllerYio.getButtonRenderer().renderButton(basePanel);
         }
         basePanel.setTouchable(false);
-        basePanel.setAnimation(Animation.FIXED_DOWN);
+        basePanel.setAnimation(Animation.fixed_down);
     }
 
 

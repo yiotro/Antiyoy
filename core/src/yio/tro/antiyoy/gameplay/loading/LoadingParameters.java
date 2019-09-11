@@ -2,23 +2,18 @@ package yio.tro.antiyoy.gameplay.loading;
 
 import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.YioGdxGame;
-import yio.tro.antiyoy.gameplay.FieldController;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyInfoCondensed;
-import yio.tro.antiyoy.gameplay.replays.RepSlot;
 import yio.tro.antiyoy.gameplay.replays.Replay;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
-
-import java.util.Random;
-import java.util.StringTokenizer;
 
 public class LoadingParameters {
 
     private static LoadingParameters instance = null;
 
-    public int mode;
+    public LoadingType loadingType;
     public int levelSize;
     public int playersNumber;
-    public int colorNumber;
+    public int fractionsQuantity;
     public int difficulty;
     public int colorOffset;
     public boolean slayRules;
@@ -32,14 +27,17 @@ public class LoadingParameters {
     public boolean userLevelMode;
     public String ulKey;
     public boolean editorColorFixApplied;
-    public boolean forceNoLoadingScreen;
+    public String levelCode;
+    public String editorProvincesData;
+    public String editorRelationsData;
+    public String preparedMessagesData;
 
 
     void defaultValues() {
-        mode = -1;
+        loadingType = null;
         levelSize = -1;
         playersNumber = -1;
-        colorNumber = -1;
+        fractionsQuantity = -1;
         difficulty = -1;
         colorOffset = -1;
         slayRules = false;
@@ -52,15 +50,18 @@ public class LoadingParameters {
         diplomacy = false;
         ulKey = null;
         editorColorFixApplied = false;
-        forceNoLoadingScreen = false;
+        levelCode = "";
+        editorProvincesData = "";
+        editorRelationsData = "";
+        preparedMessagesData = "";
     }
 
 
     public void copyFrom(LoadingParameters src) {
-        mode = src.mode;
+        loadingType = src.loadingType;
         levelSize = src.levelSize;
         playersNumber = src.playersNumber;
-        colorNumber = src.colorNumber;
+        fractionsQuantity = src.fractionsQuantity;
         difficulty = src.difficulty;
         colorOffset = src.colorOffset;
         slayRules = src.slayRules;
@@ -74,7 +75,10 @@ public class LoadingParameters {
         userLevelMode = src.userLevelMode;
         ulKey = src.ulKey;
         editorColorFixApplied = src.editorColorFixApplied;
-//        forceNoLoadingScreen = src.forceNoLoadingScreen;
+        levelCode = src.levelCode;
+        editorProvincesData = src.editorProvincesData;
+        editorRelationsData = src.editorRelationsData;
+        preparedMessagesData = src.preparedMessagesData;
     }
 
 
@@ -96,15 +100,15 @@ public class LoadingParameters {
     public void showInConsole() {
         System.out.println();
         System.out.println("Parameters:");
-        System.out.println("loadMode = " + mode);
+        System.out.println("loadMode = " + loadingType);
+        System.out.println("activeHexes = " + activeHexes);
         System.out.println("levelSize = " + levelSize);
         System.out.println("playersNumber = " + playersNumber);
-        System.out.println("colorNumber = " + colorNumber);
+        System.out.println("fractionsQuantity = " + fractionsQuantity);
         System.out.println("difficulty = " + difficulty);
         System.out.println("colorOffset = " + colorOffset);
         System.out.println("slayRules = " + slayRules);
         System.out.println("campaignLevelIndex = " + campaignLevelIndex);
-        System.out.println("activeHexes = " + activeHexes);
         System.out.println("turn = " + turn);
         System.out.println("replay = " + replay);
         System.out.println("fogOfWar = " + fogOfWar);
@@ -112,45 +116,21 @@ public class LoadingParameters {
         System.out.println("userLevelMode = " + userLevelMode);
         System.out.println("ulKey = " + ulKey);
         System.out.println("editorColorFixApplied = " + editorColorFixApplied);
-        System.out.println("forceNoLoadingScreen = " + forceNoLoadingScreen);
+        System.out.println("levelCode = " + levelCode);
+        System.out.println("editorProvincesData = " + editorProvincesData);
+        System.out.println("editorRelationsData = " + editorRelationsData);
+        System.out.println("preparedMessagesData = " + preparedMessagesData);
 
         System.out.println();
-    }
-
-
-    public void applyFullLevel(String fullLevel) {
-        int delimiterChar = fullLevel.indexOf("/");
-        String basicInfo;
-        int basicInfoValues[] = new int[4];
-
-        if (delimiterChar < 0) { // empty slot
-            return;
-        }
-
-        basicInfo = fullLevel.substring(0, delimiterChar);
-        StringTokenizer stringTokenizer = new StringTokenizer(basicInfo, " ");
-        int i = 0;
-
-        while (stringTokenizer.hasMoreTokens()) {
-            String token = stringTokenizer.nextToken();
-            basicInfoValues[i] = Integer.valueOf(token);
-            i++;
-        }
-
-        activeHexes = fullLevel.substring(delimiterChar + 1, fullLevel.length());
-        playersNumber = basicInfoValues[2];
-        colorNumber = basicInfoValues[3];
-        levelSize = basicInfoValues[1];
-        difficulty = basicInfoValues[0];
     }
 
 
     public void applyPrefs(Preferences prefs) {
         turn = prefs.getInteger("save_turn");
         playersNumber = prefs.getInteger("save_player_number");
-        colorNumber = prefs.getInteger("save_color_number");
-        if (colorNumber > FieldController.NEUTRAL_LANDS_INDEX) {
-            colorNumber = FieldController.NEUTRAL_LANDS_INDEX;
+        fractionsQuantity = prefs.getInteger("save_color_number");
+        if (fractionsQuantity > GameRules.MAX_FRACTIONS_QUANTITY) {
+            fractionsQuantity = GameRules.MAX_FRACTIONS_QUANTITY;
         }
         levelSize = prefs.getInteger("save_level_size");
         difficulty = prefs.getInteger("save_difficulty");

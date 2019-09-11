@@ -12,6 +12,6 @@ public class RbClearLevel extends Reaction {
     @Override
     public void perform(ButtonYio buttonYio) {
         Scenes.sceneEditorConfirmClear.hide();
-        getGameController(buttonYio).clearLevel();
+        getGameController(buttonYio).levelEditor.clearLevel();
     }
 }

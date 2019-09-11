@@ -26,7 +26,7 @@ public class SceneGlobalStatistics extends AbstractScene{
         rbBack = new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
-                Scenes.sceneMoreSettingsMenu.create();
+                Scenes.sceneMoreSettings.create();
             }
         };
     }
@@ -52,7 +52,7 @@ public class SceneGlobalStatistics extends AbstractScene{
         label = buttonFactory.getButton(pos, 1201, null);
         updateLabelText();
         menuControllerYio.buttonRenderer.renderButton(label);
-        label.setAnimation(Animation.FROM_CENTER);
+        label.setAnimation(Animation.from_center);
         label.setTouchable(false);
     }
 

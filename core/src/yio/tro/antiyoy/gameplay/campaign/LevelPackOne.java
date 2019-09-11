@@ -1,8 +1,8 @@
 package yio.tro.antiyoy.gameplay.campaign;
 
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
-import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
+import yio.tro.antiyoy.gameplay.loading.LoadingType;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 public class LevelPackOne {
@@ -22,11 +22,11 @@ public class LevelPackOne {
 
         if (index > 70 && index <= 80) {
             LoadingParameters instance = LoadingParameters.getInstance();
-            instance.mode = LoadingMode.CAMPAIGN_CUSTOM;
-            instance.applyFullLevel(getLevelFromPackOne());
+            instance.loadingType = LoadingType.campaign_custom_legacy;
+            campaignLevelFactory.gameController.gameSaver.legacyImportManager.applyFullLevel(instance, getLevelFromPackOne());
             instance.campaignLevelIndex = index;
             instance.slayRules = false; // these levels are forcing normal rules
-            instance.colorOffset = campaignLevelFactory.readColorOffsetFromSlider(instance.colorNumber);
+            instance.colorOffset = campaignLevelFactory.readColorOffsetFromSlider(instance.fractionsQuantity);
             LoadingManager.getInstance().startGame(instance);
             return true;
         }

@@ -20,4 +20,6 @@ public enum DipMessageType {
 
     hex_sale,
 
+    message,
+
 }

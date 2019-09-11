@@ -37,7 +37,7 @@ public class SceneEditorConfirmClear extends AbstractScene {
         ButtonYio cancelButton = buttonFactory.getButton(generateRectangle(0.025, 0.15, 0.475, 0.06), 362, getString("cancel"));
         cancelButton.setReaction(EditorReactions.rbEditorHideConfirmClearLevelMenu);
         cancelButton.setShadow(false);
-        cancelButton.setAnimation(Animation.FIXED_DOWN);
+        cancelButton.setAnimation(Animation.fixed_down);
     }
 
 
@@ -45,7 +45,7 @@ public class SceneEditorConfirmClear extends AbstractScene {
         ButtonYio yesButton = buttonFactory.getButton(generateRectangle(0.5, 0.15, 0.475, 0.06), 361, getString("editor_clear"));
         yesButton.setReaction(EditorReactions.rbClearEditorLevel);
         yesButton.setShadow(false);
-        yesButton.setAnimation(Animation.FIXED_DOWN);
+        yesButton.setAnimation(Animation.fixed_down);
     }
 
 
@@ -58,7 +58,7 @@ public class SceneEditorConfirmClear extends AbstractScene {
             menuControllerYio.getButtonRenderer().renderButton(basePanel);
         }
         basePanel.setTouchable(false);
-        basePanel.setAnimation(Animation.FIXED_DOWN);
+        basePanel.setAnimation(Animation.fixed_down);
     }
 
 

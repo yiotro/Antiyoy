@@ -1,13 +1,9 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.gameplay.GlobalStatistics;
-import yio.tro.antiyoy.menu.Animation;
-import yio.tro.antiyoy.menu.SingleMessages;
+import yio.tro.antiyoy.menu.*;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
-import yio.tro.antiyoy.menu.ButtonYio;
-import yio.tro.antiyoy.menu.MenuControllerYio;
-import yio.tro.antiyoy.menu.behaviors.editor.EditorReactions;
 
 public class SceneChoodeGameModeMenu extends AbstractScene{
 
@@ -20,15 +16,27 @@ public class SceneChoodeGameModeMenu extends AbstractScene{
     private ButtonYio loadGameButton;
     private ButtonYio editorButton;
     private ButtonYio secretScreenButton;
+    private Reaction rbEditor;
 
 
     public SceneChoodeGameModeMenu(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
+        initReactions();
+    }
+
+
+    private void initReactions() {
         rbUserLevels = new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
                 Scenes.sceneUserLevels.create();
+            }
+        };
+        rbEditor = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                Scenes.sceneEditorLobby.create();
             }
         };
     }
@@ -62,8 +70,7 @@ public class SceneChoodeGameModeMenu extends AbstractScene{
         if (GlobalStatistics.getInstance().timeInGame < 8 * 60 * 60 * 60) return; // 8 hours
 
         ButtonYio myOtherGamesButton = buttonFactory.getButton(generateRectangle(0.2, 0.05, 0.6, 0.06), 79, getString("my_games"));
-        myOtherGamesButton.setAnimation(Animation.DOWN);
-        myOtherGamesButton.disableTouchAnimation();
+        myOtherGamesButton.setAnimation(Animation.down);
         myOtherGamesButton.setReaction(new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
@@ -86,7 +93,7 @@ public class SceneChoodeGameModeMenu extends AbstractScene{
 
     private void createEditorButton() {
         editorButton = buttonFactory.getButton(generateRectangle(0.1, 0.54, 0.8, 0.08), 77, getString("editor"));
-        editorButton.setReaction(EditorReactions.rbEditorSlotMenu);
+        editorButton.setReaction(rbEditor);
         finishMakingInnerButton(editorButton);
     }
 
@@ -121,9 +128,8 @@ public class SceneChoodeGameModeMenu extends AbstractScene{
 
     private void finishMakingInnerButton(ButtonYio buttonYio) {
         buttonYio.setShadow(false);
-        buttonYio.setAnimation(Animation.FROM_CENTER);
+        buttonYio.setAnimation(Animation.from_center);
         buttonYio.setVisualHook(basePanel);
-        buttonYio.disableTouchAnimation();
     }
 
 
@@ -131,6 +137,6 @@ public class SceneChoodeGameModeMenu extends AbstractScene{
         basePanel = buttonFactory.getButton(generateRectangle(0.1, 0.3, 0.8, 0.4), 70, null);
         basePanel.setTouchable(false);
         basePanel.onlyShadow = true;
-        basePanel.setAnimation(Animation.FROM_CENTER);
+        basePanel.setAnimation(Animation.from_center);
     }
 }

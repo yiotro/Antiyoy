@@ -71,7 +71,7 @@ public class MoveZoneDetection {
         tempHex.inMoveZone = true;
         result.add(tempHex);
 
-        if (!tempHex.sameColor(startHex)) return;
+        if (!tempHex.sameFraction(startHex)) return;
         if (tempHex.moveZoneNumber == 0) return;
 
         for (int dir = 0; dir < 6; dir++) {
@@ -79,12 +79,12 @@ public class MoveZoneDetection {
             if (!adjHex.active) continue;
             if (adjHex.flag) continue;
 
-            if (adjHex.sameColor(startHex)) {
+            if (adjHex.sameFraction(startHex)) {
                 propagationList.add(adjHex);
                 adjHex.moveZoneNumber = tempHex.moveZoneNumber - 1;
                 adjHex.flag = true;
             } else {
-                if (fieldController.gameController.canUnitAttackHex(strength, startHex.colorIndex, adjHex)) {
+                if (fieldController.gameController.canUnitAttackHex(strength, startHex.fraction, adjHex)) {
                     propagationList.add(adjHex);
                     adjHex.flag = true;
                 }

@@ -50,11 +50,8 @@ public class RenderFogOfWar extends GameRender {
         updateReferences();
         size = 1.25f * fieldController.hexSize;
 
-        // this is quite slow
         renderFogPoints();
         renderBlocks();
-
-        // this is probably faster
         endFog();
 
 //        renderDebug();

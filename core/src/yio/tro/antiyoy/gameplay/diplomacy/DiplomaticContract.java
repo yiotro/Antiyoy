@@ -1,6 +1,5 @@
 package yio.tro.antiyoy.gameplay.diplomacy;
 
-import yio.tro.antiyoy.stuff.Yio;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
 public class DiplomaticContract implements ReusableYio {
@@ -101,21 +100,21 @@ public class DiplomaticContract implements ReusableYio {
     }
 
 
-    public int getOneColor() {
+    public int getOneFraction() {
         if (one == null) {
             return -1;
         }
 
-        return one.color;
+        return one.fraction;
     }
 
 
-    public int getTwoColor() {
+    public int getTwoFraction() {
         if (two == null) {
             return -1;
         }
 
-        return two.color;
+        return two.fraction;
     }
 
 

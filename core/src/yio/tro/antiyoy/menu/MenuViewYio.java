@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import yio.tro.antiyoy.*;
-import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.menu.render.MenuRender;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
@@ -88,7 +87,6 @@ public class MenuViewYio {
         c = batch.getColor();
 
         renderButtons.render(renderAliveButtons, renderDyingButtons, buttons);
-        renderCheckButtons();
         renderInterfaceElements();
     }
 
@@ -119,13 +117,5 @@ public class MenuViewYio {
         batch.end();
     }
 
-
-    private void renderCheckButtons() {
-        batch.begin();
-        for (CheckButtonYio checkButton : menuControllerYio.checkButtons) {
-            if (checkButton.isVisible()) MenuRender.renderCheckButton.renderCheckButton(checkButton);
-        }
-        batch.end();
-    }
 
 }

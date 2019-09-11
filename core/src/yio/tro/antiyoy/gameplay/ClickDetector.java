@@ -27,26 +27,20 @@ public class ClickDetector {
     }
 
 
-    public boolean touchDown(PointYio touchPoint) {
+    public void onTouchDown(PointYio touchPoint) {
         touchDownPoint.setBy(touchPoint);
         touchDownTime = System.currentTimeMillis();
         maxDistance = 0;
-
-        return false;
     }
 
 
-    public boolean touchDrag(PointYio touchPoint) {
+    public void onTouchDrag(PointYio touchPoint) {
         checkToUpdateMaxDistance(touchPoint);
-
-        return false;
     }
 
 
-    public boolean touchUp(PointYio touchPoint) {
+    public void onTouchUp(PointYio touchPoint) {
         checkToUpdateMaxDistance(touchPoint);
-
-        return false;
     }
 
 

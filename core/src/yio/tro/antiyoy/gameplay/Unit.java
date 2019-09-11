@@ -1,16 +1,17 @@
 package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.gameplay.data_storage.EncodeableYio;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
-import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.ArrayList;
 
 /**
  * Created by yiotro on 24.05.2015.
  */
-public class Unit {
+public class Unit implements EncodeableYio{
+
     public Hex lastHex, currentHex;
     public final PointYio currentPos;
     public final FactorYio moveFactor;
@@ -42,7 +43,7 @@ public class Unit {
 
 
     boolean moveToHex(Hex destinationHex) {
-        if (destinationHex.sameColor(currentHex) && destinationHex.containsBuilding()) return false;
+        if (destinationHex.sameFraction(currentHex) && destinationHex.containsBuilding()) return false;
 
         gameController.ruleset.onUnitMoveToHex(this, destinationHex);
         if (destinationHex.containsObject()) {
@@ -64,8 +65,8 @@ public class Unit {
     }
 
 
-    public int getColor() {
-        return currentHex.colorIndex;
+    public int getFraction() {
+        return currentHex.fraction;
     }
 
 
@@ -100,7 +101,7 @@ public class Unit {
         minDistance = FieldController.distanceBetweenHexes(moveZone.get(0), toWhere);
         Hex closestHex = moveZone.get(0);
         for (Hex hex : moveZone) {
-            if (hex.sameColor(currentHex) && hex.nothingBlocksWayForUnit()) {
+            if (hex.sameFraction(currentHex) && hex.nothingBlocksWayForUnit()) {
                 currentDistance = FieldController.distanceBetweenHexes(toWhere, hex);
                 if (currentDistance < minDistance) {
                     minDistance = currentDistance;
@@ -143,6 +144,26 @@ public class Unit {
         if (jumpPos < 0) {
             jumpPos = 0;
             jumpDy = jumpStartingImpulse;
+        }
+    }
+
+
+    @Override
+    public String encode() {
+        return currentHex.index1 + " " + currentHex.index2 + " " + strength + " " + isReadyToMove();
+    }
+
+
+    @Override
+    public void decode(String source) {
+        String[] split = source.split(" ");
+        boolean ready = Boolean.valueOf(split[3]);
+        if (ready) {
+            setReadyToMove(true);
+            startJumping();
+        } else {
+            setReadyToMove(false);
+            stopJumping();
         }
     }
 }

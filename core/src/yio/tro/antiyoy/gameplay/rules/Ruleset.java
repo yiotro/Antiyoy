@@ -45,9 +45,6 @@ public abstract class Ruleset {
     public abstract boolean canUnitAttackHex(int unitStrength, Hex hex);
 
 
-    public abstract int getColorIndexWithOffset(int srcIndex);
-
-
     public int howManyTreesNearby(Hex hex) {
         if (!hex.active) return 0;
         int c = 0;

@@ -78,12 +78,13 @@ public class DiplomacyElement extends InterfaceElement {
     private void initIcons() {
         icons = new ArrayList<>();
 
-        addIcon(DeIcon.ACTION_TRANSFER_MONEY);
-        addIcon(DeIcon.ACTION_LIKE);
-        addIcon(DeIcon.ACTION_DISLIKE);
-        addIcon(DeIcon.ACTION_BLACK_MARK);
-        addIcon(DeIcon.ACTION_INFO);
-        addIcon(DeIcon.ACTION_BUY_HEXES);
+        addIcon(DipActionType.transfer_money);
+        addIcon(DipActionType.like);
+        addIcon(DipActionType.dislike);
+        addIcon(DipActionType.black_mark);
+        addIcon(DipActionType.info);
+        addIcon(DipActionType.buy_hexes);
+        addIcon(DipActionType.mail);
 
         for (DeIcon icon : icons) {
             icon.setTouchOffset(iconTouchOffset);
@@ -92,7 +93,7 @@ public class DiplomacyElement extends InterfaceElement {
     }
 
 
-    private void addIcon(int action) {
+    private void addIcon(DipActionType action) {
         DeIcon deIcon = new DeIcon(this);
 
         deIcon.setAction(action);
@@ -164,7 +165,7 @@ public class DiplomacyElement extends InterfaceElement {
         if (!mainEntity.isHuman()) return;
 
         for (DeItem item : items) {
-            DiplomaticEntity relationEntity = diplomacyManager.getEntity(item.colorIndex);
+            DiplomaticEntity relationEntity = diplomacyManager.getEntity(item.fraction);
             item.setStatus(convertRelationIntoStatus(mainEntity, relationEntity));
             item.setBlackMarkEnabled(mainEntity.isBlackMarkedWith(relationEntity));
             item.setDescriptionString(getItemDescription(mainEntity, relationEntity));
@@ -252,7 +253,7 @@ public class DiplomacyElement extends InterfaceElement {
     private void addItem(DiplomaticEntity relationEntity) {
         DeItem deItem = poolItems.getNext();
 
-        deItem.setColorIndex(relationEntity.color);
+        deItem.setFraction(relationEntity.fraction);
         deItem.setTitle(relationEntity.capitalName);
 
         items.add(deItem);
@@ -448,7 +449,7 @@ public class DiplomacyElement extends InterfaceElement {
     private void performIconClickAction() {
         GameController gameController = getGameController();
         DiplomacyManager diplomacyManager = getDiplomacyManager(gameController);
-        diplomacyManager.onUserClickedContextIcon(selectedItem.colorIndex, clickedIcon.action);
+        diplomacyManager.onUserClickedContextIcon(selectedItem.fraction, clickedIcon.action);
     }
 
 
@@ -495,10 +496,10 @@ public class DiplomacyElement extends InterfaceElement {
         touchedScrollArea = (currentTouch.y < position.y + position.height - topLabelHeight);
 
         if (touched) {
-            clickDetector.touchDown(currentTouch);
+            clickDetector.onTouchDown(currentTouch);
 
             if (touchedScrollArea) {
-                scrollEngineYio.updateCanSoftCorrect(false);
+                scrollEngineYio.onTouchDown();
                 checkToSelectItems();
             } else {
                 checkToSelectIcons();
@@ -538,7 +539,7 @@ public class DiplomacyElement extends InterfaceElement {
                 scrollEngineYio.setSpeed(currentTouch.y - lastTouch.y);
             }
 
-            clickDetector.touchDrag(currentTouch);
+            clickDetector.onTouchDrag(currentTouch);
         }
 
         return touched;
@@ -550,12 +551,12 @@ public class DiplomacyElement extends InterfaceElement {
         updateCurrentTouch(screenX, screenY);
 
         if (touchedScrollArea) {
-            scrollEngineYio.updateCanSoftCorrect(true);
+            scrollEngineYio.onTouchUp();
         }
 
         if (touched) {
             touched = false;
-            clickDetector.touchUp(currentTouch);
+            clickDetector.onTouchUp(currentTouch);
 
             if (clickDetector.isClicked()) {
                 onClick();
@@ -652,33 +653,36 @@ public class DiplomacyElement extends InterfaceElement {
 
         GameController gameController = getGameController();
         DiplomacyManager diplomacyManager = getDiplomacyManager(gameController);
-        int colorIndex = selectedItem.colorIndex;
-        DiplomaticEntity selectedEntity = diplomacyManager.getEntity(colorIndex);
+        int fraction = selectedItem.fraction;
+        DiplomaticEntity selectedEntity = diplomacyManager.getEntity(fraction);
         DiplomaticEntity mainEntity = diplomacyManager.getMainEntity();
         int relation = mainEntity.getRelation(selectedEntity);
         boolean blackMarked = mainEntity.isBlackMarkedWith(selectedEntity);
 
         switch (relation) {
             case DiplomaticRelation.NEUTRAL:
-                enableIcon(DeIcon.ACTION_LIKE);
-                enableIcon(DeIcon.ACTION_DISLIKE);
+                enableIcon(DipActionType.like);
+                enableIcon(DipActionType.dislike);
                 if (!blackMarked) {
-                    enableIcon(DeIcon.ACTION_BLACK_MARK);
+                    enableIcon(DipActionType.black_mark);
                 }
-                enableIcon(DeIcon.ACTION_INFO);
-                enableIcon(DeIcon.ACTION_TRANSFER_MONEY);
+                enableIcon(DipActionType.info);
+                enableIcon(DipActionType.transfer_money);
+                enableIcon(DipActionType.mail);
                 break;
             case DiplomaticRelation.FRIEND:
-                enableIcon(DeIcon.ACTION_TRANSFER_MONEY);
-                enableIcon(DeIcon.ACTION_DISLIKE);
-                enableIcon(DeIcon.ACTION_INFO);
-                enableIcon(DeIcon.ACTION_BUY_HEXES);
+                enableIcon(DipActionType.transfer_money);
+                enableIcon(DipActionType.dislike);
+                enableIcon(DipActionType.info);
+                enableIcon(DipActionType.buy_hexes);
+                enableIcon(DipActionType.mail);
                 break;
             case DiplomaticRelation.ENEMY:
-                enableIcon(DeIcon.ACTION_LIKE);
+                enableIcon(DipActionType.like);
                 if (!blackMarked) {
-                    enableIcon(DeIcon.ACTION_BLACK_MARK);
+                    enableIcon(DipActionType.black_mark);
                 }
+                enableIcon(DipActionType.mail);
                 break;
         }
 
@@ -696,7 +700,7 @@ public class DiplomacyElement extends InterfaceElement {
 
     private void alignIcons() {
         int n = getNumberOfVisibleIcons();
-        float iDelta = 2 * iconTouchOffset + 2 * iconRadius;
+        float iDelta = 1.5f * iconTouchOffset + 2 * iconRadius;
         float fullWidth = iDelta * (n - 1);
         float currentX = (float) (position.width / 2 - fullWidth / 2);
 
@@ -724,12 +728,12 @@ public class DiplomacyElement extends InterfaceElement {
     }
 
 
-    void enableIcon(int action) {
+    void enableIcon(DipActionType action) {
         getIcon(action).visible = true;
     }
 
 
-    DeIcon getIcon(int action) {
+    DeIcon getIcon(DipActionType action) {
         for (DeIcon icon : icons) {
             if (icon.action == action) {
                 return icon;
@@ -755,12 +759,6 @@ public class DiplomacyElement extends InterfaceElement {
     @Override
     public void setTouchable(boolean touchable) {
 
-    }
-
-
-    @Override
-    public boolean isButton() {
-        return false;
     }
 
 

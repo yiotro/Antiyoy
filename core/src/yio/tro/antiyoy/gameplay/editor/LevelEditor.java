@@ -3,16 +3,16 @@ package yio.tro.antiyoy.gameplay.editor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Clipboard;
-import yio.tro.antiyoy.gameplay.loading.LoadingMode;
-import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
-import yio.tro.antiyoy.gameplay.loading.LoadingManager;
-import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
+import yio.tro.antiyoy.gameplay.data_storage.GameSaver;
+import yio.tro.antiyoy.gameplay.loading.LoadingType;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.gameplay.touch_mode.TouchMode;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.scenes.Scenes;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -20,25 +20,20 @@ import java.util.ListIterator;
 
 public class LevelEditor {
 
-    public static final String EDITOR_PREFS = "editor";
     public static final String SLOT_NAME = "slot";
-    public static final int TEMPORARY_SLOT_NUMBER = 12345; // to edit campaign levels
     public static final int MAX_ACCEPTABLE_DELTA = 22;
     public GameController gameController;
     private final EditorAutomationManager editorAutomationManager;
-    private int inputMode, inputColor, inputObject;
-    private boolean randomColor, filteredByOnlyLand;
-    public static final int MODE_MOVE = 0;
-    public static final int MODE_SET_HEX = 1;
-    public static final int MODE_SET_OBJECT = 2;
-    public static final int MODE_DELETE = 3;
+    private int inputFraction, inputObject;
+    private boolean randomizeFraction, filteredByOnlyLand;
+    private LeInputMode leInputMode;
     private int scrX, scrY;
     private long lastTimeTouched;
-    private int currentSlotNumber;
     private ArrayList<Hex> tempList;
     private GameSaver gameSaver;
-    public boolean showMoney;
     DetectorProvince detectorProvince;
+    public EditorProvinceManager editorProvinceManager;
+    public EditorRelationsManager editorRelationsManager;
 
 
     public LevelEditor(GameController gameController) {
@@ -48,24 +43,27 @@ public class LevelEditor {
         gameSaver = new GameSaver(gameController);
         detectorProvince = new DetectorProvince();
         editorAutomationManager = new EditorAutomationManager(this);
-        showMoney = false;
+        editorProvinceManager = new EditorProvinceManager(this);
+        editorRelationsManager = new EditorRelationsManager(this);
     }
 
 
     private void focusedHexActions(Hex focusedHex) {
         if (focusedHex == null) return;
-        if (randomColor) inputColor = gameController.random.nextInt(GameRules.MAX_COLOR_NUMBER);
-        switch (inputMode) {
-            case MODE_MOVE:
+        if (randomizeFraction) {
+            inputFraction = gameController.random.nextInt(GameRules.MAX_FRACTIONS_QUANTITY);
+        }
+        switch (leInputMode) {
+            case move:
                 inputModeMoveActions(focusedHex);
                 break;
-            case MODE_SET_HEX:
+            case set_hex:
                 inputModeHexActions(focusedHex);
                 break;
-            case MODE_SET_OBJECT:
+            case set_object:
                 inputModeSetObjectActions(focusedHex);
                 break;
-            case MODE_DELETE:
+            case delete:
                 inputModeDeleteActions(focusedHex);
                 break;
         }
@@ -73,9 +71,8 @@ public class LevelEditor {
 
 
     private void inputModeDeleteActions(Hex focusedHex) {
-        if (focusedHex.active) {
-            deactivateHex(focusedHex);
-        }
+        if (!focusedHex.active) return;
+        deactivateHex(focusedHex);
     }
 
 
@@ -159,7 +156,7 @@ public class LevelEditor {
             tempList.remove(0);
             for (int i = 0; i < 6; i++) {
                 Hex adjacentHex = hex.getAdjacentHex(i);
-                if (adjacentHex.active && adjacentHex.sameColor(hex) && !province.contains(adjacentHex)) {
+                if (adjacentHex.active && adjacentHex.sameFraction(hex) && !province.contains(adjacentHex)) {
                     tempList.add(adjacentHex);
                     province.add(adjacentHex);
                 }
@@ -197,123 +194,41 @@ public class LevelEditor {
     }
 
 
-    private int countUpColorNumber() {
-        int cn = 0;
+    int countUpFractionsQuantity() {
+        int maxFraction = 0;
         for (Hex activeHex : gameController.fieldController.activeHexes) {
-            if (activeHex.colorIndex > cn) {
-                cn = activeHex.colorIndex;
+            if (activeHex.fraction > maxFraction) {
+                maxFraction = activeHex.fraction;
             }
         }
-        cn++;
 
-        if (cn > FieldController.NEUTRAL_LANDS_INDEX) {
-            cn = FieldController.NEUTRAL_LANDS_INDEX;
+        int quantity = maxFraction + 1;
+        if (quantity > GameRules.MAX_FRACTIONS_QUANTITY) {
+            quantity = GameRules.MAX_FRACTIONS_QUANTITY;
         }
 
-        return cn;
+        return quantity;
     }
 
 
-    public String getFullLevelString() {
-        GameRules.colorNumber = countUpColorNumber();
-        return gameController.fieldController.getFullLevelString();
-    }
-
-
-    public void saveSlot() {
-        String fullLevel = getFullLevelString();
-        Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
-        prefs.putString(SLOT_NAME + currentSlotNumber, fullLevel);
-        prefs.putInteger("chosen_color" + currentSlotNumber, GameRules.editorChosenColor);
-        prefs.putBoolean("editor_fog" + currentSlotNumber, GameRules.editorFog);
-        prefs.putBoolean("editor_diplomacy" + currentSlotNumber, GameRules.editorDiplomacy);
-        prefs.flush();
-    }
-
-
-    public boolean isCurrentSlotEmpty() {
-        Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
-        String fullLevel = prefs.getString(SLOT_NAME + currentSlotNumber, "");
-        return fullLevel.length() < 12;
-    }
-
-
-    public void createNewLevel(int levelSize) {
-        Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
-        LoadingParameters instance = LoadingParameters.getInstance();
-        instance.mode = LoadingMode.EDITOR_NEW;
-        instance.levelSize = levelSize;
-        instance.playersNumber = 1;
-        instance.colorNumber = 5;
-        instance.colorOffset = 0;
-        instance.difficulty = 1;
-
-        LoadingManager.getInstance().startGame(instance);
-        GameRules.editorChosenColor = prefs.getInteger("chosen_color" + currentSlotNumber);
-        GameRules.editorFog = prefs.getBoolean("editor_fog" + currentSlotNumber, false);
-        GameRules.editorDiplomacy = prefs.getBoolean("editor_diplomacy" + currentSlotNumber, false);
-
-        defaultValues();
-    }
-
-
-    public void loadSlot() {
-        Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
-        String fullLevel = prefs.getString(SLOT_NAME + currentSlotNumber, "");
-
-        LoadingParameters instance = LoadingParameters.getInstance();
-
-        instance.mode = LoadingMode.EDITOR_LOAD;
-        instance.applyFullLevel(fullLevel);
-        instance.colorOffset = 0;
-
-        LoadingManager.getInstance().startGame(instance);
-        GameRules.editorChosenColor = prefs.getInteger("chosen_color" + currentSlotNumber);
-        GameRules.editorFog = prefs.getBoolean("editor_fog" + currentSlotNumber, false);
-        GameRules.editorDiplomacy = prefs.getBoolean("editor_diplomacy" + currentSlotNumber, false);
-
-        defaultValues();
-    }
-
-
-    private void defaultValues() {
-        inputMode = MODE_MOVE;
-        showMoney = false;
+    private Preferences getPreferences() {
+        return Gdx.app.getPreferences("dsajdha");
     }
 
 
     public void onAllPanelsHide() {
-        showMoney = false;
+        gameController.resetTouchMode();
     }
 
 
-    private boolean isValidLevelString(String fullLevel) {
-        if (fullLevel == null) return false;
-        if (!fullLevel.contains("/")) return false;
-        if (!fullLevel.contains("#")) return false;
-        if (fullLevel.length() < 10) return false;
-        return true;
+    public void importLevelFromClipboard() {
+        gameSaver.legacyImportManager.importLevelFromClipboard();
     }
 
 
-    public void importLevel() {
-        String fromClipboard = "";
-
-        Clipboard clipboard = Gdx.app.getClipboard();
-        fromClipboard = clipboard.getContents();
-        if (!isValidLevelString(fromClipboard)) return;
-
-        LoadingParameters instance = LoadingParameters.getInstance();
-        instance.mode = LoadingMode.EDITOR_LOAD;
-        instance.applyFullLevel(fromClipboard);
-        instance.colorOffset = 0;
-        LoadingManager.getInstance().startGame(instance);
-    }
-
-
-    public void exportLevel() {
-        Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
-        String fullLevel = prefs.getString(SLOT_NAME + currentSlotNumber, "");
+    public void exportLevel(int slotNumber) {
+        Preferences prefs = getPreferences();
+        String fullLevel = prefs.getString(SLOT_NAME + slotNumber, "");
         System.out.println("Level exported to clipboard.");
         Clipboard clipboard = Gdx.app.getClipboard();
         clipboard.setContents(fullLevel);
@@ -329,7 +244,9 @@ public class LevelEditor {
     public boolean isLevelAcceptableForUserLevels(String fullLevel) {
         if (getLevelSize(fullLevel) >= LevelSize.HUGE) return false;
 
-        String innerString = fullLevel.substring(fullLevel.indexOf("/") + 1);
+        int beginIndex = fullLevel.indexOf("/") + 1;
+        if (beginIndex >= fullLevel.length()) return false;
+        String innerString = fullLevel.substring(beginIndex);
         float min = -1;
         float max = -1;
         FieldController fieldController = gameController.fieldController;
@@ -355,18 +272,11 @@ public class LevelEditor {
 
 
     private int getLevelSize(String fullLevel) {
-        String basicInfoString = fullLevel.substring(0, fullLevel.indexOf("/"));
+        int endIndex = fullLevel.indexOf("/");
+        if (endIndex >= fullLevel.length()) return LevelSize.BIG;
+        String basicInfoString = fullLevel.substring(0, endIndex);
         String[] split = basicInfoString.split(" ");
         return Integer.valueOf(split[1]);
-    }
-
-
-    public void doTestSizeMeasureFeature() {
-        saveSlot();
-        Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
-        String fullLevel = prefs.getString(SLOT_NAME + currentSlotNumber, "");
-        boolean levelAcceptableForUserLevels = isLevelAcceptableForUserLevels(fullLevel);
-        System.out.println("levelAcceptableForUserLevels = " + levelAcceptableForUserLevels);
     }
 
 
@@ -392,26 +302,12 @@ public class LevelEditor {
             }
         }
         gameController.addAnimHex(hex);
-//        gameController.yioGdxGame.gameView.updateCacheNearAnimHexes();
+        editorProvinceManager.onHexModified(hex);
     }
 
 
-    public void playLevel() {
-        Preferences prefs = Gdx.app.getPreferences(EDITOR_PREFS);
-        String fullLevel = prefs.getString(SLOT_NAME + currentSlotNumber, "");
-        if (fullLevel.length() < 10) return; // empty slot
-
-        LoadingParameters instance = LoadingParameters.getInstance();
-        instance.mode = LoadingMode.EDITOR_PLAY;
-        instance.applyFullLevel(fullLevel);
-        GameRules.editorChosenColor = prefs.getInteger("chosen_color" + currentSlotNumber);
-        GameRules.editorFog = prefs.getBoolean("editor_fog" + currentSlotNumber, false);
-        instance.fogOfWar = GameRules.editorFog;
-        GameRules.editorDiplomacy = prefs.getBoolean("editor_diplomacy" + currentSlotNumber, false);
-        instance.diplomacy = GameRules.editorDiplomacy;
-        instance.colorOffset = gameController.getColorOffsetBySliderIndex(GameRules.editorChosenColor, GameRules.MAX_COLOR_NUMBER);
-
-        LoadingManager.getInstance().startGame(instance);
+    public void move() {
+        editorProvinceManager.move();
     }
 
 
@@ -421,13 +317,16 @@ public class LevelEditor {
         }
 
         gameController.fieldController.clearProvincesList();
+        gameController.setTouchMode(TouchMode.tmEditor);
+        editorProvinceManager.onEndCreation();
+        editorRelationsManager.onEndCreation();
     }
 
 
-    private void activateHex(Hex hex, int color) {
+    private void activateHex(Hex hex, int fraction) {
         if (hex.active) return;
         hex.active = true;
-        hex.setColorIndex(color);
+        hex.setFraction(fraction);
         ListIterator activeIterator = gameController.fieldController.activeHexes.listIterator();
         activeIterator.add(hex);
         gameController.addAnimHex(hex);
@@ -436,12 +335,22 @@ public class LevelEditor {
 
     private void inputModeHexActions(Hex focusedHex) {
         if (focusedHex.active) {
-            int objectInside = focusedHex.objectInside;
-            gameController.fieldController.setHexColor(focusedHex, inputColor);
-            focusedHex.setObjectInside(objectInside);
+            applySetHex(focusedHex);
         } else {
             if (filteredByOnlyLand) return;
-            activateHex(focusedHex, inputColor);
+            activateHex(focusedHex, inputFraction);
+        }
+
+        editorProvinceManager.onHexModified(focusedHex);
+    }
+
+
+    private void applySetHex(Hex focusedHex) {
+        if (focusedHex.fraction == inputFraction) return;
+        int objectInside = focusedHex.objectInside;
+        gameController.fieldController.setHexFraction(focusedHex, inputFraction);
+        if (inputFraction != GameRules.NEUTRAL_FRACTION) {
+            gameController.fieldController.addSolidObject(focusedHex, objectInside);
         }
     }
 
@@ -455,18 +364,20 @@ public class LevelEditor {
 
 
     public boolean isSomethingMoving() {
-        if (inputMode == MODE_SET_HEX)
+        if (leInputMode == LeInputMode.set_hex) {
             return gameController.currentTime < lastTimeTouched + 50;
-        else return false;
+        } else {
+            return false;
+        }
     }
 
 
-    public boolean touchDown(int x, int y) {
+    public boolean onTouchDown(int x, int y) {
         scrX = x;
         scrY = y;
         lastTimeTouched = gameController.currentTime;
         updateFocusedHex();
-        if (inputMode == MODE_SET_OBJECT || inputMode == MODE_SET_HEX || inputMode == MODE_DELETE) {
+        if (leInputMode == LeInputMode.set_object || leInputMode == LeInputMode.set_hex || leInputMode == LeInputMode.delete) {
             focusedHexActions(gameController.fieldController.focusedHex);
         }
 
@@ -474,7 +385,7 @@ public class LevelEditor {
     }
 
 
-    public boolean touchUp(int x, int y) {
+    public boolean onTouchUp(int x, int y) {
         scrX = x;
         scrY = y;
         lastTimeTouched = gameController.currentTime;
@@ -483,13 +394,15 @@ public class LevelEditor {
     }
 
 
-    public boolean touchDrag(int x, int y) {
+    public boolean onTouchDrag(int x, int y) {
         scrX = x;
         scrY = y;
         lastTimeTouched = gameController.currentTime;
-        if (!updateFocusedHex()) return isTouchCaptured();
+        if (!updateFocusedHex()) {
+            return isTouchCaptured();
+        }
 
-        if (inputMode == MODE_SET_HEX || inputMode == MODE_DELETE) {
+        if (leInputMode == LeInputMode.set_hex || leInputMode == LeInputMode.delete) {
             focusedHexActions(gameController.fieldController.focusedHex);
         }
 
@@ -497,8 +410,26 @@ public class LevelEditor {
     }
 
 
-    private boolean isTouchCaptured() {
-        return inputMode != MODE_MOVE;
+    public void onEditDiplomacyButtonPressed() {
+        gameController.yioGdxGame.menuControllerYio.hideAllEditorPanels();
+        Scenes.sceneEditorDiplomacy.create();
+    }
+
+
+    public void defaultValues() {
+        editorProvinceManager.defaultValues();
+        editorRelationsManager.defaultValues();
+    }
+
+
+    public void onEditProvincesButtonPressed() {
+        gameController.yioGdxGame.menuControllerYio.hideAllEditorPanels();
+        gameController.setTouchMode(TouchMode.tmEditProvinces);
+    }
+
+
+    public boolean isTouchCaptured() {
+        return leInputMode != LeInputMode.move;
     }
 
 
@@ -540,7 +471,8 @@ public class LevelEditor {
 
     public void randomize() {
         gameSaver.detectRules();
-        GameRules.setColorNumber(countUpColorNumber());
+        GameRules.setFractionsQuantity(countUpFractionsQuantity());
+        checkToFixRandomizationRulesForEmptyMap();
         gameController.fieldController.clearField();
         gameController.fieldController.createFieldMatrix();
         if (GameRules.slayRules) {
@@ -549,29 +481,34 @@ public class LevelEditor {
             gameController.mapGeneratorGeneric.generateMap(gameController.random, gameController.fieldController.field);
         }
         gameController.yioGdxGame.gameView.updateCacheLevelTextures();
+        editorProvinceManager.onLevelRandomlyCreated();
 
         resetInputMode();
     }
 
 
+    private void checkToFixRandomizationRulesForEmptyMap() {
+        if (GameRules.fractionsQuantity != 1) return;
+        if (gameController.fieldController.activeHexes.size() > 0) return;
+
+        GameRules.setFractionsQuantity(GameRules.MAX_FRACTIONS_QUANTITY);
+        GameRules.slayRules = false;
+    }
+
+
     public void resetInputMode() {
-        setInputMode(LevelEditor.MODE_MOVE);
+        setInputMode(LeInputMode.move);
     }
 
 
-    public void setInputMode(int inputMode) {
-        this.inputMode = inputMode;
-//        gameController.cameraControllerOld.camDx = 0;
-//        gameController.cameraControllerOld.camDy = 0;
-//        gameController.cameraControllerOld.camDZoom = 0;
+    public void setInputMode(LeInputMode inputMode) {
+        this.leInputMode = inputMode;
     }
 
 
-    public void setInputColor(int inputColor) {
-        this.inputColor = inputColor;
-        setRandomColor(false);
-        if (inputColor >= GameRules.MAX_COLOR_NUMBER && inputColor != FieldController.NEUTRAL_LANDS_INDEX)
-            setRandomColor(true);
+    public void setInputFraction(int inputFraction) {
+        this.inputFraction = inputFraction;
+        setRandomizeFraction(false);
     }
 
 
@@ -598,15 +535,13 @@ public class LevelEditor {
         }
 
         GameRules.inEditorMode = true;
-        currentSlotNumber = TEMPORARY_SLOT_NUMBER;
-        saveSlot();
-        Scenes.sceneEditorActions.create();
+        String levelCode = gameController.encodeManager.perform();
+        gameController.importManager.launchGame(LoadingType.editor_import, levelCode);
     }
 
 
     public void importFromClipboardToExtraSlot() {
-        setCurrentSlotNumber(3);
-        importLevel();
+        importLevelFromClipboard();
     }
 
 
@@ -625,18 +560,21 @@ public class LevelEditor {
     }
 
 
-    private void setRandomColor(boolean randomColor) {
-        this.randomColor = randomColor;
+    public void setRandomizeFraction(boolean randomizeFraction) {
+        this.randomizeFraction = randomizeFraction;
     }
 
 
-    public void setCurrentSlotNumber(int currentSlotNumber) {
-        this.currentSlotNumber = currentSlotNumber;
+    public void onLevelImported(String levelCode) {
+        editorProvinceManager.onLevelImported(levelCode);
+        editorRelationsManager.onLevelImported(levelCode);
+        gameController.messagesManager.onLevelImported(levelCode);
     }
 
 
-    public int getCurrentSlotNumber() {
-        return currentSlotNumber;
+    public void checkToApplyAdditionalData() {
+        editorProvinceManager.checkToApplyProvincesData();
+        editorRelationsManager.checkToApplyEditorRelationsData();
     }
 
 

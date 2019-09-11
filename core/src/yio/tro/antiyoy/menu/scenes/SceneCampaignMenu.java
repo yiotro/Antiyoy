@@ -1,11 +1,7 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
-import yio.tro.antiyoy.menu.Animation;
-import yio.tro.antiyoy.menu.LevelSelector;
+import yio.tro.antiyoy.menu.*;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
-import yio.tro.antiyoy.menu.ButtonYio;
-import yio.tro.antiyoy.menu.MenuControllerYio;
 
 public class SceneCampaignMenu extends AbstractScene{
 
@@ -34,8 +30,7 @@ public class SceneCampaignMenu extends AbstractScene{
 
         ButtonYio moreOptionsButton = buttonFactory.getButton(generateRectangle(0.75, 0.9, 0.2, 0.07), 21, getString("..."));
         moreOptionsButton.setReaction(Reaction.rbMoreCampaignOptions);
-        moreOptionsButton.setAnimation(Animation.UP);
-        moreOptionsButton.disableTouchAnimation();
+        moreOptionsButton.setAnimation(Animation.up);
 
         checkToCreateLevelSelector();
         levelSelector.appear();

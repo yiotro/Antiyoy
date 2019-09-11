@@ -29,22 +29,23 @@ public class DiplomaticLog {
         poolMessages = new ObjectPoolYio<DiplomaticMessage>() {
             @Override
             public DiplomaticMessage makeNewObject() {
-                return new DiplomaticMessage();
+                return new DiplomaticMessage(DiplomaticLog.this);
             }
         };
     }
 
 
     public void onClearMessagesButtonClicked() {
-        removeMessagesByRecipient(diplomacyManager.getMainEntity());
+        removeMessagesByRecipient(diplomacyManager.getMainEntity(), false);
     }
 
 
-    public void removeMessagesByRecipient(DiplomaticEntity recipient) {
+    public void removeMessagesByRecipient(DiplomaticEntity recipient, boolean leaveImportant) {
         for (int i = messages.size() - 1; i >= 0; i--) {
             DiplomaticMessage diplomaticMessage = messages.get(i);
 
             if (diplomaticMessage.recipient != recipient) continue;
+            if (leaveImportant && diplomaticMessage.isImportant()) continue;
 
             removeMessage(diplomaticMessage);
         }
@@ -93,9 +94,23 @@ public class DiplomaticLog {
                 Scenes.sceneAgreeToBuyHexes.create();
                 Scenes.sceneAgreeToBuyHexes.dialog.setData(message.recipient, hexList, price);
                 break;
+            case message:
+                Scenes.sceneDipMessage.showMessage(message.sender.capitalName + ": ", message.arg1);
+                break;
         }
 
         removeMessage(message);
+    }
+
+
+    void checkToRemoveInvalidHexSaleMessages() {
+        for (int i = messages.size() - 1; i >= 0; i--) {
+            DiplomaticMessage diplomaticMessage = messages.get(i);
+            if (diplomaticMessage.isNot(DipMessageType.hex_purchase) && diplomaticMessage.isNot(DipMessageType.hex_sale)) continue;
+            if (!diplomaticMessage.containsLandOwnedByThirdParty()) continue;
+
+            removeMessage(diplomaticMessage);
+        }
     }
 
 
@@ -104,8 +119,8 @@ public class DiplomaticLog {
             DiplomaticMessage diplomaticMessage = messages.get(i);
             if (!isFriendshipProposalToMainEntity(diplomaticMessage)) continue;
 
-            int senderColor = diplomaticMessage.getSenderColor();
-            DiplomaticMessage warMessage = findMessage(DipMessageType.war_declaration, senderColor);
+            int senderFraction = diplomaticMessage.getSenderFraction();
+            DiplomaticMessage warMessage = findMessage(DipMessageType.war_declaration, senderFraction);
             if (warMessage == null) continue;
 
             removeMessage(diplomaticMessage);
@@ -113,10 +128,10 @@ public class DiplomaticLog {
     }
 
 
-    DiplomaticMessage findMessage(DipMessageType type, int senderColor) {
+    DiplomaticMessage findMessage(DipMessageType type, int senderFraction) {
         for (DiplomaticMessage message : messages) {
             if (message.type != type) continue;
-            if (message.getSenderColor() != senderColor) continue;
+            if (message.getSenderFraction() != senderFraction) continue;
             return message;
         }
         return null;
@@ -233,9 +248,8 @@ public class DiplomaticLog {
 
     private boolean containsSimilarMessage(DiplomaticMessage message) {
         for (DiplomaticMessage diplomaticMessage : messages) {
-            if (diplomaticMessage.equals(message)) {
-                return true;
-            }
+            if (!message.equals(diplomaticMessage)) continue;
+            return true;
         }
 
         return false;

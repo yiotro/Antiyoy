@@ -6,6 +6,8 @@ import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.behaviors.editor.EditorReactions;
+import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.RectangleYio;
 
 public class SceneEditorAutomationPanel extends AbstractEditorPanel{
 
@@ -33,14 +35,15 @@ public class SceneEditorAutomationPanel extends AbstractEditorPanel{
 
 
     private void createIcon(int id, int place, String texturePath, Reaction rb) {
-        ButtonYio iconButton = buttonFactory.getButton(generateSquare(place * 0.07 / YioGdxGame.screenRatio, 0.07, 0.07), id, null);
+        RectangleYio position = generateSquare(place * GraphicsYio.convertToWidth(SceneEditorOverlay.PANEL_HEIGHT), SceneEditorOverlay.PANEL_HEIGHT, SceneEditorOverlay.PANEL_HEIGHT);
+        ButtonYio iconButton = buttonFactory.getButton(position, id, null);
         menuControllerYio.loadButtonOnce(iconButton, texturePath);
         iconButton.setReaction(rb);
     }
 
 
     private void createBasePanel() {
-        basePanel = buttonFactory.getButton(generateRectangle(0, 0.07, 1, 0.07), 510, null);
+        basePanel = buttonFactory.getButton(generateRectangle(0, SceneEditorOverlay.PANEL_HEIGHT, 1, SceneEditorOverlay.PANEL_HEIGHT), 510, null);
         menuControllerYio.loadButtonOnce(basePanel, "gray_pixel.png");
         basePanel.setTouchable(false);
     }
@@ -53,8 +56,7 @@ public class SceneEditorAutomationPanel extends AbstractEditorPanel{
 
             buttonYio.appearFactor.appear(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
             buttonYio.enableRectangularMask();
-            buttonYio.disableTouchAnimation();
-            buttonYio.setAnimation(Animation.DOWN);
+            buttonYio.setAnimation(Animation.down);
         }
     }
 

@@ -16,7 +16,7 @@ public class MoveZoneManager {
     public MoveZoneManager(FieldController fieldController) {
         this.fieldController = fieldController;
 
-        moveZone = new ArrayList<Hex>();
+        moveZone = new ArrayList<>();
         appearFactor = new FactorYio();
         moveZoneDetection = new MoveZoneDetection(fieldController);
     }
@@ -120,6 +120,7 @@ public class MoveZoneManager {
 
 
     public void checkToForceMoveZoneAnims() {
+        if (moveZone.size() == 0) return;
         if (moveZone.get(0).selectionFactor.get() == 1) return;
 
         for (Hex hex : moveZone) {

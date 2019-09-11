@@ -40,39 +40,44 @@ public class SceneTestScrollableList extends AbstractScene{
 
 
     private void createList() {
-        if (scrollableListYio == null) {
-            scrollableListYio = new ScrollableListYio(menuControllerYio);
-            scrollableListYio.setPosition(generateRectangle(0.05, 0.07, 0.9, 0.75));
-
-            scrollableListYio.setTitle("Title");
-            for (int i = 0; i < 3; i++) {
-                scrollableListYio.addItem("key" + i, "item " + i, "description");
-            }
-
-            scrollableListYio.setListBehavior(new ListBehaviorYio() {
-                @Override
-                public void applyItem(ListItemYio item) {
-                    System.out.println();
-                    System.out.println("SceneTestScrollableList.applyItem");
-                    System.out.println("item = " + item.title);
-                }
-
-
-                @Override
-                public void onItemRenamed(ListItemYio item) {
-
-                }
-
-
-                @Override
-                public void onItemDeleteRequested(ListItemYio item) {
-
-                }
-            });
-
-            menuControllerYio.addElementToScene(scrollableListYio);
-        }
+        initList();
 
         scrollableListYio.appear();
+    }
+
+
+    private void initList() {
+        if (scrollableListYio != null) return;
+
+        scrollableListYio = new ScrollableListYio(menuControllerYio);
+        scrollableListYio.setPosition(generateRectangle(0.05, 0.07, 0.9, 0.75));
+
+        scrollableListYio.setTitle("Title");
+//        for (int i = 0; i < 3; i++) {
+//            scrollableListYio.addItem("key" + i, "item " + i, "description");
+//        }
+
+        scrollableListYio.setListBehavior(new ListBehaviorYio() {
+            @Override
+            public void applyItem(ListItemYio item) {
+                System.out.println();
+                System.out.println("SceneTestScrollableList.applyItem");
+                System.out.println("item = " + item.title);
+            }
+
+
+            @Override
+            public void onItemRenamed(ListItemYio item) {
+
+            }
+
+
+            @Override
+            public void onItemDeleteRequested(ListItemYio item) {
+
+            }
+        });
+
+        menuControllerYio.addElementToScene(scrollableListYio);
     }
 }

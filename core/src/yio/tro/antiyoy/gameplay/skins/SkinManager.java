@@ -34,7 +34,11 @@ public class SkinManager {
         Scenes.sceneFastConstructionPanel.onSkinChanged();
         Scenes.sceneAiOnlyOverlay.onSkinChanged();
         MenuRender.renderFastConstructionPanel.onSkinChanged();
-        yioGdxGame.menuControllerYio.onSkinChanged();
+
+        if (yioGdxGame != null && yioGdxGame.menuControllerYio != null) {
+            yioGdxGame.menuControllerYio.onSkinChanged();
+            MenuRender.renderDiplomacyElement.loadBackgroundColors();
+        }
     }
 
 
@@ -44,9 +48,9 @@ public class SkinManager {
             case original:
                 return GraphicsYio.loadTextureRegion("hex_" + name + ".png", false);
             case points:
-                return GraphicsYio.loadTextureRegion("skins/points_hex_" + name + ".png", false);
+                return GraphicsYio.loadTextureRegion("skins/points/points_hex_" + name + ".png", false);
             case grid:
-                return GraphicsYio.loadTextureRegion("skins/hex_" + name + "_grid.png", false);
+                return GraphicsYio.loadTextureRegion("skins/grid/hex_" + name + "_grid.png", false);
             case jannes_peters:
                 return GraphicsYio.loadTextureRegion("skins/jannes/hex_" + name + ".png", false);
         }

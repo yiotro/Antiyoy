@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class AiNormalGenericRules extends ArtificialIntelligenceGeneric{
 
-    public AiNormalGenericRules(GameController gameController, int color) {
-        super(gameController, color);
+    public AiNormalGenericRules(GameController gameController, int fraction) {
+        super(gameController, fraction);
     }
 
 

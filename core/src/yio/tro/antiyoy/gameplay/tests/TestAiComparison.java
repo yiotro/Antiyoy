@@ -2,12 +2,12 @@ package yio.tro.antiyoy.gameplay.tests;
 
 import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.ai.Difficulty;
+import yio.tro.antiyoy.gameplay.ColorsManager;
 import yio.tro.antiyoy.gameplay.DebugFlags;
 import yio.tro.antiyoy.gameplay.LevelSize;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
-import yio.tro.antiyoy.gameplay.loading.LoadingMode;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
-import yio.tro.antiyoy.menu.scenes.SceneSkirmishMenu;
+import yio.tro.antiyoy.gameplay.loading.LoadingType;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.Yio;
 
@@ -102,7 +102,7 @@ public class TestAiComparison extends AbstractTest {
             if (minResult > 0) {
                 ratio = (float) results[i] / (float) minResult;
             }
-            String colorString = SceneSkirmishMenu.getColorStringBySliderIndex(i + 1);
+            String colorString = ColorsManager.getMenuColorNameByIndex(i + 1);
             list.add(colorString + ": " + results[i] + " (" + Yio.roundUp(ratio, 2) + ")");
         }
 
@@ -145,10 +145,10 @@ public class TestAiComparison extends AbstractTest {
     private void launchMatch() {
         LoadingParameters instance = LoadingParameters.getInstance();
 
-        instance.mode = LoadingMode.SKIRMISH;
+        instance.loadingType = LoadingType.skirmish;
         instance.levelSize = LevelSize.MEDIUM;
         instance.playersNumber = 0;
-        instance.colorNumber = results.length;
+        instance.fractionsQuantity = results.length;
         instance.difficulty = Difficulty.BALANCER;
         instance.colorOffset = 0;
         instance.slayRules = false;

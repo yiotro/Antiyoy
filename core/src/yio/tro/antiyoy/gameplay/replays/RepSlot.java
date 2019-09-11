@@ -6,10 +6,6 @@ import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.stuff.Yio;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class RepSlot {
 
 
@@ -41,7 +37,7 @@ public class RepSlot {
         preferences.putInteger("level_index", levelIndex);
 
         replay.setTempSlayRules(GameRules.slayRules);
-        replay.setTempColorOffset(gameController.colorIndexViewOffset);
+        replay.setTempColorOffset(gameController.colorsManager.colorOffset);
         preferences.flush();
 
         replay.saveToPreferences(key);

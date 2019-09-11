@@ -11,7 +11,9 @@ public class RbAboutGame extends Reaction {
 
     @Override
     public void perform(ButtonYio buttonYio) {
-        Scenes.sceneSettingsMenu.onDestroy();
+        if (Scenes.sceneSettings.isInitialized()) {
+            Scenes.sceneSettings.onDestroy();
+        }
         Scenes.sceneAboutGame.create();
     }
 }

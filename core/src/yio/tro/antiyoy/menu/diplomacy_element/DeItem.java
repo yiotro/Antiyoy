@@ -20,7 +20,7 @@ public class DeItem implements ReusableYio, Comparable<DeItem> {
     FactorYio selectionFactor;
     public PointYio titlePosition, statusPosition, descPosition;
     public String title, descriptionString;
-    public int colorIndex;
+    public int fraction;
     float titleOffset, statusOffset, descOffset, statusOffDelta;
     float titleHeight, titleWidth;
     public int status;
@@ -52,7 +52,7 @@ public class DeItem implements ReusableYio, Comparable<DeItem> {
         titlePosition.reset();
         statusPosition.reset();
         blackMarkPosition.reset();
-        colorIndex = -1;
+        fraction = -1;
         title = null;
         titleHeight = 0;
         titleWidth = 0;
@@ -175,8 +175,8 @@ public class DeItem implements ReusableYio, Comparable<DeItem> {
     }
 
 
-    public void setColorIndex(int colorIndex) {
-        this.colorIndex = colorIndex;
+    public void setFraction(int fraction) {
+        this.fraction = fraction;
     }
 
 
@@ -210,6 +210,6 @@ public class DeItem implements ReusableYio, Comparable<DeItem> {
 
     @Override
     public int compareTo(DeItem o) {
-        return colorIndex - o.colorIndex;
+        return fraction - o.fraction;
     }
 }

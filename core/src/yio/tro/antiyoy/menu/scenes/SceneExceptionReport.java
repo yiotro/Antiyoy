@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import yio.tro.antiyoy.gameplay.user_levels.UserLevelFactory;
 import yio.tro.antiyoy.stuff.Fonts;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.ButtonYio;
@@ -26,6 +27,7 @@ public class SceneExceptionReport extends AbstractScene{
         int lineWidth = 44;
         int lineNumber = 25;
         ArrayList<String> text = new ArrayList<String>();
+        text.add("" + UserLevelFactory.getInstance().getLevels().size());
         String title = "Error : " + exception.toString();
         if (title.length() > lineWidth) title = title.substring(0, lineWidth);
         text.add(title);
@@ -34,6 +36,8 @@ public class SceneExceptionReport extends AbstractScene{
         boolean go;
         for (int i = 0; i < exception.getStackTrace().length; i++) {
             temp = exception.getStackTrace()[i].toString();
+            if (temp.length() == 0) continue;
+
             start = 0;
             go = true;
             while (go) {
@@ -42,12 +46,18 @@ public class SceneExceptionReport extends AbstractScene{
                     go = false;
                     end = temp.length() - 1;
                 }
+
                 try {
                     text.add(temp.substring(start, end));
                 } catch (ArrayIndexOutOfBoundsException e) {
+
                 }
+
                 start = end + 1;
-                if (text.size() > lineNumber) go = false;
+
+                if (text.size() > lineNumber) {
+                    go = false;
+                }
             }
         }
 

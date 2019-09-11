@@ -72,7 +72,7 @@ public class RenderCityNames extends GameRender{
 
     private void renderInNormalMode() {
         for (Province province : gameController.fieldController.provinces) {
-            if (gameController.isCurrentTurn(province.getColor()) && province.isSelected()) {
+            if (gameController.isCurrentTurn(province.getFraction()) && province.isSelected()) {
                 renderSingleCityName(province);
             }
         }
