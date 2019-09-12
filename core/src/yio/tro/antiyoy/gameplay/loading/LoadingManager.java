@@ -123,6 +123,7 @@ public class LoadingManager {
     private void createUserLevel() {
         GameRules.campaignMode = false;
         GameRules.userLevelMode = true;
+        GameRules.ulKey = parameters.ulKey;
         gameController.fieldController.createFieldMatrix();
         gameController.decodeManager.perform(parameters.levelCode);
         GameRules.fogOfWarEnabled = GameRules.editorFog;

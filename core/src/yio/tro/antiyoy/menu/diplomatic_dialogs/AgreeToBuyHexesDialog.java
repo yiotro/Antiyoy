@@ -121,6 +121,7 @@ public class AgreeToBuyHexesDialog extends AbstractDiplomaticDialog{
     protected void onCustomActionButtonPressed(AcButton acButton) {
         if (acButton.actionType == AcActionType.show) {
             Scenes.sceneAgreeToBuyHexes.hide();
+            Scenes.sceneDiplomaticLog.hide();
             GameController gameController = menuControllerYio.yioGdxGame.gameController;
             gameController.setTouchMode(TouchMode.tmShowChosenHexes);
             TouchMode.tmShowChosenHexes.highlightHexList(hexesToBuy);

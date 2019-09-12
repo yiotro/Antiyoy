@@ -125,7 +125,7 @@ public class SceneSelectionOverlay extends AbstractModalScene {
         loadCoinButtonTexture();
         coinButton.appearFactor.appear(3, 2);
         coinButton.setTouchable(true);
-        coinButton.setReaction(Reaction.rbShowColorStats);
+        coinButton.setReaction(Reaction.RB_SHOW_INCOME_GRAPH);
     }
 
 

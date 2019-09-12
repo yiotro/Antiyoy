@@ -40,9 +40,15 @@ public class ImportManager {
 
 
     public void launchGame(LoadingType loadingType, String levelCode) {
+        launchGame(loadingType, levelCode, null);
+    }
+
+
+    public void launchGame(LoadingType loadingType, String levelCode, String ulKey) {
         LoadingParameters instance = LoadingParameters.getInstance();
         decodeManager.setSource(levelCode);
         instance.loadingType = loadingType;
+        instance.ulKey = ulKey;
         instance.levelSize = decodeManager.extractLevelSize(levelCode);
         instance.editorProvincesData = decodeManager.getSection("provinces");
         instance.editorRelationsData = decodeManager.getSection("relations");

@@ -56,7 +56,7 @@ public abstract class Reaction {
     public static final RbInputModeMove rbInputModeMove = new RbInputModeMove();
     public static final RbSettingsMenu rbSettingsMenu = new RbSettingsMenu();
     public static final RbWinGame rbWinGame = new RbWinGame();
-    public static final RbShowColorStats rbShowColorStats = new RbShowColorStats();
+    public static final RbShowIncomeGraph RB_SHOW_INCOME_GRAPH = new RbShowIncomeGraph();
     public static final RbNextLevel rbNextLevel = new RbNextLevel();
     public static final RbMoreSettings rbMoreSettings = new RbMoreSettings();
     public static final RbHideEndTurnConfirm rbHideEndTurnConfirm = new RbHideEndTurnConfirm();

@@ -7,6 +7,7 @@ import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.data_storage.DecodeManager;
 import yio.tro.antiyoy.gameplay.data_storage.EncodeableYio;
 import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.stuff.RepeatYio;
 import yio.tro.antiyoy.stuff.object_pool.ObjectPoolYio;
 
@@ -318,6 +319,11 @@ public class EditorProvinceManager implements EncodeableYio{
             Province provinceByHex = getGameController().fieldController.getProvinceByHex(editorProvinceData.hexList.get(0));
             if (provinceByHex == null) continue;
             editorProvinceData.applyDataToRealProvince(provinceByHex);
+            getGameController().namingManager.setHexName(provinceByHex.getCapital(), editorProvinceData.name);
+        }
+
+        if (GameRules.diplomacyEnabled) {
+            getGameController().fieldController.diplomacyManager.updateAllNames();
         }
     }
 }

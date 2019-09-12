@@ -60,6 +60,7 @@ public class SceneDiplomaticRelations extends AbstractModalScene {
         ColorsManager colorsManager = getGameController().colorsManager;
         for (DiplomaticEntity entity : diplomacyManager.entities) {
             if (chosenEntity == entity) continue;
+            if (!entity.alive) continue;
             EditorRelation editorRelation = new EditorRelation();
             editorRelation.relation = chosenEntity.getRelation(entity);
             editorRelation.color1 = colorsManager.getColorByFraction(chosenEntity.fraction);

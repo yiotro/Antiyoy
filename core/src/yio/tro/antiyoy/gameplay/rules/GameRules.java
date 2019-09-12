@@ -2,7 +2,7 @@ package yio.tro.antiyoy.gameplay.rules;
 
 public class GameRules {
 
-    public static final int MAX_FRACTIONS_QUANTITY = 10;
+    public static final int MAX_FRACTIONS_QUANTITY = 11;
     public static final int NEUTRAL_FRACTION = 7;
     public static final int UNIT_MOVE_LIMIT = 4;
 

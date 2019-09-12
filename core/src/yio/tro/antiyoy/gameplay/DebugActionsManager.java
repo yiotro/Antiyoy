@@ -27,7 +27,21 @@ public class DebugActionsManager {
 
 
     public void debugActions() {
-        doShowColorStuff();
+        System.out.println("GameRules.ulKey = " + GameRules.ulKey);
+    }
+
+
+    private void doShowIncomeGraph() {
+        Scenes.sceneIncomeGraph.create();
+    }
+
+
+    private void doShowEntityNames() {
+        System.out.println();
+        System.out.println("DebugActionsManager.doShowEntityNames");
+        for (DiplomaticEntity entity : gameController.fieldController.diplomacyManager.entities) {
+            System.out.println("entity = " + entity);
+        }
     }
 
 

@@ -42,7 +42,7 @@ public class EditLandElement extends InterfaceElement{
 
     private void initItems() {
         items = new ArrayList<>();
-        for (int i = 0; i <= GameRules.MAX_FRACTIONS_QUANTITY; i++) {
+        for (int i = 0; i < GameRules.MAX_FRACTIONS_QUANTITY; i++) {
             addItem(EleActionType.def, i);
         }
         addItem(EleActionType.random, -1);
@@ -128,8 +128,8 @@ public class EditLandElement extends InterfaceElement{
 
     private void updateItemDeltas() {
         for (EleItem item : items) {
-            item.viewPosition.setRadius(0.18 * position.height);
-            item.touchPosition.setRadius(0.25 * position.height);
+            item.touchPosition.setRadius(position.width / 16);
+            item.viewPosition.setRadius(0.8 * item.touchPosition.radius);
         }
 
         for (int i = 0; i < 6; i++) {
@@ -144,16 +144,18 @@ public class EditLandElement extends InterfaceElement{
 
     private void alignLeft(EleItem eleItem, int x, int y) {
         if (eleItem == null) return;
-        float step = (float) (position.height / 2);
-        eleItem.delta.x = step / 2 + step * x;
-        eleItem.delta.y = step / 2 + step * y;
+        float stepX = (float) (position.width / 8);
+        float stepY = (float) (position.height / 2);
+        eleItem.delta.x = stepX / 2 + stepX * x;
+        eleItem.delta.y = stepY / 2 + stepY * y;
     }
 
 
     private void alignRight(EleItem eleItem, int x, int y) {
-        float step = (float) (position.height / 2);
-        eleItem.delta.x = (float) (position.width - step / 2 - step * x);
-        eleItem.delta.y = step / 2 + step * y;
+        float stepX = (float) (position.width / 8);
+        float stepY = (float) (position.height / 2);
+        eleItem.delta.x = (float) (position.width - stepX / 2 - stepX * x);
+        eleItem.delta.y = stepY / 2 + stepY * y;
     }
 
 

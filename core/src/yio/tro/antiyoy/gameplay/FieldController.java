@@ -189,6 +189,21 @@ public class FieldController implements EncodeableYio{
     }
 
 
+    public int[] getIncomeArray() {
+        int[] array = new int[GameRules.fractionsQuantity];
+
+        for (int i = 0; i < array.length; i++) {
+            array[i] = 0;
+        }
+
+        for (Province province : gameController.fieldController.provinces) {
+            array[province.getFraction()] += province.getIncome();
+        }
+
+        return array;
+    }
+
+
     public void killUnitByStarvation(Hex hex) {
         cleanOutHex(hex);
         addSolidObject(hex, Obj.GRAVE);

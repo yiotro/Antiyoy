@@ -647,6 +647,13 @@ public class DiplomacyManager {
     }
 
 
+    public void updateAllNames() {
+        for (DiplomaticEntity entity : entities) {
+            entity.updateCapitalName();
+        }
+    }
+
+
     private void onAiTurnStarted() {
         if (!getMainEntity().alive) return;
 

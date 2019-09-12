@@ -10,8 +10,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 /**
  * Created by yiotro on 29.12.2015.
  */
-public class RbShowColorStats extends Reaction {
-
+public class RbShowIncomeGraph extends Reaction {
 
 
     @Override
@@ -23,23 +22,6 @@ public class RbShowColorStats extends Reaction {
         }
 
         Scenes.sceneIncomeGraph.create();
-
-        ColorStatsRenderer colorStatsRenderer = buttonYio.menuControllerYio.colorStatsRenderer;
-        colorStatsRenderer.performRendering(Scenes.sceneIncomeGraph.showPanel, getIncomeArray(gameController));
     }
 
-
-    private int[] getIncomeArray(GameController gameController) {
-        int[] array = new int[GameRules.fractionsQuantity];
-
-        for (int i = 0; i < array.length; i++) {
-            array[i] = 0;
-        }
-
-        for (Province province : gameController.fieldController.provinces) {
-            array[province.getFraction()] += province.getIncome();
-        }
-
-        return array;
-    }
 }

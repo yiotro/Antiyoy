@@ -36,7 +36,7 @@ public class SceneEditorHexPanel extends AbstractEditorPanel{
     private void initEditLandElement() {
         if (editLandElement != null) return;
         editLandElement = new EditLandElement(menuControllerYio);
-        editLandElement.setPosition(generateRectangle(0.05, SceneEditorOverlay.PANEL_HEIGHT + 0.075, 0.9, 0.15));
+        editLandElement.setPosition(generateRectangle(0.025, SceneEditorOverlay.PANEL_HEIGHT + 0.075, 0.95, 0.15));
         menuControllerYio.addElementToScene(editLandElement);
     }
 

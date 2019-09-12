@@ -231,8 +231,7 @@ public class SceneUserLevels extends AbstractScene {
 
     private void launchUserLevel(AbstractLegacyUserLevel level) {
         AbstractUserLevel userLevel = (AbstractUserLevel) level;
-        getGameController().importManager.launchGame(LoadingType.user_level, userLevel.getLevelCode());
-        GameRules.ulKey = userLevel.getKey();
+        getGameController().importManager.launchGame(LoadingType.user_level, userLevel.getLevelCode(), userLevel.getKey());
         getGameController().fieldController.onUserLevelLoaded();
     }
 

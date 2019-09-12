@@ -4,19 +4,19 @@ import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
+import yio.tro.antiyoy.menu.income_graph.IncomeGraphElement;
 
 public class SceneIncomeGraph extends AbstractModalScene {
 
 
-    public ButtonYio showPanel;
     private Reaction rbHide;
-    private ButtonYio okButton;
-    private ButtonYio closeButton;
+    IncomeGraphElement incomeGraphElement;
 
 
     public SceneIncomeGraph(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
+        incomeGraphElement = null;
         initReactions();
     }
 
@@ -36,12 +36,26 @@ public class SceneIncomeGraph extends AbstractModalScene {
         menuControllerYio.getYioGdxGame().gameController.selectionManager.deselectAll();
 
         createCloseButton();
-        createShowPanel();
+        createIncomeGraph();
+    }
+
+
+    private void createIncomeGraph() {
+        initIncomeGraph();
+        incomeGraphElement.appear();
+    }
+
+
+    private void initIncomeGraph() {
+        if (incomeGraphElement != null) return;
+        incomeGraphElement = new IncomeGraphElement(menuControllerYio);
+        incomeGraphElement.setPosition(generateRectangle(0, 0.18, 1, 0.41));
+        menuControllerYio.addElementToScene(incomeGraphElement);
     }
 
 
     private void createCloseButton() {
-        closeButton = buttonFactory.getButton(generateRectangle(0, 0, 1, 1), 56323, null);
+        ButtonYio closeButton = buttonFactory.getButton(generateRectangle(0, 0, 1, 1), 430, null);
         if (closeButton.notRendered()) {
             closeButton.loadTexture("pixels/transparent_black_pixel.png");
         }
@@ -51,16 +65,11 @@ public class SceneIncomeGraph extends AbstractModalScene {
     }
 
 
-    private void createShowPanel() {
-        showPanel = buttonFactory.getButton(generateRectangle(0, 0.15, 1, 0.41), 56321, null);
-        showPanel.setTouchable(false);
-        showPanel.setAnimation(Animation.fixed_down);
-        showPanel.setIgnorePauseResume(true);
-    }
-
-
     @Override
     public void hide() {
-        destroyByIndex(56321, 56329);
+        destroyByIndex(430, 439);
+        if (incomeGraphElement != null) {
+            incomeGraphElement.destroy();
+        }
     }
 }

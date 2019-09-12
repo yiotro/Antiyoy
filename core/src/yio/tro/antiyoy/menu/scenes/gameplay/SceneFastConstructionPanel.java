@@ -44,7 +44,7 @@ public class SceneFastConstructionPanel extends AbstractModalScene {
         loadCoinButtonTexture(coinButton);
         coinButton.appearFactor.appear(3, 2);
         coinButton.setTouchable(true);
-        coinButton.setReaction(Reaction.rbShowColorStats);
+        coinButton.setReaction(Reaction.RB_SHOW_INCOME_GRAPH);
     }
 
 

@@ -196,14 +196,15 @@ public class SceneSkirmishMenu extends AbstractScene {
     }
 
 
-    private void updateColorsSliderQuantity(SliderYio colorsSlider, SliderYio playersSlider) {
+    private void updateColorsSliderQuantity(SliderYio colorsSlider, SliderYio mapSizeSlider) {
         int s = 3;
-        if (playersSlider.getValueIndex() == 1) {
+        if (mapSizeSlider.getValueIndex() == 1) {
+            s = GameRules.MAX_FRACTIONS_QUANTITY - 4;
+        }
+        if (mapSizeSlider.getValueIndex() >= 2) {
             s = GameRules.MAX_FRACTIONS_QUANTITY - 3;
         }
-        if (playersSlider.getValueIndex() >= 2) {
-            s = GameRules.MAX_FRACTIONS_QUANTITY - 2;
-        }
+        System.out.println("s = " + s);
         int currentRunnerIndex = colorsSlider.getValueIndex();
         colorsSlider.setNumberOfSegments(s);
         colorsSlider.setValueIndex(currentRunnerIndex);

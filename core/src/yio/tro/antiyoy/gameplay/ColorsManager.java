@@ -156,6 +156,7 @@ public class ColorsManager {
     public String getColorName(int color, String keyModifier) {
         switch (color) {
             default:
+                return "unknown";
             case 6:
             case 0:
                 return LanguagesManager.getInstance().getString("green" + keyModifier);

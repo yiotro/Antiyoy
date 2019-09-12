@@ -2,11 +2,11 @@ package yio.tro.antiyoy.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import yio.tro.antiyoy.*;
+import yio.tro.antiyoy.SettingsManager;
+import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.ColorsManager;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
-import yio.tro.antiyoy.menu.behaviors.gameplay.ColorStatsRenderer;
-import yio.tro.antiyoy.menu.scenes.*;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.stuff.RectangleYio;
@@ -28,7 +28,6 @@ public class MenuControllerYio {
     public final ArrayList<ButtonYio> buttons;
     public SpecialActionController specialActionController;
     public ArrayList<InterfaceElement> interfaceElements;
-    public ColorStatsRenderer colorStatsRenderer;
 
 
     public MenuControllerYio(YioGdxGame yioGdxGame) {
@@ -41,7 +40,6 @@ public class MenuControllerYio {
         lockedLevelIcon = GraphicsYio.loadTextureRegion("locked_level_icon.png", true);
         openedLevelIcon = GraphicsYio.loadTextureRegion("opened_level_icon.png", true);
         interfaceElements = new ArrayList<>();
-        colorStatsRenderer = new ColorStatsRenderer(this);
         applyAnimStyle();
 
         Scenes.createScenes(this);
@@ -420,7 +418,7 @@ public class MenuControllerYio {
 
 
     public void onSkinChanged() {
-        colorStatsRenderer.loadColors();
+
     }
 
 
