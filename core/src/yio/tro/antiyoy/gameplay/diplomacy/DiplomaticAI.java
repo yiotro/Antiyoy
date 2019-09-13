@@ -94,7 +94,7 @@ public class DiplomaticAI {
             performAiToHumanHexSellProposal();
         }
 
-        if (YioGdxGame.random.nextInt(12) == 0 || doesLogContainMessageToMe()) {
+        if (YioGdxGame.random.nextInt(18) == 0 || doesLogContainMessageToMe()) {
             sendCustomMessageToHuman();
         }
     }

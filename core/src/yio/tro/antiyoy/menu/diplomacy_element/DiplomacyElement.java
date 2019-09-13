@@ -392,7 +392,6 @@ public class DiplomacyElement extends InterfaceElement {
     public void appear() {
         appearFactor.setValues(0.01, 0);
         appearFactor.appear(3, 1.25);
-
         onAppear();
     }
 

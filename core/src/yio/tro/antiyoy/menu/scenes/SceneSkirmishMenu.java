@@ -204,7 +204,6 @@ public class SceneSkirmishMenu extends AbstractScene {
         if (mapSizeSlider.getValueIndex() >= 2) {
             s = GameRules.MAX_FRACTIONS_QUANTITY - 3;
         }
-        System.out.println("s = " + s);
         int currentRunnerIndex = colorsSlider.getValueIndex();
         colorsSlider.setNumberOfSegments(s);
         colorsSlider.setValueIndex(currentRunnerIndex);

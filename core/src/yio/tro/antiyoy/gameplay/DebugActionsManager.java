@@ -27,7 +27,7 @@ public class DebugActionsManager {
 
 
     public void debugActions() {
-        System.out.println("GameRules.ulKey = " + GameRules.ulKey);
+        doShowIncomeGraph();
     }
 
 

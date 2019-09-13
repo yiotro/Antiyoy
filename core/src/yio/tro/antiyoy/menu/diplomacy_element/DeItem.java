@@ -210,6 +210,16 @@ public class DeItem implements ReusableYio, Comparable<DeItem> {
 
     @Override
     public int compareTo(DeItem o) {
-        return fraction - o.fraction;
+        int anotherFractionModifed = o.fraction;
+        if (o.status == STATUS_DEAD) {
+            anotherFractionModifed *= 1000;
+        }
+
+        int myFractionModified = fraction;
+        if (status == STATUS_DEAD) {
+            myFractionModified *= 1000;
+        }
+
+        return myFractionModified - anotherFractionModifed;
     }
 }

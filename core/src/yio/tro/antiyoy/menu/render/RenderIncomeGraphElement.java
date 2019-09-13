@@ -14,11 +14,13 @@ public class RenderIncomeGraphElement extends MenuRender{
     private TextureRegion backgroundTexture;
     private IncomeGraphElement incomeGraphElement;
     private float alpha;
+    private TextureRegion borderTexture;
 
 
     @Override
     public void loadTextures() {
         backgroundTexture = GraphicsYio.loadTextureRegion("diplomacy/background.png", false);
+        borderTexture = GraphicsYio.loadTextureRegion("pixels/pixel_dark_gray.png", true);
     }
 
 
@@ -47,9 +49,21 @@ public class RenderIncomeGraphElement extends MenuRender{
         renderBackground();
         renderTitle();
         renderSeparator();
+        renderBorders();
         renderItems();
 
         Fonts.smallerMenuFont.setColor(previousColor);
+    }
+
+
+    private void renderBorders() {
+        for (IgeItem item : incomeGraphElement.items) {
+            if (item.borderFactor.get() == 0) continue;
+            if (item.text.string.equals("0")) continue;
+            GraphicsYio.setBatchAlpha(batch, alpha * item.borderFactor.get());
+            GraphicsYio.drawByRectangle(batch, borderTexture, item.borderPosition);
+        }
+        GraphicsYio.setBatchAlpha(batch, alpha);
     }
 
 

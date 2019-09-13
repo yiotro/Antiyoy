@@ -109,6 +109,9 @@ public class IncomeGraphElement extends InterfaceElement{
     @Override
     public void destroy() {
         appearFactor.destroy(2, 2);
+        for (IgeItem item : items) {
+            item.onDestroy();
+        }
     }
 
 
@@ -213,8 +216,8 @@ public class IncomeGraphElement extends InterfaceElement{
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         updateCurrentTouch(screenX, screenY);
-        touched = viewPosition.isPointInside(currentTouch);
-        System.out.println("IncomeGraphElement.touchDown");
+//        touched = viewPosition.isPointInside(currentTouch);
+        touched = false;
         return touched;
     }
 

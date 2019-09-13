@@ -15,6 +15,8 @@ public class IgeItem implements ReusableYio{
     float targetHeight;
     float maxHeight;
     public RenderableTextYio text;
+    public FactorYio borderFactor;
+    public RectangleYio borderPosition;
 
 
     public IgeItem(IncomeGraphElement incomeGraphElement) {
@@ -25,6 +27,8 @@ public class IgeItem implements ReusableYio{
         prepareFactor = new FactorYio();
         text = new RenderableTextYio();
         text.setFont(Fonts.smallerMenuFont);
+        borderFactor = new FactorYio();
+        borderPosition = new RectangleYio();
     }
 
 
@@ -37,6 +41,8 @@ public class IgeItem implements ReusableYio{
         targetHeight = 0;
         prepareFactor.reset();
         maxHeight = 0;
+        borderFactor.reset();
+        borderPosition.reset();
 
         prepareFactor.appear(1, 2);
     }
@@ -47,6 +53,28 @@ public class IgeItem implements ReusableYio{
         appearFactor.move();
         updateViewPosition();
         moveText();
+        moveBorder();
+        updateBorderPosition();
+    }
+
+
+    private void updateBorderPosition() {
+        borderPosition.setBy(viewPosition);
+        borderPosition.increase(GraphicsYio.borderThickness);
+    }
+
+
+    public void onDestroy() {
+        borderFactor.destroy(1, 3);
+    }
+
+
+    private void moveBorder() {
+        borderFactor.move();
+        if (borderFactor.get() > 0) return;
+        if (appearFactor.get() <= 0.01 || appearFactor.getGravity() <= 0) return;
+        borderFactor.setValues(0.01, 0);
+        borderFactor.appear(3, 1);
     }
 
 

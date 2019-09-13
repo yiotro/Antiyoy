@@ -753,7 +753,7 @@ public class GameController {
 
     public int convertSliderIndexToColorOffset(int sliderIndex, int fractionsQuantity) {
         if (sliderIndex == 0) { // random
-            return predictableRandom.nextInt(fractionsQuantity);
+            return predictableRandom.nextInt(Math.min(fractionsQuantity, GameRules.NEUTRAL_FRACTION));
         } else {
             return sliderIndex - 1;
         }
