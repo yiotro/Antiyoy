@@ -303,6 +303,7 @@ public class LoadingManager {
 
         gameController.onEndCreation();
         gameController.updateInitialParameters(parameters);
+        gameController.yioGdxGame.gameView.rList.renderBackgroundCache.setUpdateAllowed(true);
         yioGdxGame.onEndCreation();
 
         if (GameRules.inEditorMode) {
@@ -336,6 +337,7 @@ public class LoadingManager {
 //        parameters.showInConsole();
 
         gameController.fieldController.createField();
+        gameController.yioGdxGame.gameView.rList.renderBackgroundCache.setUpdateAllowed(false);
     }
 
 

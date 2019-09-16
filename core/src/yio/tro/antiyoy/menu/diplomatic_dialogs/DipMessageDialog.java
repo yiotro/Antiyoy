@@ -43,6 +43,14 @@ public class DipMessageDialog extends AbstractDiplomaticDialog {
         sourceText = LanguagesManager.getInstance().getString(messageKey);
         updateLines();
         updateAll();
+        cutOffExcessiveLabels();
+    }
+
+
+    private void cutOffExcessiveLabels() {
+        while (labels.size() > 5) {
+            labels.remove(labels.size() - 1);
+        }
     }
 
 

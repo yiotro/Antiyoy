@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.TurnStartDialog;
 import yio.tro.antiyoy.stuff.GraphicsYio;
@@ -20,7 +21,7 @@ public class RenderTurnStartDialog extends MenuRender{
 
     @Override
     public void loadTextures() {
-        bckColors = new TextureRegion[7];
+        bckColors = new TextureRegion[GameRules.MAX_FRACTIONS_QUANTITY];
         for (int i = 0; i < bckColors.length; i++) {
             bckColors[i] = GraphicsYio.loadTextureRegion("diplomacy/color" + (i + 1) + ".png", false);
         }

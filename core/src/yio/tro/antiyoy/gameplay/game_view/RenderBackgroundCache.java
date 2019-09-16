@@ -27,6 +27,7 @@ public class RenderBackgroundCache extends GameRender {
     RectangleYio animBounds;
     ObjectPoolYio<CacheItem> poolItems;
     PointYio tempPoint;
+    public boolean updateAllowed;
 
 
     public RenderBackgroundCache(GameRendersList gameRendersList) {
@@ -39,6 +40,7 @@ public class RenderBackgroundCache extends GameRender {
         animBounds = new RectangleYio();
         items = new ArrayList<>();
         tempPoint = new PointYio();
+        updateAllowed = true;
 
         initPools();
     }
@@ -128,6 +130,7 @@ public class RenderBackgroundCache extends GameRender {
     void updateCacheNearAnimHexes() {
         if (DebugFlags.testMode) return;
         if (!isThereAtLeastOneAnimHex()) return;
+        if (!isUpdateAllowed()) return;
 
         updateAnimBounds();
 
@@ -205,6 +208,7 @@ public class RenderBackgroundCache extends GameRender {
 
     public void updateFullCache() {
         if (DebugFlags.testMode) return;
+        if (!isUpdateAllowed()) return;
         gameController.letsUpdateCacheByAnim = false;
 
         cacheCam.position.set(0.5f * GraphicsYio.width, 0.5f * GraphicsYio.height, 0);
@@ -323,5 +327,15 @@ public class RenderBackgroundCache extends GameRender {
     @Override
     public void disposeTextures() {
 
+    }
+
+
+    public boolean isUpdateAllowed() {
+        return updateAllowed;
+    }
+
+
+    public void setUpdateAllowed(boolean updateAllowed) {
+        this.updateAllowed = updateAllowed;
     }
 }

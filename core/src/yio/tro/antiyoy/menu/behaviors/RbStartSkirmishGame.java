@@ -4,6 +4,7 @@ import yio.tro.antiyoy.gameplay.LevelSize;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.loading.LoadingType;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.scenes.Scenes;
@@ -28,7 +29,7 @@ public class RbStartSkirmishGame extends Reaction {
         instance.loadingType = LoadingType.skirmish;
         instance.levelSize = getLevelSizeBySliderPos(Scenes.sceneSkirmishMenu.mapSizeSlider);
         instance.playersNumber = Scenes.sceneSkirmishMenu.playersSlider.getValueIndex();
-        instance.fractionsQuantity = Scenes.sceneSkirmishMenu.colorsSlider.getValueIndex() + 2;
+        instance.fractionsQuantity = getFractionsQuantity();
         instance.difficulty = Scenes.sceneSkirmishMenu.difficultySlider.getValueIndex();
         instance.colorOffset = getGameController(buttonYio).convertSliderIndexToColorOffset(
                 Scenes.sceneMoreSkirmishOptions.colorOffsetSlider.getValueIndex(), instance.fractionsQuantity);
@@ -39,6 +40,15 @@ public class RbStartSkirmishGame extends Reaction {
         LoadingManager.getInstance().startGame(instance);
 
         getYioGdxGame(buttonYio).setAnimToStartButtonSpecial();
+    }
+
+
+    private int getFractionsQuantity() {
+        int fractionsQuantity = Scenes.sceneSkirmishMenu.colorsSlider.getValueIndex() + 2;
+        if (fractionsQuantity >= GameRules.NEUTRAL_FRACTION) {
+            fractionsQuantity++;
+        }
+        return fractionsQuantity;
     }
 
 

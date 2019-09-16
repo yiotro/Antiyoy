@@ -11,6 +11,6 @@ public class RbArticleUnits extends Reaction {
 
     @Override
     public void perform(ButtonYio buttonYio) {
-        Scenes.sceneAboutGame.create("help_units_article", Reaction.rbHelpIndex, 18);
+        Scenes.sceneArticle.create("help_units_article", Reaction.rbHelpIndex, 18);
     }
 }

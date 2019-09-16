@@ -48,7 +48,7 @@ public class SceneExceptionReport extends AbstractScene{
                 }
 
                 try {
-                    text.add(temp.substring(start, end));
+                    text.add(temp.substring(Math.max(0, start), Math.min(end, temp.length())));
                 } catch (ArrayIndexOutOfBoundsException e) {
 
                 }
@@ -71,7 +71,7 @@ public class SceneExceptionReport extends AbstractScene{
         parameter.flip = true;
         BitmapFont font = generator.generateFont(parameter);
 
-        ButtonYio textPanel = buttonFactory.getButton(generateRectangle(0.1, 0.2, 0.8, 0.7), 6731267, null);
+        ButtonYio textPanel = buttonFactory.getButton(generateRectangle(0.05, 0.1, 0.9, 0.85), 6731267, null);
         if (textPanel.notRendered()) {
             textPanel.addManyLines(text);
             for (int i = 0; i < (lineNumber - text.size()); i++) textPanel.addTextLine(" ");
@@ -79,7 +79,7 @@ public class SceneExceptionReport extends AbstractScene{
         }
         textPanel.setTouchable(false);
 
-        ButtonYio okButton = buttonFactory.getButton(generateRectangle(0.1, 0.1, 0.8, 0.1), 73612321, "Ok");
+        ButtonYio okButton = buttonFactory.getButton(generateRectangle(0.05, 0.03, 0.9, 0.07), 73612321, "Ok");
         okButton.setReaction(new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {

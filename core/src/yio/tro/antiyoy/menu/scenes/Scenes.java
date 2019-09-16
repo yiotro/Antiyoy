@@ -9,7 +9,7 @@ public class Scenes {
     public static SceneMainMenu sceneMainMenu;
     public static SceneSettings sceneSettings;
     public static SceneMoreSettings sceneMoreSettings;
-    public static SceneAboutGame sceneAboutGame;
+    public static SceneArticle sceneArticle;
     public static SceneMoreSkirmishOptions sceneMoreSkirmishOptions;
     public static SceneSkirmishMenu sceneSkirmishMenu;
     public static SceneTestScreen sceneTestScreen;
@@ -89,13 +89,14 @@ public class Scenes {
     public static SceneColorPicker sceneColorPicker;
     public static SceneEditorMessages sceneEditorMessages;
     public static SceneDiplomaticRelations sceneDiplomaticRelations;
+    public static SceneMyGames sceneMyGames;
 
 
     public static void createScenes(MenuControllerYio menuController) {
         sceneMainMenu = new SceneMainMenu(menuController);
         sceneSettings = new SceneSettings(menuController);
         sceneMoreSettings = new SceneMoreSettings(menuController);
-        sceneAboutGame = new SceneAboutGame(menuController);
+        sceneArticle = new SceneArticle(menuController);
         sceneMoreSkirmishOptions = new SceneMoreSkirmishOptions(menuController);
         sceneSkirmishMenu = new SceneSkirmishMenu(menuController);
         sceneTestScreen = new SceneTestScreen(menuController);
@@ -175,5 +176,6 @@ public class Scenes {
         sceneColorPicker = new SceneColorPicker(menuController);
         sceneEditorMessages = new SceneEditorMessages(menuController);
         sceneDiplomaticRelations = new SceneDiplomaticRelations(menuController);
+        sceneMyGames = new SceneMyGames(menuController);
     }
 }

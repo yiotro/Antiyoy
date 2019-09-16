@@ -1,8 +1,6 @@
 package yio.tro.antiyoy.menu.editor_elements.color_picker;
 
-import yio.tro.antiyoy.stuff.CircleYio;
-import yio.tro.antiyoy.stuff.PointYio;
-import yio.tro.antiyoy.stuff.SelectionEngineYio;
+import yio.tro.antiyoy.stuff.*;
 
 public class CpeItem {
 
@@ -11,6 +9,7 @@ public class CpeItem {
     PointYio delta;
     public int color;
     public SelectionEngineYio selectionEngineYio;
+    public RectangleYio borderPosition;
 
 
     public CpeItem(ColorPickerElement colorPickerElement) {
@@ -19,12 +18,20 @@ public class CpeItem {
         delta = new PointYio();
         color = -1;
         selectionEngineYio = new SelectionEngineYio();
+        borderPosition = new RectangleYio();
     }
 
 
     void move() {
         updateViewPosition();
+        updateBorderPosition();
         selectionEngineYio.move();
+    }
+
+
+    private void updateBorderPosition() {
+        borderPosition.setBy(viewPosition);
+        borderPosition.increase(GraphicsYio.borderThickness);
     }
 
 

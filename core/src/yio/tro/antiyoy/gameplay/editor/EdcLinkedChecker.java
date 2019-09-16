@@ -9,6 +9,7 @@ public class EdcLinkedChecker {
     EditorProvinceManager editorProvinceManager;
     ArrayList<Hex> propagationList;
     private ArrayList<Hex> hexList;
+    EditorProvinceData provinceData;
 
 
     public EdcLinkedChecker(EditorProvinceManager editorProvinceManager) {
@@ -18,6 +19,7 @@ public class EdcLinkedChecker {
 
 
     public boolean isLinked(EditorProvinceData province) {
+        provinceData = province;
         hexList = province.hexList;
         if (hexList.size() < 2) return true;
 
@@ -35,7 +37,8 @@ public class EdcLinkedChecker {
     private void prepare() {
         propagationList.clear();
         prepareHexList();
-        addHexToPropagationList(hexList.get(0));
+        Hex hex = hexList.get(0);
+        addHexToPropagationList(hex);
     }
 
 

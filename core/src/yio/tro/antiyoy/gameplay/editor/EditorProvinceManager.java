@@ -12,6 +12,7 @@ import yio.tro.antiyoy.stuff.RepeatYio;
 import yio.tro.antiyoy.stuff.object_pool.ObjectPoolYio;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class EditorProvinceManager implements EncodeableYio{
 
@@ -174,6 +175,7 @@ public class EditorProvinceManager implements EncodeableYio{
     private void splitProvince(EditorProvinceData editorProvinceData) {
         tempList.clear();
         tempList.addAll(editorProvinceData.hexList);
+        int fraction = editorProvinceData.getFraction();
         editorProvinceData.kill();
         for (Hex hex : tempList) {
             onHexActivated(hex);
@@ -189,16 +191,18 @@ public class EditorProvinceManager implements EncodeableYio{
             tempProvList.add(provinceByHex);
         }
 
-        EditorProvinceData biggestProvince = getBiggestProvince(tempProvList);
+
+        EditorProvinceData biggestProvince = getBiggestProvince(tempProvList, fraction);
         if (biggestProvince == null) return;
 
         biggestProvince.copyStoredDataFrom(editorProvinceData);
     }
 
 
-    private EditorProvinceData getBiggestProvince(ArrayList<EditorProvinceData> list) {
+    private EditorProvinceData getBiggestProvince(ArrayList<EditorProvinceData> list, int fraction) {
         EditorProvinceData result = null;
         for (EditorProvinceData editorProvinceData : list) {
+            if (editorProvinceData.getFraction() != fraction) continue;
             if (result == null || editorProvinceData.hexList.size() > result.hexList.size()) {
                 result = editorProvinceData;
             }
@@ -244,7 +248,18 @@ public class EditorProvinceManager implements EncodeableYio{
             EditorProvinceData editorProvinceData = provincesList.get(i);
             EditorProvinceData nearbyProvince = findNearbyProvince(editorProvinceData, editorProvinceData.getFraction());
             if (nearbyProvince == null) continue;
-            uniteProvinces(nearbyProvince, editorProvinceData);
+
+            EditorProvinceData biggerProvince;
+            EditorProvinceData smallerProvince;
+            if (nearbyProvince.hexList.size() > editorProvinceData.hexList.size()) {
+                biggerProvince = nearbyProvince;
+                smallerProvince = editorProvinceData;
+            } else {
+                biggerProvince = editorProvinceData;
+                smallerProvince = nearbyProvince;
+            }
+
+            uniteProvinces(biggerProvince, smallerProvince);
         }
     }
 
@@ -275,10 +290,12 @@ public class EditorProvinceManager implements EncodeableYio{
     public void decode(String source) {
         for (String token : source.split(",")) {
             String[] split = token.split("@");
+            if (split.length < 2) continue;
             int index1 = Integer.valueOf(split[0]);
             int index2 = Integer.valueOf(split[1]);
             Hex hex = getGameController().fieldController.getHex(index1, index2);
             EditorProvinceData provinceByHex = getProvinceByHex(hex);
+            if (provinceByHex == null) continue;
             provinceByHex.decode(token);
         }
     }

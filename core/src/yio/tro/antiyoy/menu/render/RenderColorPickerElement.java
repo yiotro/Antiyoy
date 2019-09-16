@@ -12,11 +12,13 @@ public class RenderColorPickerElement extends MenuRender{
     private ColorPickerElement colorPickerElement;
     private float alpha;
     private TextureRegion backgroundTexture;
+    private TextureRegion borderTexture;
 
 
     @Override
     public void loadTextures() {
         backgroundTexture = GraphicsYio.loadTextureRegion("menu/background.png", false);
+        borderTexture = GraphicsYio.loadTextureRegion("pixels/pixel_dark_gray.png", true);
     }
 
 
@@ -52,6 +54,7 @@ public class RenderColorPickerElement extends MenuRender{
 
 
     private void renderSingleItem(CpeItem item) {
+        GraphicsYio.drawByRectangle(batch, borderTexture, item.borderPosition);
         GraphicsYio.drawByCircle(batch, getItemTexture(item.color), item.viewPosition);
         if (item.selectionEngineYio.isSelected()) {
             GraphicsYio.setBatchAlpha(batch, alpha * item.selectionEngineYio.getAlpha());

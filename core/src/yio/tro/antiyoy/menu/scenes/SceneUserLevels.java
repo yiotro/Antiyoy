@@ -6,7 +6,6 @@ import yio.tro.antiyoy.gameplay.data_storage.LegacyImportManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.loading.LoadingType;
-import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.gameplay.user_levels.AbstractLegacyUserLevel;
 import yio.tro.antiyoy.gameplay.user_levels.AbstractUserLevel;
 import yio.tro.antiyoy.gameplay.user_levels.UserLevelFactory;
@@ -19,7 +18,6 @@ import yio.tro.antiyoy.menu.scrollable_list.ListBehaviorYio;
 import yio.tro.antiyoy.menu.scrollable_list.ListItemYio;
 import yio.tro.antiyoy.menu.scrollable_list.ScrollableListYio;
 import yio.tro.antiyoy.stuff.LanguagesManager;
-import yio.tro.antiyoy.stuff.Yio;
 
 public class SceneUserLevels extends AbstractScene {
 
@@ -237,7 +235,7 @@ public class SceneUserLevels extends AbstractScene {
 
 
     public void onAddMyMapClicked() {
-        Scenes.sceneAboutGame.create("how_add_my_map", new Reaction() {
+        Scenes.sceneArticle.create("how_add_my_map", new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
                 Scenes.sceneUserLevels.create();

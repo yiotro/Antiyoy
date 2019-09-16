@@ -32,21 +32,21 @@ public class SceneHelpIndex extends AbstractScene{
         rbDiplomacy1 = new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
-                Scenes.sceneAboutGame.create("article_diplomacy_1", Reaction.rbHelpIndex, 18);
+                Scenes.sceneArticle.create("article_diplomacy_1", Reaction.rbHelpIndex, 18);
             }
         };
 
         rbDiplomacy2 = new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
-                Scenes.sceneAboutGame.create("article_diplomacy_2", Reaction.rbHelpIndex, 18);
+                Scenes.sceneArticle.create("article_diplomacy_2", Reaction.rbHelpIndex, 18);
             }
         };
     }
 
 
     public static void createMyGamesArticle() {
-        Scenes.sceneAboutGame.create(LanguagesManager.getInstance().getString("article_my_games") + " #- Achikaps #- Bleentoro #- Shmatoosto #- Opacha-mda", Reaction.rbHelpIndex, 18);
+        Scenes.sceneMyGames.create();
     }
 
 

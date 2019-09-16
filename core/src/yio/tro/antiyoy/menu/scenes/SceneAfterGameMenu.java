@@ -114,9 +114,19 @@ public class SceneAfterGameMenu extends AbstractScene {
                     getString("won") + ".";
         }
 
-        return menuControllerYio.getColorsManager().getColorNameByFraction(winnerFraction, "_ai") + " " +
+        String aiColorName = menuControllerYio.getColorsManager().getColorNameByFraction(winnerFraction, "_ai");
+        if (aiColorName.equals("unknown")) {
+            return castFirstLetterUpperCase(getString("ai")) + " " + getString("won") + ".";
+        }
+
+        return aiColorName + " " +
                 getString("ai") + " " +
                 getString("won") + ".";
+    }
+
+
+    private String castFirstLetterUpperCase(String src) {
+        return src.substring(0, 1).toUpperCase() + src.substring(1);
     }
 
 

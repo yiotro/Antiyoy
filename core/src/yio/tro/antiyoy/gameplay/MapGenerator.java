@@ -567,7 +567,12 @@ public class MapGenerator {
 
 
     protected int getRandomFraction() {
-        return random.nextInt(GameRules.fractionsQuantity);
+        if (GameRules.fractionsQuantity == 0) return -1;
+        while (true) {
+            int fraction = random.nextInt(GameRules.fractionsQuantity);
+            if (fraction == GameRules.NEUTRAL_FRACTION) continue;
+            return fraction;
+        }
     }
 
 

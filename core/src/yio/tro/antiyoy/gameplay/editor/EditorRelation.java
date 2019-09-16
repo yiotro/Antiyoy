@@ -18,6 +18,7 @@ public class EditorRelation implements EncodeableYio{
     @Override
     public void decode(String source) {
         String[] split = source.split(" ");
+        if (split.length < 3) return;
         color1 = Integer.valueOf(split[0]);
         relation = Integer.valueOf(split[1]);
         color2 = Integer.valueOf(split[2]);

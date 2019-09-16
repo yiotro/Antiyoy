@@ -219,9 +219,8 @@ public class DiplomaticLog {
         DiplomaticEntity mainEntity = diplomacyManager.getMainEntity();
 
         for (DiplomaticMessage message : messages) {
-            if (message.recipient == mainEntity) {
-                return true;
-            }
+            if (message.recipient != mainEntity) continue;
+            return true;
         }
 
         return false;

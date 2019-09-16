@@ -3,6 +3,7 @@ package yio.tro.antiyoy.gameplay.diplomacy;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class DiplomacyInfoCondensed implements ReusableYio {
 
@@ -69,7 +70,7 @@ public class DiplomacyInfoCondensed implements ReusableYio {
         }
 
         if (builder.length() == 0) {
-            builder.append(" ");
+            builder.append("#");
         }
 
         messages = builder.toString();
@@ -77,7 +78,7 @@ public class DiplomacyInfoCondensed implements ReusableYio {
 
 
     private String getSingleMessageCode(DiplomaticMessage message) {
-        return message.type + " " + message.getSenderFraction() + " " + message.getRecipientFraction() + " " + message.arg1 + " " + message.arg2 + " " + message.arg3;
+        return message.type + "=" + message.getSenderFraction() + "=" + message.getRecipientFraction() + "=" + message.arg1 + "=" + message.arg2 + "=" + message.arg3;
     }
 
 
@@ -146,9 +147,11 @@ public class DiplomacyInfoCondensed implements ReusableYio {
 
 
     private void applySingleMessage(String s) {
-        String[] split = s.split(" ");
+        if (!s.contains("=")) return;
+        if (countSymbol(s, '=') < 5) return;
+        String[] split = s.split("=");
 
-        if (split.length == 0) return;
+        if (split.length < 3) return;
 
         DipMessageType type = DipMessageType.valueOf(split[0]);
         int fraction1 = Integer.valueOf(split[1]);
@@ -167,6 +170,16 @@ public class DiplomacyInfoCondensed implements ReusableYio {
         diplomaticMessage.setArg1(arg1);
         diplomaticMessage.setArg2(arg2);
         diplomaticMessage.setArg3(arg3);
+    }
+
+
+    private int countSymbol(String string, char c) {
+        int counter = 0;
+        for (int i = 0; i < string.length(); i++) {
+            if (string.charAt(i) != c) continue;
+            counter++;
+        }
+        return counter;
     }
 
 

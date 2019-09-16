@@ -33,22 +33,15 @@ public class DiplomaticLogPanel extends ScrollableListYio {
 
 
     private void initBehavior() {
-        setListBehavior(new ListBehaviorYio() {
+        setListBehavior(getListBehavior());
+    }
+
+
+    private ListBehaviorYio getListBehavior() {
+        return new ListBehaviorYio() {
             @Override
             public void applyItem(ListItemYio item) {
-                DiplomaticLog log = menuControllerYio.yioGdxGame.gameController.fieldController.diplomacyManager.log;
-
-                if (item.key.equals("clear")) {
-                    log.onClearMessagesButtonClicked();
-                } else {
-                    log.onListItemClicked(item.key);
-                }
-
-                updateItems();
-
-                if (items.size() == 0) {
-                    Scenes.sceneDiplomaticLog.hide();
-                }
+                DiplomaticLogPanel.this.applyItem(item);
             }
 
 
@@ -62,7 +55,24 @@ public class DiplomaticLogPanel extends ScrollableListYio {
             public void onItemDeleteRequested(ListItemYio item) {
 
             }
-        });
+        };
+    }
+
+
+    private void applyItem(ListItemYio item) {
+        DiplomaticLog log = menuControllerYio.yioGdxGame.gameController.fieldController.diplomacyManager.log;
+
+        if (item.key.equals("clear")) {
+            log.onClearMessagesButtonClicked();
+        } else {
+            log.onListItemClicked(item.key);
+        }
+
+        updateItems();
+
+        if (items.size() == 0) {
+            Scenes.sceneDiplomaticLog.hide();
+        }
     }
 
 
@@ -181,6 +191,11 @@ public class DiplomaticLogPanel extends ScrollableListYio {
         }
 
         return super.checkToPerformAction();
+    }
+
+
+    public boolean isEmpty() {
+        return items.size() == 0;
     }
 
 

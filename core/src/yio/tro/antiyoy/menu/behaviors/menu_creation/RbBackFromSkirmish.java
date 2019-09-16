@@ -8,6 +8,8 @@ public class RbBackFromSkirmish extends Reaction {
 
     @Override
     public void perform(ButtonYio buttonYio) {
+        if (Scenes.sceneSkirmishMenu.startButton.selectionFactor.get() > 0.5) return;
+
         Scenes.sceneSkirmishMenu.saveValues();
         Scenes.sceneChoodeGameModeMenu.create();
     }

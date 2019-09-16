@@ -14,6 +14,6 @@ public class RbAboutGame extends Reaction {
         if (Scenes.sceneSettings.isInitialized()) {
             Scenes.sceneSettings.onDestroy();
         }
-        Scenes.sceneAboutGame.create();
+        Scenes.sceneArticle.create();
     }
 }

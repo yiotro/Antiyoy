@@ -8,6 +8,6 @@ public class RbArticleRules extends Reaction {
 
     @Override
     public void perform(ButtonYio buttonYio) {
-        Scenes.sceneAboutGame.create("article_rules", Reaction.rbHelpIndex, 18);
+        Scenes.sceneArticle.create("article_rules", Reaction.rbHelpIndex, 18);
     }
 }

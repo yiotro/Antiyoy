@@ -887,8 +887,7 @@ public class DiplomacyManager {
                 Scenes.sceneStopWarDialog.create();
                 Scenes.sceneStopWarDialog.dialog.setEntities(initiator, two);
             } else {
-                Scenes.sceneDipMessage.create();
-                Scenes.sceneDipMessage.dialog.setMessage(two.capitalName, "refuse_stop_war");
+                Scenes.sceneDipMessage.showMessage(two.capitalName, "refuse_stop_war");
             }
         }
 
@@ -897,8 +896,7 @@ public class DiplomacyManager {
                 Scenes.sceneFriendshipDialog.create();
                 Scenes.sceneFriendshipDialog.dialog.setEntities(initiator, two);
             } else {
-                Scenes.sceneDipMessage.create();
-                Scenes.sceneDipMessage.dialog.setMessage(two.capitalName, "refuse_friendship");
+                Scenes.sceneDipMessage.showMessage(two.capitalName, "refuse_friendship");
             }
         }
     }

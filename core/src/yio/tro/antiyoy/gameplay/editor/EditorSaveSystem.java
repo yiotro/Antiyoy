@@ -78,11 +78,7 @@ public class EditorSaveSystem {
         instance.fogOfWar = GameRules.editorFog;
         GameRules.editorDiplomacy = prefs.getBoolean("editor_diplomacy" + slotNumber, false);
         instance.diplomacy = GameRules.editorDiplomacy;
-        if (GameRules.editorChosenColor == 0) {
-            instance.colorOffset = 0;
-        } else {
-            instance.colorOffset = gameController.convertSliderIndexToColorOffset(GameRules.editorChosenColor, GameRules.MAX_FRACTIONS_QUANTITY);
-        }
+        instance.colorOffset = gameController.convertSliderIndexToColorOffset(GameRules.editorChosenColor, GameRules.MAX_FRACTIONS_QUANTITY);
         instance.editorProvincesData = gameController.levelEditor.editorProvinceManager.encode();
         instance.editorRelationsData = gameController.levelEditor.editorRelationsManager.encode();
         instance.preparedMessagesData = gameController.messagesManager.encode();

@@ -4698,12 +4698,12 @@
         <string key="messages" value="Messages"/>
 
         <!-- Settings -->
-        <string key="autosave" value="自动保存"/>
-        <string key="ask_to_end_turn" value="询问结束回合"/>
-        <string key="city_names" value="城市名字"/>
-        <string key="sound" value="音效"/>
+        <string key="autosave" value="Autosave"/>
+        <string key="ask_to_end_turn" value="Ask to end turn"/>
+        <string key="city_names" value="City names"/>
+        <string key="sound" value="Sound"/>
         <string key="limited_turns" value="有限回合"/>
-        <string key="hold_to_march" value="长按移动"/>
+        <string key="hold_to_march" value="Hold to march"/>
         <string key="skin" value="皮肤"/>
         <string key="original" value="原版"/>
         <string key="points" value="点"/>
@@ -4715,7 +4715,7 @@
         <string key="slay_rules" value="Slay（原作） 模式"/>
         <string key="language" value="语言"/>
         <string key="more_settings_checks" value="# #水纹理 # # "/>
-        <string key="water_texture" value="水纹理 "/>
+        <string key="water_texture" value="Water texture"/>
         <string key="confirm_reset" value="Clear progress?"/>
         <string key="replays" value="Replays"/>
         <string key="save_replay" value="Save replay"/>

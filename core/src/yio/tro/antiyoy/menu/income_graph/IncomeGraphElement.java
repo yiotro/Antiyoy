@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.menu.income_graph;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
@@ -248,6 +249,11 @@ public class IncomeGraphElement extends InterfaceElement{
     @Override
     public void setPosition(RectangleYio position) {
         this.position.setBy(position);
+    }
+
+
+    public BitmapFont getFont() {
+        return Fonts.microFont;
     }
 
 

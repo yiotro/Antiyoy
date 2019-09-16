@@ -4,6 +4,7 @@ import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.data_storage.EncodeableYio;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
@@ -37,6 +38,40 @@ public class EditorProvinceData implements ReusableYio, EncodeableYio{
         name = src.name;
         startingMoney = src.startingMoney;
         id = src.id;
+    }
+
+
+    public int countFraction(int fraction) {
+        int c = 0;
+        for (Hex hex : hexList) {
+            if (hex.fraction != fraction) continue;
+            c++;
+        }
+        return c;
+    }
+
+
+    public Hex getHex(int fraction) {
+        for (Hex hex : hexList) {
+            if (hex.fraction != fraction) continue;
+            return hex;
+        }
+        return null;
+    }
+
+
+    public int getMajorFraction() {
+        int majorFraction = -1;
+        int majorValue = 0;
+        for (int fraction = 0; fraction < GameRules.MAX_FRACTIONS_QUANTITY; fraction++) {
+            int value = countFraction(fraction);
+            if (value == 0) continue;
+            if (majorFraction == -1 || value > majorValue) {
+                majorFraction = fraction;
+                majorValue = value;
+            }
+        }
+        return majorFraction;
     }
 
 
@@ -107,7 +142,9 @@ public class EditorProvinceData implements ReusableYio, EncodeableYio{
         return "[ProvinceData " +
                 getUniqueCode() +
                 ": " +
-                id +
+                name +
+                " " +
+                "f" + getFraction() +
                 " " +
                 hexList.size() +
                 "]";

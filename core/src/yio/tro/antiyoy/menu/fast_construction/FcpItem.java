@@ -5,23 +5,11 @@ import yio.tro.antiyoy.stuff.PointYio;
 
 public class FcpItem {
 
-    public static final int ACTION_UNIT_1 = 1;
-    public static final int ACTION_UNIT_2 = 2;
-    public static final int ACTION_UNIT_3 = 3;
-    public static final int ACTION_UNIT_4 = 4;
-    public static final int ACTION_FARM = 5;
-    public static final int ACTION_TOWER = 6;
-    public static final int ACTION_STRONG_TOWER = 7;
-    public static final int ACTION_UNDO = 8;
-    public static final int ACTION_END_TURN = 9;
-    public static final int ACTION_DIPLOMACY = 10;
-    public static final int ACTION_LOG = 11;
-
     FastConstructionPanel fastConstructionPanel;
     public PointYio position, delta, touchDelta, animDelta;
     public float radius, touchOffset;
     public FactorYio selectionFactor;
-    public int action;
+    public FcpActionType actionType;
     boolean visible;
 
 
@@ -36,7 +24,7 @@ public class FcpItem {
         touchOffset = 0;
         selectionFactor = new FactorYio();
         visible = false;
-        action = -1;
+        actionType = null;
     }
 
 
@@ -89,8 +77,8 @@ public class FcpItem {
     }
 
 
-    public void setAction(int action) {
-        this.action = action;
+    public void setActionType(FcpActionType actionType) {
+        this.actionType = actionType;
     }
 
 

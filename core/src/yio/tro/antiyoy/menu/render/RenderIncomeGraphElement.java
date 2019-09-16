@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.menu.render;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.income_graph.IgeItem;
@@ -43,8 +44,9 @@ public class RenderIncomeGraphElement extends MenuRender{
 
 
     private void renderInternals() {
-        Color previousColor = Fonts.smallerMenuFont.getColor();
-        Fonts.smallerMenuFont.setColor(Color.BLACK);
+        BitmapFont font = incomeGraphElement.getFont();
+        Color previousColor = font.getColor();
+        font.setColor(Color.BLACK);
 
         renderBackground();
         renderTitle();
@@ -52,7 +54,7 @@ public class RenderIncomeGraphElement extends MenuRender{
         renderBorders();
         renderItems();
 
-        Fonts.smallerMenuFont.setColor(previousColor);
+        font.setColor(previousColor);
     }
 
 

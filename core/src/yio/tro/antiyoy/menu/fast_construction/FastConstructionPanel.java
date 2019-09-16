@@ -49,17 +49,17 @@ public class FastConstructionPanel extends InterfaceElement {
         itemTouchOffset = 0.05f * GraphicsYio.width;
         items = new ArrayList<>();
 
-        addItem(FcpItem.ACTION_UNIT_1);
-        addItem(FcpItem.ACTION_UNIT_2);
-        addItem(FcpItem.ACTION_UNIT_3);
-        addItem(FcpItem.ACTION_UNIT_4);
-        addItem(FcpItem.ACTION_FARM);
-        addItem(FcpItem.ACTION_TOWER);
-        addItem(FcpItem.ACTION_STRONG_TOWER);
-        addItem(FcpItem.ACTION_UNDO);
-        addItem(FcpItem.ACTION_END_TURN);
-        addItem(FcpItem.ACTION_DIPLOMACY);
-        addItem(FcpItem.ACTION_LOG);
+        addItem(FcpActionType.unit_1);
+        addItem(FcpActionType.unit_2);
+        addItem(FcpActionType.unit_3);
+        addItem(FcpActionType.unit_4);
+        addItem(FcpActionType.farm);
+        addItem(FcpActionType.tower);
+        addItem(FcpActionType.strong_tower);
+        addItem(FcpActionType.undo);
+        addItem(FcpActionType.end_turn);
+        addItem(FcpActionType.diplomacy);
+        addItem(FcpActionType.log);
 
         for (FcpItem spItem : items) {
             spItem.setRadius(0.37f * height);
@@ -74,18 +74,18 @@ public class FastConstructionPanel extends InterfaceElement {
         }
 
         if (!GameRules.slayRules) {
-            FcpItem farmItem = getItemByAction(FcpItem.ACTION_FARM);
+            FcpItem farmItem = getItemByAction(FcpActionType.farm);
             farmItem.touchDelta.x = 0.5f * farmItem.radius;
 
-            FcpItem towerItem = getItemByAction(FcpItem.ACTION_TOWER);
+            FcpItem towerItem = getItemByAction(FcpActionType.tower);
             towerItem.touchDelta.x = 0.3f * towerItem.radius;
         }
     }
 
 
-    private void addItem(int action) {
+    private void addItem(FcpActionType actionType) {
         FcpItem fcpItem = new FcpItem(this);
-        fcpItem.setAction(action);
+        fcpItem.setActionType(actionType);
         items.add(fcpItem);
     }
 
@@ -173,19 +173,19 @@ public class FastConstructionPanel extends InterfaceElement {
 
 
     private void rearrangeSpecialItems() {
-        FcpItem undoItem = getItemByAction(FcpItem.ACTION_UNDO);
+        FcpItem undoItem = getItemByAction(FcpActionType.undo);
         undoItem.visible = true;
         undoItem.delta.x = getSpecialItemHorPos();
         undoItem.delta.y = 2.2f * height;
         undoItem.animDelta.set(getSpecialItemAnimDelta(), height);
 
-        FcpItem endTurnItem = getItemByAction(FcpItem.ACTION_END_TURN);
+        FcpItem endTurnItem = getItemByAction(FcpActionType.end_turn);
         endTurnItem.visible = true;
         endTurnItem.delta.x = getSpecialItemHorPos();
         endTurnItem.delta.y = 3.5f * height;
         endTurnItem.animDelta.set(getSpecialItemAnimDelta(), height);
 
-        FcpItem diplomacyItem = getItemByAction(FcpItem.ACTION_DIPLOMACY);
+        FcpItem diplomacyItem = getItemByAction(FcpActionType.diplomacy);
         diplomacyItem.visible = GameRules.diplomacyEnabled;
         diplomacyItem.delta.x = getSpecialItemHorPos();
         diplomacyItem.delta.y = 4.8f * height;
@@ -194,7 +194,7 @@ public class FastConstructionPanel extends InterfaceElement {
         GameController gameController = menuControllerYio.yioGdxGame.gameController;
         DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
         if (diplomacyManager.log.hasSomethingToRead()) {
-            FcpItem logItem = getItemByAction(FcpItem.ACTION_LOG);
+            FcpItem logItem = getItemByAction(FcpActionType.log);
             logItem.visible = GameRules.diplomacyEnabled;
             logItem.delta.x = getSpecialItemHorPos();
             logItem.delta.y = 6.1f * height;
@@ -222,29 +222,29 @@ public class FastConstructionPanel extends InterfaceElement {
 
 
     private void rearrangeByNormalRules() {
-        placeItem(FcpItem.ACTION_STRONG_TOWER, 0, false);
-        placeItem(FcpItem.ACTION_TOWER, 1, false);
-        placeItem(FcpItem.ACTION_FARM, 2, false);
+        placeItem(FcpActionType.strong_tower, 0, false);
+        placeItem(FcpActionType.tower, 1, false);
+        placeItem(FcpActionType.farm, 2, false);
 
-        placeItem(FcpItem.ACTION_UNIT_1, 3, true);
-        placeItem(FcpItem.ACTION_UNIT_2, 2, true);
-        placeItem(FcpItem.ACTION_UNIT_3, 1, true);
-        placeItem(FcpItem.ACTION_UNIT_4, 0, true);
+        placeItem(FcpActionType.unit_1, 3, true);
+        placeItem(FcpActionType.unit_2, 2, true);
+        placeItem(FcpActionType.unit_3, 1, true);
+        placeItem(FcpActionType.unit_4, 0, true);
     }
 
 
     private void rearrangeBySlayRules() {
-        placeItem(FcpItem.ACTION_TOWER, 0, false);
+        placeItem(FcpActionType.tower, 0, false);
 
-        placeItem(FcpItem.ACTION_UNIT_1, 3, true);
-        placeItem(FcpItem.ACTION_UNIT_2, 2, true);
-        placeItem(FcpItem.ACTION_UNIT_3, 1, true);
-        placeItem(FcpItem.ACTION_UNIT_4, 0, true);
+        placeItem(FcpActionType.unit_1, 3, true);
+        placeItem(FcpActionType.unit_2, 2, true);
+        placeItem(FcpActionType.unit_3, 1, true);
+        placeItem(FcpActionType.unit_4, 0, true);
     }
 
 
-    private void placeItem(int action, int place, boolean alignRight) {
-        FcpItem itemByAction = getItemByAction(action);
+    private void placeItem(FcpActionType actionType, int place, boolean alignRight) {
+        FcpItem itemByAction = getItemByAction(actionType);
         if (itemByAction == null) return;
 
         itemByAction.visible = true;
@@ -257,11 +257,10 @@ public class FastConstructionPanel extends InterfaceElement {
     }
 
 
-    private FcpItem getItemByAction(int action) {
+    private FcpItem getItemByAction(FcpActionType actionType) {
         for (FcpItem item : items) {
-            if (item.action == action) {
-                return item;
-            }
+            if (item.actionType != actionType) continue;
+            return item;
         }
 
         return null;
@@ -330,38 +329,38 @@ public class FastConstructionPanel extends InterfaceElement {
 
         SoundManagerYio.playSound(SoundManagerYio.soundPressButton);
 
-        switch (item.action) {
-            case FcpItem.ACTION_UNIT_1:
+        switch (item.actionType) {
+            case unit_1:
                 applyBuildUnit(1);
                 break;
-            case FcpItem.ACTION_UNIT_2:
+            case unit_2:
                 applyBuildUnit(2);
                 break;
-            case FcpItem.ACTION_UNIT_3:
+            case unit_3:
                 applyBuildUnit(3);
                 break;
-            case FcpItem.ACTION_UNIT_4:
+            case unit_4:
                 applyBuildUnit(4);
                 break;
-            case FcpItem.ACTION_FARM:
+            case farm:
                 applyBuildSolidObject(Obj.FARM);
                 break;
-            case FcpItem.ACTION_TOWER:
+            case tower:
                 applyBuildSolidObject(Obj.TOWER);
                 break;
-            case FcpItem.ACTION_STRONG_TOWER:
+            case strong_tower:
                 applyBuildSolidObject(Obj.STRONG_TOWER);
                 break;
-            case FcpItem.ACTION_UNDO:
+            case undo:
                 applyUndoAction();
                 break;
-            case FcpItem.ACTION_END_TURN:
+            case end_turn:
                 applyEndTurn();
                 break;
-            case FcpItem.ACTION_DIPLOMACY:
+            case diplomacy:
                 applyOpenDiplomacy();
                 break;
-            case FcpItem.ACTION_LOG:
+            case log:
                 applyOpenDiplomaticLog();
                 break;
         }

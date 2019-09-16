@@ -94,7 +94,7 @@ public class DiplomaticAI {
             performAiToHumanHexSellProposal();
         }
 
-        if (YioGdxGame.random.nextInt(18) == 0 || doesLogContainMessageToMe()) {
+        if (YioGdxGame.random.nextInt(25) == 0 || doesLogContainMessageToMe()) {
             sendCustomMessageToHuman();
         }
     }
@@ -103,7 +103,7 @@ public class DiplomaticAI {
     private boolean doesLogContainMessageToMe() {
         for (DiplomaticMessage message : getLog().messages) {
             if (message.recipient != getMainEntity()) continue;
-            if (message.isNot(DipMessageType.message)) continue;
+            if (message.isNot(DipMessageType.message) && message.isNot(DipMessageType.war_declaration)) continue;
             return true;
         }
         return false;
@@ -327,6 +327,9 @@ public class DiplomaticAI {
 
 
     private boolean doesAiWantToBuyOthersHexes(DiplomaticMessage message) {
+        ArrayList<Hex> hexList = diplomacyManager.convertStringToPurchaseList(message.arg1);
+        if (hexList.size() < 2) return false;
+
         int price = Integer.valueOf(message.arg2);
         DiplomaticEntity buyer = message.recipient;
         return buyer.getStateFullMoney() > price && buyer.getStateBalance() > 0;

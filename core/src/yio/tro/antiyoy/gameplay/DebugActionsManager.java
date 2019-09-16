@@ -10,6 +10,7 @@ import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticRelation;
 import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
 import yio.tro.antiyoy.gameplay.replays.ReplaySaveSystem;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.gameplay.touch_mode.TouchMode;
 import yio.tro.antiyoy.menu.keyboard.AbstractKbReaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.Yio;
@@ -27,7 +28,12 @@ public class DebugActionsManager {
 
 
     public void debugActions() {
-        doShowIncomeGraph();
+        Scenes.sceneColorPicker.create();
+    }
+
+
+    private void doEnableTmEditProvinces() {
+        //
     }
 
 
@@ -201,12 +207,6 @@ public class DebugActionsManager {
         System.out.println("GameRules.userLevelMode = " + GameRules.userLevelMode);
         System.out.println("GameRules.editorFog = " + GameRules.editorFog);
         System.out.println("GameRules.editorDiplomacy = " + GameRules.editorDiplomacy);
-    }
-
-
-    private void doShowDiplomaticMessage() {
-        Scenes.sceneDipMessage.create();
-        Scenes.sceneDipMessage.dialog.setMessage("Message", "HJdas hjashdk ahsdkj aha hsdja hkjas hkash jkdah kjash dkjsahd kah kjah dkjah dkjhaskjd hsk hhsdk asda");
     }
 
 

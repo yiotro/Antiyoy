@@ -26,7 +26,7 @@ public class IgeItem implements ReusableYio{
         appearFactor = new FactorYio();
         prepareFactor = new FactorYio();
         text = new RenderableTextYio();
-        text.setFont(Fonts.smallerMenuFont);
+        text.setFont(incomeGraphElement.getFont());
         borderFactor = new FactorYio();
         borderPosition = new RectangleYio();
     }

@@ -8,13 +8,13 @@ import yio.tro.antiyoy.menu.behaviors.Reaction;
 
 import java.util.ArrayList;
 
-public class SceneAboutGame extends AbstractScene{
+public class SceneArticle extends AbstractScene{
 
 
     private ButtonYio infoPanel;
 
 
-    public SceneAboutGame(MenuControllerYio menuControllerYio) {
+    public SceneArticle(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
     }
 

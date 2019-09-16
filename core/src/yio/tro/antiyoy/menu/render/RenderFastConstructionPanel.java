@@ -134,36 +134,31 @@ public class RenderFastConstructionPanel extends MenuRender{
 
 
     private TextureRegion getItemTexture(FcpItem item) {
-        if (item.action == FcpItem.ACTION_UNDO) {
-            return undoIcon;
+        switch (item.actionType) {
+            default:
+                return getSkinDependentItemTexture(item);
+            case undo:
+                return undoIcon;
+            case end_turn:
+                return endTurnIcon;
+            case diplomacy:
+                return diplomacyIcon;
+            case log:
+                return mailIconTexture;
         }
-
-        if (item.action == FcpItem.ACTION_END_TURN) {
-            return endTurnIcon;
-        }
-
-        if (item.action == FcpItem.ACTION_DIPLOMACY) {
-            return diplomacyIcon;
-        }
-
-        if (item.action == FcpItem.ACTION_LOG) {
-            return mailIconTexture;
-        }
-
-        return getSkinDependentItemTexture(item);
     }
 
 
     private TextureRegion getSkinDependentItemTexture(FcpItem item) {
-        switch (item.action) {
+        switch (item.actionType) {
             default: return null;
-            case FcpItem.ACTION_UNIT_1: return man0;
-            case FcpItem.ACTION_UNIT_2: return man1;
-            case FcpItem.ACTION_UNIT_3: return man2;
-            case FcpItem.ACTION_UNIT_4: return man3;
-            case FcpItem.ACTION_FARM: return house;
-            case FcpItem.ACTION_TOWER: return tower;
-            case FcpItem.ACTION_STRONG_TOWER: return strongTower;
+            case unit_1: return man0;
+            case unit_2: return man1;
+            case unit_3: return man2;
+            case unit_4: return man3;
+            case farm: return house;
+            case tower: return tower;
+            case strong_tower: return strongTower;
         }
     }
 

@@ -49,7 +49,9 @@ public class Yio {
             currentCountDown -= 60;
         }
         String zero = "";
-        if (currentCountDown < 10) zero = "0";
+        if (currentCountDown < 10) {
+            zero = "0";
+        }
         return min + ":" + zero + currentCountDown;
     }
 
