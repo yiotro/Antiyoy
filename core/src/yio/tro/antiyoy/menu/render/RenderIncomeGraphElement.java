@@ -45,7 +45,6 @@ public class RenderIncomeGraphElement extends MenuRender{
 
     private void renderInternals() {
         BitmapFont font = incomeGraphElement.getFont();
-        Color previousColor = font.getColor();
         font.setColor(Color.BLACK);
 
         renderBackground();
@@ -54,7 +53,7 @@ public class RenderIncomeGraphElement extends MenuRender{
         renderBorders();
         renderItems();
 
-        font.setColor(previousColor);
+        font.setColor(Color.WHITE);
     }
 
 
@@ -98,7 +97,11 @@ public class RenderIncomeGraphElement extends MenuRender{
 
 
     private void renderTitle() {
+        BitmapFont titleFont = incomeGraphElement.title.font;
+        Color previousColor = titleFont.getColor();
+        titleFont.setColor(Color.BLACK);
         GraphicsYio.renderTextOptimized(batch, getBlackPixel(), incomeGraphElement.title, alpha);
+        titleFont.setColor(previousColor);
     }
 
 

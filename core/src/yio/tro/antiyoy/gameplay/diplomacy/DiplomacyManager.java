@@ -465,6 +465,42 @@ public class DiplomacyManager {
         }
 
         fieldController.tryToDetectAddiotionalProvinces();
+        stopLoneUnitsAroundHexList(hexList);
+    }
+
+
+    private void stopLoneUnitsAroundHexList(ArrayList<Hex> hexList) {
+        for (Hex hex : hexList) {
+            for (int dir = 0; dir < 6; dir++) {
+                Hex adjacentHex = hex.getAdjacentHex(dir);
+                if (!isLoneHexWithUnit(adjacentHex)) continue;
+                if (hexList.contains(adjacentHex)) continue;
+
+                Unit unit = adjacentHex.unit;
+                unit.setReadyToMove(false);
+                unit.stopJumping();
+            }
+        }
+    }
+
+
+    private boolean isLoneHexWithUnit(Hex hex) {
+        if (hex == null) return false;
+        if (hex.isNullHex()) return false;
+        if (!hex.active) return false;
+        if (hex.isNeutral()) return false;
+        if (!hex.hasUnit()) return false;
+
+        for (int dir = 0; dir < 6; dir++) {
+            Hex adjacentHex = hex.getAdjacentHex(dir);
+            if (adjacentHex == null) continue;
+            if (adjacentHex.isNullHex()) continue;
+            if (!adjacentHex.active) continue;
+            if (adjacentHex.fraction != hex.fraction) continue;
+            return false;
+        }
+
+        return true;
     }
 
 

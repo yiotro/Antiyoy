@@ -3,10 +3,7 @@ package yio.tro.antiyoy.gameplay;
 import yio.tro.antiyoy.KeyboardManager;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
-import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
-import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticCooldown;
-import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
-import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticRelation;
+import yio.tro.antiyoy.gameplay.diplomacy.*;
 import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
 import yio.tro.antiyoy.gameplay.replays.ReplaySaveSystem;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
@@ -28,7 +25,13 @@ public class DebugActionsManager {
 
 
     public void debugActions() {
-        Scenes.sceneColorPicker.create();
+        DiplomacyManager diplomacyManager = getDiplomacyManager();
+        for (int i = 0; i < 10; i++) {
+            DiplomaticEntity sender = diplomacyManager.getRandomEntity();
+            DiplomaticEntity recipient = diplomacyManager.getMainEntity();
+            DiplomaticMessage diplomaticMessage = diplomacyManager.log.addMessage(DipMessageType.message, sender, recipient);
+            diplomaticMessage.setArg1("Sample message " + (i + 1));
+        }
     }
 
 
@@ -169,7 +172,8 @@ public class DebugActionsManager {
 
         String one = builder.toString();
 
-        builder.setLength(0);;
+        builder.setLength(0);
+        ;
         for (int i = 0; i < 5; i++) {
             builder.append(3 * i).append(" ");
         }

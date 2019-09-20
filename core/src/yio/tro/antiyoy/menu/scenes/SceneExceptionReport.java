@@ -49,7 +49,7 @@ public class SceneExceptionReport extends AbstractScene{
 
                 try {
                     text.add(temp.substring(Math.max(0, start), Math.min(end, temp.length())));
-                } catch (ArrayIndexOutOfBoundsException e) {
+                } catch (Exception e) {
 
                 }
 

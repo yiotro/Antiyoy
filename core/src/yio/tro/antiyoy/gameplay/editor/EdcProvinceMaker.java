@@ -1,53 +1,39 @@
 package yio.tro.antiyoy.gameplay.editor;
 
 import yio.tro.antiyoy.gameplay.Hex;
+import yio.tro.antiyoy.stuff.TimeMeasureYio;
 
 import java.util.ArrayList;
 
-public class EdcLinkedChecker {
+public class EdcProvinceMaker {
 
     EditorProvinceManager editorProvinceManager;
     ArrayList<Hex> propagationList;
     private ArrayList<Hex> hexList;
-    EditorProvinceData provinceData;
 
 
-    public EdcLinkedChecker(EditorProvinceManager editorProvinceManager) {
+    public EdcProvinceMaker(EditorProvinceManager editorProvinceManager) {
         this.editorProvinceManager = editorProvinceManager;
         propagationList = new ArrayList<>();
     }
 
 
-    public boolean isLinked(EditorProvinceData province) {
-        provinceData = province;
-        hexList = province.hexList;
-        if (hexList.size() < 2) return true;
-
-        prepare();
+    public void makeProvince(EditorProvinceData provinceData, Hex startHex) {
+        hexList = provinceData.hexList;
+        prepare(startHex);
         while (propagationList.size() > 0) {
             Hex hex = propagationList.get(0);
             propagationList.remove(0);
             applyIteration(hex);
         }
-
-        return isWholeHexListFlagged();
+        provinceData.updateGeometricalCenter();
     }
 
 
-    private void prepare() {
+    private void prepare(Hex startHex) {
         propagationList.clear();
-        prepareHexList();
-        Hex hex = hexList.get(0);
-        addHexToPropagationList(hex);
-    }
-
-
-    private boolean isWholeHexListFlagged() {
-        for (Hex hex : hexList) {
-            if (hex.flag) continue;
-            return false;
-        }
-        return true;
+        hexList.clear();
+        addHexToPropagationList(startHex);
     }
 
 
@@ -67,12 +53,7 @@ public class EdcLinkedChecker {
     private void addHexToPropagationList(Hex hex) {
         hex.flag = true;
         propagationList.add(hex);
+        hexList.add(hex);
     }
 
-
-    private void prepareHexList() {
-        for (Hex hex : hexList) {
-            hex.flag = false;
-        }
-    }
 }

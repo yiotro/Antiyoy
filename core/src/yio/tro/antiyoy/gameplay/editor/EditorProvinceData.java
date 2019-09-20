@@ -4,6 +4,8 @@ import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.data_storage.EncodeableYio;
+import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
+import yio.tro.antiyoy.gameplay.name_generator.NameGenerator;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
@@ -34,10 +36,32 @@ public class EditorProvinceData implements ReusableYio, EncodeableYio{
     }
 
 
-    void copyStoredDataFrom(EditorProvinceData src) {
+    void copySomeDataFrom(EditorProvinceData src) {
         name = src.name;
         startingMoney = src.startingMoney;
         id = src.id;
+    }
+
+
+    public void fillWithDefaultData() {
+        startingMoney = 10;
+        name = CityNameGenerator.getInstance().generateName(hexList.get(0));
+    }
+
+
+    int countIntersection(EditorProvinceData anotherProvince) {
+        for (Hex hex : hexList) {
+            hex.flag = false;
+        }
+        for (Hex hex : anotherProvince.hexList) {
+            hex.flag = true;
+        }
+        int c = 0;
+        for (Hex hex : hexList) {
+            if (!hex.flag) continue;
+            c++;
+        }
+        return c;
     }
 
 
@@ -48,15 +72,6 @@ public class EditorProvinceData implements ReusableYio, EncodeableYio{
             c++;
         }
         return c;
-    }
-
-
-    public Hex getHex(int fraction) {
-        for (Hex hex : hexList) {
-            if (hex.fraction != fraction) continue;
-            return hex;
-        }
-        return null;
     }
 
 
@@ -81,37 +96,18 @@ public class EditorProvinceData implements ReusableYio, EncodeableYio{
     }
 
 
-    void addHex(Hex hex) {
-        if (hexList.contains(hex)) return;
-        hexList.add(hex);
-        updateGeometricalCenter();
-    }
-
-
-    void removeHex(Hex hex) {
-        hexList.remove(hex);
-        updateGeometricalCenter();
-    }
-
-
     public boolean contains(Hex hex) {
         return hexList.contains(hex);
     }
 
 
-    public boolean isEmpty() {
-        return hexList.size() == 0;
-    }
-
-
     int getFraction() {
-        if (isEmpty()) return -1;
         return hexList.get(0).fraction;
     }
 
 
-    void kill() {
-        hexList.clear();
+    public boolean isBigEnough() {
+        return hexList.size() > 1;
     }
 
 

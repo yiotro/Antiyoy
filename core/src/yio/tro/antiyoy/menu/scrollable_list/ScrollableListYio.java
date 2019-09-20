@@ -22,7 +22,7 @@ public class ScrollableListYio extends InterfaceElement {
     public ArrayList<ListItemYio> items;
     float hook;
     private float itemHeight;
-    ScrollEngineYio scrollEngineYio;
+    protected ScrollEngineYio scrollEngineYio;
     ClickDetector clickDetector;
     public BitmapFont titleFont, descFont;
     public String label;
@@ -229,8 +229,7 @@ public class ScrollableListYio extends InterfaceElement {
 
 
     private void updateHook() {
-        hook = +(float) scrollEngineYio.getSlider().a;
-
+        hook = (float) scrollEngineYio.getSlider().a;
         hook -= (1 - appearFactor.get()) * 0.2f * GraphicsYio.width;
     }
 
@@ -283,6 +282,7 @@ public class ScrollableListYio extends InterfaceElement {
     protected void onAppear() {
         alphaTriggered = false;
         scrollEngineYio.resetToBottom();
+        hook = 0;
         readyToProcessLongTap = false;
         scrollLock = false;
     }

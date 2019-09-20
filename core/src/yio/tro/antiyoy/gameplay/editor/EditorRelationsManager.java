@@ -49,6 +49,8 @@ public class EditorRelationsManager implements EncodeableYio{
 
 
     private boolean isValid(int color1, int color2, int relation) {
+        if (color1 == -1) return false;
+        if (color2 == -1) return false;
         if (color1 == color2) return false;
         if (relation == DiplomaticRelation.NEUTRAL) return false;
         return true;

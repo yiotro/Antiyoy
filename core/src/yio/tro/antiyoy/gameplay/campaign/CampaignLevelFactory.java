@@ -1,5 +1,7 @@
 package yio.tro.antiyoy.gameplay.campaign;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.ai.Difficulty;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.LevelSize;
@@ -68,16 +70,15 @@ public class CampaignLevelFactory {
 
 
     private void updateRules() {
-        System.out.println("CampaignLevelFactory.updateRules: should set slay rules as chosen in more campaign options scene");
+        Preferences prefs = Gdx.app.getPreferences("campaign_options");
+        GameRules.slayRules = prefs.getBoolean("slay_rules", false);
     }
 
 
     private boolean checkForTutorial() {
-        if (index == 0) {
-            gameController.initTutorial();
-            return true;
-        }
-        return false;
+        if (index != 0) return false;
+        gameController.initTutorial();
+        return true;
     }
 
 

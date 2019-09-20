@@ -6,43 +6,30 @@ import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.data_storage.DecodeManager;
 import yio.tro.antiyoy.gameplay.data_storage.EncodeableYio;
-import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
-import yio.tro.antiyoy.stuff.RepeatYio;
 import yio.tro.antiyoy.stuff.object_pool.ObjectPoolYio;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class EditorProvinceManager implements EncodeableYio{
 
     LevelEditor levelEditor;
     public ArrayList<EditorProvinceData> provincesList;
     ObjectPoolYio<EditorProvinceData> poolProvinces;
-    RepeatYio<EditorProvinceManager> repeatRemoveProvinces;
     ArrayList<Hex> tempList;
-    EdcLinkedChecker edcLinkedChecker;
+    EdcProvinceMaker edcProvinceMaker;
     ArrayList<EditorProvinceData> tempProvList;
+    EdcSnapshot snapshot;
 
 
     public EditorProvinceManager(LevelEditor levelEditor) {
         this.levelEditor = levelEditor;
         provincesList = new ArrayList<>();
         tempList = new ArrayList<>();
-        edcLinkedChecker = new EdcLinkedChecker(this);
+        edcProvinceMaker = new EdcProvinceMaker(this);
         tempProvList = new ArrayList<>();
+        snapshot = new EdcSnapshot(this);
         initPools();
-        initRepeats();
-    }
-
-
-    private void initRepeats() {
-        repeatRemoveProvinces = new RepeatYio<EditorProvinceManager>(this, 300) {
-            @Override
-            public void performAction() {
-                parent.removeEmptyProvinces();
-            }
-        };
     }
 
 
@@ -57,15 +44,59 @@ public class EditorProvinceManager implements EncodeableYio{
 
 
     public void move() {
-        repeatRemoveProvinces.move();
+
     }
 
 
-    private void removeEmptyProvinces() {
-        for (int i = provincesList.size() - 1; i >= 0; i--) {
-            EditorProvinceData editorProvinceData = provincesList.get(i);
-            if (!editorProvinceData.isEmpty()) continue;
-            poolProvinces.removeFromExternalList(editorProvinceData);
+    public void onExitedToPauseMenu() {
+        performUpdate();
+    }
+
+
+    public void performUpdate() {
+        snapshot.update();
+        clear();
+        resetFlags();
+        makeProvinces();
+        restoreDataFromSnapshot();
+    }
+
+
+    private void restoreDataFromSnapshot() {
+        for (EditorProvinceData editorProvinceData : provincesList) {
+            EditorProvinceData parent = snapshot.getParentFor(editorProvinceData);
+            if (parent != null) {
+                editorProvinceData.copySomeDataFrom(parent);
+            } else {
+                editorProvinceData.fillWithDefaultData();
+            }
+        }
+    }
+
+
+    private void makeProvinces() {
+        for (Hex activeHex : getFieldController().activeHexes) {
+            if (activeHex.isNeutral()) continue;
+            if (activeHex.flag) continue;
+            makeProvince(activeHex);
+        }
+    }
+
+
+    private void makeProvince(Hex startHex) {
+        EditorProvinceData freshObject = poolProvinces.getFreshObject();
+        freshObject.setId(getIdForNewProvince());
+        edcProvinceMaker.makeProvince(freshObject, startHex);
+
+        if (!freshObject.isBigEnough()) {
+            poolProvinces.removeFromExternalList(freshObject);
+        }
+    }
+
+
+    private void resetFlags() {
+        for (Hex activeHex : getFieldController().activeHexes) {
+            activeHex.flag = false;
         }
     }
 
@@ -76,9 +107,7 @@ public class EditorProvinceManager implements EncodeableYio{
 
 
     public void onEndCreation() {
-        for (Hex activeHex : getFieldController().activeHexes) {
-            onHexModified(activeHex);
-        }
+
     }
 
 
@@ -101,47 +130,6 @@ public class EditorProvinceManager implements EncodeableYio{
     }
 
 
-    private EditorProvinceData findNearbyProvince(Hex hex, int fraction, EditorProvinceData ignoredProvince) {
-        for (int dir = 0; dir < 6; dir++) {
-            Hex adjacentHex = hex.getAdjacentHex(dir);
-            if (adjacentHex == null) continue;
-            if (!adjacentHex.active) continue;
-            if (adjacentHex.isNeutral()) continue;
-            if (adjacentHex.fraction != fraction) continue;
-            if (ignoredProvince != null && ignoredProvince.contains(adjacentHex)) continue;
-            EditorProvinceData provinceByHex = getProvinceByHex(adjacentHex);
-            if (provinceByHex == null) continue;
-            return provinceByHex;
-        }
-        return null;
-    }
-
-
-    EditorProvinceData findNearbyProvince(EditorProvinceData provinceData, int fraction) {
-        for (Hex hex : provinceData.hexList) {
-            EditorProvinceData nearbyProvince = findNearbyProvince(hex, fraction, provinceData);
-            if (nearbyProvince == null) continue;
-            return nearbyProvince;
-        }
-        return null;
-    }
-
-
-    private void removeHexFromProvinces(Hex hex) {
-        EditorProvinceData provinceByHex = getProvinceByHex(hex);
-        if (provinceByHex == null) return;
-        provinceByHex.removeHex(hex);
-    }
-
-
-    private void startNewProvince(Hex hex) {
-        EditorProvinceData freshObject = poolProvinces.getFreshObject();
-        freshObject.name = CityNameGenerator.getInstance().generateName(hex);
-        freshObject.setId(getIdForNewProvince());
-        freshObject.addHex(hex);
-    }
-
-
     private int getIdForNewProvince() {
         int maxId = 0;
         for (EditorProvinceData editorProvinceData : provincesList) {
@@ -153,119 +141,17 @@ public class EditorProvinceManager implements EncodeableYio{
     }
 
 
-    public void onHexModified(Hex hex) {
-        if (hex.active && !hex.isNeutral()) {
-            onHexActivated(hex);
-        } else {
-            removeHexFromProvinces(hex);
-        }
-        checkToSplitProvinces();
-    }
-
-
-    private void checkToSplitProvinces() {
-        for (int i = provincesList.size() - 1; i >= 0; i--) {
-            EditorProvinceData editorProvinceData = provincesList.get(i);
-            if (edcLinkedChecker.isLinked(editorProvinceData)) continue;
-            splitProvince(editorProvinceData);
-        }
-    }
-
-
-    private void splitProvince(EditorProvinceData editorProvinceData) {
-        tempList.clear();
-        tempList.addAll(editorProvinceData.hexList);
-        int fraction = editorProvinceData.getFraction();
-        editorProvinceData.kill();
-        for (Hex hex : tempList) {
-            onHexActivated(hex);
-        }
-
-        tempProvList.clear();
-        for (Hex hex : tempList) {
-            if (!hex.active) continue;
-            if (hex.isNeutral()) continue;
-            EditorProvinceData provinceByHex = getProvinceByHex(hex);
-            if (provinceByHex == null) continue;
-            if (tempProvList.contains(provinceByHex)) continue;
-            tempProvList.add(provinceByHex);
-        }
-
-
-        EditorProvinceData biggestProvince = getBiggestProvince(tempProvList, fraction);
-        if (biggestProvince == null) return;
-
-        biggestProvince.copyStoredDataFrom(editorProvinceData);
-    }
-
-
-    private EditorProvinceData getBiggestProvince(ArrayList<EditorProvinceData> list, int fraction) {
-        EditorProvinceData result = null;
-        for (EditorProvinceData editorProvinceData : list) {
-            if (editorProvinceData.getFraction() != fraction) continue;
-            if (result == null || editorProvinceData.hexList.size() > result.hexList.size()) {
-                result = editorProvinceData;
-            }
-        }
-        return result;
-    }
-
-
     public void onLevelRandomlyCreated() {
-        onLevelCleared();
-        for (Hex activeHex : getFieldController().activeHexes) {
-            onHexModified(activeHex);
-        }
+        clear();
     }
 
 
-    public void onLevelCleared() {
+    public void clear() {
         poolProvinces.clearExternalList();
     }
 
 
-    private void onHexActivated(Hex hex) {
-        EditorProvinceData nearbyProvince = findNearbyProvince(hex, hex.fraction, null);
-        if (nearbyProvince != null) {
-            nearbyProvince.addHex(hex);
-            checkToUniteProvinces();
-        } else {
-            startNewProvince(hex);
-        }
-    }
-
-
-    private void uniteProvinces(EditorProvinceData mainProvince, EditorProvinceData source) {
-        for (Hex hex : source.hexList) {
-            mainProvince.addHex(hex);
-        }
-        source.kill();
-    }
-
-
-    private void checkToUniteProvinces() {
-        for (int i = provincesList.size() - 1; i >= 0; i--) {
-            EditorProvinceData editorProvinceData = provincesList.get(i);
-            EditorProvinceData nearbyProvince = findNearbyProvince(editorProvinceData, editorProvinceData.getFraction());
-            if (nearbyProvince == null) continue;
-
-            EditorProvinceData biggerProvince;
-            EditorProvinceData smallerProvince;
-            if (nearbyProvince.hexList.size() > editorProvinceData.hexList.size()) {
-                biggerProvince = nearbyProvince;
-                smallerProvince = editorProvinceData;
-            } else {
-                biggerProvince = editorProvinceData;
-                smallerProvince = nearbyProvince;
-            }
-
-            uniteProvinces(biggerProvince, smallerProvince);
-        }
-    }
-
-
     public void showProvincesInConsole() {
-        removeEmptyProvinces();
         System.out.println();
         System.out.println("EditorProvinceManager.showProvincesInConsole");
         System.out.println("provincesList.size() = " + provincesList.size());
@@ -278,7 +164,6 @@ public class EditorProvinceManager implements EncodeableYio{
     @Override
     public String encode() {
         StringBuilder builder = new StringBuilder();
-        removeEmptyProvinces();
         for (EditorProvinceData editorProvinceData : provincesList) {
             builder.append(editorProvinceData.encode()).append(",");
         }
@@ -288,6 +173,7 @@ public class EditorProvinceManager implements EncodeableYio{
 
     @Override
     public void decode(String source) {
+        performUpdate();
         for (String token : source.split(",")) {
             String[] split = token.split("@");
             if (split.length < 2) continue;
@@ -330,7 +216,6 @@ public class EditorProvinceManager implements EncodeableYio{
 
         onEndCreation();
         decode(source);
-        removeEmptyProvinces();
 
         for (EditorProvinceData editorProvinceData : provincesList) {
             Province provinceByHex = getGameController().fieldController.getProvinceByHex(editorProvinceData.hexList.get(0));

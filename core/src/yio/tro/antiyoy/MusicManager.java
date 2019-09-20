@@ -28,7 +28,7 @@ public class MusicManager {
     public void onMusicStatusChanged() {
         if (YioGdxGame.IOS) return;
 
-        if (SettingsManager.musicEnabled && SettingsManager.soundEnabled) {
+        if (SettingsManager.musicEnabled) {
             if (music.isPlaying()) return;
 
             play();

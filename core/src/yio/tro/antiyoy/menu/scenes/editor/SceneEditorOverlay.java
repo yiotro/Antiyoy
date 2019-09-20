@@ -128,6 +128,7 @@ public class SceneEditorOverlay extends AbstractScene{
     private void onPauseMenuButtonPressed() {
         YioGdxGame yioGdxGame = menuControllerYio.yioGdxGame;
         EditorSaveSystem editorSaveSystem = yioGdxGame.gameController.editorSaveSystem;
+        yioGdxGame.gameController.levelEditor.onExitedToPauseMenu();
         editorSaveSystem.saveSlot(GameRules.editorSlotNumber);
         Scenes.sceneEditorPauseMenu.create();
         yioGdxGame.setGamePaused(true);

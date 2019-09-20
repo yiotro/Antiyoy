@@ -302,7 +302,6 @@ public class LevelEditor {
             }
         }
         gameController.addAnimHex(hex);
-        editorProvinceManager.onHexModified(hex);
     }
 
 
@@ -340,8 +339,6 @@ public class LevelEditor {
             if (filteredByOnlyLand) return;
             activateHex(focusedHex, inputFraction);
         }
-
-        editorProvinceManager.onHexModified(focusedHex);
     }
 
 
@@ -424,7 +421,13 @@ public class LevelEditor {
 
     public void onEditProvincesButtonPressed() {
         gameController.yioGdxGame.menuControllerYio.hideAllEditorPanels();
+        editorProvinceManager.performUpdate();
         gameController.setTouchMode(TouchMode.tmEditProvinces);
+    }
+
+
+    public void onExitedToPauseMenu() {
+        editorProvinceManager.onExitedToPauseMenu();
     }
 
 

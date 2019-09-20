@@ -44,7 +44,6 @@ public class TmEditProvinces extends TouchMode{
         poolCityNames.clearExternalList();
         EditorProvinceManager editorProvinceManager = gameController.levelEditor.editorProvinceManager;
         for (EditorProvinceData editorProvinceData : editorProvinceManager.provincesList) {
-            if (editorProvinceData.isEmpty()) continue;
             TmepCityName freshObject = poolCityNames.getFreshObject();
             freshObject.setEditorProvinceData(editorProvinceData);
         }
