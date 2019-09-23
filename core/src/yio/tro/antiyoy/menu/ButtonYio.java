@@ -135,7 +135,9 @@ public class ButtonYio implements SliderParentElement, UiChildrenHolder {
         if (!selectionFactor.hasToMove()) return;
 
         selectionFactor.move();
-        if (lockAction && selectionFactor.get() == 1) lockAction = false;
+        if (lockAction && selectionFactor.get() == 1) {
+            lockAction = false;
+        }
     }
 
 
@@ -252,6 +254,18 @@ public class ButtonYio implements SliderParentElement, UiChildrenHolder {
     }
 
 
+    public void appear() {
+        appearFactor.appear(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
+        appearFactor.setValues(0, 0.001);
+        onAppear();
+    }
+
+
+    private void onAppear() {
+        selectionFactor.reset();
+    }
+
+
     public double getVpX() {
         if (animType == Animation.left) {
             return animPos.x;
@@ -290,7 +304,6 @@ public class ButtonYio implements SliderParentElement, UiChildrenHolder {
         touchX = screenX;
         touchY = screenY;
         animR = Math.max(touchX - (float) animPos.x, (float) (animPos.x + animPos.width - touchX));
-//        if (touchAnimation) lockAction = true;
         lockAction = true;
         menuControllerYio.yioGdxGame.render();
         if (reaction != null && System.currentTimeMillis() - timeToPerformAction > ACTION_DELAY) {

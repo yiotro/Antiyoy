@@ -207,6 +207,9 @@ public class LevelEditor {
             quantity = GameRules.MAX_FRACTIONS_QUANTITY;
         }
 
+        // temporary fix
+        quantity = GameRules.MAX_FRACTIONS_QUANTITY;
+
         return quantity;
     }
 
@@ -319,6 +322,10 @@ public class LevelEditor {
         gameController.setTouchMode(TouchMode.tmEditor);
         editorProvinceManager.onEndCreation();
         editorRelationsManager.onEndCreation();
+
+        if (gameController.isInEditorMode()) {
+            resetInputMode();
+        }
     }
 
 

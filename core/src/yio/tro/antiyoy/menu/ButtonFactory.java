@@ -26,8 +26,7 @@ public class ButtonFactory {
         }
         buttonYio.setVisible(true);
         buttonYio.setTouchable(true);
-        buttonYio.appearFactor.appear(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
-        buttonYio.appearFactor.setValues(0, 0.001);
+        buttonYio.appear();
         return buttonYio;
     }
 }

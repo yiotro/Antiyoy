@@ -32,7 +32,7 @@ public class UserLevelFactory {
 
 
     private void initLevels() {
-        // 8
+        // 10
         add(new UlevBackyardSale());
         add(new UlevForJasmin());
         add(new UlevAf3());
@@ -41,6 +41,8 @@ public class UserLevelFactory {
         add(new UlevHardhex());
         add(new UlevDrunken());
         add(new UlevLockedIn());
+        add(new UlevDa1());
+        add(new UlevDa2());
         add(new UlevLuckyGreenOne());
         add(new UlevIslandOfUnity());
         add(new UlevAf2());
@@ -281,3 +283,4 @@ public class UserLevelFactory {
         return null;
     }
 }
+

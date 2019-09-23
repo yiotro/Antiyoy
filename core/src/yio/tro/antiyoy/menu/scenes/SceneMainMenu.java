@@ -48,6 +48,7 @@ public class SceneMainMenu extends AbstractScene{
         menuControllerYio.loadButtonOnce(playButton, "play_button.png");
         playButton.setReaction(playButtonReaction);
         playButton.selectionFactor.setValues(1, 0);
+        playButton.selectionFactor.stopMoving();
     }
 
 

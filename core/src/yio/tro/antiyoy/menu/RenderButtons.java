@@ -144,8 +144,9 @@ public class RenderButtons {
     private boolean checkForSpecialMask(ButtonYio buttonYio) {
         switch (buttonYio.id) {
             case 3:
-                if (buttonYio.appearFactor.get() > 0.1)
+                if (buttonYio.appearFactor.get() > 0.1) {
                     shapeRenderer.circle(buttonYio.cx, buttonYio.cy, (float) (0.8 + 0.2 * buttonYio.selectionFactor.get()) * buttonYio.hor);
+                }
                 return true;
         }
         return false;

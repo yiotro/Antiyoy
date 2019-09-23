@@ -55,7 +55,7 @@ public class StopWarDialog extends AbstractDiplomaticDialog {
         addLabel(instance.getString("pay") + " (1x) : " + getPay(), Fonts.smallerMenuFont, leftOffset, y);
         y -= lineOffset;
 
-        addLabel(instance.getString("reparations") + ": " + getReparations(), Fonts.smallerMenuFont, leftOffset, y);
+        addLabel(instance.getString("reparations") + ": " + getReparationsValue(), Fonts.smallerMenuFont, leftOffset, y);
         y -= lineOffset;
 
         addLabel(instance.getString("duration") + ": " + DiplomaticContract.DURATION_PIECE, Fonts.smallerMenuFont, leftOffset, y);
@@ -72,10 +72,14 @@ public class StopWarDialog extends AbstractDiplomaticDialog {
     }
 
 
-    private String getReparations() {
+    private String getReparationsValue() {
         DiplomacyManager diplomacyManager = getDiplomacyManager();
         int reparations = diplomacyManager.calculateReparations(sender, recipient);
         if (reparations == 0) return "0";
+
+        if (diplomacyManager.getMainEntity() == recipient) {
+            reparations *= -1;
+        }
 
         return "" + reparations;
     }

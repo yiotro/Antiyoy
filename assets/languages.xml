@@ -8365,7 +8365,7 @@
 
         <!-- Main menu -->
         <string key="main_menu_info" value="Info"/>
-        <string key="main_menu_exit" value="Exit"/>
+        <string key="main_menu_exit" value="Lukk"/>
         <string key="main_menu_something" value="Hvit tekst om ingenting"/>
 
         <!-- Random stuff -->
@@ -8398,10 +8398,10 @@
         <string key="special_thanks_title" value="Spesiell Takk"/>
 
         <!-- Choose game mode menu-->
-        <string key="choose_game_mode_skirmish" value="Skirmish"/>
+        <string key="choose_game_mode_skirmish" value="Trefning"/>
         <string key="choose_game_mode_tutorial" value="Opplæringen"/>
         <string key="choose_game_mode_campaign" value="Kampanje"/>
-        <string key="choose_game_mode_load" value="Last Spill"/>
+        <string key="choose_game_mode_load" value="Fortsette"/>
         <string key="user_levels" value="User levels"/>
 
         <!-- User levels -->
@@ -8419,7 +8419,7 @@
         <string key="small" value="liten"/>
         <string key="medium" value="medium"/>
         <string key="big" value="stor"/>
-        <string key="huge" value="huge"/>
+        <string key="huge" value="enorm"/>
         <string key="ai_only" value="AI bare"/>
         <string key="single_player" value="enkelt-spiller"/>
         <string key="multiplayer" value="flere-spiller"/>
@@ -8428,7 +8428,7 @@
         <string key="difficulty" value="Vanskelighet"/>
         <string key="easy" value="enkel"/>
         <string key="normal" value="middels"/>
-        <string key="hard" value="hard"/>
+        <string key="hard" value="vanskelig"/>
         <string key="expert" value="ekspert"/>
         <string key="balancer" value="balanserte"/>
         <string key="player_color" value="Spillerfarge"/>
@@ -8450,8 +8450,8 @@
         <string key="filter_only_land" value="Bare land"/>
 
         <!-- End game menu -->
-        <string key="end_game_ok" value="Ok"/>
-        <string key="end_game_okay" value="Okay..."/>
+        <string key="end_game_ok" value="Ja"/>
+        <string key="end_game_okay" value="Okay"/>
         <string key="player" value="spiller"/>
         <string key="ai" value="AI"/>
         <string key="won" value="vant"/>
@@ -8504,7 +8504,7 @@
         <string key="tip_build_towers" value="Bygg tårn for å beskytte#nærliggende celler"/>
         <string key="tip_about_taxes" value="Sterkere enheter forbruker#mer penger"/>
         <string key="tip_about_defense" value="Enheter og hus forsvarer #også nærliggende celler"/>
-        <string key="tip_hold_to_march" value="To quickly move armies#use 'hold to march'"/>
+        <string key="tip_hold_to_march" value="For raskt å flytte hærene#trykk lenge for å marsjere."/>
         <string key="tip_about_unit_death" value="Hvis pengene går ut,#vil alle enheter dø.#Så vær forsiktig"/>
         <string key="tip_merging" value="Slå sammen enheter for#å få en kraftigere enhet"/>
         <string key="tip_trees" value="Trær reduserer inntektene,#så det er bedre å kutte dem"/>
@@ -8524,7 +8524,8 @@
         <string key="gen_press_button" value="Trykk på knappen nederst"/>
         <string key="gen_build_peasant" value="Plasser enheten på en sekskant i nærheten av byens grenser."/>
         <string key="gen_capture_peasant" value="Nå, ta en nøytral sekskant ved å velge enhet og peke på hvor du skal dra."/>
-        <string key="gen_capture_hex" value="Capture neutral hex"/>
+        <string key="gen_capture_hex" value="
+Fang den nøytrale sekskanten"/>
         <string key="gen_lets_build_tower" value="Du må forsvare landene dine. Tårnene er gode for dette."/>
         <string key="gen_build_tower" value="Bygg et tårn ved å trykke på uthevet sekskant."/>
         <string key="gen_about_towers" value="Tårnene forsvarer tilstøtende heksagoner fra bønder og spearmen hvis disse sekskantene er under din kontroll."/>
@@ -8543,13 +8544,13 @@
 
         <!-- Tutorial help -->
         <string key="help" value="Hjelp"/>Enheter"/>
-        <string key="help_about_units" value="Units"/>
+        <string key="help_about_units" value="Hærer"/>
         <string key="help_about_trees" value="Trær"/>
         <string key="help_about_towers" value="Tårn"/>
         <string key="help_about_money" value="Penger"/>
         <string key="help_about_tactics" value="Taktikk"/>
         <string key="help_about_rules" value="Regler"/>
-        <string key="my_games" value="My games"/>
+        <string key="my_games" value="Spillene mine"/>
 
         <string key="help_units_article" value="Det er 4 enhetstyper.
         #De varierer bare med styrke.
@@ -8624,7 +8625,7 @@
         #
         #Også, du vil ikke kunne bli venn med alle enkelt. Siste land vil alltid nekte din vennsforespørsel."/>
 
-        <string key="article_my_games" value="If you liked this game then you may also like some of my other games:"/>
+        <string key="article_my_games" value="Hvis du likte dette spillet, kan du også like noen av mine andre spill:"/>
 
         <!-- Statistics -->
         <string key="turns_made" value="Slår:"/>
@@ -8632,12 +8633,12 @@
         <string key="units_produced" value="Produserte enheter:"/>
         <string key="money_spent" value="Penger brukt:"/>
         <string key="time" value="Tid:"/>
-        <string key="wins" value="Wins"/>
+        <string key="wins" value="Vinner"/>
 
         <!-- Editor -->
         <string key="editor" value="Redaktør"/>
-        <string key="slot" value="Slot"/>
-        <string key="slots" value="Lagre spor"/>
+        <string key="slot" value="Spor"/>
+        <string key="slots" value="Spor"/>
         <string key="import" value="Importere"/>
         <string key="export" value="Eksport"/>
         <string key="empty" value="tømme"/>
@@ -8654,7 +8655,7 @@
         <string key="confirm_clear_level" value="Klar kart?"/>
         <string key="confirm_randomize" value="Generer tilfeldig kart?"/>
         <string key="randomize" value="Tilfeldig"/>
-        <string key="create" value="Create"/>
+        <string key="create" value="Skape"/>
         <string key="change" value="Change"/>
         <string key="messages" value="Messages"/>
 
@@ -8678,7 +8679,7 @@
         <string key="more_settings_checks" value="# #Vanntekstur # # "/>
         <string key="water_texture" value="Vanntekstur "/>
         <string key="confirm_reset" value="Tilbakestill fremdrift?"/>
-        <string key="replays" value="Replays"/>
+        <string key="replays" value="Replayer"/>
         <string key="save_replay" value="Lagre replay"/>
         <string key="replay" value="Replay"/>
         <string key="replay_saved" value="Replay lagret"/>
@@ -8690,8 +8691,8 @@
 
         <!-- Single messages -->
         <string key="level_24" value="Dette er det første 'harde' -nivået. Vær mer oppmerksom på forsvaret."/>
-        <string key="map_too_big_for_user_levels" value="Map was successfully exported, but if you want to send it as user level then please make it smaller."/>
-        <string key="available_on_ios" value="Now available on iOS"/>
+        <string key="map_too_big_for_user_levels" value="Kart eksportert, men det er for stort som skal sendes inn som brukernivå."/>
+        <string key="available_on_ios" value="Dette spillet er tilgjengelig på iOS!"/>
 
         <!-- Gameplay -->
         <string key="friends" value="venner"/>
@@ -8725,36 +8726,34 @@
         <string key="friendship_canceled" value="Vennskap avbrutt"/>
         <string key="black_marked" value="Sort merket"/>
         <string key="letter_sent" value="Brev sendt"/>
-        <string key="delete" value="Delete"/>
-        <string key="rename" value="Rename"/>
-        <string key="confirm_delete_slot" value="Delete slot?"/>
-        <string key="resume_button" value="'Resume' button"/>
-        <string key="filters" value="Filters"/>
-        <string key="completed" value="Completed"/>
-        <string key="historical" value="Historical"/>
-        <string key="temp_slot" value="Temporary slot"/>
-        <string key="can_skip_level" value="You can skip this level"/>
-        <string key="reason" value="Reason"/>
-        <string key="friends_with_everybody" value="friendship with all kingdoms"/>
-        <string key="hex_purchase" value="Hex purchase"/>
-        <string key="confirm_buy_hexes" value="Buy hexes?"/>
-        <string key="price" value="Price"/>
-        <string key="gift" value="Gift"/>
-        <string key="gift_received" value="Gift received"/>
-        <string key="confirm_sell_hexes" value="Sell hexes?"/>
-        <string key="confirm_skip_level" value="Skip level?"/>
-        <string key="ok" value="Ok"/>
-        <string key="money" value="Money"/>
-        <string key="quantity" value="Quantity"/>
-        <string key="income" value="Income"/>
-        <string key="by_name" value="By name"/>
-        <string key="hex_trade" value="Hex trade"/>
-        <string key="hex_sale" value="Hex sale"/>
-        <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
+        <string key="delete" value="Slette"/>
+        <string key="rename" value="Endre navn"/>
+        <string key="confirm_delete_slot" value="Slette dette sporet?"/>
+        <string key="resume_button" value="Fortsett-knappen"/>
+        <string key="filters" value="Filtre"/>
+        <string key="completed" value="Fullført"/>
+        <string key="historical" value="Historisk"/>
+        <string key="temp_slot" value="Midlertidig spor"/>
+        <string key="can_skip_level" value="Du kan hoppe over dette stadiet."/>
+        <string key="reason" value="Årsaken"/>
+        <string key="friends_with_everybody" value="vennskap med alle riker"/>
+        <string key="hex_purchase" value="Sekskant kjøp"/>
+        <string key="confirm_buy_hexes" value="Kjøpe sekskanter?"/>
+        <string key="price" value="Pris"/>
+        <string key="gift" value="Gave"/>
+        <string key="gift_received" value="Gave mottatt"/>
+        <string key="confirm_sell_hexes" value="Selge sekskanter?"/>
+        <string key="confirm_skip_level" value="Hoppe over nivå?"/>
+        <string key="ok" value="Ja"/>
+        <string key="money" value="Penger"/>
+        <string key="quantity" value="Mengde"/>
+        <string key="income" value="Inntekt"/>
+        <string key="by_name" value="Etter navn"/>
+        <string key="hex_trade" value="Sekskant handel"/>
+        <string key="hex_sale" value="Sekskant salg"/>
+        <string key="buyer_not_enough_money" value="Kjøperen har ikke nok penger"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
-
-
 
     </language>
 

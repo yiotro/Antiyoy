@@ -140,6 +140,7 @@ public class DiplomacyInfoCondensed implements ReusableYio {
     private void applyMessages() {
         if (messages == null) return;
 
+        diplomacyManager.log.clear();
         for (String s : messages.split(",")) {
             applySingleMessage(s);
         }
