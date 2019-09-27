@@ -431,7 +431,7 @@
         <!-- Main menu -->
         <string key="main_menu_info" value="Инфо"/>
         <string key="main_menu_exit" value="Выход"/>
-        <string key="main_menu_something" value="Белый текст ни о чем"/>
+        <string key="main_menu_something" value="Белый текст ни о чём"/>
 
         <!-- Random stuff -->
         <string key="menu_level" value="Уровень"/>
@@ -490,7 +490,7 @@
         <string key="colors" value="цветов"/>
         <string key="color" value="цвета"/>
         <string key="difficulty" value="Сложность"/>
-        <string key="easy" value="легкий"/>
+        <string key="easy" value="лёгкий"/>
         <string key="normal" value="обычный"/>
         <string key="hard" value="сложный"/>
         <string key="expert" value="эксперт"/>
@@ -524,23 +524,23 @@
         <string key="continue" value="Продолжить"/>
 
         <!-- Colors -->
-        <string key="green_player" value="Зеленый"/>
+        <string key="green_player" value="Зелёный"/>
         <string key="red_player" value="Красный"/>
         <string key="magenta_player" value="Фиолетовый"/>
         <string key="cyan_player" value="Голубой"/>
-        <string key="yellow_player" value="Желтый"/>
+        <string key="yellow_player" value="Жёлтый"/>
         <string key="gray_player" value="Серый"/>
-        <string key="green_ai" value="Зеленый"/>
+        <string key="green_ai" value="Зелёный"/>
         <string key="red_ai" value="Красный"/>
         <string key="magenta_ai" value="Фиолетовый"/>
         <string key="cyan_ai" value="Голубой"/>
-        <string key="yellow_ai" value="Желтый"/>
+        <string key="yellow_ai" value="Жёлтый"/>
         <string key="gray_ai" value="Серый"/>
-        <string key="green_menu" value="Зеленый"/>
+        <string key="green_menu" value="Зелёный"/>
         <string key="red_menu" value="Красный"/>
         <string key="magenta_menu" value="Фиолетовый"/>
         <string key="cyan_menu" value="Голубой"/>
-        <string key="yellow_menu" value="Желтый"/>
+        <string key="yellow_menu" value="Жёлтый"/>
         <string key="gray_menu" value="Серый"/>
 
         <!-- Tutorial -->
@@ -551,7 +551,7 @@
         <string key="tut_tap_on_hex" value="Нажми на поле"/>
         <string key="tut_press_button" value="Нажми кнопку"/>
         <string key="tut_build_tower" value="Построй башню"/>
-        <string key="tut_again" value="Еще раз"/>
+        <string key="tut_again" value="Ещё раз"/>
         <string key="tut_build_spearman" value="Построй копейщика"/>
         <string key="tut_tap_to_undo" value="Нажми 'отменить'"/>
         <string key="tut_tap_to_end_turn" value="Нажми 'конец хода'"/>
@@ -594,13 +594,13 @@
         <string key="gen_units_consume_money" value="Юниты потребляют деньги чтобы жить. Чем сильнее юнит, тем больше ему нужно денег."/>
         <string key="gen_undo_spearman" value="Сейчас прибыль города равна -1. Это плохо, поэтому давай отменим постройку копейщика."/>
         <string key="gen_why_units_die" value="Если деньги у города кончатся, то юниты умрут. Поэтому надо следить чтобы прибыль была больше нуля."/>
-        <string key="gen_about_trees_one" value="Деревья тоже представляют опасность. Ячейки на которых растет дерево не приносят дохода."/>
+        <string key="gen_about_trees_one" value="Деревья тоже представляют опасность. Ячейки на которых растёт дерево не приносят дохода."/>
         <string key="gen_about_trees_two" value="Деревья лучше рубить сразу, пока их мало."/>
         <string key="gen_end_turn" value="Чтобы закончить ход нажми на кнопку справа снизу."/>
         <string key="gen_choose_to_merge" value="Юнитов также можно схлопывать. Выбери нижнего крестьянина."/>
         <string key="gen_merge_units" value="Теперь когда крестьянин выбран, нажми на верхнего чтобы схлопнуть их."/>
         <string key="gen_long_tap" value="Если юнитов слишком много, то можно двигать сразу всех по долгому тапу."/>
-        <string key="gen_several_provinces" value="Городов может быть несколько, причем у каждого своя экономика."/>
+        <string key="gen_several_provinces" value="Городов может быть несколько, причём у каждого своя экономика."/>
 
         <!-- Tutorial help -->
         <string key="help" value="Справка"/>
@@ -618,7 +618,7 @@
         #[3] бароны
         #[4] рыцари
         #
-        #Юнит дает соседним клеткам защиту равную своей силе.
+        #Юнит даёт соседним клеткам защиту равную своей силе.
         #
         #Чтобы захватить клетку сила юнита должна быть больше чем защита клетки.
         #
@@ -627,7 +627,7 @@
 
         <string key="help_trees_article" value="Деревья остаются после умерших юнитов.
         #
-        #Клетка с деревом не дает дохода. Так что деревья наносят вред.
+        #Клетка с деревом не даёт дохода. Так что деревья наносят вред.
         #
         #С ними нужно бороться, иначе они разрастутся и приведут к кризису экономики.
         #
@@ -663,7 +663,7 @@
         #
         #Изначально в игре были только правила slay, поэтому справка описывает именно их.
         #
-        #Чтобы поменять правила в режиме 'сражение' надо перед началом игры нажать 'еще'.
+        #Чтобы поменять правила в режиме 'сражение' надо перед началом игры нажать 'ещё'.
         #
         #Чтобы поменять правила в кампании надо на экране выбора уровня нажать '...' в правом вехнем углу."/>
 
@@ -675,7 +675,7 @@
         #
         #Кнопки 'палец вверх' и 'палец вниз' могут сделать отношения лучше или хуже."/>
 
-        <string key="article_diplomacy_2" value="Идея черной метки очень проста: любая другая страна не может быть одновременно другом с вами обоими. Это что-то вроде дипломатического давления.
+        <string key="article_diplomacy_2" value="Идея чёрной метки очень проста: любая другая страна не может быть одновременно другом с вами обоими. Это что-то вроде дипломатического давления.
         #
         #Кстати, победа простой не будет. Последняя страна всегда будет отказывать в дружбе."/>
 
@@ -726,7 +726,7 @@
         <string key="grid" value="сетка"/>
         <string key="skin_shroomarts" value="ShroomArts"/>  <!-- Same as english -->
         <string key="anim_style" value="Чувствительность"/>
-        <string key="more" value="Еще"/>
+        <string key="more" value="Ещё"/>
         <string key="camera_offset" value="Отступ камеры"/>
         <string key="slay_rules" value="Правила Slay"/>
         <string key="language" value="Язык"/>
@@ -736,7 +736,7 @@
         <string key="replays" value="Повторы"/>
         <string key="save_replay" value="Сохранить повтор"/>
         <string key="replay" value="Повтор"/>
-        <string key="replay_saved" value="Повтор сохранен"/>
+        <string key="replay_saved" value="Повтор сохранён"/>
         <string key="fast_construction" value="Быстрая постройка"/>
         <string key="music" value="Музыка"/>
         <string key="left_handed" value="Леворукий режим"/>
@@ -759,7 +759,7 @@
         <string key="friend" value="друг"/>
         <string key="enemy" value="враг"/>
         <string key="neutral" value="нейтрал"/>
-        <string key="dead" value="мертв"/>
+        <string key="dead" value="мёртв"/>
         <string key="confirm_cancel_friendship" value="Отменить дружбу?"/>
         <string key="confirm_start_war" value="Начать войну?"/>
         <string key="peace_treaty" value="Мирный договор"/>
@@ -768,8 +768,8 @@
         <string key="refuse_stop_war" value="Я буду драться до конца!"/>
         <string key="win_conditions" value="Условия победы"/>
         <string key="diplomatic_win_conditions" value="Чтобы победить с помощью дипломатии нужно дружить со всеми."/>
-        <string key="confirm_black_mark" value="Поставить черную метку?"/>
-        <string key="black_mark_description" value="Поставив черную метку на игрока вы запрещаете остальным дружить с вами обоими одновременно. На уже заключенные договора не действует."/>
+        <string key="confirm_black_mark" value="Поставить чёрную метку?"/>
+        <string key="black_mark_description" value="Поставив чёрную метку на игрока вы запрещаете остальным дружить с вами обоими одновременно. На уже заключённые договора не действует."/>
         <string key="player_turn" value="Ход игрока"/>
         <string key="fine" value="Штраф"/>
         <string key="log" value="Письма"/>
@@ -778,7 +778,7 @@
         <string key="stop_war" value="Прекращение войны"/>
         <string key="friendship_ended" value="Дружба закончилась"/>
         <string key="friendship_canceled" value="Дружба отменена"/>
-        <string key="black_marked" value="Черная метка"/>
+        <string key="black_marked" value="Чёрная метка"/>
         <string key="letter_sent" value="Письмо отправлено"/>
         <string key="delete" value="Удалить"/>
         <string key="rename" value="Переименовать"/>
