@@ -69,7 +69,7 @@ public class GameView {
     }
 
 
-    SkinManager getSkinManager() {
+    public SkinManager getSkinManager() {
         return yioGdxGame.skinManager;
     }
 

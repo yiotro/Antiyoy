@@ -25,13 +25,7 @@ public class DebugActionsManager {
 
 
     public void debugActions() {
-        DiplomacyManager diplomacyManager = getDiplomacyManager();
-        for (int i = 0; i < 10; i++) {
-            DiplomaticEntity sender = diplomacyManager.getRandomEntity();
-            DiplomaticEntity recipient = diplomacyManager.getMainEntity();
-            DiplomaticMessage diplomaticMessage = diplomacyManager.log.addMessage(DipMessageType.message, sender, recipient);
-            diplomaticMessage.setArg1("Sample message " + (i + 1));
-        }
+        doShowColorStuff();
     }
 
 

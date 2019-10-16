@@ -78,6 +78,8 @@
         <string key="player_color" value="Player color"/>
         <string key="fog_of_war" value="Fog of war"/>
         <string key="diplomacy" value="Diplomacy"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Resume"/>
@@ -105,26 +107,7 @@
         <string key="win_game" value="Win"/>
         <string key="win_or_continue" value="Win now#or continue?"/>
         <string key="continue" value="Continue"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Green"/>
-        <string key="red_player" value="Red"/>
-        <string key="magenta_player" value="Magenta"/>
-        <string key="cyan_player" value="Cyan"/>
-        <string key="yellow_player" value="Yellow"/>
-        <string key="gray_player" value="Gray"/>
-        <string key="green_ai" value="Green"/>
-        <string key="red_ai" value="Red"/>
-        <string key="magenta_ai" value="Magenta"/>
-        <string key="cyan_ai" value="Cyan"/>
-        <string key="yellow_ai" value="Yellow"/>
-        <string key="gray_ai" value="Gray"/>
-        <string key="green_menu" value="Green"/>
-        <string key="red_menu" value="Red"/>
-        <string key="magenta_menu" value="Magenta"/>
-        <string key="cyan_menu" value="Cyan"/>
-        <string key="yellow_menu" value="Yellow"/>
-        <string key="gray_menu" value="Gray"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Normal rules"/>
@@ -397,6 +380,7 @@
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
 
 
 
@@ -498,6 +482,8 @@
         <string key="player_color" value="Цвет игрока"/>
         <string key="fog_of_war" value="Туман войны"/>
         <string key="diplomacy" value="Дипломатия"/>
+        <string key="provinces" value="Провинции"/>
+        <string key="default" value="По умолчанию"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Продолжить"/>
@@ -522,26 +508,7 @@
         <string key="win_game" value="Победа"/>
         <string key="win_or_continue" value="Закончить игру#или продолжить?"/>
         <string key="continue" value="Продолжить"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Зеленый"/>
-        <string key="red_player" value="Красный"/>
-        <string key="magenta_player" value="Фиолетовый"/>
-        <string key="cyan_player" value="Голубой"/>
-        <string key="yellow_player" value="Желтый"/>
-        <string key="gray_player" value="Серый"/>
-        <string key="green_ai" value="Зеленый"/>
-        <string key="red_ai" value="Красный"/>
-        <string key="magenta_ai" value="Фиолетовый"/>
-        <string key="cyan_ai" value="Голубой"/>
-        <string key="yellow_ai" value="Желтый"/>
-        <string key="gray_ai" value="Серый"/>
-        <string key="green_menu" value="Зеленый"/>
-        <string key="red_menu" value="Красный"/>
-        <string key="magenta_menu" value="Фиолетовый"/>
-        <string key="cyan_menu" value="Голубой"/>
-        <string key="yellow_menu" value="Желтый"/>
-        <string key="gray_menu" value="Серый"/>
+        <string key="winner" value="Победитель"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Обычные правила"/>
@@ -808,6 +775,7 @@
         <string key="buyer_not_enough_money" value="У покупателя недостаточно денег"/>
         <string key="message" value="Сообщение"/>
         <string key="show" value="Показать"/>
+        <string key="check_filters" value="Проверьте фильтры"/>
 
     </language>
 
@@ -906,6 +874,8 @@
         <string key="player_color" value="Колiр гравця"/>
         <string key="fog_of_war" value="Туман війни"/>
         <string key="diplomacy" value="Дипломатія"/>
+        <string key="provinces" value="Території"/>
+        <string key="default" value="За замовчуванням"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Продовжити"/>
@@ -930,26 +900,7 @@
         <string key="win_game" value="Перемога"/>
         <string key="win_or_continue" value="Закiнчити гру#або продовжити?"/>
         <string key="continue" value="Продовжити"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Зелений"/>
-        <string key="red_player" value="Червоний"/>
-        <string key="magenta_player" value="Фiолетовий"/>
-        <string key="cyan_player" value="Блакитний"/>
-        <string key="yellow_player" value="Жовтий"/>
-        <string key="gray_player" value="Сiрий"/>
-        <string key="green_ai" value="Зелений"/>
-        <string key="red_ai" value="Червоний"/>
-        <string key="magenta_ai" value="Фiолетовий"/>
-        <string key="cyan_ai" value="Блакитний"/>
-        <string key="yellow_ai" value="Жовтий"/>
-        <string key="gray_ai" value="Сiрий"/>
-        <string key="green_menu" value="Зелений"/>
-        <string key="red_menu" value="Червоний"/>
-        <string key="magenta_menu" value="Фiолетовий"/>
-        <string key="cyan_menu" value="Блакитний"/>
-        <string key="yellow_menu" value="Жовтий"/>
-        <string key="gray_menu" value="Сiрий"/>
+        <string key="winner" value="Переможець"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Звичайнi правила"/>
@@ -1216,6 +1167,7 @@
         <string key="buyer_not_enough_money" value="У покупця недостатньо грошей"/>
         <string key="message" value="Повідомлення"/>
         <string key="show" value="Показати"/>
+        <string key="check_filters" value="Перевірте фільтри"/>
 
     </language>
 
@@ -1325,6 +1277,8 @@
         <string key="player_color" value="Spielerfarbe"/>
         <string key="fog_of_war" value="Fog of war"/> <!-- Same as english -->
         <string key="diplomacy" value="Diplomatie"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Fortfahren"/>
@@ -1349,26 +1303,7 @@
         <string key="win_game" value="Gewinnen"/>
         <string key="win_or_continue" value="Jetzt gewinnen#oder weiterspielen?"/>
         <string key="continue" value="Weiterspielen"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Grüner"/>
-        <string key="red_player" value="Roter"/>
-        <string key="magenta_player" value="Magenta"/>  <!-- Same as english -->
-        <string key="cyan_player" value="Cyan"/>  <!-- Same as english -->
-        <string key="yellow_player" value="Gelber"/>
-        <string key="gray_player" value="Grauer"/>
-        <string key="green_ai" value="Grüne"/>
-        <string key="red_ai" value="Rote"/>
-        <string key="magenta_ai" value="Magenta"/>  <!-- Same as english -->
-        <string key="cyan_ai" value="Cyan"/>  <!-- Same as english -->
-        <string key="yellow_ai" value="Gelbe"/>
-        <string key="gray_ai" value="Graue"/>
-        <string key="green_menu" value="Grüner"/>
-        <string key="red_menu" value="Roter"/>
-        <string key="magenta_menu" value="Magenta"/>  <!-- Same as english -->
-        <string key="cyan_menu" value="Cyan"/>  <!-- Same as english -->
-        <string key="yellow_menu" value="Gelber"/>
-        <string key="gray_menu" value="Grauer"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Normale Regeln"/>
@@ -1677,6 +1612,7 @@
         <string key="buyer_not_enough_money" value="Käufer hat nicht genug Geld"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
     </language>
 
 
@@ -1775,6 +1711,8 @@
         <string key="player_color" value="Barva hráče"/>
         <string key="fog_of_war" value="Fog of war"/>
         <string key="diplomacy" value="Diplomacy"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Pokračovat"/>
@@ -1799,26 +1737,7 @@
         <string key="win_game" value="Vítězství"/>
         <string key="win_or_continue" value="Vyhrát nyní#nebo pokračovat?"/>
         <string key="continue" value="Continue"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Zelený"/>
-        <string key="red_player" value="Červený"/>
-        <string key="magenta_player" value="Purprový"/>
-        <string key="cyan_player" value="Azurový"/>
-        <string key="yellow_player" value="Žlutý"/>
-        <string key="gray_player" value="Šedý"/>
-        <string key="green_ai" value="Zelený"/>
-        <string key="red_ai" value="Červený"/>
-        <string key="magenta_ai" value="Purpurový"/>
-        <string key="cyan_ai" value="Azurový"/>
-        <string key="yellow_ai" value="Žlutý"/>
-        <string key="gray_ai" value="Šedý"/>
-        <string key="green_menu" value="Zelená"/>
-        <string key="red_menu" value="Červená"/>
-        <string key="magenta_menu" value="Purpurová"/>
-        <string key="cyan_menu" value="Azurová"/>
-        <string key="yellow_menu" value="Žlutá"/>
-        <string key="gray_menu" value="Šedá"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Normální pravidla"/>
@@ -2120,6 +2039,7 @@
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
     </language>
 
 
@@ -2219,6 +2139,8 @@
         <string key="player_color" value="Couleur du joueur"/>
         <string key="fog_of_war" value="Bouillard"/>
         <string key="diplomacy" value="Diplomatie"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Reprendre"/>
@@ -2243,26 +2165,7 @@
         <string key="win_game" value="Gagner"/>
         <string key="win_or_continue" value="Gagner immédiatement#ou continuer?"/>
         <string key="continue" value="Continuer"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Vert"/>
-        <string key="red_player" value="Rouge"/>
-        <string key="magenta_player" value="Magenta"/>  <!-- Same as english -->
-        <string key="cyan_player" value="Cyan"/>  <!-- Same as english -->
-        <string key="yellow_player" value="Jaune"/>
-        <string key="gray_player" value="Gris"/>
-        <string key="green_ai" value="Vert"/>
-        <string key="red_ai" value="Rouge"/>
-        <string key="magenta_ai" value="Magenta"/>  <!-- Same as english -->
-        <string key="cyan_ai" value="Cyan"/>  <!-- Same as english -->
-        <string key="yellow_ai" value="Jaune"/>
-        <string key="gray_ai" value="Gris"/>
-        <string key="green_menu" value="Vert"/>
-        <string key="red_menu" value="Rouge"/>
-        <string key="magenta_menu" value="Magenta"/>  <!-- Same as english -->
-        <string key="cyan_menu" value="Cyan"/>  <!-- Same as english -->
-        <string key="yellow_menu" value="Jaune"/>
-        <string key="gray_menu" value="Gris"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Règles normales"/>
@@ -2571,6 +2474,7 @@
         <string key="buyer_not_enough_money" value="Argent insufisant"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
     </language>
 
 
@@ -2672,6 +2576,8 @@
         <string key="player_color" value="Kolor gracza"/>
         <string key="fog_of_war" value="Fog of war"/>
         <string key="diplomacy" value="dyplomacja"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Wznów"/>
@@ -2696,26 +2602,7 @@
         <string key="win_game" value="Wygraj"/>
         <string key="win_or_continue" value="Wygrać teraz#czy kontynuować?"/>
         <string key="continue" value="Continue"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Zielony"/>
-        <string key="red_player" value="Czerwony"/>
-        <string key="magenta_player" value="Fioletowy"/>
-        <string key="cyan_player" value="Szaroniebieski"/>
-        <string key="yellow_player" value="Żółty"/>
-        <string key="gray_player" value="Szary"/>
-        <string key="green_ai" value="Zielone"/>
-        <string key="red_ai" value="Czerwone"/>
-        <string key="magenta_ai" value="Fioletowe"/>
-        <string key="cyan_ai" value="Szaroniebieskie"/>
-        <string key="yellow_ai" value="Żółte"/>
-        <string key="gray_ai" value="Szare"/>
-        <string key="green_menu" value="Zielony"/>
-        <string key="red_menu" value="Czerwony"/>
-        <string key="magenta_menu" value="Fioletowy"/>
-        <string key="cyan_menu" value="Szaroniebieski"/>
-        <string key="yellow_menu" value="Żółty"/>
-        <string key="gray_menu" value="Szary"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Zwykła rozgrywka"/>
@@ -3025,6 +2912,7 @@
         <string key="buyer_not_enough_money" value="kupiec nie ma wystarczająco pieniędzy"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
     </language>
 
 
@@ -3124,6 +3012,8 @@
         <string key="player_color" value="Colore giocatore"/>
         <string key="fog_of_war" value="Nebbia di guerra"/>
         <string key="diplomacy" value="Diplomazia"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Continua"/>
@@ -3148,26 +3038,7 @@
         <string key="win_game" value="Vittoria!"/>
         <string key="win_or_continue" value="Termina da vincitore#o continua?"/>
         <string key="continue" value="Continue"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Verde"/>
-        <string key="red_player" value="Rosso"/>
-        <string key="magenta_player" value="Magenta"/>
-        <string key="cyan_player" value="Ciano"/>
-        <string key="yellow_player" value="Giallo"/>
-        <string key="gray_player" value="Grigio"/>
-        <string key="green_ai" value="Verde"/>
-        <string key="red_ai" value="Rosso"/>
-        <string key="magenta_ai" value="Magenta"/>
-        <string key="cyan_ai" value="Ciano"/>
-        <string key="yellow_ai" value="Giallo"/>
-        <string key="gray_ai" value="Grigio"/>
-        <string key="green_menu" value="Verde"/>
-        <string key="red_menu" value="Rosso"/>
-        <string key="magenta_menu" value="Magenta"/>
-        <string key="cyan_menu" value="Ciano"/>
-        <string key="yellow_menu" value="Giallo"/>
-        <string key="gray_menu" value="Grigio"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Regole normali"/>
@@ -3441,6 +3312,7 @@
         <string key="buyer_not_enough_money" value="L'acquirente non ha abbastanza monete"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
     </language>
 
 
@@ -3537,6 +3409,8 @@
         <string key="player_color" value="Color del jugador"/>
         <string key="fog_of_war" value="Fog of war"/>
         <string key="diplomacy" value="Diplomacy"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Continuar"/>
@@ -3570,27 +3444,8 @@
         <string key="win_game" value="Victoria"/>
         <string key="win_or_continue" value="¿Ganar ahora o continuar?"/>
         <string key="continue" value="Continue"/>
+        <string key="winner" value="Winner"/>
 
-
-        <!-- Colors -->
-        <string key="green_player" value="Verde"/>
-        <string key="red_player" value="Rojo"/>
-        <string key="magenta_player" value="Magenta"/>
-        <string key="cyan_player" value="Cyan"/>
-        <string key="yellow_player" value="Amarillo"/>
-        <string key="gray_player" value="Gris"/>
-        <string key="green_ai" value="Verde"/>
-        <string key="red_ai" value="Rojo"/>
-        <string key="magenta_ai" value="Magenta"/>
-        <string key="cyan_ai" value="Cyan"/>
-        <string key="yellow_ai" value="Amarillo"/>
-        <string key="gray_ai" value="Gris"/>
-        <string key="green_menu" value="Verde"/>
-        <string key="red_menu" value="Rojo"/>
-        <string key="magenta_menu" value="Magenta"/>
-        <string key="cyan_menu" value="Cyan"/>
-        <string key="yellow_menu" value="Amarillo"/>
-        <string key="gray_menu" value="Gris"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Reglas normales"/>
@@ -3885,6 +3740,7 @@
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
     </language>
 
 
@@ -3983,6 +3839,8 @@
         <string key="player_color" value="Farba hráča"/>
         <string key="fog_of_war" value="hmla_vojny"/>
         <string key="diplomacy" value="diplomacia"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Pokračovať"/>
@@ -4007,26 +3865,7 @@
         <string key="win_game" value="Víťazstvo"/>
         <string key="win_or_continue" value="Vyhrať teraz#alebo pokračovať?"/>
         <string key="continue" value="pokračovať"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Zelený"/>
-        <string key="red_player" value="Červený"/>
-        <string key="magenta_player" value="Purpurový"/>
-        <string key="cyan_player" value="Azúrový"/>
-        <string key="yellow_player" value="Žlutý"/>
-        <string key="gray_player" value="Šedý"/>
-        <string key="green_ai" value="Zelený"/>
-        <string key="red_ai" value="Červený"/>
-        <string key="magenta_ai" value="Purpurový"/>
-        <string key="cyan_ai" value="Azúrový"/>
-        <string key="yellow_ai" value="Žlutý"/>
-        <string key="gray_ai" value="Šedý"/>
-        <string key="green_menu" value="Zelená"/>
-        <string key="red_menu" value="Červená"/>
-        <string key="magenta_menu" value="Purpurová"/>
-        <string key="cyan_menu" value="Azúrová"/>
-        <string key="yellow_menu" value="Žlutá"/>
-        <string key="gray_menu" value="Šedá"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Normálne pravidlá"/>
@@ -4329,6 +4168,7 @@
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
     </language>
 
 
@@ -4442,6 +4282,8 @@
         <string key="player_color" value="玩家颜色"/>
         <string key="fog_of_war" value="Fog of war"/>
         <string key="diplomacy" value="Diplomacy"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="返回游戏"/>
@@ -4466,26 +4308,7 @@
         <string key="win_game" value="你赢了"/>
         <string key="win_or_continue" value="结束#还是继续?"/>
         <string key="continue" value="继续"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="绿色"/>
-        <string key="red_player" value="红色"/>
-        <string key="magenta_player" value="品红色"/>
-        <string key="cyan_player" value="青色"/>
-        <string key="yellow_player" value="黄色"/>
-        <string key="gray_player" value="灰色"/>
-        <string key="green_ai" value="绿色"/>
-        <string key="red_ai" value="红色"/>
-        <string key="magenta_ai" value="品红色"/>
-        <string key="cyan_ai" value="青色"/>
-        <string key="yellow_ai" value="黄色"/>
-        <string key="gray_ai" value="灰色"/>
-        <string key="green_menu" value="绿色"/>
-        <string key="red_menu" value="红色"/>
-        <string key="magenta_menu" value="品红色"/>
-        <string key="cyan_menu" value="青色"/>
-        <string key="yellow_menu" value="黄色"/>
-        <string key="gray_menu" value="灰色"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="普通规则"/>
@@ -4705,10 +4528,10 @@
         <string key="limited_turns" value="有限回合"/>
         <string key="hold_to_march" value="Hold to march"/>
         <string key="skin" value="皮肤"/>
-        <string key="original" value="原版"/>
-        <string key="points" value="点"/>
-        <string key="grid" value="网格"/>
-        <string key="skin_shroomarts" value="像素风格"/>  <!-- Same as english -->
+        <string key="original" value="Original"/>
+        <string key="points" value="Points"/>
+        <string key="grid" value="Grid"/>
+        <string key="skin_shroomarts" value="Shroomarts"/>  <!-- Same as english -->
         <string key="anim_style" value="灵敏度"/>
         <string key="more" value="更多"/>
         <string key="camera_offset" value="相机调整"/>
@@ -4792,6 +4615,7 @@
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
     </language>
 
 
@@ -4896,6 +4720,8 @@
         <string key="player_color" value="Oyuncu rengi"/>
         <string key="fog_of_war" value="Savaş sisi"/>
         <string key="diplomacy" value="Diplomasi"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Devam et"/>
@@ -4920,26 +4746,7 @@
         <string key="win_game" value="Kazan"/>
         <string key="win_or_continue" value="Şimdi kazan#ya da oyuna devam et?"/>
         <string key="continue" value="Devam et"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Yeşil"/>
-        <string key="red_player" value="Kırmızı"/>
-        <string key="magenta_player" value="Eflatun"/>
-        <string key="cyan_player" value="Turkuaz"/>
-        <string key="yellow_player" value="Sarı"/>
-        <string key="gray_player" value="Gri"/>
-        <string key="green_ai" value="Yeşil"/>
-        <string key="red_ai" value="Kırmızı"/>
-        <string key="magenta_ai" value="Eflatun"/>
-        <string key="cyan_ai" value="Turkuaz"/>
-        <string key="yellow_ai" value="Sarı"/>
-        <string key="gray_ai" value="Gri"/>
-        <string key="green_menu" value="Yeşil"/>
-        <string key="red_menu" value="Kırmızı"/>
-        <string key="magenta_menu" value="Eflatun"/>
-        <string key="cyan_menu" value="Turkuaz"/>
-        <string key="yellow_menu" value="Sarı"/>
-        <string key="gray_menu" value="Gri"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Standart kurallar"/>
@@ -5247,6 +5054,7 @@
         <string key="buyer_not_enough_money" value="Alıcının yeteri kadar parası yok."/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
     </language>
 
 
@@ -5357,6 +5165,8 @@
         <string key="player_color" value="Цвят на играча"/>
         <string key="fog_of_war" value="Fog of war"/>
         <string key="diplomacy" value="Diplomacy"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Продължи"/>
@@ -5390,26 +5200,7 @@
         <string key="win_game" value="Печели"/>
         <string key="win_or_continue" value="Спечели сега#или продължи?"/>
         <string key="continue" value="Continue"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Зелен"/>
-        <string key="red_player" value="Червен"/>
-        <string key="magenta_player" value="Магента"/>
-        <string key="cyan_player" value="Циан"/>
-        <string key="yellow_player" value="Жълт"/>
-        <string key="gray_player" value="Сив"/>
-        <string key="green_ai" value="Зелен"/>
-        <string key="red_ai" value="Червен"/>
-        <string key="magenta_ai" value="Магента"/>
-        <string key="cyan_ai" value="Циан"/>
-        <string key="yellow_ai" value="Жълт"/>
-        <string key="gray_ai" value="Сив"/>
-        <string key="green_menu" value="Зелен"/>
-        <string key="red_menu" value="Червен"/>
-        <string key="magenta_menu" value="Магента"/>
-        <string key="cyan_menu" value="Циан"/>
-        <string key="yellow_menu" value="Жълт"/>
-        <string key="gray_menu" value="Сив"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Нормални правила"/>
@@ -5708,6 +5499,7 @@
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
 
     </language>
 
@@ -5821,6 +5613,8 @@
         <string key="player_color" value="Cor do jogador"/>
         <string key="fog_of_war" value="Névoa de guerra"/>
         <string key="diplomacy" value="Diplomacia"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Continuar"/>
@@ -5848,26 +5642,7 @@
         <string key="win_game" value="Vencer"/>
         <string key="win_or_continue" value="Vencer agora#ou continuar?"/>
         <string key="continue" value="Continuar"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="verde"/>
-        <string key="red_player" value="vermelho"/>
-        <string key="magenta_player" value="magenta"/>  <!-- Same as english -->
-        <string key="cyan_player" value="ciano"/>
-        <string key="yellow_player" value="amarelo"/>
-        <string key="gray_player" value="cinza"/>
-        <string key="green_ai" value="verde"/>
-        <string key="red_ai" value="vermelho"/>
-        <string key="magenta_ai" value="magenta"/>  <!-- Same as english -->
-        <string key="cyan_ai" value="ciano"/>
-        <string key="yellow_ai" value="amarelo"/>
-        <string key="gray_ai" value="cinza"/>
-        <string key="green_menu" value="amarelo"/>
-        <string key="red_menu" value="vermelho"/>
-        <string key="magenta_menu" value="magenta"/>  <!-- Same as english -->
-        <string key="cyan_menu" value="ciano"/>
-        <string key="yellow_menu" value="amarelo"/>
-        <string key="gray_menu" value="cinza"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Regras normais"/>
@@ -6140,6 +5915,7 @@
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
 
 
     </language>
@@ -6252,6 +6028,8 @@
         <string key="player_color" value="Kleur speler"/>
         <string key="fog_of_war" value="Waas van oorlog"/>
         <string key="diplomacy" value="Diplomatie"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Verder"/>
@@ -6279,26 +6057,7 @@
         <string key="win_game" value="Gewonnen"/>
         <string key="win_or_continue" value="Nu winnen#of verder?"/>
         <string key="continue" value="Verder"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Groene"/>
-        <string key="red_player" value="Rode"/>
-        <string key="magenta_player" value="Magenta"/>  <!-- Same as english -->
-        <string key="cyan_player" value="Cyaan"/>
-        <string key="yellow_player" value="Gele"/>
-        <string key="gray_player" value="Grijze"/>
-        <string key="green_ai" value="Groene"/>
-        <string key="red_ai" value="Rode"/>
-        <string key="magenta_ai" value="Magenta"/>  <!-- Same as english -->
-        <string key="cyan_ai" value="Cyaan"/>
-        <string key="yellow_ai" value="Gele"/>
-        <string key="gray_ai" value="Grijze"/>
-        <string key="green_menu" value="Groen"/>
-        <string key="red_menu" value="Rood"/>
-        <string key="magenta_menu" value="Magenta"/>  <!-- Same as english -->
-        <string key="cyan_menu" value="Cyaan"/>
-        <string key="yellow_menu" value="Geel"/>
-        <string key="gray_menu" value="Grijs"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Normale regels"/>
@@ -6571,6 +6330,7 @@
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
 
 
     </language>
@@ -6694,6 +6454,8 @@
         <string key="player_color" value="Játékos színe"/>
         <string key="fog_of_war" value="Csökkentett látóhatár"/>
         <string key="diplomacy" value="Diplomácia"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Folytatás"/>
@@ -6721,26 +6483,7 @@
         <string key="win_game" value="Győzelem"/>
         <string key="win_or_continue" value="Győzelem most#vagy folytatod?"/>
         <string key="continue" value="Folytatás"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Zöld"/>
-        <string key="red_player" value="Piros"/>
-        <string key="magenta_player" value="Lila"/>
-        <string key="cyan_player" value="Kék"/>
-        <string key="yellow_player" value="Sárga"/>
-        <string key="gray_player" value="Szürke"/>
-        <string key="green_ai" value="Zöld"/>
-        <string key="red_ai" value="Piros"/>
-        <string key="magenta_ai" value="Lila"/>
-        <string key="cyan_ai" value="Kék"/>
-        <string key="yellow_ai" value="Sárga"/>
-        <string key="gray_ai" value="Szürke"/>
-        <string key="green_menu" value="Zöld"/>
-        <string key="red_menu" value="Piros"/>
-        <string key="magenta_menu" value="Lila"/>
-        <string key="cyan_menu" value="Kék"/>
-        <string key="yellow_menu" value="Sárga"/>
-        <string key="gray_menu" value="Szürke"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Normál szabályok"/>
@@ -7048,6 +6791,7 @@
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
 
 
     </language>
@@ -7169,6 +6913,8 @@
         <string key="player_color" value="Колер гульца"/>
         <string key="fog_of_war" value="Туман вайны"/>
         <string key="diplomacy" value="Дыпламатыя"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Прадоўжыць"/>
@@ -7193,26 +6939,7 @@
         <string key="win_game" value="Перамога"/>
         <string key="win_or_continue" value="Скончыць гульню#або прадоўжыць?"/>
         <string key="continue" value="Працягнуць"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Зялёны"/>
-        <string key="red_player" value="Чырвоны"/>
-        <string key="magenta_player" value="Фіялетавы"/>
-        <string key="cyan_player" value="Блакітны"/>
-        <string key="yellow_player" value="Жоўты"/>
-        <string key="gray_player" value="Шэры"/>
-        <string key="green_ai" value="Зялёны"/>
-        <string key="red_ai" value="Чырвоны"/>
-        <string key="magenta_ai" value="Фіялетавы"/>
-        <string key="cyan_ai" value="Блакітны"/>
-        <string key="yellow_ai" value="Жоўты"/>
-        <string key="gray_ai" value="Шэры"/>
-        <string key="green_menu" value="Зялёны"/>
-        <string key="red_menu" value="Чырвоны"/>
-        <string key="magenta_menu" value="Фіялетавы"/>
-        <string key="cyan_menu" value="Блакітны"/>
-        <string key="yellow_menu" value="Жоўты"/>
-        <string key="gray_menu" value="Шэры"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Звычайныя правілы"/>
@@ -7479,6 +7206,7 @@
         <string key="buyer_not_enough_money" value="У пакупніка не хапае грошай"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
     </language>
 
 
@@ -7581,6 +7309,8 @@
         <string key="player_color" value="Warna pemain"/>
         <string key="fog_of_war" value="Kabut perang"/>
         <string key="diplomacy" value="Diplomasi"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Lanjutkan"/>
@@ -7608,26 +7338,7 @@
         <string key="win_game" value="Menang"/>
         <string key="win_or_continue" value="Menangi sekarang#atau lanjutkan?"/>
         <string key="continue" value="Lanjutkan"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Hijau"/>
-        <string key="red_player" value="Merah"/>
-        <string key="magenta_player" value="Ungu"/>
-        <string key="cyan_player" value="Biru"/>
-        <string key="yellow_player" value="Kuning"/>
-        <string key="gray_player" value="Kelabu"/>
-        <string key="green_ai" value="Hijau"/>
-        <string key="red_ai" value="Merah"/>
-        <string key="magenta_ai" value="Ungu"/>
-        <string key="cyan_ai" value="Biru"/>
-        <string key="yellow_ai" value="Kuning"/>
-        <string key="gray_ai" value="Kelabu"/>
-        <string key="green_menu" value="Hijau"/>
-        <string key="red_menu" value="Merah"/>
-        <string key="magenta_menu" value="Ungu"/>
-        <string key="cyan_menu" value="Biru"/>
-        <string key="yellow_menu" value="Kuning"/>
-        <string key="gray_menu" value="Kelabu"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Peraturan normal"/>
@@ -7900,6 +7611,7 @@
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
 
 
 
@@ -8003,6 +7715,8 @@
         <string key="player_color" value="Χρώμα παίχτη"/>
         <string key="fog_of_war" value="Ομίχλη πολέμου"/>
         <string key="diplomacy" value="Διπλωματία"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Συνέχεια"/>
@@ -8030,26 +7744,7 @@
         <string key="win_game" value="Νίκη"/>
         <string key="win_or_continue" value="Νίκη τώρα#ή συνέχισε;"/>
         <string key="continue" value="Συνέχισε"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Πράσινο"/>
-        <string key="red_player" value="Κόκκινο"/>
-        <string key="magenta_player" value="Μωβ"/>
-        <string key="cyan_player" value="Κυανό"/>
-        <string key="yellow_player" value="Κίτρινο"/>
-        <string key="gray_player" value="Γκρι"/>
-        <string key="green_ai" value="Πράσινο"/>
-        <string key="red_ai" value="Κόκκινο"/>
-        <string key="magenta_ai" value="Μωβ"/>
-        <string key="cyan_ai" value="Κυανό"/>
-        <string key="yellow_ai" value="Κίτρινο"/>
-        <string key="gray_ai" value="Γκρι"/>
-        <string key="green_menu" value="Πράσινο"/>
-        <string key="red_menu" value="Κόκκινο"/>
-        <string key="magenta_menu" value="Μωβ"/>
-        <string key="cyan_menu" value="Κυανό"/>
-        <string key="yellow_menu" value="Κίτρινο"/>
-        <string key="gray_menu" value="Γκρι"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Κανονικοί κανόνες"/>
@@ -8322,6 +8017,7 @@
         <string key="buyer_not_enough_money" value="Buyer doesn't have enough money"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
 
 
 
@@ -8434,6 +8130,8 @@
         <string key="player_color" value="Spillerfarge"/>
         <string key="fog_of_war" value="Tåke av krig"/>
         <string key="diplomacy" value="Diplomati"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Gjenoppta"/>
@@ -8461,26 +8159,7 @@
         <string key="win_game" value="Vinne"/>
         <string key="win_or_continue" value="Vinn nå#eller fortsett?"/>
         <string key="continue" value="Fortsette"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Grønn"/>
-        <string key="red_player" value="Rød"/>
-        <string key="magenta_player" value="Magenta"/>
-        <string key="cyan_player" value="Cyan"/>
-        <string key="yellow_player" value="Gul"/>
-        <string key="gray_player" value="Grå"/>
-        <string key="green_ai" value="Grønn"/>
-        <string key="red_ai" value="Rød"/>
-        <string key="magenta_ai" value="Magenta"/>
-        <string key="cyan_ai" value="Cyan"/>
-        <string key="yellow_ai" value="Gul"/>
-        <string key="gray_ai" value="Grå"/>
-        <string key="green_menu" value="Grønn"/>
-        <string key="red_menu" value="Rød"/>
-        <string key="magenta_menu" value="Magenta"/>
-        <string key="cyan_menu" value="Cyan"/>
-        <string key="yellow_menu" value="Gul"/>
-        <string key="gray_menu" value="Grå"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Normale regler"/>
@@ -8754,6 +8433,7 @@ Fang den nøytrale sekskanten"/>
         <string key="buyer_not_enough_money" value="Kjøperen har ikke nok penger"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
 
     </language>
 
@@ -8868,6 +8548,8 @@ Fang den nøytrale sekskanten"/>
         <string key="player_color" value="Боја играча"/>
         <string key="fog_of_war" value="Магла на бојишту"/>
         <string key="diplomacy" value="Дипломатија"/>
+        <string key="provinces" value="Provinces"/>
+        <string key="default" value="default"/>
 
         <!-- In game menu -->
         <string key="in_game_menu_resume" value="Наставак"/>
@@ -8895,26 +8577,7 @@ Fang den nøytrale sekskanten"/>
         <string key="win_game" value="Победа"/>
         <string key="win_or_continue" value="Обајви победу#или настави борбу до истребљења?"/>
         <string key="continue" value="Наставак"/>
-
-        <!-- Colors -->
-        <string key="green_player" value="Зелени"/>
-        <string key="red_player" value="Црвени"/>
-        <string key="magenta_player" value="Розе"/>
-        <string key="cyan_player" value="Плави"/>
-        <string key="yellow_player" value="Жути"/>
-        <string key="gray_player" value="Сиви"/>
-        <string key="green_ai" value="Зелени"/>
-        <string key="red_ai" value="Црвени"/>
-        <string key="magenta_ai" value="Розе"/>
-        <string key="cyan_ai" value="Плави"/>
-        <string key="yellow_ai" value="Жути"/>
-        <string key="gray_ai" value="Сиви"/>
-        <string key="green_menu" value="Зелена"/>
-        <string key="red_menu" value="Црвена"/>
-        <string key="magenta_menu" value="Розе"/>
-        <string key="cyan_menu" value="Плава"/>
-        <string key="yellow_menu" value="Жута"/>
-        <string key="gray_menu" value="Сива"/>
+        <string key="winner" value="Winner"/>
 
         <!-- Tutorial -->
         <string key="normal_rules" value="Основна правила"/>
@@ -9187,6 +8850,7 @@ Fang den nøytrale sekskanten"/>
         <string key="buyer_not_enough_money" value="Купац нема довољно пара"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
+        <string key="check_filters" value="Check filters"/>
     </language>
 
 

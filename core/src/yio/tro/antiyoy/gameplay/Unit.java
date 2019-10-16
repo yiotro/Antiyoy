@@ -42,22 +42,22 @@ public class Unit implements EncodeableYio{
     }
 
 
-    boolean moveToHex(Hex destinationHex) {
-        if (destinationHex.sameFraction(currentHex) && destinationHex.containsBuilding()) return false;
+    boolean moveToHex(Hex targetHex) {
+        if (targetHex.sameFraction(currentHex) && targetHex.containsBuilding()) return false;
 
-        gameController.ruleset.onUnitMoveToHex(this, destinationHex);
-        if (destinationHex.containsObject()) {
-            gameController.cleanOutHex(destinationHex); // unit crushes object
+        gameController.ruleset.onUnitMoveToHex(this, targetHex);
+        if (targetHex.containsObject()) {
+            gameController.cleanOutHex(targetHex); // unit crushes object
             gameController.updateCacheOnceAfterSomeTime();
         }
         stopJumping();
         setReadyToMove(false);
         lastHex = currentHex;
-        currentHex = destinationHex;
+        currentHex = targetHex;
         moveFactor.setValues(0, 0);
         moveFactor.appear(1, 4);
         lastHex.unit = null;
-        destinationHex.unit = this;
+        targetHex.unit = this;
 //        YioGdxGame.say("anim hexes: " + gameController.animHexes.size() + "        selected hexes: " + gameController.selectedHexes.size());
 //        this was wonderful bug. Hexes were added to list several times which caused method move() to be called to many times
 
@@ -93,21 +93,19 @@ public class Unit implements EncodeableYio{
     }
 
 
-    public void marchToHex(Hex toWhere, Province province) {
-        if (toWhere == currentHex) return;
+    public void marchToHex(Hex target, Province province) {
+        if (target == currentHex) return;
         ArrayList<Hex> moveZone = gameController.detectMoveZone(currentHex, strength, GameRules.UNIT_MOVE_LIMIT);
         if (moveZone.size() == 0) return;
         double minDistance, currentDistance;
-        minDistance = FieldController.distanceBetweenHexes(moveZone.get(0), toWhere);
+        minDistance = FieldController.distanceBetweenHexes(moveZone.get(0), target);
         Hex closestHex = moveZone.get(0);
         for (Hex hex : moveZone) {
-            if (hex.sameFraction(currentHex) && hex.nothingBlocksWayForUnit()) {
-                currentDistance = FieldController.distanceBetweenHexes(toWhere, hex);
-                if (currentDistance < minDistance) {
-                    minDistance = currentDistance;
-                    closestHex = hex;
-                }
-            }
+            if (!hex.sameFraction(currentHex) || !hex.nothingBlocksWayForUnit()) continue;
+            currentDistance = FieldController.distanceBetweenHexes(target, hex);
+            if (currentDistance >= minDistance) continue;
+            minDistance = currentDistance;
+            closestHex = hex;
         }
 
         if (closestHex != null && closestHex != currentHex) {

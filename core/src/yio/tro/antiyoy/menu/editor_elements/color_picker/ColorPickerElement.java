@@ -7,6 +7,7 @@ import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.render.MenuRender;
 import yio.tro.antiyoy.menu.scenes.Scenes;
+import yio.tro.antiyoy.stuff.CircleYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
@@ -23,6 +24,10 @@ public class ColorPickerElement extends InterfaceElement{
     public ArrayList<CpeItem> items;
     boolean touched;
     PointYio currentTouch;
+    public RectangleYio shadowPosition;
+    public FactorYio fillFactor;
+    public RectangleYio fillPosition;
+    public int chosenColor;
 
 
     public ColorPickerElement(MenuControllerYio menuControllerYio) {
@@ -33,6 +38,9 @@ public class ColorPickerElement extends InterfaceElement{
         viewPosition = new RectangleYio();
         listener = null;
         currentTouch = new PointYio();
+        shadowPosition = new RectangleYio();
+        fillFactor = new FactorYio();
+        fillPosition = new RectangleYio();
         initItems();
     }
 
@@ -53,6 +61,32 @@ public class ColorPickerElement extends InterfaceElement{
         appearFactor.move();
         updateViewPosition();
         moveItems();
+        updateShadowPosition();
+        moveFill();
+    }
+
+
+    private void moveFill() {
+        fillFactor.move();
+        if (fillFactor.get() == 0) return;
+
+        CpeItem item = getItem(chosenColor);
+        if (item == null) return;
+
+        CircleYio pos = item.viewPosition;
+        fillPosition.setBy(pos);
+        fillPosition.x += fillFactor.get() * (viewPosition.x - (pos.center.x - pos.radius));
+        fillPosition.y += fillFactor.get() * (viewPosition.y - (pos.center.y - pos.radius));
+        fillPosition.width += fillFactor.get() * (viewPosition.width - 2 * pos.radius);
+        fillPosition.height += fillFactor.get() * (viewPosition.height - 2 * pos.radius);
+    }
+
+
+    private void updateShadowPosition() {
+        shadowPosition.x = 0;
+        shadowPosition.width = GraphicsYio.width;
+        shadowPosition.y = viewPosition.y + viewPosition.height - 0.04f * GraphicsYio.width;
+        shadowPosition.height = 0.06f * GraphicsYio.width;
     }
 
 
@@ -77,7 +111,7 @@ public class ColorPickerElement extends InterfaceElement{
 
     @Override
     public void destroy() {
-        appearFactor.destroy(2, 2);
+        appearFactor.destroy(2, 1.3);
     }
 
 
@@ -91,13 +125,42 @@ public class ColorPickerElement extends InterfaceElement{
 
     private void onAppear() {
         touched = false;
+        chosenColor = -1;
+        fillFactor.reset();
+        removeRandomColorItem();
         updateItemDeltas();
         move();
     }
 
 
+    private void removeRandomColorItem() {
+        CpeItem rcItem = getItem(-1);
+        if (rcItem == null) return;
+        items.remove(rcItem);
+    }
+
+
+    public void addRandomColorItem() {
+        CpeItem item = new CpeItem(this);
+        item.color = -1;
+        items.add(item);
+
+        updateItemDeltas();
+        move();
+    }
+
+
+    public CpeItem getItem(int color) {
+        for (CpeItem item : items) {
+            if (item.color != color) continue;
+            return item;
+        }
+        return null;
+    }
+
+
     private void updateItemDeltas() {
-        int rowQuantity = 5;
+        int rowQuantity = 8;
         float radius = (float) (0.5 * position.width / (rowQuantity + 1));
         float delta = (float) (position.width / rowQuantity);
         float x = delta;
@@ -155,6 +218,9 @@ public class ColorPickerElement extends InterfaceElement{
         if (listener != null) {
             listener.onColorChosen(cpeItem.color);
         }
+        fillFactor.reset();
+        fillFactor.appear(2, 2);
+        chosenColor = cpeItem.color;
         Scenes.sceneColorPicker.hide();
     }
 

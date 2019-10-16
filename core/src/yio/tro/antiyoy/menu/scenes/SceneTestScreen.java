@@ -2,9 +2,11 @@ package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.menu.*;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
+import yio.tro.antiyoy.menu.color_picking.ColorHolderElement;
 import yio.tro.antiyoy.menu.customizable_list.CustomizableListYio;
 import yio.tro.antiyoy.menu.customizable_list.SampleListItem;
 import yio.tro.antiyoy.menu.customizable_list.TitleListItem;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 
 public class SceneTestScreen extends AbstractScene{
 
@@ -15,12 +17,14 @@ public class SceneTestScreen extends AbstractScene{
     private CheckButtonYio chkOne;
     private CheckButtonYio chkTwo;
     private CustomizableListYio customizableListYio;
+    ColorHolderElement colorHolderElement;
 
 
     public SceneTestScreen(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
         chkOne = null;
         customizableListYio = null;
+        colorHolderElement = null;
     }
 
 
@@ -30,9 +34,30 @@ public class SceneTestScreen extends AbstractScene{
         menuControllerYio.getYioGdxGame().beginBackgroundChange(2, false, true);
         menuControllerYio.spawnBackButton(38721132, Reaction.rbChooseGameModeMenu);
 
-        createCustomizableList();
+        createColorHolder();
 
         menuControllerYio.endMenuCreation();
+    }
+
+
+    private void createColorHolder() {
+        ButtonYio label = buttonFactory.getButton(generateRectangle(0.1, 0.25, 0.8, 0.4), 831273671, " ");
+        label.setAnimation(Animation.from_center);
+        label.setTouchable(false);
+
+        initColorHolder();
+        colorHolderElement.appear();
+    }
+
+
+    private void initColorHolder() {
+        if (colorHolderElement != null) return;
+        colorHolderElement = new ColorHolderElement(menuControllerYio);
+        colorHolderElement.setAnimation(Animation.from_center);
+        colorHolderElement.setPosition(generateRectangle(0.15, 0.3, 0.7, 0.08));
+        colorHolderElement.setValueIndex(0);
+        colorHolderElement.setTitle(LanguagesManager.getInstance().getString("player_color") + ":");
+        menuControllerYio.addElementToScene(colorHolderElement);
     }
 
 

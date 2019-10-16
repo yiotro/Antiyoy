@@ -21,6 +21,7 @@ public class DecodeManager {
 
 
     protected boolean isValidLevelCode(String levelCode) {
+        if (levelCode == null) return false;
         if (!levelCode.contains("antiyoy_level_code")) return false;
         if (!levelCode.contains("level_size")) return false;
         if (!levelCode.contains("units")) return false;

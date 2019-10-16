@@ -214,6 +214,13 @@ public class SliderYio extends InterfaceElement implements SliderListener {
     }
 
 
+    public float getAlpha() {
+        if (appearFactor.get() < 0.5) return 0;
+
+        return Math.min(1, 2 * (appearFactor.get() - 0.5f));
+    }
+
+
     @Override
     public void move() {
         if (appearFactor.hasToMove()) {
@@ -305,8 +312,7 @@ public class SliderYio extends InterfaceElement implements SliderListener {
 
     @Override
     public void appear() {
-        // if need something else it's better to link slider to button
-        appearFactor.appear(3, 1.8);
+        appearFactor.appear(MenuControllerYio.SPAWN_ANIM, MenuControllerYio.SPAWN_SPEED);
         appearFactor.setValues(0.001, 0.001);
     }
 
@@ -337,10 +343,6 @@ public class SliderYio extends InterfaceElement implements SliderListener {
         this.minNumber = minNumber;
         animDistance = -1;
         updateValueString();
-
-//        if (isAnimTypeForSlowSpawn(animType)) {
-//            menuControllerYio.addElementToSlowSpawnList(this);
-//        }
     }
 
 

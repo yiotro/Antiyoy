@@ -124,17 +124,21 @@ public abstract class ArtificialIntelligence {
         ArrayList<Hex> moveZone = gameController.detectMoveZone(unit.currentHex, unit.strength, GameRules.UNIT_MOVE_LIMIT);
         if (moveZone.size() == 0) return;
         for (Hex hex : moveZone) {
-            if (mergeConditions(province, unit, hex)) {
-                gameController.moveUnit(unit, hex, province); // should not call mergeUnits() directly
-                break;
-            }
+            if (!mergeConditions(province, unit, hex)) continue;
+            gameController.moveUnit(unit, hex, province); // should not call mergeUnits() directly
+            break;
         }
     }
 
 
     protected boolean mergeConditions(Province province, Unit unit, Hex hex) {
-        return hex.sameFraction(unit.currentHex) && hex.containsUnit() && hex.unit.isReadyToMove() && unit != hex.unit &&
-                province.canAiAffordUnit(gameController.mergedUnitStrength(unit, hex.unit));
+        if (!hex.sameFraction(unit.currentHex)) return false;
+        if (!hex.containsUnit()) return false;
+        if (!hex.unit.isReadyToMove()) return false;
+        if (unit == hex.unit) return false;
+        if (!gameController.ruleset.canMergeUnits(unit, hex.unit)) return false;
+        if (!province.canAiAffordUnit(gameController.mergedUnitStrength(unit, hex.unit))) return false;
+        return true;
     }
 
 
@@ -261,7 +265,11 @@ public abstract class ArtificialIntelligence {
 
 
     protected void buildUnit(Province province, Hex hex, int strength) {
-        boolean success = gameController.fieldController.buildUnit(province, hex, strength);
+        boolean success = false;
+
+        if (isAllowedToBuildNewUnit(province)) {
+            success = gameController.fieldController.buildUnit(province, hex, strength);
+        }
 
         if (success) {
             numberOfUnitsBuiltThisTurn++;
@@ -309,8 +317,9 @@ public abstract class ArtificialIntelligence {
         }
 
         // this is to kick start province
-        if (province.canBuildUnit(1) && howManyUnitsInProvince(province) <= 1)
+        if (province.canBuildUnit(1) && howManyUnitsInProvince(province) <= 1) {
             tryToAttackWithStrength(province, 1);
+        }
     }
 
 

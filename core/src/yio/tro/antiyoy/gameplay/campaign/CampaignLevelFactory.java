@@ -10,6 +10,7 @@ import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.loading.LoadingType;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.color_picking.ColorHolderElement;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.menu.slider.SliderYio;
 import yio.tro.antiyoy.stuff.LanguagesManager;
@@ -41,6 +42,7 @@ public class CampaignLevelFactory {
                 new LevelPackSeven(this),
                 new LevelPackEight(this),
                 new LevelPackNine(this),
+                new LevekPackTen(this),
         };
         index = -1;
     }
@@ -89,7 +91,7 @@ public class CampaignLevelFactory {
         instance.playersNumber = 1;
         instance.fractionsQuantity = getFractionsQuantityByIndex(index);
         instance.difficulty = getDifficultyByIndex(index);
-        instance.colorOffset = readColorOffsetFromSlider(instance.fractionsQuantity);
+        instance.colorOffset = readColorOffsetFromHolder(instance.fractionsQuantity);
         instance.slayRules = GameRules.slayRules;
         instance.campaignLevelIndex = index;
         LoadingManager.getInstance().startGame(instance);
@@ -98,13 +100,10 @@ public class CampaignLevelFactory {
     }
 
 
-    public int readColorOffsetFromSlider(int fractionsQuantity) {
-        return gameController.convertSliderIndexToColorOffset(getColorOffsetSlider().getValueIndex(), fractionsQuantity);
-    }
-
-
-    private SliderYio getColorOffsetSlider() {
-        return Scenes.sceneMoreCampaignOptions.colorOffsetSlider;
+    public int readColorOffsetFromHolder(int fractionsQuantity) {
+        Preferences prefs = Gdx.app.getPreferences("campaign_options");
+        int valueIndex = prefs.getInteger("color_offset", 0);
+        return ColorHolderElement.getColor(valueIndex, fractionsQuantity);
     }
 
 

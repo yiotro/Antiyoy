@@ -99,7 +99,6 @@ public class SceneUserLevels extends AbstractScene {
             addUserLevelToList(userLevel);
         }
 
-        checkToAddOneLevel();
         checkToCreateAddMapItem();
     }
 
@@ -139,6 +138,7 @@ public class SceneUserLevels extends AbstractScene {
 
     private void checkToCreateAddMapItem() {
         if (!isAddMapItemEnabled()) return;
+        if (scrollableListYio.items.size() == 0) return;
 
         scrollableListYio.addItem(
                 "add_my_map",
@@ -170,9 +170,14 @@ public class SceneUserLevels extends AbstractScene {
         scrollableListYio = new ScrollableListYio(menuControllerYio);
         scrollableListYio.setPosition(generateRectangle(0.05, 0.07, 0.9, 0.75));
         scrollableListYio.setTitle(LanguagesManager.getInstance().getString("user_levels"));
+        scrollableListYio.setListBehavior(getListBehavior());
+        scrollableListYio.setEmptySign(LanguagesManager.getInstance().getString("check_filters"));
         menuControllerYio.addElementToScene(scrollableListYio);
+    }
 
-        scrollableListYio.setListBehavior(new ListBehaviorYio() {
+
+    private ListBehaviorYio getListBehavior() {
+        return new ListBehaviorYio() {
             @Override
             public void applyItem(ListItemYio item) {
                 OnItemClicked(item);
@@ -189,7 +194,7 @@ public class SceneUserLevels extends AbstractScene {
             public void onItemDeleteRequested(ListItemYio item) {
 
             }
-        });
+        };
     }
 
 

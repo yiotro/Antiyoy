@@ -8,16 +8,18 @@ import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
+import yio.tro.antiyoy.menu.color_picking.ColorHolderElement;
 import yio.tro.antiyoy.menu.slider.SliderBehavior;
 import yio.tro.antiyoy.menu.slider.SliderYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.stuff.RectangleYio;
 
 public class SceneTakeControl extends AbstractScene {
 
 
     private ButtonYio label;
-    private SliderYio colorSlider;
+    ColorHolderElement colorHolderElement;
     private RectangleYio pos;
     private ButtonYio okButton;
     private Reaction rbBack;
@@ -27,7 +29,13 @@ public class SceneTakeControl extends AbstractScene {
         super(menuControllerYio);
 
         pos = new RectangleYio(0.1, 0.35, 0.8, 0.2);
+        colorHolderElement = null;
 
+        initReactions();
+    }
+
+
+    private void initReactions() {
         rbBack = new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
@@ -51,7 +59,7 @@ public class SceneTakeControl extends AbstractScene {
 
     private void createInternals() {
         createLabel();
-        createSlider();
+        createColorHolder();
         createOkButton();
 
         loadValues();
@@ -61,7 +69,7 @@ public class SceneTakeControl extends AbstractScene {
     private void loadValues() {
         GameController gameController = getGameController();
         int color = gameController.getColorByFraction(0);
-        colorSlider.setValueIndex(color + 1);
+        colorHolderElement.setValueIndex(color + 1);
     }
 
 
@@ -89,7 +97,7 @@ public class SceneTakeControl extends AbstractScene {
         YioGdxGame yioGdxGame = menuControllerYio.yioGdxGame;
         GameController gameController = yioGdxGame.gameController;
 
-        int currentRunnerIndex = colorSlider.getValueIndex();
+        int currentRunnerIndex = colorHolderElement.getValueIndex();
         int desiredColor = currentRunnerIndex - 1;
         if (currentRunnerIndex == 0) {
             desiredColor = YioGdxGame.random.nextInt(GameRules.MAX_FRACTIONS_QUANTITY);
@@ -105,35 +113,19 @@ public class SceneTakeControl extends AbstractScene {
     }
 
 
-    private void createSlider() {
-        initColorSlider();
-
-        colorSlider.appear();
+    private void createColorHolder() {
+        initColorHolder();
+        colorHolderElement.appear();
     }
 
 
-    private void initColorSlider() {
-        if (colorSlider != null) return;
-
-        double sWidth = 0.7;
-        RectangleYio pos = generateRectangle((1 - sWidth) / 2, 0, sWidth, 0);
-
-        colorSlider = new SliderYio(menuControllerYio, -1);
-        colorSlider.setValues(0, 0, GameRules.MAX_FRACTIONS_QUANTITY, Animation.none);
-        colorSlider.setPosition(pos);
-        colorSlider.setParentElement(label, 0.1);
-        colorSlider.setTitle("player_color");
-        colorSlider.setVisualHook(label);
-        colorSlider.setBehavior(new SliderBehavior() {
-            @Override
-            public String getValueString(SliderYio sliderYio) {
-                return ColorsManager.getMenuColorNameByIndex(sliderYio.getValueIndex());
-            }
-        });
-
-        menuControllerYio.addElementToScene(colorSlider);
-        colorSlider.setVerticalTouchOffset(0.05f * GraphicsYio.height);
-        colorSlider.setTitleOffset(0.125f * GraphicsYio.width);
+    private void initColorHolder() {
+        if (colorHolderElement != null) return;
+        colorHolderElement = new ColorHolderElement(menuControllerYio);
+        colorHolderElement.setTitle(LanguagesManager.getInstance().getString("player_color") + ":");
+        colorHolderElement.setAnimation(Animation.from_center);
+        colorHolderElement.setPosition(generateRectangle(0.1, 0.45, 0.8, 0.08));
+        menuControllerYio.addElementToScene(colorHolderElement);
     }
 
 

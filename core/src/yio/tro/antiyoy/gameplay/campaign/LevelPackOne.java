@@ -26,7 +26,7 @@ public class LevelPackOne {
             campaignLevelFactory.gameController.gameSaver.legacyImportManager.applyFullLevel(instance, getLevelFromPackOne());
             instance.campaignLevelIndex = index;
             instance.slayRules = false; // these levels are forcing normal rules
-            instance.colorOffset = campaignLevelFactory.readColorOffsetFromSlider(instance.fractionsQuantity);
+            instance.colorOffset = campaignLevelFactory.readColorOffsetFromHolder(instance.fractionsQuantity);
             LoadingManager.getInstance().startGame(instance);
             return true;
         }

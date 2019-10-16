@@ -42,7 +42,7 @@ public class SceneDiplomaticRelations extends AbstractModalScene {
 
     @Override
     public void create() {
-        createInvisibleCloseButton(370, rbHide);
+        createInvisibleCloseButton(rbHide);
         createBasePanel();
         createList();
     }

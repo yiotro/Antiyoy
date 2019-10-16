@@ -20,6 +20,8 @@ public class Hex implements ReusableYio, EncodeableYio{
     boolean blockToTreeFromExpanding, canContainObjects;
     public FactorYio animFactor, selectionFactor;
     public Unit unit;
+    public Hex algoLink;
+    public int algoValue;
 
 
     public Hex(int index1, int index2, PointYio fieldPos, FieldController fieldController) {
@@ -39,6 +41,8 @@ public class Hex implements ReusableYio, EncodeableYio{
         unit = null;
         visualDiversityIndex = (101 * index1 * index2 + 7 * index2) % 3;
         canContainObjects = true;
+        algoLink = null;
+        algoValue = 0;
         updatePos();
     }
 

@@ -34,6 +34,7 @@ public class SkinManager {
         Scenes.sceneFastConstructionPanel.onSkinChanged();
         Scenes.sceneAiOnlyOverlay.onSkinChanged();
         MenuRender.renderFastConstructionPanel.onSkinChanged();
+        MenuRender.renderIncomeGraphElement.onSkinChanged();
 
         if (yioGdxGame != null && yioGdxGame.menuControllerYio != null) {
             yioGdxGame.menuControllerYio.onSkinChanged();
@@ -125,10 +126,10 @@ public class SkinManager {
     }
 
 
-    public String getPixelsFolderPath() {
+    public String getColorPixelsFolderPath() {
         switch (skinType) {
             default:
-                return "pixels";
+                return "pixels/colors";
             case jannes_peters:
                 return "skins/jannes/pixels";
         }

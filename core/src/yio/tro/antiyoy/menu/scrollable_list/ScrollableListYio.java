@@ -37,6 +37,7 @@ public class ScrollableListYio extends InterfaceElement {
     boolean readyToProcessLongTap;
     boolean scrollLock;
     boolean editable;
+    public RenderableTextYio emptySign;
 
 
     public ScrollableListYio(MenuControllerYio menuControllerYio) {
@@ -63,6 +64,9 @@ public class ScrollableListYio extends InterfaceElement {
         bottomEdge = new RectangleYio();
         listBehaviorYio = null;
         editable = false;
+        emptySign = new RenderableTextYio();
+        emptySign.setFont(Fonts.smallerMenuFont);
+        setEmptySign("-");
 
         initMetrics();
         initScrollEngine();
@@ -188,6 +192,14 @@ public class ScrollableListYio extends InterfaceElement {
         updateLabelPosition();
         updateEdgeRectangles();
         longTapDetector.move();
+        updateEmpySignPosition();
+    }
+
+
+    private void updateEmpySignPosition() {
+        emptySign.centerHorizontal(viewPosition);
+        emptySign.centerVertical(viewPosition);
+        emptySign.updateBounds();
     }
 
 
@@ -482,6 +494,12 @@ public class ScrollableListYio extends InterfaceElement {
     @Override
     public MenuRender getRenderSystem() {
         return MenuRender.renderScrollableList;
+    }
+
+
+    public void setEmptySign(String string) {
+        emptySign.setString(string);
+        emptySign.updateMetrics();
     }
 
 

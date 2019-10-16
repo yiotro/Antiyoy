@@ -33,6 +33,13 @@ public class UserLevelFactory {
 
     private void initLevels() {
         // 10
+        add(new UlevSpikes());
+        add(new UlevDino());
+        add(new UlevRiseOfCivilizations());
+        add(new UlevRescueForest());
+        add(new UlevNeighbourhood());
+        add(new Ulev2030SouthAmerica());
+        add(new UlevDoubleLanes());
         add(new UlevBackyardSale());
         add(new UlevForJasmin());
         add(new UlevAf3());

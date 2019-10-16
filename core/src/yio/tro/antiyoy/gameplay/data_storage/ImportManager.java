@@ -30,6 +30,7 @@ public class ImportManager {
 
 
     private boolean checkForLegacyImport(String levelCode) {
+        if (levelCode == null) return false;
         if (levelCode.contains("antiyoy_level_code")) return false;
         if (!levelCode.contains("/")) return false;
         if (!levelCode.contains("#")) return false;
@@ -60,8 +61,9 @@ public class ImportManager {
         instance.difficulty = 1;
         instance.levelCode = levelCode;
 
+        int slotNumber = gameController.editorSaveSystem.getNewSlotNumber();
         LoadingManager.getInstance().startGame(instance);
 
-        gameController.editorSaveSystem.onLevelImported(levelCode);
+        gameController.editorSaveSystem.onLevelImported(levelCode, slotNumber);
     }
 }

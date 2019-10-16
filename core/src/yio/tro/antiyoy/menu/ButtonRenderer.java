@@ -205,7 +205,9 @@ public class ButtonRenderer {
         for (String line : text) {
             font.draw(batch, line, horizontalOffset, verticalOffset + lineNumber * lineHeight);
             currentLineLength = getTextWidth(line, font);
-            if (currentLineLength > longestLineLength) longestLineLength = currentLineLength;
+            if (currentLineLength > longestLineLength) {
+                longestLineLength = currentLineLength;
+            }
             lineNumber++;
         }
 
@@ -227,6 +229,11 @@ public class ButtonRenderer {
         if (conditionsForSmallerText(buttonYio)) {
             pos.width += singleLineDeltaOffset;
             pos.height += singleLineDeltaOffset / ratio;
+        }
+
+        if (buttonYio.textLines.size() == 1 && buttonYio.textLines.get(0).equals(" ")) {
+            pos.width = 0.4f * GraphicsYio.width;
+            pos.height = 0.4f * GraphicsYio.width;
         }
     }
 

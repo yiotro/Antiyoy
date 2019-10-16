@@ -215,7 +215,7 @@ public class Province {
 
 
     public boolean canAiAffordUnit(int strength) {
-        return canAiAffordUnit(strength, 2);
+        return canAiAffordUnit(strength, strength + 1);
     }
 
 
@@ -227,8 +227,7 @@ public class Province {
         }
 
         int newIncome = getBalance() - gameController.ruleset.getUnitTax(strength);
-        if (money + turnsToSurvive * newIncome >= 0) return true;
-        return false;
+        return money + turnsToSurvive * newIncome >= 0;
     }
 
 
@@ -236,6 +235,22 @@ public class Province {
         if (GameRules.replayMode) return true;
 
         return gameController.ruleset.canBuildUnit(this, strength);
+    }
+
+
+    public boolean isNearFraction(int otherFraction) {
+        int fraction = getFraction();
+        for (Hex hex : hexList) {
+            for (int dir = 0; dir < 6; dir++) {
+                Hex adjacentHex = hex.getAdjacentHex(dir);
+                if (adjacentHex == null) continue;
+                if (adjacentHex.isNullHex()) continue;
+                if (!adjacentHex.active) continue;
+                if (adjacentHex.fraction != otherFraction) continue;
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -336,8 +351,7 @@ public class Province {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        String colorName = gameController.colorsManager.getColorNameForPlayerByFraction(getFraction());
-        builder.append("[Province" + "(").append(colorName).append(")").append(":");
+        builder.append("[Province" + "(").append(getFraction()).append(")").append(":");
         for (Hex hex : hexList) {
             builder.append(" ").append(hex);
         }

@@ -70,7 +70,20 @@ public class TutorialScriptGenericRules extends TutorialScript{
         waitingBeforeNextStep = true;
         ignoreAll();
         showTutorialTip("gen_greetings");
-        menuControllerYio.getButtonById(30).setReaction(Reaction.rbChooseGameModeMenu);
+        changeThreeDotsReaction();
+    }
+
+
+    private void changeThreeDotsReaction() {
+        menuControllerYio.getButtonById(30).setReaction(new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                Scenes.sceneNotification.hideNotification();
+                Scenes.sceneChoodeGameModeMenu.create();
+                getYioGdxGame(buttonYio).setGamePaused(true);
+                getYioGdxGame(buttonYio).setAnimToPlayButtonSpecial();
+            }
+        });
     }
 
 

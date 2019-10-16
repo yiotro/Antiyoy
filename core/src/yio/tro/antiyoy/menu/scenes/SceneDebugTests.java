@@ -1,8 +1,6 @@
 package yio.tro.antiyoy.menu.scenes;
 
-import yio.tro.antiyoy.gameplay.tests.AbstractTest;
-import yio.tro.antiyoy.gameplay.tests.TestAiComparison;
-import yio.tro.antiyoy.gameplay.tests.TestLaunchFireworks;
+import yio.tro.antiyoy.gameplay.tests.*;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -38,6 +36,8 @@ public class SceneDebugTests extends AbstractScene{
         tests = new AbstractTest[]{
                 new TestLaunchFireworks(),
                 new TestAiComparison(),
+                new TestEnableForceKeys(),
+                new TestOpenTestScreen(),
         };
 
         if (tests.length > 9) {

@@ -3,6 +3,7 @@ package yio.tro.antiyoy.menu;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.ClickDetector;
+import yio.tro.antiyoy.gameplay.ColorsManager;
 import yio.tro.antiyoy.menu.render.MenuRender;
 import yio.tro.antiyoy.stuff.*;
 
@@ -190,7 +191,8 @@ public class TurnStartDialog extends InterfaceElement{
     public void setColor(int color) {
         this.color = color;
 
-        descString = menuControllerYio.getColorsManager().getColorName(color, "_player");
+        ColorsManager colorsManager = menuControllerYio.yioGdxGame.gameController.colorsManager;
+        descString = (colorsManager.getFractionByColor(color) + 1) + "";
         float textWidth = GraphicsYio.getTextWidth(descFont, descString);
         descPosition.x = GraphicsYio.width / 2 - textWidth / 2;
         descPosition.y = 0.55f * GraphicsYio.height;

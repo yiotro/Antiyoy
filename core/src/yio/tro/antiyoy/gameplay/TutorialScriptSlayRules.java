@@ -64,8 +64,21 @@ public class TutorialScriptSlayRules extends TutorialScript{
         allButtonsIgnoreTouches();
         allHexesIgnoreTouches();
         showTutorialTip("tip_capture_with_units");
-        menuControllerYio.getButtonById(30).setReaction(Reaction.rbChooseGameModeMenu);
+        changeThreeDotsReaction();
         enableLongTapToMoveInSettings();
+    }
+
+
+    private void changeThreeDotsReaction() {
+        menuControllerYio.getButtonById(30).setReaction(new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                Scenes.sceneNotification.hideNotification();
+                Scenes.sceneChoodeGameModeMenu.create();
+                getYioGdxGame(buttonYio).setGamePaused(true);
+                getYioGdxGame(buttonYio).setAnimToPlayButtonSpecial();
+            }
+        });
     }
 
 

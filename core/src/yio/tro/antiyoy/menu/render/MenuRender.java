@@ -46,6 +46,8 @@ public abstract class MenuRender {
     public static RenderColorPickerElement renderColorPickerElement = new RenderColorPickerElement();
     public static RenderEditLandElement renderEditLandElement = new RenderEditLandElement();
     public static RenderIncomeGraphElement renderIncomeGraphElement = new RenderIncomeGraphElement();
+    public static RenderColorHolderElement renderColorHolderElement = new RenderColorHolderElement();
+    public static RenderNothing renderNothing = new RenderNothing();
 
     protected MenuViewYio menuViewYio;
     protected SpriteBatch batch;

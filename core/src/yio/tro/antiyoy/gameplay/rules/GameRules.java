@@ -39,6 +39,7 @@ public class GameRules {
     public static boolean editorDiplomacy;
     public static boolean editorColorFixApplied;
     public static int editorSlotNumber;
+    public static int genProvinces;
 
 
     public static void defaultValues() {
@@ -56,6 +57,7 @@ public class GameRules {
         editorDiplomacy = false;
         editorColorFixApplied = false;
         editorSlotNumber = -1;
+        genProvinces = 0;
     }
 
 

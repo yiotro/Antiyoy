@@ -65,7 +65,8 @@ public class MapGeneratorGeneric extends MapGenerator {
 
 
     private void spawnProvinces() {
-        for (int i = 0; i < numberOfProvincesByLevelSize(); i++) {
+        int quantity = getProvincesQuantity();
+        for (int i = 0; i < quantity; i++) {
             for (int fraction = 0; fraction < GameRules.fractionsQuantity; fraction++) {
                 Hex hex = findGoodPlaceForNewProvince();
                 if (hex == null) continue;
@@ -294,7 +295,9 @@ public class MapGeneratorGeneric extends MapGenerator {
     }
 
 
-    protected int numberOfProvincesByLevelSize() {
+    protected int getProvincesQuantity() {
+        if (GameRules.genProvinces > 0) return GameRules.genProvinces;
+
         switch (gameController.levelSizeManager.levelSize) {
             default:
             case LevelSize.SMALL:

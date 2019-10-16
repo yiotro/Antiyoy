@@ -1,19 +1,19 @@
 package yio.tro.antiyoy.menu.scenes.editor;
 
 import yio.tro.antiyoy.ai.Difficulty;
-import yio.tro.antiyoy.gameplay.ColorsManager;
-import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.behaviors.editor.EditorReactions;
+import yio.tro.antiyoy.menu.color_picking.ColorHolderElement;
 import yio.tro.antiyoy.menu.scenes.SceneSkirmishMenu;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.menu.slider.SliderBehavior;
 import yio.tro.antiyoy.menu.slider.SliderYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ public class SceneEditorParams extends AbstractEditorPanel {
     private double yOffset;
     private double bSize;
     private SliderYio difficultySlider;
-    private SliderYio colorSlider;
+    ColorHolderElement colorHolderElement;
     private Reaction rbMessages;
 
 
@@ -36,6 +36,7 @@ public class SceneEditorParams extends AbstractEditorPanel {
         super(menuControllerYio);
 
         sliders = null;
+        colorHolderElement = null;
 
         initMetrics();
         initReactions();
@@ -73,10 +74,32 @@ public class SceneEditorParams extends AbstractEditorPanel {
         createClearLevelButton();
         createRandomizeButton();
         createMessagesButton();
-
         createSliders();
+        createColorHolder();
 
         loadValues();
+    }
+
+
+    private void createColorHolder() {
+        initColorHolder();
+        colorHolderElement.appear();
+    }
+
+
+    private void initColorHolder() {
+        if (colorHolderElement != null) return;
+        colorHolderElement = new ColorHolderElement(menuControllerYio);
+        colorHolderElement.setTitle(LanguagesManager.getInstance().getString("player_color") + ":");
+        colorHolderElement.setAnimation(Animation.down);
+        colorHolderElement.setPosition(generateRectangle(0.1, 0.1, 0.8, 0.08));
+        colorHolderElement.setChangeReaction(new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                onChosenColorChanged();
+            }
+        });
+        menuControllerYio.addElementToScene(colorHolderElement);
     }
 
 
@@ -131,7 +154,7 @@ public class SceneEditorParams extends AbstractEditorPanel {
     private void loadValues() {
         playersSlider.setValueIndex(getGameController().playersNumber);
         difficultySlider.setValueIndex(GameRules.difficulty);
-        colorSlider.setValueIndex(GameRules.editorChosenColor);
+        colorHolderElement.setValueIndex(GameRules.editorChosenColor);
     }
 
 
@@ -160,36 +183,11 @@ public class SceneEditorParams extends AbstractEditorPanel {
         sliders.add(difficultySlider);
         curSlY -= slDelta;
 
-        colorSlider = new SliderYio(menuControllerYio, -1);
-        colorSlider.setValues(0, 0, 7, Animation.down);
-        colorSlider.setPosition(generateRectangle(0.1, 0, 0.8, 0));
-        colorSlider.setParentElement(basePanel, curSlY);
-        colorSlider.setTitle("player_color");
-        colorSlider.setBehavior(getColorsSliderBehavior());
-        sliders.add(colorSlider);
-        curSlY -= slDelta;
-
         for (SliderYio slider : sliders) {
             menuControllerYio.addElementToScene(slider);
             slider.setTitleOffset(0.11f * GraphicsYio.width);
             slider.setVerticalTouchOffset(0.05f * GraphicsYio.height);
         }
-    }
-
-
-    private SliderBehavior getColorsSliderBehavior() {
-        return new SliderBehavior() {
-            @Override
-            public String getValueString(SliderYio sliderYio) {
-                return ColorsManager.getMenuColorNameByIndex(sliderYio.getValueIndex());
-            }
-
-
-            @Override
-            public void onValueChanged(SliderYio sliderYio) {
-                onColorOffsetChanged();
-            }
-        };
     }
 
 
@@ -235,8 +233,8 @@ public class SceneEditorParams extends AbstractEditorPanel {
     }
 
 
-    void onColorOffsetChanged() {
-        GameRules.setEditorChosenColor(colorSlider.getValueIndex());
+    void onChosenColorChanged() {
+        GameRules.setEditorChosenColor(colorHolderElement.getValueIndex());
     }
 
 
@@ -248,6 +246,10 @@ public class SceneEditorParams extends AbstractEditorPanel {
 
         for (SliderYio slider : sliders) {
             slider.destroy();
+        }
+
+        if (colorHolderElement != null) {
+            colorHolderElement.destroy();
         }
     }
 

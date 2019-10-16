@@ -102,8 +102,8 @@ public class TestAiComparison extends AbstractTest {
             if (minResult > 0) {
                 ratio = (float) results[i] / (float) minResult;
             }
-            String colorString = ColorsManager.getMenuColorNameByIndex(i + 1);
-            list.add(colorString + ": " + results[i] + " (" + Yio.roundUp(ratio, 2) + ")");
+            String fractionString = i + "";
+            list.add(fractionString + ": " + results[i] + " (" + Yio.roundUp(ratio, 2) + ")");
         }
 
         return list;

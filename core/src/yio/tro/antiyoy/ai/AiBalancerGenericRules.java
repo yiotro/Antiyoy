@@ -245,8 +245,9 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         }
 
         // this is to kick start province
-        if (province.canBuildUnit(1) && howManyUnitsInProvince(province) <= 1)
+        if (province.canBuildUnit(1) && howManyUnitsInProvince(province) <= 1) {
             tryToAttackWithStrength(province, 1);
+        }
     }
 
 

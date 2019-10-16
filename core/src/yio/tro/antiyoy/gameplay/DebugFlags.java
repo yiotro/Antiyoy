@@ -11,6 +11,7 @@ public class DebugFlags {
     public static int testWinner = -1;
     public static boolean renderDebug = false;
     public static boolean showSliderBorder = false;
+    public static boolean forceKeys = false;
 
 
 }

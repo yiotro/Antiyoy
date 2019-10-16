@@ -27,7 +27,11 @@ public abstract class AbstractUserLevel extends AbstractLegacyUserLevel{
     public abstract String getMapName();
 
 
-    public abstract String getKey();
+    public String getKey() {
+        String mapName = getMapName();
+        String lowerCaseString = mapName.toLowerCase();
+        return lowerCaseString.replace(' ', '_');
+    }
 
 
     public abstract String getAuthor();

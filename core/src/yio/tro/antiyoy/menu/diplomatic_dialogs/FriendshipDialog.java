@@ -4,6 +4,7 @@ import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticContract;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticMessage;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.Fonts;
@@ -12,18 +13,20 @@ import yio.tro.antiyoy.stuff.LanguagesManager;
 public class FriendshipDialog extends AbstractDiplomaticDialog {
 
     DiplomaticEntity sender, recipient;
+    DiplomaticMessage message;
 
 
     public FriendshipDialog(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
-        resetEntities();
+        reset();
     }
 
 
-    protected void resetEntities() {
+    protected void reset() {
         sender = null;
         recipient = null;
+        message = null;
     }
 
 
@@ -31,13 +34,14 @@ public class FriendshipDialog extends AbstractDiplomaticDialog {
     protected void onAppear() {
         super.onAppear();
 
-        resetEntities();
+        reset();
     }
 
 
-    public void setEntities(DiplomaticEntity sender, DiplomaticEntity recipient) {
+    public void setValues(DiplomaticEntity sender, DiplomaticEntity recipient, DiplomaticMessage message) {
         this.sender = sender;
         this.recipient = recipient;
+        this.message = message;
 
         updateAll();
         updateTagFraction();
@@ -90,6 +94,10 @@ public class FriendshipDialog extends AbstractDiplomaticDialog {
 
 
     protected int getDotationsValue() {
+        if (message != null) {
+            return -Integer.valueOf(message.arg1);
+        }
+
         GameController gameController = menuControllerYio.yioGdxGame.gameController;
         DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
         int dotations = diplomacyManager.calculateDotationsForFriendship(sender, recipient);
@@ -107,6 +115,11 @@ public class FriendshipDialog extends AbstractDiplomaticDialog {
         GameController gameController = menuControllerYio.yioGdxGame.gameController;
         DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
         diplomacyManager.requestedFriendship(sender, recipient);
+
+        if (message != null) {
+            DiplomaticContract contract = diplomacyManager.getContract(DiplomaticContract.TYPE_FRIENDSHIP, sender, recipient);
+            contract.setDotations(Integer.valueOf(message.arg1));
+        }
 
         Scenes.sceneFriendshipDialog.hide();
     }

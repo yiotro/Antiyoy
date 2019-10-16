@@ -133,7 +133,7 @@ public class EncodeManager {
 
 
     public boolean isCurrentLevelTooBig() {
-        if (gameController.levelSizeManager.levelSize == LevelSize.HUGE) return false;
+        if (gameController.levelSizeManager.levelSize == LevelSize.HUGE) return true;
 
         float min = -1;
         float max = -1;

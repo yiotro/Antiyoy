@@ -1,5 +1,8 @@
 package yio.tro.antiyoy.menu.behaviors;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
+import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.LevelSize;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
@@ -7,6 +10,7 @@ import yio.tro.antiyoy.gameplay.loading.LoadingType;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.color_picking.ColorHolderElement;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.menu.slider.SliderYio;
 
@@ -28,18 +32,40 @@ public class RbStartSkirmishGame extends Reaction {
 
         instance.loadingType = LoadingType.skirmish;
         instance.levelSize = getLevelSizeBySliderPos(Scenes.sceneSkirmishMenu.mapSizeSlider);
-        instance.playersNumber = Scenes.sceneSkirmishMenu.playersSlider.getValueIndex();
+        instance.playersNumber = getPlayersNumber();
         instance.fractionsQuantity = getFractionsQuantity();
         instance.difficulty = Scenes.sceneSkirmishMenu.difficultySlider.getValueIndex();
-        instance.colorOffset = getGameController(buttonYio).convertSliderIndexToColorOffset(
-                Scenes.sceneMoreSkirmishOptions.colorOffsetSlider.getValueIndex(), instance.fractionsQuantity);
+        instance.colorOffset = getColorOffset(buttonYio, instance);
         instance.slayRules = Scenes.sceneMoreSkirmishOptions.chkSlayRules.isChecked();
         instance.fogOfWar = Scenes.sceneMoreSkirmishOptions.chkFogOfWar.isChecked();
         instance.diplomacy = Scenes.sceneMoreSkirmishOptions.chkDiplomacy.isChecked();
+        instance.genProvinces = getGenProvinces();
 
         LoadingManager.getInstance().startGame(instance);
 
         getYioGdxGame(buttonYio).setAnimToStartButtonSpecial();
+    }
+
+
+    private int getGenProvinces() {
+        Preferences prefs = Gdx.app.getPreferences("skirmish");
+        return prefs.getInteger("provinces", 0);
+    }
+
+
+    private int getColorOffset(ButtonYio buttonYio, LoadingParameters instance) {
+        Preferences prefs = Gdx.app.getPreferences("skirmish");
+        int valueIndex = prefs.getInteger("color_offset", 0);
+        return ColorHolderElement.getColor(valueIndex, instance.fractionsQuantity);
+    }
+
+
+    private int getPlayersNumber() {
+        int valueIndex = Scenes.sceneSkirmishMenu.playersSlider.getValueIndex();
+        if (valueIndex > GameRules.NEUTRAL_FRACTION) {
+            valueIndex++;
+        }
+        return valueIndex;
     }
 
 

@@ -168,9 +168,8 @@ public class MenuControllerYio {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         for (int i = interfaceElements.size() - 1; i >= 0; i--) {
             InterfaceElement interfaceElement = interfaceElements.get(i);
-            if (interfaceElement.isTouchable() && interfaceElement.isVisible()) {
-                if (interfaceElement.touchDown(screenX, screenY, pointer, button)) return true;
-            }
+            if (!interfaceElement.isTouchable() || !interfaceElement.isVisible()) continue;
+            if (interfaceElement.touchDown(screenX, screenY, pointer, button)) return true;
         }
 
         for (int i = buttons.size() - 1; i >= 0; i--) {
@@ -334,9 +333,12 @@ public class MenuControllerYio {
 
     public void forceDyingButtonsToEnd() {
         for (ButtonYio button : buttons) {
-            if (button.appearFactor.getGravity() < 0) {
-                button.appearFactor.setValues(0, 0);
-            }
+            if (button.appearFactor.getGravity() >= 0) continue;
+            button.appearFactor.setValues(0, 0);
+        }
+        for (InterfaceElement interfaceElement : interfaceElements) {
+            if (interfaceElement.getFactor().getGravity() >= 0) continue;
+            interfaceElement.getFactor().setValues(0, 0);
         }
     }
 

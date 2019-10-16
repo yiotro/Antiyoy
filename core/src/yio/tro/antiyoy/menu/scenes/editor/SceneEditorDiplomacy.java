@@ -29,7 +29,7 @@ public class SceneEditorDiplomacy extends AbstractModalScene {
 
     @Override
     public void create() {
-        createInvisibleCloseButton(280, rbHide);
+        createInvisibleCloseButton(rbHide);
         createBasePanel();
         createList();
         loadValues();
@@ -69,7 +69,7 @@ public class SceneEditorDiplomacy extends AbstractModalScene {
         EditorProvinceManager editorProvinceManager = levelEditor.editorProvinceManager;
         EditorProvinceData largestProvince = editorProvinceManager.getLargestProvince(fraction);
         if (largestProvince == null) {
-            return ColorsManager.getMenuColorNameByIndex(fraction + 1);
+            return " ";
         }
 
         return largestProvince.name;

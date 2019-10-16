@@ -72,7 +72,7 @@ public class SceneEditorOverlay extends AbstractScene{
         createIcon(144, 2, "field_elements/man0_low.png", EditorReactions.rbShowObjectPanel);
 
         createIconFromRight(149, 4, "menu/editor/editor_flag.png", rbEditDiplomacy);
-        createIconFromRight(147, 3, "menu/editor/transfer_money_icon.png", rbEditProvinces);
+        createIconFromRight(147, 3, "menu/editor/editor_money_icon.png", rbEditProvinces);
         createIconFromRight(148, 2, "menu/editor/chk.png", rbShowEditorChecks);
         createIconFromRight(146, 1, "menu/editor/automation_icon.png", EditorReactions.rbShowAutomationPanel);
         createIconFromRight(145, 0, "menu/editor/params_icon.png", EditorReactions.rbShowEditorParams);

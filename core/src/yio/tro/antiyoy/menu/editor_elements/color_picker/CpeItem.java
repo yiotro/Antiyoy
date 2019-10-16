@@ -31,7 +31,7 @@ public class CpeItem {
 
     private void updateBorderPosition() {
         borderPosition.setBy(viewPosition);
-        borderPosition.increase(GraphicsYio.borderThickness);
+        borderPosition.increase(GraphicsYio.borderThickness / 2);
     }
 
 

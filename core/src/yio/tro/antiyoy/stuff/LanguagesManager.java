@@ -10,6 +10,7 @@ import org.w3c.dom.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import yio.tro.antiyoy.gameplay.DebugFlags;
 
 public class LanguagesManager {
     private static LanguagesManager _instance = null;
@@ -61,6 +62,8 @@ public class LanguagesManager {
 
 
     public String getString(String key) {
+        if (DebugFlags.forceKeys) return key;
+
         String string;
 
         if (_language != null) {

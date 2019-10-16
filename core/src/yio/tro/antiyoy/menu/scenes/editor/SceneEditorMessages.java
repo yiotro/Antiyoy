@@ -29,7 +29,7 @@ public class SceneEditorMessages extends AbstractModalScene {
 
     @Override
     public void create() {
-        createInvisibleCloseButton(420, rbHide);
+        createInvisibleCloseButton(rbHide);
         createBasePanel();
         createList();
         loadValues();

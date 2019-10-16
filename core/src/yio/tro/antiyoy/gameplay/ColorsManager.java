@@ -1,7 +1,6 @@
 package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.gameplay.rules.GameRules;
-import yio.tro.antiyoy.stuff.LanguagesManager;
 
 import java.util.ArrayList;
 
@@ -21,20 +20,27 @@ public class ColorsManager {
         if (fraction == GameRules.NEUTRAL_FRACTION) return fraction;
         if (colorOffset == 0) return fraction;
 
-        if (GameRules.fractionsQuantity <= GameRules.NEUTRAL_FRACTION) {
+        if (colorOffset <= GameRules.NEUTRAL_FRACTION) {
             return getLegacyColorByFraction(fraction);
         }
 
         fraction += colorOffset;
 
+        fraction = getLimitedByMaxFractionsValue(fraction);
         if (fraction == GameRules.NEUTRAL_FRACTION) {
             return getExcludedByNeutralColor();
         }
 
+        fraction = getLimitedByMaxFractionsValue(fraction);
+
+        return fraction;
+    }
+
+
+    private int getLimitedByMaxFractionsValue(int fraction) {
         if (fraction >= GameRules.MAX_FRACTIONS_QUANTITY) {
             fraction -= GameRules.MAX_FRACTIONS_QUANTITY;
         }
-
         return fraction;
     }
 
@@ -42,9 +48,7 @@ public class ColorsManager {
     private int getExcludedByNeutralColor() {
         int color = GameRules.NEUTRAL_FRACTION + colorOffset;
 
-        if (color >= GameRules.MAX_FRACTIONS_QUANTITY) {
-            color -= GameRules.MAX_FRACTIONS_QUANTITY;
-        }
+        color = getLimitedByMaxFractionsValue(color);
 
         return color;
     }
@@ -140,61 +144,6 @@ public class ColorsManager {
 
     public void setColorOffset(int colorOffset) {
         this.colorOffset = colorOffset;
-    }
-
-
-    public String getColorNameForPlayerByFraction(int fraction) {
-        return getColorNameByFraction(fraction, "_player");
-    }
-
-
-    public String getColorNameByFraction(int fraction, String keyModifier) {
-        return getColorName(getColorByFraction(fraction), keyModifier);
-    }
-
-
-    public String getColorName(int color, String keyModifier) {
-        switch (color) {
-            default:
-                return "unknown";
-            case 6:
-            case 0:
-                return LanguagesManager.getInstance().getString("green" + keyModifier);
-            case 1:
-            case 5:
-                return LanguagesManager.getInstance().getString("red" + keyModifier);
-            case 2:
-                return LanguagesManager.getInstance().getString("magenta" + keyModifier);
-            case 3:
-                return LanguagesManager.getInstance().getString("cyan" + keyModifier);
-            case 4:
-                return LanguagesManager.getInstance().getString("yellow" + keyModifier);
-            case 7:
-                return LanguagesManager.getInstance().getString("gray" + keyModifier);
-        }
-    }
-
-
-    public static String getMenuColorNameByIndex(int index) {
-        switch (index) {
-            default:
-            case 0:
-                return LanguagesManager.getInstance().getString("random");
-            case 1:
-                return LanguagesManager.getInstance().getString("green_menu");
-            case 2:
-                return LanguagesManager.getInstance().getString("red_menu");
-            case 3:
-                return LanguagesManager.getInstance().getString("magenta_menu");
-            case 4:
-                return LanguagesManager.getInstance().getString("cyan_menu");
-            case 5:
-                return LanguagesManager.getInstance().getString("yellow_menu");
-            case 6:
-                return LanguagesManager.getInstance().getString("red_menu") + "+";
-            case 7:
-                return LanguagesManager.getInstance().getString("green_menu") + "+";
-        }
     }
 
 

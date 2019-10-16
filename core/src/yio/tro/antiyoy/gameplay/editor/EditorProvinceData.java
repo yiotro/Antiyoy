@@ -7,6 +7,7 @@ import yio.tro.antiyoy.gameplay.data_storage.EncodeableYio;
 import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
 import yio.tro.antiyoy.gameplay.name_generator.NameGenerator;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.stuff.Fonts;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
@@ -45,6 +46,11 @@ public class EditorProvinceData implements ReusableYio, EncodeableYio{
 
     public void fillWithDefaultData() {
         startingMoney = 10;
+        generateRandomName();
+    }
+
+
+    private void generateRandomName() {
         name = CityNameGenerator.getInstance().generateName(hexList.get(0));
     }
 
@@ -154,12 +160,25 @@ public class EditorProvinceData implements ReusableYio, EncodeableYio{
     }
 
 
+    public boolean containsInvalidSymbols() {
+        for (int i = 0; i < name.length(); i++) {
+            char c = name.charAt(i);
+            if (!Fonts.getAllCharacters().contains("" + c)) return true;
+        }
+        return false;
+    }
+
+
     @Override
     public void decode(String source) {
         String[] split = source.split("@");
         id = Integer.valueOf(split[2]);
         name = split[3];
         startingMoney = Integer.valueOf(split[4]);
+
+        if (containsInvalidSymbols()) {
+            generateRandomName();
+        }
     }
 
 

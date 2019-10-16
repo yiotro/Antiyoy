@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.menu.render;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import yio.tro.antiyoy.menu.InterfaceElement;
@@ -9,6 +10,7 @@ import yio.tro.antiyoy.menu.scrollable_list.ScrollableListYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.Masking;
 import yio.tro.antiyoy.stuff.RectangleYio;
+import yio.tro.antiyoy.stuff.RenderableTextYio;
 
 public class RenderScrollableList extends MenuRender{
 
@@ -16,7 +18,7 @@ public class RenderScrollableList extends MenuRender{
     private TextureRegion selectionPixel;
     ScrollableListYio scrollableList;
     private RectangleYio viewPosition;
-    private float factor;
+    private float alpha;
     private TextureRegion bck1;
     private TextureRegion bck2;
     private TextureRegion bck3;
@@ -42,9 +44,9 @@ public class RenderScrollableList extends MenuRender{
     public void renderSecondLayer(InterfaceElement element) {
         scrollableList = (ScrollableListYio) element;
         viewPosition = scrollableList.viewPosition;
-        factor = scrollableList.getFactor().get();
+        alpha = scrollableList.getFactor().get();
 
-        if (factor < 0.25) return;
+        if (alpha < 0.25) return;
 
         renderShadow();
 
@@ -64,7 +66,7 @@ public class RenderScrollableList extends MenuRender{
 
 
     private void renderShadow() {
-        if (factor <= 0.6) return;
+        if (alpha <= 0.6) return;
 
         MenuRender.renderShadow.disableInternalFillForOneDraw();
         MenuRender.renderShadow.renderShadow(viewPosition, 1);
@@ -72,14 +74,27 @@ public class RenderScrollableList extends MenuRender{
 
 
     private void renderInternals() {
-        GraphicsYio.setBatchAlpha(batch, factor);
+        GraphicsYio.setBatchAlpha(batch, alpha);
 
         renderBackground();
         renderEdges();
         renderItems();
         renderLabel();
+        renderEmptySign();
 
         GraphicsYio.setBatchAlpha(batch, 1);
+    }
+
+
+    private void renderEmptySign() {
+        if (scrollableList.items.size() > 0) return;
+
+        RenderableTextYio emptySign = scrollableList.emptySign;
+        BitmapFont font = emptySign.font;
+        Color color = font.getColor();
+        font.setColor(Color.DARK_GRAY);
+        GraphicsYio.renderTextOptimized(batch, getBlackPixel(), emptySign, alpha);
+        font.setColor(color);
     }
 
 
@@ -110,7 +125,7 @@ public class RenderScrollableList extends MenuRender{
 
 
     private void renderLabel() {
-        if (factor < 0.5) return;
+        if (alpha < 0.5) return;
 
         GraphicsYio.setFontAlpha(scrollableList.titleFont, scrollableList.textAlphaFactor.get());
 
@@ -145,7 +160,7 @@ public class RenderScrollableList extends MenuRender{
 
 
     protected void renderItemBackground(ListItemYio item) {
-        GraphicsYio.setBatchAlpha(batch, factor);
+        GraphicsYio.setBatchAlpha(batch, alpha);
 
         GraphicsYio.drawByRectangle(
                 batch,

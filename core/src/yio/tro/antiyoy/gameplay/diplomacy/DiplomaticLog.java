@@ -60,11 +60,11 @@ public class DiplomaticLog {
         switch (message.type) {
             case friendship_proposal:
                 Scenes.sceneFriendshipDialog.create();
-                Scenes.sceneFriendshipDialog.dialog.setEntities(message.sender, message.recipient);
+                Scenes.sceneFriendshipDialog.dialog.setValues(message.sender, message.recipient, message);
                 break;
             case friendship_ended:
                 Scenes.sceneFriendshipDialog.create();
-                Scenes.sceneFriendshipDialog.dialog.setEntities(message.sender, message.recipient);
+                Scenes.sceneFriendshipDialog.dialog.setValues(message.sender, message.recipient, message);
                 break;
             case friendship_canceled:
                 // nothing

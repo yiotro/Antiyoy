@@ -149,6 +149,7 @@ public class DiplomacyElement extends InterfaceElement {
         DiplomaticEntity mainEntity = diplomacyManager.getEntity(gameController.turn);
 
         for (DiplomaticEntity relationEntity : mainEntity.relations.keySet()) {
+            if (relationEntity.hidden) continue;
             addItem(relationEntity);
         }
 

@@ -11,7 +11,9 @@ import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
+import yio.tro.antiyoy.menu.color_picking.ColorHolderElement;
 import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.stuff.RectangleYio;
 
 import java.util.ArrayList;
@@ -26,14 +28,16 @@ public class SceneAfterGameMenu extends AbstractScene {
     private ButtonYio okButton;
     private ButtonYio statisticsButton;
     private final RectangleYio pos;
+    ColorHolderElement colorHolderElement;
 
 
     public SceneAfterGameMenu(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
-        pos = new RectangleYio(0.05, 0.35, 0.9, 0.2);
+        pos = new RectangleYio(0.05, 0.35, 0.9, 0.25);
         winnerFraction = 0;
         playerIsWinner = true;
+        colorHolderElement = null;
     }
 
 
@@ -50,29 +54,55 @@ public class SceneAfterGameMenu extends AbstractScene {
         createOkButton();
         createStatisticsButton();
         createReplayButton();
+        createColorHolder();
 
         menuControllerYio.endMenuCreation();
     }
 
 
+    private void createColorHolder() {
+        initColorHolder();
+        colorHolderElement.appear();
+        int colorByFraction = getGameController().colorsManager.getColorByFraction(winnerFraction);
+        colorHolderElement.setValueIndex(colorByFraction + 1);
+    }
+
+
+    private void initColorHolder() {
+        if (colorHolderElement != null) return;
+        colorHolderElement = new ColorHolderElement(menuControllerYio);
+        colorHolderElement.setTitle(LanguagesManager.getInstance().getString("winner") + ":");
+        colorHolderElement.setAnimation(Animation.from_center);
+        colorHolderElement.setPosition(generateRectangle(pos.x, pos.y + pos.height - 0.095, pos.width, 0.08));
+        colorHolderElement.setTouchable(false);
+        menuControllerYio.addElementToScene(colorHolderElement);
+    }
+
+
     private void createTextPanel() {
         textPanel = buttonFactory.getButton(generateRectangle(pos.x, pos.y, pos.width, pos.height), 60, null);
+        textPanel.setTextOffset((float) GraphicsYio.convertToWidth(0.03) * GraphicsYio.width);
         textPanel.cleatText();
+        textPanel.addTextLine(" ");
+        textPanel.addTextLine(" ");
         textPanel.addTextLine(getTextPanelMessage());
-        checkToAddAdditionalTextLines();
-        textPanel.applyNumberOfLines(4);
+        textPanel.applyNumberOfLines(5);
         menuControllerYio.getButtonRenderer().renderButton(textPanel);
         textPanel.setTouchable(false);
         textPanel.setAnimation(Animation.from_center);
     }
 
 
-    private void checkToAddAdditionalTextLines() {
-        if (!GameRules.diplomacyEnabled) return;
-
-        if (isVictoryDiplomatic()) {
-            textPanel.addTextLine(getString("reason") + ": " + getString("friends_with_everybody"));
+    private String getTextPanelMessage() {
+        if (CampaignProgressManager.getInstance().areCampaignLevelCompletionConditionsSatisfied(winnerFraction)) {
+            return getString("level_complete");
         }
+
+        if (GameRules.diplomacyEnabled && isVictoryDiplomatic()) {
+            return getString("reason") + ": " + getString("friends_with_everybody");
+        }
+
+        return " ";
     }
 
 
@@ -100,28 +130,6 @@ public class SceneAfterGameMenu extends AbstractScene {
         }
 
         return false;
-    }
-
-
-    private String getTextPanelMessage() {
-        if (CampaignProgressManager.getInstance().areCampaignLevelCompletionConditionsSatisfied(winnerFraction)) {
-            return getString("level_complete");
-        }
-
-        if (playerIsWinner) {
-            return menuControllerYio.getColorsManager().getColorNameByFraction(winnerFraction, "_player") + " " +
-                    getString("player") + " " +
-                    getString("won") + ".";
-        }
-
-        String aiColorName = menuControllerYio.getColorsManager().getColorNameByFraction(winnerFraction, "_ai");
-        if (aiColorName.equals("unknown")) {
-            return castFirstLetterUpperCase(getString("ai")) + " " + getString("won") + ".";
-        }
-
-        return aiColorName + " " +
-                getString("ai") + " " +
-                getString("won") + ".";
     }
 
 

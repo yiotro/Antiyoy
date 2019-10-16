@@ -24,13 +24,15 @@ public class SceneColorPicker extends AbstractModalScene{
 
     @Override
     public void create() {
-        createInvisibleCloseButton(300, rbHide);
+        createInvisibleCloseButton(rbHide);
         createColorPickerElement();
     }
 
 
     private void createColorPickerElement() {
         initColorPickerElement();
+        forceElementToTop(invisibleCloseElement);
+        forceElementToTop(colorPickerElement);
         colorPickerElement.appear();
     }
 
@@ -38,13 +40,18 @@ public class SceneColorPicker extends AbstractModalScene{
     private void initColorPickerElement() {
         if (colorPickerElement != null) return;
         colorPickerElement = new ColorPickerElement(menuControllerYio);
-        colorPickerElement.setPosition(generateRectangle(0.2, 0.08, 0.6, GraphicsYio.convertToHeight(0.5)));
+        colorPickerElement.setPosition(generateRectangle(0, 0, 1, GraphicsYio.convertToHeight(0.5)));
         menuControllerYio.addElementToScene(colorPickerElement);
     }
 
 
     public void setListener(IColorChoiceListener colorChoiceListener) {
         colorPickerElement.setListener(colorChoiceListener);
+    }
+
+
+    public void addRandomColorItem() {
+        colorPickerElement.addRandomColorItem();
     }
 
 

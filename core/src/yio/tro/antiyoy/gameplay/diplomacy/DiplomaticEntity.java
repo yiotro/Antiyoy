@@ -18,6 +18,7 @@ public class DiplomaticEntity implements ReusableYio {
     public HashMap<DiplomaticEntity, Integer> relations;
     public boolean human;
     public boolean alive;
+    public boolean hidden;
 
 
     public DiplomaticEntity(DiplomacyManager diplomacyManager) {
@@ -34,6 +35,7 @@ public class DiplomaticEntity implements ReusableYio {
         relations.clear();
         human = false;
         alive = true;
+        hidden = false;
     }
 
 
@@ -237,7 +239,7 @@ public class DiplomaticEntity implements ReusableYio {
     }
 
 
-    void updateAlive() {
+    public void updateAliveState() {
         boolean previousAliveState = alive;
 
         alive = false;
@@ -384,6 +386,16 @@ public class DiplomaticEntity implements ReusableYio {
     }
 
 
+    public boolean isHidden() {
+        return hidden;
+    }
+
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+
+
     public boolean hasOnlyFriends() {
         for (Map.Entry<DiplomaticEntity, Integer> entry : relations.entrySet()) {
             if (!entry.getKey().alive) continue;
@@ -401,7 +413,7 @@ public class DiplomaticEntity implements ReusableYio {
     public String toString() {
         return "[Entity: " +
                 capitalName + " " +
-                "(" + diplomacyManager.getColorsManager().getColorNameForPlayerByFraction(fraction) + ")" +
+                "(" + fraction + ")" +
                 "]";
     }
 }

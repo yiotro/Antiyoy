@@ -131,7 +131,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
         Hex hexToMove = findRandomHexInPerimeter(province);
         if (hexToMove == null) return;
         tempHex.set(unit.currentHex);
-        unit.marchToHex(hexToMove, province);
+        gameController.fieldController.massMarchManager.performForSingleUnit(unit, hexToMove);
         if (tempHex.equals(unit.currentHex)) super.moveAfkUnit(province, unit); // to prevent infinite loop
     }
 

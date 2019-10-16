@@ -8,6 +8,7 @@ import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.loading.LoadingType;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.menu.color_picking.ColorHolderElement;
 
 public class EditorSaveSystem {
 
@@ -41,8 +42,8 @@ public class EditorSaveSystem {
     }
 
 
-    public void onLevelImported(String levelCode) {
-        GameRules.editorSlotNumber = getNewSlotNumber();
+    public void onLevelImported(String levelCode, int slotNumber) {
+        GameRules.editorSlotNumber = slotNumber;
         gameController.levelEditor.onLevelImported(levelCode);
     }
 
@@ -57,7 +58,6 @@ public class EditorSaveSystem {
             if (isEmpty(key)) break;
 
             maxSlotNumber = index;
-
             index++;
         }
 
@@ -76,14 +76,21 @@ public class EditorSaveSystem {
         GameRules.editorChosenColor = prefs.getInteger("chosen_color" + slotNumber);
         GameRules.editorFog = prefs.getBoolean("editor_fog" + slotNumber, false);
         instance.fogOfWar = GameRules.editorFog;
+        checkToApplyPlayersNumberFix(instance);
         GameRules.editorDiplomacy = prefs.getBoolean("editor_diplomacy" + slotNumber, false);
         instance.diplomacy = GameRules.editorDiplomacy;
-        instance.colorOffset = gameController.convertSliderIndexToColorOffset(GameRules.editorChosenColor, GameRules.MAX_FRACTIONS_QUANTITY);
+        instance.colorOffset = ColorHolderElement.getColor(GameRules.editorChosenColor, GameRules.MAX_FRACTIONS_QUANTITY);
         instance.editorProvincesData = gameController.levelEditor.editorProvinceManager.encode();
         instance.editorRelationsData = gameController.levelEditor.editorRelationsManager.encode();
         instance.preparedMessagesData = gameController.messagesManager.encode();
 
         LoadingManager.getInstance().startGame(instance);
+    }
+
+
+    private void checkToApplyPlayersNumberFix(LoadingParameters instance) {
+        if (instance.playersNumber <= GameRules.NEUTRAL_FRACTION) return;
+        instance.playersNumber++;
     }
 
 

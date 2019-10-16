@@ -754,9 +754,8 @@ public class GameController {
     public int convertSliderIndexToColorOffset(int sliderIndex, int fractionsQuantity) {
         if (sliderIndex == 0) { // random
             return predictableRandom.nextInt(Math.min(fractionsQuantity, GameRules.NEUTRAL_FRACTION));
-        } else {
-            return sliderIndex - 1;
         }
+        return sliderIndex - 1;
     }
 
 
@@ -776,9 +775,8 @@ public class GameController {
 
 
     public void checkToEnableAiOnlyMode() {
-        if (playersNumber == 0) {
-            GameRules.aiOnlyMode = true;
-        }
+        if (playersNumber != 0) return;
+        GameRules.aiOnlyMode = true;
     }
 
 
@@ -1018,17 +1016,17 @@ public class GameController {
     }
 
 
-    public void moveUnit(Unit unit, Hex toWhere, Province unitProvince) {
+    public void moveUnit(Unit unit, Hex target, Province unitProvince) {
         if (!unit.isReadyToMove()) {
             System.out.println("Someone tried to move unit that is not ready to move: " + unit);
             if (!GameRules.replayMode) return;
         }
 
-        replayManager.onUnitMoved(unit.currentHex, toWhere);
-        if (isMovementPeaceful(unit, toWhere)) {
-            moveUnitPeacefully(unit, toWhere);
+        replayManager.onUnitMoved(unit.currentHex, target);
+        if (isMovementPeaceful(unit, target)) {
+            moveUnitPeacefully(unit, target);
         } else {
-            moveUnitWithAttack(unit, toWhere, unitProvince);
+            moveUnitWithAttack(unit, target, unitProvince);
         }
 
         if (isPlayerTurn()) {
@@ -1038,8 +1036,8 @@ public class GameController {
     }
 
 
-    private boolean isMovementPeaceful(Unit unit, Hex toWhere) {
-        return unit.currentHex.sameFraction(toWhere);
+    private boolean isMovementPeaceful(Unit unit, Hex target) {
+        return unit.currentHex.sameFraction(target);
     }
 
 
@@ -1061,15 +1059,15 @@ public class GameController {
     }
 
 
-    private void moveUnitPeacefully(Unit unit, Hex toWhere) {
-        if (!toWhere.containsUnit()) {
-            unit.moveToHex(toWhere);
+    private void moveUnitPeacefully(Unit unit, Hex target) {
+        if (!target.containsUnit()) {
+            unit.moveToHex(target);
         } else {
-            mergeUnits(toWhere, unit, toWhere.unit);
+            mergeUnits(target, unit, target.unit);
         }
 
         if (isPlayerTurn()) {
-            fieldController.setResponseAnimHex(toWhere);
+            fieldController.setResponseAnimHex(target);
         }
     }
 
@@ -1083,7 +1081,7 @@ public class GameController {
         if (!DebugFlags.showFocusedHexInConsole) return;
 
         Hex focusedHex = fieldController.focusedHex;
-        YioGdxGame.say("Hex: " + ColorsManager.getMenuColorNameByIndex(focusedHex.fraction + 1) + " " + focusedHex.index1 + " " + focusedHex.index2);
+        YioGdxGame.say("Hex: " + focusedHex.fraction + " " + focusedHex.index1 + " " + focusedHex.index2);
     }
 
 

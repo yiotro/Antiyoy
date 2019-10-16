@@ -577,7 +577,8 @@ public class DiplomacyManager {
         DiplomaticEntity mainEntity = getMainEntity();
 
         if (mainEntity == sender) {
-            log.addMessage(DipMessageType.friendship_proposal, sender, recipient);
+            DiplomaticMessage diplomaticMessage = log.addMessage(DipMessageType.friendship_proposal, sender, recipient);
+            diplomaticMessage.setArg1(calculateDotationsForFriendship(sender, recipient) + "");
             showLetterSentNotification();
         } else {
             if (!recipient.acceptsFriendsRequest(sender)) return;
@@ -649,14 +650,14 @@ public class DiplomacyManager {
 
         DiplomaticEntity entity = getEntity(fraction);
         if (entity != null) {
-            entity.updateAlive();
+            entity.updateAliveState();
         }
     }
 
 
     public void updateAllAliveStatuses() {
         for (DiplomaticEntity entity : entities) {
-            entity.updateAlive();
+            entity.updateAliveState();
         }
     }
 
@@ -749,7 +750,7 @@ public class DiplomacyManager {
         if (!GameRules.diplomacyEnabled) return;
 
         DiplomaticEntity entity = getEntity(fieldController.gameController.turn);
-        entity.updateAlive();
+        entity.updateAliveState();
 
         diplomaticAI.checkToChangeRelations();
 
@@ -774,10 +775,8 @@ public class DiplomacyManager {
 
 
     public boolean canUnitAttackHex(int unitStrength, int unitFraction, Hex hex) {
-        if (isHexSingle(hex)) return true;
-
         boolean rulesetDecision = fieldController.gameController.ruleset.canUnitAttackHex(unitStrength, hex);
-        if (hex.isNeutral()) return rulesetDecision;
+        if (hex.isNeutral() || isHexSingle(hex)) return rulesetDecision;
 
         DiplomaticEntity attacker = getEntity(unitFraction);
         DiplomaticEntity defender = getEntity(hex.fraction);
@@ -819,11 +818,26 @@ public class DiplomacyManager {
 
         if (entity.isAtWar()) return true;
 
-        // piece
+        // peace
         if (unitStrength > 1) return false;
         if (numberOfPeasantsInProvince(province) > 4) return false;
 
         return true;
+    }
+
+
+    public boolean areKingdomsTouching(DiplomaticEntity one, DiplomaticEntity two) {
+        return areKingdomsTouching(one.fraction, two.fraction);
+    }
+
+
+    public boolean areKingdomsTouching(int fraction1, int fraction2) {
+        for (Province province : fieldController.provinces) {
+            if (province.getFraction() != fraction1) continue;
+            if (!province.isNearFraction(fraction2)) continue;
+            return true;
+        }
+        return false;
     }
 
 
@@ -930,7 +944,7 @@ public class DiplomacyManager {
         if (relation == DiplomaticRelation.NEUTRAL) {
             if (isFriendshipPossible(initiator, two)) {
                 Scenes.sceneFriendshipDialog.create();
-                Scenes.sceneFriendshipDialog.dialog.setEntities(initiator, two);
+                Scenes.sceneFriendshipDialog.dialog.setValues(initiator, two, null);
             } else {
                 Scenes.sceneDipMessage.showMessage(two.capitalName, "refuse_friendship");
             }
@@ -1005,6 +1019,11 @@ public class DiplomacyManager {
     }
 
 
+    public DiplomaticContract getContract(int type, DiplomaticEntity one, DiplomaticEntity two) {
+        return findContract(type, one, two);
+    }
+
+
     DiplomaticContract addContract(int contractType, DiplomaticEntity initiator, DiplomaticEntity entity) {
         DiplomaticContract next = poolContracts.getNext();
 
@@ -1057,6 +1076,8 @@ public class DiplomacyManager {
 
 
     public int calculateReparations(DiplomaticEntity initiator, DiplomaticEntity two) {
+        if (!areKingdomsTouching(initiator, two)) return 0;
+
         int stateBalance = initiator.getStateBalance();
 
         if (stateBalance < 5) return 0;
@@ -1073,9 +1094,8 @@ public class DiplomacyManager {
 
     public DiplomaticContract findContract(int type, DiplomaticEntity one, DiplomaticEntity two) {
         for (DiplomaticContract contract : contracts) {
-            if (contract.equals(one, two, type)) {
-                return contract;
-            }
+            if (!contract.equals(one, two, type)) continue;
+            return contract;
         }
 
         return null;

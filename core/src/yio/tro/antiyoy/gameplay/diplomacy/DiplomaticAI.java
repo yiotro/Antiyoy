@@ -66,19 +66,19 @@ public class DiplomaticAI {
 
 
     private void aiSendMessages() {
-        if (YioGdxGame.random.nextInt(8) == 0) {
+        if (compareRandomToZero(8)) {
             performAiToHumanFriendshipProposal();
         }
 
-        if (YioGdxGame.random.nextInt(4) == 0) {
+        if (compareRandomToZero(4)) {
             performAiToHumanBlackMark();
         }
 
-        if (YioGdxGame.random.nextInt(6) == 0) {
-            checkToProposePeace();
+        if (compareRandomToZero(6)) {
+            checkToProposePeaceToHuman();
         }
 
-        if (getMainEntity().getStateFullMoney() > 100 && YioGdxGame.random.nextInt(15) == 0) {
+        if (getMainEntity().getStateFullMoney() > 100 && compareRandomToZero(15)) {
             performAiToHumanGift();
         }
 
@@ -86,17 +86,46 @@ public class DiplomaticAI {
             applyCharismaCheat();
         }
 
-        if (getMainEntity().getStateBalance() > 50 && YioGdxGame.random.nextInt(4) == 0) {
+        if (getMainEntity().getStateBalance() > 50 && compareRandomToZero(4)) {
             performAiToHumanHexBuyProposal();
         }
 
-        if (getMainEntity().getStateBalance() < 9 && YioGdxGame.random.nextInt(4) == 0) {
+        if (getMainEntity().getStateBalance() < 9 && compareRandomToZero(4)) {
             performAiToHumanHexSellProposal();
         }
 
-        if (YioGdxGame.random.nextInt(50) == 0 || doesLogContainMessageToMe()) {
+        if (compareRandomToZero(80) || doesLogContainMessageToMe()) {
             sendCustomMessageToHuman();
         }
+
+        if (compareRandomToZero(3)) {
+            checkToProposePeaceToAnotherAI();
+        }
+    }
+
+
+    private void checkToProposePeaceToAnotherAI() {
+        DiplomaticEntity mainEntity = getMainEntity();
+
+        for (DiplomaticEntity entity : diplomacyManager.entities) {
+            if (entity == mainEntity) continue;
+            if (entity.isHuman()) continue;
+
+            int relation = mainEntity.getRelation(entity);
+            if (relation != DiplomaticRelation.ENEMY) continue;
+            if (diplomacyManager.areKingdomsTouching(mainEntity, entity)) continue;
+
+            getLog().addMessage(DipMessageType.stop_war, mainEntity, entity);
+            break;
+        }
+    }
+
+
+    private boolean compareRandomToZero(int maxRandomValue) {
+        if (doesLogContainMessageToMe()) {
+            return YioGdxGame.random.nextInt(maxRandomValue) <= 2;
+        }
+        return YioGdxGame.random.nextInt(maxRandomValue) == 0;
     }
 
 
@@ -125,7 +154,7 @@ public class DiplomaticAI {
     }
 
 
-    private void checkToProposePeace() {
+    private void checkToProposePeaceToHuman() {
         DiplomaticEntity mainEntity = getMainEntity();
 
         DiplomaticEntity randomHumanEntity = getRandomHumanEntity();

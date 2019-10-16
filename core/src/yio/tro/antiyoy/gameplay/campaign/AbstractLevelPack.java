@@ -48,7 +48,7 @@ public abstract class AbstractLevelPack {
         instance.levelSize = decodeManager.extractLevelSize(levelCode);
         instance.slayRules = GameRules.slayRules;
         instance.fractionsQuantity = decodeManager.extractFractionsQuantity(levelCode);
-        instance.colorOffset = campaignLevelFactory.readColorOffsetFromSlider(instance.fractionsQuantity);
+        instance.colorOffset = campaignLevelFactory.readColorOffsetFromHolder(instance.fractionsQuantity);
         instance.playersNumber = 1;
         instance.difficulty = decodeManager.extractDifficulty(levelCode);
         instance.editorProvincesData = decodeManager.getSection("provinces");
@@ -63,7 +63,7 @@ public abstract class AbstractLevelPack {
         campaignLevelFactory.gameController.gameSaver.legacyImportManager.applyFullLevel(instance, levelFromPack);
         instance.campaignLevelIndex = index;
         instance.slayRules = GameRules.slayRules;
-        instance.colorOffset = campaignLevelFactory.readColorOffsetFromSlider(instance.fractionsQuantity);
+        instance.colorOffset = campaignLevelFactory.readColorOffsetFromHolder(instance.fractionsQuantity);
         applySpecialParameters(instance);
         LoadingManager.getInstance().startGame(instance);
 

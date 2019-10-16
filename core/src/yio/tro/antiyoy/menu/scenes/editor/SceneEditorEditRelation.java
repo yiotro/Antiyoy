@@ -36,7 +36,8 @@ public class SceneEditorEditRelation extends AbstractModalScene{
 
     @Override
     public void create() {
-        createInvisibleCloseButton(290, rbHide);
+        createInvisibleCloseButton(rbHide);
+        invisibleCloseElement.setPosition(generateRectangle(0, panelHeight, 1, 1 - panelHeight));
         createBasePanel();
         createApplyButton();
         createAddEditorRelationElement();

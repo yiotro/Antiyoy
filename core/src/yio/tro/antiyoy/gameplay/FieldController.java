@@ -53,6 +53,7 @@ public class FieldController implements EncodeableYio{
     public MoveZoneManager moveZoneManager;
     private ArrayList<Hex> tempList;
     private ArrayList<Hex> propagationList;
+    public MassMarchManager massMarchManager;
 
 
     public FieldController(GameController gameController) {
@@ -85,6 +86,7 @@ public class FieldController implements EncodeableYio{
         initialLevelString = null;
         tempList = new ArrayList<>();
         propagationList = new ArrayList<>();
+        massMarchManager = new MassMarchManager(this);
     }
 
 
@@ -623,18 +625,23 @@ public class FieldController implements EncodeableYio{
     }
 
 
-    public void marchUnitsToHex(Hex toWhere) {
+    public void marchUnitsToHex(Hex target) {
         if (!gameController.selectionManager.isSomethingSelected()) return;
-        if (!toWhere.isSelected()) return;
+        if (!target.isSelected()) return;
+
+        MassMarchManager massMarchManager = gameController.fieldController.massMarchManager;
+        massMarchManager.clearChosenUnits();
         if (selectedProvince.hasSomeoneReadyToMove()) {
             gameController.takeSnapshot();
             for (Hex hex : selectedProvince.hexList) {
                 if (hex.containsUnit() && hex.unit.isReadyToMove()) {
-                    hex.unit.marchToHex(toWhere, selectedProvince);
+                    massMarchManager.addChosenUnit(hex.unit);
                 }
             }
+            massMarchManager.performMarch(target);
         }
-        setResponseAnimHex(toWhere);
+
+        setResponseAnimHex(target);
         SoundManagerYio.playSound(SoundManagerYio.soundHoldToMarch);
     }
 
@@ -1088,7 +1095,7 @@ public class FieldController implements EncodeableYio{
 
 
     public void checkToFocusCameraOnCurrentPlayer() {
-        if (gameController.playersNumber < 2) return;
+        if (!gameController.isInMultiplayerMode()) return;
         if (!gameController.isPlayerTurn()) return;
 
         Province province = findProvince(gameController.turn);

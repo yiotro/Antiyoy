@@ -4,7 +4,10 @@ import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.data_storage.GameSaver;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.menu.color_picking.ColorHolderElement;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
 import java.util.Random;
@@ -130,7 +133,7 @@ public class LoadingManager {
         GameRules.diplomacyEnabled = GameRules.editorDiplomacy;
         int colorOffset = 0;
         if (GameRules.editorChosenColor > 0) {
-            colorOffset = gameController.convertSliderIndexToColorOffset(GameRules.editorChosenColor, GameRules.MAX_FRACTIONS_QUANTITY);
+            colorOffset = ColorHolderElement.getColor(GameRules.editorChosenColor, GameRules.MAX_FRACTIONS_QUANTITY);
         }
         gameController.colorsManager.setColorOffset(colorOffset);
         parameters.editorColorFixApplied = false;
@@ -292,6 +295,7 @@ public class LoadingManager {
 
 
     private void createSkirmish() {
+        GameRules.genProvinces = parameters.genProvinces;
         gameController.fieldController.generateMap();
         gameController.checkToEnableAiOnlyMode();
     }
@@ -314,10 +318,21 @@ public class LoadingManager {
 
         if (GameRules.diplomacyEnabled) {
             gameController.fieldController.diplomacyManager.checkForWinConditionsMessage();
+            hideDeadDiplomaticEntities();
         }
 
         gameController.levelEditor.checkToApplyAdditionalData();
         gameController.messagesManager.checkToApplyAdditionalData();
+    }
+
+
+    private void hideDeadDiplomaticEntities() {
+        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        for (DiplomaticEntity entity : diplomacyManager.entities) {
+            entity.updateAliveState();
+            if (entity.alive) continue;
+            entity.setHidden(true);
+        }
     }
 
 

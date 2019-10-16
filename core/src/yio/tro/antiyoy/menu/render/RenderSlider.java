@@ -14,7 +14,6 @@ import yio.tro.antiyoy.stuff.Masking;
 public class RenderSlider extends MenuRender {
 
     TextureRegion blackCircle, accentPixel, untouchableValue, untouchablePixel;
-    TextureRegion buildCircle, carryCircle, cultivateCircle, defenseCircle;
     float sliderLineHeight, sliderLineHeightHalved;
     private SliderYio slider;
 
@@ -44,7 +43,9 @@ public class RenderSlider extends MenuRender {
     public void renderSecondLayer(InterfaceElement element) {
         slider = (SliderYio) element;
 
-        if (slider.hasVisualHook() && slider.appearFactor.get() < 1) {
+        if (slider.getAlpha() == 0) return;
+
+        if (slider.hasVisualHook() && slider.getAlpha() < 1) {
             renderSliderWithVisualHook();
             return;
         }
@@ -91,7 +92,7 @@ public class RenderSlider extends MenuRender {
         Color color = titleFont.getColor();
         titleFont.setColor(Color.BLACK);
 
-        GraphicsYio.setFontAlpha(titleFont, slider.getFactor().get());
+        GraphicsYio.setFontAlpha(titleFont, slider.getAlpha());
 
         titleFont.draw(
                 batch,
@@ -139,8 +140,8 @@ public class RenderSlider extends MenuRender {
         Color color = slider.valueFont.getColor();
         slider.valueFont.setColor(Color.BLACK);
 
-        if (slider.getFactor().get() < 1) {
-            GraphicsYio.setFontAlpha(slider.valueFont, slider.getFactor().get() * slider.getFactor().get());
+        if (slider.getAlpha() < 1) {
+            GraphicsYio.setFontAlpha(slider.valueFont, slider.getAlpha() * slider.getAlpha());
         }
 
         slider.valueFont.draw(
@@ -150,7 +151,7 @@ public class RenderSlider extends MenuRender {
                 slider.valueStringPosition.y
         );
 
-        if (slider.getFactor().get() < 1) {
+        if (slider.getAlpha() < 1) {
             GraphicsYio.setFontAlpha(slider.valueFont, 1);
         }
 
@@ -173,9 +174,9 @@ public class RenderSlider extends MenuRender {
 
 
     private void checkToChangeBatchAlpha() {
-        if (slider.appearFactor.get() == 1) return;
+        if (slider.getAlpha() == 1) return;
 
-        batch.setColor(c.r, c.g, c.b, slider.appearFactor.get());
+        batch.setColor(c.r, c.g, c.b, slider.getAlpha());
     }
 
 

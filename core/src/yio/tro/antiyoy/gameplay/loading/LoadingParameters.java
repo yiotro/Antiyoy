@@ -31,6 +31,7 @@ public class LoadingParameters {
     public String editorProvincesData;
     public String editorRelationsData;
     public String preparedMessagesData;
+    public int genProvinces;
 
 
     void defaultValues() {
@@ -54,6 +55,7 @@ public class LoadingParameters {
         editorProvincesData = "";
         editorRelationsData = "";
         preparedMessagesData = "";
+        genProvinces = 0;
     }
 
 
@@ -79,6 +81,7 @@ public class LoadingParameters {
         editorProvincesData = src.editorProvincesData;
         editorRelationsData = src.editorRelationsData;
         preparedMessagesData = src.preparedMessagesData;
+        genProvinces = src.genProvinces;
     }
 
 
@@ -120,6 +123,7 @@ public class LoadingParameters {
         System.out.println("editorProvincesData = " + editorProvincesData);
         System.out.println("editorRelationsData = " + editorRelationsData);
         System.out.println("preparedMessagesData = " + preparedMessagesData);
+        System.out.println("genProvinces = " + genProvinces);
 
         System.out.println();
     }

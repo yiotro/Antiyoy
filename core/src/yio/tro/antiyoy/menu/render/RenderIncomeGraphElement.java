@@ -3,6 +3,7 @@ package yio.tro.antiyoy.menu.render;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import yio.tro.antiyoy.gameplay.skins.SkinManager;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.income_graph.IgeItem;
 import yio.tro.antiyoy.menu.income_graph.IncomeGraphElement;
@@ -16,12 +17,45 @@ public class RenderIncomeGraphElement extends MenuRender{
     private IncomeGraphElement incomeGraphElement;
     private float alpha;
     private TextureRegion borderTexture;
+    private TextureRegion pixelGreen;
+    private TextureRegion pixelRed;
+    private TextureRegion pixelBlue;
+    private TextureRegion pixelCyan;
+    private TextureRegion pixelYellow;
+    private TextureRegion pixelColor1;
+    private TextureRegion pixelColor2;
+    private TextureRegion pixelColor3;
+    private TextureRegion pixelColor4;
+    private TextureRegion pixelColor5;
+    private TextureRegion pixelColor6;
 
 
     @Override
     public void loadTextures() {
         backgroundTexture = GraphicsYio.loadTextureRegion("diplomacy/background.png", false);
-        borderTexture = GraphicsYio.loadTextureRegion("pixels/pixel_dark_gray.png", true);
+        borderTexture = GraphicsYio.loadTextureRegion("menu/separator.png", true);
+        loadSkinDependentTextures();
+    }
+
+
+    private void loadSkinDependentTextures() {
+        pixelGreen = loadColorPixel("green");
+        pixelRed = loadColorPixel("red");
+        pixelBlue = loadColorPixel("blue");
+        pixelCyan = loadColorPixel("cyan");
+        pixelYellow = loadColorPixel("yellow");
+        pixelColor1 = loadColorPixel("color1");
+        pixelColor2 = loadColorPixel("color2");
+        pixelColor3 = loadColorPixel("color3");
+        pixelColor4 = loadColorPixel("color4");
+        pixelColor5 = loadColorPixel("color5");
+        pixelColor6 = loadColorPixel("color6");
+    }
+
+
+    private TextureRegion loadColorPixel(String name) {
+        SkinManager skinManager = menuViewYio.yioGdxGame.skinManager;
+        return GraphicsYio.loadTextureRegion(skinManager.getColorPixelsFolderPath() + "/" + name + ".png", false);
     }
 
 
@@ -62,7 +96,7 @@ public class RenderIncomeGraphElement extends MenuRender{
             if (item.borderFactor.get() == 0) continue;
             if (item.text.string.equals("0")) continue;
             GraphicsYio.setBatchAlpha(batch, alpha * item.borderFactor.get());
-            GraphicsYio.drawByRectangle(batch, borderTexture, item.borderPosition);
+            GraphicsYio.renderBorder(batch, borderTexture, item.borderPosition);
         }
         GraphicsYio.setBatchAlpha(batch, alpha);
     }
@@ -79,10 +113,39 @@ public class RenderIncomeGraphElement extends MenuRender{
         int colorByFraction = getGameView().gameController.colorsManager.getColorByFraction(item.fraction);
         GraphicsYio.drawByRectangle(
                 batch,
-                MenuRender.renderDiplomacyElement.getBackgroundPixelByColor(colorByFraction),
+                getPixelByColor(colorByFraction),
                 item.viewPosition
         );
         GraphicsYio.renderTextOptimized(batch, getBlackPixel(), item.text, alpha);
+    }
+
+
+    public TextureRegion getPixelByColor(int color) {
+        switch (color) {
+            default:
+            case 0:
+                return pixelGreen;
+            case 1:
+                return pixelRed;
+            case 2:
+                return pixelBlue;
+            case 3:
+                return pixelCyan;
+            case 4:
+                return pixelYellow;
+            case 5:
+                return pixelColor1;
+            case 6:
+                return pixelColor2;
+            case 7:
+                return pixelColor3;
+            case 8:
+                return pixelColor4;
+            case 9:
+                return pixelColor5;
+            case 10:
+                return pixelColor6;
+        }
     }
 
 
@@ -102,6 +165,11 @@ public class RenderIncomeGraphElement extends MenuRender{
         titleFont.setColor(Color.BLACK);
         GraphicsYio.renderTextOptimized(batch, getBlackPixel(), incomeGraphElement.title, alpha);
         titleFont.setColor(previousColor);
+    }
+
+
+    public void onSkinChanged() {
+        loadSkinDependentTextures();
     }
 
 

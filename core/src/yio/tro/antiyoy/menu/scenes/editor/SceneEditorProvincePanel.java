@@ -52,7 +52,8 @@ public class SceneEditorProvincePanel extends AbstractModalScene{
 
     @Override
     public void create() {
-        createInvisibleCloseButton(270, rbHide);
+        createInvisibleCloseButton(rbHide);
+        invisibleCloseElement.setPosition(generateRectangle(0, 0.3, 1, 0.7));
         createLabel();
         createTitle();
         createChangeNameButton();

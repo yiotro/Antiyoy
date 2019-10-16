@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.menu.income_graph;
 
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.stuff.*;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
@@ -60,7 +61,7 @@ public class IgeItem implements ReusableYio{
 
     private void updateBorderPosition() {
         borderPosition.setBy(viewPosition);
-        borderPosition.increase(GraphicsYio.borderThickness);
+        borderPosition.increase(GraphicsYio.borderThickness / 2);
     }
 
 

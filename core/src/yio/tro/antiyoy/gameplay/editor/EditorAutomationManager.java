@@ -109,6 +109,7 @@ public class EditorAutomationManager {
 
         for (Hex activeHex : getFieldController().activeHexes) {
             if (activeHex.isNeutral()) continue;
+            if (activeHex.numberOfFriendlyHexesNearby() == 0) continue;
             if (ignoredHices.contains(activeHex)) continue;
 
             hices = levelEditor.detectorProvince.detectProvince(activeHex);
