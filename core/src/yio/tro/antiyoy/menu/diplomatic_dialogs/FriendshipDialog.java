@@ -9,6 +9,7 @@ import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.Fonts;
 import yio.tro.antiyoy.stuff.LanguagesManager;
+import yio.tro.antiyoy.stuff.Yio;
 
 public class FriendshipDialog extends AbstractDiplomaticDialog {
 
@@ -94,7 +95,7 @@ public class FriendshipDialog extends AbstractDiplomaticDialog {
 
 
     protected int getDotationsValue() {
-        if (message != null) {
+        if (message != null && message.arg1 != null && Yio.isNumeric(message.arg1)) {
             return -Integer.valueOf(message.arg1);
         }
 
@@ -116,9 +117,11 @@ public class FriendshipDialog extends AbstractDiplomaticDialog {
         DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
         diplomacyManager.requestedFriendship(sender, recipient);
 
-        if (message != null) {
+        if (message != null && message.arg1 != null) {
             DiplomaticContract contract = diplomacyManager.getContract(DiplomaticContract.TYPE_FRIENDSHIP, sender, recipient);
-            contract.setDotations(Integer.valueOf(message.arg1));
+            if (contract != null) {
+                contract.setDotations(Integer.valueOf(message.arg1));
+            }
         }
 
         Scenes.sceneFriendshipDialog.hide();

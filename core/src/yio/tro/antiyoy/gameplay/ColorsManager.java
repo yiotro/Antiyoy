@@ -20,7 +20,7 @@ public class ColorsManager {
         if (fraction == GameRules.NEUTRAL_FRACTION) return fraction;
         if (colorOffset == 0) return fraction;
 
-        if (colorOffset <= GameRules.NEUTRAL_FRACTION) {
+        if (colorOffset <= GameRules.NEUTRAL_FRACTION && GameRules.fractionsQuantity <= GameRules.NEUTRAL_FRACTION) {
             return getLegacyColorByFraction(fraction);
         }
 

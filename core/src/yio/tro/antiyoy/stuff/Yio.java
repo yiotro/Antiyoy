@@ -154,4 +154,9 @@ public class Yio {
     public static double getRandomAngle() {
         return 2d * Math.PI * YioGdxGame.random.nextDouble();
     }
+
+
+    public static boolean isNumeric(String str) {
+        return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
+    }
 }
