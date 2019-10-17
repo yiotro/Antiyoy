@@ -239,7 +239,6 @@ public class Province {
 
 
     public boolean isNearFraction(int otherFraction) {
-        int fraction = getFraction();
         for (Hex hex : hexList) {
             for (int dir = 0; dir < 6; dir++) {
                 Hex adjacentHex = hex.getAdjacentHex(dir);

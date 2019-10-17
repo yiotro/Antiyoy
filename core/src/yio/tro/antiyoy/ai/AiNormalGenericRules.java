@@ -35,13 +35,14 @@ public class AiNormalGenericRules extends ArtificialIntelligenceGeneric{
 
         for (int i = 1; i <= 4; i++) {
             if (!province.canAiAffordUnit(i)) break;
-            while (province.canBuildUnit(i)) {
+            while (canProvinceBuildUnit(province, i)) {
                 if (!tryToBuiltUnitInsideProvince(province, i)) break;
             }
         }
 
         // this is to kick start province
-        if (province.canBuildUnit(1) && howManyUnitsInProvince(province) <= 1)
+        if (canProvinceBuildUnit(province, 1) && howManyUnitsInProvince(province) <= 1) {
             tryToAttackWithStrength(province, 1);
+        }
     }
 }

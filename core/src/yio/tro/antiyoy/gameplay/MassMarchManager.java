@@ -32,6 +32,11 @@ public class MassMarchManager {
     public void performMarch(Hex target) {
         this.target = target;
         buildLinks();
+        moveUnits();
+    }
+
+
+    private void moveUnits() {
         for (Unit unit : chosenUnits) {
             if (unit.currentHex.algoLink == null) continue;
             ArrayList<Hex> moveZone = fieldController.moveZoneManager.detectMoveZone(unit.currentHex, unit.strength, GameRules.UNIT_MOVE_LIMIT);
@@ -57,7 +62,7 @@ public class MassMarchManager {
 
     private void buildLinks() {
         prepareHexes();
-        addToPropagationList(target, null);
+        addToPropagationList(target, target);
         while (propagationList.size() > 0) {
             Hex hex = propagationList.get(0);
             propagationList.remove(0);
@@ -79,14 +84,14 @@ public class MassMarchManager {
     }
 
 
-    private void addToPropagationList(Hex hex, Hex parent) {
-        propagationList.add(hex);
-        hex.algoLink = parent;
+    private void addToPropagationList(Hex child, Hex parent) {
+        propagationList.add(child);
+        child.algoLink = parent;
 
-        if (parent != null) {
-            hex.algoValue = parent.algoValue + 1;
+        if (parent != child) {
+            child.algoValue = parent.algoValue + 1;
         } else {
-            hex.algoValue = 0;
+            child.algoValue = 0;
         }
     }
 

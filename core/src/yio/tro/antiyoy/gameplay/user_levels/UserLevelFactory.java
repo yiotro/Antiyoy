@@ -40,6 +40,7 @@ public class UserLevelFactory {
         add(new UlevNeighbourhood());
         add(new Ulev2030SouthAmerica());
         add(new UlevDoubleLanes());
+        add(new UlevJustLevelUp());
         add(new UlevBackyardSale());
         add(new UlevForJasmin());
         add(new UlevAf3());

@@ -157,14 +157,14 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
         for (int i = 1; i <= 4; i++) {
             if (!provinceHasEnoughIncomeForUnit(province, i)) break;
             boolean successfullyAttacked = false;
-            if (province.canBuildUnit(i)) {
+            if (canProvinceBuildUnit(province, i)) {
                 successfullyAttacked = tryToAttackWithStrength(province, i);
             }
             if (successfullyAttacked) i = 0;
         }
 
         // this is to kick start province
-        if (province.canBuildUnit(1) && howManyUnitsInProvince(province) <= 1)
+        if (canProvinceBuildUnit(province, 1) && howManyUnitsInProvince(province) <= 1)
             tryToAttackWithStrength(province, 1);
     }
 

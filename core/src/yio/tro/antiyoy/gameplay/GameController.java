@@ -632,9 +632,8 @@ public class GameController {
 
 
     private void checkToSkipTurn() {
-        if (fieldController.numberOfProvincesWithFraction(turn) == 0) {
-            onEndTurnButtonPressed();
-        }
+        if (fieldController.numberOfProvincesWithFraction(turn) != 0) return;
+        onEndTurnButtonPressed();
     }
 
 

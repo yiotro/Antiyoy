@@ -71,10 +71,9 @@ public abstract class ArtificialIntelligence {
     void spendMoneyAndMergeUnits() {
         for (int i = 0; i < gameController.fieldController.provinces.size(); i++) {
             Province province = gameController.fieldController.provinces.get(i);
-            if (province.getFraction() == fraction) {
-                spendMoney(province);
-                mergeUnits(province);
-            }
+            if (province.getFraction() != fraction) continue;
+            spendMoney(province);
+            mergeUnits(province);
         }
     }
 
@@ -293,7 +292,7 @@ public abstract class ArtificialIntelligence {
     void tryToBuildUnitsOnPalms(Province province) {
         if (!province.canAiAffordUnit(1)) return;
 
-        while (province.canBuildUnit(1)) {
+        while (canProvinceBuildUnit(province, 1)) {
             ArrayList<Hex> moveZone = gameController.detectMoveZone(province.getCapital(), 1);
             boolean killedPalm = false;
             for (Hex hex : moveZone) {
@@ -306,18 +305,23 @@ public abstract class ArtificialIntelligence {
     }
 
 
+    protected boolean canProvinceBuildUnit(Province province, int strength) {
+        return province.canBuildUnit(strength) && isAllowedToBuildNewUnit(province);
+    }
+
+
     void tryToBuildUnits(Province province) {
         tryToBuildUnitsOnPalms(province);
 
         for (int i = 1; i <= 4; i++) {
             if (!province.canAiAffordUnit(i)) break;
-            while (province.canBuildUnit(i)) {
+            while (canProvinceBuildUnit(province, i)) {
                 if (!tryToAttackWithStrength(province, i)) break;
             }
         }
 
         // this is to kick start province
-        if (province.canBuildUnit(1) && howManyUnitsInProvince(province) <= 1) {
+        if (canProvinceBuildUnit(province, 1) && howManyUnitsInProvince(province) <= 1) {
             tryToAttackWithStrength(province, 1);
         }
     }
