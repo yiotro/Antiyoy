@@ -68,7 +68,7 @@ public class SceneAiOnlyOverlay extends AbstractScene {
         loadCoinButtonTexture();
         coinButton.appearFactor.appear(3, 2);
         coinButton.setTouchable(true);
-        coinButton.setReaction(Reaction.RB_SHOW_INCOME_GRAPH);
+        coinButton.setReaction(Reaction.rbShowIncomeGraph);
     }
 
 

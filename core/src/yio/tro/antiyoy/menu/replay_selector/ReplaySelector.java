@@ -106,7 +106,7 @@ public class ReplaySelector extends InterfaceElement {
     }
 
 
-    private void updateItems() {
+    private void loadValues() {
         items.clear();
 
         ReplaySaveSystem instance = ReplaySaveSystem.getInstance();
@@ -278,7 +278,7 @@ public class ReplaySelector extends InterfaceElement {
 
 
     private void onAppear() {
-        updateItems();
+        loadValues();
         updateItemMetrics();
         updateScrollEngineLimits();
         alphaTriggered = false;
@@ -316,7 +316,7 @@ public class ReplaySelector extends InterfaceElement {
     private void removeClickedReplay() {
         ReplaySaveSystem.getInstance().removeReplay(readyToRemoveItem.key);
 
-        updateItems();
+        loadValues();
         updateItemMetrics();
         updateScrollEngineLimits();
         scrollEngineYio.resetToBottom();
@@ -494,6 +494,6 @@ public class ReplaySelector extends InterfaceElement {
 
     @Override
     public MenuRender getRenderSystem() {
-        return MenuRender.renderReplaySelector;
+        return null;
     }
 }

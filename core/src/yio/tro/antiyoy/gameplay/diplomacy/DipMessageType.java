@@ -22,4 +22,6 @@ public enum DipMessageType {
 
     message,
 
+    attack_proposition,
+
 }

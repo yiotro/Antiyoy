@@ -1,5 +1,7 @@
 package yio.tro.antiyoy.gameplay.name_generator;
 
+import yio.tro.antiyoy.SettingsManager;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 
@@ -81,6 +83,16 @@ public class CityNameGenerator {
 
 
     public String generateName(Hex capitalHex) {
+        if (SettingsManager.useCityNamesList) {
+            CustomCityNamesManager instance = CustomCityNamesManager.getInstance();
+            FieldManager fieldManager = capitalHex.fieldManager;
+            String unusedName = instance.getUnusedName(fieldManager);
+            if (unusedName != null && !unusedName.equals("null")) {
+                fieldManager.gameController.namingManager.setHexName(capitalHex, unusedName);
+                return unusedName;
+            }
+        }
+
         Random random = new Random(capitalHex.index1 + 53 * capitalHex.index2);
 
         nameGenerator.setMasks(masks);

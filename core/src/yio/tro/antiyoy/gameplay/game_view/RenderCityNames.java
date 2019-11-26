@@ -64,14 +64,14 @@ public class RenderCityNames extends GameRender{
 
 
     private void renderInEditorMode() {
-        for (Province province : gameController.fieldController.provinces) {
+        for (Province province : gameController.fieldManager.provinces) {
             renderSingleCityName(province);
         }
     }
 
 
     private void renderInNormalMode() {
-        for (Province province : gameController.fieldController.provinces) {
+        for (Province province : gameController.fieldManager.provinces) {
             if (gameController.isCurrentTurn(province.getFraction()) && province.isSelected()) {
                 renderSingleCityName(province);
             }
@@ -178,7 +178,7 @@ public class RenderCityNames extends GameRender{
         this.province = province;
         capitalHex = province.getCapital();
         hexPos = capitalHex.getPos();
-        f = capitalHex.selectionFactor.get() - gameController.fieldController.moveZoneManager.appearFactor.get();
+        f = capitalHex.selectionFactor.get() - gameController.fieldManager.moveZoneManager.appearFactor.get();
         pWidth = province.nameWidth;
         c = batchMovable.getColor();
     }

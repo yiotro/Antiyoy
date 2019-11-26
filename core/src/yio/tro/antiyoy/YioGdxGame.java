@@ -18,6 +18,7 @@ import yio.tro.antiyoy.gameplay.game_view.GameView;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
+import yio.tro.antiyoy.gameplay.name_generator.CustomCityNamesManager;
 import yio.tro.antiyoy.gameplay.replays.ReplaySaveSystem;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.gameplay.skins.SkinManager;
@@ -186,6 +187,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         GlobalStatistics.initialize();
         ReplaySaveSystem.initialize();
         KeyboardManager.initialize();
+        CustomCityNamesManager.initialize();
     }
 
 

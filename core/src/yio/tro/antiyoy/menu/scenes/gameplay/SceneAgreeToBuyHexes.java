@@ -18,7 +18,6 @@ public class SceneAgreeToBuyHexes extends AbstractModalScene {
     @Override
     public void create() {
         initDialog();
-
         dialog.appear();
     }
 

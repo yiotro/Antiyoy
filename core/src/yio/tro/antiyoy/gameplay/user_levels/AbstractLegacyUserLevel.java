@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.gameplay.user_levels;
 
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
@@ -70,9 +70,9 @@ public abstract class AbstractLegacyUserLevel {
 
 
     protected void setProvinceMoney(GameController gameController, int i, int j, int money) {
-        FieldController fieldController = gameController.fieldController;
-        Hex hex = fieldController.field[i][j];
-        Province provinceByHex = fieldController.getProvinceByHex(hex);
+        FieldManager fieldManager = gameController.fieldManager;
+        Hex hex = fieldManager.field[i][j];
+        Province provinceByHex = fieldManager.getProvinceByHex(hex);
         provinceByHex.money = money;
     }
 

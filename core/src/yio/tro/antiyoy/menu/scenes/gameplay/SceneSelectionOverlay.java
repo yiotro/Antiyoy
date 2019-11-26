@@ -3,7 +3,9 @@ package yio.tro.antiyoy.menu.scenes.gameplay;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.gameplay.skins.SkinManager;
@@ -11,6 +13,9 @@ import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
+import yio.tro.antiyoy.menu.income_view.MoneyViewElement;
+import yio.tro.antiyoy.menu.income_view.MveBehavior;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
 public class SceneSelectionOverlay extends AbstractModalScene {
@@ -18,7 +23,6 @@ public class SceneSelectionOverlay extends AbstractModalScene {
 
     private ButtonYio unitButton;
     private ButtonYio towerButton;
-    private ButtonYio coinButton;
     private ButtonYio diplomacyButton;
     TextureRegion flagNormal;
     private final TextureRegion mailIconTexture;
@@ -37,7 +41,6 @@ public class SceneSelectionOverlay extends AbstractModalScene {
     public void create() {
         createUnitButton();
         createTowerButton();
-        createCoinButton();
         createDiplomacyButton();
         createDiplomaticLogButton();
     }
@@ -50,7 +53,7 @@ public class SceneSelectionOverlay extends AbstractModalScene {
         logButton.setTouchable(GameRules.diplomacyEnabled);
 
         GameController gameController = menuControllerYio.yioGdxGame.gameController;
-        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomacyManager diplomacyManager = gameController.fieldManager.diplomacyManager;
         boolean hasSomethingToRead = diplomacyManager.log.hasSomethingToRead();
         if (!GameRules.diplomacyEnabled || !hasSomethingToRead) {
             logButton.destroy();
@@ -70,7 +73,7 @@ public class SceneSelectionOverlay extends AbstractModalScene {
         logButton.setReaction(new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
-                getGameController(buttonYio).fieldController.diplomacyManager.onDiplomaticLogButtonPressed();
+                getGameController(buttonYio).fieldManager.diplomacyManager.onDiplomaticLogButtonPressed();
             }
         });
     }
@@ -100,7 +103,7 @@ public class SceneSelectionOverlay extends AbstractModalScene {
         diplomacyButton.setReaction(new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
-                getGameController(buttonYio).fieldController.diplomacyManager.onDiplomacyButtonPressed();
+                getGameController(buttonYio).fieldManager.diplomacyManager.onDiplomacyButtonPressed();
             }
         });
     }
@@ -108,24 +111,6 @@ public class SceneSelectionOverlay extends AbstractModalScene {
 
     private void updateDiplomacyFlagTexture() {
         diplomacyButton.setTexture(flagNormal);
-    }
-
-
-    private void createCoinButton() {
-        // important: there is another coin button in SceneFastConstruction
-        // important: there is another coin button in SceneAiOnlyOverlay
-
-        coinButton = menuControllerYio.getButtonById(37);
-        if (coinButton == null) { // init
-            coinButton = buttonFactory.getButton(generateSquare(0, 0.93, 0.07), 37, null);
-            coinButton.setAnimation(Animation.up);
-            coinButton.setPressSound(SoundManagerYio.soundCoin);
-            coinButton.enableRectangularMask();
-        }
-        loadCoinButtonTexture();
-        coinButton.appearFactor.appear(3, 2);
-        coinButton.setTouchable(true);
-        coinButton.setReaction(Reaction.RB_SHOW_INCOME_GRAPH);
     }
 
 
@@ -169,9 +154,6 @@ public class SceneSelectionOverlay extends AbstractModalScene {
 
 
     public void onSkinChanged() {
-        if (coinButton != null) {
-            coinButton.resetTexture();
-        }
         if (unitButton != null) {
             unitButton.resetTexture();
         }
@@ -196,11 +178,6 @@ public class SceneSelectionOverlay extends AbstractModalScene {
     }
 
 
-    void loadCoinButtonTexture() {
-        menuControllerYio.loadButtonOnce(coinButton, getSkinManager().getCoinTexturePath());
-    }
-
-
     private SkinManager getSkinManager() {
         return menuControllerYio.yioGdxGame.skinManager;
     }
@@ -209,6 +186,9 @@ public class SceneSelectionOverlay extends AbstractModalScene {
     @Override
     public void hide() {
         destroyByIndex(33, 39);
-        menuControllerYio.getYioGdxGame().gameController.selectionManager.getSelMoneyFactor().destroy(2, 8);
+
+        GameController gameController = menuControllerYio.getYioGdxGame().gameController;
+        FactorYio selMoneyFactor = gameController.selectionManager.getSelMoneyFactor();
+        selMoneyFactor.destroy(2, 8);
     }
 }

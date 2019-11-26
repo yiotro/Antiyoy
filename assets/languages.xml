@@ -314,6 +314,8 @@
         <string key="left_handed" value="Left handed"/>
         <string key="full_screen_mode" value="Full screen mode"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -381,8 +383,16 @@
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
-
-
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
 
     </language>
 
@@ -709,6 +719,8 @@
         <string key="left_handed" value="Леворукий режим"/>
         <string key="full_screen_mode" value="Полноэкранный режим"/>
         <string key="system_keyboard" value="Системная клавиатура"/>
+        <string key="use_list" value="Использовать список"/>
+        <string key="automatic_transition" value="Автопереход"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Это первый 'сложный' уровень. Уделяй больше внимания защите."/>
@@ -776,6 +788,16 @@
         <string key="message" value="Сообщение"/>
         <string key="show" value="Показать"/>
         <string key="check_filters" value="Проверьте фильтры"/>
+        <string key="lands" value="Земли"/>
+        <string key="farms" value="Фермы"/>
+        <string key="units" value="Юниты"/>
+        <string key="trees" value="Деревья"/>
+        <string key="towers" value="Башни"/>
+        <string key="profit" value="Прибыль"/>
+        <string key="aggressor" value="Агрессор"/>
+        <string key="target" value="Цель"/>
+        <string key="choose" value="Выбрать"/>
+        <string key="attack_proposition" value="Предложение атаки"/>
 
     </language>
 
@@ -934,7 +956,7 @@
         <string key="gen_greetings" value="Привiт. Цей туторiал розповiсть про основнi правила гри."/>
         <string key="gen_select_province" value="Натисни на своє мiсто щоб вибрати його."/>
         <string key="gen_select_unit" value="Добре. В тебе є декiлька юнiтiв. Натисни на одного з них."/>
-        <string key="gen_move_unit" value="Кожний юнит ходить один раз в хiд. Захопи нiчийну територiю натиснувши на клiтину бiля вибраного юнiта."/>
+        <string key="gen_move_unit" value="Кожний юніт ходить один раз в хiд. Захопи нiчийну територiю натиснувши на клiтину бiля вибраного юнiта."/>
         <string key="gen_income" value="Захопивши нову клiтину ти збiльшив прибуток свого мiста. Бiльше клiтин - бiльше прибуток."/>
         <string key="gen_lets_build_farm" value="Тепер давай побудуємо ферму щоб збiльшити прибуток мiста."/>
         <string key="gen_press_button_twice" value="Натисни два рази на кнопку"/>
@@ -953,7 +975,7 @@
         <string key="gen_units_consume_money" value="Юнiти споживають грошi щоб жити. Чим сильнiший юнiт, тим бiльше грошей вiн потребує."/>
         <string key="gen_undo_spearman" value="Зараз прибуток мiста рiвний -1. Це погано, тому давай вiдмiнимо побудову воїна."/>
         <string key="gen_why_units_die" value="Якщо грошi у мiстi закiнчатся, то юнiти помруть. Тому треба слiдкувати щоб прибуток був бiльше нуля."/>
-        <string key="gen_about_trees_one" value="Дерева теж становлять небезпеку. Клiтини на яких росте дерево не приносять доходу."/>
+        <string key="gen_about_trees_one" value="Дерева теж становлять небезпеку. Клiтини на яких росте дерево не приносять прибутку."/>
         <string key="gen_about_trees_two" value="Дерева краще рубати вiдразу, поки їх мало."/>
         <string key="gen_end_turn" value="Щоб закiнчити хiд натисни на кнопку справа знизу."/>
         <string key="gen_choose_to_merge" value="Юнiтiв також можна об'єднувати. Вибери нижнього селянина."/>
@@ -1101,6 +1123,8 @@
         <string key="left_handed" value="Режим лівої руки"/>
         <string key="full_screen_mode" value="Повний екран"/>
         <string key="system_keyboard" value="Системна клавіатура"/>
+        <string key="use_list" value="Використовувати список"/>
+        <string key="automatic_transition" value="Автоперехід"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Це перший 'складний' рівень. Приділяй більше уваги захисту."/>
@@ -1168,6 +1192,16 @@
         <string key="message" value="Повідомлення"/>
         <string key="show" value="Показати"/>
         <string key="check_filters" value="Перевірте фільтри"/>
+        <string key="lands" value="Землі"/>
+        <string key="farms" value="Ферми"/>
+        <string key="units" value="Юніти"/>
+        <string key="trees" value="Дерева"/>
+        <string key="towers" value="Башти"/>
+        <string key="profit" value="Прибуток"/>
+        <string key="aggressor" value="Агресор"/>
+        <string key="target" value="Ціль"/>
+        <string key="choose" value="Вибрати"/>
+        <string key="attack_proposition" value="Пропозиція атаки"/>
 
     </language>
 
@@ -1546,6 +1580,8 @@
         <string key="left_handed" value="Linkshänder"/>
         <string key="full_screen_mode" value="Vollbildmodus"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Dies ist das erste 'schwere' Level. Achte besonders auf Deine Verteidigung."/>
@@ -1613,6 +1649,16 @@
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
     </language>
 
 
@@ -1973,6 +2019,8 @@
         <string key="left_handed" value="Left handed"/>
         <string key="full_screen_mode" value="Full screen mode"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -2040,6 +2088,16 @@
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
     </language>
 
 
@@ -2407,6 +2465,8 @@
         <string key="left_handed" value="Gaucher"/>
         <string key="full_screen_mode" value="Plein écran"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="C'est le premier niveau difficile, attention à vos défenses."/>  <!-- Same as english -->
@@ -2475,6 +2535,16 @@
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
     </language>
 
 
@@ -2846,6 +2916,8 @@
         <string key="left_handed" value="leworęczny"/>
         <string key="full_screen_mode" value="pełny ekran"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="To jest pierwszy trudny poziom więc uważaj na swoją obrone."/>
@@ -2913,6 +2985,16 @@
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
     </language>
 
 
@@ -3246,6 +3328,8 @@
         <string key="left_handed" value="Mano sinistra"/>
         <string key="full_screen_mode" value="Modalità tutto schermo"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Questo è il primo livello 'difficile'. Presta attenzione alle difese."/>
@@ -3313,6 +3397,16 @@
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
     </language>
 
 
@@ -3674,6 +3768,8 @@
         <string key="left_handed" value="Left handed"/>
         <string key="full_screen_mode" value="Full screen mode"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -3741,6 +3837,16 @@
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
     </language>
 
 
@@ -4102,6 +4208,8 @@
         <string key="left_handed" value="ľavoruký"/>
         <string key="full_screen_mode" value="Full screen mode"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -4169,6 +4277,16 @@
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
     </language>
 
 
@@ -4549,6 +4667,8 @@
         <string key="left_handed" value="Left handed"/>
         <string key="full_screen_mode" value="Full screen mode"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="这是第一个'困难' 关卡。 注意防守！"/>
@@ -4616,6 +4736,16 @@
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
     </language>
 
 
@@ -4988,6 +5118,8 @@
         <string key="left_handed" value="Solak modu"/>
         <string key="full_screen_mode" value="Tam ekran modu"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Bu ilk 'zor' seviye. Savunmaya daha fazla önem ver."/>
@@ -5055,6 +5187,16 @@
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
     </language>
 
 
@@ -5433,6 +5575,8 @@
         <string key="left_handed" value="Left handed"/>
         <string key="full_screen_mode" value="Full screen mode"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="This is the first 'hard' level. Pay more attention to defense."/>
@@ -5500,6 +5644,16 @@
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
 
     </language>
 
@@ -5849,6 +6003,8 @@
         <string key="left_handed" value="Mão esquerda"/>
         <string key="full_screen_mode" value="Full screen mode"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Esse é o primeiro nível 'difícil'. Preste mais atenção na defesa."/>
@@ -5916,6 +6072,16 @@
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
 
 
     </language>
@@ -6264,6 +6430,8 @@
         <string key="left_handed" value="Linkshandig"/>
         <string key="full_screen_mode" value="Full screen mode"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Dit is het eerste level in categorie 'moeilijk'. Let meer op verdediging."/>
@@ -6331,6 +6499,16 @@
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
 
 
     </language>
@@ -6725,6 +6903,8 @@
         <string key="left_handed" value="Bal kezes"/>
         <string key="full_screen_mode" value="Full screen mode"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Ez az első nehéz szint, fordíts nagyobb figyelmet a védelemre."/>
@@ -6792,6 +6972,16 @@
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
 
 
     </language>
@@ -7140,6 +7330,8 @@
         <string key="left_handed" value="Леварукі рэжым"/>
         <string key="full_screen_mode" value="Паўнаэкранны рэжым"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Гэта першы 'цяжкі' узровень. Удзяляй больш увагі абароне."/>
@@ -7207,6 +7399,16 @@
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
     </language>
 
 
@@ -7545,6 +7747,8 @@
         <string key="left_handed" value="Kidal"/>
         <string key="full_screen_mode" value="Full screen mode"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Ini level tingkat 'hard' pertama. Beri perhatian lebih pada pertahanan."/>
@@ -7612,6 +7816,16 @@
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
 
 
 
@@ -7951,6 +8165,8 @@
         <string key="left_handed" value="Αριστερόχειρας"/>
         <string key="full_screen_mode" value="Full screen mode"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Αυτός είναι το πρώτο 'δύσκολο' επίπεδο. Δώσε μεγαλύτερη προσοχή στην άμυνα."/>
@@ -8018,6 +8234,16 @@
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
 
 
 
@@ -8367,6 +8593,8 @@ Fang den nøytrale sekskanten"/>
         <string key="left_handed" value="Venstrehånds modus"/>
         <string key="full_screen_mode" value="Full screen mode"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Dette er det første 'harde' -nivået. Vær mer oppmerksom på forsvaret."/>
@@ -8434,6 +8662,16 @@ Fang den nøytrale sekskanten"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
 
     </language>
 
@@ -8784,6 +9022,8 @@ Fang den nøytrale sekskanten"/>
         <string key="left_handed" value="За леворуке"/>
         <string key="full_screen_mode" value="Преко целог екрана"/>
         <string key="system_keyboard" value="System keyboard"/>
+        <string key="use_list" value="Use list"/>
+        <string key="automatic_transition" value="Auto transition"/>
 
         <!-- Single messages -->
         <string key="level_24" value="Ово је први 'тежак' ниво. Обрати посебну пажњу на одбрану."/>
@@ -8851,6 +9091,16 @@ Fang den nøytrale sekskanten"/>
         <string key="message" value="Message"/>
         <string key="show" value="Show"/>
         <string key="check_filters" value="Check filters"/>
+        <string key="lands" value="Lands"/>
+        <string key="farms" value="Farms"/>
+        <string key="units" value="Units"/>
+        <string key="trees" value="Trees"/>
+        <string key="towers" value="Towers"/>
+        <string key="profit" value="Profit"/>
+        <string key="aggressor" value="Aggressor"/>
+        <string key="target" value="Target"/>
+        <string key="choose" value="Choose"/>
+        <string key="attack_proposition" value="Attack proposition"/>
     </language>
 
 

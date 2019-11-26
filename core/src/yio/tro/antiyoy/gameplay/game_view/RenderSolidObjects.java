@@ -29,7 +29,7 @@ public class RenderSolidObjects extends GameRender{
     public void render() {
         if (!YioGdxGame.isScreenVerySmall()) return;
 
-        for (Hex activeHex : gameController.fieldController.activeHexes) {
+        for (Hex activeHex : gameController.fieldManager.activeHexes) {
             if (!activeHex.containsObject()) continue;
 
             renderSolidObject(batchMovable, activeHex.getPos(), activeHex);

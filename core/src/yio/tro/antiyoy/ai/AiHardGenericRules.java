@@ -3,9 +3,6 @@ package yio.tro.antiyoy.ai;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
-import yio.tro.antiyoy.gameplay.Unit;
-
-import java.util.ArrayList;
 
 public class AiHardGenericRules extends ArtificialIntelligenceGeneric{
 
@@ -32,10 +29,10 @@ public class AiHardGenericRules extends ArtificialIntelligenceGeneric{
             if (hex == null) return;
 
             if (province.hasMoneyForStrongTower()) {
-                gameController.fieldController.buildStrongTower(province, hex);
+                gameController.fieldManager.buildStrongTower(province, hex);
                 continue;
             }
-            gameController.fieldController.buildTower(province, hex);
+            gameController.fieldManager.buildTower(province, hex);
         }
     }
 }

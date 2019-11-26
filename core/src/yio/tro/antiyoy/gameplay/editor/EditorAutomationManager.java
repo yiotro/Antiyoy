@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.gameplay.editor;
 
 import yio.tro.antiyoy.YioGdxGame;
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.MoveZoneDetection;
 import yio.tro.antiyoy.gameplay.Obj;
@@ -47,8 +47,8 @@ public class EditorAutomationManager {
     }
 
 
-    private FieldController getFieldController() {
-        return levelEditor.gameController.fieldController;
+    private FieldManager getFieldController() {
+        return levelEditor.gameController.fieldManager;
     }
 
 

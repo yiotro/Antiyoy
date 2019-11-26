@@ -55,7 +55,7 @@ public class ConfirmBlackMarkDialog extends AbstractDiplomaticDialog{
 
     private DiplomacyManager getDiplomacyManager() {
         GameController gameController = menuControllerYio.yioGdxGame.gameController;
-        return gameController.fieldController.diplomacyManager;
+        return gameController.fieldManager.diplomacyManager;
     }
 
 

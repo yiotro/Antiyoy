@@ -109,7 +109,7 @@ public class EditorRelationsManager implements EncodeableYio{
         onEndCreation();
         decode(source);
 
-        DiplomacyManager diplomacyManager = getGameController().fieldController.diplomacyManager;
+        DiplomacyManager diplomacyManager = getGameController().fieldManager.diplomacyManager;
         ColorsManager colorsManager = getGameController().colorsManager;
         for (EditorRelation relation : relations) {
             int fraction1 = colorsManager.getFractionByColor(relation.color1);

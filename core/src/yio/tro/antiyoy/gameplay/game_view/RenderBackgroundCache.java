@@ -174,12 +174,12 @@ public class RenderBackgroundCache extends GameRender {
 
 
     private boolean isThereAtLeastOneAnimHex() {
-        return gameController.fieldController.animHexes.size() > 0;
+        return gameController.fieldManager.animHexes.size() > 0;
     }
 
 
     private void updateAnimBounds() {
-        ArrayList<Hex> animHexes = gameController.fieldController.animHexes;
+        ArrayList<Hex> animHexes = gameController.fieldManager.animHexes;
         float up, right, down, left;
         up = down = animHexes.get(0).getPos().y;
         left = right = animHexes.get(0).getPos().x;
@@ -258,7 +258,7 @@ public class RenderBackgroundCache extends GameRender {
 
 
     private void renderShadows() {
-        for (Hex hex : gameController.fieldController.activeHexes) {
+        for (Hex hex : gameController.fieldManager.activeHexes) {
             pos = hex.getPos();
             if (!isPosInCacheFrame(pos, hexViewSize)) continue;
 
@@ -270,7 +270,7 @@ public class RenderBackgroundCache extends GameRender {
     private void renderHexes() {
         TextureRegion currentHexTexture;
         GameTexturesManager texturesManager = gameView.texturesManager;
-        for (Hex hex : gameController.fieldController.activeHexes) {
+        for (Hex hex : gameController.fieldManager.activeHexes) {
             pos = hex.getPos();
             if (!isPosInCacheFrame(pos, hexViewSize)) continue;
 
@@ -281,13 +281,13 @@ public class RenderBackgroundCache extends GameRender {
 
 
     private void renderLinesBetweenHexes() {
-        for (Hex hex : gameController.fieldController.activeHexes) {
+        for (Hex hex : gameController.fieldManager.activeHexes) {
             pos = hex.getPos();
             if (!isPosInCacheFrame(pos, hexViewSize)) continue;
 
             for (int dir = 0; dir < 6; dir++) {
                 Hex adjacentHex = hex.getAdjacentHex(dir);
-                if (adjacentHex == gameController.fieldController.nullHex) continue;
+                if (adjacentHex == gameController.fieldManager.nullHex) continue;
                 if (adjacentHex == null) continue;
                 if (!isLineBetweenHexesNeeded(hex, dir, adjacentHex)) continue;
 
@@ -313,7 +313,7 @@ public class RenderBackgroundCache extends GameRender {
 
 
     private void renderSolidObjects() {
-        for (Hex hex : gameController.fieldController.solidObjects) {
+        for (Hex hex : gameController.fieldManager.solidObjects) {
             renderSolidObject(batchCache, hex.getPos(), hex);
         }
     }

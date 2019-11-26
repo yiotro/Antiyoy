@@ -133,7 +133,7 @@ public class AgreeToBuyHexesDialog extends AbstractDiplomaticDialog{
 
 
     private DiplomacyManager getDiplomacyManager() {
-        return menuControllerYio.yioGdxGame.gameController.fieldController.diplomacyManager;
+        return menuControllerYio.yioGdxGame.gameController.fieldManager.diplomacyManager;
     }
 
 

@@ -83,14 +83,14 @@ public class ColorsManager {
     public void applyEditorChosenColorFix() {
         gameController.updateRuleset();
 
-        ArrayList<Hex> activeHexes = gameController.fieldController.activeHexes;
+        ArrayList<Hex> activeHexes = gameController.fieldManager.activeHexes;
         for (Hex activeHex : activeHexes) {
             if (!GameRules.slayRules && activeHex.isNeutral()) continue;
 
             activeHex.fraction = gameController.colorsManager.getFractionByColor(activeHex.fraction);
         }
 
-        gameController.fieldController.detectProvinces();
+        gameController.fieldManager.detectProvinces();
         gameController.stopAllUnitsFromJumping();
         gameController.prepareCertainUnitsToMove();
     }
@@ -104,7 +104,7 @@ public class ColorsManager {
 
 
     public void shiftColors(int delta) {
-        for (Hex activeHex : gameController.fieldController.activeHexes) {
+        for (Hex activeHex : gameController.fieldManager.activeHexes) {
             if (!GameRules.slayRules && activeHex.isNeutral()) continue;
 
             activeHex.fraction = getShiftedColor(activeHex.fraction, delta);
@@ -128,7 +128,7 @@ public class ColorsManager {
 
 
     public void doShiftFractionsInEditorMode() {
-        ArrayList<Hex> activeHexes = gameController.fieldController.activeHexes;
+        ArrayList<Hex> activeHexes = gameController.fieldManager.activeHexes;
         for (Hex activeHex : activeHexes) {
             if (activeHex.isNeutral()) continue;
 

@@ -196,7 +196,7 @@ public class LevelEditor {
 
     int countUpFractionsQuantity() {
         int maxFraction = 0;
-        for (Hex activeHex : gameController.fieldController.activeHexes) {
+        for (Hex activeHex : gameController.fieldManager.activeHexes) {
             if (activeHex.fraction > maxFraction) {
                 maxFraction = activeHex.fraction;
             }
@@ -252,12 +252,12 @@ public class LevelEditor {
         String innerString = fullLevel.substring(beginIndex);
         float min = -1;
         float max = -1;
-        FieldController fieldController = gameController.fieldController;
+        FieldManager fieldManager = gameController.fieldManager;
         for (String token : innerString.split("#")) {
             String[] split = token.split(" ");
             int index1 = Integer.valueOf(split[0]);
             int index2 = Integer.valueOf(split[1]);
-            float y = fieldController.hexStep1 * index1 + fieldController.hexStep2 * index2 * (float) Math.cos(Math.PI / 3d);
+            float y = fieldManager.hexStep1 * index1 + fieldManager.hexStep2 * index2 * (float) Math.cos(Math.PI / 3d);
             if (min == -1 || y < min) {
                 min = y;
             }
@@ -267,7 +267,7 @@ public class LevelEditor {
         }
 
         float delta = max - min;
-        delta /= fieldController.hexStep1;
+        delta /= fieldManager.hexStep1;
         delta += 1;
 
         return delta <= MAX_ACCEPTABLE_DELTA;
@@ -284,9 +284,9 @@ public class LevelEditor {
 
 
     public void clearLevel() {
-        for (int i = 0; i < gameController.fieldController.fWidth; i++) {
-            for (int j = 0; j < gameController.fieldController.fHeight; j++) {
-                deactivateHex(gameController.fieldController.field[i][j]);
+        for (int i = 0; i < gameController.fieldManager.fWidth; i++) {
+            for (int j = 0; j < gameController.fieldManager.fHeight; j++) {
+                deactivateHex(gameController.fieldManager.field[i][j]);
             }
         }
     }
@@ -296,7 +296,7 @@ public class LevelEditor {
         if (!hex.active) return;
         gameController.cleanOutHex(hex);
         hex.active = false;
-        ListIterator activeIterator = gameController.fieldController.activeHexes.listIterator();
+        ListIterator activeIterator = gameController.fieldManager.activeHexes.listIterator();
         while (activeIterator.hasNext()) {
             Hex tHex = (Hex) activeIterator.next();
             if (tHex == hex) {
@@ -318,7 +318,7 @@ public class LevelEditor {
             unit.stopJumping();
         }
 
-        gameController.fieldController.clearProvincesList();
+        gameController.fieldManager.clearProvincesList();
         gameController.setTouchMode(TouchMode.tmEditor);
         editorProvinceManager.onEndCreation();
         editorRelationsManager.onEndCreation();
@@ -333,7 +333,7 @@ public class LevelEditor {
         if (hex.active) return;
         hex.active = true;
         hex.setFraction(fraction);
-        ListIterator activeIterator = gameController.fieldController.activeHexes.listIterator();
+        ListIterator activeIterator = gameController.fieldManager.activeHexes.listIterator();
         activeIterator.add(hex);
         gameController.addAnimHex(hex);
     }
@@ -352,17 +352,17 @@ public class LevelEditor {
     private void applySetHex(Hex focusedHex) {
         if (focusedHex.fraction == inputFraction) return;
         int objectInside = focusedHex.objectInside;
-        gameController.fieldController.setHexFraction(focusedHex, inputFraction);
+        gameController.fieldManager.setHexFraction(focusedHex, inputFraction);
         if (inputFraction != GameRules.NEUTRAL_FRACTION) {
-            gameController.fieldController.addSolidObject(focusedHex, objectInside);
+            gameController.fieldManager.addSolidObject(focusedHex, objectInside);
         }
     }
 
 
     private boolean updateFocusedHex() {
-        Hex lastFocHex = gameController.fieldController.focusedHex;
+        Hex lastFocHex = gameController.fieldManager.focusedHex;
         gameController.selectionManager.updateFocusedHex(scrX, scrY);
-        if (gameController.fieldController.focusedHex == lastFocHex) return false; // focused hex is same
+        if (gameController.fieldManager.focusedHex == lastFocHex) return false; // focused hex is same
         return true; // focused hex updated
     }
 
@@ -382,7 +382,7 @@ public class LevelEditor {
         lastTimeTouched = gameController.currentTime;
         updateFocusedHex();
         if (leInputMode == LeInputMode.set_object || leInputMode == LeInputMode.set_hex || leInputMode == LeInputMode.delete) {
-            focusedHexActions(gameController.fieldController.focusedHex);
+            focusedHexActions(gameController.fieldManager.focusedHex);
         }
 
         return isTouchCaptured();
@@ -407,7 +407,7 @@ public class LevelEditor {
         }
 
         if (leInputMode == LeInputMode.set_hex || leInputMode == LeInputMode.delete) {
-            focusedHexActions(gameController.fieldController.focusedHex);
+            focusedHexActions(gameController.fieldManager.focusedHex);
         }
 
         return isTouchCaptured();
@@ -483,12 +483,12 @@ public class LevelEditor {
         gameSaver.detectRules();
         GameRules.setFractionsQuantity(countUpFractionsQuantity());
         checkToFixRandomizationRulesForEmptyMap();
-        gameController.fieldController.clearField();
-        gameController.fieldController.createFieldMatrix();
+        gameController.fieldManager.clearField();
+        gameController.fieldManager.createFieldMatrix();
         if (GameRules.slayRules) {
-            gameController.mapGeneratorSlay.generateMap(gameController.random, gameController.fieldController.field);
+            gameController.mapGeneratorSlay.generateMap(gameController.random, gameController.fieldManager.field);
         } else {
-            gameController.mapGeneratorGeneric.generateMap(gameController.random, gameController.fieldController.field);
+            gameController.mapGeneratorGeneric.generateMap(gameController.random, gameController.fieldManager.field);
         }
         gameController.yioGdxGame.gameView.updateCacheLevelTextures();
         editorProvinceManager.onLevelRandomlyCreated();
@@ -499,7 +499,7 @@ public class LevelEditor {
 
     private void checkToFixRandomizationRulesForEmptyMap() {
         if (GameRules.fractionsQuantity != 1) return;
-        if (gameController.fieldController.activeHexes.size() > 0) return;
+        if (gameController.fieldManager.activeHexes.size() > 0) return;
 
         GameRules.setFractionsQuantity(GameRules.MAX_FRACTIONS_QUANTITY);
         GameRules.slayRules = false;

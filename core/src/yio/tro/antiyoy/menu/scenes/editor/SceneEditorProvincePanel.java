@@ -112,6 +112,7 @@ public class SceneEditorProvincePanel extends AbstractModalScene{
         KeyboardManager.getInstance().apply(editorProvinceData.name, new AbstractKbReaction() {
             @Override
             public void onInputFromKeyboardReceived(String input) {
+                System.out.println("input = " + input);
                 if (input.length() > NAME_LIMIT) {
                     input = input.substring(0, NAME_LIMIT);
                 }
@@ -142,6 +143,7 @@ public class SceneEditorProvincePanel extends AbstractModalScene{
         label = buttonFactory.getButton(generateRectangle(0, 0, 1, 0.3), 271, null);
         menuControllerYio.loadButtonOnce(label, "gray_pixel.png");
         label.setAnimation(Animation.down);
+        label.setTouchable(false);
     }
 
 

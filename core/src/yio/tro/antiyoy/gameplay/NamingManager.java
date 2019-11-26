@@ -65,8 +65,8 @@ public class NamingManager implements SavableYio{
 
 
     private void updateRelatedDiplomaticEntity(Hex hex) {
-        FieldController fieldController = gameController.fieldController;
-        DiplomacyManager diplomacyManager = fieldController.diplomacyManager;
+        FieldManager fieldManager = gameController.fieldManager;
+        DiplomacyManager diplomacyManager = fieldManager.diplomacyManager;
         DiplomaticEntity entity = diplomacyManager.getEntity(hex.fraction);
         if (entity == null) return;
         if (!entity.alive) return;
@@ -104,7 +104,7 @@ public class NamingManager implements SavableYio{
             int index1 = Integer.valueOf(split[0]);
             int index2 = Integer.valueOf(split[1]);
             String name = split[2];
-            Hex hex = gameController.fieldController.getHex(index1, index2);
+            Hex hex = gameController.fieldManager.getHex(index1, index2);
 
             setHexName(hex, name);
         }
@@ -114,7 +114,7 @@ public class NamingManager implements SavableYio{
 
 
     private void forceProvincesToUpdateNames() {
-        for (Province province : gameController.fieldController.provinces) {
+        for (Province province : gameController.fieldManager.provinces) {
             province.updateName();
         }
     }

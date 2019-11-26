@@ -54,7 +54,7 @@ public class SliceUpdater {
         if (hex == null) return null;
 
         Hex adjacentHex = hex.getAdjacentHex(dir);
-        if (adjacentHex == fogOfWarManager.fieldController.nullHex) return null;
+        if (adjacentHex == fogOfWarManager.fieldManager.nullHex) return null;
 
         return fogOfWarManager.fogMap.get(adjacentHex);
     }

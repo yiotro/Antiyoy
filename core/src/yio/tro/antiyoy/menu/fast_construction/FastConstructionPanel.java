@@ -192,7 +192,7 @@ public class FastConstructionPanel extends InterfaceElement {
         diplomacyItem.animDelta.set(getSpecialItemAnimDelta(), height);
 
         GameController gameController = menuControllerYio.yioGdxGame.gameController;
-        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomacyManager diplomacyManager = gameController.fieldManager.diplomacyManager;
         if (diplomacyManager.log.hasSomethingToRead()) {
             FcpItem logItem = getItemByAction(FcpActionType.log);
             logItem.visible = GameRules.diplomacyEnabled;
@@ -325,7 +325,7 @@ public class FastConstructionPanel extends InterfaceElement {
 
 
     private void onItemClicked(FcpItem item) {
-        if (!menuControllerYio.yioGdxGame.gameController.fieldController.isSomethingSelected()) return;
+        if (!menuControllerYio.yioGdxGame.gameController.fieldManager.isSomethingSelected()) return;
 
         SoundManagerYio.playSound(SoundManagerYio.soundPressButton);
 
@@ -368,12 +368,12 @@ public class FastConstructionPanel extends InterfaceElement {
 
 
     private void applyOpenDiplomaticLog() {
-        menuControllerYio.yioGdxGame.gameController.fieldController.diplomacyManager.onDiplomaticLogButtonPressed();
+        menuControllerYio.yioGdxGame.gameController.fieldManager.diplomacyManager.onDiplomaticLogButtonPressed();
     }
 
 
     private void applyOpenDiplomacy() {
-        menuControllerYio.yioGdxGame.gameController.fieldController.diplomacyManager.onDiplomacyButtonPressed();
+        menuControllerYio.yioGdxGame.gameController.fieldManager.diplomacyManager.onDiplomacyButtonPressed();
     }
 
 

@@ -31,10 +31,10 @@ public class SkinManager {
 
         if (Scenes.sceneSelectionOverlay == null) return;
         Scenes.sceneSelectionOverlay.onSkinChanged();
-        Scenes.sceneFastConstructionPanel.onSkinChanged();
         Scenes.sceneAiOnlyOverlay.onSkinChanged();
         MenuRender.renderFastConstructionPanel.onSkinChanged();
         MenuRender.renderIncomeGraphElement.onSkinChanged();
+        Scenes.sceneFinances.onSkinChanged();
 
         if (yioGdxGame != null && yioGdxGame.menuControllerYio != null) {
             yioGdxGame.menuControllerYio.onSkinChanged();

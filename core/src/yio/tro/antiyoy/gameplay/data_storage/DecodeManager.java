@@ -1,12 +1,8 @@
 package yio.tro.antiyoy.gameplay.data_storage;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Clipboard;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Unit;
-import yio.tro.antiyoy.gameplay.game_view.GameView;
-import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 public class DecodeManager {
@@ -78,8 +74,8 @@ public class DecodeManager {
         int index1 = Integer.valueOf(split[0]);
         int index2 = Integer.valueOf(split[1]);
         int strength = Integer.valueOf(split[2]);
-        Hex hex = gameController.fieldController.getHex(index1, index2);
-        Unit unit = gameController.fieldController.addUnit(hex, strength);
+        Hex hex = gameController.fieldManager.getHex(index1, index2);
+        Unit unit = gameController.fieldManager.addUnit(hex, strength);
         unit.decode(token);
     }
 
@@ -88,7 +84,7 @@ public class DecodeManager {
         String landSection = getSection("land");
         if (landSection == null) return;
 
-        gameController.fieldController.decode(landSection);
+        gameController.fieldManager.decode(landSection);
     }
 
 

@@ -60,7 +60,7 @@ public class DiplomaticLogPanel extends ScrollableListYio {
 
 
     private void applyItem(ListItemYio item) {
-        DiplomaticLog log = menuControllerYio.yioGdxGame.gameController.fieldController.diplomacyManager.log;
+        DiplomaticLog log = menuControllerYio.yioGdxGame.gameController.fieldManager.diplomacyManager.log;
 
         if (item.key.equals("clear")) {
             log.onClearMessagesButtonClicked();
@@ -68,7 +68,7 @@ public class DiplomaticLogPanel extends ScrollableListYio {
             log.onListItemClicked(item.key);
         }
 
-        updateItems();
+        loadValues();
 
         if (items.size() == 0) {
             Scenes.sceneDiplomaticLog.hide();
@@ -138,11 +138,11 @@ public class DiplomaticLogPanel extends ScrollableListYio {
     }
 
 
-    public void updateItems() {
+    public void loadValues() {
         clearItems();
 
         GameController gameController = menuControllerYio.yioGdxGame.gameController;
-        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomacyManager diplomacyManager = gameController.fieldManager.diplomacyManager;
         DiplomaticEntity mainEntity = diplomacyManager.getMainEntity();
         DiplomaticLog log = diplomacyManager.log;
 
@@ -155,6 +155,7 @@ public class DiplomaticLogPanel extends ScrollableListYio {
         }
 
         checkToAddClearAllItem();
+        scrollEngineYio.resetToBottom();
 
         moveItems(); // update positions
     }

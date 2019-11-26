@@ -38,7 +38,7 @@ public class GameSaver {
     private void saveBasicInfo() {
         prefs.putInteger("save_turn", gameController.turn);
         prefs.putInteger("save_color_number", GameRules.fractionsQuantity);
-        prefs.putInteger("save_level_size", gameController.fieldController.getLevelSize());
+        prefs.putInteger("save_level_size", gameController.fieldManager.getLevelSize());
         prefs.putInteger("save_player_number", gameController.playersNumber);
         prefs.putBoolean("save_campaign_mode", GameRules.campaignMode);
         prefs.putInteger("save_current_level", getCurrentLevelIndexForSave());
@@ -94,14 +94,14 @@ public class GameSaver {
 
 
     private void saveInitialLevelString() {
-        prefs.putString("initial_level", gameController.fieldController.initialLevelString);
+        prefs.putString("initial_level", gameController.fieldManager.initialLevelString);
     }
 
 
     private void saveDiplomacy() {
         if (!GameRules.diplomacyEnabled) return;
 
-        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomacyManager diplomacyManager = gameController.fieldManager.diplomacyManager;
         DiplomacyInfoCondensed instance = DiplomacyInfoCondensed.getInstance();
         instance.update(diplomacyManager);
 
@@ -142,10 +142,10 @@ public class GameSaver {
     private void activateHexByString(String hexString) {
         int snapshot[] = getHexSnapshotByString(hexString);
         int index1 = snapshot[0], index2 = snapshot[1];
-        Hex hex = gameController.fieldController.field[index1][index2];
+        Hex hex = gameController.fieldManager.field[index1][index2];
         hex.active = true;
         hex.setFraction(snapshot[2]);
-        ListIterator activeIterator = gameController.fieldController.activeHexes.listIterator();
+        ListIterator activeIterator = gameController.fieldManager.activeHexes.listIterator();
         int objectInside = snapshot[3];
         if (objectInside > 0) {
             gameController.addSolidObject(hex, objectInside);
@@ -180,8 +180,8 @@ public class GameSaver {
         for (String hexString : hexStrings) {
             activateHexByString(hexString);
         }
-        gameController.fieldController.detectProvinces();
-        for (Province province : gameController.fieldController.provinces) {
+        gameController.fieldManager.detectProvinces();
+        for (Province province : gameController.fieldManager.provinces) {
             Hex hex = province.hexList.get(0);
             province.money = hex.moveZoneNumber;
             province.updateName();
@@ -200,7 +200,7 @@ public class GameSaver {
 
 
     public void beginRecreation() {
-        gameController.fieldController.createFieldMatrix();
+        gameController.fieldManager.createFieldMatrix();
         createHexStrings();
         recreateMap();
     }
@@ -229,14 +229,14 @@ public class GameSaver {
 
 
     public void loadInitialLevelString() {
-        gameController.fieldController.initialLevelString = prefs.getString("initial_level", null);
+        gameController.fieldManager.initialLevelString = prefs.getString("initial_level", null);
     }
 
 
     public void loadDiplomacy() {
         if (!GameRules.diplomacyEnabled) return;
 
-        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomacyManager diplomacyManager = gameController.fieldManager.diplomacyManager;
         DiplomacyInfoCondensed instance = DiplomacyInfoCondensed.getInstance();
         instance.setFull(prefs.getString("diplomacy_info", "-"));
         instance.apply(diplomacyManager);
@@ -245,7 +245,7 @@ public class GameSaver {
 
     public void detectRules() {
         GameRules.setSlayRules(true);
-        for (Hex activeHex : gameController.fieldController.activeHexes) {
+        for (Hex activeHex : gameController.fieldManager.activeHexes) {
             if (doesHexRequireGenericRules(activeHex)) {
                 GameRules.setSlayRules(false);
                 System.out.println("detected generic rules");

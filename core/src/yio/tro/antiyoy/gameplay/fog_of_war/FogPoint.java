@@ -1,7 +1,6 @@
 package yio.tro.antiyoy.gameplay.fog_of_war;
 
 import yio.tro.antiyoy.gameplay.Hex;
-import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
@@ -30,14 +29,14 @@ public class FogPoint implements ReusableYio{
 
 
     public boolean isVisible() {
-        return status && fogOfWarManager.visibleArea.isPointInside(position, fogOfWarManager.fieldController.hexSize);
+        return status && fogOfWarManager.visibleArea.isPointInside(position, fogOfWarManager.fieldManager.hexSize);
     }
 
 
     public void setHexByIndexes(int i, int j) {
-        hex = fogOfWarManager.fieldController.getHex(i, j);
+        hex = fogOfWarManager.fieldManager.getHex(i, j);
 
-        fogOfWarManager.fieldController.updatePointByHexIndexes(position, i, j);
+        fogOfWarManager.fieldManager.updatePointByHexIndexes(position, i, j);
     }
 
 

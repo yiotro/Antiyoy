@@ -2,7 +2,7 @@ package yio.tro.antiyoy.gameplay.game_view;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.gameplay.DebugFlags;
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.stuff.CircleYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
@@ -50,8 +50,8 @@ public class RenderDebug extends GameRender{
     }
 
 
-    private FieldController getFieldController() {
-        return gameController.fieldController;
+    private FieldManager getFieldController() {
+        return gameController.fieldManager;
     }
 
 

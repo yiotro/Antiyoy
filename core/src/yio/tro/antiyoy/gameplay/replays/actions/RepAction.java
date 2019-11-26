@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.gameplay.replays.actions;
 
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 
@@ -30,7 +30,7 @@ public abstract class RepAction {
     public abstract String saveInfo();
 
 
-    public abstract void loadInfo(FieldController fieldController, String source);
+    public abstract void loadInfo(FieldManager fieldManager, String source);
 
 
     public abstract void perform(GameController gameController);
@@ -50,11 +50,11 @@ public abstract class RepAction {
     }
 
 
-    protected Hex getHexByTwoTokens(FieldController fieldController, String one, String two) {
+    protected Hex getHexByTwoTokens(FieldManager fieldManager, String one, String two) {
         int index1 = Integer.valueOf(one);
         int index2 = Integer.valueOf(two);
 
-        return fieldController.field[index1][index2];
+        return fieldManager.field[index1][index2];
     }
 
 

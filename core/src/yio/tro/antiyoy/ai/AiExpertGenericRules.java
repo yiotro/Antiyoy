@@ -14,7 +14,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
 
     public AiExpertGenericRules(GameController gameController, int fraction) {
         super(gameController, fraction);
-        tempHex = new Hex(0, 0, new PointYio(), gameController.fieldController);
+        tempHex = new Hex(0, 0, new PointYio(), gameController.fieldManager);
         hexesInPerimeter = new ArrayList<Hex>();
     }
 
@@ -131,7 +131,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
         Hex hexToMove = findRandomHexInPerimeter(province);
         if (hexToMove == null) return;
         tempHex.set(unit.currentHex);
-        gameController.fieldController.massMarchManager.performForSingleUnit(unit, hexToMove);
+        gameController.fieldManager.massMarchManager.performForSingleUnit(unit, hexToMove);
         if (tempHex.equals(unit.currentHex)) super.moveAfkUnit(province, unit); // to prevent infinite loop
     }
 
@@ -170,7 +170,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
             Hex hex = findHexThatNeedsTower(province);
             if (hex == null) break;
 
-            gameController.fieldController.buildTower(province, hex);
+            gameController.fieldManager.buildTower(province, hex);
         }
 
         // try to build strong towers
@@ -178,7 +178,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
             Hex hex = findHexForStrongTower(province);
             if (hex == null) break;
 
-            gameController.fieldController.buildStrongTower(province, hex);
+            gameController.fieldManager.buildStrongTower(province, hex);
         }
     }
 
@@ -213,7 +213,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
 
     protected boolean provinceCanAffordStrongTower(Province province) {
         if (!province.hasMoneyForStrongTower()) return false;
-        if (province.getBalance() - GameRules.TAX_STRONG_TOWER < GameRules.PRICE_UNIT / 2) return false;
+        if (province.getProfit() - GameRules.TAX_STRONG_TOWER < GameRules.PRICE_UNIT / 2) return false;
 
         return true;
     }

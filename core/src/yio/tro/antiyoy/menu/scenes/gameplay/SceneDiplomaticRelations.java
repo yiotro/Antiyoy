@@ -55,7 +55,7 @@ public class SceneDiplomaticRelations extends AbstractModalScene {
         titleListItem.setTitle(getString("diplomacy"));
         customizableListYio.addItem(titleListItem);
 
-        DiplomacyManager diplomacyManager = getGameController().fieldController.diplomacyManager;
+        DiplomacyManager diplomacyManager = getGameController().fieldManager.diplomacyManager;
         DiplomaticEntity chosenEntity = diplomacyManager.getEntity(chosenFraction);
         ColorsManager colorsManager = getGameController().colorsManager;
         for (DiplomaticEntity entity : diplomacyManager.entities) {

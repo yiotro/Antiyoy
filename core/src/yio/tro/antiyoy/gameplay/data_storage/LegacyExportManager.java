@@ -30,7 +30,7 @@ public class LegacyExportManager {
 
     public String getActiveHexesString() {
         StringBuilder builder = new StringBuilder();
-        for (Hex activeHex : gameController.fieldController.activeHexes) {
+        for (Hex activeHex : gameController.fieldManager.activeHexes) {
             String hexString = getHexString(activeHex);
             builder.append(hexString);
             builder.append("#");

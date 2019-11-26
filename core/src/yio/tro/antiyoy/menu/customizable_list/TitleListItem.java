@@ -10,7 +10,7 @@ public class TitleListItem extends AbstractSingleLineItem{
 
     @Override
     protected BitmapFont getTitleFont() {
-        return Fonts.smallerMenuFont;
+        return Fonts.gameFont;
     }
 
 

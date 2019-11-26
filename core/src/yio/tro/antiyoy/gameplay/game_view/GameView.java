@@ -41,7 +41,7 @@ public class GameView {
         zoomLevelOne = 0.8;
         zoomLevelTwo = 1.3;
         borderLineThickness = 0.006f * w;
-        hexViewSize = 1.04f * gameController.fieldController.hexSize;
+        hexViewSize = 1.04f * gameController.fieldManager.hexSize;
         texturesManager = new GameTexturesManager(this);
 
         rList = new GameRendersList(this);
@@ -187,7 +187,7 @@ public class GameView {
         }
 
         Fonts.gameFont.setColor(Color.WHITE);
-        rList.renderMoney.render();
+        rList.renderSelectionShadows.render();
         rList.renderTip.render();
     }
 

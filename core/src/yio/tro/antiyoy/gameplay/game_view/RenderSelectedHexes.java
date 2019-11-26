@@ -24,7 +24,7 @@ public class RenderSelectedHexes extends GameRender{
 
 
     private void renderSelectionBorders() {
-        for (Hex hex : gameController.fieldController.selectedHexes) {
+        for (Hex hex : gameController.fieldManager.selectedHexes) {
             if (hex.selectionFactor.get() < 0.01) continue;
 
             for (int dir = 0; dir < 6; dir++) {
@@ -55,7 +55,7 @@ public class RenderSelectedHexes extends GameRender{
 
 
     private void renderObjectsOnSelectedHexes() {
-        for (Hex hex : gameController.fieldController.selectedHexes) {
+        for (Hex hex : gameController.fieldManager.selectedHexes) {
             if (!hex.containsObject()) continue;
 
             renderSolidObject(batchMovable, hex.getPos(), hex);

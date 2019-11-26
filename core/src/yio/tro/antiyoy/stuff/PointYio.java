@@ -32,6 +32,12 @@ public class PointYio implements ReusableYio{
     }
 
 
+    public void add(PointYio point) {
+        x += point.x;
+        y += point.y;
+    }
+
+
     public void setBy(PointYio p) {
         this.x = p.x;
         this.y = p.y;

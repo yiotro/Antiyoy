@@ -6,14 +6,14 @@ import java.util.ArrayList;
 
 public class MassMarchManager {
 
-    FieldController fieldController;
+    FieldManager fieldManager;
     ArrayList<Unit> chosenUnits;
     ArrayList<Hex> propagationList;
     private Hex target;
 
 
-    public MassMarchManager(FieldController fieldController) {
-        this.fieldController = fieldController;
+    public MassMarchManager(FieldManager fieldManager) {
+        this.fieldManager = fieldManager;
         chosenUnits = new ArrayList<>();
         propagationList = new ArrayList<>();
     }
@@ -39,7 +39,7 @@ public class MassMarchManager {
     private void moveUnits() {
         for (Unit unit : chosenUnits) {
             if (unit.currentHex.algoLink == null) continue;
-            ArrayList<Hex> moveZone = fieldController.moveZoneManager.detectMoveZone(unit.currentHex, unit.strength, GameRules.UNIT_MOVE_LIMIT);
+            ArrayList<Hex> moveZone = fieldManager.moveZoneManager.detectMoveZone(unit.currentHex, unit.strength, GameRules.UNIT_MOVE_LIMIT);
             Hex bestHexToGo = findBestHexToGo(moveZone, unit.getFraction());
             if (bestHexToGo == null) continue;
             moveUnit(unit, bestHexToGo);
@@ -97,7 +97,7 @@ public class MassMarchManager {
 
 
     private void prepareHexes() {
-        for (Hex activeHex : fieldController.activeHexes) {
+        for (Hex activeHex : fieldManager.activeHexes) {
             activeHex.algoLink = null;
             activeHex.algoValue = 0;
         }
@@ -112,7 +112,7 @@ public class MassMarchManager {
 
 
     void moveUnit(Unit unit, Hex hex) {
-        Province provinceByHex = fieldController.getProvinceByHex(unit.currentHex);
-        fieldController.gameController.moveUnit(unit, hex, provinceByHex);
+        Province provinceByHex = fieldManager.getProvinceByHex(unit.currentHex);
+        fieldManager.gameController.moveUnit(unit, hex, provinceByHex);
     }
 }

@@ -152,11 +152,7 @@ public class MenuControllerYio {
 
 
     public ButtonYio getCoinButton() {
-        if (SettingsManager.fastConstructionEnabled) {
-            return getButtonById(610);
-        } else {
-            return getButtonById(37);
-        }
+        return Scenes.sceneFinances.coinButton;
     }
 
 

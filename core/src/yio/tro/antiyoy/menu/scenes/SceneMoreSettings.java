@@ -19,7 +19,6 @@ public class SceneMoreSettings extends AbstractScene{
     public CheckButtonYio chkWaterTexture;
     public CheckButtonYio chkLongTapToMove;
     public CheckButtonYio chkLeftHanded;
-    public CheckButtonYio chkFastConstruction;
     public CheckButtonYio chkResumeButton;
     public CheckButtonYio chkFullScreen;
     private ButtonYio topLabel;
@@ -29,9 +28,12 @@ public class SceneMoreSettings extends AbstractScene{
     private Reaction rbStatistics;
     private ButtonYio statisticsButton;
     private ButtonYio checksLabel;
-    private CheckButtonYio chkNativeKeyboard;
     public int chosenSkinIndex;
     private Reaction rbChooseSkin;
+    private ButtonYio cityNamesButton;
+    private Reaction rbCityNames;
+    private double topLabelPos;
+    private CheckButtonYio chkAutoTransition;
 
 
     public SceneMoreSettings(MenuControllerYio menuControllerYio) {
@@ -40,7 +42,13 @@ public class SceneMoreSettings extends AbstractScene{
         sliders = null;
         chkWaterTexture = null;
 
+        initMetrics();
         initReactions();
+    }
+
+
+    private void initMetrics() {
+        topLabelPos = 0.61;
     }
 
 
@@ -66,6 +74,13 @@ public class SceneMoreSettings extends AbstractScene{
                 Scenes.sceneChooseSkin.create();
             }
         };
+        rbCityNames = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                onDestroy();
+                Scenes.sceneCityNames.create();
+            }
+        };
     }
 
 
@@ -83,7 +98,6 @@ public class SceneMoreSettings extends AbstractScene{
         createBackButton();
         createResetButton();
 
-        initMetrics();
         createTopLabel();
         createSliders();
         createSkinButton();
@@ -92,6 +106,7 @@ public class SceneMoreSettings extends AbstractScene{
         createCheckButtons();
 
         createGlobalStatisticsButton();
+        createCityNamesButton();
 
         loadValues();
 
@@ -99,9 +114,17 @@ public class SceneMoreSettings extends AbstractScene{
     }
 
 
+    private void createCityNamesButton() {
+        cityNamesButton = buttonFactory.getButton(generateRectangle(0.1, 0.12, 0.8, 0.07), 315, getString("city_names"));
+        cityNamesButton.setReaction(rbCityNames);
+        cityNamesButton.setAnimation(Animation.down);
+    }
+
+
     private void createSkinButton() {
-        ButtonYio skinButton = buttonFactory.getButton(generateRectangle(0.25, 0.58, 0.5, 0.05), 313, getString("skin"));
+        ButtonYio skinButton = buttonFactory.getButton(generateRectangle(0.25, topLabelPos + 0.02, 0.5, 0.05), 313, getString("skin"));
         skinButton.setReaction(rbChooseSkin);
+        skinButton.setShadow(false);
         skinButton.setAnimation(Animation.up);
     }
 
@@ -119,11 +142,10 @@ public class SceneMoreSettings extends AbstractScene{
 
         chkLongTapToMove.setChecked(SettingsManager.longTapToMove);
         chkWaterTexture.setChecked(SettingsManager.waterTextureEnabled);
-        chkFastConstruction.setChecked(SettingsManager.fastConstructionEnabled);
         chkLeftHanded.setChecked(SettingsManager.leftHandMode);
         chkResumeButton.setChecked(SettingsManager.resumeButtonEnabled);
         chkFullScreen.setChecked(SettingsManager.fullScreenMode);
-        chkNativeKeyboard.setChecked(SettingsManager.nativeKeyboard);
+        chkAutoTransition.setChecked(SettingsManager.automaticTransition);
     }
 
 
@@ -135,10 +157,9 @@ public class SceneMoreSettings extends AbstractScene{
 
         SettingsManager.longTapToMove = chkLongTapToMove.isChecked();
         SettingsManager.waterTextureEnabled = chkWaterTexture.isChecked();
-        SettingsManager.fastConstructionEnabled = chkFastConstruction.isChecked();
         SettingsManager.leftHandMode = chkLeftHanded.isChecked();
         SettingsManager.resumeButtonEnabled = chkResumeButton.isChecked();
-        SettingsManager.nativeKeyboard = chkNativeKeyboard.isChecked();
+        SettingsManager.automaticTransition = chkAutoTransition.isChecked();
 
         if (SettingsManager.fullScreenMode != chkFullScreen.isChecked()) {
             SettingsManager.fullScreenMode = chkFullScreen.isChecked();
@@ -195,7 +216,7 @@ public class SceneMoreSettings extends AbstractScene{
 
 
     private void createTopLabel() {
-        topLabel = buttonFactory.getButton(generateRectangle(0.1, 0.56, 0.8, 0.25), 312, " ");
+        topLabel = buttonFactory.getButton(generateRectangle(0.1, topLabelPos, 0.8, 0.25), 312, " ");
         topLabel.setTouchable(false);
         topLabel.setAnimation(Animation.up);
     }
@@ -205,11 +226,10 @@ public class SceneMoreSettings extends AbstractScene{
         initChecks();
         chkWaterTexture.appear();
         chkLongTapToMove.appear();
-        chkFastConstruction.appear();
         chkLeftHanded.appear();
         chkResumeButton.appear();
         chkFullScreen.appear();
-        chkNativeKeyboard.appear();
+        chkAutoTransition.appear();
     }
 
 
@@ -227,12 +247,6 @@ public class SceneMoreSettings extends AbstractScene{
         chkLongTapToMove.setHeight(0.055);
         chkLongTapToMove.alignUnderPreviousElement();
         chkLongTapToMove.setTitle("hold_to_march");
-
-        chkFastConstruction = CheckButtonYio.getFreshCheckButton(menuControllerYio);
-        chkFastConstruction.setParent(checksLabel);
-        chkFastConstruction.setHeight(0.055);
-        chkFastConstruction.alignUnderPreviousElement();
-        chkFastConstruction.setTitle("fast_construction");
 
         chkLeftHanded = CheckButtonYio.getFreshCheckButton(menuControllerYio);
         chkLeftHanded.setParent(checksLabel);
@@ -252,17 +266,17 @@ public class SceneMoreSettings extends AbstractScene{
         chkFullScreen.alignUnderPreviousElement();
         chkFullScreen.setTitle("full_screen_mode");
 
-        chkNativeKeyboard = CheckButtonYio.getFreshCheckButton(menuControllerYio);
-        chkNativeKeyboard.setParent(checksLabel);
-        chkNativeKeyboard.setHeight(0.055);
-        chkNativeKeyboard.alignUnderPreviousElement();
-        chkNativeKeyboard.setTitle("system_keyboard");
+        chkAutoTransition = CheckButtonYio.getFreshCheckButton(menuControllerYio);
+        chkAutoTransition.setParent(checksLabel);
+        chkAutoTransition.setHeight(0.055);
+        chkAutoTransition.alignUnderPreviousElement();
+        chkAutoTransition.setTitle("automatic_transition");
     }
 
 
     private void createChecksLabel() {
-        panelHeight = 0.4;
-        double y = 0.53 - panelHeight;
+        panelHeight = 0.34;
+        double y = 0.57 - panelHeight;
         checksLabel = buttonFactory.getButton(generateRectangle(0.1, y, 0.8, panelHeight), 316, " ");
         checksLabel.setTouchable(false);
         checksLabel.setAnimation(Animation.down);
@@ -276,11 +290,6 @@ public class SceneMoreSettings extends AbstractScene{
 
     private void createBackButton() {
         menuControllerYio.spawnBackButton(310, rbBack);
-    }
-
-
-    private void initMetrics() {
-        panelHeight = 0.14;
     }
 
 

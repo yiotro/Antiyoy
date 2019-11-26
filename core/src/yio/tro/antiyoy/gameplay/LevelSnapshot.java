@@ -84,7 +84,7 @@ public class LevelSnapshot {
     private void updateDiplomacyInfo() {
         if (!GameRules.diplomacyEnabled) return;
 
-        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomacyManager diplomacyManager = gameController.fieldManager.diplomacyManager;
         DiplomacyInfoCondensed instance = DiplomacyInfoCondensed.getInstance();
         instance.update(diplomacyManager);
 
@@ -110,14 +110,14 @@ public class LevelSnapshot {
 
 
     private void updateActiveHexesCopy() {
-        for (Hex activeHex : gameController.fieldController.activeHexes) {
+        for (Hex activeHex : gameController.fieldManager.activeHexes) {
             activeHexesCopy.add(activeHex.getSnapshotCopy());
         }
     }
 
 
     private void updateProvincesCopy() {
-        for (Province province : gameController.fieldController.provinces) {
+        for (Province province : gameController.fieldManager.provinces) {
             provincesCopy.add(province.getSnapshotCopy());
         }
     }
@@ -127,7 +127,7 @@ public class LevelSnapshot {
         checkToCreateFieldCopyMatrix();
         for (int i = 0; i < fWidth; i++) {
             for (int j = 0; j < fHeight; j++) {
-                fieldCopy[i][j] = gameController.fieldController.field[i][j].getSnapshotCopy();
+                fieldCopy[i][j] = gameController.fieldManager.field[i][j].getSnapshotCopy();
             }
         }
     }
@@ -141,8 +141,8 @@ public class LevelSnapshot {
 
 
     private void updateMetrics() {
-        fWidth = gameController.fieldController.fWidth;
-        fHeight = gameController.fieldController.fHeight;
+        fWidth = gameController.fieldManager.fWidth;
+        fHeight = gameController.fieldManager.fHeight;
     }
 
 
@@ -151,7 +151,7 @@ public class LevelSnapshot {
 
         if (!gameController.selectionManager.isSomethingSelected()) return;
 
-        Province selectedProvince = gameController.fieldController.selectedProvince;
+        Province selectedProvince = gameController.fieldManager.selectedProvince;
         if (selectedProvince == null) return;
 
         selectionHex = selectedProvince.hexList.get(0);
@@ -159,24 +159,24 @@ public class LevelSnapshot {
 
 
     private void cleanOutEveryHexInField() {
-        gameController.fieldController.cleanOutAllHexesInField();
+        gameController.fieldManager.cleanOutAllHexesInField();
     }
 
 
     private Hex getHexByCopy(Hex copy) {
-        return gameController.fieldController.field[copy.index1][copy.index2];
+        return gameController.fieldManager.field[copy.index1][copy.index2];
     }
 
 
     public void recreate() {
-        gameController.fieldController.clearField();
+        gameController.fieldManager.clearField();
         cleanOutEveryHexInField();
-        gameController.fieldController.clearAnims();
+        gameController.fieldManager.clearAnims();
 
         recreateField();
         recreateActiveHexes();
 
-        gameController.fieldController.detectProvinces();
+        gameController.fieldManager.detectProvinces();
         recreateProvinces();
 
         recreateSelection();
@@ -184,7 +184,7 @@ public class LevelSnapshot {
         recreateReplayBuffer();
         recreateDiplomacy();
 
-        gameController.addAnimHex(gameController.fieldController.field[0][0]);
+        gameController.addAnimHex(gameController.fieldManager.field[0][0]);
         gameController.updateWholeCache = true;
     }
 
@@ -193,7 +193,7 @@ public class LevelSnapshot {
         if (!GameRules.diplomacyEnabled) return;
         if (diplomacyInfo == null) return;
 
-        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomacyManager diplomacyManager = gameController.fieldManager.diplomacyManager;
         DiplomacyInfoCondensed instance = DiplomacyInfoCondensed.getInstance();
         instance.setFull(diplomacyInfo);
         instance.apply(diplomacyManager);
@@ -242,7 +242,7 @@ public class LevelSnapshot {
 
 
     private void recreateActiveHexes() {
-        ListIterator iterator = gameController.fieldController.activeHexes.listIterator();
+        ListIterator iterator = gameController.fieldManager.activeHexes.listIterator();
         for (Hex hex : activeHexesCopy) {
             iterator.add(getHexByCopy(hex));
         }
@@ -254,7 +254,7 @@ public class LevelSnapshot {
         for (int i = 0; i < fWidth; i++) {
             for (int j = 0; j < fHeight; j++) {
 
-                currHex = gameController.fieldController.field[i][j];
+                currHex = gameController.fieldManager.field[i][j];
                 if (!currHex.active) continue;
 
                 if (!currHex.sameFraction(fieldCopy[i][j])) {

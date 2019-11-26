@@ -21,7 +21,7 @@ public class CustomizableListYio extends InterfaceElement {
 
     public MenuControllerYio menuControllerYio;
     public RectangleYio position, viewPosition;
-    private FactorYio appearFactor;
+    public FactorYio appearFactor;
     public boolean factorMoved;
     protected PointYio initialTouch, currentTouch, lastTouch;
     ClickDetector clickDetector;
@@ -38,6 +38,8 @@ public class CustomizableListYio extends InterfaceElement {
     public boolean scrollingEnabled;
     boolean embeddedMode;
     Animation animation;
+    int destroyType;
+    double destroySpeed;
 
 
     public CustomizableListYio(MenuControllerYio menuControllerYio) {
@@ -65,6 +67,8 @@ public class CustomizableListYio extends InterfaceElement {
         scrollingEnabled = true;
         animation = Animation.def;
         embeddedMode = false;
+        destroyType = 2;
+        destroySpeed = 2;
 
         initLongTapDetector();
     }
@@ -88,7 +92,7 @@ public class CustomizableListYio extends InterfaceElement {
     }
 
 
-    private void updateItemDeltas() {
+    public void updateItemDeltas() {
         boolean fm = factorMoved;
         factorMoved = true;
         updateViewPosition();
@@ -116,9 +120,8 @@ public class CustomizableListYio extends InterfaceElement {
     }
 
 
-    public CustomizableListYio clearItems() {
+    public void clearItems() {
         items.clear();
-        return this;
     }
 
 
@@ -257,13 +260,19 @@ public class CustomizableListYio extends InterfaceElement {
     @Override
     public void destroy() {
         appearFactor.setDy(0);
-        appearFactor.destroy(2, 2);
+        appearFactor.destroy(destroyType, destroySpeed);
         onDestroy();
     }
 
 
     private void onDestroy() {
         //
+    }
+
+
+    public void setDestroyParameters(int type, double speed) {
+        destroyType = type;
+        destroySpeed = speed;
     }
 
 

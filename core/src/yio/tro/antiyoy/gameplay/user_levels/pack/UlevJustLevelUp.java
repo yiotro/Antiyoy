@@ -18,6 +18,6 @@ public class UlevJustLevelUp extends AbstractUserLevel{
 
     @Override
     public String getAuthor() {
-        return "Isaev Casha";
+        return "sasha123";
     }
 }

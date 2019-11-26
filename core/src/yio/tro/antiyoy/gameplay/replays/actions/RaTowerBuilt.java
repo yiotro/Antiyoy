@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.gameplay.replays.actions;
 
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Obj;
@@ -32,9 +32,9 @@ public class RaTowerBuilt extends RepAction{
 
 
     @Override
-    public void loadInfo(FieldController fieldController, String source) {
+    public void loadInfo(FieldManager fieldManager, String source) {
         ArrayList<String> strings = convertSourceStringToList(source);
-        hex = getHexByTwoTokens(fieldController, strings.get(0), strings.get(1));
+        hex = getHexByTwoTokens(fieldManager, strings.get(0), strings.get(1));
 
         strong = Boolean.valueOf(strings.get(2));
     }
@@ -43,9 +43,9 @@ public class RaTowerBuilt extends RepAction{
     @Override
     public void perform(GameController gameController) {
         if (strong) {
-            gameController.fieldController.addSolidObject(hex, Obj.STRONG_TOWER);
+            gameController.fieldManager.addSolidObject(hex, Obj.STRONG_TOWER);
         } else {
-            gameController.fieldController.addSolidObject(hex, Obj.TOWER);
+            gameController.fieldManager.addSolidObject(hex, Obj.TOWER);
         }
     }
 

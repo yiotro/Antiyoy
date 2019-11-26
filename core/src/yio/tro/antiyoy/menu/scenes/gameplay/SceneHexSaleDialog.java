@@ -49,7 +49,7 @@ public class SceneHexSaleDialog extends AbstractModalScene {
 
 
     private void loadValues() {
-        DiplomacyManager diplomacyManager = getGameController().fieldController.diplomacyManager;
+        DiplomacyManager diplomacyManager = getGameController().fieldManager.diplomacyManager;
         int price = diplomacyManager.calculatePriceForHexes(dialog.getHexesToSell());
         int indexByPrice = getIndexByPrice(price);
         moneySlider.setValueIndex(indexByPrice);

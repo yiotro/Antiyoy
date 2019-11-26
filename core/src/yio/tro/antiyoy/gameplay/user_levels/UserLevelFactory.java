@@ -33,31 +33,51 @@ public class UserLevelFactory {
 
     private void initLevels() {
         // 10
-        add(new UlevSpikes());
-        add(new UlevDino());
-        add(new UlevRiseOfCivilizations());
-        add(new UlevRescueForest());
-        add(new UlevNeighbourhood());
-        add(new Ulev2030SouthAmerica());
-        add(new UlevDoubleLanes());
-        add(new UlevJustLevelUp());
-        add(new UlevBackyardSale());
-        add(new UlevForJasmin());
-        add(new UlevAf3());
-        add(new UlevInDilemma());
-        add(new UlevDota());
-        add(new UlevHardhex());
-        add(new UlevDrunken());
-        add(new UlevLockedIn());
-        add(new UlevDa1());
-        add(new UlevDa2());
-        add(new UlevLuckyGreenOne());
-        add(new UlevIslandOfUnity());
-        add(new UlevAf2());
-        add(new UlevTripleThreat());
-        add(new UlevYellowBarrier());
-        add(new UlevDominicAjducic());
-        add(new UlevUsa1793());
+        addArray(new AbstractLegacyUserLevel[]{
+                new UlevEatenAlive(),
+                new UlevConjunctions(),
+                new UlevMiniTournament(),
+                new UlevFromCenter(),
+                new UlevUnfairIslands(),
+                new UlevWindmill(),
+                new UlevDmOne(),
+                new UlevLightAndDarkness(),
+                new UlevHolyEurope(),
+                new UlevDoorway(),
+                new UlevJustLevelTwo(),
+                new UlevSaveKooNation(),
+                new UlevIvanKo(),
+                new UlevSecondWorldFromRusky(),
+                new UlevJustLevelThree(),
+                new UlevBelgium(),
+                new UlevBigNeighbor(),
+                new UlevSpikes(),
+                new UlevDino(),
+                new UlevRiseOfCivilizations(),
+                new UlevRescueForest(),
+                new UlevNeighbourhood(),
+                new Ulev2030SouthAmerica(),
+                new UlevDoubleLanes(),
+                new UlevThinkTwice(),
+                new UlevJustLevelUp(),
+                new UlevBackyardSale(),
+                new UlevForJasmin(),
+                new UlevAf3(),
+                new UlevInDilemma(),
+                new UlevDota(),
+                new UlevHardhex(),
+                new UlevDrunken(),
+                new UlevLockedIn(),
+                new UlevDa1(),
+                new UlevDa2(),
+                new UlevLuckyGreenOne(),
+                new UlevIslandOfUnity(),
+                new UlevAf2(),
+                new UlevTripleThreat(),
+                new UlevYellowBarrier(),
+                new UlevGekokujo(),
+                new UlevUsa1793(),
+        });
 
         // 7
         add(new UlevSpaghettiMonster());
@@ -268,6 +288,13 @@ public class UserLevelFactory {
         add(new UlevOleg2());
         add(new UlevMirage212());
         add(new UlevConquestOfItalicPeninsula());
+    }
+
+
+    private void addArray(AbstractLegacyUserLevel array[]) {
+        for (AbstractLegacyUserLevel abstractLegacyUserLevel : array) {
+            add(abstractLegacyUserLevel);
+        }
     }
 
 

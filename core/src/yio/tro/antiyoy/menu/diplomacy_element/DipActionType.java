@@ -2,6 +2,8 @@ package yio.tro.antiyoy.menu.diplomacy_element;
 
 public enum DipActionType {
 
+    transfer_money,
+
     like,
 
     dislike,
@@ -10,10 +12,10 @@ public enum DipActionType {
 
     info,
 
-    transfer_money,
-
     buy_hexes,
 
     mail,
+
+    attack,
 
 }

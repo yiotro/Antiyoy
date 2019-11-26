@@ -43,6 +43,7 @@ public class CampaignLevelFactory {
                 new LevelPackEight(this),
                 new LevelPackNine(this),
                 new LevekPackTen(this),
+                new LevelPackEleven(this),
         };
         index = -1;
     }

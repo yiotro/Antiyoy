@@ -100,7 +100,7 @@ public class FriendshipDialog extends AbstractDiplomaticDialog {
         }
 
         GameController gameController = menuControllerYio.yioGdxGame.gameController;
-        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomacyManager diplomacyManager = gameController.fieldManager.diplomacyManager;
         int dotations = diplomacyManager.calculateDotationsForFriendship(sender, recipient);
 
         if (recipient.isMain()) {
@@ -114,7 +114,7 @@ public class FriendshipDialog extends AbstractDiplomaticDialog {
     @Override
     protected void onYesButtonPressed() {
         GameController gameController = menuControllerYio.yioGdxGame.gameController;
-        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomacyManager diplomacyManager = gameController.fieldManager.diplomacyManager;
         diplomacyManager.requestedFriendship(sender, recipient);
 
         if (message != null && message.arg1 != null) {

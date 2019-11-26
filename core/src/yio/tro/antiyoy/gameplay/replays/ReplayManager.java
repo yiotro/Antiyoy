@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.gameplay.replays;
 
 import yio.tro.antiyoy.SettingsManager;
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
@@ -50,9 +50,9 @@ public class ReplayManager {
     }
 
 
-    public void onLoadingFromSlotFinished(FieldController fieldController) {
+    public void onLoadingFromSlotFinished(FieldManager fieldManager) {
         if (replay != null) {
-            replay.updateActionsFromString(fieldController);
+            replay.updateActionsFromString(fieldManager);
         }
     }
 

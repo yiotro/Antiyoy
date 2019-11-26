@@ -17,7 +17,6 @@ public abstract class MenuRender {
 
     public static RenderLevelSelector renderLevelSelector = new RenderLevelSelector();
     public static RenderSpeedPanel renderSpeedPanel = new RenderSpeedPanel();
-    public static RenderReplaySelector renderReplaySelector = new RenderReplaySelector();
     public static RenderFastConstructionPanel renderFastConstructionPanel = new RenderFastConstructionPanel();
     public static RenderFireworksElement renderFireworksElement = new RenderFireworksElement();
     public static RenderNotificationElement renderNotificationElement = new RenderNotificationElement();
@@ -48,6 +47,10 @@ public abstract class MenuRender {
     public static RenderIncomeGraphElement renderIncomeGraphElement = new RenderIncomeGraphElement();
     public static RenderColorHolderElement renderColorHolderElement = new RenderColorHolderElement();
     public static RenderNothing renderNothing = new RenderNothing();
+    public static RenderMoneyViewElement renderMoneyViewElement = new RenderMoneyViewElement();
+    public static RenderProfitDetailItem renderProfitDetailItem = new RenderProfitDetailItem();
+    public static RenderReplayListItem renderReplayListItem = new RenderReplayListItem();
+    public static RenderSimpleDipEntityItem renderSimpleDipEntityItem = new RenderSimpleDipEntityItem();
 
     protected MenuViewYio menuViewYio;
     protected SpriteBatch batch;

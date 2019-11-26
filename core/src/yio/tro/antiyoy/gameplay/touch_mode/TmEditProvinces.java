@@ -95,9 +95,9 @@ public class TmEditProvinces extends TouchMode{
 
     @Override
     public boolean onClick() {
-        gameController.fieldController.updateFocusedHex();
+        gameController.fieldManager.updateFocusedHex();
         EditorProvinceManager editorProvinceManager = gameController.levelEditor.editorProvinceManager;
-        Hex focusedHex = gameController.fieldController.focusedHex;
+        Hex focusedHex = gameController.fieldManager.focusedHex;
         EditorProvinceData provinceByHex = editorProvinceManager.getProvinceByHex(focusedHex);
         if (provinceByHex != null) {
             gameController.highlightManager.highlightEditorProvince(provinceByHex);

@@ -54,14 +54,14 @@ public class RenderMoveZone extends GameRender {
     private void prepare() {
         c = batchMovable.getColor();
         hvSize = gameView.hexViewSize;
-        moveZoneManager = gameController.fieldController.moveZoneManager;
+        moveZoneManager = gameController.fieldManager.moveZoneManager;
         moveZone = moveZoneManager.moveZone;
         appearFactor = moveZoneManager.appearFactor;
     }
 
 
     private void renderSelectionBorder() {
-        if (gameController.fieldController.selectedHexes.size() == 0) return;
+        if (gameController.fieldManager.selectedHexes.size() == 0) return;
 
         batchMovable.setColor(c.r, c.g, c.b, 1f - appearFactor.get());
 

@@ -56,15 +56,12 @@ public class DiplomaticLog {
         DiplomaticMessage message = findMessage(key);
         if (message == null) return;
 
-        int price;
         switch (message.type) {
             case friendship_proposal:
-                Scenes.sceneFriendshipDialog.create();
-                Scenes.sceneFriendshipDialog.dialog.setValues(message.sender, message.recipient, message);
+                applyFriendshipProposal(message);
                 break;
             case friendship_ended:
-                Scenes.sceneFriendshipDialog.create();
-                Scenes.sceneFriendshipDialog.dialog.setValues(message.sender, message.recipient, message);
+                applyFriendshipEnded(message);
                 break;
             case friendship_canceled:
                 // nothing
@@ -73,8 +70,7 @@ public class DiplomaticLog {
                 // nothing
                 break;
             case stop_war:
-                Scenes.sceneStopWarDialog.create();
-                Scenes.sceneStopWarDialog.dialog.setEntities(message.sender, message.recipient);
+                applyStopWar(message);
                 break;
             case black_marked:
                 // nothing
@@ -83,23 +79,68 @@ public class DiplomaticLog {
                 // nothing
                 break;
             case hex_purchase:
-                ArrayList<Hex> hexesToBuy = diplomacyManager.convertStringToPurchaseList(message.arg1);
-                price = Integer.valueOf(message.arg2);
-                Scenes.sceneAgreeToSellHexes.create();
-                Scenes.sceneAgreeToSellHexes.dialog.setData(message.sender, hexesToBuy, price);
+                applyHexPurchase(message);
                 break;
             case hex_sale:
-                ArrayList<Hex> hexList = diplomacyManager.convertStringToPurchaseList(message.arg1);
-                price = Integer.valueOf(message.arg2);
-                Scenes.sceneAgreeToBuyHexes.create();
-                Scenes.sceneAgreeToBuyHexes.dialog.setData(message.recipient, hexList, price);
+                applyHexSale(message);
                 break;
             case message:
-                Scenes.sceneDipMessage.showMessage(message.sender.capitalName + ": ", message.arg1);
+                applyReadCustomMessage(message);
+                break;
+            case attack_proposition:
+                applyReceiveAttackPropositionDialog(message);
                 break;
         }
 
         removeMessage(message);
+    }
+
+
+    private void applyReadCustomMessage(DiplomaticMessage message) {
+        Scenes.sceneDipMessage.showMessage(message.sender.capitalName + ": ", message.arg1);
+    }
+
+
+    private void applyHexSale(DiplomaticMessage message) {
+        int price;ArrayList<Hex> hexList = diplomacyManager.convertStringToPurchaseList(message.arg1);
+        price = Integer.valueOf(message.arg2);
+        Scenes.sceneAgreeToBuyHexes.create();
+        Scenes.sceneAgreeToBuyHexes.dialog.setData(message.recipient, hexList, price);
+    }
+
+
+    private void applyHexPurchase(DiplomaticMessage message) {
+        int price;ArrayList<Hex> hexesToBuy = diplomacyManager.convertStringToPurchaseList(message.arg1);
+        price = Integer.valueOf(message.arg2);
+        Scenes.sceneAgreeToSellHexes.create();
+        Scenes.sceneAgreeToSellHexes.dialog.setData(message.sender, hexesToBuy, price);
+    }
+
+
+    private void applyStopWar(DiplomaticMessage message) {
+        Scenes.sceneStopWarDialog.create();
+        Scenes.sceneStopWarDialog.dialog.setEntities(message.sender, message.recipient);
+    }
+
+
+    private void applyFriendshipEnded(DiplomaticMessage message) {
+        Scenes.sceneFriendshipDialog.create();
+        Scenes.sceneFriendshipDialog.dialog.setValues(message.sender, message.recipient, message);
+    }
+
+
+    private void applyFriendshipProposal(DiplomaticMessage message) {
+        Scenes.sceneFriendshipDialog.create();
+        Scenes.sceneFriendshipDialog.dialog.setValues(message.sender, message.recipient, message);
+    }
+
+
+    void applyReceiveAttackPropositionDialog(DiplomaticMessage message) {
+        Scenes.sceneReceiveAttackPropositionDialog.create();
+        int price = Integer.valueOf(message.arg1);
+        int targetFraction = Integer.valueOf(message.arg2);
+        DiplomaticEntity targetEntity = diplomacyManager.getEntity(targetFraction);
+        Scenes.sceneReceiveAttackPropositionDialog.dialog.setData(message.sender, message.recipient, targetEntity, price);
     }
 
 
@@ -141,7 +182,7 @@ public class DiplomaticLog {
     void checkToClearAbuseMessages() {
         DiplomaticEntity mainEntity = diplomacyManager.getMainEntity();
         boolean oneFriendAwayFromDiplomaticVictory = mainEntity.isOneFriendAwayFromDiplomaticVictory();
-        int turnsMade = diplomacyManager.fieldController.gameController.matchStatistics.turnsMade;
+        int turnsMade = diplomacyManager.fieldManager.gameController.matchStatistics.turnsMade;
 
         for (int i = messages.size() - 1; i >= 0; i--) {
             DiplomaticMessage diplomaticMessage = messages.get(i);
@@ -213,7 +254,7 @@ public class DiplomaticLog {
 
 
     public boolean hasSomethingToRead() {
-        GameController gameController = diplomacyManager.fieldController.gameController;
+        GameController gameController = diplomacyManager.fieldManager.gameController;
         if (!gameController.isPlayerTurn()) return false;
 
         DiplomaticEntity mainEntity = diplomacyManager.getMainEntity();
@@ -242,6 +283,18 @@ public class DiplomaticLog {
         messages.add(next);
 
         return next;
+    }
+
+
+    public DiplomaticMessage getSimilarMessage(DipMessageType type, DiplomaticEntity sender, DiplomaticEntity recipient) {
+        for (DiplomaticMessage message : messages) {
+            if (message.type != type) continue;
+            if (message.sender != sender) continue;
+            if (message.recipient != recipient) continue;
+            return message;
+        }
+
+        return null;
     }
 
 

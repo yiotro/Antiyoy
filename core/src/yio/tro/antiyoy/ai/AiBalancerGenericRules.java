@@ -21,7 +21,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
 
 
     private void updateSortConditions() {
-        playerHexCount = gameController.fieldController.getPlayerHexCount();
+        playerHexCount = gameController.fieldManager.getPlayerHexCount();
     }
 
 
@@ -37,7 +37,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
 
 
     private void checkToKillRedundantUnits() {
-        for (Province province : gameController.fieldController.provinces) {
+        for (Province province : gameController.fieldManager.provinces) {
             checkToKillRedundantUnits(province);
         }
     }
@@ -59,9 +59,10 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
 
 
     private void killRedundantUnits(Province province) {
-        while (province.money >= GameRules.PRICE_UNIT && province.getBalance() >= 0) {
+        while (province.money >= GameRules.PRICE_UNIT && province.getProfit() >= 0) {
             Unit unitWithMaxStrengh = findUnitWithMaxStrenghExceptKnight(province);
             if (unitWithMaxStrengh == null) break;
+            if (!canProvinceBuildUnit(province, 1)) break;
             buildUnit(province, unitWithMaxStrengh.currentHex, 1);
         }
     }
@@ -179,7 +180,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
         gameController.moveUnit(unit, moveZone.get(random.nextInt(moveZone.size())), province);
 
         // place tower
-        gameController.fieldController.buildTower(province, gameController.fieldController.field[x][y]);
+        gameController.fieldManager.buildTower(province, gameController.fieldManager.field[x][y]);
     }
 
 

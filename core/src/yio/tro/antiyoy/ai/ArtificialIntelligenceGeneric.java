@@ -32,7 +32,7 @@ public abstract class ArtificialIntelligenceGeneric extends ArtificialIntelligen
             if (!isOkToBuildNewFarm(province)) return;
             Hex hex = findGoodHexForFarm(province);
             if (hex == null) return;
-            gameController.fieldController.buildFarm(province, hex);
+            gameController.fieldManager.buildFarm(province, hex);
         }
     }
 

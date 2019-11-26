@@ -187,7 +187,7 @@ public class IncomeGraphElement extends InterfaceElement{
 
     private void updateIncomeArray() {
         GameController gameController = menuControllerYio.yioGdxGame.gameController;
-        incomeArray = gameController.fieldController.getIncomeArray();
+        incomeArray = gameController.fieldManager.getIncomeArray();
     }
 
 

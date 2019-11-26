@@ -107,18 +107,18 @@ public class LoadingManager {
         GameRules.campaignMode = true;
         CampaignProgressManager.getInstance().setCurrentLevelIndex(parameters.campaignLevelIndex);
 
-        gameController.fieldController.createFieldMatrix();
+        gameController.fieldManager.createFieldMatrix();
         gameController.decodeManager.perform(parameters.levelCode);
         GameRules.fogOfWarEnabled = GameRules.editorFog;
         GameRules.diplomacyEnabled = GameRules.editorDiplomacy;
-        gameController.fieldController.detectProvinces();
+        gameController.fieldManager.detectProvinces();
         gameSaver.detectRules();
     }
 
 
     private void createEditorImport() {
         GameRules.inEditorMode = true;
-        gameController.fieldController.createFieldMatrix();
+        gameController.fieldManager.createFieldMatrix();
         gameController.decodeManager.perform(parameters.levelCode);
     }
 
@@ -127,7 +127,7 @@ public class LoadingManager {
         GameRules.campaignMode = false;
         GameRules.userLevelMode = true;
         GameRules.ulKey = parameters.ulKey;
-        gameController.fieldController.createFieldMatrix();
+        gameController.fieldManager.createFieldMatrix();
         gameController.decodeManager.perform(parameters.levelCode);
         GameRules.fogOfWarEnabled = GameRules.editorFog;
         GameRules.diplomacyEnabled = GameRules.editorDiplomacy;
@@ -139,7 +139,7 @@ public class LoadingManager {
         parameters.editorColorFixApplied = false;
         applyEditorChosenColorFix();
         gameSaver.detectRules();
-        gameController.fieldController.onUserLevelLoaded();
+        gameController.fieldManager.onUserLevelLoaded();
     }
 
 
@@ -162,7 +162,7 @@ public class LoadingManager {
 
         gameController.checkToEnableAiOnlyMode();
         gameController.replayManager.setReplay(parameters.replay);
-        gameController.replayManager.onLoadingFromSlotFinished(gameController.fieldController);
+        gameController.replayManager.onLoadingFromSlotFinished(gameController.fieldManager);
         gameController.stopAllUnitsFromJumping();
     }
 
@@ -194,7 +194,7 @@ public class LoadingManager {
 
     public void applyEditorChosenColorFix() {
         if (gameController.colorsManager.colorOffset == 0) {
-            gameController.fieldController.detectProvinces();
+            gameController.fieldManager.detectProvinces();
             return;
         }
         if (parameters.editorColorFixApplied) {
@@ -242,13 +242,13 @@ public class LoadingManager {
 
     private void generateMapForSlayRules() {
         int c = 0;
-        FieldController fieldController = gameController.fieldController;
+        FieldManager fieldManager = gameController.fieldManager;
         long startTime = System.currentTimeMillis();
         while (c < 6 && System.currentTimeMillis() - startTime < MAX_LOADING_DELAY) {
-            fieldController.clearAnims();
-            fieldController.createField();
-            fieldController.generateMap(true);
-            if (fieldController.getPredictionForWinner() == 0) break;
+            fieldManager.clearAnims();
+            fieldManager.createField();
+            fieldManager.generateMap(true);
+            if (fieldManager.getPredictionForWinner() == 0) break;
             c++;
         }
     }
@@ -256,13 +256,13 @@ public class LoadingManager {
 
     private void generateMapForGenericRules() {
         int c = 0;
-        FieldController fieldController = gameController.fieldController;
+        FieldManager fieldManager = gameController.fieldManager;
         long startTime = System.currentTimeMillis();
         while (c < 6 && System.currentTimeMillis() - startTime < MAX_LOADING_DELAY) {
-            fieldController.clearAnims();
-            fieldController.createField();
-            fieldController.generateMap(false);
-            if (fieldController.areConditionsGoodForPlayer()) break;
+            fieldManager.clearAnims();
+            fieldManager.createField();
+            fieldManager.generateMap(false);
+            if (fieldManager.areConditionsGoodForPlayer()) break;
             c++;
         }
     }
@@ -284,7 +284,7 @@ public class LoadingManager {
 
         GameRules.campaignMode = true;
         CampaignProgressManager.getInstance().setCurrentLevelIndex(0);
-        gameController.fieldController.giveMoneyToPlayerProvinces(90);
+        gameController.fieldManager.giveMoneyToPlayerProvinces(90);
     }
 
 
@@ -296,7 +296,7 @@ public class LoadingManager {
 
     private void createSkirmish() {
         GameRules.genProvinces = parameters.genProvinces;
-        gameController.fieldController.generateMap();
+        gameController.fieldManager.generateMap();
         gameController.checkToEnableAiOnlyMode();
     }
 
@@ -317,7 +317,7 @@ public class LoadingManager {
         Scenes.sceneGameOverlay.create();
 
         if (GameRules.diplomacyEnabled) {
-            gameController.fieldController.diplomacyManager.checkForWinConditionsMessage();
+            gameController.fieldManager.diplomacyManager.checkForWinConditionsMessage();
             hideDeadDiplomaticEntities();
         }
 
@@ -327,7 +327,7 @@ public class LoadingManager {
 
 
     private void hideDeadDiplomaticEntities() {
-        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomacyManager diplomacyManager = gameController.fieldManager.diplomacyManager;
         for (DiplomaticEntity entity : diplomacyManager.entities) {
             entity.updateAliveState();
             if (entity.alive) continue;
@@ -351,7 +351,7 @@ public class LoadingManager {
         applyLoadingParameters();
 //        parameters.showInConsole();
 
-        gameController.fieldController.createField();
+        gameController.fieldManager.createField();
         gameController.yioGdxGame.gameView.rList.renderBackgroundCache.setUpdateAllowed(false);
     }
 

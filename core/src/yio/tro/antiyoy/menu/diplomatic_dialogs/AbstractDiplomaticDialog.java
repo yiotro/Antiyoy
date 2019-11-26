@@ -174,10 +174,8 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
 
 
     protected void moveLabels() {
-        if (factorMoved) {
-            for (AcLabel label : labels) {
-                label.updatePosition();
-            }
+        for (AcLabel label : labels) {
+            label.updatePosition();
         }
     }
 
@@ -371,7 +369,7 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
         if (!areButtonsEnabled()) return false;
 
         for (AcButton button : buttons) {
-            if (isInSingleButtonMode() && button.actionType != AcActionType.yes) continue;
+            if (isInSingleButtonMode() && button.actionType == AcActionType.no) continue;
 
             if (button.isTouched(currentTouch)) {
                 button.select();

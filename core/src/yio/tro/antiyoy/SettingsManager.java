@@ -22,6 +22,8 @@ public class SettingsManager {
     public static boolean cityNamesEnabled;
     public static boolean fullScreenMode;
     public static boolean nativeKeyboard;
+    public static boolean useCityNamesList;
+    public static boolean automaticTransition;
 
 
     public static void initialize() {
@@ -46,6 +48,7 @@ public class SettingsManager {
     public void loadAllSettings() {
         loadMainSettings();
         loadMoreSettings();
+        loadCityNamesOptions();
     }
 
 
@@ -59,11 +62,11 @@ public class SettingsManager {
         longTapToMove = prefs.getBoolean("long_tap_to_move", true);
         waterTextureEnabled = prefs.getBoolean("water_texture", false);
         replaysEnabled = true;
-        fastConstructionEnabled = prefs.getBoolean("fast_construction", false);
         leftHandMode = prefs.getBoolean("left_hand_mode", false);
         resumeButtonEnabled = prefs.getBoolean("resume_button", getDefaultValueForResumeButtonOption());
         fullScreenMode = prefs.getBoolean("full_screen", false);
-        nativeKeyboard = prefs.getBoolean("native_keyboard", true);
+        nativeKeyboard = true;
+        automaticTransition = prefs.getBoolean("automatic_transition", false);
     }
 
 
@@ -78,10 +81,17 @@ public class SettingsManager {
         autosave = convertToBoolean(prefs.getInteger("autosave", 1));
         musicEnabled = prefs.getBoolean("music", false);
         askToEndTurn = convertToBoolean(prefs.getInteger("ask_to_end_turn", 0));
-        cityNamesEnabled = convertToBoolean(prefs.getInteger("city_names", 0));
         soundEnabled = convertToBoolean(prefs.getInteger("sound", 0));
+        fastConstructionEnabled = prefs.getBoolean("fast_construction", false);
 
         MusicManager.getInstance().onMusicStatusChanged();
+    }
+
+
+    private void loadCityNamesOptions() {
+        Preferences prefs = getPrefs();
+        cityNamesEnabled = convertToBoolean(prefs.getInteger("city_names", 0));
+        useCityNamesList = prefs.getBoolean("use_city_names_list", true);
     }
 
 
@@ -107,12 +117,19 @@ public class SettingsManager {
         prefs.putInteger("sound", convertToInteger(soundEnabled));
         prefs.putInteger("autosave", convertToInteger(autosave));
         prefs.putInteger("ask_to_end_turn", convertToInteger(askToEndTurn));
-        prefs.putInteger("city_names", convertToInteger(cityNamesEnabled));
         prefs.putBoolean("music", musicEnabled);
+        prefs.putBoolean("fast_construction", fastConstructionEnabled);
 
         prefs.flush();
 
         return false;
+    }
+
+
+    public void saveCityNamesOptions() {
+        Preferences prefs = getPrefs();
+        prefs.putInteger("city_names", convertToInteger(cityNamesEnabled));
+        prefs.putBoolean("use_city_names_list", useCityNamesList);
     }
 
 
@@ -123,11 +140,10 @@ public class SettingsManager {
         prefs.putInteger("sensitivity", (int) (sensitivity * 6));
         prefs.putBoolean("water_texture", waterTextureEnabled);
         prefs.putBoolean("long_tap_to_move", longTapToMove);
-        prefs.putBoolean("fast_construction", fastConstructionEnabled);
         prefs.putBoolean("left_hand_mode", leftHandMode);
         prefs.putBoolean("resume_button", resumeButtonEnabled);
         prefs.putBoolean("full_screen", fullScreenMode);
-        prefs.putBoolean("native_keyboard", nativeKeyboard);
+        prefs.putBoolean("automatic_transition", automaticTransition);
 
         prefs.flush();
     }

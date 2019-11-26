@@ -18,7 +18,7 @@ public class SceneSettings extends AbstractScene{
     private CheckButtonYio chkAutosave;
     private CheckButtonYio chkMusic;
     private CheckButtonYio chkTurnEnd;
-    private CheckButtonYio chkCityNames;
+    private CheckButtonYio chkFastConstruction;
     private Reaction rbBack;
     boolean initialized;
 
@@ -94,7 +94,7 @@ public class SceneSettings extends AbstractScene{
         chkMusic.appear();
         chkAutosave.appear();
         chkTurnEnd.appear();
-        chkCityNames.appear();
+        chkFastConstruction.appear();
     }
 
 
@@ -123,10 +123,10 @@ public class SceneSettings extends AbstractScene{
         chkTurnEnd.alignUnderPreviousElement();
         chkTurnEnd.setTitle(getString("ask_to_end_turn"));
 
-        chkCityNames = CheckButtonYio.getFreshCheckButton(menuControllerYio);
-        chkCityNames.setParent(label);
-        chkCityNames.alignUnderPreviousElement();
-        chkCityNames.setTitle(getString("city_names"));
+        chkFastConstruction = CheckButtonYio.getFreshCheckButton(menuControllerYio);
+        chkFastConstruction.setParent(label);
+        chkFastConstruction.alignUnderPreviousElement();
+        chkFastConstruction.setTitle(getString("fast_construction"));
     }
 
 
@@ -176,7 +176,7 @@ public class SceneSettings extends AbstractScene{
     public void loadValues() {
         chkAutosave.setChecked(SettingsManager.autosave);
         chkMusic.setChecked(SettingsManager.musicEnabled);
-        chkCityNames.setChecked(SettingsManager.cityNamesEnabled);
+        chkFastConstruction.setChecked(SettingsManager.fastConstructionEnabled);
         chkTurnEnd.setChecked(SettingsManager.askToEndTurn);
         chkSound.setChecked(SettingsManager.soundEnabled);
     }
@@ -185,9 +185,9 @@ public class SceneSettings extends AbstractScene{
     public void applyValues() {
         SettingsManager.autosave = chkAutosave.isChecked();
         SettingsManager.musicEnabled = chkMusic.isChecked();
-        SettingsManager.cityNamesEnabled = chkCityNames.isChecked();
         SettingsManager.askToEndTurn = chkTurnEnd.isChecked();
         SettingsManager.soundEnabled = chkSound.isChecked();
+        SettingsManager.fastConstructionEnabled = chkFastConstruction.isChecked();
     }
 
 

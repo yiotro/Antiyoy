@@ -30,12 +30,10 @@ public class RulesetGeneric extends Ruleset{
             return;
         }
 
-        Province provinceByHex = gameController.fieldController.getProvinceByHex(hex);
+        Province provinceByHex = gameController.fieldManager.getProvinceByHex(hex);
         if (provinceByHex != null) {
             provinceByHex.money += GameRules.TREE_CUT_REWARD;
         }
-
-        gameController.fieldController.updateSelectedProvinceMoney();
     }
 
 
@@ -77,7 +75,6 @@ public class RulesetGeneric extends Ruleset{
         if (hex.objectInside == Obj.STRONG_TOWER) return GameRules.TAX_STRONG_TOWER;
 
         return 0;
-
     }
 
 
@@ -112,8 +109,6 @@ public class RulesetGeneric extends Ruleset{
         if (provinceByHex != null) {
             provinceByHex.money += GameRules.TREE_CUT_REWARD;
         }
-
-        gameController.selectionManager.updateSelectedProvinceMoney();
     }
 
 

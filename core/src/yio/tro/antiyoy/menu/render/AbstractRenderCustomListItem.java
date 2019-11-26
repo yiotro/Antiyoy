@@ -1,5 +1,7 @@
 package yio.tro.antiyoy.menu.render;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.customizable_list.AbstractCustomListItem;
 import yio.tro.antiyoy.stuff.GraphicsYio;
@@ -46,7 +48,11 @@ public abstract class AbstractRenderCustomListItem extends MenuRender{
 
 
     protected void renderTextOptimized(RenderableTextYio renderableTextYio, double alpha) {
+        BitmapFont font = renderableTextYio.font;
+        Color fontColor = font.getColor();
+        font.setColor(Color.BLACK);
         GraphicsYio.renderTextOptimized(batch, getBlackPixel(), renderableTextYio, (float) alpha);
+        font.setColor(fontColor);
     }
 
 }

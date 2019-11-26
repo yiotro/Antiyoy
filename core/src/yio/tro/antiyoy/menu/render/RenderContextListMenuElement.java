@@ -39,7 +39,7 @@ public class RenderContextListMenuElement extends MenuRender{
         GraphicsYio.setBatchAlpha(batch, 0.15 * f);
         renderBlackout();
 
-        GraphicsYio.setBatchAlpha(batch, f);
+        GraphicsYio.setBatchAlpha(batch, 1);
         renderBackground();
         renderItems();
 

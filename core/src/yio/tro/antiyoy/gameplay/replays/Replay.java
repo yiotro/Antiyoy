@@ -45,8 +45,8 @@ public class Replay {
         GameSaver gameSaver = gameController.gameSaver;
         int indexOf = initialLevelString.indexOf("/");
         gameSaver.setActiveHexesString(initialLevelString.substring(indexOf + 1));
-        gameController.fieldController.clearField();
-        gameController.fieldController.cleanOutAllHexesInField();
+        gameController.fieldManager.clearField();
+        gameController.fieldManager.cleanOutAllHexesInField();
         gameSaver.createHexStrings();
         gameSaver.recreateMap();
     }
@@ -169,7 +169,7 @@ public class Replay {
     }
 
 
-    public void updateActionsFromString(FieldController fieldController) {
+    public void updateActionsFromString(FieldManager fieldManager) {
         if (stringActions == null) return;
 
         StringTokenizer tokenizer = new StringTokenizer(stringActions, "#");
@@ -180,7 +180,7 @@ public class Replay {
             int indexOfMinus = token.indexOf("-");
             int actionType = Integer.valueOf(token.substring(0, indexOfMinus));
             RepAction action = factory.createAction(actionType);
-            action.loadInfo(fieldController, token.substring(indexOfMinus + 1));
+            action.loadInfo(fieldManager, token.substring(indexOfMinus + 1));
             addAction(action);
         }
 

@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.gameplay.replays.actions;
 
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Obj;
@@ -30,15 +30,15 @@ public class RaPineSpawned extends RepAction{
 
 
     @Override
-    public void loadInfo(FieldController fieldController, String source) {
+    public void loadInfo(FieldManager fieldManager, String source) {
         ArrayList<String> strings = convertSourceStringToList(source);
-        hex = getHexByTwoTokens(fieldController, strings.get(0), strings.get(1));
+        hex = getHexByTwoTokens(fieldManager, strings.get(0), strings.get(1));
     }
 
 
     @Override
     public void perform(GameController gameController) {
-        gameController.fieldController.addSolidObject(hex, Obj.PINE);
+        gameController.fieldManager.addSolidObject(hex, Obj.PINE);
     }
 
 

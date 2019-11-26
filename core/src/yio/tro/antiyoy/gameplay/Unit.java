@@ -98,11 +98,11 @@ public class Unit implements EncodeableYio{
         ArrayList<Hex> moveZone = gameController.detectMoveZone(currentHex, strength, GameRules.UNIT_MOVE_LIMIT);
         if (moveZone.size() == 0) return;
         double minDistance, currentDistance;
-        minDistance = FieldController.distanceBetweenHexes(moveZone.get(0), target);
+        minDistance = FieldManager.distanceBetweenHexes(moveZone.get(0), target);
         Hex closestHex = moveZone.get(0);
         for (Hex hex : moveZone) {
             if (!hex.sameFraction(currentHex) || !hex.nothingBlocksWayForUnit()) continue;
-            currentDistance = FieldController.distanceBetweenHexes(target, hex);
+            currentDistance = FieldManager.distanceBetweenHexes(target, hex);
             if (currentDistance >= minDistance) continue;
             minDistance = currentDistance;
             closestHex = hex;

@@ -163,6 +163,8 @@ public class EditorProvinceData implements ReusableYio, EncodeableYio{
     public boolean containsInvalidSymbols() {
         for (int i = 0; i < name.length(); i++) {
             char c = name.charAt(i);
+            if (c == ' ') continue;
+            if (c == '.') continue;
             if (!Fonts.getAllCharacters().contains("" + c)) return true;
         }
         return false;

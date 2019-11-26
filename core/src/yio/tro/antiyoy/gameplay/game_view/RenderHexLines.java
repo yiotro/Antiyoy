@@ -29,7 +29,7 @@ public class RenderHexLines extends GameRender{
         double a = Yio.angle(hex1.pos.x, hex1.pos.y, hex2.pos.x, hex2.pos.y);
         double cx = 0.5 * (hex1.pos.x + hex2.pos.x);
         double cy = 0.5 * (hex1.pos.y + hex2.pos.y);
-        double s = 0.5 * gameController.fieldController.hexSize;
+        double s = 0.5 * gameController.fieldManager.hexSize;
         cx -= 0.2 * s * Math.cos(a);
         cy -= 0.2 * s * Math.sin(a);
         a += 0.5 * Math.PI;
@@ -51,7 +51,7 @@ public class RenderHexLines extends GameRender{
         double a2 = a + 0.5 * Math.PI;
         double cx = 0.5 * (hex1.pos.x + hex2.pos.x);
         double cy = 0.5 * (hex1.pos.y + hex2.pos.y);
-        double s = 0.5 * gameController.fieldController.hexSize * (0.7 + 0.37 * factor);
+        double s = 0.5 * gameController.fieldManager.hexSize * (0.7 + 0.37 * factor);
 
         drawSpecialHexedLine(
                 spriteBatch, textureRegion, cx + offset * Math.cos(a) + s * Math.cos(a2),
@@ -69,7 +69,7 @@ public class RenderHexLines extends GameRender{
         a += 0.5 * Math.PI;
         double cx = 0.5 * (hex1.pos.x + hex2.pos.x);
         double cy = 0.5 * (hex1.pos.y + hex2.pos.y);
-        double s = 0.5 * gameController.fieldController.hexSize;
+        double s = 0.5 * gameController.fieldManager.hexSize;
 
         drawSpecialHexedLine(
                 spriteBatch, gameView.texturesManager.blackBorderTexture, cx + s * Math.cos(a),

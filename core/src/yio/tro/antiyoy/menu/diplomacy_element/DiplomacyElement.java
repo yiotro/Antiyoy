@@ -78,13 +78,9 @@ public class DiplomacyElement extends InterfaceElement {
     private void initIcons() {
         icons = new ArrayList<>();
 
-        addIcon(DipActionType.transfer_money);
-        addIcon(DipActionType.like);
-        addIcon(DipActionType.dislike);
-        addIcon(DipActionType.black_mark);
-        addIcon(DipActionType.info);
-        addIcon(DipActionType.buy_hexes);
-        addIcon(DipActionType.mail);
+        for (DipActionType dipActionType : DipActionType.values()) {
+            addIcon(dipActionType);
+        }
 
         for (DeIcon icon : icons) {
             icon.setTouchOffset(iconTouchOffset);
@@ -175,7 +171,7 @@ public class DiplomacyElement extends InterfaceElement {
 
 
     private DiplomacyManager getDiplomacyManager(GameController gameController) {
-        return gameController.fieldController.diplomacyManager;
+        return gameController.fieldManager.diplomacyManager;
     }
 
 
@@ -601,15 +597,57 @@ public class DiplomacyElement extends InterfaceElement {
 
         for (DeItem item : items) {
             if (item.isTouched(currentTouch)) {
+                SoundManagerYio.playSound(SoundManagerYio.soundPressButton);
                 onItemClicked(item);
             }
         }
     }
 
 
-    private void onItemClicked(DeItem item) {
-        SoundManagerYio.playSound(SoundManagerYio.soundPressButton);
+    public DeItem getItem(int fraction) {
+        for (DeItem item : items) {
+            if (item.fraction != fraction) continue;
+            return item;
+        }
+        return null;
+    }
 
+
+    public void applyClickByFraction(int fraction) {
+        DeItem item = getItem(fraction);
+        if (item == null) return;
+
+        onItemClicked(item);
+        focusOnItem(item);
+    }
+
+
+    public void focusOnItem(DeItem item) {
+        scrollEngineYio.resetToBottom();
+
+        int c = 150;
+        while (!isItemInFocus(item) && c > 0) {
+            c--;
+            scrollEngineYio.getSlider().relocate(0.02f * GraphicsYio.height);
+            viewPosition.setBy(position);
+            scrollEngineYio.move();
+            updateHook();
+            moveItems();
+        }
+
+        updateViewPosition();
+        scrollEngineYio.move();
+        updateHook();
+        moveItems();
+    }
+
+
+    private boolean isItemInFocus(DeItem item) {
+        return item.position.y > viewPosition.y;
+    }
+
+
+    private void onItemClicked(DeItem item) {
         if (item.keepSelection) {
             resetToLabel();
             return;
@@ -676,6 +714,7 @@ public class DiplomacyElement extends InterfaceElement {
                 enableIcon(DipActionType.info);
                 enableIcon(DipActionType.buy_hexes);
                 enableIcon(DipActionType.mail);
+                enableIcon(DipActionType.attack);
                 break;
             case DiplomaticRelation.ENEMY:
                 enableIcon(DipActionType.like);

@@ -30,6 +30,8 @@ public class SceneUserLevels extends AbstractScene {
     private boolean singlePlayerAllowed;
     private boolean multiplayerAllowed;
     private String searchName;
+    private boolean diplomacyAllowed;
+    private boolean fogOfWarAllowed;
 
 
     public SceneUserLevels(MenuControllerYio menuControllerYio) {
@@ -77,12 +79,12 @@ public class SceneUserLevels extends AbstractScene {
             initListOnce();
         }
 
-        updateList();
+        loadValues();
         scrollableListYio.appear();
     }
 
 
-    private void updateList() {
+    private void loadValues() {
         scrollableListYio.clearItems();
 
         Preferences filterPrefs = SceneUlFilters.getFilterPrefs();
@@ -91,6 +93,8 @@ public class SceneUserLevels extends AbstractScene {
         singlePlayerAllowed = filterPrefs.getBoolean("single_player", true);
         multiplayerAllowed = filterPrefs.getBoolean("multiplayer", true);
         searchName = filterPrefs.getString("search_name", "");
+        diplomacyAllowed = filterPrefs.getBoolean("diplomacy", true);
+        fogOfWarAllowed = filterPrefs.getBoolean("fog_of_war", true);
 
         for (AbstractLegacyUserLevel userLevel : UserLevelFactory.getInstance().getLevels()) {
             userLevel.setGameController(getGameController());
@@ -129,6 +133,8 @@ public class SceneUserLevels extends AbstractScene {
         if (!historicalAllowed && userLevel.isHistorical()) return true;
         if (!singlePlayerAllowed && userLevel.isSinglePlayer()) return true;
         if (!multiplayerAllowed && userLevel.isMultiplayer()) return true;
+        if (!diplomacyAllowed && userLevel.getDiplomacy()) return true;
+        if (!fogOfWarAllowed && userLevel.getFogOfWar()) return true;
 
         if (searchName.length() > 0 && !userLevel.getMapName().toLowerCase().contains(searchName.toLowerCase())) return true;
 
@@ -228,14 +234,14 @@ public class SceneUserLevels extends AbstractScene {
         LoadingManager.getInstance().startGame(instance);
 
         level.onLevelLoaded(getGameController());
-        getGameController().fieldController.onUserLevelLoaded();
+        getGameController().fieldManager.onUserLevelLoaded();
     }
 
 
     private void launchUserLevel(AbstractLegacyUserLevel level) {
         AbstractUserLevel userLevel = (AbstractUserLevel) level;
         getGameController().importManager.launchGame(LoadingType.user_level, userLevel.getLevelCode(), userLevel.getKey());
-        getGameController().fieldController.onUserLevelLoaded();
+        getGameController().fieldManager.onUserLevelLoaded();
     }
 
 

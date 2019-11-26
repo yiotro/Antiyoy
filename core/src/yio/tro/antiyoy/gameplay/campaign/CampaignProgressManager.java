@@ -12,7 +12,7 @@ public class CampaignProgressManager {
 
     public static final String PROGRESS_PREFS_GENERIC = "antiyoy.progress";
     public static final String PROGRESS_PREFS_SLAY = "antiyoy.progress.slay"; // maybe will be used later
-    public static final int INDEX_OF_LAST_LEVEL = 127;
+    public static final int INDEX_OF_LAST_LEVEL = 129;
 
     private static CampaignProgressManager instance;
     public int currentLevelIndex;

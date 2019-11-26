@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.gameplay.replays.actions;
 
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
@@ -33,10 +33,10 @@ public class RaUnitBuilt extends RepAction{
 
 
     @Override
-    public void loadInfo(FieldController fieldController, String source) {
+    public void loadInfo(FieldManager fieldManager, String source) {
         ArrayList<String> strings = convertSourceStringToList(source);
-        src = getHexByTwoTokens(fieldController, strings.get(0), strings.get(1));
-        dst = getHexByTwoTokens(fieldController, strings.get(2), strings.get(3));
+        src = getHexByTwoTokens(fieldManager, strings.get(0), strings.get(1));
+        dst = getHexByTwoTokens(fieldManager, strings.get(2), strings.get(3));
 
         strength = Integer.valueOf(strings.get(4));
     }
@@ -44,9 +44,9 @@ public class RaUnitBuilt extends RepAction{
 
     @Override
     public void perform(GameController gameController) {
-        FieldController fieldController = gameController.fieldController;
-        Province provinceByHex = fieldController.getProvinceByHex(src);
-        boolean success = fieldController.buildUnit(provinceByHex, dst, strength);
+        FieldManager fieldManager = gameController.fieldManager;
+        Province provinceByHex = fieldManager.getProvinceByHex(src);
+        boolean success = fieldManager.buildUnit(provinceByHex, dst, strength);
 
         if (!success) {
             System.out.println("Problem in RaUnitBuilt.perform()");

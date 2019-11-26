@@ -16,7 +16,7 @@ public class FogOfWarManager {
 
 
     public static final int OFFSET = 4;
-    public FieldController fieldController;
+    public FieldManager fieldManager;
     public HashMap<Hex, FogPoint> fogMap;
     ObjectPoolYio<FogPoint> poolFogPoints;
     ObjectPoolYio<Hex> poolKeys;
@@ -30,11 +30,11 @@ public class FogOfWarManager {
     SliceUpdater sliceUpdater;
 
 
-    public FogOfWarManager(FieldController fieldController) {
-        this.fieldController = fieldController;
+    public FogOfWarManager(FieldManager fieldManager) {
+        this.fieldManager = fieldManager;
 
         fogMap = new HashMap<>();
-        viewOffset = 2 * fieldController.hexSize;
+        viewOffset = 2 * fieldManager.hexSize;
         lightUpAlgorithm = new LightUpAlgorithm(this);
         visibleArea = new RectangleYio();
         topBlock = new RectangleYio();
@@ -77,7 +77,7 @@ public class FogOfWarManager {
 
         resetStatuses();
 
-        int playersNumber = fieldController.gameController.playersNumber;
+        int playersNumber = fieldManager.gameController.playersNumber;
 
         if (playersNumber == 0) {
             lightUpAllMap();
@@ -94,7 +94,7 @@ public class FogOfWarManager {
 
 
     private void lightUpInMultiplayerMode() {
-        for (Province province : fieldController.provinces) {
+        for (Province province : fieldManager.provinces) {
             if (isCurrentPlayerProvince(province)) {
                 lightUpProvince(province);
                 continue;
@@ -108,7 +108,7 @@ public class FogOfWarManager {
 
     private void lightUpInSingleplayerMode() {
         foundPlayersProvince = false;
-        for (Province province : fieldController.provinces) {
+        for (Province province : fieldManager.provinces) {
             if (isFirstPlayerProvince(province)) {
                 foundPlayersProvince = true;
                 lightUpProvince(province);
@@ -128,10 +128,10 @@ public class FogOfWarManager {
     boolean isFriendOfCurrentPlayer(Province province) {
         if (!GameRules.diplomacyEnabled) return false;
 
-        DiplomaticEntity entity = fieldController.diplomacyManager.getEntity(province.getFraction());
+        DiplomaticEntity entity = fieldManager.diplomacyManager.getEntity(province.getFraction());
         if (entity == null) return false;
 
-        DiplomaticEntity currentEntity = fieldController.diplomacyManager.getEntity(fieldController.gameController.turn);
+        DiplomaticEntity currentEntity = fieldManager.diplomacyManager.getEntity(fieldManager.gameController.turn);
         if (currentEntity == entity) return false;
 
         int relation = entity.getRelation(currentEntity);
@@ -143,10 +143,10 @@ public class FogOfWarManager {
     boolean isFriendOfFirstPlayer(Province province) {
         if (!GameRules.diplomacyEnabled) return false;
 
-        DiplomaticEntity entity = fieldController.diplomacyManager.getEntity(province.getFraction());
+        DiplomaticEntity entity = fieldManager.diplomacyManager.getEntity(province.getFraction());
         if (entity == null) return false;
 
-        DiplomaticEntity firstEntity = fieldController.diplomacyManager.getEntity(0);
+        DiplomaticEntity firstEntity = fieldManager.diplomacyManager.getEntity(0);
         if (firstEntity == entity) return false;
 
         int relation = entity.getRelation(firstEntity);
@@ -156,7 +156,7 @@ public class FogOfWarManager {
 
 
     private boolean isCurrentPlayerProvince(Province province) {
-        return province.getFraction() == fieldController.gameController.turn;
+        return province.getFraction() == fieldManager.gameController.turn;
     }
 
 
@@ -219,7 +219,7 @@ public class FogOfWarManager {
 
 
     private LevelSizeManager getLevelSizeManager() {
-        return fieldController.gameController.levelSizeManager;
+        return fieldManager.gameController.levelSizeManager;
     }
 
 
@@ -336,8 +336,8 @@ public class FogOfWarManager {
 
         clearPoints();
 
-        for (int i = -OFFSET; i < fieldController.fWidth + OFFSET; i++) {
-            for (int j = -OFFSET; j < fieldController.fHeight + OFFSET; j++) {
+        for (int i = -OFFSET; i < fieldManager.fWidth + OFFSET; i++) {
+            for (int j = -OFFSET; j < fieldManager.fHeight + OFFSET; j++) {
                 FogPoint next = poolFogPoints.getNext();
 
                 next.setHexByIndexes(i, j);
@@ -359,7 +359,7 @@ public class FogOfWarManager {
 
 
     private boolean isFogPointValid(FogPoint next) {
-        return getLevelSizeManager().isPointInsideLevelBoundsWithOffset(next.position, 2 * fieldController.hexSize);
+        return getLevelSizeManager().isPointInsideLevelBoundsWithOffset(next.position, 2 * fieldManager.hexSize);
     }
 
 

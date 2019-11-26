@@ -3,7 +3,7 @@ package yio.tro.antiyoy.gameplay.data_storage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Clipboard;
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.LevelSize;
@@ -16,7 +16,7 @@ public class EncodeManager {
 
     GameController gameController;
     private StringBuilder builder;
-    private FieldController fieldController;
+    private FieldManager fieldManager;
 
 
     public EncodeManager(GameController gameController) {
@@ -36,7 +36,7 @@ public class EncodeManager {
 
     public String perform() {
         builder = new StringBuilder();
-        fieldController = gameController.fieldController;
+        fieldManager = gameController.fieldManager;
 
         addWatermark();
         encodeLevelSize();
@@ -100,7 +100,7 @@ public class EncodeManager {
 
     private void encodeUnits() {
         startSection("units");
-        for (Hex activeHex : fieldController.activeHexes) {
+        for (Hex activeHex : fieldManager.activeHexes) {
             if (!activeHex.hasUnit()) continue;
             builder.append(activeHex.unit.encode()).append(",");
         }
@@ -109,7 +109,7 @@ public class EncodeManager {
 
     private void encodeLand() {
         startSection("land");
-        builder.append(fieldController.encode());
+        builder.append(fieldManager.encode());
     }
 
 
@@ -137,7 +137,7 @@ public class EncodeManager {
 
         float min = -1;
         float max = -1;
-        for (Hex activeHex : gameController.fieldController.activeHexes) {
+        for (Hex activeHex : gameController.fieldManager.activeHexes) {
             if (min == -1 || activeHex.pos.y < min) {
                 min = activeHex.pos.y;
             }
@@ -147,7 +147,7 @@ public class EncodeManager {
         }
 
         float delta = max - min;
-        delta /= fieldController.hexStep1;
+        delta /= fieldManager.hexStep1;
         delta += 1;
 
         return delta > LevelEditor.MAX_ACCEPTABLE_DELTA;

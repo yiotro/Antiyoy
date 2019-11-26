@@ -8,8 +8,10 @@ import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.SingleMessages;
 import yio.tro.antiyoy.menu.diplomacy_element.DipActionType;
 import yio.tro.antiyoy.menu.diplomacy_element.DiplomacyElement;
+import yio.tro.antiyoy.menu.diplomatic_dialogs.PrepareForAttackPropositionDialog;
 import yio.tro.antiyoy.menu.keyboard.AbstractKbReaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
+import yio.tro.antiyoy.stuff.Yio;
 import yio.tro.antiyoy.stuff.object_pool.ObjectPoolYio;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ import java.util.Map;
 
 public class DiplomacyManager {
 
-    FieldController fieldController;
+    FieldManager fieldManager;
     public ArrayList<DiplomaticEntity> entities;
     ObjectPoolYio<DiplomaticEntity> poolEntities;
     public ArrayList<DiplomaticContract> contracts;
@@ -31,8 +33,8 @@ public class DiplomacyManager {
     public DiplomaticAI diplomaticAI;
 
 
-    public DiplomacyManager(FieldController fieldController) {
-        this.fieldController = fieldController;
+    public DiplomacyManager(FieldManager fieldManager) {
+        this.fieldManager = fieldManager;
 
         entities = new ArrayList<>();
         contracts = new ArrayList<>();
@@ -115,7 +117,7 @@ public class DiplomacyManager {
 
 
     public void onDiplomaticLogButtonPressed() {
-        fieldController.gameController.selectionManager.deselectAll();
+        fieldManager.gameController.selectionManager.deselectAll();
 
         if (!log.hasSomethingToRead()) {
             System.out.println("DiplomacyManager.onDiplomaticLogButtonPressed: log button shouldn't be visible when log is empty");
@@ -127,7 +129,7 @@ public class DiplomacyManager {
 
 
     public void onDiplomacyButtonPressed() {
-        fieldController.gameController.selectionManager.deselectAll();
+        fieldManager.gameController.selectionManager.deselectAll();
 
         Scenes.sceneDiplomacy.create();
     }
@@ -167,7 +169,7 @@ public class DiplomacyManager {
 
             next.setFraction(fraction);
             next.updateCapitalName();
-            next.setHuman(fieldController.gameController.isPlayerTurn(fraction));
+            next.setHuman(fieldManager.gameController.isPlayerTurn(fraction));
 
             entities.add(next);
         }
@@ -264,7 +266,17 @@ public class DiplomacyManager {
             case mail:
                 applySendCustomLetter(mainEntity, selectedEntity);
                 break;
+            case attack:
+                prepareToSendAttackProposition(mainEntity, selectedEntity);
+                break;
         }
+    }
+
+
+    private void prepareToSendAttackProposition(DiplomaticEntity mainEntity, DiplomaticEntity selectedEntity) {
+        Scenes.sceneDiplomacy.hide();
+        Scenes.scenePrepareForAttackProposition.create();
+        Scenes.scenePrepareForAttackProposition.dialog.setEntities(mainEntity, selectedEntity);
     }
 
 
@@ -283,12 +295,12 @@ public class DiplomacyManager {
 
 
     public void enableAreaSelectionMode(int filterFraction) {
-        GameController gameController = fieldController.gameController;
-        Province province = gameController.fieldController.findProvince(gameController.turn);
+        GameController gameController = fieldManager.gameController;
+        Province province = gameController.fieldManager.findProvince(gameController.turn);
         Hex capital = province.getCapital();
         gameController.selectionManager.setAreaSelectionMode(true);
         gameController.selectionManager.setAsFilterFraction(filterFraction);
-        MoveZoneManager moveZoneManager = fieldController.moveZoneManager;
+        MoveZoneManager moveZoneManager = fieldManager.moveZoneManager;
         moveZoneManager.detectAndShowMoveZone(capital, 0, 0);
         moveZoneManager.clear();
 
@@ -306,19 +318,19 @@ public class DiplomacyManager {
 
         if (hex == null) return;
 
-        MoveZoneManager moveZoneManager = fieldController.moveZoneManager;
+        MoveZoneManager moveZoneManager = fieldManager.moveZoneManager;
         moveZoneManager.addHexToMoveZoneManually(hex);
     }
 
 
     private Hex getRandomFilteredHex(boolean inViewFrame) {
-        int filterFraction = fieldController.gameController.selectionManager.getAsFilterFraction();
+        int filterFraction = fieldManager.gameController.selectionManager.getAsFilterFraction();
         int index;
         int c = 100;
         while (c > 0) {
             c--;
-            index = YioGdxGame.random.nextInt(fieldController.provinces.size());
-            Province province = fieldController.provinces.get(index);
+            index = YioGdxGame.random.nextInt(fieldManager.provinces.size());
+            Province province = fieldManager.provinces.get(index);
             if (province.getFraction() != filterFraction) continue;
 
             c = 100;
@@ -337,8 +349,8 @@ public class DiplomacyManager {
 
 
     private boolean isThereAtLeastOneFilteredHexInViewFrame() {
-        int filterFraction = fieldController.gameController.selectionManager.getAsFilterFraction();
-        for (Province province : fieldController.provinces) {
+        int filterFraction = fieldManager.gameController.selectionManager.getAsFilterFraction();
+        for (Province province : fieldManager.provinces) {
             if (province.getFraction() != filterFraction) continue;
             for (Hex hex : province.hexList) {
                 if (!isHexInViewFrame(hex)) continue;
@@ -351,14 +363,14 @@ public class DiplomacyManager {
 
 
     private boolean isHexInViewFrame(Hex hex) {
-        return fieldController.gameController.cameraController.frame.isPointInside(hex.pos, 0);
+        return fieldManager.gameController.cameraController.frame.isPointInside(hex.pos, 0);
     }
 
 
     public void disableAreaSelectionMode() {
-        GameController gameController = fieldController.gameController;
+        GameController gameController = fieldManager.gameController;
         gameController.selectionManager.setAreaSelectionMode(false);
-        fieldController.moveZoneManager.hide();
+        fieldManager.moveZoneManager.hide();
         Scenes.sceneAreaSelectionUI.hide();
     }
 
@@ -415,7 +427,7 @@ public class DiplomacyManager {
             return;
         }
 
-        fieldController.gameController.takeSnapshot();
+        fieldManager.gameController.takeSnapshot();
         updateTempMap(hexList);
         transferMoney(buyer, seller, price);
 
@@ -428,18 +440,18 @@ public class DiplomacyManager {
                 unitStrength = hex.unit.strength;
             }
 
-            fieldController.setHexFraction(hex, buyer.fraction);
-            ReplayManager replayManager = fieldController.gameController.replayManager;
+            fieldManager.setHexFraction(hex, buyer.fraction);
+            ReplayManager replayManager = fieldManager.gameController.replayManager;
             replayManager.onHexChangedFractionWithoutObviousReason(hex);
 
             if (unitStrength > 0) {
-                fieldController.addUnit(hex, unitStrength);
+                fieldManager.addUnit(hex, unitStrength);
                 replayManager.onUnitSpawned(hex, unitStrength);
                 continue;
             }
 
             if (objectInside > 0 && objectInside != Obj.TOWN) {
-                fieldController.addSolidObject(hex, objectInside);
+                fieldManager.addSolidObject(hex, objectInside);
 
                 switch (objectInside) {
                     case Obj.PINE:
@@ -464,7 +476,7 @@ public class DiplomacyManager {
             }
         }
 
-        fieldController.tryToDetectAddiotionalProvinces();
+        fieldManager.tryToDetectAddiotionalProvinces();
         stopLoneUnitsAroundHexList(hexList);
     }
 
@@ -530,9 +542,13 @@ public class DiplomacyManager {
         for (String token : source.split("@")) {
             String[] split = token.split("%");
             if (split.length < 2) continue;
+            if (!Yio.isNumeric(split[0])) continue;
             int index1 = Integer.valueOf(split[0]);
+            if (!Yio.isNumeric(split[1])) continue;
             int index2 = Integer.valueOf(split[1]);
-            tempHexList.add(fieldController.getHex(index1, index2));
+            Hex hex = fieldManager.getHex(index1, index2);
+            if (hex == null) continue;
+            tempHexList.add(hex);
         }
 
         return tempHexList;
@@ -578,6 +594,9 @@ public class DiplomacyManager {
 
         if (mainEntity == sender) {
             DiplomaticMessage diplomaticMessage = log.addMessage(DipMessageType.friendship_proposal, sender, recipient);
+            if (diplomaticMessage == null) {
+                diplomaticMessage = log.getSimilarMessage(DipMessageType.friendship_proposal, sender, recipient);
+            }
             diplomaticMessage.setArg1(calculateDotationsForFriendship(sender, recipient) + "");
             showLetterSentNotification();
         } else {
@@ -593,7 +612,7 @@ public class DiplomacyManager {
     }
 
 
-    void onEntityRequestedToMakeRelationsWorse(DiplomaticEntity initiator, DiplomaticEntity entity) {
+    public void onEntityRequestedToMakeRelationsWorse(DiplomaticEntity initiator, DiplomaticEntity entity) {
         int previousRelation = initiator.getRelation(entity);
 
         if (previousRelation == DiplomaticRelation.FRIEND) {
@@ -674,7 +693,7 @@ public class DiplomacyManager {
             diplomacyElement.onTurnStarted();
         }
 
-        if (fieldController.gameController.isPlayerTurn()) {
+        if (fieldManager.gameController.isPlayerTurn()) {
             onHumanTurnStarted();
         } else {
             onAiTurnStarted();
@@ -699,7 +718,7 @@ public class DiplomacyManager {
 
 
     private void moveCooldowns() {
-        if (fieldController.gameController.turn != 0) return;
+        if (fieldManager.gameController.turn != 0) return;
 
         for (DiplomaticCooldown cooldown : cooldowns) {
             cooldown.decreaseCounter();
@@ -710,7 +729,7 @@ public class DiplomacyManager {
 
 
     private void checkToRemoveCooldowns() {
-        if (fieldController.gameController.turn != 0) return;
+        if (fieldManager.gameController.turn != 0) return;
 
         for (int i = cooldowns.size() - 1; i >= 0; i--) {
             DiplomaticCooldown cooldown = cooldowns.get(i);
@@ -749,14 +768,14 @@ public class DiplomacyManager {
     public void onTurnEnded() {
         if (!GameRules.diplomacyEnabled) return;
 
-        DiplomaticEntity entity = getEntity(fieldController.gameController.turn);
+        DiplomaticEntity entity = getEntity(fieldManager.gameController.turn);
         entity.updateAliveState();
 
         diplomaticAI.checkToChangeRelations();
 
         log.removeMessagesByRecipient(entity, true);
 
-        if (fieldController.gameController.turn == 0) {
+        if (fieldManager.gameController.turn == 0) {
             onFirstPlayerTurnEnded();
         }
     }
@@ -775,7 +794,7 @@ public class DiplomacyManager {
 
 
     public boolean canUnitAttackHex(int unitStrength, int unitFraction, Hex hex) {
-        boolean rulesetDecision = fieldController.gameController.ruleset.canUnitAttackHex(unitStrength, hex);
+        boolean rulesetDecision = fieldManager.gameController.ruleset.canUnitAttackHex(unitStrength, hex);
         if (hex.isNeutral() || isHexSingle(hex)) return rulesetDecision;
 
         DiplomaticEntity attacker = getEntity(unitFraction);
@@ -801,7 +820,7 @@ public class DiplomacyManager {
         for (int dir = 0; dir < 6; dir++) {
             Hex adjacentHex = hex.getAdjacentHex(dir);
             if (adjacentHex == null) continue;
-            if (adjacentHex == fieldController.nullHex) continue;
+            if (adjacentHex == fieldManager.nullHex) continue;
             if (!adjacentHex.active) continue;
             if (!adjacentHex.sameFraction(hex)) continue;
 
@@ -832,7 +851,7 @@ public class DiplomacyManager {
 
 
     public boolean areKingdomsTouching(int fraction1, int fraction2) {
-        for (Province province : fieldController.provinces) {
+        for (Province province : fieldManager.provinces) {
             if (province.getFraction() != fraction1) continue;
             if (!province.isNearFraction(fraction2)) continue;
             return true;
@@ -856,8 +875,8 @@ public class DiplomacyManager {
 
 
     public int calculateDotationsForFriendship(DiplomaticEntity initiator, DiplomaticEntity entity) {
-        int money1 = entity.getStateBalance() * entity.getNumberOfFriends();
-        int money2 = initiator.getStateBalance() * initiator.getNumberOfFriends();
+        int money1 = entity.getStateBalance() * Math.max(1, entity.getNumberOfFriends());
+        int money2 = initiator.getStateBalance() * Math.max(1, initiator.getNumberOfFriends());
         int max = Math.max(money1, money2);
         int cutValue = (int) (0.2 * ((float) max));
 
@@ -894,7 +913,7 @@ public class DiplomacyManager {
         diplomaticMessage.setArg1("" + value);
 
         float f;
-        for (Province province : fieldController.provinces) {
+        for (Province province : fieldManager.provinces) {
             int money = province.money;
 
             if (province.getFraction() == sender.fraction) {
@@ -912,7 +931,7 @@ public class DiplomacyManager {
 
 
     public DiplomaticEntity getMainEntity() {
-        int turn = fieldController.gameController.turn;
+        int turn = fieldManager.gameController.turn;
         return getEntity(turn);
     }
 
@@ -960,7 +979,7 @@ public class DiplomacyManager {
     }
 
 
-    boolean canWarBeStopped(DiplomaticEntity one, DiplomaticEntity two) {
+    public boolean canWarBeStopped(DiplomaticEntity one, DiplomaticEntity two) {
         if (one.isHuman() && two.isHuman()) return true;
         if (!checkForStopWarCooldown(one, two)) return false;
 
@@ -1168,7 +1187,7 @@ public class DiplomacyManager {
         }
 
         if (GameRules.fogOfWarEnabled) {
-            fieldController.fogOfWarManager.updateFog();
+            fieldManager.fogOfWarManager.updateFog();
         }
     }
 
@@ -1206,6 +1225,6 @@ public class DiplomacyManager {
 
 
     public ColorsManager getColorsManager() {
-        return fieldController.gameController.colorsManager;
+        return fieldManager.gameController.colorsManager;
     }
 }

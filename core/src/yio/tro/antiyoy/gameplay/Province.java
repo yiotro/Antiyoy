@@ -112,13 +112,13 @@ public class Province {
     }
 
 
-    public int getBalance() {
+    public int getProfit() {
         return getIncome() - getTaxes() + getDotations();
     }
 
 
-    String getBalanceString() {
-        int balance = getBalance();
+    public String getProfitString() {
+        int balance = getProfit();
         if (balance > 0) return "+" + balance;
         return "" + balance;
     }
@@ -135,6 +135,16 @@ public class Province {
     }
 
 
+    public int countObjects(int objType) {
+        int c = 0;
+        for (Hex hex : hexList) {
+            if (hex.objectInside != objType) continue;
+            c++;
+        }
+        return c;
+    }
+
+
     int getTaxes() {
         int taxes = 0;
 
@@ -146,10 +156,30 @@ public class Province {
     }
 
 
+    public int getUnitsTaxes() {
+        int sum = 0;
+        for (Hex hex : hexList) {
+            if (!hex.containsUnit()) continue;
+            sum += gameController.ruleset.getUnitTax(hex.unit.strength);
+        }
+        return sum;
+    }
+
+
+    public int getTowerTaxes() {
+        int sum = 0;
+        for (Hex hex : hexList) {
+            if (!hex.containsTower()) continue;
+            sum += gameController.ruleset.getHexTax(hex);
+        }
+        return sum;
+    }
+
+
     public int getDotations() {
         if (!GameRules.diplomacyEnabled) return 0;
 
-        return gameController.fieldController.diplomacyManager.getProvinceDotations(this);
+        return gameController.fieldManager.diplomacyManager.getProvinceDotations(this);
     }
 
 
@@ -157,7 +187,7 @@ public class Province {
         int n = 0;
         int fraction = getFraction();
 
-        for (Province province : gameController.fieldController.provinces) {
+        for (Province province : gameController.fieldManager.provinces) {
             if (province.getFraction() != fraction) continue;
 
             n++;
@@ -221,12 +251,12 @@ public class Province {
 
     public boolean canAiAffordUnit(int strength, int turnsToSurvive) {
         if (GameRules.diplomacyEnabled) {
-            if (!gameController.fieldController.diplomacyManager.isProvinceAllowedToBuildUnit(this, strength)) {
+            if (!gameController.fieldManager.diplomacyManager.isProvinceAllowedToBuildUnit(this, strength)) {
                 return false;
             }
         }
 
-        int newIncome = getBalance() - gameController.ruleset.getUnitTax(strength);
+        int newIncome = getProfit() - gameController.ruleset.getUnitTax(strength);
         return money + turnsToSurvive * newIncome >= 0;
     }
 

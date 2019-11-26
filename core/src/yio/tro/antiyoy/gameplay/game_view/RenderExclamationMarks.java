@@ -23,7 +23,7 @@ public class RenderExclamationMarks extends GameRender{
     public void render() {
         if (!gameController.isPlayerTurn()) return;
 
-        for (Province province : gameController.fieldController.provinces) {
+        for (Province province : gameController.fieldManager.provinces) {
             if (!gameController.isCurrentTurn(province.getFraction())) continue;
             if (province.money < GameRules.PRICE_UNIT) continue;
 

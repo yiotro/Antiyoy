@@ -8,6 +8,7 @@ import yio.tro.antiyoy.stuff.RenderableTextYio;
 public class RenderSingleListItem extends AbstractRenderCustomListItem{
 
     private AbstractSingleLineItem slItem;
+    private float alpha;
 
 
     @Override
@@ -19,8 +20,9 @@ public class RenderSingleListItem extends AbstractRenderCustomListItem{
     @Override
     public void renderItem(AbstractCustomListItem item) {
         slItem = (AbstractSingleLineItem) item;
+        alpha = slItem.customizableListYio.getFactor().get();
 
-        renderTextOptimized(slItem.title, slItem.customizableListYio.getFactor().get());
+        renderTextOptimized(slItem.title, alpha);
         renderDefaultSelection(slItem);
     }
 }

@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.menu.render;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.menu.InterfaceElement;
@@ -76,8 +77,11 @@ public class RenderColorHolderElement extends MenuRender{
 
     private void renderTitle() {
         GraphicsYio.setFontAlpha(font, alpha);
+        Color fontColor = title.font.getColor();
+        title.font.setColor(Color.BLACK);
         GraphicsYio.renderTextOptimized(batch, getBlackPixel(), title, alpha);
         GraphicsYio.setFontAlpha(font, 1);
+        title.font.setColor(fontColor);
     }
 
 

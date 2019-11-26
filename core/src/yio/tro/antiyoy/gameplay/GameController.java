@@ -35,11 +35,11 @@ import java.util.Random;
 
 public class GameController {
 
-    private final DebugActionsManager debugActionsManager;
+    public DebugActionsManager debugActionsManager;
     public YioGdxGame yioGdxGame;
 
     public final SelectionManager selectionManager;
-    public final FieldController fieldController;
+    public final FieldManager fieldManager;
     public CameraController cameraController;
     public final AiFactory aiFactory;
 
@@ -115,8 +115,8 @@ public class GameController {
         initialParameters = new LoadingParameters();
         touchPoint = new PointYio();
         snapshotManager = new SnapshotManager(this);
-        fieldController = new FieldController(this);
-        jumperUnit = new Unit(this, fieldController.nullHex, 0);
+        fieldManager = new FieldManager(this);
+        jumperUnit = new Unit(this, fieldManager.nullHex, 0);
         speedManager = new SpeedManager(this);
         replayManager = new ReplayManager(this);
         namingManager = new NamingManager(this);
@@ -143,7 +143,7 @@ public class GameController {
         // so the problem is that all players except first
         // get income in the first turn
         updateRuleset();
-        for (Province province : fieldController.provinces) {
+        for (Province province : fieldManager.provinces) {
             if (province.getFraction() == 0) continue; // first player is not getting income at first turn
             province.money -= province.getIncome() - province.getTaxes();
         }
@@ -154,7 +154,7 @@ public class GameController {
         for (int i = 0; i < unitList.size(); i++) {
             Unit unit = unitList.get(i);
             if (isCurrentTurn(unit.getFraction()) && unit.currentHex.numberOfFriendlyHexesNearby() == 0) {
-                fieldController.killUnitByStarvation(unit.currentHex);
+                fieldManager.killUnitByStarvation(unit.currentHex);
                 i--;
             }
         }
@@ -162,11 +162,11 @@ public class GameController {
 
 
     private void checkForBankrupts() {
-        for (Province province : fieldController.provinces) {
+        for (Province province : fieldManager.provinces) {
             if (isCurrentTurn(province.getFraction())) {
                 if (province.money < 0) {
                     province.money = 0;
-                    fieldController.killEveryoneByStarvation(province);
+                    fieldManager.killEveryoneByStarvation(province);
                 }
             }
         }
@@ -186,20 +186,20 @@ public class GameController {
 
         moveCheckToMarch();
         moveUnits();
-        fieldController.moveAnimHexes();
+        fieldManager.move();
         selectionManager.moveSelections();
 
         jumperUnit.moveJumpAnim();
-        fieldController.moveZoneManager.move();
+        fieldManager.moveZoneManager.move();
         selectionManager.getBlackoutFactor().move();
         selectionManager.moveDefenseTips();
         levelEditor.move();
 
-        fieldController.moveZoneManager.checkToClear();
+        fieldManager.moveZoneManager.checkToClear();
         selectionManager.tipFactor.move();
         moveTouchMode();
 
-        fieldController.moveResponseAnimHex();
+        fieldManager.moveResponseAnimHex();
         moveTutorialStuff();
         namingManager.move();
         skipLevelManager.move();
@@ -229,11 +229,11 @@ public class GameController {
 
 
     private void doCheckAnimHexes() {
-        if (!fieldController.letsCheckAnimHexes) return;
-        if (currentTime <= fieldController.timeToCheckAnimHexes) return;
+        if (!fieldManager.letsCheckAnimHexes) return;
+        if (currentTime <= fieldManager.timeToCheckAnimHexes) return;
         if (!doesCurrentTurnEndDependOnAnimHexes()) return;
 
-        fieldController.checkAnimHexes();
+        fieldManager.checkAnimHexes();
     }
 
 
@@ -297,10 +297,10 @@ public class GameController {
         if (!checkConditionsToMarch()) return;
 
         checkToMarch = false;
-        fieldController.updateFocusedHex();
+        fieldManager.updateFocusedHex();
         selectionManager.setSelectedUnit(null);
-        if (fieldController.focusedHex != null && fieldController.focusedHex.active) {
-            fieldController.marchUnitsToHex(fieldController.focusedHex);
+        if (fieldManager.focusedHex != null && fieldManager.focusedHex.active) {
+            fieldManager.marchUnitsToHex(fieldManager.focusedHex);
         }
     }
 
@@ -339,7 +339,7 @@ public class GameController {
     private void updateFogOfWar() {
         if (!GameRules.fogOfWarEnabled) return;
 
-        fieldController.fogOfWarManager.updateFog();
+        fieldManager.fogOfWarManager.updateFog();
     }
 
 
@@ -359,7 +359,7 @@ public class GameController {
         if (speedManager.getSpeed() == SpeedManager.SPEED_PAUSED) return false;
 
         if (doesCurrentTurnEndDependOnAnimHexes()) {
-            return fieldController.animHexes.size() == 0;
+            return fieldManager.animHexes.size() == 0;
         } else {
             return true;
         }
@@ -381,7 +381,7 @@ public class GameController {
     public boolean haveToAskToEndTurn() {
         if (GameRules.tutorialMode) return false;
 
-        return SettingsManager.askToEndTurn && fieldController.atLeastOneUnitIsReadyToMove();
+        return SettingsManager.askToEndTurn && fieldManager.atLeastOneUnitIsReadyToMove();
     }
 
 
@@ -414,13 +414,13 @@ public class GameController {
 
 
     private int checkIfWeHaveWinner() {
-        if (fieldController.activeHexes.size() == 0) return -1;
+        if (fieldManager.activeHexes.size() == 0) return -1;
         if (GameRules.diplomacyEnabled) {
-            return fieldController.diplomacyManager.getDiplomaticWinner();
+            return fieldManager.diplomacyManager.getDiplomaticWinner();
         }
-        if (!fieldController.isThereOnlyOneKingdomOnMap()) return -1;
+        if (!fieldManager.isThereOnlyOneKingdomOnMap()) return -1;
 
-        for (Province province : fieldController.provinces) {
+        for (Province province : fieldManager.provinces) {
             if (province.hexList.get(0).isNeutral()) continue;
             return province.getFraction();
         }
@@ -457,7 +457,7 @@ public class GameController {
         if (playersNumber != 1) return;
 
         if (!proposedSurrender) {
-            int possibleWinner = fieldController.possibleWinner();
+            int possibleWinner = fieldManager.possibleWinner();
             if (possibleWinner >= 0 && isPlayerTurn(possibleWinner)) {
                 doProposeSurrender();
                 proposedSurrender = true;
@@ -490,7 +490,7 @@ public class GameController {
 
 
     public void forceGameEnd() {
-        int playerHexCount[] = fieldController.getPlayerHexCount();
+        int playerHexCount[] = fieldManager.getPlayerHexCount();
         int maxNumber = maxNumberFromArray(playerHexCount);
         int winnerFraction = 0;
         for (int i = 0; i < playerHexCount.length; i++) {
@@ -500,15 +500,15 @@ public class GameController {
             }
         }
 
-        fieldController.clearProvincesList();
+        fieldManager.clearProvincesList();
         ArrayList<Hex> hexList = new ArrayList<>();
-        for (Hex activeHex : fieldController.activeHexes) {
+        for (Hex activeHex : fieldManager.activeHexes) {
             if (activeHex.fraction == winnerFraction) {
                 hexList.add(activeHex);
                 break;
             }
         }
-        fieldController.provinces.add(new Province(this, hexList));
+        fieldManager.provinces.add(new Province(this, hexList));
 
         checkToEndGame();
     }
@@ -578,7 +578,7 @@ public class GameController {
         checkToEndGame();
         ruleset.onTurnEnd();
         replayManager.onTurnEnded();
-        fieldController.diplomacyManager.onTurnEnded();
+        fieldManager.diplomacyManager.onTurnEnded();
 
         for (Unit unit : unitList) {
             unit.setReadyToMove(false);
@@ -595,11 +595,11 @@ public class GameController {
             if (playersNumber == 1) {
                 GlobalStatistics.getInstance().updateByMatchStatistics(matchStatistics);
             }
-            fieldController.expandTrees();
+            fieldManager.expandTrees();
         }
 
         prepareCertainUnitsToMove();
-        fieldController.transformGraves(); // this must be called before 'check for bankrupts' and after 'expand trees'
+        fieldManager.transformGraves(); // this must be called before 'check for bankrupts' and after 'expand trees'
         collectTributesAndPayTaxes();
         checkForStarvation();
 
@@ -610,15 +610,15 @@ public class GameController {
             snapshotManager.onTurnStart();
             jumperUnit.startJumping();
             checkToSkipTurn();
-            fieldController.fogOfWarManager.updateFog();
+            fieldManager.fogOfWarManager.updateFog();
         } else {
-            for (Hex animHex : fieldController.animHexes) {
+            for (Hex animHex : fieldManager.animHexes) {
                 animHex.animFactor.setValues(1, 0);
             }
         }
 
-        fieldController.diplomacyManager.onTurnStarted();
-        fieldController.checkToFocusCameraOnCurrentPlayer();
+        fieldManager.diplomacyManager.onTurnStarted();
+        fieldManager.checkToFocusCameraOnCurrentPlayer();
 
         checkToAutoSave();
     }
@@ -632,7 +632,7 @@ public class GameController {
 
 
     private void checkToSkipTurn() {
-        if (fieldController.numberOfProvincesWithFraction(turn) != 0) return;
+        if (fieldManager.numberOfProvincesWithFraction(turn) != 0) return;
         onEndTurnButtonPressed();
     }
 
@@ -655,9 +655,9 @@ public class GameController {
 
 
     private void collectTributesAndPayTaxes() {
-        for (Province province : fieldController.provinces) {
+        for (Province province : fieldManager.provinces) {
             if (isCurrentTurn(province.getFraction())) {
-                province.money += province.getBalance();
+                province.money += province.getProfit();
             }
         }
     }
@@ -691,9 +691,9 @@ public class GameController {
         Scenes.sceneTurnStartDialog.create();
 
         int nextTurnIndex = turn;
-        while (fieldController.hasAtLeastOneProvince()) {
+        while (fieldManager.hasAtLeastOneProvince()) {
             nextTurnIndex = getNextTurnIndex(nextTurnIndex);
-            if (isPlayerTurn(nextTurnIndex) && fieldController.numberOfProvincesWithFraction(nextTurnIndex) > 0) {
+            if (isPlayerTurn(nextTurnIndex) && fieldManager.numberOfProvincesWithFraction(nextTurnIndex) > 0) {
                 break;
             }
         }
@@ -711,7 +711,7 @@ public class GameController {
         cameraController.defaultValues();
         ignoreMarch = false;
         readyToEndTurn = false;
-        fieldController.defaultValues();
+        fieldManager.defaultValues();
         selectionManager.setSelectedUnit(null);
         turn = 0;
         jumperUnit.startJumping();
@@ -760,10 +760,10 @@ public class GameController {
 
     public void onEndCreation() {
         snapshotManager.clear();
-        fieldController.createPlayerHexCount();
+        fieldManager.createPlayerHexCount();
         updateRuleset();
         createCamera();
-        fieldController.onEndCreation();
+        fieldManager.onEndCreation();
         aiFactory.createAiList(GameRules.difficulty);
         selectionManager.deselectAll();
         replayManager.onEndCreation();
@@ -814,12 +814,12 @@ public class GameController {
 
 
     public void addSolidObject(Hex hex, int type) {
-        fieldController.addSolidObject(hex, type);
+        fieldManager.addSolidObject(hex, type);
     }
 
 
     public void cleanOutHex(Hex hex) {
-        fieldController.cleanOutHex(hex);
+        fieldManager.cleanOutHex(hex);
     }
 
 
@@ -848,7 +848,7 @@ public class GameController {
             return ruleset.canUnitAttackHex(unitStrength, hex);
         }
 
-        return fieldController.diplomacyManager.canUnitAttackHex(unitStrength, unitFraction, hex);
+        return fieldManager.diplomacyManager.canUnitAttackHex(unitStrength, unitFraction, hex);
     }
 
 
@@ -860,9 +860,9 @@ public class GameController {
     public boolean mergeUnits(Hex hex, Unit unit1, Unit unit2) {
         if (!ruleset.canMergeUnits(unit1, unit2)) return false;
 
-        fieldController.cleanOutHex(unit1.currentHex);
-        fieldController.cleanOutHex(unit2.currentHex);
-        Unit mergedUnit = fieldController.addUnit(hex, mergedUnitStrength(unit1, unit2));
+        fieldManager.cleanOutHex(unit1.currentHex);
+        fieldManager.cleanOutHex(unit2.currentHex);
+        Unit mergedUnit = fieldManager.addUnit(hex, mergedUnitStrength(unit1, unit2));
         matchStatistics.onUnitsMerged();
         mergedUnit.setReadyToMove(true);
         if (!unit1.isReadyToMove() || !unit2.isReadyToMove()) {
@@ -882,8 +882,8 @@ public class GameController {
 
 
     public void restartGame() {
-        if (fieldController.initialLevelString != null) {
-            gameSaver.legacyImportManager.applyFullLevel(initialParameters, fieldController.initialLevelString);
+        if (fieldManager.initialLevelString != null) {
+            gameSaver.legacyImportManager.applyFullLevel(initialParameters, fieldManager.initialLevelString);
         }
 
         LoadingManager.getInstance().startGame(initialParameters);
@@ -911,19 +911,18 @@ public class GameController {
 
 
     void updateBalanceString() {
-        if (fieldController.selectedProvince != null) {
-            balanceString = fieldController.selectedProvince.getBalanceString();
-        }
+        if (fieldManager.selectedProvince == null) return;
+        balanceString = fieldManager.selectedProvince.getProfitString();
     }
 
 
     public Unit addUnit(Hex hex, int strength) {
-        return fieldController.addUnit(hex, strength);
+        return fieldManager.addUnit(hex, strength);
     }
 
 
     boolean isSomethingMoving() {
-        for (Hex hex : fieldController.animHexes) {
+        for (Hex hex : fieldManager.animHexes) {
             if (hex.containsUnit() && hex.unit.moveFactor.get() < 1) return true;
         }
         if (GameRules.inEditorMode && levelEditor.isSomethingMoving()) return true;
@@ -946,37 +945,37 @@ public class GameController {
 
 
     public void detectAndShowMoveZoneForBuildingUnit(int strength) {
-        fieldController.moveZoneManager.detectAndShowMoveZoneForBuildingUnit(strength);
+        fieldManager.moveZoneManager.detectAndShowMoveZoneForBuildingUnit(strength);
     }
 
 
     public void detectAndShowMoveZoneForFarm() {
-        fieldController.moveZoneManager.detectAndShowMoveZoneForFarm();
+        fieldManager.moveZoneManager.detectAndShowMoveZoneForFarm();
     }
 
 
     public ArrayList<Hex> detectMoveZone(Hex startHex, int strength) {
-        return fieldController.moveZoneManager.detectMoveZone(startHex, strength);
+        return fieldManager.moveZoneManager.detectMoveZone(startHex, strength);
     }
 
 
     public ArrayList<Hex> detectMoveZone(Hex startHex, int strength, int moveLimit) {
-        return fieldController.moveZoneManager.detectMoveZone(startHex, strength, moveLimit);
+        return fieldManager.moveZoneManager.detectMoveZone(startHex, strength, moveLimit);
     }
 
 
     public void addAnimHex(Hex hex) {
-        fieldController.addAnimHex(hex);
+        fieldManager.addAnimHex(hex);
     }
 
 
     Province findProvinceCopy(Province src) {
-        return fieldController.findProvinceCopy(src);
+        return fieldManager.findProvinceCopy(src);
     }
 
 
     public Province getProvinceByHex(Hex hex) {
-        return fieldController.getProvinceByHex(hex);
+        return fieldManager.getProvinceByHex(hex);
     }
 
 
@@ -1029,8 +1028,7 @@ public class GameController {
         }
 
         if (isPlayerTurn()) {
-            fieldController.moveZoneManager.hide();
-            updateBalanceString();
+            fieldManager.moveZoneManager.hide();
         }
     }
 
@@ -1047,12 +1045,12 @@ public class GameController {
             return;
         }
 
-        fieldController.setHexFraction(destination, turn); // must be called before object in hex destroyed
-        fieldController.cleanOutHex(destination);
+        fieldManager.setHexFraction(destination, turn); // must be called before object in hex destroyed
+        fieldManager.cleanOutHex(destination);
         unit.moveToHex(destination);
         unitProvince.addHex(destination);
         if (isPlayerTurn()) {
-            fieldController.selectedHexes.add(destination);
+            fieldManager.selectedHexes.add(destination);
             updateCacheOnceAfterSomeTime();
         }
     }
@@ -1066,7 +1064,7 @@ public class GameController {
         }
 
         if (isPlayerTurn()) {
-            fieldController.setResponseAnimHex(target);
+            fieldManager.setResponseAnimHex(target);
         }
     }
 
@@ -1079,7 +1077,7 @@ public class GameController {
     public void showFocusedHexInConsole() {
         if (!DebugFlags.showFocusedHexInConsole) return;
 
-        Hex focusedHex = fieldController.focusedHex;
+        Hex focusedHex = fieldManager.focusedHex;
         YioGdxGame.say("Hex: " + focusedHex.fraction + " " + focusedHex.index1 + " " + focusedHex.index2);
     }
 
@@ -1171,19 +1169,19 @@ public class GameController {
 
 
     public void close() {
-        for (int i = 0; i < fieldController.fWidth; i++) {
-            for (int j = 0; j < fieldController.fHeight; j++) {
-                if (fieldController.field[i][j] != null) fieldController.field[i][j].close();
+        for (int i = 0; i < fieldManager.fWidth; i++) {
+            for (int j = 0; j < fieldManager.fHeight; j++) {
+                if (fieldManager.field[i][j] != null) fieldManager.field[i][j].close();
             }
         }
-        if (fieldController.provinces != null) {
-            for (Province province : fieldController.provinces) {
+        if (fieldManager.provinces != null) {
+            for (Province province : fieldManager.provinces) {
                 province.close();
             }
         }
 
-        fieldController.provinces = null;
-        fieldController.field = null;
+        fieldManager.provinces = null;
+        fieldManager.field = null;
         yioGdxGame = null;
     }
 

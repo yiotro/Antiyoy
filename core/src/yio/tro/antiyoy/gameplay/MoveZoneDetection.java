@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class MoveZoneDetection {
 
-    private final FieldController fieldController;
+    private final FieldManager fieldManager;
     private ArrayList<Hex> result;
     private ArrayList<Hex> propagationList;
     private Hex tempHex;
     private Hex adjHex;
 
 
-    public MoveZoneDetection(FieldController fieldController) {
-        this.fieldController = fieldController;
+    public MoveZoneDetection(FieldManager fieldManager) {
+        this.fieldManager = fieldManager;
 
         result = new ArrayList<>();
         propagationList = new ArrayList<>();
@@ -28,10 +28,10 @@ public class MoveZoneDetection {
 
 
     public ArrayList<Hex> detectMoveZoneForFarm() {
-        fieldController.moveZoneManager.clear();
-        unFlagAllHexesInArrayList(fieldController.activeHexes);
+        fieldManager.moveZoneManager.clear();
+        unFlagAllHexesInArrayList(fieldManager.activeHexes);
         result.clear();
-        for (Hex hex : fieldController.selectedProvince.hexList) {
+        for (Hex hex : fieldManager.selectedProvince.hexList) {
             if (canBuildFarmOnHex(hex)) {
                 hex.inMoveZone = true;
                 result.add(hex);
@@ -53,7 +53,7 @@ public class MoveZoneDetection {
 
 
     public ArrayList<Hex> detectMoveZone(Hex startHex, int strength, int moveLimit) {
-        unFlagAllHexesInArrayList(fieldController.activeHexes);
+        unFlagAllHexesInArrayList(fieldManager.activeHexes);
         beginDetection(startHex, moveLimit);
 
         while (propagationList.size() > 0) {
@@ -84,7 +84,7 @@ public class MoveZoneDetection {
                 adjHex.moveZoneNumber = tempHex.moveZoneNumber - 1;
                 adjHex.flag = true;
             } else {
-                if (fieldController.gameController.canUnitAttackHex(strength, startHex.fraction, adjHex)) {
+                if (fieldManager.gameController.canUnitAttackHex(strength, startHex.fraction, adjHex)) {
                     propagationList.add(adjHex);
                     adjHex.flag = true;
                 }

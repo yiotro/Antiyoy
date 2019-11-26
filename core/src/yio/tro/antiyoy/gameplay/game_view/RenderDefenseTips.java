@@ -28,10 +28,10 @@ public class RenderDefenseTips extends GameRender{
 
     @Override
     public void render() {
-        float f = gameController.fieldController.defenseTipFactor.get();
+        float f = gameController.fieldManager.defenseTipFactor.get();
         if (f == 0) return;
 
-        ArrayList<Hex> defenseTips = gameController.fieldController.defenseTips;
+        ArrayList<Hex> defenseTips = gameController.fieldManager.defenseTips;
         if (defenseTips.size() == 0) return;
 
         Color c = batchMovable.getColor();
@@ -51,7 +51,7 @@ public class RenderDefenseTips extends GameRender{
 
 
     private void updateIconCircle(float f, PointYio tipPos, PointYio srcPos) {
-        if (gameController.fieldController.defenseTipFactor.getDy() >= 0) {
+        if (gameController.fieldManager.defenseTipFactor.getDy() >= 0) {
             iconCircle.set(
                     srcPos.x + f * (tipPos.x - srcPos.x),
                     srcPos.y + f * (tipPos.y - srcPos.y),
@@ -73,7 +73,7 @@ public class RenderDefenseTips extends GameRender{
         if (defSrcHex != null) {
             cPos = defSrcHex.getPos();
         } else {
-            cPos = gameController.fieldController.defTipHex.getPos();
+            cPos = gameController.fieldManager.defTipHex.getPos();
         }
         return cPos;
     }

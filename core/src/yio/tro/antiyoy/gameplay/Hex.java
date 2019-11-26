@@ -13,7 +13,7 @@ public class Hex implements ReusableYio, EncodeableYio{
     public int index1, index2, moveZoneNumber, genPotential, visualDiversityIndex;
     public PointYio pos, fieldPos;
     private GameController gameController;
-    FieldController fieldController;
+    public FieldManager fieldManager;
     float cos60, sin60;
     public int fraction, previousFraction, objectInside;
     long animStartTime;
@@ -24,14 +24,14 @@ public class Hex implements ReusableYio, EncodeableYio{
     public int algoValue;
 
 
-    public Hex(int index1, int index2, PointYio fieldPos, FieldController fieldController) {
+    public Hex(int index1, int index2, PointYio fieldPos, FieldManager fieldManager) {
         this.index1 = index1;
         this.index2 = index2;
         this.fieldPos = fieldPos;
-        this.fieldController = fieldController;
-        if (fieldController == null) return;
+        this.fieldManager = fieldManager;
+        if (fieldManager == null) return;
 
-        gameController = fieldController.gameController;
+        gameController = fieldManager.gameController;
         active = false;
         pos = new PointYio();
         cos60 = (float) Math.cos(Math.PI / 3d);
@@ -54,13 +54,13 @@ public class Hex implements ReusableYio, EncodeableYio{
 
 
     void updateCanContainsObjects() {
-        canContainObjects = fieldController.gameController.levelSizeManager.isPointInsideLevelBoundsHorizontally(pos);
+        canContainObjects = fieldManager.gameController.levelSizeManager.isPointInsideLevelBoundsHorizontally(pos);
     }
 
 
     void updatePos() {
-        pos.x = fieldPos.x + fieldController.hexStep2 * index2 * sin60;
-        pos.y = fieldPos.y + fieldController.hexStep1 * index1 + fieldController.hexStep2 * index2 * cos60;
+        pos.x = fieldPos.x + fieldManager.hexStep2 * index2 * sin60;
+        pos.y = fieldPos.y + fieldManager.hexStep1 * index1 + fieldManager.hexStep2 * index2 * cos60;
     }
 
 
@@ -77,7 +77,7 @@ public class Hex implements ReusableYio, EncodeableYio{
     public boolean isNearWater() {
         if (!this.active) return false;
         for (int i = 0; i < 6; i++) {
-            if (!gameController.fieldController.adjacentHex(this, i).active) return true;
+            if (!gameController.fieldManager.adjacentHex(this, i).active) return true;
         }
         return false;
     }
@@ -146,7 +146,7 @@ public class Hex implements ReusableYio, EncodeableYio{
 
 
     public Hex getSnapshotCopy() {
-        Hex record = new Hex(index1, index2, fieldPos, fieldController);
+        Hex record = new Hex(index1, index2, fieldPos, fieldManager);
         record.active = active;
         record.fraction = fraction;
         record.objectInside = objectInside;
@@ -333,7 +333,7 @@ public class Hex implements ReusableYio, EncodeableYio{
 
 
     public Hex getAdjacentHex(int direction) {
-        return gameController.fieldController.adjacentHex(this, direction);
+        return gameController.fieldManager.adjacentHex(this, direction);
     }
 
 
@@ -414,7 +414,7 @@ public class Hex implements ReusableYio, EncodeableYio{
         String[] split = source.split(" ");
         int obj = Integer.valueOf(split[3]);
         if (obj > 0) {
-            fieldController.addSolidObject(this, obj);
+            fieldManager.addSolidObject(this, obj);
         }
     }
 }

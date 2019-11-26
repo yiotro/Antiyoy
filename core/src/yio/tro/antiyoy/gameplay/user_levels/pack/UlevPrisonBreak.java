@@ -18,7 +18,7 @@ public class UlevPrisonBreak extends AbstractLegacyUserLevel {
         setProvinceMoney(gameController, 15, 14, 200);
         setProvinceMoney(gameController, 29, 14, 200);
 
-        for (Province province : gameController.fieldController.provinces) {
+        for (Province province : gameController.fieldManager.provinces) {
             if (province.getFraction() != 0) continue;
 
             for (Hex hex : province.hexList) {

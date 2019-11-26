@@ -28,10 +28,10 @@ public class RaUnitMoved extends RepAction{
 
 
     @Override
-    public void loadInfo(FieldController fieldController, String source) {
+    public void loadInfo(FieldManager fieldManager, String source) {
         ArrayList<String> strings = convertSourceStringToList(source);
-        src = getHexByTwoTokens(fieldController, strings.get(0), strings.get(1));
-        dst = getHexByTwoTokens(fieldController, strings.get(2), strings.get(3));
+        src = getHexByTwoTokens(fieldManager, strings.get(0), strings.get(1));
+        dst = getHexByTwoTokens(fieldManager, strings.get(2), strings.get(3));
     }
 
 
@@ -40,7 +40,7 @@ public class RaUnitMoved extends RepAction{
         Unit unit = src.unit;
         if (unit == null) return;
 
-        Province provinceByHex = gameController.fieldController.getProvinceByHex(src);
+        Province provinceByHex = gameController.fieldManager.getProvinceByHex(src);
 
         if (!dst.sameFraction(src) && !dst.isNeutral() && !dst.canBeAttackedBy(unit)) {
             System.out.println();

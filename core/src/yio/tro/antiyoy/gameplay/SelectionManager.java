@@ -1,7 +1,9 @@
 package yio.tro.antiyoy.gameplay;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import yio.tro.antiyoy.KeyboardManager;
+import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
@@ -50,7 +52,7 @@ public class SelectionManager {
 
 
     void moveSelections() {
-        for (Hex hex : gameController.fieldController.selectedHexes) hex.move();
+        for (Hex hex : gameController.fieldManager.selectedHexes) hex.move();
         if (selectedUnit != null && selUnitFactor.hasToMove()) {
             selUnitFactor.move();
         }
@@ -64,7 +66,7 @@ public class SelectionManager {
         readyToRenameCity = false;
         if (!isSomethingSelected()) return;
 
-        Province selectedProvince = gameController.fieldController.selectedProvince;
+        Province selectedProvince = gameController.fieldManager.selectedProvince;
         if (selectedProvince == null) return;
 
         String name = selectedProvince.getName();
@@ -74,7 +76,7 @@ public class SelectionManager {
             public void onInputFromKeyboardReceived(String input) {
                 if (input.length() == 0) return;
 
-                Province selectedProvince = gameController.fieldController.selectedProvince;
+                Province selectedProvince = gameController.fieldManager.selectedProvince;
                 if (selectedProvince == null) return;
 
                 Hex capital = selectedProvince.getCapital();
@@ -87,7 +89,7 @@ public class SelectionManager {
 
 
     void moveDefenseTips() {
-        FactorYio defenseTipFactor = gameController.fieldController.defenseTipFactor;
+        FactorYio defenseTipFactor = gameController.fieldManager.defenseTipFactor;
         defenseTipFactor.move();
 
         if (gameController.getCurrentTime() <= defTipSpawnTime + defTipDelay) return;
@@ -96,7 +98,7 @@ public class SelectionManager {
             defenseTipFactor.destroy(1, 1);
         }
 
-        ArrayList<Hex> defenseTips = gameController.fieldController.defenseTips;
+        ArrayList<Hex> defenseTips = gameController.fieldManager.defenseTips;
         if (defenseTipFactor.get() == 0 && defenseTips.size() > 0) {
             ListIterator iterator = defenseTips.listIterator();
             while (iterator.hasNext()) {
@@ -121,12 +123,12 @@ public class SelectionManager {
 
 
     private ArrayList<Hex> getMoveZone() {
-        return gameController.fieldController.moveZoneManager.moveZone;
+        return gameController.fieldManager.moveZoneManager.moveZone;
     }
 
 
     private void hideMoveZone() {
-        gameController.fieldController.moveZoneManager.hide();
+        gameController.fieldManager.moveZoneManager.hide();
     }
 
 
@@ -194,20 +196,21 @@ public class SelectionManager {
 
 
     public boolean isSomethingSelected() {
-        return gameController.fieldController.isSomethingSelected();
+        return gameController.fieldManager.isSomethingSelected();
     }
 
 
     public void deselectAll() {
-        FieldController fieldController = gameController.fieldController;
-        for (int i = 0; i < fieldController.fWidth; i++) {
-            for (int j = 0; j < fieldController.fHeight; j++) {
-                fieldController.field[i][j].selected = false;
+        FieldManager fieldManager = gameController.fieldManager;
+        for (int i = 0; i < fieldManager.fWidth; i++) {
+            for (int j = 0; j < fieldManager.fHeight; j++) {
+                fieldManager.field[i][j].selected = false;
             }
         }
-        fieldController.selectedHexes.clear();
+        fieldManager.selectedHexes.clear();
         selectedUnit = null;
-        selMoneyFactor.destroy(3, 2);
+        selMoneyFactor.setDy(0);
+        selMoneyFactor.destroy(1, 1);
         tipFactor.setValues(0, 0);
         tipFactor.destroy(1, 1);
         hideMoveZone();
@@ -221,24 +224,20 @@ public class SelectionManager {
         Scenes.sceneFastConstructionPanel.hide();
         Scenes.sceneSelectionOverlay.hide();
         Scenes.sceneAreaSelectionUI.hide();
+        Scenes.sceneFinances.hide();
     }
 
 
     void selectAdjacentHexes(Hex startHex) {
-        gameController.fieldController.selectAdjacentHexes(startHex);
-    }
-
-
-    public void updateSelectedProvinceMoney() {
-        gameController.fieldController.updateSelectedProvinceMoney();
+        gameController.fieldManager.selectAdjacentHexes(startHex);
     }
 
 
     void showDefenseTip(Hex hex) {
-        FieldController fieldController = gameController.fieldController;
-        ArrayList<Hex> defenseTips = fieldController.defenseTips;
+        FieldManager fieldManager = gameController.fieldManager;
+        ArrayList<Hex> defenseTips = fieldManager.defenseTips;
 
-        if (fieldController.defenseTipFactor.get() == 1) {
+        if (fieldManager.defenseTipFactor.get() == 1) {
             defenseTips.clear();
         }
 
@@ -248,10 +247,10 @@ public class SelectionManager {
                 defenseTips.add(adjHex);
             }
         }
-        fieldController.defenseTipFactor.setValues(0, 0);
-        fieldController.defenseTipFactor.appear(3, 0.7);
+        fieldManager.defenseTipFactor.setValues(0, 0);
+        fieldManager.defenseTipFactor.appear(3, 0.7);
         defTipSpawnTime = System.currentTimeMillis();
-        fieldController.defTipHex = hex;
+        fieldManager.defTipHex = hex;
     }
 
 
@@ -308,7 +307,7 @@ public class SelectionManager {
 
 
     private void reactionAreaSelection() {
-        MoveZoneManager moveZoneManager = gameController.fieldController.moveZoneManager;
+        MoveZoneManager moveZoneManager = gameController.fieldManager.moveZoneManager;
 
         if (!isHexAllowedForAreaSelection(focusedHex)) return;
 
@@ -327,7 +326,7 @@ public class SelectionManager {
         if (asFilterFraction == -1) return true;
 
         if (hex.fraction != asFilterFraction && hex.fraction != gameController.turn) return false;
-        if (gameController.fieldController.getProvinceByHex(hex) == null) return false;
+        if (gameController.fieldManager.getProvinceByHex(hex) == null) return false;
         if (getMoveZone().size() > 0 && hex.fraction != getMoveZone().get(0).fraction) return false;
 
         return true;
@@ -343,7 +342,7 @@ public class SelectionManager {
         System.out.println();
         System.out.println("Province:");
 
-        Province provinceByHex = gameController.fieldController.getProvinceByHex(focusedHex);
+        Province provinceByHex = gameController.fieldManager.getProvinceByHex(focusedHex);
         for (Hex hex : provinceByHex.hexList) {
             System.out.println(" - " + hex);
         }
@@ -362,10 +361,7 @@ public class SelectionManager {
         if (!gameController.isCurrentTurn(focusedHex.fraction)) return;
         if (!selectedUnit.canMoveToFriendlyHex(focusedHex)) return;
 
-        gameController.takeSnapshot();
-        SoundManagerYio.playSound(SoundManagerYio.soundWalk);
-        gameController.moveUnit(selectedUnit, focusedHex, gameController.fieldController.selectedProvince);
-        selectedUnit = null;
+        applyUnitMoveAction(selectedUnit, focusedHex, gameController.fieldManager.selectedProvince, SoundManagerYio.soundWalk);
     }
 
 
@@ -375,22 +371,28 @@ public class SelectionManager {
         if (focusedHex.unit.moveFactor.get() != 1) return true;
         if (!focusedHex.unit.isReadyToMove()) return true;
 
-        selectedUnit = focusedHex.unit;
         SoundManagerYio.playSound(SoundManagerYio.soundSelectUnit);
-        gameController.fieldController.moveZoneManager.detectAndShowMoveZone(selectedUnit.currentHex, selectedUnit.strength, GameRules.UNIT_MOVE_LIMIT);
-        selUnitFactor.setValues(0, 0);
-        selUnitFactor.appear(3, 2);
+        applyUnitSelection(focusedHex.unit);
         hideTip();
         return true;
     }
 
 
+    public void applyUnitSelection(Unit unit) {
+        selectedUnit = unit;
+        MoveZoneManager moveZoneManager = gameController.fieldManager.moveZoneManager;
+        moveZoneManager.detectAndShowMoveZone(selectedUnit.currentHex, selectedUnit.strength, GameRules.UNIT_MOVE_LIMIT);
+        selUnitFactor.setValues(0, 0);
+        selUnitFactor.appear(3, 2);
+    }
+
+
     private void reactionSelectProvince() {
         if (!gameController.isCurrentTurn(focusedHex.fraction)) return;
-        if (!gameController.fieldController.hexHasNeighbourWithFraction(focusedHex, gameController.getTurn())) return;
+        if (!gameController.fieldManager.hexHasNeighbourWithFraction(focusedHex, gameController.getTurn())) return;
 
-        gameController.fieldController.selectAdjacentHexes(focusedHex);
-        if (gameController.fieldController.selectedProvince == null) return;
+        gameController.fieldManager.selectAdjacentHexes(focusedHex);
+        if (gameController.fieldManager.selectedProvince == null) return;
 
         isSomethingSelected = true;
     }
@@ -401,10 +403,29 @@ public class SelectionManager {
         if (!focusedHex.inMoveZone) return;
         if (selectedUnit == null) return;
 
+        applyUnitMoveAction(selectedUnit, focusedHex, gameController.fieldManager.selectedProvince, SoundManagerYio.soundAttack);
+    }
+
+
+    private void applyUnitMoveAction(Unit unit, Hex targetHex, Province province, Sound sound) {
         gameController.takeSnapshot();
-        gameController.moveUnit(selectedUnit, focusedHex, gameController.fieldController.selectedProvince);
-        SoundManagerYio.playSound(SoundManagerYio.soundAttack);
+        gameController.moveUnit(unit, targetHex, province);
+        SoundManagerYio.playSound(sound);
         selectedUnit = null;
+
+        checkToApplyAutomaticTransitionToNextUnit();
+    }
+
+
+    private void checkToApplyAutomaticTransitionToNextUnit() {
+        if (!SettingsManager.automaticTransition) return;
+
+        AutomaticTransitionWorker automaticTransitionWorker;
+        automaticTransitionWorker = gameController.fieldManager.automaticTransitionWorker;
+        Unit nextUnit = automaticTransitionWorker.findNextUnit(gameController.turn);
+        if (nextUnit == null) return;
+
+        automaticTransitionWorker.applyUnitSelection(nextUnit);
     }
 
 
@@ -436,7 +457,7 @@ public class SelectionManager {
 
 
     private void showAllDefenseTipsInProvince(Hex srcHex) {
-        Province provinceByHex = gameController.fieldController.getProvinceByHex(srcHex);
+        Province provinceByHex = gameController.fieldManager.getProvinceByHex(srcHex);
 
         for (Hex hex : provinceByHex.hexList) {
             if (!isHexGoodForDefenseTip(hex)) continue;
@@ -445,7 +466,7 @@ public class SelectionManager {
             showDefenseTip(hex);
         }
 
-        gameController.fieldController.defTipHex = provinceByHex.getCapital();
+        gameController.fieldManager.defTipHex = provinceByHex.getCapital();
     }
 
 
@@ -461,25 +482,25 @@ public class SelectionManager {
 
 
     private boolean reactionBuildStuff() {
-        FieldController fieldController = gameController.fieldController;
+        FieldManager fieldManager = gameController.fieldManager;
 
         if (canBuildOnHex(focusedHex, tipType)) {
             buildSomethingOnHex(focusedHex);
             // else attack by building unit
         } else {
             if (unitBuildConditions()) {
-                fieldController.buildUnit(fieldController.selectedProvince, focusedHex, tipType);
-                fieldController.selectedProvince = fieldController.getProvinceByHex(focusedHex); // when uniting provinces, selected province object may change
-                fieldController.selectAdjacentHexes(focusedHex);
+                fieldManager.buildUnit(fieldManager.selectedProvince, focusedHex, tipType);
+                fieldManager.selectedProvince = fieldManager.getProvinceByHex(focusedHex); // when uniting provinces, selected province object may change
+                fieldManager.selectAdjacentHexes(focusedHex);
                 resetTipType();
                 SoundManagerYio.playSound(SoundManagerYio.soundBuild);
             } else {
-                fieldController.setResponseAnimHex(focusedHex);
+                fieldManager.setResponseAnimHex(focusedHex);
             }
         }
 
         hideTip();
-        Scenes.sceneFastConstructionPanel.checkToReappear();
+        fieldManager.showBuildOverlay();
         hideMoveZone();
 
         return true;
@@ -490,7 +511,7 @@ public class SelectionManager {
         if (!focusedHex.isInMoveZone()) return false;
         if (gameController.isCurrentTurn(focusedHex.fraction)) return false;
         if (!isTipTypeUnit()) return false;
-        if (!gameController.fieldController.selectedProvince.canBuildUnit(tipType)) return false;
+        if (!gameController.fieldManager.selectedProvince.canBuildUnit(tipType)) return false;
 
         return true;
     }
@@ -502,7 +523,7 @@ public class SelectionManager {
 
 
     private void updateIsSomethingSelectedState() {
-        isSomethingSelected = gameController.fieldController.selectedHexes.size() > 0;
+        isSomethingSelected = gameController.fieldManager.selectedHexes.size() > 0;
     }
 
 
@@ -518,7 +539,7 @@ public class SelectionManager {
             case SelectionTipType.UNIT_4:
                 return (GameRules.PRICE_UNIT * tipType);
             case SelectionTipType.FARM:
-                return gameController.fieldController.selectedProvince.getCurrentFarmPrice();
+                return gameController.fieldManager.selectedProvince.getCurrentFarmPrice();
             case SelectionTipType.STRONG_TOWER:
                 return GameRules.PRICE_STRONG_TOWER;
             case SelectionTipType.TREE:
@@ -528,38 +549,38 @@ public class SelectionManager {
 
 
     private void buildSomethingOnHex(Hex focusedHex) {
-        Province selectedProvince = gameController.fieldController.selectedProvince;
+        Province selectedProvince = gameController.fieldManager.selectedProvince;
         switch (tipType) {
             case SelectionTipType.TOWER:
                 if (!focusedHex.containsTree() && !focusedHex.containsUnit()) {
-                    gameController.fieldController.buildTower(selectedProvince, focusedHex);
+                    gameController.fieldManager.buildTower(selectedProvince, focusedHex);
                 }
                 break;
             case SelectionTipType.UNIT_1:
             case SelectionTipType.UNIT_2:
             case SelectionTipType.UNIT_3:
             case SelectionTipType.UNIT_4:
-                gameController.fieldController.buildUnit(selectedProvince, focusedHex, tipType);
+                gameController.fieldManager.buildUnit(selectedProvince, focusedHex, tipType);
                 break;
             case SelectionTipType.FARM:
                 if (!focusedHex.containsTree() && !focusedHex.containsUnit()) {
-                    gameController.fieldController.buildFarm(selectedProvince, focusedHex);
+                    gameController.fieldManager.buildFarm(selectedProvince, focusedHex);
                 }
                 break;
             case SelectionTipType.STRONG_TOWER:
                 if (!focusedHex.containsTree() && !focusedHex.containsUnit()) {
-                    gameController.fieldController.buildStrongTower(selectedProvince, focusedHex);
+                    gameController.fieldManager.buildStrongTower(selectedProvince, focusedHex);
                 }
                 break;
             case SelectionTipType.TREE:
                 if (focusedHex.isFree()) {
-                    gameController.fieldController.buildTree(selectedProvince, focusedHex);
+                    gameController.fieldManager.buildTree(selectedProvince, focusedHex);
                 }
                 break;
         }
 
         resetTipType();
-        gameController.fieldController.setResponseAnimHex(focusedHex);
+        gameController.fieldManager.setResponseAnimHex(focusedHex);
         SoundManagerYio.playSound(SoundManagerYio.soundBuild);
     }
 
@@ -574,7 +595,7 @@ public class SelectionManager {
 
 
     public void updateFocusedHex(int screenX, int screenY) {
-        gameController.fieldController.updateFocusedHex(screenX, screenY);
+        gameController.fieldManager.updateFocusedHex(screenX, screenY);
     }
 
 

@@ -3,6 +3,7 @@ package yio.tro.antiyoy.menu.scenes;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.scenes.editor.*;
 import yio.tro.antiyoy.menu.scenes.gameplay.*;
+import yio.tro.antiyoy.menu.scenes.gameplay.choose_entity.SceneChooseDiplomaticEntity;
 
 public class Scenes {
 
@@ -90,6 +91,12 @@ public class Scenes {
     public static SceneEditorMessages sceneEditorMessages;
     public static SceneDiplomaticRelations sceneDiplomaticRelations;
     public static SceneMyGames sceneMyGames;
+    public static SceneProfitDetails sceneProfitDetails;
+    public static SceneFinances sceneFinances;
+    public static SceneCityNames sceneCityNames;
+    public static ScenePrepareForAttackProposition scenePrepareForAttackProposition;
+    public static SceneChooseDiplomaticEntity sceneChooseDiplomaticEntity;
+    public static SceneReceiveAttackPropositionDialog sceneReceiveAttackPropositionDialog;
 
 
     public static void createScenes(MenuControllerYio menuController) {
@@ -177,5 +184,11 @@ public class Scenes {
         sceneEditorMessages = new SceneEditorMessages(menuController);
         sceneDiplomaticRelations = new SceneDiplomaticRelations(menuController);
         sceneMyGames = new SceneMyGames(menuController);
+        sceneProfitDetails = new SceneProfitDetails(menuController);
+        sceneFinances = new SceneFinances(menuController);
+        sceneCityNames = new SceneCityNames(menuController);
+        scenePrepareForAttackProposition = new ScenePrepareForAttackProposition(menuController);
+        sceneChooseDiplomaticEntity = new SceneChooseDiplomaticEntity(menuController);
+        sceneReceiveAttackPropositionDialog = new SceneReceiveAttackPropositionDialog(menuController);
     }
 }

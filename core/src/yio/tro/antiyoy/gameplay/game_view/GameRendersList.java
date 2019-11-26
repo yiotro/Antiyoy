@@ -12,7 +12,7 @@ public class GameRendersList {
     public RenderCityNames renderCityNames;
     public RenderMoveZone renderMoveZone;
     public RenderBackgroundCache renderBackgroundCache;
-    public RenderMoney renderMoney;
+    public RenderSelectionShadows renderSelectionShadows;
     public RenderDefenseTips renderDefenseTips;
     public RenderBlackout renderBlackout;
     public RenderSelectedUnit renderSelectedUnit;
@@ -43,7 +43,7 @@ public class GameRendersList {
         renderCityNames = new RenderCityNames(this);
         renderMoveZone = new RenderMoveZone(this);
         renderBackgroundCache = new RenderBackgroundCache(this);
-        renderMoney = new RenderMoney(this);
+        renderSelectionShadows = new RenderSelectionShadows(this);
         renderDefenseTips = new RenderDefenseTips(this);
         renderBlackout = new RenderBlackout(this);
         renderSelectedUnit = new RenderSelectedUnit(this);

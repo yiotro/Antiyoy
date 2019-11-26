@@ -50,6 +50,18 @@ public abstract class AbstractUserLevel extends AbstractLegacyUserLevel{
 
 
     @Override
+    public boolean getFogOfWar() {
+        return gameController.decodeManager.extractFogOfWar(getLevelCode());
+    }
+
+
+    @Override
+    public boolean getDiplomacy() {
+        return gameController.decodeManager.extractDiplomacy(getLevelCode());
+    }
+
+
+    @Override
     protected void onGameControllerSet() {
         super.onGameControllerSet();
         String levelCode = getLevelCode();

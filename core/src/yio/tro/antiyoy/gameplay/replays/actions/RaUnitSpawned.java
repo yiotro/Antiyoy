@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.gameplay.replays.actions;
 
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 
@@ -29,16 +29,16 @@ public class RaUnitSpawned extends RepAction{
 
 
     @Override
-    public void loadInfo(FieldController fieldController, String source) {
+    public void loadInfo(FieldManager fieldManager, String source) {
         String[] split = source.split(" ");
-        hex = getHexByTwoTokens(fieldController, split[0], split[1]);
+        hex = getHexByTwoTokens(fieldManager, split[0], split[1]);
         strength = Integer.valueOf(split[2]);
     }
 
 
     @Override
     public void perform(GameController gameController) {
-        gameController.fieldController.addUnit(hex, strength);
+        gameController.fieldManager.addUnit(hex, strength);
     }
 
 

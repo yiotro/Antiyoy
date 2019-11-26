@@ -2,13 +2,18 @@ package yio.tro.antiyoy.gameplay.editor;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.ai.Difficulty;
 import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.loading.LoadingType;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.color_picking.ColorHolderElement;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class EditorSaveSystem {
 
@@ -79,12 +84,36 @@ public class EditorSaveSystem {
         checkToApplyPlayersNumberFix(instance);
         GameRules.editorDiplomacy = prefs.getBoolean("editor_diplomacy" + slotNumber, false);
         instance.diplomacy = GameRules.editorDiplomacy;
-        instance.colorOffset = ColorHolderElement.getColor(GameRules.editorChosenColor, GameRules.MAX_FRACTIONS_QUANTITY);
+        instance.colorOffset = getColorOffsetForPlayLevelProcess();
         instance.editorProvincesData = gameController.levelEditor.editorProvinceManager.encode();
         instance.editorRelationsData = gameController.levelEditor.editorRelationsManager.encode();
         instance.preparedMessagesData = gameController.messagesManager.encode();
 
         LoadingManager.getInstance().startGame(instance);
+    }
+
+
+    private int getColorOffsetForPlayLevelProcess() {
+        if (GameRules.editorChosenColor == 0) {
+            return getRandomValidPlayerColor();
+        }
+        return ColorHolderElement.getColor(GameRules.editorChosenColor, GameRules.MAX_FRACTIONS_QUANTITY);
+    }
+
+
+    private int getRandomValidPlayerColor() {
+        ArrayList<Integer> availableColors = new ArrayList<>();
+        for (Hex activeHex : gameController.fieldManager.activeHexes) {
+            if (activeHex.isNeutral()) continue;
+            int color = activeHex.fraction; // in case of editor it's the same thing
+            if (availableColors.contains(color)) continue;
+            availableColors.add(color);
+        }
+
+        if (availableColors.size() == 0) return 0;
+
+        int index = YioGdxGame.random.nextInt(availableColors.size());
+        return availableColors.get(index);
     }
 
 

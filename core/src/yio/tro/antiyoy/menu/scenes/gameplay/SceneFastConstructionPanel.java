@@ -11,60 +11,30 @@ import yio.tro.antiyoy.menu.fast_construction.FastConstructionPanel;
 public class SceneFastConstructionPanel extends AbstractModalScene {
 
     public FastConstructionPanel fastConstructionPanel;
-    private ButtonYio coinButton;
 
 
     public SceneFastConstructionPanel(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
-        coinButton = null;
         fastConstructionPanel = null;
     }
 
 
     @Override
     public void create() {
+        if (isAlreadyShown()) return;
+
         checkToCreateFastConstructionPanel();
 
         fastConstructionPanel.appear();
-        createCoinButton();
     }
 
 
-    private void createCoinButton() {
-        coinButton = menuControllerYio.getButtonById(610);
-
-        if (coinButton == null) { // init
-            coinButton = buttonFactory.getButton(generateSquare(0, 0.93, 0.07), 610, null);
-            coinButton.setAnimation(Animation.up);
-            coinButton.setPressSound(SoundManagerYio.soundCoin);
-            coinButton.enableRectangularMask();
-        }
-
-        loadCoinButtonTexture(coinButton);
-        coinButton.appearFactor.appear(3, 2);
-        coinButton.setTouchable(true);
-        coinButton.setReaction(Reaction.RB_SHOW_INCOME_GRAPH);
-    }
-
-
-    public void onSkinChanged() {
-        if (coinButton != null) {
-            coinButton.resetTexture();
-        }
-    }
-
-
-    public void checkToReappear() {
-        if (!SettingsManager.fastConstructionEnabled) return;
-        if (fastConstructionPanel.getFactor().get() == 1) return;
-
-        create();
-    }
-
-
-    void loadCoinButtonTexture(ButtonYio coinButton) {
-        menuControllerYio.loadButtonOnce(coinButton, menuControllerYio.yioGdxGame.skinManager.getCoinTexturePath());
+    private boolean isAlreadyShown() {
+        if (fastConstructionPanel == null) return false;
+        if (fastConstructionPanel.getFactor().get() != 1) return false;
+        if (fastConstructionPanel.getFactor().getGravity() <= 0) return false;
+        return true;
     }
 
 

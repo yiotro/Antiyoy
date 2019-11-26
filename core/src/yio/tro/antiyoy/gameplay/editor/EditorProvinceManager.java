@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.gameplay.editor;
 
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
@@ -111,8 +111,8 @@ public class EditorProvinceManager implements EncodeableYio{
     }
 
 
-    private FieldController getFieldController() {
-        return getGameController().fieldController;
+    private FieldManager getFieldController() {
+        return getGameController().fieldManager;
     }
 
 
@@ -179,7 +179,7 @@ public class EditorProvinceManager implements EncodeableYio{
             if (split.length < 2) continue;
             int index1 = Integer.valueOf(split[0]);
             int index2 = Integer.valueOf(split[1]);
-            Hex hex = getGameController().fieldController.getHex(index1, index2);
+            Hex hex = getGameController().fieldManager.getHex(index1, index2);
             EditorProvinceData provinceByHex = getProvinceByHex(hex);
             if (provinceByHex == null) continue;
             provinceByHex.decode(token);
@@ -218,14 +218,14 @@ public class EditorProvinceManager implements EncodeableYio{
         decode(source);
 
         for (EditorProvinceData editorProvinceData : provincesList) {
-            Province provinceByHex = getGameController().fieldController.getProvinceByHex(editorProvinceData.hexList.get(0));
+            Province provinceByHex = getGameController().fieldManager.getProvinceByHex(editorProvinceData.hexList.get(0));
             if (provinceByHex == null) continue;
             editorProvinceData.applyDataToRealProvince(provinceByHex);
             getGameController().namingManager.setHexName(provinceByHex.getCapital(), editorProvinceData.name);
         }
 
         if (GameRules.diplomacyEnabled) {
-            getGameController().fieldController.diplomacyManager.updateAllNames();
+            getGameController().fieldManager.diplomacyManager.updateAllNames();
         }
     }
 }

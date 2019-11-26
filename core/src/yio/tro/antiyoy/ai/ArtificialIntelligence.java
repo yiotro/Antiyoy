@@ -32,7 +32,7 @@ public abstract class ArtificialIntelligence {
 
     void updateUnitsReadyToMove() {
         unitsReadyToMove.clear();
-        for (Province province : gameController.fieldController.provinces) {
+        for (Province province : gameController.fieldManager.provinces) {
             if (province.getFraction() == fraction) {
                 searchForUnitsReadyToMoveInProvince(province);
             }
@@ -69,8 +69,8 @@ public abstract class ArtificialIntelligence {
 
 
     void spendMoneyAndMergeUnits() {
-        for (int i = 0; i < gameController.fieldController.provinces.size(); i++) {
-            Province province = gameController.fieldController.provinces.get(i);
+        for (int i = 0; i < gameController.fieldManager.provinces.size(); i++) {
+            Province province = gameController.fieldManager.provinces.get(i);
             if (province.getFraction() != fraction) continue;
             spendMoney(province);
             mergeUnits(province);
@@ -151,7 +151,7 @@ public abstract class ArtificialIntelligence {
         while (province.hasMoneyForTower()) {
             Hex hex = findHexThatNeedsTower(province);
             if (hex == null) return;
-            gameController.fieldController.buildTower(province, hex);
+            gameController.fieldManager.buildTower(province, hex);
         }
     }
 
@@ -224,7 +224,7 @@ public abstract class ArtificialIntelligence {
         if (adjacentHex.isNeutral()) return;
         if (adjacentHex.sameFraction(srcHex)) return;
 
-        Province provinceByHex = gameController.fieldController.getProvinceByHex(adjacentHex);
+        Province provinceByHex = gameController.fieldManager.getProvinceByHex(adjacentHex);
         addProvinceToNearbyProvines(provinceByHex);
     }
 
@@ -267,7 +267,7 @@ public abstract class ArtificialIntelligence {
         boolean success = false;
 
         if (isAllowedToBuildNewUnit(province)) {
-            success = gameController.fieldController.buildUnit(province, hex, strength);
+            success = gameController.fieldManager.buildUnit(province, hex, strength);
         }
 
         if (success) {

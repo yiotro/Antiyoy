@@ -18,10 +18,10 @@ public class RenderBlackout extends GameRender{
 
     @Override
     public void render() {
-        if (gameController.fieldController.moveZoneManager.appearFactor.get() < 0.01) return;
+        if (gameController.fieldManager.moveZoneManager.appearFactor.get() < 0.01) return;
 
         Color c = batchMovable.getColor();
-        batchMovable.setColor(c.r, c.g, c.b, 0.5f * gameController.selectionManager.getBlackoutFactor().get());
+        batchMovable.setColor(c.r, c.g, c.b, 0.4f * gameController.selectionManager.getBlackoutFactor().get());
         GraphicsYio.drawByRectangle(batchMovable, getBlackPixel(), gameController.cameraController.frame);
         batchMovable.setColor(c.r, c.g, c.b, c.a);
     }

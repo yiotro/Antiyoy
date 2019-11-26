@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.gameplay.diplomacy;
 
 import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
@@ -56,7 +57,7 @@ public class DiplomaticEntity implements ReusableYio {
 
 
     public boolean isMain() {
-        return fraction == diplomacyManager.fieldController.gameController.turn;
+        return fraction == diplomacyManager.fieldManager.gameController.turn;
     }
 
 
@@ -85,10 +86,10 @@ public class DiplomaticEntity implements ReusableYio {
     public int getStateBalance() {
         int balance = 0;
 
-        for (Province province : diplomacyManager.fieldController.provinces) {
+        for (Province province : diplomacyManager.fieldManager.provinces) {
             if (province.getFraction() != fraction) continue;
 
-            balance += province.getBalance();
+            balance += province.getProfit();
         }
 
         return balance;
@@ -98,7 +99,7 @@ public class DiplomaticEntity implements ReusableYio {
     public int getStateFullMoney() {
         int money = 0;
 
-        for (Province province : diplomacyManager.fieldController.provinces) {
+        for (Province province : diplomacyManager.fieldManager.provinces) {
             if (province.getFraction() != fraction) continue;
 
             money += province.money;
@@ -109,7 +110,7 @@ public class DiplomaticEntity implements ReusableYio {
 
 
     public void pay(int amount) {
-        for (Province province : diplomacyManager.fieldController.provinces) {
+        for (Province province : diplomacyManager.fieldManager.provinces) {
             if (province.getFraction() != fraction) continue;
 
             float incomeCoefficient = province.getIncomeCoefficient();
@@ -157,19 +158,20 @@ public class DiplomaticEntity implements ReusableYio {
 
         Hex capital;
         if (largestProvince == null) {
-            capital = diplomacyManager.fieldController.getRandomActivehex();
+            capital = diplomacyManager.fieldManager.getRandomActivehex();
             capitalName = CityNameGenerator.getInstance().generateName(capital);
             return;
         }
 
-        capitalName = diplomacyManager.fieldController.gameController.namingManager.getProvinceName(largestProvince);
+        GameController gameController = diplomacyManager.fieldManager.gameController;
+        capitalName = gameController.namingManager.getProvinceName(largestProvince);
     }
 
 
     private Province getLargestProvince(int fraction) {
         Province largestProvince = null;
 
-        for (Province province : diplomacyManager.fieldController.provinces) {
+        for (Province province : diplomacyManager.fieldManager.provinces) {
             if (province.getFraction() != fraction) continue;
 
             if (largestProvince == null || province.hexList.size() > largestProvince.hexList.size()) {
@@ -244,7 +246,7 @@ public class DiplomaticEntity implements ReusableYio {
 
         alive = false;
 
-        for (Province province : diplomacyManager.fieldController.provinces) {
+        for (Province province : diplomacyManager.fieldManager.provinces) {
             if (province.getFraction() == fraction) {
                 alive = true;
                 break;
@@ -371,7 +373,7 @@ public class DiplomaticEntity implements ReusableYio {
     int getNumberOfLands() {
         int c = 0;
 
-        for (Province province : diplomacyManager.fieldController.provinces) {
+        for (Province province : diplomacyManager.fieldManager.provinces) {
             if (province.getFraction() != fraction) continue;
 
             c += province.hexList.size();

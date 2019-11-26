@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.gameplay.campaign;
 
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.data_storage.DecodeManager;
@@ -83,9 +83,9 @@ public abstract class AbstractLevelPack {
 
 
     protected void setProvinceMoney(int i, int j, int money) {
-        FieldController fieldController = campaignLevelFactory.gameController.fieldController;
-        Hex hex = fieldController.field[i][j];
-        Province provinceByHex = fieldController.getProvinceByHex(hex);
+        FieldManager fieldManager = campaignLevelFactory.gameController.fieldManager;
+        Hex hex = fieldManager.field[i][j];
+        Province provinceByHex = fieldManager.getProvinceByHex(hex);
         provinceByHex.money = money;
     }
 

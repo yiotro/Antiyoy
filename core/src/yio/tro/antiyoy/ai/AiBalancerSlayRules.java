@@ -21,7 +21,7 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
 
 
     private void updateSortConditions() {
-        playerHexCount = gameController.fieldController.getPlayerHexCount();
+        playerHexCount = gameController.fieldManager.getPlayerHexCount();
     }
 
 
@@ -96,7 +96,7 @@ public class AiBalancerSlayRules extends AiExpertSlayRules implements Comparator
         gameController.moveUnit(unit, moveZone.get(random.nextInt(moveZone.size())), province);
 
         // place tower
-        gameController.fieldController.buildTower(province, gameController.fieldController.field[x][y]);
+        gameController.fieldManager.buildTower(province, gameController.fieldManager.field[x][y]);
     }
 
 

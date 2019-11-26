@@ -9,14 +9,14 @@ import yio.tro.antiyoy.stuff.RectangleYio;
 public abstract class AbstractRectangularUiElement extends InterfaceElement {
 
     public MenuControllerYio menuControllerYio;
-    FactorYio appearFactor;
+    protected FactorYio appearFactor;
     RectangleYio position;
     public RectangleYio viewPosition;
     boolean touched;
-    PointYio currentTouch;
+    protected PointYio currentTouch;
     public boolean factorMoved;
-    ClickDetector clickDetector;
-    Animation animation;
+    protected ClickDetector clickDetector;
+    protected Animation animation;
 
 
     public AbstractRectangularUiElement(MenuControllerYio menuControllerYio) {

@@ -88,7 +88,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
 
 
     private Hex getHex(int x, int y) {
-        return gameController.fieldController.field[x][y];
+        return gameController.fieldManager.field[x][y];
     }
 
 
@@ -341,9 +341,9 @@ public class TutorialScriptSlayRules extends TutorialScript{
             if (buttonYio == null) continue;
             buttonYio.setTouchable(true);
         }
-        for (int i = 0; i < gameController.fieldController.fWidth; i++) {
-            for (int j = 0; j < gameController.fieldController.fHeight; j++) {
-                gameController.fieldController.field[i][j].setIgnoreTouch(false);
+        for (int i = 0; i < gameController.fieldManager.fWidth; i++) {
+            for (int j = 0; j < gameController.fieldManager.fHeight; j++) {
+                gameController.fieldManager.field[i][j].setIgnoreTouch(false);
             }
         }
     }
@@ -371,9 +371,9 @@ public class TutorialScriptSlayRules extends TutorialScript{
 
 
     private void allHexesIgnoreTouches() {
-        for (int i = 0; i < gameController.fieldController.fWidth; i++) {
-            for (int j = 0; j < gameController.fieldController.fHeight; j++) {
-                gameController.fieldController.field[i][j].setIgnoreTouch(true);
+        for (int i = 0; i < gameController.fieldManager.fWidth; i++) {
+            for (int j = 0; j < gameController.fieldManager.fHeight; j++) {
+                gameController.fieldManager.field[i][j].setIgnoreTouch(true);
             }
         }
     }

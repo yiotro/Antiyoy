@@ -252,7 +252,7 @@ public class NativeKeyboardElement extends InterfaceElement {
 
 
     private boolean isCurrentlyTouched() {
-        return appearFactor.get() == 1 && !tfPosition.isPointInside(currentTouch);
+        return appearFactor.get() == 1;
     }
 
 
@@ -260,9 +260,10 @@ public class NativeKeyboardElement extends InterfaceElement {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         updateCurrentTouch(screenX, screenY);
         touched = isCurrentlyTouched();
-        if (!touched) return false;
 
-        clickDetector.onTouchDown(currentTouch);
+        if (!tfPosition.isPointInside(currentTouch)) {
+            clickDetector.onTouchDown(currentTouch);
+        }
 
         return true;
     }

@@ -99,7 +99,7 @@ public class ContextListMenuElement extends InterfaceElement{
 
     @Override
     public void destroy() {
-        appearFactor.destroy(1, 2);
+        appearFactor.destroy(2, 3);
         onDestroy();
     }
 

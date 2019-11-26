@@ -8,17 +8,17 @@ public class MoveZoneManager {
 
 
     private final MoveZoneDetection moveZoneDetection;
-    FieldController fieldController;
+    FieldManager fieldManager;
     public ArrayList<Hex> moveZone;
     public FactorYio appearFactor;
 
 
-    public MoveZoneManager(FieldController fieldController) {
-        this.fieldController = fieldController;
+    public MoveZoneManager(FieldManager fieldManager) {
+        this.fieldManager = fieldManager;
 
         moveZone = new ArrayList<>();
         appearFactor = new FactorYio();
-        moveZoneDetection = new MoveZoneDetection(fieldController);
+        moveZoneDetection = new MoveZoneDetection(fieldManager);
     }
 
 
@@ -91,7 +91,7 @@ public class MoveZoneManager {
 
 
     public void detectAndShowMoveZoneForBuildingUnit(int strength) {
-        detectAndShowMoveZone(fieldController.selectedHexes.get(0), strength);
+        detectAndShowMoveZone(fieldManager.selectedHexes.get(0), strength);
     }
 
 
@@ -110,7 +110,7 @@ public class MoveZoneManager {
 
 
     private GameController getGameController() {
-        return fieldController.gameController;
+        return fieldManager.gameController;
     }
 
 

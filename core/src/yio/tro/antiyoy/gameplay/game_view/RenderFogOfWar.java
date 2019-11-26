@@ -3,7 +3,7 @@ package yio.tro.antiyoy.gameplay.game_view;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import yio.tro.antiyoy.Storage3xTexture;
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.fog_of_war.FogOfWarManager;
 import yio.tro.antiyoy.gameplay.fog_of_war.FogPoint;
 import yio.tro.antiyoy.gameplay.fog_of_war.FogSlice;
@@ -19,7 +19,7 @@ public class RenderFogOfWar extends GameRender {
     private FogOfWarManager fogOfWarManager;
     private Storage3xTexture fogTexture;
     float size;
-    private FieldController fieldController;
+    private FieldManager fieldManager;
     private TextureRegion whitePixel;
     private AtlasLoader smallAtlasLoader;
     private ShapeRenderer shapeRenderer;
@@ -48,7 +48,7 @@ public class RenderFogOfWar extends GameRender {
         if (!GameRules.fogOfWarEnabled) return;
 
         updateReferences();
-        size = 1.25f * fieldController.hexSize;
+        size = 1.25f * fieldManager.hexSize;
 
         renderFogPoints();
         renderBlocks();
@@ -59,8 +59,8 @@ public class RenderFogOfWar extends GameRender {
 
 
     private void updateReferences() {
-        fieldController = gameView.gameController.fieldController;
-        fogOfWarManager = fieldController.fogOfWarManager;
+        fieldManager = gameView.gameController.fieldManager;
+        fogOfWarManager = fieldManager.fogOfWarManager;
     }
 
 
@@ -92,8 +92,8 @@ public class RenderFogOfWar extends GameRender {
 
 
     private void drawShapeRendererStuff() {
-        hexSize = fogOfWarManager.fieldController.hexSize;
-        hexStep1 = fogOfWarManager.fieldController.hexStep1;
+        hexSize = fogOfWarManager.fieldManager.hexSize;
+        hexStep1 = fogOfWarManager.fieldManager.hexStep1;
         PointYio pos;
 
         for (FogSlice viewSlice : fogOfWarManager.viewSlices) {
@@ -189,8 +189,8 @@ public class RenderFogOfWar extends GameRender {
         shapeRenderer = menuViewYio.shapeRenderer;
         shapeRenderer.setProjectionMatrix(gameView.orthoCam.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        hexSize = fogOfWarManager.fieldController.hexSize;
-        hexStep1 = fogOfWarManager.fieldController.hexStep1;
+        hexSize = fogOfWarManager.fieldManager.hexSize;
+        hexStep1 = fogOfWarManager.fieldManager.hexStep1;
         PointYio pos;
 
         for (FogSlice viewSlice : fogOfWarManager.viewSlices) {

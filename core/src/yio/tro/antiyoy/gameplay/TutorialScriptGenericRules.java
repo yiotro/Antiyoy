@@ -88,7 +88,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
 
 
     private Hex getHex(int x, int y) {
-        return gameController.fieldController.field[x][y];
+        return gameController.fieldManager.field[x][y];
     }
 
 
@@ -314,7 +314,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
             default:
             case STEP_GREETINGS: return true;
             case STEP_SELECT_PROVINCE:
-                if (gameController.fieldController.selectedProvince != null) return true;
+                if (gameController.fieldManager.selectedProvince != null) return true;
                 return false;
             case STEP_SELECT_UNIT:
                 if (gameController.selectionManager.selectedUnit != null) return true;
@@ -405,9 +405,9 @@ public class TutorialScriptGenericRules extends TutorialScript{
             if (buttonYio == null) continue;
             buttonYio.setTouchable(true);
         }
-        for (int i = 0; i < gameController.fieldController.fWidth; i++) {
-            for (int j = 0; j < gameController.fieldController.fHeight; j++) {
-                gameController.fieldController.field[i][j].setIgnoreTouch(false);
+        for (int i = 0; i < gameController.fieldManager.fWidth; i++) {
+            for (int j = 0; j < gameController.fieldManager.fHeight; j++) {
+                gameController.fieldManager.field[i][j].setIgnoreTouch(false);
             }
         }
     }
@@ -435,7 +435,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
 
     private void setHexToRespondByFraction(int fraction) {
         ignoreAll();
-        for (Hex activeHex : gameController.fieldController.activeHexes) {
+        for (Hex activeHex : gameController.fieldManager.activeHexes) {
             if (activeHex.fraction == fraction && !activeHex.containsUnit()) {
                 activeHex.setIgnoreTouch(false);
             }
@@ -444,9 +444,9 @@ public class TutorialScriptGenericRules extends TutorialScript{
 
 
     private void allHexesIgnoreTouches() {
-        for (int i = 0; i < gameController.fieldController.fWidth; i++) {
-            for (int j = 0; j < gameController.fieldController.fHeight; j++) {
-                gameController.fieldController.field[i][j].setIgnoreTouch(true);
+        for (int i = 0; i < gameController.fieldManager.fWidth; i++) {
+            for (int j = 0; j < gameController.fieldManager.fHeight; j++) {
+                gameController.fieldManager.field[i][j].setIgnoreTouch(true);
             }
         }
     }

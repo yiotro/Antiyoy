@@ -33,7 +33,7 @@ public class RenderAnimHexes extends GameRender {
 
 
     private void renderStuffOnAnimHexes() {
-        for (Hex hex : gameController.fieldController.animHexes) {
+        for (Hex hex : gameController.fieldManager.animHexes) {
             pos = hex.getPos();
             if (!isPosInViewFrame(pos, hexViewSize)) continue;
 
@@ -70,7 +70,7 @@ public class RenderAnimHexes extends GameRender {
         TextureRegion previousTexture, targetTexture;
         GameTexturesManager texturesManager = gameView.texturesManager;
 
-        for (Hex hex : gameController.fieldController.animHexes) {
+        for (Hex hex : gameController.fieldManager.animHexes) {
             pos = hex.getPos();
             if (!isPosInViewFrame(pos, hexViewSize)) continue;
 

@@ -17,6 +17,8 @@ public abstract class TouchMode {
     public static TmEditor tmEditor;
     public static TmEditProvinces tmEditProvinces;
     public static TmShowChosenHexes tmShowChosenHexes;
+    public static TmIgnore tmIgnore;
+    // create tm lower
 
 
     public TouchMode(GameController gameController) {
@@ -33,6 +35,7 @@ public abstract class TouchMode {
         tmEditor = new TmEditor(gameController);
         tmEditProvinces = new TmEditProvinces(gameController);
         tmShowChosenHexes = new TmShowChosenHexes(gameController);
+        tmIgnore = new TmIgnore(gameController);
     }
 
 

@@ -4,14 +4,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import yio.tro.antiyoy.stuff.Fonts;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
-public class RenderMoney extends GameRender{
+public class RenderSelectionShadows extends GameRender{
 
 
     private float smFactor;
     private float smDelta;
 
 
-    public RenderMoney(GameRendersList gameRendersList) {
+    public RenderSelectionShadows(GameRendersList gameRendersList) {
         super(gameRendersList);
     }
 
@@ -47,20 +47,6 @@ public class RenderMoney extends GameRender{
                 -smDelta + 0,
                 GraphicsYio.width,
                 0.1f * GraphicsYio.height
-        );
-
-        Fonts.gameFont.draw(
-                batch,
-                "" + gameController.fieldController.selectedProvinceMoney,
-                0.12f * GraphicsYio.width,
-                (1.08f - 0.1f * smFactor) * GraphicsYio.height
-        );
-
-        Fonts.gameFont.draw(
-                batch,
-                gameController.balanceString,
-                0.47f * GraphicsYio.width,
-                (1.08f - 0.1f * smFactor) * GraphicsYio.height
         );
 
         batch.end();

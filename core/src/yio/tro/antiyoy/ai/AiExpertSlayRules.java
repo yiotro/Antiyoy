@@ -17,7 +17,7 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
 
     public AiExpertSlayRules(GameController gameController, int fraction) {
         super(gameController, fraction);
-        tempHex = new Hex(0, 0, new PointYio(), gameController.fieldController);
+        tempHex = new Hex(0, 0, new PointYio(), gameController.fieldManager);
         hexesInPerimeter = new ArrayList<Hex>();
     }
 
@@ -137,7 +137,7 @@ public class AiExpertSlayRules extends ArtificialIntelligence {
         Hex hexToMove = findRandomHexInPerimeter(province);
         if (hexToMove == null) return;
         tempHex.set(unit.currentHex);
-        gameController.fieldController.massMarchManager.performForSingleUnit(unit, hexToMove);
+        gameController.fieldManager.massMarchManager.performForSingleUnit(unit, hexToMove);
         if (tempHex.equals(unit.currentHex)) super.moveAfkUnit(province, unit); // to prevent infinite loop
     }
 

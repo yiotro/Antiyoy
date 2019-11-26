@@ -1,5 +1,8 @@
 package yio.tro.antiyoy.gameplay;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.utils.Clipboard;
 import yio.tro.antiyoy.KeyboardManager;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
@@ -7,12 +10,12 @@ import yio.tro.antiyoy.gameplay.diplomacy.*;
 import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
 import yio.tro.antiyoy.gameplay.replays.ReplaySaveSystem;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
-import yio.tro.antiyoy.gameplay.touch_mode.TouchMode;
 import yio.tro.antiyoy.menu.keyboard.AbstractKbReaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class DebugActionsManager {
 
@@ -25,7 +28,71 @@ public class DebugActionsManager {
 
 
     public void debugActions() {
-        doShowColorStuff();
+        doGiveFirstFractionMoney();
+    }
+
+
+    private void doGiveFirstFractionMoney() {
+        for (Province province : gameController.fieldManager.provinces) {
+            if (province.getFraction() != 0) continue;
+            province.money += 1000;
+        }
+    }
+
+
+    private void doShowProvinceNames() {
+        System.out.println();
+        System.out.println("DebugActionsManager.doShowProvinceNames");
+        for (Province province : gameController.fieldManager.provinces) {
+            System.out.println("- " + province.name);
+        }
+    }
+
+
+    private void doShowSelectedProvinceIncome() {
+        System.out.println();
+        System.out.println("DebugActionsManager.doShowSelectedProvinceIncome");
+        Province selectedProvince = gameController.fieldManager.selectedProvince;
+        System.out.println("selectedProvince = " + selectedProvince);
+        System.out.println("selectedProvince.getBalance() = " + selectedProvince.getProfit());
+        System.out.println("selectedProvince.getIncome() = " + selectedProvince.getIncome());
+        System.out.println("selectedProvince.getDotations() = " + selectedProvince.getDotations());
+        System.out.println("selectedProvince.getTaxes() = " + selectedProvince.getTaxes());
+        System.out.println("selectedProvince.getTowerTaxes() = " + selectedProvince.getTowerTaxes());
+        System.out.println("selectedProvince.getUnitsTaxes() = " + selectedProvince.getUnitsTaxes());
+    }
+
+
+    public void doSaveFullLevelToClipboard() {
+        String prefsName = "yio.tro.antiyoy.debug_prefs";
+        gameController.gameSaver.saveGame(prefsName);
+
+        Preferences preferences = Gdx.app.getPreferences(prefsName);
+        Map<String, ?> stringMap = preferences.get();
+        StringBuilder builder = new StringBuilder();
+        for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
+            builder.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+        }
+        String result = builder.toString();
+
+        System.out.println();
+        System.out.println("DebugActionsManager.doSaveFullLevelToClipboard");
+        System.out.println(result);
+
+        Clipboard clipboard = Gdx.app.getClipboard();
+        clipboard.setContents(result);
+    }
+
+
+    private void doSendSomeMailsToPlayer() {
+        DiplomacyManager diplomacyManager = gameController.fieldManager.diplomacyManager;
+        DiplomaticEntity humanEntity = diplomacyManager.getEntity(0);
+        DiplomaticEntity aiEntity = diplomacyManager.getEntity(1);
+        for (int i = 0; i < 10; i++) {
+            DiplomaticMessage diplomaticMessage = diplomacyManager.log.addMessage(DipMessageType.message, aiEntity, humanEntity);
+            if (diplomaticMessage == null) continue;
+            diplomaticMessage.setArg1("Debug message");
+        }
     }
 
 
@@ -42,7 +109,7 @@ public class DebugActionsManager {
     private void doShowEntityNames() {
         System.out.println();
         System.out.println("DebugActionsManager.doShowEntityNames");
-        for (DiplomaticEntity entity : gameController.fieldController.diplomacyManager.entities) {
+        for (DiplomaticEntity entity : gameController.fieldManager.diplomacyManager.entities) {
             System.out.println("entity = " + entity);
         }
     }
@@ -64,7 +131,7 @@ public class DebugActionsManager {
 
 
     private void doKillRandomFriend() {
-        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomacyManager diplomacyManager = gameController.fieldManager.diplomacyManager;
         DiplomaticEntity mainEntity = diplomacyManager.getMainEntity();
 
         DiplomaticEntity friend = null;
@@ -78,16 +145,16 @@ public class DebugActionsManager {
 
         if (friend == null) return;
 
-        for (Hex activeHex : gameController.fieldController.activeHexes) {
+        for (Hex activeHex : gameController.fieldManager.activeHexes) {
             if (activeHex.fraction != friend.fraction) continue;
 
-            gameController.fieldController.setHexFraction(activeHex, GameRules.NEUTRAL_FRACTION);
+            gameController.fieldManager.setHexFraction(activeHex, GameRules.NEUTRAL_FRACTION);
         }
     }
 
 
     private void doTestAreaSelectionMode() {
-        gameController.fieldController.diplomacyManager.enableAreaSelectionMode(-1);
+        gameController.fieldManager.diplomacyManager.enableAreaSelectionMode(-1);
     }
 
 
@@ -148,7 +215,7 @@ public class DebugActionsManager {
     private void doShowSuspiciousStuff() {
         System.out.println();
         System.out.println("DebugActionsManager.doShowSuspiciousStuff");
-        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomacyManager diplomacyManager = gameController.fieldManager.diplomacyManager;
 
         ArrayList<DiplomaticCooldown> cooldowns = diplomacyManager.cooldowns;
         System.out.println("cooldowns.size() = " + cooldowns.size());
@@ -187,7 +254,7 @@ public class DebugActionsManager {
 
 
     private DiplomacyManager getDiplomacyManager() {
-        return gameController.fieldController.diplomacyManager;
+        return gameController.fieldManager.diplomacyManager;
     }
 
 
@@ -218,8 +285,8 @@ public class DebugActionsManager {
         System.out.println("DebugActionsManager.generateMultipleCityNames");
 
         CityNameGenerator instance = CityNameGenerator.getInstance();
-        FieldController fieldController = gameController.fieldController;
-        ArrayList<Hex> activeHexes = fieldController.activeHexes;
+        FieldManager fieldManager = gameController.fieldManager;
+        ArrayList<Hex> activeHexes = fieldManager.activeHexes;
         for (int i = 0; i < 10; i++) {
             Hex randomHex = activeHexes.get(YioGdxGame.random.nextInt(activeHexes.size()));
             String name = instance.generateName(randomHex);
@@ -269,7 +336,7 @@ public class DebugActionsManager {
 
 
     private void checkIfSomeProvincesAreDoubledInList() {
-        ArrayList<Province> provinces = gameController.fieldController.provinces;
+        ArrayList<Province> provinces = gameController.fieldManager.provinces;
         for (int i = 0; i < provinces.size(); i++) {
             for (int j = 0; j < provinces.size(); j++) {
                 Province A = provinces.get(i);
@@ -306,7 +373,7 @@ public class DebugActionsManager {
 
 
     private void doGiveEverybodyLotOfMoney() {
-        for (Province province : gameController.fieldController.provinces) {
+        for (Province province : gameController.fieldManager.provinces) {
             province.money += 1000;
         }
     }

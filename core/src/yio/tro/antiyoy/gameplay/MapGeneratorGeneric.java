@@ -272,7 +272,7 @@ public class MapGeneratorGeneric extends MapGenerator {
 
 
     private ArrayList<Hex> getActiveHexes() {
-        return gameController.fieldController.activeHexes;
+        return gameController.fieldManager.activeHexes;
     }
 
 

@@ -22,12 +22,12 @@ public class RenderResponseAnimHex extends GameRender{
 
     @Override
     public void render() {
-        if (gameController.fieldController.responseAnimHex == null) return;
+        if (gameController.fieldManager.responseAnimHex == null) return;
 
-        pos = gameController.fieldController.responseAnimHex.getPos();
+        pos = gameController.fieldManager.responseAnimHex.getPos();
         Color c = batchMovable.getColor();
-        batchMovable.setColor(c.r, c.g, c.b, 0.5f * Math.min(gameController.fieldController.responseAnimFactor.get(), 1));
-        float s = Math.max(hexViewSize, hexViewSize * gameController.fieldController.responseAnimFactor.get());
+        batchMovable.setColor(c.r, c.g, c.b, 0.5f * Math.min(gameController.fieldManager.responseAnimFactor.get(), 1));
+        float s = Math.max(hexViewSize, hexViewSize * gameController.fieldManager.responseAnimFactor.get());
         batchMovable.draw(gameView.texturesManager.responseAnimHexTexture, pos.x - s, pos.y - s, 2 * s, 2 * s);
         batchMovable.setColor(c.r, c.g, c.b, c.a);
     }

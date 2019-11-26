@@ -37,6 +37,12 @@ public abstract class AbstractSingleLineItem extends AbstractCustomListItem{
     }
 
 
+    public void setFont(BitmapFont font) {
+        title.setFont(font);
+        title.updateMetrics();
+    }
+
+
     @Override
     protected void onPositionChanged() {
         title.delta.x = 0.04f * GraphicsYio.width;

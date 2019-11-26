@@ -21,12 +21,14 @@ public class SceneUlFilters extends AbstractScene {
     private ButtonYio nameFilterButton;
     private AbstractKbReaction kbReaction;
     private Reaction rbByName;
+    private CheckButtonYio chkDiplomacy;
+    private CheckButtonYio chkFogOfWar;
 
 
     public SceneUlFilters(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
-        double h = 0.5;
+        double h = 0.6;
         labelPos = new RectangleYio(0.1, (0.9 - h) / 2, 0.8, h);
         chkCompleted = null;
 
@@ -120,6 +122,8 @@ public class SceneUlFilters extends AbstractScene {
         chkHistorical.appear();
         chkSingleplayer.appear();
         chkMultiplayer.appear();
+        chkDiplomacy.appear();
+        chkFogOfWar.appear();
     }
 
 
@@ -145,6 +149,16 @@ public class SceneUlFilters extends AbstractScene {
         chkMultiplayer.setParent(label);
         chkMultiplayer.alignUnderPreviousElement();
         chkMultiplayer.setTitle(makeFirstLetterUpperCase(getString("multiplayer")));
+
+        chkDiplomacy = CheckButtonYio.getFreshCheckButton(menuControllerYio);
+        chkDiplomacy.setParent(label);
+        chkDiplomacy.alignUnderPreviousElement();
+        chkDiplomacy.setTitle(getString("diplomacy"));
+
+        chkFogOfWar = CheckButtonYio.getFreshCheckButton(menuControllerYio);
+        chkFogOfWar.setParent(label);
+        chkFogOfWar.alignUnderPreviousElement();
+        chkFogOfWar.setTitle(getString("fog_of_war"));
     }
 
 
@@ -155,6 +169,8 @@ public class SceneUlFilters extends AbstractScene {
         prefs.putBoolean("historical", chkHistorical.isChecked());
         prefs.putBoolean("single_player", chkSingleplayer.isChecked());
         prefs.putBoolean("multiplayer", chkMultiplayer.isChecked());
+        prefs.putBoolean("diplomacy", chkDiplomacy.isChecked());
+        prefs.putBoolean("fog_of_war", chkFogOfWar.isChecked());
 
         prefs.flush();
     }
@@ -167,6 +183,8 @@ public class SceneUlFilters extends AbstractScene {
         chkHistorical.setChecked(prefs.getBoolean("historical", true));
         chkSingleplayer.setChecked(prefs.getBoolean("single_player", true));
         chkMultiplayer.setChecked(prefs.getBoolean("multiplayer", true));
+        chkDiplomacy.setChecked(prefs.getBoolean("diplomacy", true));
+        chkFogOfWar.setChecked(prefs.getBoolean("fog_of_war", true));
     }
 
 

@@ -24,6 +24,7 @@ public class SceneCheatsMenu extends AbstractScene{
     private Reaction rbTakeControl;
     private ButtonYio backButton;
     private Reaction rbCharisma;
+    private Reaction rbDebugExport;
 
 
     public SceneCheatsMenu(MenuControllerYio menuControllerYio) {
@@ -85,11 +86,18 @@ public class SceneCheatsMenu extends AbstractScene{
                 }
             }
         };
+
+        rbDebugExport = new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                getGameController(buttonYio).debugActionsManager.doSaveFullLevelToClipboard();
+            }
+        };
     }
 
 
     private int getPercentageOfCapturedLands() {
-        ArrayList<Hex> activeHexes = getGameController().fieldController.activeHexes;
+        ArrayList<Hex> activeHexes = getGameController().fieldManager.activeHexes;
         int c = 0;
         for (Hex activeHex : activeHexes) {
             if (!getGameController().isCurrentTurn(activeHex.fraction)) continue;
@@ -104,7 +112,7 @@ public class SceneCheatsMenu extends AbstractScene{
     private void doGiveSomeMoneyToPlayer() {
         GameController gameController = getGameController();
 
-        for (Province province : gameController.fieldController.provinces) {
+        for (Province province : gameController.fieldManager.provinces) {
             if (province.getFraction() != gameController.turn) continue;
 
             province.money += 1000;
@@ -120,13 +128,14 @@ public class SceneCheatsMenu extends AbstractScene{
 
         backButton = menuControllerYio.spawnBackButton(1831287361, rbBack);
 
-        y = 0.54;
+        y = 0.6;
 
         addInnerButton(71263781, "Open in editor", openInEditorReaction);
         addInnerButton(8213718, "Capture hexes", rbCaptureHexes);
         addInnerButton(8213719, "Give $1000", rbGiveMoney);
         addInnerButton(8213720, "Take control", rbTakeControl);
         addInnerButton(8213721, "Charisma", rbCharisma);
+        addInnerButton(8213722, "Debug export", rbDebugExport);
 
         menuControllerYio.endMenuCreation();
     }
@@ -145,7 +154,7 @@ public class SceneCheatsMenu extends AbstractScene{
         GameController gameController = getGameController();
         list.clear();
 
-        for (Hex activeHex : gameController.fieldController.activeHexes) {
+        for (Hex activeHex : gameController.fieldManager.activeHexes) {
             if (activeHex.sameFraction(0)) continue;
             if (!hasAtLeastOnePlayerHexNearby(activeHex)) continue;
             if (gameController.getRandom().nextDouble() < 0.25) continue;
@@ -154,7 +163,7 @@ public class SceneCheatsMenu extends AbstractScene{
         }
 
         for (Hex hex : list) {
-            gameController.fieldController.setHexFraction(hex, 0);
+            gameController.fieldManager.setHexFraction(hex, 0);
             gameController.replayManager.onHexChangedFractionWithoutObviousReason(hex);
         }
         list.clear();

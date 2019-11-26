@@ -1,7 +1,6 @@
 package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.stuff.GraphicsYio;
-import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.stuff.PointYio;
 
 public class LevelSizeManager {
@@ -73,8 +72,8 @@ public class LevelSizeManager {
     }
 
 
-    private FieldController getFieldController() {
-        return gameController.fieldController;
+    private FieldManager getFieldController() {
+        return gameController.fieldManager;
     }
 
 

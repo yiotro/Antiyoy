@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.menu.scenes.gameplay;
 
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
@@ -49,18 +49,18 @@ public class SceneAreaSelectionUI extends AbstractModalScene {
 
 
     private void onCancelButtonPressed() {
-        FieldController fieldController = getGameController().fieldController;
-        fieldController.diplomacyManager.disableAreaSelectionMode();
+        FieldManager fieldManager = getGameController().fieldManager;
+        fieldManager.diplomacyManager.disableAreaSelectionMode();
     }
 
 
     private void onApplyButtonPressed() {
         GameController gameController = getGameController();
-        FieldController fieldController = gameController.fieldController;
-        DiplomacyManager diplomacyManager = fieldController.diplomacyManager;
+        FieldManager fieldManager = gameController.fieldManager;
+        DiplomacyManager diplomacyManager = fieldManager.diplomacyManager;
         diplomacyManager.disableAreaSelectionMode();
 
-        ArrayList<Hex> moveZone = fieldController.moveZoneManager.moveZone;
+        ArrayList<Hex> moveZone = fieldManager.moveZoneManager.moveZone;
         if (moveZone.size() == 0) return;
 
         if (moveZone.get(0).fraction == gameController.turn) {

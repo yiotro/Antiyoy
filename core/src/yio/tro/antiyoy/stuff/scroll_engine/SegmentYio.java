@@ -26,6 +26,12 @@ public class SegmentYio {
     }
 
 
+    public void relocate(double delta) {
+        a += delta;
+        b += delta;
+    }
+
+
     @Override
     public String toString() {
         return "(" + Yio.roundUp(a, 2) + ", " + Yio.roundUp(b, 2) + ")";

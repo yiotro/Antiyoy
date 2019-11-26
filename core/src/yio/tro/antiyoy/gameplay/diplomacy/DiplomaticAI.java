@@ -2,9 +2,10 @@ package yio.tro.antiyoy.gameplay.diplomacy;
 
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.DebugFlags;
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class DiplomaticAI {
     private ArrayList<Province> tempProvinceList;
     private ArrayList<Hex> propagationList;
     String customMessageKeys[];
+    String sadSmileys[];
 
 
     public DiplomaticAI(DiplomacyManager diplomacyManager) {
@@ -23,6 +25,17 @@ public class DiplomaticAI {
         tempProvinceList = new ArrayList<>();
         propagationList = new ArrayList<>();
         initCustomMessageKeys();
+        initSadSmileys();
+    }
+
+
+    private void initSadSmileys() {
+        sadSmileys = new String[]{
+                ":(",
+                ":(",
+                ";(",
+                ">:(",
+        };
     }
 
 
@@ -94,13 +107,42 @@ public class DiplomaticAI {
             performAiToHumanHexSellProposal();
         }
 
-        if (compareRandomToZero(80) || doesLogContainMessageToMe()) {
+        if (compareRandomToZero(15 * GameRules.fractionsQuantity) || doesLogContainMessageToMe()) {
             sendCustomMessageToHuman();
         }
 
         if (compareRandomToZero(3)) {
             checkToProposePeaceToAnotherAI();
         }
+
+        if (getMainEntity().getStateFullMoney() > 100 && compareRandomToZero(4)) {
+            checkToSendAttackPropositionToHuman();
+        }
+    }
+
+
+    private void checkToSendAttackPropositionToHuman() {
+        DiplomaticEntity mainEntity = getMainEntity();
+        DiplomaticEntity randomHumanEntity = getRandomHumanEntity();
+        if (randomHumanEntity == null) return;
+        if (mainEntity.getRelation(randomHumanEntity) != DiplomaticRelation.FRIEND) return;
+
+        int price = 100;
+        if (mainEntity.getStateFullMoney() > 200) {
+            price = 200;
+        }
+        if (mainEntity.getStateFullMoney() > 300) {
+            price = 300;
+        }
+
+        DiplomaticEntity targetEntity = getRandomEntity();
+        if (targetEntity == null) return;
+        if (targetEntity == mainEntity) return;
+        if (targetEntity == randomHumanEntity) return;
+
+        DiplomaticMessage message = getLog().addMessage(DipMessageType.attack_proposition, mainEntity, randomHumanEntity);
+        message.setArg1("" + price);
+        message.setArg2("" + targetEntity.fraction);
     }
 
 
@@ -164,6 +206,7 @@ public class DiplomaticAI {
         int relation = mainEntity.getRelation(randomHumanEntity);
         if (relation != DiplomaticRelation.ENEMY) return;
         if (mainEntity.getNumberOfLands() > randomHumanEntity.getNumberOfLands()) return;
+        if (!diplomacyManager.canWarBeStopped(mainEntity, randomHumanEntity)) return;
 
         getLog().addMessage(DipMessageType.stop_war, mainEntity, randomHumanEntity);
     }
@@ -348,10 +391,42 @@ public class DiplomaticAI {
                         diplomacyManager.applyHexPurchase(message);
                     }
                     break;
+                case attack_proposition:
+                    if (!processAttackProposition(message)) {
+                        DiplomaticMessage diplomaticMessage = getLog().addMessage(DipMessageType.message, getMainEntity(), message.sender);
+                        diplomaticMessage.setArg1(getRandomSadSmiley());
+                    }
+                    break;
             }
 
             getLog().removeMessage(message);
         }
+    }
+
+
+    private String getRandomSadSmiley() {
+        int index = YioGdxGame.random.nextInt(sadSmileys.length);
+        return sadSmileys[index];
+    }
+
+
+    private boolean processAttackProposition(DiplomaticMessage message) {
+        int price = Integer.valueOf(message.arg1);
+        if (price < 50) return false;
+        if (message.sender.getStateFullMoney() < price) return false;
+
+        DiplomaticEntity mainEntity = getMainEntity();
+        int targetFraction = Integer.valueOf(message.arg2);
+        if (targetFraction == mainEntity.fraction) return false;
+
+        DiplomaticEntity targetEntity = diplomacyManager.getEntity(targetFraction);
+        if (targetEntity == null) return false;
+        if (mainEntity.getRelation(targetEntity) == DiplomaticRelation.FRIEND) return false;
+        if (price < 250 && YioGdxGame.random.nextDouble() < 0.25) return false;
+
+        diplomacyManager.transferMoney(message.sender, mainEntity, price);
+        diplomacyManager.onEntityRequestedToMakeRelationsWorse(mainEntity, targetEntity);
+        return true;
     }
 
 
@@ -437,8 +512,8 @@ public class DiplomaticAI {
     }
 
 
-    private FieldController getFieldController() {
-        return diplomacyManager.fieldController;
+    private FieldManager getFieldController() {
+        return diplomacyManager.fieldManager;
     }
 
 
@@ -487,7 +562,10 @@ public class DiplomaticAI {
             if (relation != DiplomaticRelation.NEUTRAL) continue;
             if (!humanEntity.acceptsFriendsRequest(randomEntity)) continue;
 
-            getLog().addMessage(DipMessageType.friendship_proposal, randomEntity, humanEntity);
+            DiplomaticMessage diplomaticMessage = getLog().addMessage(DipMessageType.friendship_proposal, randomEntity, humanEntity);
+            if (diplomaticMessage != null) {
+                diplomaticMessage.setArg1("" + diplomacyManager.calculateDotationsForFriendship(randomEntity, humanEntity));
+            }
             return true;
         }
 

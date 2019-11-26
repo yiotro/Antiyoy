@@ -39,7 +39,7 @@ public abstract class AbstractCustomListItem {
 
 
     private void updateViewPosition() {
-        viewPosition.x = customizableListYio.maskPosition.x + positionDelta.x;
+        viewPosition.x = customizableListYio.position.x + positionDelta.x;
         viewPosition.y = customizableListYio.maskPosition.y + positionDelta.y + customizableListYio.hook;
         viewPosition.width = (float) getWidth();
         viewPosition.height = (float) getHeight();

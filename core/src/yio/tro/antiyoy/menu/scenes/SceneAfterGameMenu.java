@@ -110,7 +110,7 @@ public class SceneAfterGameMenu extends AbstractScene {
         if (!areThereAtLeastTwoDifferentAliveColorsOnMap()) return false;
 
         GameController gameController = getGameController();
-        DiplomacyManager diplomacyManager = gameController.fieldController.diplomacyManager;
+        DiplomacyManager diplomacyManager = gameController.fieldManager.diplomacyManager;
         DiplomaticEntity winner = diplomacyManager.getEntity(winnerFraction);
         if (!winner.hasOnlyFriends()) return false;
 
@@ -120,7 +120,7 @@ public class SceneAfterGameMenu extends AbstractScene {
 
     private boolean areThereAtLeastTwoDifferentAliveColorsOnMap() {
         GameController gameController = getGameController();
-        ArrayList<Province> provinces = gameController.fieldController.provinces;
+        ArrayList<Province> provinces = gameController.fieldManager.provinces;
         if (provinces.size() < 2) return false;
 
         int firstColor = provinces.get(0).getFraction();

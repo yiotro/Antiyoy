@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.gameplay.loading;
 
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
@@ -9,7 +9,7 @@ import yio.tro.antiyoy.stuff.PointYio;
 public class WideScreenCompensationManager {
 
     GameController gameController;
-    private FieldController fieldController;
+    private FieldManager fieldManager;
     private float top;
     private float bottom;
     private float deltaTop;
@@ -23,8 +23,8 @@ public class WideScreenCompensationManager {
 
 
     public void perform() {
-        fieldController = gameController.fieldController;
-        if (fieldController.activeHexes.size() == 0) return;
+        fieldManager = gameController.fieldManager;
+        if (fieldManager.activeHexes.size() == 0) return;
 
         updateTopAndBottom();
         updateDeltas();
@@ -42,8 +42,8 @@ public class WideScreenCompensationManager {
 
 
     private void applyFixDelta() {
-        gameController.fieldController.compensatoryOffset = fixDelta;
-        gameController.fieldController.updateHexPositions();
+        gameController.fieldManager.compensatoryOffset = fixDelta;
+        gameController.fieldManager.updateHexPositions();
     }
 
 
@@ -52,8 +52,8 @@ public class WideScreenCompensationManager {
         fixDelta = (gameController.levelSizeManager.boundHeight / 2 - hexMedium);
 
         // to keep water texture aligned with hexes
-        int rv = (int) (fixDelta / fieldController.hexStep1);
-        fixDelta = rv * fieldController.hexStep1;
+        int rv = (int) (fixDelta / fieldManager.hexStep1);
+        fixDelta = rv * fieldManager.hexStep1;
     }
 
 
@@ -67,8 +67,8 @@ public class WideScreenCompensationManager {
 
 
     private void updateDeltas() {
-        deltaTop = gameController.levelSizeManager.boundHeight - 2 * fieldController.hexSize - top;
-        deltaBottom = bottom - 2 * fieldController.hexSize;
+        deltaTop = gameController.levelSizeManager.boundHeight - 2 * fieldManager.hexSize - top;
+        deltaBottom = bottom - 2 * fieldManager.hexSize;
     }
 
 
@@ -77,7 +77,7 @@ public class WideScreenCompensationManager {
         bottom = 0;
         boolean gotTop = false;
         boolean gotBottom = false;
-        for (Hex activeHex : fieldController.activeHexes) {
+        for (Hex activeHex : fieldManager.activeHexes) {
             PointYio pos = activeHex.getPos();
 
             if (!gotTop || pos.y > top) {

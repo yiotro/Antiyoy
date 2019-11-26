@@ -68,7 +68,7 @@ public class RenderDiplomaticDialog extends MenuRender{
         if (!dialog.areButtonsEnabled()) return;
 
         for (AcButton button : dialog.buttons) {
-            if (dialog.isInSingleButtonMode() && button.actionType != AcActionType.yes) continue;
+            if (dialog.isInSingleButtonMode() && button.actionType == AcActionType.no) continue;
 
             GraphicsYio.drawByRectangle(
                     batch,

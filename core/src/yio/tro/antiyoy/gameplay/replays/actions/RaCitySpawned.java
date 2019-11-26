@@ -1,6 +1,6 @@
 package yio.tro.antiyoy.gameplay.replays.actions;
 
-import yio.tro.antiyoy.gameplay.FieldController;
+import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Obj;
@@ -30,16 +30,16 @@ public class RaCitySpawned extends RepAction{
 
 
     @Override
-    public void loadInfo(FieldController fieldController, String source) {
+    public void loadInfo(FieldManager fieldManager, String source) {
         ArrayList<String> strings = convertSourceStringToList(source);
-        hex = getHexByTwoTokens(fieldController, strings.get(0), strings.get(1));
+        hex = getHexByTwoTokens(fieldManager, strings.get(0), strings.get(1));
     }
 
 
     @Override
     public void perform(GameController gameController) {
         if (hex.containsUnit()) {
-            gameController.fieldController.cleanOutHex(hex);
+            gameController.fieldManager.cleanOutHex(hex);
         }
 
         gameController.addSolidObject(hex, Obj.TOWN);

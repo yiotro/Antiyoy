@@ -7,6 +7,8 @@ import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 public class ReplaySaveSystem {
@@ -16,11 +18,14 @@ public class ReplaySaveSystem {
     private Preferences prefs;
     private ArrayList<String> keys;
     GameController gameController;
+    HashMap<String, String> renames;
 
 
     public ReplaySaveSystem() {
         keys = new ArrayList<>();
         gameController = null;
+        renames = new HashMap<>();
+        loadRenames();
     }
 
 
@@ -131,6 +136,48 @@ public class ReplaySaveSystem {
         saveKeys();
 
         return keyForNewSlot;
+    }
+
+
+    public void saveRenames() {
+        updatePrefs();
+        StringBuilder builder = new StringBuilder();
+        for (Map.Entry<String, String> entry : renames.entrySet()) {
+            builder.append(entry.getKey()).append("@").append(entry.getValue()).append("#");
+        }
+        prefs.putString("renames", builder.toString());
+        prefs.flush();
+    }
+
+
+    public boolean isSlotRenamed(String key) {
+        return renames.keySet().contains(key);
+    }
+
+
+    public String getCustomSlotName(String key) {
+        if (!isSlotRenamed(key)) return null;
+        return renames.get(key);
+    }
+
+
+    public void applySlotRename(String key, String value) {
+        renames.put(key, value);
+        saveRenames();
+    }
+
+
+    public void loadRenames() {
+        updatePrefs();
+        renames.clear();
+        String source = prefs.getString("renames", "");
+        if (source.length() == 0) return;
+        for (String token : source.split("#")) {
+            String[] split = token.split("@");
+            String key = split[0];
+            String value = split[1];
+            renames.put(key, value);
+        }
     }
 
 

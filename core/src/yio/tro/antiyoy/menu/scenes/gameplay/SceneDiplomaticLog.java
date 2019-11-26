@@ -21,7 +21,7 @@ public class SceneDiplomaticLog extends AbstractModalScene {
         initLogPanelOnce();
 
         logPanel.appear();
-        logPanel.updateItems();
+        logPanel.loadValues();
 
         if (logPanel.isEmpty()) {
             hide();

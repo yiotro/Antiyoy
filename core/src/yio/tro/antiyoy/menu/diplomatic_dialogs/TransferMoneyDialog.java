@@ -82,7 +82,7 @@ public class TransferMoneyDialog extends AbstractDiplomaticDialog{
 
 
     private void performMoneyTransfer() {
-        DiplomacyManager diplomacyManager = menuControllerYio.yioGdxGame.gameController.fieldController.diplomacyManager;
+        DiplomacyManager diplomacyManager = menuControllerYio.yioGdxGame.gameController.fieldManager.diplomacyManager;
         int currentRunnerIndex = Scenes.sceneTransferMoneyDialog.moneySlider.getValueIndex();
         int value = Scenes.sceneTransferMoneyDialog.convertSliderIndexIntoMoneyValue(currentRunnerIndex);
         diplomacyManager.transferMoney(sender, recipient, value);
