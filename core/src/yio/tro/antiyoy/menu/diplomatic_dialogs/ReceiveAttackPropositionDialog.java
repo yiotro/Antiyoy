@@ -113,7 +113,7 @@ public class ReceiveAttackPropositionDialog extends AbstractDiplomaticDialog {
 
     @Override
     protected void onCustomActionButtonPressed(AcButton acButton) {
-        if (acButton.actionType == AcActionType.show) {
+        if (acButton.actionType == AcActionType.show && targetProvince != null) {
             Scenes.sceneReceiveAttackPropositionDialog.hide();
             GameController gameController = menuControllerYio.yioGdxGame.gameController;
             gameController.setTouchMode(TouchMode.tmShowChosenHexes);

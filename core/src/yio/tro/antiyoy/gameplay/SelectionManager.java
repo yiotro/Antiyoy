@@ -391,9 +391,13 @@ public class SelectionManager {
         if (!gameController.isCurrentTurn(focusedHex.fraction)) return;
         if (!gameController.fieldManager.hexHasNeighbourWithFraction(focusedHex, gameController.getTurn())) return;
 
-        gameController.fieldManager.selectAdjacentHexes(focusedHex);
-        if (gameController.fieldManager.selectedProvince == null) return;
+        applyProvinceSelection(focusedHex);
+    }
 
+
+    public void applyProvinceSelection(Hex hex) {
+        gameController.fieldManager.selectAdjacentHexes(hex);
+        if (gameController.fieldManager.selectedProvince == null) return;
         isSomethingSelected = true;
     }
 
@@ -423,7 +427,6 @@ public class SelectionManager {
         AutomaticTransitionWorker automaticTransitionWorker;
         automaticTransitionWorker = gameController.fieldManager.automaticTransitionWorker;
         Unit nextUnit = automaticTransitionWorker.findNextUnit(gameController.turn);
-        if (nextUnit == null) return;
 
         automaticTransitionWorker.applyUnitSelection(nextUnit);
     }
@@ -616,6 +619,11 @@ public class SelectionManager {
 
     public FactorYio getSelMoneyFactor() {
         return selMoneyFactor;
+    }
+
+
+    public boolean isInAreaSelectionMode() {
+        return areaSelectionMode;
     }
 
 

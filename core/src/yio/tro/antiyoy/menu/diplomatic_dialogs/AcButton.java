@@ -2,22 +2,14 @@ package yio.tro.antiyoy.menu.diplomatic_dialogs;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import yio.tro.antiyoy.factor_yio.FactorYio;
-import yio.tro.antiyoy.stuff.GraphicsYio;
-import yio.tro.antiyoy.stuff.PointYio;
-import yio.tro.antiyoy.stuff.RectangleYio;
+import yio.tro.antiyoy.stuff.*;
 
 public class AcButton {
-
-    public static final int ACTION_YES = 0;
-    public static final int ACTION_NO = 1;
 
     AbstractDiplomaticDialog dialog;
     public RectangleYio position;
     PointYio delta;
-    public BitmapFont font;
-    public String text;
-    public PointYio textPosition;
-    PointYio textDelta;
+    public RenderableTextYio title;
     public FactorYio selectionFactor;
     public AcActionType actionType;
     float touchOffset;
@@ -28,10 +20,8 @@ public class AcButton {
 
         position = new RectangleYio();
         delta = new PointYio();
-        font = null;
-        text = null;
-        textPosition = new PointYio();
-        textDelta = new PointYio();
+        title = new RenderableTextYio();
+        title.setFont(Fonts.smallerMenuFont);
         selectionFactor = new FactorYio();
         actionType = null;
         touchOffset = 0;
@@ -58,12 +48,22 @@ public class AcButton {
     }
 
 
-    void updatePosition() {
+    void move() {
+        updatePosition();
+        updateTitlePosition();
+    }
+
+
+    private void updateTitlePosition() {
+        title.centerVertical(position);
+        title.centerHorizontal(position);
+        title.updateBounds();
+    }
+
+
+    private void updatePosition() {
         position.x = dialog.viewPosition.x + delta.x;
         position.y = dialog.viewPosition.y + delta.y;
-
-        textPosition.x = (float) (position.x + textDelta.x);
-        textPosition.y = (float) (position.y + textDelta.y);
     }
 
 
@@ -72,25 +72,9 @@ public class AcButton {
     }
 
 
-    public void setFont(BitmapFont font) {
-        this.font = font;
-    }
-
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-
-    void updateTextDelta() {
-        if (font == null) return;
-        if (text == null) return;
-
-        float textWidth = GraphicsYio.getTextWidth(font, text);
-        float textHeight = GraphicsYio.getTextHeight(font, text);
-
-        textDelta.x = (float) (position.width / 2 - textWidth / 2);
-        textDelta.y = (float) (position.height / 2 + textHeight / 2);
+    public void setTitle(String string) {
+        title.setString(string);
+        title.updateMetrics();
     }
 
 

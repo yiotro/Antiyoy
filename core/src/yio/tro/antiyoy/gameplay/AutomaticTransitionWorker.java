@@ -36,9 +36,11 @@ public class AutomaticTransitionWorker {
         updateAvailableProvinces();
         if (availableProvinces.size() == 0) return null;
 
+        updateCurrentProvince();
         updateAvailableUnits();
         if (availableUnits.size() == 0) return null;
 
+        cutOffUselessUnits();
         cutOffWeakUnits();
         if (availableUnits.size() == 0) return null;
 
@@ -47,6 +49,27 @@ public class AutomaticTransitionWorker {
         if (availableUnits.size() == 0) return null;
 
         return availableUnits.get(0);
+    }
+
+
+    private void cutOffUselessUnits() {
+        if (availableUnits.size() == 0) return;
+        for (int i = availableUnits.size() - 1; i >= 0; i--) {
+            Unit unit = availableUnits.get(i);
+            if (!isUnitUseless(unit)) continue;
+            availableUnits.remove(unit);
+        }
+    }
+
+
+    private boolean isUnitUseless(Unit unit) {
+        MoveZoneManager moveZoneManager = fieldManager.moveZoneManager;
+        ArrayList<Hex> moveZone = moveZoneManager.detectMoveZone(unit.currentHex, unit.strength);
+        for (Hex hex : moveZone) {
+            if (hex.fraction == unit.getFraction()) continue;
+            return false;
+        }
+        return true;
     }
 
 
@@ -103,7 +126,6 @@ public class AutomaticTransitionWorker {
 
     private void updateAvailableUnits() {
         availableUnits.clear();
-        updateCurrentProvince();
         if (currentProvince == null) return;
         for (Hex hex : currentProvince.hexList) {
             if (!hex.hasUnit()) continue;
@@ -117,10 +139,21 @@ public class AutomaticTransitionWorker {
     private void updateCurrentProvince() {
         currentProvince = null;
         for (Province availableProvince : availableProvinces) {
-            if (!availableProvince.hasSomeoneReadyToMove()) continue;
+            if (!isProvinceValid(availableProvince)) continue;
             currentProvince = availableProvince;
             break;
         }
+    }
+
+
+    private boolean isProvinceValid(Province province) {
+        if (!province.hasSomeoneReadyToMove()) return false;
+        for (Hex hex : province.hexList) {
+            if (!hex.hasUnit()) continue;
+            if (isUnitUseless(hex.unit)) continue;
+            return true;
+        }
+        return false;
     }
 
 
@@ -143,6 +176,9 @@ public class AutomaticTransitionWorker {
 
     void move() {
         if (!waitMode) return;
+
+        if (fieldManager.gameController.isSomethingMoving()) return;
+
         if (waitCounter > 0) {
             waitCounter--;
             return;
@@ -150,8 +186,16 @@ public class AutomaticTransitionWorker {
 
         waitMode = false;
         fieldManager.gameController.resetTouchMode();
+
+        SelectionManager selectionManager = fieldManager.gameController.selectionManager;
+        if (targetUnit == null) {
+            selectionManager.deselectAll();
+            return;
+        }
+
         CameraController cameraController = fieldManager.gameController.cameraController;
         cameraController.focusOnPoint(targetUnit.currentHex.pos);
-        fieldManager.gameController.selectionManager.applyUnitSelection(targetUnit);
+        selectionManager.applyProvinceSelection(targetUnit.currentHex);
+        selectionManager.applyUnitSelection(targetUnit);
     }
 }

@@ -139,6 +139,8 @@ public class DiplomaticAI {
         if (targetEntity == null) return;
         if (targetEntity == mainEntity) return;
         if (targetEntity == randomHumanEntity) return;
+        if (!targetEntity.alive) return;
+        if (randomHumanEntity.getRelation(targetEntity) == DiplomaticRelation.ENEMY) return;
 
         DiplomaticMessage message = getLog().addMessage(DipMessageType.attack_proposition, mainEntity, randomHumanEntity);
         message.setArg1("" + price);

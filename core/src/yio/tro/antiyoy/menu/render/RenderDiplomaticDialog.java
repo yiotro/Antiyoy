@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.menu.render;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.diplomatic_dialogs.AbstractDiplomaticDialog;
@@ -8,6 +9,7 @@ import yio.tro.antiyoy.menu.diplomatic_dialogs.AcActionType;
 import yio.tro.antiyoy.menu.diplomatic_dialogs.AcButton;
 import yio.tro.antiyoy.menu.diplomatic_dialogs.AcLabel;
 import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.RenderableTextYio;
 
 public class RenderDiplomaticDialog extends MenuRender{
 
@@ -68,38 +70,48 @@ public class RenderDiplomaticDialog extends MenuRender{
         if (!dialog.areButtonsEnabled()) return;
 
         for (AcButton button : dialog.buttons) {
-            if (dialog.isInSingleButtonMode() && button.actionType == AcActionType.no) continue;
-
-            GraphicsYio.drawByRectangle(
-                    batch,
-                    getButtonBackground(button),
-                    button.position
-            );
-
-            Color color = button.font.getColor();
-            button.font.setColor(Color.BLACK);
-
-            button.font.draw(
-                    batch,
-                    button.text,
-                    button.textPosition.x,
-                    button.textPosition.y
-            );
-
-            button.font.setColor(color);
-
-            if (button.isSelected()) {
-                GraphicsYio.setBatchAlpha(batch, 0.6 * button.selectionFactor.get());
-
-                GraphicsYio.drawByRectangle(
-                        batch,
-                        selectionPixel,
-                        button.position
-                );
-
-                GraphicsYio.setBatchAlpha(batch, 1);
-            }
+            renderSingleButton(button);
         }
+    }
+
+
+    private void renderSingleButton(AcButton button) {
+        if (dialog.isInSingleButtonMode() && button.actionType == AcActionType.no) return;
+
+        renderButtonBackground(button);
+        RenderableTextYio title = button.title;
+        BitmapFont font = title.font;
+
+        Color color = font.getColor();
+        font.setColor(Color.BLACK);
+        GraphicsYio.renderTextOptimized(batch, getBlackPixel(), title, dialog.getFactor().get());
+        font.setColor(color);
+
+        renderButtonSelection(button);
+    }
+
+
+    private void renderButtonSelection(AcButton button) {
+        if (!button.isSelected()) return;
+
+        GraphicsYio.setBatchAlpha(batch, 0.6 * button.selectionFactor.get());
+
+        GraphicsYio.drawByRectangle(
+                batch,
+                selectionPixel,
+                button.position
+        );
+
+        GraphicsYio.setBatchAlpha(batch, 1);
+    }
+
+
+    private void renderButtonBackground(AcButton button) {
+        GraphicsYio.drawByRectangle(
+                batch,
+                getButtonBackground(button),
+                button.position
+        );
     }
 
 
@@ -114,17 +126,14 @@ public class RenderDiplomaticDialog extends MenuRender{
 
     private void renderLabels() {
         for (AcLabel label : dialog.labels) {
-            Color color = label.font.getColor();
-            label.font.setColor(Color.BLACK);
+            RenderableTextYio title = label.title;
+            BitmapFont font = title.font;
+            Color color = font.getColor();
+            font.setColor(Color.BLACK);
 
-            label.font.draw(
-                    batch,
-                    label.text,
-                    label.position.x,
-                    label.position.y
-            );
+            GraphicsYio.renderTextOptimized(batch, getBlackPixel(), title, dialog.getFactor().get());
 
-            label.font.setColor(color);
+            font.setColor(color);
         }
     }
 

@@ -2,51 +2,44 @@ package yio.tro.antiyoy.menu.diplomatic_dialogs;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import yio.tro.antiyoy.stuff.PointYio;
+import yio.tro.antiyoy.stuff.RenderableTextYio;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
 public class AcLabel implements ReusableYio {
 
     AbstractDiplomaticDialog dialog;
-    public PointYio position;
-    public BitmapFont font;
-    public String text;
-    PointYio delta;
+    public RenderableTextYio title;
 
 
     public AcLabel(AbstractDiplomaticDialog dialog) {
         this.dialog = dialog;
 
-        position = new PointYio();
-        delta = new PointYio();
+        title = new RenderableTextYio();
     }
 
 
     @Override
     public void reset() {
-        position.reset();
-        delta.reset();
-        font = null;
-        text = null;
+        title.reset();
     }
 
 
-    void updatePosition() {
-        position.x = (float) (dialog.viewPosition.x + delta.x);
-        position.y = (float) (dialog.viewPosition.y + delta.y);
+    void move() {
+        title.position.x = (float) (dialog.viewPosition.x + title.delta.x);
+        title.position.y = (float) (dialog.viewPosition.y + title.delta.y);
+        title.updateBounds();
     }
 
 
     void setDelta(float x, float y) {
-        delta.set(x, y);
+        title.delta.set(x, y);
     }
 
 
-    public void setFont(BitmapFont font) {
-        this.font = font;
+    public void setData(BitmapFont font, String string) {
+        title.setFont(font);
+        title.setString(string);
+        title.updateMetrics();
     }
 
-
-    public void setText(String text) {
-        this.text = text;
-    }
 }

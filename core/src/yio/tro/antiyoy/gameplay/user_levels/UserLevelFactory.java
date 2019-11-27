@@ -51,6 +51,7 @@ public class UserLevelFactory {
                 new UlevJustLevelThree(),
                 new UlevBelgium(),
                 new UlevBigNeighbor(),
+                new UlevKingOfTheHill(),
                 new UlevSpikes(),
                 new UlevDino(),
                 new UlevRiseOfCivilizations(),

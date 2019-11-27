@@ -164,4 +164,12 @@ public class Unit implements EncodeableYio{
             stopJumping();
         }
     }
+
+
+    @Override
+    public String toString() {
+        return "[Unit: " +
+                encode() +
+                "]";
+    }
 }

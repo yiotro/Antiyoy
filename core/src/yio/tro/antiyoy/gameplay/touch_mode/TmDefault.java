@@ -79,6 +79,7 @@ public class TmDefault extends TouchMode{
     private void checkForDiplomaticForeignSelection(Hex focusedHex) {
         if (!GameRules.diplomacyEnabled) return;
         if (focusedHex.isNeutral()) return;
+        if (gameController.selectionManager.isInAreaSelectionMode()) return;
 
         int fraction = focusedHex.fraction;
         if (gameController.isCurrentTurn(fraction)) return;

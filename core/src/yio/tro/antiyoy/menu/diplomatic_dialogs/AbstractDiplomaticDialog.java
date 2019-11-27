@@ -69,15 +69,13 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
         buttons = new ArrayList<>();
 
         yesButton = new AcButton(this);
-        yesButton.setFont(Fonts.smallerMenuFont);
-        yesButton.setText(getYesButtonString());
+        yesButton.setTitle(getYesButtonString());
         yesButton.setTouchOffset(0.05f * GraphicsYio.width);
         yesButton.setAction(AcActionType.yes);
         buttons.add(yesButton);
 
         noButton = new AcButton(this);
-        noButton.setFont(Fonts.smallerMenuFont);
-        noButton.setText(LanguagesManager.getInstance().getString("no"));
+        noButton.setTitle(LanguagesManager.getInstance().getString("no"));
         noButton.setTouchOffset(0.05f * GraphicsYio.width);
         noButton.setAction(AcActionType.no);
         buttons.add(noButton);
@@ -88,13 +86,11 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
 
     protected void addButton(String string, AcActionType acActionType, RectangleYio deltaPos) {
         AcButton customButton = new AcButton(this);
-        customButton.setFont(Fonts.smallerMenuFont);
-        customButton.setText(string);
+        customButton.setTitle(string);
         customButton.setTouchOffset(0.02f * GraphicsYio.width);
         customButton.setAction(acActionType);
         customButton.position.set(0, 0, deltaPos.width, deltaPos.height);
         customButton.delta.set(deltaPos.x, deltaPos.y);
-        customButton.updateTextDelta();
         buttons.add(customButton);
     }
 
@@ -114,10 +110,6 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
 
         noButton.position.set(0, 0, position.width / 2, buttonHeight);
         noButton.delta.set(0, 0);
-
-        for (AcButton button : buttons) {
-            button.updateTextDelta();
-        }
     }
 
 
@@ -163,7 +155,7 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
 
         for (AcButton button : buttons) {
             if (factorMoved) {
-                button.updatePosition();
+                button.move();
             }
 
             if (!touched) {
@@ -175,7 +167,7 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
 
     protected void moveLabels() {
         for (AcLabel label : labels) {
-            label.updatePosition();
+            label.move();
         }
     }
 
@@ -257,8 +249,7 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
     protected void addLabel(String text, BitmapFont font, float dx, float dy) {
         AcLabel next = poolLabels.getNext();
 
-        next.setText(text);
-        next.setFont(font);
+        next.setData(font, text);
         next.setDelta(dx, dy);
 
         labels.add(next);
