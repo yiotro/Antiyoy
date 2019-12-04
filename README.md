@@ -1,6 +1,8 @@
 # Antiyoy
 Antiyoy is a simple turn-based android strategy. Easy to learn, hard to master.
 
+Latest apk file and pc version can be found here: https://drive.google.com/open?id=1p36opkblTxY_Pc6SUZ_zTh8g4iJsm3jV
+
 Features:
 - Hotseat multiplayer up to 10 players
 - Random map generator
