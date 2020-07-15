@@ -1658,7 +1658,7 @@
         <string key="confirm_skip_level" value="Level überspringen?"/>
         <string key="ok" value="Ok"/>
         <string key="money" value="Geld"/>
-        <string key="quantity" value="Quantität"/>
+        <string key="quantity" value="Menge"/>
         <string key="income" value="Einnahmen"/>
         <string key="by_name" value="By name"/>
         <string key="hex_trade" value="Hex trade"/>
