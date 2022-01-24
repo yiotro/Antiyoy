@@ -247,6 +247,7 @@ public abstract class AbstractDiplomaticDialog extends InterfaceElement implemen
 
 
     protected void addLabel(String text, BitmapFont font, float dx, float dy) {
+        if (text == null) return;
         AcLabel next = poolLabels.getNext();
 
         next.setData(font, text);

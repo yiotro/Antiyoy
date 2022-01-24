@@ -36,7 +36,7 @@ public class SoundManagerYio {
 
 
     private static String getExtention() {
-        if (YioGdxGame.IOS) {
+        if (YioGdxGame.platformType == PlatformType.ios) {
             return ".mp3";
         }
 

@@ -25,7 +25,6 @@ public class SceneTutorialTip extends AbstractModalScene {
         text.clear();
         text.addAll(srcText);
 
-        menuControllerYio.getButtonById(31).setTouchable(false);
         menuControllerYio.getButtonById(32).setTouchable(false);
 
         for (int i = 0; i < 2; i++) text.add(" ");
@@ -36,6 +35,7 @@ public class SceneTutorialTip extends AbstractModalScene {
         menuControllerYio.getButtonRenderer().renderButton(textPanel);
         textPanel.setTouchable(false);
         textPanel.setAnimation(Animation.fixed_down);
+        textPanel.enableRectangularMask();
         textPanel.appearFactor.appear(3, 1);
 
         ButtonYio okButton = buttonFactory.getButton(generateRectangle(0.6, 0.1, 0.4, 0.07), 53, getString("end_game_ok"));
@@ -47,7 +47,6 @@ public class SceneTutorialTip extends AbstractModalScene {
 
 
     public void createTutorialTipWithFixedHeight(ArrayList<String> text, int lines) {
-        menuControllerYio.getButtonById(31).setTouchable(false);
         menuControllerYio.getButtonById(32).setTouchable(false);
 
         for (int i = 0; i < 2; i++) text.add(" ");
@@ -78,9 +77,9 @@ public class SceneTutorialTip extends AbstractModalScene {
         menuControllerYio.getButtonById(50).appearFactor.destroy(1, 3);
         menuControllerYio.getButtonById(53).appearFactor.destroy(1, 3);
 
-        if (menuControllerYio.getButtonById(54) != null) { // help index button
-            menuControllerYio.getButtonById(54).destroy();
-            menuControllerYio.getButtonById(54).appearFactor.destroy(1, 3);
+        if (menuControllerYio.getButtonById(57) != null) { // help index button
+            menuControllerYio.getButtonById(57).destroy();
+            menuControllerYio.getButtonById(57).appearFactor.destroy(1, 3);
         }
 
         if (menuControllerYio.getButtonById(55) != null) { // help index button
@@ -88,14 +87,24 @@ public class SceneTutorialTip extends AbstractModalScene {
             menuControllerYio.getButtonById(55).appearFactor.destroy(1, 3);
         }
 
+        if (menuControllerYio.getButtonById(54) != null) { // win button
+            menuControllerYio.getButtonById(54).destroy();
+            menuControllerYio.getButtonById(54).appearFactor.destroy(1, 3);
+        }
+
         menuControllerYio.getButtonById(30).setTouchable(true);
-        menuControllerYio.getButtonById(31).setTouchable(true);
         menuControllerYio.getButtonById(32).setTouchable(true);
     }
 
 
+    public boolean isCurrentlyVisible() {
+        ButtonYio buttonById = menuControllerYio.getButtonById(50);
+        return buttonById != null && buttonById.getFactor().getGravity() >= 0;
+    }
+
+
     public void addHelpButtonToTutorialTip() {
-        ButtonYio helpButton = buttonFactory.getButton(generateRectangle(0, 0.1, 0.6, 0.07), 54, null);
+        ButtonYio helpButton = buttonFactory.getButton(generateRectangle(0, 0.1, 0.6, 0.07), 57, null);
         helpButton.setTextLine(getString("help"));
         menuControllerYio.buttonRenderer.renderButton(helpButton);
         helpButton.setShadow(false);

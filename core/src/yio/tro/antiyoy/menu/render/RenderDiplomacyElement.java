@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.gameplay.skins.SkinManager;
 import yio.tro.antiyoy.gameplay.skins.SkinType;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.diplomacy_element.*;
@@ -54,19 +55,9 @@ public class RenderDiplomacyElement extends MenuRender {
 
     public void loadBackgroundColors() {
         bckColors = new TextureRegion[GameRules.MAX_FRACTIONS_QUANTITY];
+        SkinManager skinManager = menuViewYio.yioGdxGame.skinManager;
         for (int i = 0; i < bckColors.length; i++) {
-            bckColors[i] = GraphicsYio.loadTextureRegion(getDiplomacyFolderPath() + "color" + (i + 1) + ".png", false);
-        }
-    }
-
-
-    private String getDiplomacyFolderPath() {
-        SkinType skinType = SkinType.values()[SettingsManager.skinIndex];
-        switch (skinType) {
-            default:
-                return "diplomacy/";
-            case jannes_peters:
-                return "skins/jannes/diplomacy/";
+            bckColors[i] = GraphicsYio.loadTextureRegion(skinManager.getDiplomacyFolderPath() + "color" + (i + 1) + ".png", false);
         }
     }
 

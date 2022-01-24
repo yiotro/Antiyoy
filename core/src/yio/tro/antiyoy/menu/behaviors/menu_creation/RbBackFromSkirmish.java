@@ -11,6 +11,6 @@ public class RbBackFromSkirmish extends Reaction {
         if (Scenes.sceneSkirmishMenu.startButton.selectionFactor.get() > 0.5) return;
 
         Scenes.sceneSkirmishMenu.saveValues();
-        Scenes.sceneChoodeGameModeMenu.create();
+        Scenes.sceneChooseGameMode.create();
     }
 }

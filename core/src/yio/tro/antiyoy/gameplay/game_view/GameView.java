@@ -127,12 +127,12 @@ public class GameView {
     }
 
 
-    public void onResume() {
+    public void onAppResume() {
         texturesManager.loadTextures();
     }
 
 
-    public void onPause() {
+    public void onAppPause() {
         texturesManager.disposeTextures();
     }
 
@@ -150,12 +150,15 @@ public class GameView {
         rList.renderUnits.render();
         rList.renderBlackout.render();
         rList.renderMoveZone.render();
+        rList.renderTextHintItems.render();
+        rList.renderDiplomaticIndicators.render();
         rList.renderFogOfWar.render();
         rList.renderCityNames.render();
         rList.renderSelectedUnit.render();
         rList.renderDefenseTips.render();
         rList.renderDebug.render();
         rList.renderHighlights.render();
+        rList.renderAiData.render();
         renderCurrentTouchMode();
 
         batchMovable.end();
@@ -195,13 +198,14 @@ public class GameView {
     private void renderTransitionFrame() {
         batchSolid.begin();
         Color c = batchSolid.getColor();
+        float a = c.a;
         float cx = w / 2;
         float cy = h / 2;
         float fw = appearFactor.get() * cx;
         float fh = appearFactor.get() * cy;
         batchSolid.setColor(c.r, c.g, c.b, appearFactor.get());
         batchSolid.draw(texturesManager.getTransitionTexture(), cx - fw, cy - fh, 2 * fw, 2 * fh);
-        batchSolid.setColor(c.r, c.g, c.b, c.a);
+        batchSolid.setColor(c.r, c.g, c.b, a);
         batchSolid.end();
     }
 

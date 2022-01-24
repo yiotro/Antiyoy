@@ -2,6 +2,7 @@ package yio.tro.antiyoy.menu.scenes;
 
 import com.badlogic.gdx.Gdx;
 import yio.tro.antiyoy.MusicManager;
+import yio.tro.antiyoy.PlatformType;
 import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.menu.*;
 import yio.tro.antiyoy.stuff.GraphicsYio;
@@ -21,6 +22,7 @@ public class SceneSettings extends AbstractScene{
     private CheckButtonYio chkFastConstruction;
     private Reaction rbBack;
     boolean initialized;
+    boolean loadingCurrently;
 
 
     public SceneSettings(MenuControllerYio menuControllerYio) {
@@ -121,7 +123,7 @@ public class SceneSettings extends AbstractScene{
         chkTurnEnd = CheckButtonYio.getFreshCheckButton(menuControllerYio);
         chkTurnEnd.setParent(label);
         chkTurnEnd.alignUnderPreviousElement();
-        chkTurnEnd.setTitle(getString("ask_to_end_turn"));
+        chkTurnEnd.setTitle(getString("long_tap_to_end_turn"));
 
         chkFastConstruction = CheckButtonYio.getFreshCheckButton(menuControllerYio);
         chkFastConstruction.setParent(label);
@@ -145,6 +147,7 @@ public class SceneSettings extends AbstractScene{
         return new ICheckButtonListener() {
             @Override
             public void onStateChanged(boolean checked) {
+                if (loadingCurrently) return;
                 applyValues();
                 MusicManager.getInstance().onMusicStatusChanged();
             }
@@ -162,7 +165,7 @@ public class SceneSettings extends AbstractScene{
 
 
     private void createInfoButton() {
-        if (YioGdxGame.IOS) return;
+        if (YioGdxGame.platformType == PlatformType.ios) return;
 
         ButtonYio infoButton = buttonFactory.getButton(generateSquare(0.95 - 0.07 / YioGdxGame.screenRatio, 0.9, 0.07), 191, null);
         menuControllerYio.loadButtonOnce(infoButton, "menu/info_icon.png");
@@ -174,18 +177,20 @@ public class SceneSettings extends AbstractScene{
 
 
     public void loadValues() {
+        loadingCurrently = true;
         chkAutosave.setChecked(SettingsManager.autosave);
-        chkMusic.setChecked(SettingsManager.musicEnabled);
-        chkFastConstruction.setChecked(SettingsManager.fastConstructionEnabled);
-        chkTurnEnd.setChecked(SettingsManager.askToEndTurn);
         chkSound.setChecked(SettingsManager.soundEnabled);
+        chkFastConstruction.setChecked(SettingsManager.fastConstructionEnabled);
+        chkTurnEnd.setChecked(SettingsManager.cautiosEndTurnEnabled);
+        chkMusic.setChecked(SettingsManager.musicEnabled);
+        loadingCurrently = false;
     }
 
 
     public void applyValues() {
         SettingsManager.autosave = chkAutosave.isChecked();
         SettingsManager.musicEnabled = chkMusic.isChecked();
-        SettingsManager.askToEndTurn = chkTurnEnd.isChecked();
+        SettingsManager.cautiosEndTurnEnabled = chkTurnEnd.isChecked();
         SettingsManager.soundEnabled = chkSound.isChecked();
         SettingsManager.fastConstructionEnabled = chkFastConstruction.isChecked();
     }

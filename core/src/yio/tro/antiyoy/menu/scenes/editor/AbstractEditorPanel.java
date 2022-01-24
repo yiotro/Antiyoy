@@ -5,8 +5,12 @@ import yio.tro.antiyoy.menu.scenes.AbstractScene;
 
 public abstract class AbstractEditorPanel extends AbstractScene{
 
+    public boolean saveAllowed;
+
+
     public AbstractEditorPanel(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
+        saveAllowed = false;
     }
 
 
@@ -26,6 +30,12 @@ public abstract class AbstractEditorPanel extends AbstractScene{
         } else {
             menuControllerYio.hideAllEditorPanels();
             create();
+            setSaveAllowed(true);
         }
+    }
+
+
+    public void setSaveAllowed(boolean saveAllowed) {
+        this.saveAllowed = saveAllowed;
     }
 }

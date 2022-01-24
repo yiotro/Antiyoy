@@ -10,12 +10,12 @@ import java.util.ArrayList;
 
 public class EditorAutomationManager {
 
-    private final LevelEditor levelEditor;
+    private final LevelEditorManager levelEditorManager;
     ArrayList<Hex> ignoredHices;
 
 
-    public EditorAutomationManager(LevelEditor levelEditor) {
-        this.levelEditor = levelEditor;
+    public EditorAutomationManager(LevelEditorManager levelEditorManager) {
+        this.levelEditorManager = levelEditorManager;
 
         ignoredHices = new ArrayList<>();
     }
@@ -38,7 +38,7 @@ public class EditorAutomationManager {
                 objectInside = adjacentHex.objectInside;
                 getFieldController().setHexFraction(adjacentHex, activeHex.fraction);
                 if (objectInside > 0) {
-                    levelEditor.placeObject(adjacentHex, objectInside);
+                    levelEditorManager.placeObject(adjacentHex, objectInside);
                 }
             }
         }
@@ -48,7 +48,7 @@ public class EditorAutomationManager {
 
 
     private FieldManager getFieldController() {
-        return levelEditor.gameController.fieldManager;
+        return levelEditorManager.gameController.fieldManager;
     }
 
 
@@ -60,7 +60,7 @@ public class EditorAutomationManager {
             if (activeHex.isNeutral()) continue;
             if (ignoredHices.contains(activeHex)) continue;
 
-            hices = levelEditor.detectorProvince.detectProvince(activeHex);
+            hices = levelEditorManager.detectorProvince.detectProvince(activeHex);
             tagHicesAsIgnored(hices);
 
             int number = howManyCapitalsInProvince(hices);
@@ -81,7 +81,7 @@ public class EditorAutomationManager {
                 continue;
             }
 
-            levelEditor.gameController.cleanOutHex(hice);
+            levelEditorManager.gameController.cleanOutHex(hice);
         }
     }
 
@@ -112,7 +112,7 @@ public class EditorAutomationManager {
             if (activeHex.numberOfFriendlyHexesNearby() == 0) continue;
             if (ignoredHices.contains(activeHex)) continue;
 
-            hices = levelEditor.detectorProvince.detectProvince(activeHex);
+            hices = levelEditorManager.detectorProvince.detectProvince(activeHex);
             tagHicesAsIgnored(hices);
 
             if (provinceHasCapital(hices)) {
@@ -137,7 +137,7 @@ public class EditorAutomationManager {
             if (!MoveZoneDetection.canBuildFarmOnHex(hex)) continue;
             if (YioGdxGame.random.nextDouble() > 0.2) continue;
 
-            levelEditor.placeObject(hex, Obj.FARM);
+            levelEditorManager.placeObject(hex, Obj.FARM);
         }
     }
 
@@ -147,7 +147,7 @@ public class EditorAutomationManager {
         int index = YioGdxGame.random.nextInt(size);
         Hex hex = hices.get(index);
 
-        levelEditor.placeObject(hex, Obj.TOWN);
+        levelEditorManager.placeObject(hex, Obj.TOWN);
     }
 
 
@@ -165,7 +165,7 @@ public class EditorAutomationManager {
     public void placeRandomTowers() {
         for (Hex activeHex : getFieldController().activeHexes) {
             if (isHexGoodForRandomTower(activeHex)) {
-                levelEditor.placeObject(activeHex, Obj.TOWER);
+                levelEditorManager.placeObject(activeHex, Obj.TOWER);
             }
         }
     }

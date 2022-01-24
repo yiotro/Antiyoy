@@ -1,11 +1,11 @@
 package yio.tro.antiyoy.gameplay.diplomacy;
 
 import yio.tro.antiyoy.YioGdxGame;
-import yio.tro.antiyoy.gameplay.DebugFlags;
-import yio.tro.antiyoy.gameplay.FieldManager;
-import yio.tro.antiyoy.gameplay.Hex;
-import yio.tro.antiyoy.gameplay.Province;
+import yio.tro.antiyoy.gameplay.*;
+import yio.tro.antiyoy.gameplay.diplomacy.exchange.ExchangeType;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.menu.diplomatic_exchange.*;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ public class DiplomaticAI {
     private ArrayList<Hex> propagationList;
     String customMessageKeys[];
     String sadSmileys[];
+    ExchangeProfitView tempProfitView;
 
 
     public DiplomaticAI(DiplomacyManager diplomacyManager) {
@@ -24,6 +25,8 @@ public class DiplomaticAI {
 
         tempProvinceList = new ArrayList<>();
         propagationList = new ArrayList<>();
+        tempProfitView = new ExchangeProfitView(Scenes.sceneDiplomaticExchange.exchangeUiElement);
+
         initCustomMessageKeys();
         initSadSmileys();
     }
@@ -75,11 +78,12 @@ public class DiplomaticAI {
 
         aiSendMessages();
         aiProcessMessages();
+        checkToChangeRelations();
     }
 
 
     private void aiSendMessages() {
-        if (compareRandomToZero(8)) {
+        if (compareRandomToZero(4)) {
             performAiToHumanFriendshipProposal();
         }
 
@@ -87,7 +91,7 @@ public class DiplomaticAI {
             performAiToHumanBlackMark();
         }
 
-        if (compareRandomToZero(6)) {
+        if (compareRandomToZero(5)) {
             checkToProposePeaceToHuman();
         }
 
@@ -99,15 +103,7 @@ public class DiplomaticAI {
             applyCharismaCheat();
         }
 
-        if (getMainEntity().getStateBalance() > 50 && compareRandomToZero(4)) {
-            performAiToHumanHexBuyProposal();
-        }
-
-        if (getMainEntity().getStateBalance() < 9 && compareRandomToZero(4)) {
-            performAiToHumanHexSellProposal();
-        }
-
-        if (compareRandomToZero(15 * GameRules.fractionsQuantity) || doesLogContainMessageToMe()) {
+        if (compareRandomToZero(20 * GameRules.fractionsQuantity) || doesLogContainMessageToMe()) {
             sendCustomMessageToHuman();
         }
 
@@ -115,9 +111,111 @@ public class DiplomaticAI {
             checkToProposePeaceToAnotherAI();
         }
 
-        if (getMainEntity().getStateFullMoney() > 100 && compareRandomToZero(4)) {
-            checkToSendAttackPropositionToHuman();
+        if (compareRandomToZero(3)) {
+            performRandomHumanExchangeProposal();
         }
+
+        if (compareRandomToZero(3)) {
+            performRandomAiExchangeProposal();
+        }
+    }
+
+
+    private void performRandomAiExchangeProposal() {
+        DiplomaticEntity randomEntity = getRandomEntity();
+        if (randomEntity == getMainEntity()) return;
+        performRandomExchangeProposal(randomEntity);
+    }
+
+
+    private void performRandomHumanExchangeProposal() {
+        performRandomExchangeProposal(getRandomHumanEntity());
+    }
+
+
+    private void performRandomExchangeProposal(DiplomaticEntity targetEntity) {
+        if (targetEntity == null) return;
+
+        ExchangeType exchangeType1 = getRandomExchangeType();
+        ExchangeType exchangeType2 = getRandomExchangeType();
+        if (exchangeType1 == exchangeType2) return;
+        if (containsExchangeType(exchangeType1, exchangeType2, ExchangeType.stop_war) && getMainEntity().getRelation(targetEntity) != DiplomaticRelation.ENEMY) return;
+        if (containsExchangeType(exchangeType1, exchangeType2, ExchangeType.remove_black_mark) && !getMainEntity().isBlackMarkedWith(targetEntity)) return;
+        if (containsExchangeType(exchangeType1, exchangeType2, ExchangeType.friendship) && isFriendshipForbidden(targetEntity)) return;
+
+        DiplomaticMessage diplomaticMessage = getLog().addMessage(DipMessageType.exchange, getMainEntity(), targetEntity);
+
+        String arg1 = getRandomizedExchangeProfitArgument(targetEntity, getMainEntity(), exchangeType1);
+        String arg2 = getRandomizedExchangeProfitArgument(getMainEntity(), targetEntity, exchangeType2);
+
+        diplomaticMessage.setArg1(arg1);
+        diplomaticMessage.setArg2(arg2);
+
+        if (!isExchangeGood(diplomaticMessage)) {
+            getLog().removeMessage(diplomaticMessage);
+        }
+    }
+
+
+    private boolean isFriendshipForbidden(DiplomaticEntity targetEntity) {
+        DiplomaticEntity mainEntity = getMainEntity();
+        if (mainEntity.isOneFriendAwayFromDiplomaticVictory()) return true;
+        if (!mainEntity.acceptsFriendsRequest(targetEntity)) return true;
+        if (targetEntity.isOneFriendAwayFromDiplomaticVictory()) return true;
+        return false;
+    }
+
+
+    private boolean containsExchangeType(ExchangeType type1, ExchangeType type2, ExchangeType comparisonType) {
+        return type1 == comparisonType || type2 == comparisonType;
+    }
+
+
+    private String getRandomizedExchangeProfitArgument(DiplomaticEntity giver, DiplomaticEntity profiter, ExchangeType exchangeType) {
+        tempProfitView.reset();
+        tempProfitView.setExchangeType(exchangeType);
+
+        switch (exchangeType) {
+            default:
+            case remove_black_mark:
+            case nothing:
+            case stop_war:
+                break;
+            case friendship:
+                AvFriendship avFriendship = (AvFriendship) tempProfitView.argumentView;
+                avFriendship.slider.setIndexByActualValue(8 + YioGdxGame.random.nextInt(5));
+                break;
+            case lands:
+                Province province = getRandomProvinceToTradeHexes(giver.fraction);
+                if (province == null) break;
+                preparePropagationListToTrade(province);
+                AvLands avLands = (AvLands) tempProfitView.argumentView;
+                avLands.hexList.clear();
+                avLands.hexList.addAll(propagationList);
+                break;
+            case war_declaration:
+                AvWarDeclaration avWarDeclaration = (AvWarDeclaration) tempProfitView.argumentView;
+                avWarDeclaration.victim = getRandomAliveEntityExceptOne(giver);
+                break;
+            case dotations:
+                AvDotations avDotations = (AvDotations) tempProfitView.argumentView;
+                avDotations.moneySlider.setValueIndex(1 + YioGdxGame.random.nextInt(4));
+                avDotations.durationSlider.setIndexByActualValue(7 + YioGdxGame.random.nextInt(14));
+                break;
+            case money:
+                AvMoney avMoney = (AvMoney) tempProfitView.argumentView;
+                avMoney.slider.setValueIndex(1 + YioGdxGame.random.nextInt(21));
+                break;
+        }
+
+        return tempProfitView.encode();
+    }
+
+
+    private ExchangeType getRandomExchangeType() {
+        ExchangeType[] values = ExchangeType.values();
+        int i = YioGdxGame.random.nextInt(values.length);
+        return values[i];
     }
 
 
@@ -176,6 +274,7 @@ public class DiplomaticAI {
     private boolean doesLogContainMessageToMe() {
         for (DiplomaticMessage message : getLog().messages) {
             if (message.recipient != getMainEntity()) continue;
+            if (!message.sender.isHuman()) continue;
             if (message.isNot(DipMessageType.message) && message.isNot(DipMessageType.war_declaration)) continue;
             return true;
         }
@@ -210,7 +309,23 @@ public class DiplomaticAI {
         if (mainEntity.getNumberOfLands() > randomHumanEntity.getNumberOfLands()) return;
         if (!diplomacyManager.canWarBeStopped(mainEntity, randomHumanEntity)) return;
 
-        getLog().addMessage(DipMessageType.stop_war, mainEntity, randomHumanEntity);
+        for (int i = 0; i < 5; i++) {
+            ExchangeType randomExchangeType = getExchangeTypeForFriendship();
+            if (YioGdxGame.random.nextDouble() < 0.33) {
+                randomExchangeType = ExchangeType.lands;
+            }
+
+            DiplomaticMessage diplomaticMessage = getLog().addMessage(DipMessageType.exchange, mainEntity, randomHumanEntity);
+            String arg1 = getRandomizedExchangeProfitArgument(randomHumanEntity, getMainEntity(), ExchangeType.stop_war);
+            String arg2 = getRandomizedExchangeProfitArgument(getMainEntity(), randomHumanEntity, randomExchangeType);
+
+            diplomaticMessage.setArg1(arg1);
+            diplomaticMessage.setArg2(arg2);
+
+            if (isExchangeGood(diplomaticMessage)) break;
+
+            getLog().removeMessage(diplomaticMessage);
+        }
     }
 
 
@@ -309,7 +424,7 @@ public class DiplomaticAI {
         while (c > 0) {
             c--;
 
-            Province randomProvince = getFieldController().getRandomProvince();
+            Province randomProvince = getFieldManager().getRandomProvince();
             if (randomProvince.getFraction() != filterFraction) continue;
 
             return randomProvince;
@@ -348,7 +463,7 @@ public class DiplomaticAI {
         DiplomaticEntity randomHumanEntity = getRandomHumanEntity();
         if (randomHumanEntity == null) return;
 
-        diplomacyManager.transferMoney(mainEntity, randomHumanEntity, mainEntity.getStateFullMoney() / 2);
+        diplomacyManager.transferMoney(mainEntity, randomHumanEntity, mainEntity.getStateFullMoney() / 2, true);
     }
 
 
@@ -359,7 +474,7 @@ public class DiplomaticAI {
         if (mainEntity.getRelation(randomHumanEntity) == DiplomaticRelation.ENEMY) return;
         if (mainEntity.isBlackMarkedWith(randomHumanEntity)) return;
 
-        diplomacyManager.transferMoney(mainEntity, randomHumanEntity, 10 + YioGdxGame.random.nextInt(11));
+        diplomacyManager.transferMoney(mainEntity, randomHumanEntity, 10 + YioGdxGame.random.nextInt(11), true);
     }
 
 
@@ -372,6 +487,9 @@ public class DiplomaticAI {
             if (message.recipient != mainEntity) continue;
 
             switch (message.type) {
+                case exchange:
+                    processExchange(message);
+                    break;
                 case friendship_proposal:
                     if (diplomacyManager.isFriendshipPossible(message.sender, message.recipient)) {
                         diplomacyManager.makeFriends(message.sender, message.recipient);
@@ -406,6 +524,97 @@ public class DiplomaticAI {
     }
 
 
+    private void processExchange(DiplomaticMessage message) {
+        if (!isExchangeGood(message)) {
+            DiplomaticMessage diplomaticMessage = getLog().addMessage(DipMessageType.message, getMainEntity(), message.sender);
+            diplomaticMessage.setArg1("refuse_offer");
+            return;
+        }
+
+        diplomacyManager.exchangePerformer.apply(message);
+    }
+
+
+    private boolean isExchangeGood(DiplomaticMessage message) {
+        DiplomaticEntity sender = message.sender;
+        DiplomaticEntity recipient = message.recipient;
+
+        int recipientToSenderScore = calculateExchangeProfitScore(recipient, sender, message.arg1);
+        int senderToRecipientScore = calculateExchangeProfitScore(sender, recipient, message.arg2);
+
+        int loss, gain;
+        DiplomaticEntity mainEntity = getMainEntity();
+        if (mainEntity == recipient) {
+            loss = recipientToSenderScore;
+            gain = senderToRecipientScore;
+        } else {
+            loss = senderToRecipientScore;
+            gain = recipientToSenderScore;
+        }
+
+        if (gain > loss) return true;
+
+        int maxScore = Math.max(loss, gain);
+        int allowedDelta = (int) (0.25 * maxScore);
+
+        return Math.abs(loss - gain) <= allowedDelta;
+    }
+
+
+    private int calculateExchangeProfitScore(DiplomaticEntity giver, DiplomaticEntity profiter, String argument) {
+        String[] split = argument.split(" ");
+        ExchangeType type = ExchangeType.valueOf(split[0]);
+
+        int moneyPerTurnValue;
+        int durationValue;
+        int fraction;
+
+        switch (type) {
+            default:
+            case nothing:
+                return 0;
+            case remove_black_mark:
+                if (giver == getMainEntity()) {
+                    return 200;
+                }
+                return -200;
+            case stop_war:
+                int relation = giver.getRelation(profiter);
+                if (relation != DiplomaticRelation.ENEMY) return 0;
+                if (profiter == getMainEntity() && profiter.getStateIncome() < 3 * giver.getStateIncome()) {
+                    return -150; // don't want
+                }
+                if (!diplomacyManager.canWarBeStopped(giver, profiter)) return 900;
+                return 120;
+            case money:
+                moneyPerTurnValue = Integer.valueOf(split[1]);
+                return moneyPerTurnValue;
+            case dotations:
+                moneyPerTurnValue = Integer.valueOf(split[1]);
+                durationValue = Integer.valueOf(split[2]);
+                int realPayPerTurn = Math.min(moneyPerTurnValue, giver.getStateIncome());
+                return realPayPerTurn * durationValue;
+            case war_declaration:
+                fraction = Integer.valueOf(split[1]);
+                if (getMainEntity().fraction == fraction) return -800;
+                return 180;
+            case lands:
+                if (split.length < 2) return 999999;
+                ArrayList<Hex> hexList = diplomacyManager.convertStringToHexList(split[1]);
+                if (giver == getMainEntity() && !doesAiAllowToBuyItsHexes(hexList, 1000)) return 999999;
+                return diplomacyManager.calculatePriceForHexes(hexList);
+            case friendship:
+                if (!diplomacyManager.isFriendshipPossible(giver, profiter)) return 999999;
+                return getFriendshipPrice(giver);
+        }
+    }
+
+
+    public int getFriendshipPrice(DiplomaticEntity giver) {
+        return (int) (2.5 * giver.getStateIncome());
+    }
+
+
     private String getRandomSadSmiley() {
         int index = YioGdxGame.random.nextInt(sadSmileys.length);
         return sadSmileys[index];
@@ -433,27 +642,26 @@ public class DiplomaticAI {
 
 
     private boolean doesAiWantToBuyOthersHexes(DiplomaticMessage message) {
-        ArrayList<Hex> hexList = diplomacyManager.convertStringToPurchaseList(message.arg1);
+        ArrayList<Hex> hexList = diplomacyManager.convertStringToHexList(message.arg1);
         if (hexList.size() < 2) return false;
 
         int price = Integer.valueOf(message.arg2);
         DiplomaticEntity buyer = message.recipient;
-        return buyer.getStateFullMoney() > price && buyer.getStateBalance() > 0;
+        return buyer.getStateFullMoney() > price && buyer.getStateProfit() > 0;
     }
 
 
-    private boolean doesAiAllowToBuyItsHexes(DiplomaticMessage message) {
-        DiplomaticEntity buyer = message.sender;
-        DiplomaticEntity seller = message.recipient;
-        ArrayList<Hex> hexList = diplomacyManager.convertStringToPurchaseList(message.arg1);
+    public boolean doesAiAllowToBuyItsHexes(ArrayList<Hex> hexList, int price) {
+        if (hexList.size() == 0) return false;
+        int fraction = hexList.get(0).fraction;
+        if (hexList.size() >= getQuantityOfOwnedHexes(fraction)) return false;
 
         int realPrice = diplomacyManager.calculatePriceForHexes(hexList);
-        int price = Integer.valueOf(message.arg2);
         if (price < 0.7 * realPrice) return false;
 
         tempProvinceList.clear();
         for (Hex hex : hexList) {
-            Province provinceByHex = getFieldController().getProvinceByHex(hex);
+            Province provinceByHex = getFieldManager().getProvinceByHex(hex);
             if (provinceByHex == null) continue;
             if (tempProvinceList.contains(provinceByHex)) continue;
             tempProvinceList.add(provinceByHex);
@@ -466,6 +674,24 @@ public class DiplomaticAI {
         }
 
         return true;
+    }
+
+
+    private int getQuantityOfOwnedHexes(int fraction) {
+        int c = 0;
+        for (Province province : getFieldManager().provinces) {
+            if (province.getFraction() != fraction) continue;
+            c += province.hexList.size();
+        }
+        return c;
+    }
+
+
+    private boolean doesAiAllowToBuyItsHexes(DiplomaticMessage message) {
+        ArrayList<Hex> hexList = diplomacyManager.convertStringToHexList(message.arg1);
+        int price = Integer.valueOf(message.arg2);
+
+        return doesAiAllowToBuyItsHexes(hexList, price);
     }
 
 
@@ -485,7 +711,7 @@ public class DiplomaticAI {
             for (int dir = 0; dir < 6; dir++) {
                 Hex adjacentHex = hex.getAdjacentHex(dir);
                 if (adjacentHex == null) continue;
-                if (adjacentHex == getFieldController().nullHex) continue;
+                if (adjacentHex == getFieldManager().nullHex) continue;
                 if (!adjacentHex.active) continue;
                 if (!adjacentHex.sameFraction(hex)) continue;
                 if (adjacentHex.flag) continue;
@@ -514,7 +740,7 @@ public class DiplomaticAI {
     }
 
 
-    private FieldManager getFieldController() {
+    private FieldManager getFieldManager() {
         return diplomacyManager.fieldManager;
     }
 
@@ -540,7 +766,7 @@ public class DiplomaticAI {
 
         int relation = aiEntity.getRelation(randomHumanEntity);
         if (relation == DiplomaticRelation.FRIEND) return;
-        if (randomHumanEntity.isBlackMarkedWith(aiEntity)) return;
+        if (!diplomacyManager.isBlackMarkAllowed(randomHumanEntity, aiEntity)) return;
 
         getLog().addMessage(DipMessageType.black_marked, aiEntity, randomHumanEntity);
 
@@ -548,30 +774,45 @@ public class DiplomaticAI {
     }
 
 
-    public boolean performAiToHumanFriendshipProposal() {
+    public void performAiToHumanFriendshipProposal() {
         DiplomaticEntity humanEntity = getRandomHumanEntity();
-        if (humanEntity == null) return false;
-        if (humanEntity.isOneFriendAwayFromDiplomaticVictory()) return false;
-        if (!humanEntity.alive) return false;
+        if (humanEntity == null) return;
+        if (humanEntity.isOneFriendAwayFromDiplomaticVictory()) return;
+        if (!humanEntity.alive) return;
 
-        for (int i = 0; i < 25; i++) {
-            DiplomaticEntity randomEntity = getRandomEntity();
-            if (!randomEntity.alive) continue;
-            if (randomEntity.isHuman()) continue;
-            if (randomEntity.isOneFriendAwayFromDiplomaticVictory()) continue; // no tricky friend requests
+        DiplomaticEntity mainEntity = getMainEntity();
+        if (mainEntity.isOneFriendAwayFromDiplomaticVictory()) return; // no tricky friend requests
 
-            int relation = humanEntity.getRelation(randomEntity);
-            if (relation != DiplomaticRelation.NEUTRAL) continue;
-            if (!humanEntity.acceptsFriendsRequest(randomEntity)) continue;
+        int relation = humanEntity.getRelation(mainEntity);
+        if (relation != DiplomaticRelation.NEUTRAL) return;
+        if (!humanEntity.acceptsFriendsRequest(mainEntity)) return;
 
-            DiplomaticMessage diplomaticMessage = getLog().addMessage(DipMessageType.friendship_proposal, randomEntity, humanEntity);
-            if (diplomaticMessage != null) {
-                diplomaticMessage.setArg1("" + diplomacyManager.calculateDotationsForFriendship(randomEntity, humanEntity));
-            }
-            return true;
+        for (int i = 0; i < 5; i++) {
+            ExchangeType randomExchangeType = getExchangeTypeForFriendship();
+
+            DiplomaticMessage diplomaticMessage = getLog().addMessage(DipMessageType.exchange, mainEntity, humanEntity);
+            String arg1 = getRandomizedExchangeProfitArgument(humanEntity, getMainEntity(), ExchangeType.friendship);
+            String arg2 = getRandomizedExchangeProfitArgument(getMainEntity(), humanEntity, randomExchangeType);
+
+            diplomaticMessage.setArg1(arg1);
+            diplomaticMessage.setArg2(arg2);
+
+            if (isExchangeGood(diplomaticMessage)) break;
+
+            getLog().removeMessage(diplomaticMessage);
         }
+    }
 
-        return false;
+
+    private ExchangeType getExchangeTypeForFriendship() {
+        switch (YioGdxGame.random.nextInt(3)) {
+            default:
+            case 0:
+            case 1:
+                return ExchangeType.dotations;
+            case 2:
+                return ExchangeType.money;
+        }
     }
 
 
@@ -624,6 +865,19 @@ public class DiplomaticAI {
 
     private DiplomaticEntity getMainEntity() {
         return diplomacyManager.getMainEntity();
+    }
+
+
+    public DiplomaticEntity getRandomAliveEntityExceptOne(DiplomaticEntity excludedEntity) {
+        int c = 200;
+        while (c > 0) {
+            c--;
+            DiplomaticEntity randomEntity = diplomacyManager.getRandomEntity();
+            if (randomEntity == excludedEntity) continue;
+            if (!randomEntity.alive) continue;
+            return randomEntity;
+        }
+        return getMainEntity();
     }
 
 

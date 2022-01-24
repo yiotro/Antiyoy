@@ -11,7 +11,7 @@ public class RbChooseGameModeMenu extends Reaction {
 
     @Override
     public void perform(ButtonYio buttonYio) {
-        Scenes.sceneChoodeGameModeMenu.create();
+        Scenes.sceneChooseGameMode.create();
         getYioGdxGame(buttonYio).setGamePaused(true);
         getYioGdxGame(buttonYio).setAnimToPlayButtonSpecial();
     }

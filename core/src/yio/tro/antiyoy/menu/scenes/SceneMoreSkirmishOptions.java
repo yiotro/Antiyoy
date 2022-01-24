@@ -2,7 +2,7 @@ package yio.tro.antiyoy.menu.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import yio.tro.antiyoy.gameplay.ColorsManager;
+import yio.tro.antiyoy.gameplay.MapGenerator;
 import yio.tro.antiyoy.menu.*;
 import yio.tro.antiyoy.menu.color_picking.ColorHolderElement;
 import yio.tro.antiyoy.menu.slider.SliderBehavior;
@@ -10,7 +10,6 @@ import yio.tro.antiyoy.menu.slider.SliderYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.stuff.LanguagesManager;
-import yio.tro.antiyoy.stuff.RectangleYio;
 
 public class SceneMoreSkirmishOptions extends AbstractScene{
 
@@ -21,6 +20,7 @@ public class SceneMoreSkirmishOptions extends AbstractScene{
     public CheckButtonYio chkFogOfWar;
     public CheckButtonYio chkDiplomacy;
     SliderYio provincesSlider;
+    SliderYio treesSlider;
 
 
     public SceneMoreSkirmishOptions(MenuControllerYio menuControllerYio) {
@@ -29,6 +29,7 @@ public class SceneMoreSkirmishOptions extends AbstractScene{
         colorHolderElement = null;
         chkSlayRules = null;
         provincesSlider = null;
+        treesSlider = null;
     }
 
 
@@ -42,11 +43,41 @@ public class SceneMoreSkirmishOptions extends AbstractScene{
         createCheckButtons();
         createColorHolder();
         createProvincesSlider();
+        createTreesSlider();
 
         loadValues();
 
         menuControllerYio.endMenuCreation();
 
+    }
+
+
+    private void createTreesSlider() {
+        initTreesSlider();
+        treesSlider.appear();
+    }
+
+
+    private void initTreesSlider() {
+        if (treesSlider != null) return;
+        treesSlider = new SliderYio(menuControllerYio, -1);
+        treesSlider.setValues(0, 0, MapGenerator.treesPercentages.length - 1, Animation.none);
+        treesSlider.setPosition(generateRectangle(0.15, 0, 0.7, 0));
+        treesSlider.setParentElement(label, 0.05);
+        treesSlider.setTitle("trees");
+        treesSlider.setVerticalTouchOffset(0.04f * GraphicsYio.height);
+        treesSlider.setBehavior(getTreesSliderBehavior());
+        menuControllerYio.addElementToScene(treesSlider);
+    }
+
+
+    private SliderBehavior getTreesSliderBehavior() {
+        return new SliderBehavior() {
+            @Override
+            public String getValueString(SliderYio sliderYio) {
+                return MapGenerator.treesPercentages[sliderYio.getValueIndex()] + "%";
+            }
+        };
     }
 
 
@@ -57,10 +88,11 @@ public class SceneMoreSkirmishOptions extends AbstractScene{
 
 
     private void initProvincesSlider() {
+        if (provincesSlider != null) return;
         provincesSlider = new SliderYio(menuControllerYio, -1);
         provincesSlider.setValues(0, 0, 3, Animation.none);
         provincesSlider.setPosition(generateRectangle(0.15, 0, 0.7, 0));
-        provincesSlider.setParentElement(label, 0.09);
+        provincesSlider.setParentElement(label, 0.2);
         provincesSlider.setTitle("provinces");
         provincesSlider.setVerticalTouchOffset(0.04f * GraphicsYio.height);
         provincesSlider.setBehavior(getProvincesSliderBehavior());
@@ -108,6 +140,7 @@ public class SceneMoreSkirmishOptions extends AbstractScene{
         chkDiplomacy.setChecked(prefs.getBoolean("diplomacy", false));
 
         provincesSlider.setValueIndex(prefs.getInteger("provinces", 0));
+        treesSlider.setValueIndex(prefs.getInteger("trees", 2));
     }
 
 
@@ -119,6 +152,7 @@ public class SceneMoreSkirmishOptions extends AbstractScene{
         prefs.putBoolean("fog_of_war", chkFogOfWar.isChecked());
         prefs.putBoolean("diplomacy", chkDiplomacy.isChecked());
         prefs.putInteger("provinces", provincesSlider.getValueIndex());
+        prefs.putInteger("trees", treesSlider.getValueIndex());
 
         prefs.flush();
     }
@@ -156,7 +190,7 @@ public class SceneMoreSkirmishOptions extends AbstractScene{
 
 
     private void createLabel() {
-        label = buttonFactory.getButton(generateRectangle(0.05, 0.25, 0.9, 0.6), 232, " ");
+        label = buttonFactory.getButton(generateRectangle(0.05, 0.15, 0.9, 0.7), 232, " ");
         label.setTouchable(false);
         label.setAnimation(Animation.fixed_up);
     }

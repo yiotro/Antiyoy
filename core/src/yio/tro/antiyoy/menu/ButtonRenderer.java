@@ -61,9 +61,10 @@ public class ButtonRenderer {
     }
 
 
-    private void beginRender(ButtonYio buttonYio, BitmapFont font, int FONT_SIZE) {
+    private boolean beginRender(ButtonYio buttonYio, BitmapFont font, int FONT_SIZE) {
         horizontalOffset = (int) (0.3f * FONT_SIZE);
         frameBuffer = FrameBufferYio.getInstance(Pixmap.Format.RGB565, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+        if (frameBuffer == null) return false;
         frameBuffer.begin();
         Gdx.gl.glClearColor(buttonYio.backColor.r, buttonYio.backColor.g, buttonYio.backColor.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -77,6 +78,7 @@ public class ButtonRenderer {
         batch.end();
         pos.setBy(buttonYio.position);
         initText(buttonYio, font);
+        return true;
     }
 
 
@@ -111,7 +113,7 @@ public class ButtonRenderer {
 
             for (String token : tokens) {
                 currentWidth = GraphicsYio.getTextWidth(font, token);
-                if (currentX + currentWidth > Gdx.graphics.getWidth() - 2) {
+                if (currentX + currentWidth > Gdx.graphics.getWidth() - 5 * GraphicsYio.borderThickness) {
                     text.add(builder.toString());
                     builder = new StringBuilder();
                     currentX = 0;
@@ -174,7 +176,7 @@ public class ButtonRenderer {
 
 
     public void renderButton(ButtonYio buttonYio, BitmapFont font, int FONT_SIZE) {
-        beginRender(buttonYio, font, FONT_SIZE);
+        if (!beginRender(buttonYio, font, FONT_SIZE)) return; // probably unable to create frame buffer
         float ratio = (float) (pos.width / pos.height);
         int lineHeight = (int) (1.2f * FONT_SIZE);
         int verticalOffset = (int) (0.3f * FONT_SIZE);

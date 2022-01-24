@@ -47,7 +47,7 @@ public class RenderMoveZone extends GameRender {
         renderMoveZoneBorderAndSomeObjects();
         renderSelectionBorder();
 
-        batchMovable.setColor(c.r, c.g, c.b, c.a);
+        batchMovable.setColor(c.r, c.g, c.b, 1);
     }
 
 

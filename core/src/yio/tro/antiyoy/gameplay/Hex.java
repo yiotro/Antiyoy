@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.ai.master.AiData;
 import yio.tro.antiyoy.gameplay.data_storage.EncodeableYio;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
@@ -22,14 +23,23 @@ public class Hex implements ReusableYio, EncodeableYio{
     public Unit unit;
     public Hex algoLink;
     public int algoValue;
+    public AiData aiData;
 
 
     public Hex(int index1, int index2, PointYio fieldPos, FieldManager fieldManager) {
+        this(index1, index2, fieldPos, fieldManager, false);
+    }
+
+
+    public Hex(int index1, int index2, PointYio fieldPos, FieldManager fieldManager, boolean snapshot) {
         this.index1 = index1;
         this.index2 = index2;
         this.fieldPos = fieldPos;
         this.fieldManager = fieldManager;
         if (fieldManager == null) return;
+        if (!snapshot) {
+            aiData = new AiData(this);
+        }
 
         gameController = fieldManager.gameController;
         active = false;
@@ -146,12 +156,14 @@ public class Hex implements ReusableYio, EncodeableYio{
 
 
     public Hex getSnapshotCopy() {
-        Hex record = new Hex(index1, index2, fieldPos, fieldManager);
+        Hex record = new Hex(index1, index2, fieldPos, fieldManager, true);
         record.active = active;
         record.fraction = fraction;
         record.objectInside = objectInside;
         record.selected = selected;
-        if (unit != null) record.unit = unit.getSnapshotCopy();
+        if (unit != null) {
+            record.unit = unit.getSnapshotCopy();
+        }
         return record;
     }
 
@@ -188,14 +200,13 @@ public class Hex implements ReusableYio, EncodeableYio{
 
     public int numberOfFriendlyHexesNearby() {
         int c = 0;
-        for (int i = 0; i < 6; i++) {
-            Hex adjHex = getAdjacentHex(i);
+        for (int dir = 0; dir < 6; dir++) {
+            Hex adjHex = getAdjacentHex(dir);
             if (adjHex == null) continue;
             if (adjHex.isNullHex()) continue;
-            if (adjHex.isNeutral()) continue;
             if (!adjHex.active) continue;
+            if (adjHex.isNeutral()) continue;
             if (!adjHex.sameFraction(this)) continue;
-
             c++;
         }
         return c;
@@ -209,10 +220,13 @@ public class Hex implements ReusableYio, EncodeableYio{
 
     public int getDefenseNumber(Unit ignoreUnit) {
         int defenseNumber = 0;
-        if (this.objectInside == Obj.TOWN) defenseNumber = Math.max(defenseNumber, 1);
-        if (this.objectInside == Obj.TOWER) defenseNumber = Math.max(defenseNumber, 2);
-        if (this.objectInside == Obj.STRONG_TOWER) defenseNumber = Math.max(defenseNumber, 3);
-        if (this.containsUnit() && unit != ignoreUnit) defenseNumber = Math.max(defenseNumber, this.unit.strength);
+        if (this.objectInside == Obj.TOWN) defenseNumber = 1;
+        if (this.objectInside == Obj.TOWER) defenseNumber = 2;
+        if (this.objectInside == Obj.STRONG_TOWER) defenseNumber = 3;
+
+        if (this.containsUnit() && unit != ignoreUnit) {
+            defenseNumber = Math.max(defenseNumber, this.unit.strength);
+        }
         Hex neighbour;
         for (int i = 0; i < 6; i++) {
             neighbour = getAdjacentHex(i);
@@ -220,8 +234,9 @@ public class Hex implements ReusableYio, EncodeableYio{
             if (neighbour.objectInside == Obj.TOWN) defenseNumber = Math.max(defenseNumber, 1);
             if (neighbour.objectInside == Obj.TOWER) defenseNumber = Math.max(defenseNumber, 2);
             if (neighbour.objectInside == Obj.STRONG_TOWER) defenseNumber = Math.max(defenseNumber, 3);
-            if (neighbour.containsUnit() && neighbour.unit != ignoreUnit)
+            if (neighbour.containsUnit() && neighbour.unit != ignoreUnit) {
                 defenseNumber = Math.max(defenseNumber, neighbour.unit.strength);
+            }
         }
         return defenseNumber;
     }
@@ -256,14 +271,16 @@ public class Hex implements ReusableYio, EncodeableYio{
     }
 
 
-    public boolean hasThisObjectNearby(int objectIndex) {
+    public boolean hasThisSupportiveObjectNearby(int objectIndex) {
         if (objectInside == objectIndex) return true;
-        for (int i = 0; i < 6; i++) {
-            Hex adjHex = getAdjacentHex(i);
-            if (adjHex.fraction != fraction) continue;
-            if (adjHex.active && adjHex.objectInside == objectIndex) {
-                return true;
-            }
+        for (int dir = 0; dir < 6; dir++) {
+            Hex adjacentHex = getAdjacentHex(dir);
+            if (adjacentHex == null) continue;
+            if (adjacentHex.isNullHex()) continue;
+            if (!adjacentHex.active) continue;
+            if (adjacentHex.fraction != fraction) continue;
+            if (adjacentHex.objectInside != objectIndex) continue;
+            return true;
         }
         return false;
     }
@@ -337,6 +354,18 @@ public class Hex implements ReusableYio, EncodeableYio{
     }
 
 
+    public boolean isAdjacentTo(Hex hex) {
+        for (int dir = 0; dir < 6; dir++) {
+            Hex adjacentHex = getAdjacentHex(dir);
+            if (adjacentHex == null) continue;
+            if (adjacentHex.isNullHex()) continue;
+            if (adjacentHex != hex) continue;
+            return true;
+        }
+        return false;
+    }
+
+
     public void setIgnoreTouch(boolean ignoreTouch) {
         this.ignoreTouch = ignoreTouch;
     }
@@ -399,6 +428,9 @@ public class Hex implements ReusableYio, EncodeableYio{
 
     @Override
     public String toString() {
+        if (!active) {
+            return "[Hex (not active): f" + fraction + " (" + index1 + ", " + index2 + ")]";
+        }
         return "[Hex: f" + fraction + " (" + index1 + ", " + index2 + ")]";
     }
 

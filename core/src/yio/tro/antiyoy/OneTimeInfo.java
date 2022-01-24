@@ -8,7 +8,10 @@ public class OneTimeInfo {
     public static final String PREFS_ONE_TIME = "antiyoy.one_time_info";
     private static OneTimeInfo instance = null;
 
-    public boolean iosPortDone;
+    public boolean newGameRelease;
+    public boolean quickExchangeTutorial;
+    public boolean iosCheckMyGames;
+    public boolean antiyoyOnline;
 
 
     public static void initialize() {
@@ -29,14 +32,22 @@ public class OneTimeInfo {
     void load() {
         Preferences preferences = Gdx.app.getPreferences(PREFS_ONE_TIME);
 
-        iosPortDone = preferences.getBoolean("ios_port_done", true);
+        newGameRelease = preferences.getBoolean("ng_release", false);
+        quickExchangeTutorial = preferences.getBoolean("quick_exchange_tutorial", false);
+        iosCheckMyGames = preferences.getBoolean("ios_check_my_games", false);
+        antiyoyOnline = preferences.getBoolean("antiyoy_online", false);
+
+        newGameRelease = true; // to disable it
     }
 
 
     public void save() {
         Preferences preferences = Gdx.app.getPreferences(PREFS_ONE_TIME);
 
-        preferences.putBoolean("ios_port_done", iosPortDone);
+        preferences.putBoolean("ng_release", newGameRelease);
+        preferences.putBoolean("quick_exchange_tutorial", quickExchangeTutorial);
+        preferences.putBoolean("ios_check_my_games", iosCheckMyGames);
+        preferences.putBoolean("antiyoy_online", antiyoyOnline);
 
         preferences.flush();
     }

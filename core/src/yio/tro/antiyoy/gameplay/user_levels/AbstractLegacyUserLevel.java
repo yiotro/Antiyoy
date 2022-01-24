@@ -92,4 +92,10 @@ public abstract class AbstractLegacyUserLevel {
     public DecodeManager getDecodeManager() {
         return gameController.decodeManager;
     }
+
+
+    public boolean isOlegLevel() {
+        return false;
+    }
+
 }

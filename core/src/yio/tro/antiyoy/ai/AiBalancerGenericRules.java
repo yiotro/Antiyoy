@@ -170,7 +170,7 @@ public class AiBalancerGenericRules extends AiExpertGenericRules implements Comp
     private void checkToSwapUnitForTower(Unit unit, ArrayList<Hex> moveZone, Province province) {
         if (!unit.isReadyToMove()) return;
         if (!province.hasMoneyForTower()) return;
-        if (unit.currentHex.hasThisObjectNearby(Obj.TOWER)) return;
+        if (unit.currentHex.hasThisSupportiveObjectNearby(Obj.TOWER)) return;
 
         // remember that hex
         int x = unit.currentHex.index1;

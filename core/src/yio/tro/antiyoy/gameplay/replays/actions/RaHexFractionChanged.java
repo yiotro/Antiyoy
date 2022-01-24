@@ -42,7 +42,7 @@ public class RaHexFractionChanged extends RepAction{
     @Override
     public void perform(GameController gameController) {
         gameController.fieldManager.setHexFraction(hex, newFraction);
-        gameController.fieldManager.tryToDetectAddiotionalProvinces();
+        gameController.fieldManager.tryToDetectAdditionalProvinces();
     }
 
 

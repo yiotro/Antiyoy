@@ -5,18 +5,20 @@ import yio.tro.antiyoy.gameplay.ClickDetector;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
+import yio.tro.antiyoy.stuff.Yio;
 
 public abstract class AbstractRectangularUiElement extends InterfaceElement {
 
     public MenuControllerYio menuControllerYio;
     protected FactorYio appearFactor;
-    RectangleYio position;
+    protected RectangleYio position;
     public RectangleYio viewPosition;
     boolean touched;
     protected PointYio currentTouch;
     public boolean factorMoved;
     protected ClickDetector clickDetector;
     protected Animation animation;
+    public float touchOffset;
 
 
     public AbstractRectangularUiElement(MenuControllerYio menuControllerYio) {
@@ -30,6 +32,7 @@ public abstract class AbstractRectangularUiElement extends InterfaceElement {
         factorMoved = false;
         clickDetector = new ClickDetector();
         animation = Animation.def;
+        touchOffset = 0;
     }
 
 
@@ -174,12 +177,17 @@ public abstract class AbstractRectangularUiElement extends InterfaceElement {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         updateCurrentTouch(screenX, screenY);
-        touched = viewPosition.isPointInside(currentTouch);
+        touched = isCurrentlyTouched();
         if (touched) {
             clickDetector.onTouchDown(currentTouch);
             onTouchDown();
         }
         return touched;
+    }
+
+
+    protected boolean isCurrentlyTouched() {
+        return viewPosition.isPointInside(currentTouch, touchOffset);
     }
 
 
@@ -213,6 +221,14 @@ public abstract class AbstractRectangularUiElement extends InterfaceElement {
     }
 
 
+    public void forceUpdateViewPosition() {
+        boolean fm = factorMoved;
+        factorMoved = true;
+        updateViewPosition();
+        factorMoved = fm;
+    }
+
+
     protected abstract void onTouchUp();
 
 
@@ -227,6 +243,11 @@ public abstract class AbstractRectangularUiElement extends InterfaceElement {
 
     public void setAnimation(Animation animation) {
         this.animation = animation;
+    }
+
+
+    public void setTouchOffset(float touchOffset) {
+        this.touchOffset = touchOffset * GraphicsYio.width;
     }
 
 

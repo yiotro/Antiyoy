@@ -13,6 +13,7 @@ public class ScrollListItem extends AbstractSingleLineItem{
     public String key;
     private float height;
     boolean centered;
+    public boolean highlightEnabled;
 
 
     public ScrollListItem() {
@@ -21,6 +22,7 @@ public class ScrollListItem extends AbstractSingleLineItem{
         key = null;
         height = 0.1f * GraphicsYio.height;
         centered = false;
+        highlightEnabled = false;
     }
 
 
@@ -90,8 +92,13 @@ public class ScrollListItem extends AbstractSingleLineItem{
     }
 
 
+    public void setHighlightEnabled(boolean highlightEnabled) {
+        this.highlightEnabled = highlightEnabled;
+    }
+
+
     @Override
     public AbstractRenderCustomListItem getRender() {
-        return MenuRender.renderSingleListItem;
+        return MenuRender.renderScrollListItem;
     }
 }

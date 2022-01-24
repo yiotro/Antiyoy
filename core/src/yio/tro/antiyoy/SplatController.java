@@ -110,7 +110,7 @@ public class SplatController {
         if (splatTransparencyFactor.get() == 1) {
             yioGdxGame.batch.setColor(c.r, c.g, c.b, splatTransparencyFactor.get());
             for (Splat splat : splats) {
-                splat.applyToCircle(tempCircle, 1);
+                splat.applyToCircle(tempCircle, 1, newYearMode);
                 GraphicsYio.drawByCircle(yioGdxGame.batch, getSplatTexture(), tempCircle);
             }
         } else if (splatTransparencyFactor.get() > 0) {
@@ -121,7 +121,7 @@ public class SplatController {
                 d = (float) Yio.distance(GraphicsYio.width / 2, GraphicsYio.height / 2, splat.x, splat.y);
                 d = 0.5f * GraphicsYio.height - d;
                 d *= 1 - splatTransparencyFactor.get();
-                splat.applyToCircle(tempCircle, splatTransparencyFactor.get());
+                splat.applyToCircle(tempCircle, splatTransparencyFactor.get(), newYearMode);
                 tempCircle.center.relocateRadial(d, a);
                 GraphicsYio.drawByCircle(yioGdxGame.batch, getSplatTexture(), tempCircle);
             }

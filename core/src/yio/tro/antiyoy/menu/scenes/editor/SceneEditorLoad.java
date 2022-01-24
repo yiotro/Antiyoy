@@ -4,8 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.editor.EditorSaveSystem;
-import yio.tro.antiyoy.gameplay.editor.LevelEditor;
-import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.gameplay.editor.LevelEditorManager;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
@@ -152,8 +151,8 @@ public class SceneEditorLoad extends AbstractScene{
         int index = 0;
 
         while (true) {
-            String key = LevelEditor.SLOT_NAME + index;
-            if (index > 200 && !preferences.contains(key)) break;
+            String key = LevelEditorManager.SLOT_NAME + index;
+            if (index > 500 && !preferences.contains(key)) break;
 
             boolean empty = isEmpty(preferences, key);
 

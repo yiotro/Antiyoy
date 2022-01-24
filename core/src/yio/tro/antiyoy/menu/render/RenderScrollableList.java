@@ -141,6 +141,7 @@ public class RenderScrollableList extends MenuRender{
 
 
     protected void renderItems() {
+        Color descBackupColor = scrollableList.descFont.getColor();
         scrollableList.descFont.setColor(Color.BLACK);
         Color titleColor = scrollableList.titleFont.getColor();
         scrollableList.titleFont.setColor(Color.BLACK);
@@ -154,7 +155,7 @@ public class RenderScrollableList extends MenuRender{
             renderItemSelection(item);
         }
 
-        scrollableList.descFont.setColor(Color.WHITE);
+        scrollableList.descFont.setColor(descBackupColor);
         scrollableList.titleFont.setColor(titleColor);
     }
 

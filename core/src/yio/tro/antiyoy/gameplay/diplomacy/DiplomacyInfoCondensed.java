@@ -1,9 +1,9 @@
 package yio.tro.antiyoy.gameplay.diplomacy;
 
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class DiplomacyInfoCondensed implements ReusableYio {
 
@@ -15,6 +15,7 @@ public class DiplomacyInfoCondensed implements ReusableYio {
     String contracts;
     String cooldowns;
     String messages;
+    String debts;
     DiplomacyManager diplomacyManager;
     private StringBuilder builder;
 
@@ -48,6 +49,7 @@ public class DiplomacyInfoCondensed implements ReusableYio {
         contracts = null;
         cooldowns = null;
         messages = null;
+        debts = null;
     }
 
 
@@ -58,7 +60,13 @@ public class DiplomacyInfoCondensed implements ReusableYio {
         updateContracts();
         updateCooldowns();
         updateMessages();
+        updateDebts();
         updateFull();
+    }
+
+
+    private void updateDebts() {
+        debts = diplomacyManager.encodeDebts();
     }
 
 
@@ -70,7 +78,7 @@ public class DiplomacyInfoCondensed implements ReusableYio {
         }
 
         if (builder.length() == 0) {
-            builder.append("#");
+            builder.append(" ");
         }
 
         messages = builder.toString();
@@ -127,13 +135,21 @@ public class DiplomacyInfoCondensed implements ReusableYio {
 
         if (full.equals("-")) return;
 
+        diplomacyManager.clearCooldowns();
+        diplomacyManager.clearContracts();
         applyFull();
         applyRelations();
         applyContracts();
         applyCooldowns();
         applyMessages();
+        applyDebts();
 
         diplomacyManager.onRelationsChanged();
+    }
+
+
+    private void applyDebts() {
+        diplomacyManager.decodeDebts(debts);
     }
 
 
@@ -261,18 +277,18 @@ public class DiplomacyInfoCondensed implements ReusableYio {
 
         relations = split[0];
         contracts = split[1];
+        cooldowns = null;
+        messages = null;
+        debts = null;
 
-        if (split.length > 2) {
-            cooldowns = split[2];
-        } else {
-            cooldowns = null;
-        }
+        if (split.length < 3) return;
+        cooldowns = split[2];
 
-        if (split.length > 3) {
-            messages = split[3];
-        } else {
-            messages = null;
-        }
+        if (split.length < 4) return;
+        messages = split[3];
+
+        if (split.length < 5) return;
+        debts = split[4];
     }
 
 
@@ -280,7 +296,8 @@ public class DiplomacyInfoCondensed implements ReusableYio {
         full = relations + "#" +
                 contracts + "#" +
                 cooldowns + "#" +
-                messages + "#";
+                messages + "#" +
+                debts + "#";
     }
 
 
@@ -306,9 +323,14 @@ public class DiplomacyInfoCondensed implements ReusableYio {
 
 
     void applyRelations() {
+        boolean lockBackup = GameRules.diplomaticRelationsLocked;
+        GameRules.diplomaticRelationsLocked = false;
+
         for (String token : relations.split(",")) {
             applySingleRelation(token);
         }
+
+        GameRules.diplomaticRelationsLocked = lockBackup;
     }
 
 

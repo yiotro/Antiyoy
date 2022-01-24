@@ -32,6 +32,7 @@ public class ImportManager {
     private boolean checkForLegacyImport(String levelCode) {
         if (levelCode == null) return false;
         if (levelCode.contains("antiyoy_level_code")) return false;
+        if (levelCode.contains("http")) return false;
         if (!levelCode.contains("/")) return false;
         if (!levelCode.contains("#")) return false;
 

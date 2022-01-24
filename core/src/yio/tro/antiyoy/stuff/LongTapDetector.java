@@ -4,7 +4,7 @@ public abstract class LongTapDetector {
 
     public static final int LONG_TAP_DELAY = 600;
 
-    boolean performedCheck;
+    boolean checkPerformed;
     long touchDownTime;
     PointYio initialTouch, currentTouch;
     boolean touched;
@@ -12,7 +12,7 @@ public abstract class LongTapDetector {
 
 
     public LongTapDetector() {
-        performedCheck = false;
+        checkPerformed = false;
         initialTouch = new PointYio();
         currentTouch = new PointYio();
         touched = false;
@@ -29,7 +29,7 @@ public abstract class LongTapDetector {
         initialTouch.setBy(touchPoint);
         currentTouch.setBy(initialTouch);
 
-        performedCheck = false;
+        checkPerformed = false;
         touched = true;
         touchDownTime = System.currentTimeMillis();
     }
@@ -47,14 +47,24 @@ public abstract class LongTapDetector {
 
     public void move() {
         if (!touched) return;
-        if (performedCheck) return;
+        if (checkPerformed) return;
         if (System.currentTimeMillis() - touchDownTime <= delay) return;
 
-        performedCheck = true;
+        checkPerformed = true;
 
         if (initialTouch.distanceTo(currentTouch) > 0.05f * GraphicsYio.width) return;
 
         onLongTapDetected();
+    }
+
+
+    public boolean isTouched() {
+        return touched;
+    }
+
+
+    public boolean isCheckPerformed() {
+        return checkPerformed;
     }
 
 

@@ -133,7 +133,7 @@ public class SceneCityNames extends AbstractScene{
 
     private void onNameItemClicked(AbstractCustomListItem item) {
         ScrollListItem scrollListItem = (ScrollListItem) item;
-        String string = scrollListItem.title.string;
+        final String string = scrollListItem.title.string;
         KeyboardManager.getInstance().apply(string, new AbstractKbReaction() {
             @Override
             public void onInputFromKeyboardReceived(String input) {

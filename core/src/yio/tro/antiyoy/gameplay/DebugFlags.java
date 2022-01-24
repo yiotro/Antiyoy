@@ -12,6 +12,9 @@ public class DebugFlags {
     public static boolean renderDebug = false;
     public static boolean showSliderBorder = false;
     public static boolean forceKeys = false;
-
-
+    public static boolean showAiData = false;
+    public static boolean closerLookMode = false;
+    public static boolean showDetailedAiMasterInfo = false;
+    public static boolean pauseAfterEachTurn = false;
+    
 }

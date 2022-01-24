@@ -17,6 +17,8 @@ public class AutomaticTransitionWorker {
     private int maxStrength;
     private Province currentProvince;
     PointYio geometricalCenter;
+    Unit previousUnit;
+    PointYio tempA, tempB;
 
 
     public AutomaticTransitionWorker(FieldManager fieldManager) {
@@ -27,11 +29,15 @@ public class AutomaticTransitionWorker {
         availableProvinces = new ArrayList<>();
         availableUnits = new ArrayList<>();
         geometricalCenter = new PointYio();
+        previousUnit = null;
+        tempA = new PointYio();
+        tempB = new PointYio();
     }
 
 
-    public Unit findNextUnit(int fraction) {
+    public Unit findNextUnit(Unit previousUnit, int fraction) {
         this.fraction = fraction;
+        this.previousUnit = previousUnit;
 
         updateAvailableProvinces();
         if (availableProvinces.size() == 0) return null;
@@ -138,11 +144,60 @@ public class AutomaticTransitionWorker {
 
     private void updateCurrentProvince() {
         currentProvince = null;
+
+        if (previousUnit != null) {
+            updateCurrentProvinceByPreviousUnit();
+            return;
+        }
+
         for (Province availableProvince : availableProvinces) {
             if (!isProvinceValid(availableProvince)) continue;
             currentProvince = availableProvince;
             break;
         }
+    }
+
+
+    private void updateCurrentProvinceByPreviousUnit() {
+        Province province = previousUnit.gameController.getProvinceByHex(previousUnit.currentHex);
+        if (isProvinceValid(province)) {
+            currentProvince = province;
+        } else {
+            currentProvince = getClosestAvailableValidProvince(province);
+        }
+    }
+
+
+    private Province getClosestAvailableValidProvince(Province province) {
+        Province bestProvince = null;
+        double minDistance = 0;
+        for (Province availableProvince : availableProvinces) {
+            if (availableProvince == province) continue;
+            if (!isProvinceValid(availableProvince)) continue;
+            double currentDistance = getFastDistanceBetweenProvinces(province, availableProvince);
+            if (bestProvince == null || currentDistance < minDistance) {
+                bestProvince = availableProvince;
+                minDistance = currentDistance;
+            }
+        }
+        return bestProvince;
+    }
+
+
+    private double getFastDistanceBetweenProvinces(Province province1, Province province2) {
+        updatePointByProvince(tempA, province1);
+        updatePointByProvince(tempB, province2);
+        return tempA.fastDistanceTo(tempB);
+    }
+
+
+    private void updatePointByProvince(PointYio pointYio, Province province) {
+        pointYio.reset();
+        for (Hex hex : province.hexList) {
+            pointYio.add(hex.pos);
+        }
+        pointYio.x /= province.hexList.size();
+        pointYio.y /= province.hexList.size();
     }
 
 

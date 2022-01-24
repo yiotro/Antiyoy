@@ -78,7 +78,7 @@ public abstract class ArtificialIntelligenceGeneric extends ArtificialIntelligen
 
     protected boolean isHexGoodForFarm(Hex hex) {
         if (!hex.isFree()) return false;
-        if (!hex.hasThisObjectNearby(Obj.TOWN) && !hex.hasThisObjectNearby(Obj.FARM)) return false;
+        if (!hex.hasThisSupportiveObjectNearby(Obj.TOWN) && !hex.hasThisSupportiveObjectNearby(Obj.FARM)) return false;
         return true;
     }
 }

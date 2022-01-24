@@ -2,11 +2,17 @@ package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.gameplay.MatchStatistics;
+import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.gameplay.user_levels.AbstractLegacyUserLevel;
+import yio.tro.antiyoy.gameplay.user_levels.UserLevelFactory;
+import yio.tro.antiyoy.gameplay.user_levels.UserLevelsManager;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.Yio;
 
 public class SceneMatchStatistics extends AbstractScene{
 
@@ -37,10 +43,22 @@ public class SceneMatchStatistics extends AbstractScene{
         ButtonYio textPanel = buttonFactory.getButton(generateRectangle(0.05, 0.1, 0.9, 0.7), 112, null);
         textPanel.cleatText();
         textPanel.addTextLine(getString("statistics"));
+        if (GameRules.campaignMode) {
+            textPanel.addTextLine(getString("menu_level") + ": " + CampaignProgressManager.getInstance().currentLevelIndex);
+        }
+        if (GameRules.userLevelMode) {
+            AbstractLegacyUserLevel userLevel = UserLevelFactory.getInstance().getLevel(GameRules.ulKey);
+            if (userLevel != null) {
+                textPanel.addTextLine(getString("menu_level") + ": " + userLevel.getMapName());
+            }
+        }
         textPanel.addTextLine(getString("turns_made") + ": " + matchStatistics.turnsMade);
         textPanel.addTextLine(getString("units_died") + ": " + matchStatistics.unitsDied);
         textPanel.addTextLine(getString("units_produced") + ": " + matchStatistics.unitsProduced);
-        textPanel.addTextLine(getString("money_spent") + ": " + matchStatistics.moneySpent);
+        if (matchStatistics.friendshipsBroken > 0) {
+            textPanel.addTextLine(getString("friendships_broken") + ": " + matchStatistics.friendshipsBroken);
+        }
+        textPanel.addTextLine(getString("money_spent") + ": $" + Yio.getCompactMoneyString(matchStatistics.moneySpent));
         textPanel.addTextLine(getString("time") + ": " + matchStatistics.getTimeString());
         for (int i = 0; i < 10; i++) {
             textPanel.addTextLine("");

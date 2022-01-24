@@ -96,7 +96,7 @@ public class SceneSkirmishMenu extends AbstractScene {
         RectangleYio pos = generateRectangle((1 - sWidth) / 2, 0, sWidth, 0);
 
         difficultySlider = new SliderYio(menuControllerYio, -1);
-        difficultySlider.setValues(0.33, 1, 5, Animation.none);
+        difficultySlider.setValues(0.33, 1, 6, Animation.none);
         difficultySlider.setPosition(pos);
         difficultySlider.setParentElement(topLabel, 0.2);
         difficultySlider.setTitle("difficulty");

@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.gameplay.diplomacy;
 
 import yio.tro.antiyoy.gameplay.Hex;
+import yio.tro.antiyoy.gameplay.diplomacy.exchange.ExchangeType;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
@@ -18,6 +19,16 @@ public class DiplomaticMessage implements ReusableYio {
     public DiplomaticMessage(DiplomaticLog diplomaticLog) {
         this.diplomaticLog = diplomaticLog;
         reset();
+    }
+
+
+    public void copyFrom(DiplomaticMessage src) {
+        type = src.type;
+        sender = src.sender;
+        recipient = src.recipient;
+        arg1 = src.arg1;
+        arg2 = src.arg2;
+        arg3 = src.arg3;
     }
 
 
@@ -44,17 +55,25 @@ public class DiplomaticMessage implements ReusableYio {
         if (sender != message.sender) return false;
         if (recipient != message.recipient) return false;
         if (arg1 != null && !arg1.equals(message.arg1)) return false;
+        if (arg2 != null && !arg2.equals(message.arg2)) return false;
 
         return true;
     }
 
 
     public String getListName() {
+        LanguagesManager instance = LanguagesManager.getInstance();
         switch (type) {
             default:
-                return LanguagesManager.getInstance().getString(type.name());
+                return instance.getString(type.name());
             case gift:
-                return LanguagesManager.getInstance().getString(type.name()) + ": $" + arg1;
+                return instance.getString(type.name()) + ": $" + arg1;
+            case exchange:
+                String receiveTypeString = arg1.split(" ")[0];
+                ExchangeType type1 = ExchangeType.valueOf(receiveTypeString);
+                String giveTypeString = arg2.split(" ")[0];
+                ExchangeType type2 = ExchangeType.valueOf(giveTypeString);
+                return instance.getString("" + type2) + " <-> " + instance.getString("" + type1);
         }
     }
 
@@ -71,7 +90,23 @@ public class DiplomaticMessage implements ReusableYio {
 
 
     public String getKey() {
+        if (type == DipMessageType.exchange) {
+            return type.name() + getSenderFraction() + getRecipientFraction() + getExchangeTypeFromArgument(arg1) + getExchangeTypeFromArgument(arg2);
+        }
         return type.name() + getSenderFraction() + getRecipientFraction();
+    }
+
+
+    private ExchangeType getExchangeTypeFromArgument(String arg) {
+        String[] split = arg.split(" ");
+        if (split.length < 1) return null;
+        ExchangeType exchangeType = null;
+        try {
+            exchangeType = ExchangeType.valueOf(split[0]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return exchangeType;
     }
 
 
@@ -109,7 +144,7 @@ public class DiplomaticMessage implements ReusableYio {
 
 
     public boolean containsLandOwnedByThirdParty() {
-        ArrayList<Hex> hexList = diplomaticLog.diplomacyManager.convertStringToPurchaseList(arg1);
+        ArrayList<Hex> hexList = diplomaticLog.diplomacyManager.convertStringToHexList(arg1);
         for (Hex hex : hexList) {
             if (hex.sameFraction(sender.fraction)) continue;
             if (hex.sameFraction(recipient.fraction)) continue;
@@ -137,9 +172,11 @@ public class DiplomaticMessage implements ReusableYio {
     @Override
     public String toString() {
         return "[Message: " +
-                type.name() + " " +
-                sender + " " +
-                recipient +
+                type.name() + " from " +
+                sender + " to " +
+                recipient + ", arg1=" +
+                arg1 + ", arg2=" +
+                arg2 +
                 "]";
     }
 }

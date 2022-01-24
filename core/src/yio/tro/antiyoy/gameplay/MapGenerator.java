@@ -23,6 +23,7 @@ public class MapGenerator {
     protected ArrayList<Link> links;
     private ArrayList<Hex> tempList;
     PointYio tempPoint;
+    public static int treesPercentages[] = new int[]{0, 5, 10, 15, 25, 33, 50, 66, 75, 90, 95, 100};
 
 
     public MapGenerator(GameController gameController) {
@@ -667,9 +668,9 @@ public class MapGenerator {
 
     protected void addTrees() {
         for (Hex activeHex : gameController.fieldManager.activeHexes) {
-            if (random.nextDouble() < 0.1 && !activeHex.containsObject()) {
-                gameController.fieldManager.spawnTree(activeHex);
-            }
+            if (random.nextDouble() >= GameRules.treesSpawnChance) continue;
+            if (activeHex.containsObject()) continue;
+            gameController.fieldManager.spawnTree(activeHex);
         }
     }
 

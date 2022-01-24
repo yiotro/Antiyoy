@@ -1,13 +1,19 @@
 package yio.tro.antiyoy.menu.income_graph;
 
 import yio.tro.antiyoy.factor_yio.FactorYio;
+import yio.tro.antiyoy.gameplay.FieldManager;
+import yio.tro.antiyoy.gameplay.GameController;
+import yio.tro.antiyoy.gameplay.Hex;
+import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.stuff.*;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
 public class IgeItem implements ReusableYio{
 
     IncomeGraphElement incomeGraphElement;
+    public RectangleYio targetPosition;
     public RectangleYio viewPosition;
     PointYio delta;
     public int fraction;
@@ -18,11 +24,12 @@ public class IgeItem implements ReusableYio{
     public RenderableTextYio text;
     public FactorYio borderFactor;
     public RectangleYio borderPosition;
+    public boolean scouted;
 
 
     public IgeItem(IncomeGraphElement incomeGraphElement) {
         this.incomeGraphElement = incomeGraphElement;
-        viewPosition = new RectangleYio();
+        targetPosition = new RectangleYio();
         delta = new PointYio();
         appearFactor = new FactorYio();
         prepareFactor = new FactorYio();
@@ -30,11 +37,13 @@ public class IgeItem implements ReusableYio{
         text.setFont(incomeGraphElement.getFont());
         borderFactor = new FactorYio();
         borderPosition = new RectangleYio();
+        viewPosition = new RectangleYio();
     }
 
 
     @Override
     public void reset() {
+        targetPosition.reset();
         viewPosition.reset();
         delta.reset();
         fraction = -1;
@@ -44,6 +53,7 @@ public class IgeItem implements ReusableYio{
         maxHeight = 0;
         borderFactor.reset();
         borderPosition.reset();
+        scouted = true;
 
         prepareFactor.appear(1, 2);
     }
@@ -52,10 +62,24 @@ public class IgeItem implements ReusableYio{
     void move() {
         movePrepareFactor();
         appearFactor.move();
+        updateTargetPosition();
         updateViewPosition();
         moveText();
         moveBorder();
         updateBorderPosition();
+    }
+
+
+    private void updateViewPosition() {
+        if (appearFactor.get() < 1) {
+            viewPosition.setBy(targetPosition);
+            return;
+        }
+
+        viewPosition.x = targetPosition.x;
+        viewPosition.y = targetPosition.y;
+        viewPosition.width = targetPosition.width;
+        viewPosition.height += 0.2f * (targetPosition.height - viewPosition.height);
     }
 
 
@@ -70,6 +94,27 @@ public class IgeItem implements ReusableYio{
     }
 
 
+    public void updateScoutedState() {
+        if (!GameRules.fogOfWarEnabled) {
+            scouted = true;
+            return;
+        }
+
+        scouted = false;
+        MenuControllerYio menuControllerYio = incomeGraphElement.menuControllerYio;
+        GameController gameController = menuControllerYio.yioGdxGame.gameController;
+        FieldManager fieldManager = gameController.fieldManager;
+        for (Province province : fieldManager.provinces) {
+            if (province.getFraction() != fraction) continue;
+            for (Hex hex : province.hexList) {
+                if (fieldManager.fogOfWarManager.isHexCoveredByFog(hex)) continue;
+                scouted = true;
+                return;
+            }
+        }
+    }
+
+
     private void moveBorder() {
         borderFactor.move();
         if (borderFactor.get() > 0) return;
@@ -80,7 +125,7 @@ public class IgeItem implements ReusableYio{
 
 
     private void moveText() {
-        text.centerHorizontal(viewPosition);
+        text.centerHorizontal(targetPosition);
         text.position.y = (float) (incomeGraphElement.viewPosition.y + incomeGraphElement.getLowerGap() / 2 + text.height / 2);
         text.updateBounds();
     }
@@ -96,10 +141,10 @@ public class IgeItem implements ReusableYio{
     }
 
 
-    private void updateViewPosition() {
-        viewPosition.x = incomeGraphElement.columnsArea.x + delta.x;
-        viewPosition.y = incomeGraphElement.columnsArea.y + delta.y;
-        viewPosition.height = Math.min(targetHeight, appearFactor.get() * maxHeight);
+    private void updateTargetPosition() {
+        targetPosition.x = incomeGraphElement.columnsArea.x + delta.x;
+        targetPosition.y = incomeGraphElement.columnsArea.y + delta.y;
+        targetPosition.height = Math.min(targetHeight, appearFactor.get() * maxHeight);
     }
 
 

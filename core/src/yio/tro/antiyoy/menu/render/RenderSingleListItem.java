@@ -25,4 +25,5 @@ public class RenderSingleListItem extends AbstractRenderCustomListItem{
         renderTextOptimized(slItem.title, alpha);
         renderDefaultSelection(slItem);
     }
+
 }

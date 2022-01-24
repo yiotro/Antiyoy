@@ -10,6 +10,8 @@ import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.keyboard.AbstractKbReaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.RepeatYio;
+import yio.tro.antiyoy.stuff.object_pool.ObjectPoolYio;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -34,6 +36,9 @@ public class SelectionManager {
     Hex focusedHex;
     boolean areaSelectionMode;
     int asFilterFraction; // area selection
+    public ArrayList<TextHintItem> hintItems;
+    ObjectPoolYio<TextHintItem> poolHintItems;
+    RepeatYio<SelectionManager> repeatRemoveInactiveHintItems;
 
 
     public SelectionManager(GameController gameController) {
@@ -48,15 +53,68 @@ public class SelectionManager {
         readyToRenameCity = false;
         areaSelectionMode = false;
         asFilterFraction = -1;
+        hintItems = new ArrayList<>();
+        initPools();
+        initRepeats();
+    }
+
+
+    private void initRepeats() {
+        repeatRemoveInactiveHintItems = new RepeatYio<SelectionManager>(this, 60) {
+            @Override
+            public void performAction() {
+                parent.removeInactiveHintItems();
+            }
+        };
+    }
+
+
+    private void initPools() {
+        poolHintItems = new ObjectPoolYio<TextHintItem>(hintItems) {
+            @Override
+            public TextHintItem makeNewObject() {
+                return new TextHintItem(gameController);
+            }
+        };
+    }
+
+
+    public void defaultValues() {
+        setSelectedUnit(null);
+        poolHintItems.clearExternalList();
     }
 
 
     void moveSelections() {
+        moveHintItems();
         for (Hex hex : gameController.fieldManager.selectedHexes) hex.move();
         if (selectedUnit != null && selUnitFactor.hasToMove()) {
             selUnitFactor.move();
         }
         moveRenameCity();
+    }
+
+
+    private void moveHintItems() {
+        repeatRemoveInactiveHintItems.move();
+        for (TextHintItem hintItem : hintItems) {
+            hintItem.move();
+        }
+    }
+
+
+    public void showHexHint(Hex hex, String string) {
+        TextHintItem freshObject = poolHintItems.getFreshObject();
+        freshObject.set(hex, string);
+    }
+
+
+    void removeInactiveHintItems() {
+        for (int i = hintItems.size() - 1; i >= 0; i--) {
+            TextHintItem textHintItem = hintItems.get(i);
+            if (textHintItem.isActive()) continue;
+            poolHintItems.removeFromExternalList(textHintItem);
+        }
     }
 
 
@@ -204,7 +262,9 @@ public class SelectionManager {
         FieldManager fieldManager = gameController.fieldManager;
         for (int i = 0; i < fieldManager.fWidth; i++) {
             for (int j = 0; j < fieldManager.fHeight; j++) {
-                fieldManager.field[i][j].selected = false;
+                Hex hex = fieldManager.field[i][j];
+                if (hex == null) continue;
+                hex.selected = false;
             }
         }
         fieldManager.selectedHexes.clear();
@@ -315,7 +375,13 @@ public class SelectionManager {
             moveZoneManager.removeHexFromMoveZoneManually(focusedHex);
         } else {
             moveZoneManager.addHexToMoveZoneManually(focusedHex);
+            showHexPrice(focusedHex);
         }
+    }
+
+
+    private void showHexPrice(Hex hex) {
+        showHexHint(hex, "$" + gameController.fieldManager.diplomacyManager.getHexPrice(hex));
     }
 
 
@@ -325,9 +391,8 @@ public class SelectionManager {
 
         if (asFilterFraction == -1) return true;
 
-        if (hex.fraction != asFilterFraction && hex.fraction != gameController.turn) return false;
+        if (hex.fraction != asFilterFraction) return false;
         if (gameController.fieldManager.getProvinceByHex(hex) == null) return false;
-        if (getMoveZone().size() > 0 && hex.fraction != getMoveZone().get(0).fraction) return false;
 
         return true;
     }
@@ -370,6 +435,7 @@ public class SelectionManager {
         if (!focusedHex.containsUnit()) return true;
         if (focusedHex.unit.moveFactor.get() != 1) return true;
         if (!focusedHex.unit.isReadyToMove()) return true;
+        if (focusedHex.fraction != gameController.turn) return true;
 
         SoundManagerYio.playSound(SoundManagerYio.soundSelectUnit);
         applyUnitSelection(focusedHex.unit);
@@ -417,16 +483,17 @@ public class SelectionManager {
         SoundManagerYio.playSound(sound);
         selectedUnit = null;
 
-        checkToApplyAutomaticTransitionToNextUnit();
+        checkToApplyAutomaticTransitionToNextUnit(unit);
     }
 
 
-    private void checkToApplyAutomaticTransitionToNextUnit() {
+    private void checkToApplyAutomaticTransitionToNextUnit(Unit previousUnit) {
         if (!SettingsManager.automaticTransition) return;
+        if (GameRules.tutorialMode) return;
 
         AutomaticTransitionWorker automaticTransitionWorker;
         automaticTransitionWorker = gameController.fieldManager.automaticTransitionWorker;
-        Unit nextUnit = automaticTransitionWorker.findNextUnit(gameController.turn);
+        Unit nextUnit = automaticTransitionWorker.findNextUnit(previousUnit, gameController.turn);
 
         automaticTransitionWorker.applyUnitSelection(nextUnit);
     }
@@ -514,7 +581,9 @@ public class SelectionManager {
         if (!focusedHex.isInMoveZone()) return false;
         if (gameController.isCurrentTurn(focusedHex.fraction)) return false;
         if (!isTipTypeUnit()) return false;
-        if (!gameController.fieldManager.selectedProvince.canBuildUnit(tipType)) return false;
+        Province selectedProvince = gameController.fieldManager.selectedProvince;
+        if (selectedProvince == null) return false;
+        if (!selectedProvince.canBuildUnit(tipType)) return false;
 
         return true;
     }
@@ -542,7 +611,9 @@ public class SelectionManager {
             case SelectionTipType.UNIT_4:
                 return (GameRules.PRICE_UNIT * tipType);
             case SelectionTipType.FARM:
-                return gameController.fieldManager.selectedProvince.getCurrentFarmPrice();
+                Province selectedProvince = gameController.fieldManager.selectedProvince;
+                if (selectedProvince == null) return 9999;
+                return selectedProvince.getCurrentFarmPrice();
             case SelectionTipType.STRONG_TOWER:
                 return GameRules.PRICE_STRONG_TOWER;
             case SelectionTipType.TREE:

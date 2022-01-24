@@ -1,7 +1,7 @@
 package yio.tro.antiyoy.gameplay.touch_mode;
 
 import yio.tro.antiyoy.gameplay.GameController;
-import yio.tro.antiyoy.gameplay.editor.LevelEditor;
+import yio.tro.antiyoy.gameplay.editor.LevelEditorManager;
 
 public class TmEditor extends TouchMode{
 
@@ -52,8 +52,8 @@ public class TmEditor extends TouchMode{
     }
 
 
-    private LevelEditor getLevelEditor() {
-        return gameController.levelEditor;
+    private LevelEditorManager getLevelEditor() {
+        return gameController.levelEditorManager;
     }
 
 

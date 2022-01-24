@@ -40,10 +40,17 @@ public class RbStartSkirmishGame extends Reaction {
         instance.fogOfWar = Scenes.sceneMoreSkirmishOptions.chkFogOfWar.isChecked();
         instance.diplomacy = Scenes.sceneMoreSkirmishOptions.chkDiplomacy.isChecked();
         instance.genProvinces = getGenProvinces();
+        instance.treesPercentageIndex = getTreesPercentageIndex();
 
         LoadingManager.getInstance().startGame(instance);
 
         getYioGdxGame(buttonYio).setAnimToStartButtonSpecial();
+    }
+
+
+    private int getTreesPercentageIndex() {
+        Preferences prefs = Gdx.app.getPreferences("skirmish");
+        return prefs.getInteger("trees", 2);
     }
 
 

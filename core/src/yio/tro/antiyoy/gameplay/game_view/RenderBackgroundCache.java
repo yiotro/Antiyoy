@@ -142,6 +142,7 @@ public class RenderBackgroundCache extends GameRender {
             if (!cacheFrame.isInCollisionWith(animBounds)) continue;
 
             FrameBuffer frameBuffer = item.frameBuffer;
+            if (frameBuffer == null) continue;
             frameBuffer.begin();
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -159,16 +160,7 @@ public class RenderBackgroundCache extends GameRender {
         Texture texture = frameBuffer.getColorBufferTexture();
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
-        // old variant
         item.textureRegion = new TextureRegion(texture, (int) GraphicsYio.width, (int) GraphicsYio.height);
-
-        // new variant, may cause bugs
-//        if (item.textureRegion == null) {
-//            item.textureRegion = new TextureRegion(texture, (int) GraphicsYio.width, (int) GraphicsYio.height);
-//        } else {
-//            item.textureRegion.setTexture(texture);
-//        }
-
         item.textureRegion.flip(false, true);
     }
 

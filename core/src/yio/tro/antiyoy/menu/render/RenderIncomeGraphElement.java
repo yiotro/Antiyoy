@@ -3,11 +3,11 @@ package yio.tro.antiyoy.menu.render;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import yio.tro.antiyoy.gameplay.ColorsManager;
 import yio.tro.antiyoy.gameplay.skins.SkinManager;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.income_graph.IgeItem;
 import yio.tro.antiyoy.menu.income_graph.IncomeGraphElement;
-import yio.tro.antiyoy.stuff.Fonts;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
 public class RenderIncomeGraphElement extends MenuRender{
@@ -28,12 +28,14 @@ public class RenderIncomeGraphElement extends MenuRender{
     private TextureRegion pixelColor4;
     private TextureRegion pixelColor5;
     private TextureRegion pixelColor6;
+    private TextureRegion grayPixel;
 
 
     @Override
     public void loadTextures() {
         backgroundTexture = GraphicsYio.loadTextureRegion("diplomacy/background.png", false);
         borderTexture = GraphicsYio.loadTextureRegion("menu/separator.png", true);
+        grayPixel = GraphicsYio.loadTextureRegion("pixels/gray_pixel.png", false);
         loadSkinDependentTextures();
     }
 
@@ -110,13 +112,20 @@ public class RenderIncomeGraphElement extends MenuRender{
 
 
     private void renderSingleItem(IgeItem item) {
-        int colorByFraction = getGameView().gameController.colorsManager.getColorByFraction(item.fraction);
         GraphicsYio.drawByRectangle(
                 batch,
-                getPixelByColor(colorByFraction),
+                getTextureForItem(item),
                 item.viewPosition
         );
         GraphicsYio.renderTextOptimized(batch, getBlackPixel(), item.text, alpha);
+    }
+
+
+    public TextureRegion getTextureForItem(IgeItem item) {
+        if (!item.scouted) return grayPixel;
+        ColorsManager colorsManager = getGameView().gameController.colorsManager;
+        int colorByFraction = colorsManager.getColorByFraction(item.fraction);
+        return getPixelByColor(colorByFraction);
     }
 
 

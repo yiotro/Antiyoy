@@ -3,12 +3,14 @@ package yio.tro.antiyoy.gameplay.diplomacy;
 import yio.tro.antiyoy.KeyboardManager;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.*;
+import yio.tro.antiyoy.gameplay.diplomacy.exchange.ExchangePerformer;
+import yio.tro.antiyoy.gameplay.diplomacy.exchange.ExchangeType;
 import yio.tro.antiyoy.gameplay.replays.ReplayManager;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.SingleMessages;
 import yio.tro.antiyoy.menu.diplomacy_element.DipActionType;
 import yio.tro.antiyoy.menu.diplomacy_element.DiplomacyElement;
-import yio.tro.antiyoy.menu.diplomatic_dialogs.PrepareForAttackPropositionDialog;
+import yio.tro.antiyoy.menu.diplomatic_exchange.ExchangeUiElement;
 import yio.tro.antiyoy.menu.keyboard.AbstractKbReaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.Yio;
@@ -20,7 +22,7 @@ import java.util.Map;
 
 public class DiplomacyManager {
 
-    FieldManager fieldManager;
+    public FieldManager fieldManager;
     public ArrayList<DiplomaticEntity> entities;
     ObjectPoolYio<DiplomaticEntity> poolEntities;
     public ArrayList<DiplomaticContract> contracts;
@@ -31,6 +33,7 @@ public class DiplomacyManager {
     HashMap<Hex, Integer> tempMap;
     private ArrayList<Hex> tempHexList;
     public DiplomaticAI diplomaticAI;
+    public ExchangePerformer exchangePerformer;
 
 
     public DiplomacyManager(FieldManager fieldManager) {
@@ -43,6 +46,7 @@ public class DiplomacyManager {
         tempMap = new HashMap<>();
         tempHexList = new ArrayList<>();
         diplomaticAI = new DiplomaticAI(this);
+        exchangePerformer = new ExchangePerformer(this);
 
         initPools();
     }
@@ -81,14 +85,18 @@ public class DiplomacyManager {
         log.clear();
         updateAllAliveStatuses();
 
-        DiplomacyElement diplomacyElement = Scenes.sceneDiplomacy.diplomacyElement;
-        if (diplomacyElement != null) {
-            diplomacyElement.updateAll();
-        }
+        updateDiplomacyElement();
     }
 
 
-    private void clearCooldowns() {
+    public void updateDiplomacyElement() {
+        DiplomacyElement diplomacyElement = Scenes.sceneDiplomacy.diplomacyElement;
+        if (diplomacyElement == null) return;
+        diplomacyElement.updateAll();
+    }
+
+
+    void clearCooldowns() {
         for (DiplomaticCooldown cooldown : cooldowns) {
             poolCooldowns.add(cooldown);
         }
@@ -97,12 +105,19 @@ public class DiplomacyManager {
     }
 
 
-    private void clearContracts() {
+    void clearContracts() {
         for (DiplomaticContract contract : contracts) {
-            poolContracts.add(contract);
+            poolContracts.addWithCheck(contract);
         }
 
         contracts.clear();
+    }
+
+
+    public void resetDebts() {
+        for (DiplomaticEntity entity : entities) {
+            entity.resetDebts();
+        }
     }
 
 
@@ -174,14 +189,21 @@ public class DiplomacyManager {
             entities.add(next);
         }
 
-        initEntityRelations();
+        onEntitiesUpdated();
     }
 
 
-    private void initEntityRelations() {
+    private void onEntitiesUpdated() {
         for (DiplomaticEntity entity : entities) {
             entity.initRelations();
+            entity.initDebts();
         }
+    }
+
+
+    public void changeDebt(DiplomaticEntity source, DiplomaticEntity target, int delta) {
+        source.getDebt(target).value += delta;
+        target.getDebt(source).value -= delta;
     }
 
 
@@ -259,15 +281,25 @@ public class DiplomacyManager {
                 Scenes.sceneTransferMoneyDialog.dialog.setEntities(mainEntity, selectedEntity);
                 break;
             case buy_hexes:
-                Scenes.sceneDiplomacy.hide();
-                enableAreaSelectionMode(selectedEntity.fraction);
-                doAreaSelectRandomHex(); // to show player
+                showExchangeElement(
+                        mainEntity, selectedEntity,
+                        ExchangeType.lands, ExchangeType.money
+                );
                 break;
             case mail:
                 applySendCustomLetter(mainEntity, selectedEntity);
                 break;
             case attack:
-                prepareToSendAttackProposition(mainEntity, selectedEntity);
+                showExchangeElement(
+                        mainEntity, selectedEntity,
+                        ExchangeType.war_declaration, ExchangeType.money
+                );
+                break;
+            case exchange:
+                showExchangeElement(
+                        mainEntity, selectedEntity,
+                        ExchangeType.nothing, ExchangeType.nothing
+                );
                 break;
         }
     }
@@ -280,7 +312,7 @@ public class DiplomacyManager {
     }
 
 
-    private void applySendCustomLetter(DiplomaticEntity mainEntity, DiplomaticEntity selectedEntity) {
+    private void applySendCustomLetter(final DiplomaticEntity mainEntity, final DiplomaticEntity selectedEntity) {
         Scenes.sceneDiplomacy.hide();
         KeyboardManager.getInstance().apply(new AbstractKbReaction() {
             @Override
@@ -297,6 +329,7 @@ public class DiplomacyManager {
     public void enableAreaSelectionMode(int filterFraction) {
         GameController gameController = fieldManager.gameController;
         Province province = gameController.fieldManager.findProvince(gameController.turn);
+        if (province == null) return;
         Hex capital = province.getCapital();
         gameController.selectionManager.setAreaSelectionMode(true);
         gameController.selectionManager.setAsFilterFraction(filterFraction);
@@ -317,6 +350,7 @@ public class DiplomacyManager {
         }
 
         if (hex == null) return;
+        if (fieldManager.fogOfWarManager.isHexCoveredByFog(hex)) return;
 
         MoveZoneManager moveZoneManager = fieldManager.moveZoneManager;
         moveZoneManager.addHexToMoveZoneManually(hex);
@@ -379,35 +413,68 @@ public class DiplomacyManager {
         int price = 0;
 
         for (Hex hex : hexList) {
-            if (hex.containsTower()) {
-                price += 40;
-            }
-
-            if (hex.objectInside == Obj.FARM) {
-                price += 75;
-            }
-
-            if (hex.objectInside == Obj.TOWN) {
-                price += 500;
-            }
-
-            if (hex.containsTree()) {
-                price -= 10;
-            }
-
-            if (hex.containsUnit()) {
-                price += 15 * hex.unit.strength;
-            }
-
-            price += 25;
+            if (!isHexNearList(hex, hexList)) continue;
+            price += getHexPrice(hex);
         }
 
         return price;
     }
 
 
+    public int getHexPrice(Hex hex) {
+        if (hex.hasUnit()) {
+            return 25 + 15 * hex.unit.strength;
+        }
+
+        switch (hex.objectInside) {
+            default:
+            case 0:
+            case Obj.GRAVE:
+                return 25;
+            case Obj.PINE:
+            case Obj.PALM:
+                return 15;
+            case Obj.TOWN:
+                return getCapitalPrice(hex);
+            case Obj.TOWER:
+                return 50;
+            case Obj.FARM:
+                return 100;
+            case Obj.STRONG_TOWER:
+                return 75;
+        }
+    }
+
+
+    private int getCapitalPrice(Hex hex) {
+        Province provinceByHex = fieldManager.getProvinceByHex(hex);
+        return 10 * provinceByHex.hexList.size();
+    }
+
+
+    private boolean isHexNearList(Hex hex, ArrayList<Hex> list) {
+        if (list.size() > 15) return true;
+        if (list.size() == 1) return list.get(0) == hex;
+        for (int dir = 0; dir < 6; dir++) {
+            Hex adjacentHex = hex.getAdjacentHex(dir);
+            if (!isWorkable(adjacentHex)) continue;
+            if (!list.contains(adjacentHex)) continue;
+            return true;
+        }
+        return false;
+    }
+
+
+    boolean isWorkable(Hex hex) {
+        if (hex == null) return false;
+        if (hex.isNullHex()) return false;
+        if (!hex.active) return false;
+        return true;
+    }
+
+
     public void applyHexPurchase(DiplomaticMessage message) {
-        ArrayList<Hex> hexList = convertStringToPurchaseList(message.arg1);
+        ArrayList<Hex> hexList = convertStringToHexList(message.arg1);
         int price = Integer.valueOf(message.arg2);
 
         switch (message.type) {
@@ -427,12 +494,16 @@ public class DiplomacyManager {
             return;
         }
 
-        fieldManager.gameController.takeSnapshot();
-        updateTempMap(hexList);
         transferMoney(buyer, seller, price);
+        transferLands(seller, buyer, hexList);
+    }
+
+
+    public void transferLands(DiplomaticEntity src, DiplomaticEntity dst, ArrayList<Hex> hexList) {
+        updateTempMap(hexList);
 
         for (Hex hex : hexList) {
-            if (!hex.sameFraction(seller.fraction)) continue;
+            if (!hex.sameFraction(src.fraction)) continue;
 
             int objectInside = tempMap.get(hex);
             int unitStrength = -1;
@@ -440,12 +511,16 @@ public class DiplomacyManager {
                 unitStrength = hex.unit.strength;
             }
 
-            fieldManager.setHexFraction(hex, buyer.fraction);
+            fieldManager.setHexFraction(hex, dst.fraction);
             ReplayManager replayManager = fieldManager.gameController.replayManager;
             replayManager.onHexChangedFractionWithoutObviousReason(hex);
 
             if (unitStrength > 0) {
-                fieldManager.addUnit(hex, unitStrength);
+                Unit unit = fieldManager.addUnit(hex, unitStrength);
+                if (unit != null) {
+                    unit.setReadyToMove(false);
+                    unit.stopJumping();
+                }
                 replayManager.onUnitSpawned(hex, unitStrength);
                 continue;
             }
@@ -476,7 +551,7 @@ public class DiplomacyManager {
             }
         }
 
-        fieldManager.tryToDetectAddiotionalProvinces();
+        fieldManager.tryToDetectAdditionalProvinces();
         stopLoneUnitsAroundHexList(hexList);
     }
 
@@ -536,7 +611,7 @@ public class DiplomacyManager {
     }
 
 
-    public ArrayList<Hex> convertStringToPurchaseList(String source) {
+    public ArrayList<Hex> convertStringToHexList(String source) {
         tempHexList.clear();
 
         for (String token : source.split("@")) {
@@ -577,6 +652,14 @@ public class DiplomacyManager {
 
     public void onUserRequestedBlackMark(DiplomaticEntity selectedEntity) {
         makeBlackMarked(getMainEntity(), selectedEntity);
+    }
+
+
+    public void removeBlackMark(DiplomaticEntity one, DiplomaticEntity two) {
+        DiplomaticContract contract = getContract(DiplomaticContract.TYPE_BLACK_MARK, one, two);
+        removeContract(contract);
+        addContract(DiplomaticContract.TYPE_FORBID_BLACK_MARK, one, two);
+        onRelationsChanged();
     }
 
 
@@ -655,7 +738,9 @@ public class DiplomacyManager {
         if (contract.type == DiplomaticContract.TYPE_FRIENDSHIP) {
             int relation = contract.one.getRelation(contract.two);
 
-            log.addMessage(DipMessageType.friendship_ended, contract.one, contract.two);
+            DiplomaticMessage diplomaticMessage = log.addMessage(DipMessageType.friendship_ended, contract.one, contract.two);
+            int dotations = calculateDotationsForFriendship(contract.two, contract.one);
+            diplomaticMessage.setArg1("" + dotations);
 
             if (relation == DiplomaticRelation.FRIEND) {
                 makeNeutral(contract.one, contract.two);
@@ -684,9 +769,7 @@ public class DiplomacyManager {
     public void onTurnStarted() {
         if (!GameRules.diplomacyEnabled) return;
 
-        log.checkToClearAbuseMessages();
-        log.checkToClearMutuallyExclusiveMessages();
-        log.checkToRemoveInvalidHexSaleMessages();
+        log.removeInvalidMessages();
 
         DiplomacyElement diplomacyElement = Scenes.sceneDiplomacy.diplomacyElement;
         if (diplomacyElement != null) {
@@ -699,7 +782,53 @@ public class DiplomacyManager {
             onAiTurnStarted();
         }
 
+        payDebts();
         moveCooldowns();
+    }
+
+
+    private void payDebts() {
+        DiplomaticEntity mainEntity = getMainEntity();
+        int debtPaySum = getMainEntity().getDebtPaySum();
+        if (debtPaySum == 0) return;
+
+        if (mainEntity.getStateFullMoney() >= debtPaySum) {
+            for (Debt debt : mainEntity.debts) {
+                if (!debt.isCurrentlyActive()) continue;
+                payDebt(debt.source, debt.target, debt.value);
+            }
+            return;
+        }
+
+        payDebtsWhenMainEntityDoesntHaveEnoughMoney();
+    }
+
+
+    public void payDebt(DiplomaticEntity source, DiplomaticEntity target, int payValue) {
+        transferMoney(source, target, payValue);
+        changeDebt(source, target, -payValue);
+    }
+
+
+    private void payDebtsWhenMainEntityDoesntHaveEnoughMoney() {
+        DiplomaticEntity mainEntity = getMainEntity();
+        while (mainEntity.getStateFullMoney() > 0) {
+            Debt biggestDebtToPay = mainEntity.getBiggestDebtToPay();
+            if (biggestDebtToPay == null) break;
+            if (biggestDebtToPay.value == 0) break;
+            int payValue = Math.min(mainEntity.getStateFullMoney(), biggestDebtToPay.value);
+            payDebt(mainEntity, biggestDebtToPay.target, payValue);
+        }
+    }
+
+
+    public boolean isBlackMarkAllowed(DiplomaticEntity entity1, DiplomaticEntity entity2) {
+        if (entity1.isBlackMarkedWith(entity2)) return false;
+        for (DiplomaticContract contract : contracts) {
+            if (!contract.equals(entity1, entity2, DiplomaticContract.TYPE_FORBID_BLACK_MARK)) continue;
+            return false;
+        }
+        return true;
     }
 
 
@@ -770,8 +899,6 @@ public class DiplomacyManager {
 
         DiplomaticEntity entity = getEntity(fieldManager.gameController.turn);
         entity.updateAliveState();
-
-        diplomaticAI.checkToChangeRelations();
 
         log.removeMessagesByRecipient(entity, true);
 
@@ -875,8 +1002,8 @@ public class DiplomacyManager {
 
 
     public int calculateDotationsForFriendship(DiplomaticEntity initiator, DiplomaticEntity entity) {
-        int money1 = entity.getStateBalance() * Math.max(1, entity.getNumberOfFriends());
-        int money2 = initiator.getStateBalance() * Math.max(1, initiator.getNumberOfFriends());
+        int money1 = entity.getStateProfit() * Math.max(1, entity.getNumberOfFriends());
+        int money2 = initiator.getStateProfit() * Math.max(1, initiator.getNumberOfFriends());
         int max = Math.max(money1, money2);
         int cutValue = (int) (0.2 * ((float) max));
 
@@ -901,6 +1028,11 @@ public class DiplomacyManager {
 
 
     public void transferMoney(DiplomaticEntity sender, DiplomaticEntity recipient, int value) {
+        transferMoney(sender, recipient, value, false);
+    }
+
+
+    public void transferMoney(DiplomaticEntity sender, DiplomaticEntity recipient, int value, boolean gift) {
         int senderMoney = sender.getStateFullMoney();
         int recipientMoney = recipient.getStateFullMoney();
 
@@ -908,9 +1040,11 @@ public class DiplomacyManager {
             value = senderMoney;
         }
 
-        DiplomaticMessage diplomaticMessage = log.addMessage(DipMessageType.gift, sender, recipient);
-        if (diplomaticMessage == null) return;
-        diplomaticMessage.setArg1("" + value);
+        if (gift) {
+            DiplomaticMessage diplomaticMessage = log.addMessage(DipMessageType.gift, sender, recipient);
+            if (diplomaticMessage == null) return;
+            diplomaticMessage.setArg1("" + value);
+        }
 
         float f;
         for (Province province : fieldManager.provinces) {
@@ -952,22 +1086,40 @@ public class DiplomacyManager {
         int relation = initiator.getRelation(two);
 
         if (relation == DiplomaticRelation.ENEMY) {
-            if (canWarBeStopped(initiator, two)) {
-                Scenes.sceneStopWarDialog.create();
-                Scenes.sceneStopWarDialog.dialog.setEntities(initiator, two);
-            } else {
-                Scenes.sceneDipMessage.showMessage(two.capitalName, "refuse_stop_war");
-            }
+            showExchangeElement(
+                    initiator, two,
+                    ExchangeType.stop_war, ExchangeType.dotations
+            );
         }
 
         if (relation == DiplomaticRelation.NEUTRAL) {
-            if (isFriendshipPossible(initiator, two)) {
-                Scenes.sceneFriendshipDialog.create();
-                Scenes.sceneFriendshipDialog.dialog.setValues(initiator, two, null);
-            } else {
-                Scenes.sceneDipMessage.showMessage(two.capitalName, "refuse_friendship");
-            }
+            showExchangeElement(
+                    initiator, two,
+                    ExchangeType.friendship, ExchangeType.dotations
+            );
+
+            int friendshipPrice = diplomaticAI.getFriendshipPrice(initiator);
+            Scenes.sceneDiplomaticExchange.exchangeUiElement.applyOptimalDotaions(friendshipPrice);
         }
+    }
+
+
+    public ExchangeUiElement showExchangeElement(DiplomaticEntity sender, DiplomaticEntity receiver, ExchangeType topType, ExchangeType bottomType) {
+        Scenes.sceneDiplomacy.hide();
+        Scenes.sceneDiplomaticExchange.create();
+        Scenes.sceneDiplomaticExchange.setParentScene(Scenes.sceneDiplomacy);
+        ExchangeUiElement exchangeUiElement = Scenes.sceneDiplomaticExchange.exchangeUiElement;
+        exchangeUiElement.resetData();
+        exchangeUiElement.setMainEntity(sender);
+        exchangeUiElement.setTargetEntity(receiver);
+        exchangeUiElement.setReadMode(false);
+        exchangeUiElement.topView.setExchangeType(topType);
+        exchangeUiElement.bottomView.setExchangeType(bottomType);
+        exchangeUiElement.updateSize();
+
+        Scenes.sceneDiplomaticExchange.checkToShowQuickTutorial();
+
+        return exchangeUiElement;
     }
 
 
@@ -992,30 +1144,43 @@ public class DiplomacyManager {
 
         if (relation == DiplomaticRelation.FRIEND) {
             log.addMessage(DipMessageType.friendship_canceled, initiator, two);
-
+            fieldManager.gameController.matchStatistics.onFriendshipBroken();
             makeNeutral(two, initiator);
         }
 
         if (relation == DiplomaticRelation.NEUTRAL) {
             log.addMessage(DipMessageType.war_declaration, initiator, two);
-
             makeEnemies(initiator, two);
         }
     }
 
 
-    private void onWarStarted(DiplomaticEntity initiator, DiplomaticEntity one) {
+    public void onWarStarted(DiplomaticEntity initiator, DiplomaticEntity one) {
         punishAggressor(initiator, one);
         addCooldown(DiplomaticCooldown.TYPE_STOP_WAR, 10, initiator, one);
+    }
+
+
+    public void resetDebtsBetweenEntities(DiplomaticEntity one, DiplomaticEntity two) {
+        Debt debt = one.getDebt(two);
+        if (debt == null) return;
+        if (debt.value == 0) return;
+        one.getDebt(two).value = 0;
+        two.getDebt(one).value = 0;
+
+        DiplomacyElement diplomacyElement = Scenes.sceneDiplomacy.diplomacyElement;
+        if (diplomacyElement != null) {
+            diplomacyElement.onRelationsChanged();
+        }
     }
 
 
     private void punishAggressor(DiplomaticEntity initiator, DiplomaticEntity one) {
         for (Map.Entry<DiplomaticEntity, Integer> entry : initiator.relations.entrySet()) {
             DiplomaticEntity entity = entry.getKey();
-            if (one.isFriendTo(entity)) {
-                requestWorseRelations(initiator, entity);
-            }
+            if (entity == initiator) continue;
+            if (!one.isFriendTo(entity)) continue;
+            requestWorseRelations(initiator, entity);
         }
     }
 
@@ -1043,7 +1208,7 @@ public class DiplomacyManager {
     }
 
 
-    DiplomaticContract addContract(int contractType, DiplomaticEntity initiator, DiplomaticEntity entity) {
+    public DiplomaticContract addContract(int contractType, DiplomaticEntity initiator, DiplomaticEntity entity) {
         DiplomaticContract next = poolContracts.getNext();
 
         next.setOne(entity);
@@ -1062,7 +1227,7 @@ public class DiplomacyManager {
             default:
                 return 0;
             case DiplomaticContract.TYPE_FRIENDSHIP:
-                return calculateDotationsForFriendship(initiator, two);
+                return 0; // friendship was separated from dotations
             case DiplomaticContract.TYPE_PIECE:
                 return calculateReparations(initiator, two);
             case DiplomaticContract.TYPE_BLACK_MARK:
@@ -1074,7 +1239,7 @@ public class DiplomacyManager {
 
 
     public int calculateTraitorFine(DiplomaticEntity initiator) {
-        int stateBalance = initiator.getStateBalance();
+        int stateBalance = initiator.getStateProfit();
 
         return Math.min(-stateBalance / 3, -5);
     }
@@ -1089,7 +1254,7 @@ public class DiplomacyManager {
 
 
     private void removeContract(DiplomaticContract contract) {
-        poolContracts.add(contract);
+        poolContracts.addWithCheck(contract);
         contracts.remove(contract);
     }
 
@@ -1097,10 +1262,10 @@ public class DiplomacyManager {
     public int calculateReparations(DiplomaticEntity initiator, DiplomaticEntity two) {
         if (!areKingdomsTouching(initiator, two)) return 0;
 
-        int stateBalance = initiator.getStateBalance();
+        int stateBalance = initiator.getStateProfit();
 
         if (stateBalance < 5) return 0;
-        if (two.getStateBalance() < 10) return 0;
+        if (two.getStateProfit() < 10) return 0;
 
         return -stateBalance / 2;
     }
@@ -1136,12 +1301,14 @@ public class DiplomacyManager {
     }
 
 
-    public void makeFriends(DiplomaticEntity initiator, DiplomaticEntity entity) {
+    public void makeFriends(DiplomaticEntity initiator, DiplomaticEntity entity, int duration) {
         if (!initiator.alive || !entity.alive) return;
         if (initiator.getRelation(entity) == DiplomaticRelation.FRIEND) return;
+        if (GameRules.diplomaticRelationsLocked) return;
 
         // should be before relations change because they will influence dotations
-        addContract(DiplomaticContract.TYPE_FRIENDSHIP, initiator, entity);
+        DiplomaticContract contract = addContract(DiplomaticContract.TYPE_FRIENDSHIP, initiator, entity);
+        contract.setExpireCountDown(duration);
         removeContract(DiplomaticContract.TYPE_PIECE, initiator, entity);
 
         initiator.setRelation(entity, DiplomaticRelation.FRIEND);
@@ -1151,9 +1318,15 @@ public class DiplomacyManager {
     }
 
 
+    public void makeFriends(DiplomaticEntity initiator, DiplomaticEntity entity) {
+        makeFriends(initiator, entity, 12);
+    }
+
+
     public void makeNeutral(DiplomaticEntity one, DiplomaticEntity two) {
         if (!one.alive || !two.alive) return;
         if (one.getRelation(two) == DiplomaticRelation.NEUTRAL) return;
+        if (GameRules.diplomaticRelationsLocked) return;
 
         one.setRelation(two, DiplomaticRelation.NEUTRAL);
         two.setRelation(one, DiplomaticRelation.NEUTRAL);
@@ -1168,15 +1341,27 @@ public class DiplomacyManager {
     public boolean makeEnemies(DiplomaticEntity initiator, DiplomaticEntity entity) {
         if (!initiator.alive || !entity.alive) return false;
         if (initiator.getRelation(entity) == DiplomaticRelation.ENEMY) return false;
+        if (GameRules.diplomaticRelationsLocked) return false;
 
         initiator.setRelation(entity, DiplomaticRelation.ENEMY);
         entity.setRelation(initiator, DiplomaticRelation.ENEMY);
 
         removeContract(DiplomaticContract.TYPE_FRIENDSHIP, initiator, entity);
         removeContract(DiplomaticContract.TYPE_PIECE, initiator, entity);
+        resetDebtsBetweenEntities(initiator, entity);
+        removeDotationsBetweenEntities(initiator, entity);
 
         onRelationsChanged();
         return true;
+    }
+
+
+    void removeDotationsBetweenEntities(DiplomaticEntity one, DiplomaticEntity two) {
+        while (true) {
+            DiplomaticContract contract = getContract(DiplomaticContract.TYPE_DOTATIONS, one, two);
+            if (contract == null) break;
+            removeContract(contract);
+        }
     }
 
 
@@ -1221,6 +1406,48 @@ public class DiplomacyManager {
             if (entity != null && !contract.contains(entity)) continue;
             System.out.println("- " + contract);
         }
+    }
+
+
+    public String encodeDebts() {
+        StringBuilder builder = new StringBuilder();
+        for (DiplomaticEntity entity : entities) {
+            for (Debt debt : entity.debts) {
+                if (debt.value <= 0) continue;
+                builder.append(debt.encode()).append(",");
+            }
+        }
+        return builder.toString();
+    }
+
+
+    public void decodeDebts(String source) {
+        resetDebts();
+
+        if (source == null) return;
+        if (source.length() < 3) return;
+
+        for (String token : source.split(",")) {
+            decodeSingleDebt(token);
+        }
+    }
+
+
+    private void decodeSingleDebt(String token) {
+        if (token.length() < 3) return;
+        String[] split = token.split(" ");
+        if (split.length < 3) return;
+
+        int sFraction = Integer.valueOf(split[0]);
+        int tFraction = Integer.valueOf(split[1]);
+        int value = Integer.valueOf(split[2]);
+
+        DiplomaticEntity source = getEntity(sFraction);
+        if (source == null) return;
+        DiplomaticEntity target = getEntity(tFraction);
+        if (target == null) return;
+
+        changeDebt(source, target, value);
     }
 
 

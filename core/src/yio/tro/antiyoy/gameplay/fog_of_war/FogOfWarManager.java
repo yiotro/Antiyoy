@@ -140,6 +140,11 @@ public class FogOfWarManager {
     }
 
 
+    public boolean isHexCoveredByFog(Hex hex) {
+        return fogMap.containsKey(hex) && fogMap.get(hex).status;
+    }
+
+
     boolean isFriendOfFirstPlayer(Province province) {
         if (!GameRules.diplomacyEnabled) return false;
 

@@ -54,7 +54,6 @@ public class RenderLevelSelector extends MenuRender {
             checkToRenderSelection(selector, pos, i);
         }
 
-
         Masking.end(batch);
         batch.setColor(c.r, c.g, c.b, 1);
     }

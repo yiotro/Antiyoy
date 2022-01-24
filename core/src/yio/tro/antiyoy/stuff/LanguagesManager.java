@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.xml.parsers.*;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import org.w3c.dom.*;
 
 import com.badlogic.gdx.Gdx;
@@ -85,7 +83,6 @@ public class LanguagesManager {
     }
 
 
-    @TargetApi(Build.VERSION_CODES.FROYO)
     public ArrayList<LanguageChooseItem> getChooseListItems() {
         ArrayList<LanguageChooseItem> result = new ArrayList<>();
 
@@ -118,7 +115,6 @@ public class LanguagesManager {
     }
 
 
-    @TargetApi(Build.VERSION_CODES.FROYO)
     public boolean loadLanguage(String languageName) {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

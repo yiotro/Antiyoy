@@ -35,6 +35,7 @@ public class RenderDefenseTips extends GameRender{
         if (defenseTips.size() == 0) return;
 
         Color c = batchMovable.getColor();
+        float a = c.a;
         batchMovable.setColor(c.r, c.g, c.b, f);
         for (Hex defenseTip : defenseTips) {
             PointYio tipPos = defenseTip.getPos();
@@ -46,7 +47,7 @@ public class RenderDefenseTips extends GameRender{
             updateIconCircle(f, tipPos, srcPos);
             GraphicsYio.drawByCircle(batchMovable, gameView.texturesManager.defenseIcon, iconCircle);
         }
-        batchMovable.setColor(c.r, c.g, c.b, c.a);
+        batchMovable.setColor(c.r, c.g, c.b, a);
     }
 
 

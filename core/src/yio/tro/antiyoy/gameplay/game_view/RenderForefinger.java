@@ -42,6 +42,7 @@ public class RenderForefinger extends GameRender{
         batch.begin();
         pos = gameController.forefinger.animPos;
         Color c = batch.getColor();
+        float a = c.a;
         batch.setColor(c.r, c.g, c.b, gameController.forefinger.getAlpha());
 
         GraphicsYio.drawFromCenterRotated(
@@ -53,7 +54,7 @@ public class RenderForefinger extends GameRender{
                 gameController.forefinger.getRotation()
         );
 
-        batch.setColor(c.r, c.g, c.b, c.a);
+        batch.setColor(c.r, c.g, c.b, a);
         batch.end();
     }
 
@@ -73,7 +74,7 @@ public class RenderForefinger extends GameRender{
                 gameController.forefinger.getRotation()
         );
 
-        batchMovable.setColor(c.r, c.g, c.b, c.a);
+        batchMovable.setColor(c.r, c.g, c.b, 1);
         batchMovable.end();
     }
 

@@ -1,35 +1,31 @@
 package yio.tro.antiyoy.menu;
 
-import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.menu.render.MenuRender;
-import yio.tro.antiyoy.stuff.*;
+import yio.tro.antiyoy.stuff.Fonts;
+import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.PointYio;
+import yio.tro.antiyoy.stuff.RenderableTextYio;
 
-public class TextLabelElement extends InterfaceElement{
+public class TextLabelElement extends AbstractRectangularUiElement{
 
-    MenuControllerYio menuControllerYio;
     public RenderableTextYio title;
     PointYio delta;
-    FactorYio appearFactor;
     UiChildrenHolder parent;
 
 
     public TextLabelElement(MenuControllerYio menuControllerYio) {
-        super(-1);
-        this.menuControllerYio = menuControllerYio;
+        super(menuControllerYio);
 
         title = new RenderableTextYio();
         title.setFont(Fonts.smallerMenuFont);
         delta = new PointYio();
-        appearFactor = new FactorYio();
         parent = null;
     }
 
 
     @Override
-    public void move() {
-        appearFactor.move();
+    protected void onMove() {
         updateTitlePosition();
-
     }
 
 
@@ -40,96 +36,84 @@ public class TextLabelElement extends InterfaceElement{
 
 
     private void updateTitlePosition() {
-        title.position.x = (float) (parent.getHookPosition().x + delta.x);
-        title.position.y = (float) (parent.getHookPosition().y + delta.y);
+        if (parent != null) {
+            title.position.x = (float) (parent.getHookPosition().x + delta.x);
+            title.position.y = (float) (parent.getHookPosition().y + delta.y);
+        } else {
+            title.centerHorizontal(viewPosition);
+            title.centerVertical(viewPosition);
+        }
         title.updateBounds();
     }
 
 
     @Override
-    public FactorYio getFactor() {
-        return appearFactor;
+    protected void onDestroy() {
+
     }
 
 
     @Override
-    public void destroy() {
-        appearFactor.destroy(2, 2);
+    protected void onAppear() {
+
     }
 
 
     @Override
-    public void appear() {
-        appearFactor.setValues(0.01, 0);
-        appearFactor.appear(2, 2);
+    protected void onTouchDown() {
+
     }
 
 
     @Override
-    public boolean isVisible() {
-        return appearFactor.get() > 0;
+    protected void onTouchDrag() {
+
+    }
+
+
+    @Override
+    protected void onTouchUp() {
+
+    }
+
+
+    @Override
+    protected void onClick() {
+
+    }
+
+
+    public void alignTitleLeft(double offset) {
+        delta.x = (float) (offset * GraphicsYio.width);
+    }
+
+
+    public void centerTitleHorizontal() {
+        if (parent != null) {
+            delta.x = (float) (parent.getTargetPosition().width / 2 - title.width / 2);
+            return;
+        }
+        delta.x = GraphicsYio.width / 2 - title.width / 2;
+    }
+
+
+    public void alignTitleTop(double offset) {
+        if (parent != null) {
+            delta.y = (float) (parent.getTargetPosition().height - offset * GraphicsYio.height);
+            return;
+        }
+        delta.y = (float) (GraphicsYio.height * (1f - offset));
+    }
+
+
+    public void setParent(UiChildrenHolder parent) {
+        this.parent = parent;
     }
 
 
     @Override
     public boolean checkToPerformAction() {
         return false;
-    }
-
-
-    @Override
-    public boolean isTouchable() {
-        return false;
-    }
-
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-
-    @Override
-    public boolean touchDrag(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-
-    @Override
-    public void setTouchable(boolean touchable) {
-
-    }
-
-
-    @Override
-    public void setPosition(RectangleYio position) {
-
-    }
-
-
-    public void alignLeft(double offset) {
-        delta.x = (float) (offset * GraphicsYio.width);
-    }
-
-
-    public void centerHorizontal() {
-        delta.x = (float) (parent.getTargetPosition().width / 2 - title.width / 2);
-    }
-
-
-    public void alignTop(double offset) {
-        delta.y = (float) (parent.getTargetPosition().height - offset * GraphicsYio.height);
-    }
-
-
-    public void setParent(UiChildrenHolder parent) {
-        this.parent = parent;
     }
 
 

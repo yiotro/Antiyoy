@@ -40,6 +40,8 @@ public class GameRules {
     public static boolean editorColorFixApplied;
     public static int editorSlotNumber;
     public static int genProvinces;
+    public static double treesSpawnChance;
+    public static boolean diplomaticRelationsLocked;
 
 
     public static void defaultValues() {
@@ -56,8 +58,10 @@ public class GameRules {
         editorFog = false;
         editorDiplomacy = false;
         editorColorFixApplied = false;
+        diplomaticRelationsLocked = false;
         editorSlotNumber = -1;
         genProvinces = 0;
+        treesSpawnChance = 0.1;
     }
 
 
@@ -92,5 +96,10 @@ public class GameRules {
 
     public static void setDiplomacyEnabled(boolean diplomacyEnabled) {
         GameRules.diplomacyEnabled = diplomacyEnabled;
+    }
+
+
+    public static void setDiplomaticRelationsLocked(boolean diplomaticRelationsLocked) {
+        GameRules.diplomaticRelationsLocked = diplomaticRelationsLocked;
     }
 }

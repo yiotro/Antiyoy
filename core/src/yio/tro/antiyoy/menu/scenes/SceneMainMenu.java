@@ -1,5 +1,7 @@
 package yio.tro.antiyoy.menu.scenes;
 
+import yio.tro.antiyoy.OneTimeInfo;
+import yio.tro.antiyoy.PlatformType;
 import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.campaign.CampaignLevelFactory;
@@ -63,7 +65,7 @@ public class SceneMainMenu extends AbstractScene{
 
 
     private void createExitButton() {
-        if (YioGdxGame.IOS) {
+        if (YioGdxGame.platformType == PlatformType.ios) {
             createInfoButton();
             return;
         }
@@ -107,7 +109,8 @@ public class SceneMainMenu extends AbstractScene{
     public void checkToCreateResumeButton() {
         if (!SettingsManager.resumeButtonEnabled) return;
 
-        resumeButton = buttonFactory.getButton(generateRectangle(0.2, 0.05, 0.6, 0.055), 5, getString("in_game_menu_resume"));
+        double h = Math.max(0.055, GraphicsYio.convertToHeight(0.14));
+        resumeButton = buttonFactory.getButton(generateRectangle(0.2, 0.05, 0.6, h), 5, getString("in_game_menu_resume"));
         resumeButton.setAnimation(Animation.down);
         resumeButton.setTouchOffset(0.05f * GraphicsYio.width);
         resumeButton.setReaction(loadLastSaveReaction);
@@ -121,8 +124,15 @@ public class SceneMainMenu extends AbstractScene{
             return;
         }
 
-        Scenes.sceneChoodeGameModeMenu.create();
+        Scenes.sceneChooseGameMode.create();
         menuControllerYio.yioGdxGame.setGamePaused(true);
         menuControllerYio.yioGdxGame.setAnimToPlayButtonSpecial();
+        checkForAntiyoyOnlineAttraction();
+    }
+
+
+    private void checkForAntiyoyOnlineAttraction() {
+        if (OneTimeInfo.getInstance().antiyoyOnline) return;
+        Scenes.sceneAoButton.create();
     }
 }

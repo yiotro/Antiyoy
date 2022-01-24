@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.menu.render;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.diplomatic_log.DiplomaticLogPanel;
@@ -83,16 +84,20 @@ public class RenderDiplomaticLogPanel extends MenuRender{
                 panel.titleBackground
         );
 
-        GraphicsYio.setFontAlpha(panel.titleFont, panel.textAlphaFactor.get());
+        BitmapFont titleFont = panel.titleFont;
+        GraphicsYio.setFontAlpha(titleFont, panel.textAlphaFactor.get());
+        Color backupColor = titleFont.getColor();
+        titleFont.setColor(Color.BLACK);
 
-        panel.titleFont.draw(
+        titleFont.draw(
                 batch,
                 panel.label,
                 panel.labelPosition.x,
                 panel.labelPosition.y
         );
 
-        GraphicsYio.setFontAlpha(panel.titleFont, 1);
+        GraphicsYio.setFontAlpha(titleFont, 1);
+        titleFont.setColor(backupColor);
     }
 
 

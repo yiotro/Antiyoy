@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.gameplay;
 
 
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
 import yio.tro.antiyoy.stuff.Yio;
 
 public class MatchStatistics {
@@ -8,6 +9,7 @@ public class MatchStatistics {
     public int turnsMade, unitsDied, unitsProduced, moneySpent;
     public int firstPlayerMoneySpent;
     public int timeCount;
+    public int friendshipsBroken;
 
 
     public MatchStatistics() {
@@ -22,6 +24,7 @@ public class MatchStatistics {
         moneySpent = 0;
         timeCount = 0;
         firstPlayerMoneySpent = 0;
+        friendshipsBroken = 0;
     }
 
 
@@ -32,6 +35,7 @@ public class MatchStatistics {
         moneySpent = source.moneySpent;
         timeCount = source.timeCount;
         firstPlayerMoneySpent = source.firstPlayerMoneySpent;
+        friendshipsBroken = source.friendshipsBroken;
     }
 
 
@@ -59,6 +63,11 @@ public class MatchStatistics {
     }
 
 
+    public void onFriendshipBroken() {
+        friendshipsBroken++;
+    }
+
+
     void onFirstPlayerSpentMoney(int amount) {
         firstPlayerMoneySpent += amount;
     }
@@ -76,6 +85,7 @@ public class MatchStatistics {
         System.out.println("unitsDied: " + unitsDied);
         System.out.println("unitsProduced: " + unitsProduced);
         System.out.println("moneySpent: " + moneySpent);
+        System.out.println("friendshipsBroken: " + friendshipsBroken);
         System.out.println();
     }
 

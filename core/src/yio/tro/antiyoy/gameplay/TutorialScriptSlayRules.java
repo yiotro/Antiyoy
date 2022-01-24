@@ -1,13 +1,16 @@
 package yio.tro.antiyoy.gameplay;
 
 import yio.tro.antiyoy.SettingsManager;
+import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.loading.LoadingType;
+import yio.tro.antiyoy.menu.AbstractRectangularUiElement;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.LanguagesManager;
+import yio.tro.antiyoy.stuff.RectangleYio;
 
 /**
  * Created by yiotro on 12.11.2015.
@@ -74,7 +77,8 @@ public class TutorialScriptSlayRules extends TutorialScript{
             @Override
             public void perform(ButtonYio buttonYio) {
                 Scenes.sceneNotification.hideNotification();
-                Scenes.sceneChoodeGameModeMenu.create();
+                Scenes.sceneChooseGameMode.create();
+                CampaignProgressManager.getInstance().markLevelAsCompleted(0);
                 getYioGdxGame(buttonYio).setGamePaused(true);
                 getYioGdxGame(buttonYio).setAnimToPlayButtonSpecial();
             }
@@ -161,8 +165,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
                 pointToMenu(buttonYio.x2, buttonYio.y2, 0.75 * Math.PI);
                 break;
             case STEP_PRESS_END_TURN:
-                buttonYio = setOnlyButtonToRespond(31, "tut_tap_to_end_turn");
-                pointToMenu(buttonYio.x1, buttonYio.y2, -0.75 * Math.PI);
+                setInterfaceElementToRespond(Scenes.sceneGameOverlay.endTurnButtonElement, "tut_tap_to_end_turn");
                 break;
             case STEP_SELECT_PROVINCE:
                 setOnlyHexToRespond(22, 5);
@@ -195,6 +198,19 @@ public class TutorialScriptSlayRules extends TutorialScript{
 //                menuControllerLighty.showNotification(languagesManager.getString("tut_good_luck"), true);
                 break;
         }
+    }
+
+
+    private void setInterfaceElementToRespond(AbstractRectangularUiElement uiElement, String message) {
+        allButtonsIgnoreTouches();
+        showMessage(message);
+        RectangleYio viewPosition = uiElement.viewPosition;
+        uiElement.setTouchable(true);
+        pointToMenu(
+                viewPosition.x,
+                viewPosition.y + viewPosition.height,
+                -0.75 * Math.PI
+        );
     }
 
 
@@ -297,8 +313,10 @@ public class TutorialScriptSlayRules extends TutorialScript{
                 if (getHex(20, 5).fraction != 0) return true;
                 return false;
             case STEP_PRESS_END_TURN:
-                if (menuControllerYio.getButtonById(31).isCurrentlyTouched()) return true;
-                return false;
+                Hex hex = getHex(19, 8);
+                if (hex == null) return false;
+                Unit unit = hex.unit;
+                return unit != null && unit.isReadyToMove();
             case STEP_SELECT_PROVINCE:
                 if (gameController.selectionManager.isSomethingSelected()) return true;
                 return false;
@@ -334,6 +352,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
         gameController.setIgnoreMarch(false);
         for (int i = 31; i <= 32; i++) {
             ButtonYio buttonYio = menuControllerYio.getButtonById(i);
+            if (buttonYio == null) continue;
             buttonYio.setTouchable(true);
         }
         for (int i = 38; i <= 39; i++) {
@@ -346,12 +365,14 @@ public class TutorialScriptSlayRules extends TutorialScript{
                 gameController.fieldManager.field[i][j].setIgnoreTouch(false);
             }
         }
+        Scenes.sceneGameOverlay.endTurnButtonElement.setTouchable(true);
     }
 
 
     private void allButtonsIgnoreTouches() {
         for (int i = 31; i <= 32; i++) {
             ButtonYio buttonYio = menuControllerYio.getButtonById(i);
+            if (buttonYio == null) continue;
             buttonYio.setTouchable(false);
         }
         for (int i = 38; i <= 39; i++) {
@@ -359,6 +380,7 @@ public class TutorialScriptSlayRules extends TutorialScript{
             if (buttonYio == null) continue;
             buttonYio.setTouchable(false);
         }
+        Scenes.sceneGameOverlay.endTurnButtonElement.setTouchable(false);
     }
 
 

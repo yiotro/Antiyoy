@@ -4,7 +4,7 @@ import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.editor.LeInputMode;
-import yio.tro.antiyoy.gameplay.editor.LevelEditor;
+import yio.tro.antiyoy.gameplay.editor.LevelEditorManager;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -178,19 +178,19 @@ public class EditLandElement extends InterfaceElement{
 
     private void applyTargetItem() {
         GameController gameController = menuControllerYio.yioGdxGame.gameController;
-        LevelEditor levelEditor = gameController.levelEditor;
+        LevelEditorManager levelEditorManager = gameController.levelEditorManager;
 
         switch (targetItem.actionType) {
             case delete:
-                levelEditor.setInputMode(LeInputMode.delete);
+                levelEditorManager.setInputMode(LeInputMode.delete);
                 break;
             case random:
-                levelEditor.setInputMode(LeInputMode.set_hex);
-                levelEditor.setRandomizeFraction(true);
+                levelEditorManager.setInputMode(LeInputMode.set_hex);
+                levelEditorManager.setRandomizeFraction(true);
                 break;
             case def:
-                levelEditor.setInputMode(LeInputMode.set_hex);
-                levelEditor.setInputFraction(targetItem.value);
+                levelEditorManager.setInputMode(LeInputMode.set_hex);
+                levelEditorManager.setInputFraction(targetItem.value);
                 break;
         }
 

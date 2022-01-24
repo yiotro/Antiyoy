@@ -89,7 +89,7 @@ public class SceneEditorMessages extends AbstractModalScene {
     }
 
 
-    private void onMessageItemClicked(ScrollListItem scrollListItem) {
+    private void onMessageItemClicked(final ScrollListItem scrollListItem) {
         hide();
         KeyboardManager.getInstance().apply(scrollListItem.title.string, new AbstractKbReaction() {
             @Override

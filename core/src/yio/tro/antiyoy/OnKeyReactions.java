@@ -1,6 +1,10 @@
 package yio.tro.antiyoy;
 
 import com.badlogic.gdx.Input;
+import yio.tro.antiyoy.ai.AbstractAi;
+import yio.tro.antiyoy.ai.master.AiMaster;
+import yio.tro.antiyoy.gameplay.DebugFlags;
+import yio.tro.antiyoy.gameplay.tests.TestRestoreLevelState;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.fast_construction.FastConstructionPanel;
 import yio.tro.antiyoy.menu.keyboard.BasicKeyboardElement;
@@ -90,11 +94,34 @@ public class OnKeyReactions {
             case Input.Keys.Q:
                 yioGdxGame.pressButtonIfVisible(145);
                 break;
+            case Input.Keys.P:
+                DebugFlags.showAiData = !DebugFlags.showAiData;
+                break;
+            case Input.Keys.O:
+                doExportAiMasterState();
+                break;
         }
 
         checkFastConstructionPanel(keycode);
 
         return false;
+    }
+
+
+    private void doExportAiMasterState() {
+        if (yioGdxGame.gamePaused) {
+            TestRestoreLevelState test = new TestRestoreLevelState();
+            test.setGameController(yioGdxGame.gameController);
+            test.perform();
+            return;
+        }
+
+        for (AbstractAi abstractAi : yioGdxGame.gameController.getAiList()) {
+            if (abstractAi instanceof AiMaster) {
+                ((AiMaster) abstractAi).exportLastStateStringToClipboard();
+                break;
+            }
+        }
     }
 
 
@@ -127,7 +154,7 @@ public class OnKeyReactions {
 
     private void onEnterPressed() {
         pressIfVisible(Scenes.sceneMainMenu.playButton);
-        pressIfVisible(Scenes.sceneChoodeGameModeMenu.skirmishButton);
+        pressIfVisible(Scenes.sceneChooseGameMode.skirmishButton);
         pressIfVisible(Scenes.sceneSkirmishMenu.startButton);
 
         pressIfVisible(Scenes.scenePauseMenu.resumeButton);
@@ -179,10 +206,9 @@ public class OnKeyReactions {
 
 
     private void onSpaceButtonPressed() {
-        if (!yioGdxGame.gamePaused) {
-            yioGdxGame.pressButtonIfVisible(31);
-            yioGdxGame.pressButtonIfVisible(53); // close tip
-        }
+        if (yioGdxGame.gamePaused) return;
+        if (yioGdxGame.pressButtonIfVisible(53)) return; // close tutorial tip
+        Scenes.sceneGameOverlay.onSpaceButtonPressed();
     }
 
 

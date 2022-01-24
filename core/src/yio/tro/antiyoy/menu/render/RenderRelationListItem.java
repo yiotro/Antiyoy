@@ -41,14 +41,18 @@ public class RenderRelationListItem extends AbstractRenderCustomListItem {
         );
         GraphicsYio.renderTextOptimized(batch, getBlackPixel(), relationListItem.nameOne, alpha);
         GraphicsYio.renderTextOptimized(batch, getBlackPixel(), relationListItem.nameTwo, alpha);
-        GraphicsYio.drawByCircle(batch, getRelationTexture(), relationListItem.iconPosition);
+        GraphicsYio.drawByCircle(
+                batch,
+                getRelationTexture(relationListItem.editorRelation.relation),
+                relationListItem.iconPosition
+        );
         renderDefaultSelection(relationListItem);
         GraphicsYio.setBatchAlpha(batch, 1);
     }
 
 
-    private TextureRegion getRelationTexture() {
-        switch (relationListItem.editorRelation.relation) {
+    public TextureRegion getRelationTexture(int relation) {
+        switch (relation) {
             default:
                 return null;
             case DiplomaticRelation.NEUTRAL:

@@ -10,8 +10,16 @@ public enum SkinType {
 
     shroomarts,
 
-    bubbles,
+    slimes,
 
     jannes_peters,
+
+    world_war,
+
+    katuri,
+
+    matveismi_art,
+
+    aww2,
 
 }

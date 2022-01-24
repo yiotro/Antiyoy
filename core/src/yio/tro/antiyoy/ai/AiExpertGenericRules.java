@@ -22,9 +22,7 @@ public class AiExpertGenericRules extends ArtificialIntelligenceGeneric {
     @Override
     public void makeMove() {
         moveUnits();
-
         spendMoneyAndMergeUnits();
-
         moveAfkUnits();
     }
 

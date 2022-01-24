@@ -10,7 +10,7 @@ import yio.tro.antiyoy.YioGdxGame;
 
 public class Fonts {
 
-    public static final String SPECIAL_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<^>";
+    public static final String SPECIAL_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<^>ö";
     public static BitmapFont buttonFont;
     public static BitmapFont gameFont;
     public static BitmapFont microFont;

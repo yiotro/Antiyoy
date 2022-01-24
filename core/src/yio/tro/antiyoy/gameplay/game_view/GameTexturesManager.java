@@ -32,21 +32,26 @@ public class GameTexturesManager {
 
     public void loadTextures() {
         loadSkin();
+        loadSkinDependentTextures();
         blackCircleTexture = GraphicsYio.loadTextureRegion("black_circle.png", true);
-        shadowHexTexture = GraphicsYio.loadTextureRegion("shadow_hex.png", true);
         gradientShadow = GraphicsYio.loadTextureRegion("gradient_shadow.png", false);
         blackPixel = GraphicsYio.loadTextureRegion("black_pixel.png", false);
         transCircle1 = GraphicsYio.loadTextureRegion("transition_circle_1.png", false);
         transCircle2 = GraphicsYio.loadTextureRegion("transition_circle_2.png", false);
-        loadFieldTextures();
         selUnitShadow = GraphicsYio.loadTextureRegion("sel_shadow.png", true);
         sideShadow = GraphicsYio.loadTextureRegion("money_shadow.png", true);
         responseAnimHexTexture = GraphicsYio.loadTextureRegion("response_anim_hex.png", false);
-        loadExclamationMark();
         forefingerTexture = GraphicsYio.loadTextureRegion("forefinger.png", true);
-        defenseIcon = GraphicsYio.loadTextureRegion("defense_icon.png", true);
         blackBorderTexture = GraphicsYio.loadTextureRegion("pixels/black_border.png", true);
         grayPixel = GraphicsYio.loadTextureRegion("pixels/gray_pixel.png", false);
+    }
+
+
+    private void loadSkinDependentTextures() {
+        shadowHexTexture = GraphicsYio.loadTextureRegion(getSkinManager().getShadowHexPath(), true);
+        exclamationMarkTexture = GraphicsYio.loadTextureRegion(getSkinManager().getExclamationMarkPath(), true);
+        defenseIcon = GraphicsYio.loadTextureRegion(getSkinManager().getDefenseIconPath(), true);
+        loadFieldTextures();
     }
 
 
@@ -91,13 +96,8 @@ public class GameTexturesManager {
         if (SettingsManager.waterTextureEnabled || getSkinManager().currentSkinRequiresWater()) {
             backgroundRegion = GraphicsYio.loadTextureRegion(getSkinManager().getWaterTexturePath(), true);
         } else {
-            backgroundRegion = GraphicsYio.loadTextureRegion("game_background.png", true);
+            backgroundRegion = GraphicsYio.loadTextureRegion(getSkinManager().getGameBackgroundTexturePath(), true);
         }
-    }
-
-
-    private void loadExclamationMark() {
-        exclamationMarkTexture = getSkinManager().loadExclamationMark();
     }
 
 
@@ -111,8 +111,7 @@ public class GameTexturesManager {
 
 
     private void reloadTextures() {
-        loadFieldTextures();
-        loadExclamationMark();
+        loadSkinDependentTextures();
 
         resetButtonTexture(38); // tower (build)
         resetButtonTexture(39); // unit (build)

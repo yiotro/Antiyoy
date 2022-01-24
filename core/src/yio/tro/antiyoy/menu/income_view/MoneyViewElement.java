@@ -101,11 +101,13 @@ public class MoneyViewElement extends AbstractRectangularUiElement{
 
 
     private String castValue(int titleValue) {
+        String compactedString = Yio.getCompactMoneyString(titleValue);
+
         if (plusNeeded && titleValue > 0) {
-            return "+" + titleValue;
+            return "+" + compactedString;
         }
 
-        return "" + titleValue;
+        return "" + compactedString;
     }
 
 

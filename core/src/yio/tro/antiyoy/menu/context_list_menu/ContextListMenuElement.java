@@ -161,6 +161,8 @@ public class ContextListMenuElement extends InterfaceElement{
 
 
     private void performItem(ClmItem item) {
+        if (item == null) return;
+
         if (item.key.equals("delete")) {
             editableItem.onDeleteRequested();
             return;
@@ -170,11 +172,23 @@ public class ContextListMenuElement extends InterfaceElement{
             KeyboardManager.getInstance().apply(editableItem.getEditableName(), new AbstractKbReaction() {
                 @Override
                 public void onInputFromKeyboardReceived(String input) {
-                    editableItem.rename(input);
+                    onRenameInputReceived(input);
                 }
             });
             return;
         }
+    }
+
+
+    private void onRenameInputReceived(String input) {
+        if (input.length() == 0) return;
+
+        // see SaveSlotSelector.loadSlot() for a reason behind this cycle
+        while (input.length() < 3) {
+            input = input + " ";
+        }
+
+        editableItem.rename(input);
     }
 
 

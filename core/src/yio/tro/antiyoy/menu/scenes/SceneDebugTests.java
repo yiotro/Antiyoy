@@ -9,6 +9,7 @@ import yio.tro.antiyoy.menu.slider.SliderBehavior;
 import yio.tro.antiyoy.menu.slider.SliderYio;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
+import yio.tro.antiyoy.stuff.Yio;
 
 public class SceneDebugTests extends AbstractScene{
 
@@ -28,7 +29,7 @@ public class SceneDebugTests extends AbstractScene{
 
 
     private void initQuantities() {
-        quantities = new int[]{1, 5, 10, 50, 100, 500, 1000, 2000, 5000, 10000};
+        quantities = new int[]{1, 5, 10, 50, 100, 500, 1000, 2000, 5000, 10000, 25000};
     }
 
 
@@ -36,13 +37,10 @@ public class SceneDebugTests extends AbstractScene{
         tests = new AbstractTest[]{
                 new TestLaunchFireworks(),
                 new TestAiComparison(),
-                new TestEnableForceKeys(),
-                new TestOpenTestScreen(),
+                new TestLaunchComparisonMatch(),
+                new TestRestoreLevelState(),
+                new TestCheckMasterAi(),
         };
-
-        if (tests.length > 9) {
-            System.out.println("SceneDebugTests.initTests(): problem");
-        }
     }
 
 
@@ -83,7 +81,8 @@ public class SceneDebugTests extends AbstractScene{
         quantitySlider.setBehavior(new SliderBehavior() {
             @Override
             public String getValueString(SliderYio sliderYio) {
-                return "" + quantities[sliderYio.getValueIndex()];
+                int quantity = quantities[sliderYio.getValueIndex()];
+                return "" + Yio.getCompactMoneyString(quantity);
             }
         });
 
@@ -97,7 +96,7 @@ public class SceneDebugTests extends AbstractScene{
         curY = 0.52;
         int id = 732;
 
-        for (AbstractTest test : tests) {
+        for (final AbstractTest test : tests) {
             createTestButton(id, test.getName(), new Reaction() {
                 @Override
                 public void perform(ButtonYio buttonYio) {

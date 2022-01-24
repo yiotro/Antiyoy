@@ -3,12 +3,9 @@ package yio.tro.antiyoy.gameplay.data_storage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Clipboard;
-import yio.tro.antiyoy.gameplay.FieldManager;
-import yio.tro.antiyoy.gameplay.GameController;
-import yio.tro.antiyoy.gameplay.Hex;
-import yio.tro.antiyoy.gameplay.LevelSize;
+import yio.tro.antiyoy.gameplay.*;
 import yio.tro.antiyoy.gameplay.editor.EditorSaveSystem;
-import yio.tro.antiyoy.gameplay.editor.LevelEditor;
+import yio.tro.antiyoy.gameplay.editor.LevelEditorManager;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 
@@ -47,10 +44,39 @@ public class EncodeManager {
         encodeUnits();
         encodeProvinces();
         encodeRelations();
+        encodeCoalitions();
         encodeMessages();
+        encodeGoal();
+        encodeRealMoney();
 
         builder.append("#");
         return builder.toString();
+    }
+
+
+    private void encodeCoalitions() {
+        startSection("coalitions");
+        builder.append(gameController.levelEditorManager.coalitionsManager.encode());
+    }
+
+
+    private void encodeRealMoney() {
+        startSection("real_money");
+        for (Province province : fieldManager.provinces) {
+            Hex capital = province.getCapital();
+            builder.append(capital.index1)
+                    .append(" ")
+                    .append(capital.index2)
+                    .append(" ")
+                    .append(province.money)
+                    .append(",");
+        }
+    }
+
+
+    private void encodeGoal() {
+        startSection("goal");
+        builder.append(gameController.finishGameManager.encode());
     }
 
 
@@ -62,13 +88,13 @@ public class EncodeManager {
 
     private void encodeRelations() {
         startSection("relations");
-        builder.append(gameController.levelEditor.editorRelationsManager.encode());
+        builder.append(gameController.levelEditorManager.editorRelationsManager.encode());
     }
 
 
     private void encodeProvinces() {
         startSection("provinces");
-        builder.append(gameController.levelEditor.editorProvinceManager.encode());
+        builder.append(gameController.levelEditorManager.editorProvinceManager.encode());
     }
 
 
@@ -95,6 +121,7 @@ public class EncodeManager {
         builder.append(GameRules.editorChosenColor).append(" ");
         builder.append(GameRules.editorDiplomacy).append(" ");
         builder.append(GameRules.editorFog).append(" ");
+        builder.append(GameRules.diplomaticRelationsLocked).append(" ");
     }
 
 
@@ -150,7 +177,7 @@ public class EncodeManager {
         delta /= fieldManager.hexStep1;
         delta += 1;
 
-        return delta > LevelEditor.MAX_ACCEPTABLE_DELTA;
+        return delta > LevelEditorManager.MAX_ACCEPTABLE_DELTA;
     }
 
 

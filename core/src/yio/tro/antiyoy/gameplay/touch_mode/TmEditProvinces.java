@@ -42,7 +42,7 @@ public class TmEditProvinces extends TouchMode{
 
     private void updateCityNames() {
         poolCityNames.clearExternalList();
-        EditorProvinceManager editorProvinceManager = gameController.levelEditor.editorProvinceManager;
+        EditorProvinceManager editorProvinceManager = gameController.levelEditorManager.editorProvinceManager;
         for (EditorProvinceData editorProvinceData : editorProvinceManager.provincesList) {
             TmepCityName freshObject = poolCityNames.getFreshObject();
             freshObject.setEditorProvinceData(editorProvinceData);
@@ -96,7 +96,7 @@ public class TmEditProvinces extends TouchMode{
     @Override
     public boolean onClick() {
         gameController.fieldManager.updateFocusedHex();
-        EditorProvinceManager editorProvinceManager = gameController.levelEditor.editorProvinceManager;
+        EditorProvinceManager editorProvinceManager = gameController.levelEditorManager.editorProvinceManager;
         Hex focusedHex = gameController.fieldManager.focusedHex;
         EditorProvinceData provinceByHex = editorProvinceManager.getProvinceByHex(focusedHex);
         if (provinceByHex != null) {

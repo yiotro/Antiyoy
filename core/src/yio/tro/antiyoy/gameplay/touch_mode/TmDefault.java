@@ -69,8 +69,8 @@ public class TmDefault extends TouchMode{
         if (selectionManager.checkForCityNameReaction()) return true;
 
         if (fieldManager.focusedHex != null && gameController.isPlayerTurn()) {
-            selectionManager.focusedHexActions(fieldManager.focusedHex);
             checkForDiplomaticForeignSelection(fieldManager.focusedHex);
+            selectionManager.focusedHexActions(fieldManager.focusedHex);
         }
         return true;
     }
@@ -80,11 +80,17 @@ public class TmDefault extends TouchMode{
         if (!GameRules.diplomacyEnabled) return;
         if (focusedHex.isNeutral()) return;
         if (gameController.selectionManager.isInAreaSelectionMode()) return;
+        if (gameController.playersNumber == 0) return;
+        if (GameRules.replayMode) return;
+        if (gameController.selectionManager.tipType != -1) return;
+        FieldManager fieldManager = gameController.fieldManager;
+        if (fieldManager.moveZoneManager.moveZone.size() > 0) return;
+        if (!fieldManager.isAtLeastOneCurrentFractionProvinceAlive()) return;
+        if (fieldManager.fogOfWarManager.isHexCoveredByFog(focusedHex)) return;
 
         int fraction = focusedHex.fraction;
         if (gameController.isCurrentTurn(fraction)) return;
 
-        FieldManager fieldManager = gameController.fieldManager;
         Province provinceByHex = fieldManager.getProvinceByHex(focusedHex);
         if (provinceByHex == null) return;
 

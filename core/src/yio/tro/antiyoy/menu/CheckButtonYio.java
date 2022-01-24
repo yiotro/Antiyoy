@@ -23,6 +23,7 @@ public class CheckButtonYio extends InterfaceElement{
     public FactorYio iconFactor;
     ClickDetector clickDetector;
     ICheckButtonListener listener;
+    public boolean alternativeVisualMode;
 
 
     public CheckButtonYio(MenuControllerYio menuControllerYio) {
@@ -43,6 +44,7 @@ public class CheckButtonYio extends InterfaceElement{
         iconFactor = new FactorYio();
         clickDetector = new ClickDetector();
         listener = null;
+        alternativeVisualMode = false;
     }
 
 
@@ -291,6 +293,12 @@ public class CheckButtonYio extends InterfaceElement{
             listener.onStateChanged(checked);
         }
 
+        launchIconFactor();
+    }
+
+
+    private void launchIconFactor() {
+        if (checkToLaunchIconFactorInAlternativeMode()) return;
         if (checked) {
             iconFactor.setValues(0, 0);
             iconFactor.appear(3, 0.5);
@@ -298,6 +306,19 @@ public class CheckButtonYio extends InterfaceElement{
             iconFactor.setValues(1, -0.1);
             iconFactor.destroy(1, 3);
         }
+    }
+
+
+    private boolean checkToLaunchIconFactorInAlternativeMode() {
+        if (!alternativeVisualMode) return false;
+        if (checked) {
+            iconFactor.setValues(0, 0.1);
+            iconFactor.appear(1, 2.5);
+        } else {
+            iconFactor.setValues(1, -0.1);
+            iconFactor.destroy(1, 2.5);
+        }
+        return true;
     }
 
 
@@ -309,6 +330,11 @@ public class CheckButtonYio extends InterfaceElement{
     @Override
     public MenuRender getRenderSystem() {
         return MenuRender.renderCheckButton;
+    }
+
+
+    public void setAlternativeVisualMode(boolean alternativeVisualMode) {
+        this.alternativeVisualMode = alternativeVisualMode;
     }
 
 

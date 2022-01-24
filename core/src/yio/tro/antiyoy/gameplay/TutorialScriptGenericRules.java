@@ -4,10 +4,12 @@ import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.loading.LoadingType;
+import yio.tro.antiyoy.menu.AbstractRectangularUiElement;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.LanguagesManager;
+import yio.tro.antiyoy.stuff.RectangleYio;
 
 public class TutorialScriptGenericRules extends TutorialScript{
 
@@ -79,7 +81,8 @@ public class TutorialScriptGenericRules extends TutorialScript{
             @Override
             public void perform(ButtonYio buttonYio) {
                 Scenes.sceneNotification.hideNotification();
-                Scenes.sceneChoodeGameModeMenu.create();
+                Scenes.sceneChooseGameMode.create();
+                CampaignProgressManager.getInstance().markLevelAsCompleted(0);
                 getYioGdxGame(buttonYio).setGamePaused(true);
                 getYioGdxGame(buttonYio).setAnimToPlayButtonSpecial();
             }
@@ -192,8 +195,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
                 ignoreAll();
                 break;
             case STEP_END_TURN:
-                buttonYio = setOnlyButtonToRespond(31, "tut_tap_to_end_turn");
-                pointToMenu(buttonYio.x1, buttonYio.y2, -0.75 * Math.PI);
+                setInterfaceElementToRespond(Scenes.sceneGameOverlay.endTurnButtonElement, "tut_tap_to_end_turn");
                 break;
             case STEP_CHOOSE_TO_MERGE:
                 setOnlyHexToRespond(17, 9);
@@ -312,7 +314,8 @@ public class TutorialScriptGenericRules extends TutorialScript{
     private boolean isStepComplete() {
         switch (currentStep) {
             default:
-            case STEP_GREETINGS: return true;
+            case STEP_GREETINGS:
+                return true;
             case STEP_SELECT_PROVINCE:
                 if (gameController.fieldManager.selectedProvince != null) return true;
                 return false;
@@ -367,8 +370,10 @@ public class TutorialScriptGenericRules extends TutorialScript{
             case STEP_ABOUT_TREES_TWO:
                 return true;
             case STEP_END_TURN:
-                if (menuControllerYio.getButtonById(31).isCurrentlyTouched()) return true;
-                return false;
+                Hex hex = getHex(17, 9);
+                if (hex == null) return false;
+                Unit unit = hex.unit;
+                return unit != null && unit.isReadyToMove();
             case STEP_CHOOSE_TO_MERGE:
                 if (gameController.selectionManager.selectedUnit != null) return true;
                 return false;
@@ -394,10 +399,24 @@ public class TutorialScriptGenericRules extends TutorialScript{
     }
 
 
+    private void setInterfaceElementToRespond(AbstractRectangularUiElement uiElement, String message) {
+        ignoreAll();
+        showMessage(message);
+        RectangleYio viewPosition = uiElement.viewPosition;
+        uiElement.setTouchable(true);
+        pointToMenu(
+                viewPosition.x,
+                viewPosition.y + viewPosition.height,
+                -0.75 * Math.PI
+        );
+    }
+
+
     private void resetIgnores() {
         gameController.setIgnoreMarch(false);
         for (int i = 31; i <= 32; i++) {
             ButtonYio buttonYio = menuControllerYio.getButtonById(i);
+            if (buttonYio == null) continue;
             buttonYio.setTouchable(true);
         }
         for (int i = 38; i <= 39; i++) {
@@ -410,12 +429,14 @@ public class TutorialScriptGenericRules extends TutorialScript{
                 gameController.fieldManager.field[i][j].setIgnoreTouch(false);
             }
         }
+        Scenes.sceneGameOverlay.endTurnButtonElement.setTouchable(true);
     }
 
 
     private void allButtonsIgnoreTouches() {
         for (int i = 31; i <= 32; i++) {
             ButtonYio buttonYio = menuControllerYio.getButtonById(i);
+            if (buttonYio == null) continue;
             buttonYio.setTouchable(false);
         }
         for (int i = 38; i <= 39; i++) {
@@ -423,6 +444,7 @@ public class TutorialScriptGenericRules extends TutorialScript{
             if (buttonYio == null) continue;
             buttonYio.setTouchable(false);
         }
+        Scenes.sceneGameOverlay.endTurnButtonElement.setTouchable(false);
     }
 
 

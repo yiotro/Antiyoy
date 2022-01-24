@@ -1,6 +1,8 @@
 package yio.tro.antiyoy.gameplay;
 
+import yio.tro.antiyoy.menu.AbstractRectangularUiElement;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.stuff.RectangleYio;
 
 public abstract class TutorialScript {
 
@@ -23,4 +25,5 @@ public abstract class TutorialScript {
     public void setTipIsCurrentlyShown(boolean tipIsCurrentlyShown) {
         this.tipIsCurrentlyShown = tipIsCurrentlyShown;
     }
+
 }

@@ -95,7 +95,7 @@ public class RenderCityNames extends GameRender{
         renderText();
         renderEditicon();
 
-        batchMovable.setColor(c.r, c.g, c.b, c.a);
+        batchMovable.setColor(c.r, c.g, c.b, 1);
     }
 
 
@@ -150,12 +150,15 @@ public class RenderCityNames extends GameRender{
 
 
     private void renderText() {
+        float bckpValue = Fonts.microFont.getColor().r;
+        Fonts.microFont.setColor(0.9f, 0.9f, 0.9f, 1);
         Fonts.microFont.draw(
                 batchMovable,
                 province.getName(),
                 textPosition.x,
                 textPosition.y
         );
+        Fonts.microFont.setColor(bckpValue, bckpValue, bckpValue, 1);
     }
 
 

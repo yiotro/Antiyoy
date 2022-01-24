@@ -7,6 +7,7 @@ import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
+import yio.tro.antiyoy.menu.customizable_list.AbstractCustomListItem;
 import yio.tro.antiyoy.menu.customizable_list.CustomizableListYio;
 import yio.tro.antiyoy.menu.customizable_list.SimpleDipEntityItem;
 import yio.tro.antiyoy.menu.scenes.gameplay.AbstractModalScene;
@@ -51,6 +52,18 @@ public class SceneChooseDiplomaticEntity extends AbstractModalScene {
             simpleDipEntityItem.setDiplomaticEntity(entity);
         }
         customizableListYio.updateItemDeltas();
+    }
+
+
+    public void excludeEntity(DiplomaticEntity diplomaticEntity) {
+        for (int i = customizableListYio.items.size() - 1; i >= 0; i--) {
+            AbstractCustomListItem abstractCustomListItem = customizableListYio.items.get(i);
+            SimpleDipEntityItem simpleDipEntityItem = (SimpleDipEntityItem) abstractCustomListItem;
+            if (simpleDipEntityItem.diplomaticEntity != diplomaticEntity) continue;
+            customizableListYio.items.remove(abstractCustomListItem);
+            customizableListYio.updateItemDeltas();
+            break;
+        }
     }
 
 

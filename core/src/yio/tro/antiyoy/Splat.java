@@ -34,10 +34,14 @@ public class Splat {
     }
 
 
-    void applyToCircle(CircleYio circleYio, double factor) {
+    void applyToCircle(CircleYio circleYio, double factor, boolean newYearMode) {
         circleYio.center.set(x, y);
         circleYio.setRadius(0.5 * r * factor);
         circleYio.setAngle(a);
+
+        if (newYearMode) {
+            circleYio.center.y = GraphicsYio.height - circleYio.center.y;
+        }
     }
 
 

@@ -5,11 +5,13 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Clipboard;
 import yio.tro.antiyoy.KeyboardManager;
 import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.ai.AbstractAi;
 import yio.tro.antiyoy.gameplay.campaign.CampaignProgressManager;
 import yio.tro.antiyoy.gameplay.diplomacy.*;
 import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
 import yio.tro.antiyoy.gameplay.replays.ReplaySaveSystem;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.keyboard.AbstractKbReaction;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.Yio;
@@ -28,7 +30,105 @@ public class DebugActionsManager {
 
 
     public void debugActions() {
-        doGiveFirstFractionMoney();
+        Scenes.sceneAoArticle.create();
+    }
+
+
+    private void doTestTimeToStringConversion() {
+        System.out.println();
+        System.out.println("DebugActionsManager.doTestTimeToStringConversion");
+        for (int i = 0; i < 10; i++) {
+            int value = YioGdxGame.random.nextInt(999999);
+            System.out.println(value + " -> " + Yio.convertTimeToUnderstandableString(value));
+        }
+    }
+
+
+    private void doShowTutorialTip() {
+        ArrayList<String> strings = new ArrayList<>();
+        strings.add("Test");
+        Scenes.sceneTutorialTip.createTutorialTip(strings);
+    }
+
+
+    private void doShowCameraInConsole() {
+        System.out.println();
+        System.out.println("DebugActionsManager.doShowCameraInConsole");
+        System.out.println("Camera: " + gameController.cameraController.encode());
+    }
+
+
+    public void doDetectAiFractionsBug() {
+        ArrayList<AbstractAi> aiList = gameController.getAiList();
+        for (int i = 0; i < aiList.size(); i++) {
+            AbstractAi abstractAi = aiList.get(i);
+            if (i != abstractAi.getFraction()) {
+                System.out.println();
+                System.out.println("DebugActionsManager.doDetectAiFractionsBug: problem detected");
+                System.out.println("i = " + i);
+                System.out.println("abstractAi.getFraction() = " + abstractAi.getFraction());
+                return;
+            }
+        }
+    }
+
+
+    public void doDetectIntersectingProvincesBug() {
+        System.out.println();
+        System.out.println("DebugActionsManager.doDetectIntersectingProvincesBug");
+        ArrayList<Province> provinces = gameController.fieldManager.provinces;
+        for (int i = 0; i < provinces.size(); i++) {
+            Province a = provinces.get(i);
+            if (a.getFraction() != 0) continue;
+            for (int j = i + 1; j < provinces.size(); j++) {
+                Province b = provinces.get(j);
+                if (b.getFraction() != 0) continue;
+                if (a.intersects(b)) {
+                    System.out.println("Detected problem");
+                    System.out.println("a = " + a);
+                    System.out.println("b = " + b);
+                    return;
+                }
+            }
+        }
+        System.out.println("No problems detected");
+    }
+
+
+    private void doTestDebts() {
+        System.out.println();
+        System.out.println("DebugActionsManager.doTestDebts");
+        DiplomacyManager diplomacyManager = gameController.fieldManager.diplomacyManager;
+        DiplomaticEntity entity1 = diplomacyManager.getEntity(0);
+        DiplomaticEntity entity2 = diplomacyManager.getEntity(1);
+        diplomacyManager.changeDebt(entity1, entity2, 12);
+    }
+
+
+    private void doCoverWholeMapInFarms() {
+        for (Hex activeHex : gameController.fieldManager.activeHexes) {
+            if (activeHex.isNeutral()) continue;
+            if (!activeHex.isEmpty()) continue;
+            activeHex.setObjectInside(Obj.FARM);
+        }
+    }
+
+
+    private void doTestCompactMoneyAlgorithm() {
+        System.out.println();
+        System.out.println("DebugActionsManager.doTestCompactMoneyAlgorithm");
+        System.out.println("Yio.getCompactMoneyString(0) = " + Yio.getCompactMoneyString(0));
+        System.out.println("Yio.getCompactMoneyString(15) = " + Yio.getCompactMoneyString(15));
+        System.out.println("Yio.getCompactMoneyString(600) = " + Yio.getCompactMoneyString(600));
+        System.out.println("Yio.getCompactMoneyString(1500) = " + Yio.getCompactMoneyString(1500));
+        System.out.println("Yio.getCompactMoneyString(-100) = " + Yio.getCompactMoneyString(-100));
+        System.out.println("Yio.getCompactMoneyString(-1500) = " + Yio.getCompactMoneyString(-1500));
+        System.out.println("Yio.getCompactMoneyString(50000) = " + Yio.getCompactMoneyString(50000));
+        System.out.println("Yio.getCompactMoneyString(1000000) = " + Yio.getCompactMoneyString(1000000));
+        System.out.println("Yio.getCompactMoneyString(2500000) = " + Yio.getCompactMoneyString(2500000));
+        System.out.println("Yio.getCompactMoneyString(-2500000) = " + Yio.getCompactMoneyString(-2500000));
+        System.out.println("Yio.getCompactMoneyString(999999) = " + Yio.getCompactMoneyString(999999));
+        System.out.println("Yio.getCompactMoneyString(999999999) = " + Yio.getCompactMoneyString(999999999));
     }
 
 
@@ -121,7 +221,7 @@ public class DebugActionsManager {
 
 
     private void doShowEditorProvinces() {
-        gameController.levelEditor.editorProvinceManager.showProvincesInConsole();
+        gameController.levelEditorManager.editorProvinceManager.showProvincesInConsole();
     }
 
 

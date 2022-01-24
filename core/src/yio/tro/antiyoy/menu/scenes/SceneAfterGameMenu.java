@@ -112,6 +112,7 @@ public class SceneAfterGameMenu extends AbstractScene {
         GameController gameController = getGameController();
         DiplomacyManager diplomacyManager = gameController.fieldManager.diplomacyManager;
         DiplomaticEntity winner = diplomacyManager.getEntity(winnerFraction);
+        if (winner == null) return false;
         if (!winner.hasOnlyFriends()) return false;
 
         return true;

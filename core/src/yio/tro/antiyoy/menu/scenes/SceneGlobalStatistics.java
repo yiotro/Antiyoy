@@ -62,9 +62,11 @@ public class SceneGlobalStatistics extends AbstractScene{
 
         label.cleatText();
         label.addTextLine(getString("statistics"));
-        label.addTextLine(getString("time") + ": " + Yio.convertTime(instance.timeInGame));
-        label.addTextLine(getString("turns_made") + ": " + instance.turnsMade);
-        label.addTextLine(getString("money_spent") + ": " + instance.moneySpent);
+        label.addTextLine(getString("time") + ": " + Yio.convertTimeToUnderstandableString(instance.timeInGame));
+        label.addTextLine(getString("turns_made") + ": " + Yio.getCompactMoneyString(instance.turnsMade));
+        label.addTextLine(getString("money_spent") + ": $" + Yio.getCompactMoneyString(instance.moneySpent));
+        label.addTextLine(getString("units_died") + ": " + Yio.getCompactMoneyString(instance.unitsDied));
+        label.addTextLine(getString("friendships_broken") + ": " + Yio.getCompactMoneyString(instance.friendshipsBroken));
         label.addTextLine(getString("wins") + ": " + instance.wins);
         label.applyNumberOfLines(16);
     }

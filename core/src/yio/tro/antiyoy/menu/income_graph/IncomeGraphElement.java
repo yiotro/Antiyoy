@@ -26,6 +26,7 @@ public class IncomeGraphElement extends InterfaceElement{
     public ArrayList<IgeItem> items;
     ObjectPoolYio<IgeItem> poolItems;
     private int[] incomeArray;
+    RepeatYio<IncomeGraphElement> repeatUpdateColumns;
 
 
     public IncomeGraphElement(MenuControllerYio menuControllerYio) {
@@ -43,6 +44,17 @@ public class IncomeGraphElement extends InterfaceElement{
         separatorPosition = new RectangleYio();
         items = new ArrayList<>();
         initPools();
+        initRepeats();
+    }
+
+
+    private void initRepeats() {
+        repeatUpdateColumns = new RepeatYio<IncomeGraphElement>(this, 10) {
+            @Override
+            public void performAction() {
+                parent.updateColumnsDynamically();
+            }
+        };
     }
 
 
@@ -61,9 +73,25 @@ public class IncomeGraphElement extends InterfaceElement{
         appearFactor.move();
         updateViewPosition();
         moveTitle();
+        checkToMoveColumnsInRealTime();
         updateColumnsArea();
         updateSeparatorPosition();
         moveItems();
+    }
+
+
+    private void checkToMoveColumnsInRealTime() {
+        if (!GameRules.aiOnlyMode) return;
+        GameController gameController = menuControllerYio.getYioGdxGame().gameController;
+        if (gameController.speedManager.getSpeed() == 0) return;
+
+        repeatUpdateColumns.move();
+    }
+
+
+    private void updateColumnsDynamically() {
+        updateIncomeArray();
+        updateItemDeltas();
     }
 
 
@@ -149,11 +177,12 @@ public class IncomeGraphElement extends InterfaceElement{
         for (IgeItem item : items) {
             item.delta.x = x;
             item.delta.y = y;
-            item.viewPosition.width = cw;
+            item.targetPosition.width = cw;
             item.setMaxHeight(maxHeight);
             item.setTargetHeight(((float)incomeArray[item.fraction] / maxIncomeValue) * maxHeight);
-            item.text.setString("" + incomeArray[item.fraction]);
+            item.text.setString(Yio.getCompactMoneyString(incomeArray[item.fraction]));
             item.text.updateMetrics();
+            item.updateScoutedState();
             x += deltaX;
         }
     }

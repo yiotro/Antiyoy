@@ -1,0 +1,21 @@
+package yio.tro.antiyoy.gameplay.user_levels;
+
+public class UlevWaterTribes extends AbstractUserLevel{
+
+    @Override
+    public String getLevelCode() {
+        return "antiyoy_level_code#level_size:4#general:2 1 11#map_name:Water Tribes#editor_info:6 true false false #land:33 7 7 0,35 3 8 6,35 4 8 6,34 4 8 0,34 5 8 6,33 6 8 0,32 6 8 6,33 5 8 4,32 7 7 0,32 8 7 0,31 8 7 4,31 9 7 0,28 18 1 2,27 18 1 6,27 16 1 3,26 17 1 0,27 17 1 6,28 17 1 6,28 16 1 2,29 16 1 0,29 14 1 0,28 15 1 4,29 15 1 6,28 8 7 4,19 15 5 3,20 14 5 6,23 9 5 0,23 10 5 6,21 12 5 2,31 5 8 0,33 3 8 6,32 4 8 2,32 5 8 6,31 4 8 3,29 4 4 6,26 4 4 6,27 4 4 6,27 5 4 3,28 6 4 0,14 24 4 0,13 25 4 6,14 25 4 6,15 25 4 0,17 25 4 4,12 25 4 0,13 24 4 6,15 18 4 4,13 23 4 0,14 22 4 2,13 22 4 6,15 20 4 2,15 19 4 0,14 21 4 0,15 23 4 2,16 20 4 2,18 21 9 4,17 20 9 2,17 19 9 4,16 19 4 0,17 18 4 4,16 17 4 0,16 16 4 0,19 19 9 6,18 19 9 6,17 15 6 0,17 17 4 3,18 13 6 6,20 8 7 0,16 25 4 0,16 24 4 0,11 24 4 0,12 23 4 0,12 22 4 6,13 21 4 6,13 20 4 0,14 19 4 0,14 18 4 0,15 17 4 0,15 16 4 0,16 15 4 4,16 14 6 0,17 13 6 4,17 12 6 2,18 11 6 2,18 10 7 6,19 9 6 6,19 10 6 6,20 9 4 2,20 7 7 0,19 8 7 2,20 6 4 6,21 6 4 0,22 5 4 0,23 5 4 0,22 6 4 6,21 7 7 4,22 7 4 0,18 14 6 0,18 12 6 6,19 13 6 4,19 12 6 0,19 11 6 2,20 11 7 4,20 10 6 3,21 10 7 6,21 9 7 2,22 9 7 4,21 8 4 0,22 8 4 0,23 7 4 0,23 6 4 6,24 6 4 0,25 7 4 2,25 6 4 0,25 5 4 6,26 5 4 2,26 6 4 0,27 7 4 0,28 5 4 6,27 6 4 6,22 19 4 4,23 17 4 6,26 21 4 6,26 22 4 6,25 20 4 4,25 21 4 3,23 19 4 0,24 19 4 6,25 22 4 0,21 22 0 6,20 21 7 6,19 21 7 2,19 22 7 4,17 24 4 2,15 21 4 0,17 22 4 4,16 21 9 0,17 21 9 0,16 23 4 0,15 22 4 0,16 22 4 0,17 23 4 0,18 24 7 0,18 23 7 0,19 24 0 6,19 23 7 2,20 23 0 6,21 23 0 4,22 23 0 6,22 24 0 6,23 24 0 6,22 20 0 0,23 21 4 0,23 20 4 6,24 20 4 0,24 21 4 0,25 23 4 4,24 24 0 4,24 23 0 0,24 22 0 2,22 21 0 3,23 22 0 6,22 22 0 0,18 18 9 0,21 21 0 6,20 20 9 0,20 19 9 6,19 18 9 3,21 20 0 4,21 19 0 2,20 18 9 4,18 17 4 0,19 17 4 0,20 17 9 0,21 18 9 0,22 18 4 0,22 16 4 0,21 15 4 4,22 15 4 0,23 16 4 0,24 16 4 2,23 15 4 0,22 14 4 0,22 13 5 0,25 15 4 0,24 14 4 0,23 13 5 2,26 15 4 2,25 14 4 4,24 13 5 0,23 12 5 4,23 11 5 6,26 13 4 0,25 13 4 0,25 12 5 2,24 10 5 0,24 11 5 3,25 11 5 6,26 12 4 0,27 13 4 4,25 10 5 6,26 11 5 6,27 12 4 0,26 10 5 4,25 9 5 4,26 9 5 6,28 11 7 4,27 11 7 0,27 10 7 0,27 9 5 2,28 9 7 0,28 7 4 6,29 5 4 6,30 10 7 4,30 7 7 0,29 8 7 2,30 8 7 4,30 9 7 0,30 11 7 3,29 10 7 4,29 11 7 4,30 12 7 2,29 13 7 0,17 11 6 6,16 12 6 0,15 12 6 2,15 14 6 0,16 13 6 2,19 7 7 6,18 9 7 0,17 9 7 2,18 7 7 2,19 6 7 0,18 8 7 0,14 17 4 0,13 18 4 0,12 19 4 0,13 19 4 6,12 20 4 0,11 21 4 0,11 22 4 0,10 23 4 0,10 24 4 6,11 23 4 2,#units:26 17 1 false,29 16 1 false,29 14 1 false,28 6 1 false,16 16 1 false,17 15 2 false,15 17 1 false,15 16 2 false,16 14 2 false,22 5 2 false,18 14 1 false,19 12 2 false,21 8 2 false,23 7 1 false,25 6 2 false,27 7 1 false,25 22 1 false,16 21 2 false,16 23 1 false,16 22 1 false,22 20 2 true,23 21 1 false,24 20 2 false,24 23 2 true,22 22 2 true,20 20 1 false,18 17 1 false,19 17 2 false,20 17 2 false,23 15 1 false,22 14 2 false,22 13 1 false,24 14 1 false,24 13 1 false,26 12 2 false,#provinces:35@3@4@Koliso Tribe@100,28@18@1@Mikasa Tribe@10,19@15@1@Kamai Island @0,23@9@2@Kamai Tribe@25,29@4@4@Colonists@100,14@24@5@Colonists@100,18@21@6@Nagawi Tribe@50,17@15@7@Onugu Tribe@25,22@19@8@Colonists@150,21@22@9@Diwaya Tribe@50,#relations:4 1 8,8 1 1,8 1 5,8 1 0,8 1 9,8 1 6,1 1 9,1 1 5,1 1 0,1 1 6,5 1 0,5 1 9,5 1 6,0 1 6,0 1 9,9 1 6,4 2 0,4 2 9,4 2 6,4 2 5,1 1 4,#coalitions:temporary#messages:Our Water Tribes are being colonized!!!@We are being attacked, aswell as other southern Water Tribes...@But northern Water Tribes are rich, so they bribed colonists off...@It looks we are gonna be colonised, you have your Kawai island, which cannot be conquered...@So when we are colonised on land, we are gonna prepare on the island, and buy our land back just in case we are defeated!@Keep in mind that you need to wait to get your money, with it you can buy lands or even bribe off colonists?@Also, northern Water Tribes are in peace, so buy their land!!!@Good Luck !!!! @#goal:destroy_target_kingdom 4#real_money:#";
+    }
+
+
+    @Override
+    public String getMapName() {
+        return "Water Tribes";
+    }
+
+
+    @Override
+    public String getAuthor() {
+        return "Ysahh";
+    }
+}

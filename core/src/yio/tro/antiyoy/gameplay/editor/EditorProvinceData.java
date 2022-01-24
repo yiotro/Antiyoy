@@ -175,8 +175,14 @@ public class EditorProvinceData implements ReusableYio, EncodeableYio{
     public void decode(String source) {
         String[] split = source.split("@");
         id = Integer.valueOf(split[2]);
+        if (split.length < 4) {
+            generateRandomName();
+            return;
+        }
         name = split[3];
-        startingMoney = Integer.valueOf(split[4]);
+        if (split.length > 4) {
+            startingMoney = Integer.valueOf(split[4]);
+        }
 
         if (containsInvalidSymbols()) {
             generateRandomName();

@@ -55,7 +55,7 @@ public class FcpItem {
 
 
     void move() {
-        selectionFactor.move();
+        moveSelection();
 
         position.x = (float) (fastConstructionPanel.viewPosition.x + delta.x);
         position.y = (float) (fastConstructionPanel.viewPosition.y + delta.y);
@@ -64,6 +64,12 @@ public class FcpItem {
             position.x += (1 - fastConstructionPanel.appearFactor.get()) * animDelta.x;
             position.y += (1 - fastConstructionPanel.appearFactor.get()) * animDelta.y;
         }
+    }
+
+
+    private void moveSelection() {
+        if (fastConstructionPanel.touched) return;
+        selectionFactor.move();
     }
 
 

@@ -5,10 +5,8 @@ import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.ClickDetector;
 import yio.tro.antiyoy.gameplay.GameController;
-import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
-import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticContract;
-import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
-import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticRelation;
+import yio.tro.antiyoy.gameplay.diplomacy.*;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.render.MenuRender;
@@ -185,16 +183,30 @@ public class DiplomacyElement extends InterfaceElement {
 
         updateTempContracts(mainEntity, relationEntity);
 
-        if (tempContracts.size() == 0) {
-            return LanguagesManager.getInstance().getString(getRelationStringKey(mainEntity, relationEntity));
+        String relationStringKey = getRelationStringKey(mainEntity, relationEntity);
+        String relationString = LanguagesManager.getInstance().getString(relationStringKey);
+        if (tempContracts.size() == 0 && !mainEntity.hasAnyDebts()) {
+            return relationString;
         }
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(LanguagesManager.getInstance().getString(getRelationStringKey(mainEntity, relationEntity)));
+        stringBuilder.append(relationString);
+        for (Debt debt : mainEntity.debts) {
+            if (debt.value == 0) continue;
+            if (debt.target != relationEntity) continue;
+            stringBuilder.append(" [").append(Yio.getDeltaMoneyString(-debt.value)).append("]");
+        }
         for (DiplomaticContract contract : tempContracts) {
+            String dotationsString = contract.getDotationsStringFromEntityPerspective(mainEntity, false);
+            int dotationsValue = contract.getDotationsFromEntityPerspective(mainEntity, true);
+            if (contract.type != DiplomaticContract.TYPE_FRIENDSHIP && dotationsValue == 0) continue;
+            if (contract.type == DiplomaticContract.TYPE_FRIENDSHIP && GameRules.diplomaticRelationsLocked) continue;
             stringBuilder.append(" [");
-            stringBuilder.append(contract.getDotationsStringFromEntityPerspective(mainEntity));
-            stringBuilder.append(", ");
+            String string = dotationsString + ", ";
+            if (contract.type == DiplomaticContract.TYPE_FRIENDSHIP) {
+                string = "";
+            }
+            stringBuilder.append(string);
             stringBuilder.append(contract.getExpireCountDown());
             stringBuilder.append("x]");
         }
@@ -207,21 +219,10 @@ public class DiplomacyElement extends InterfaceElement {
         tempContracts.clear();
 
         DiplomacyManager diplomacyManager = getDiplomacyManager(getGameController());
-        DiplomaticContract contract;
 
-        contract = diplomacyManager.findContract(DiplomaticContract.TYPE_PIECE, mainEntity, relationEntity);
-        if (contract != null) {
-            tempContracts.add(contract);
-        }
-
-        contract = diplomacyManager.findContract(DiplomaticContract.TYPE_FRIENDSHIP, mainEntity, relationEntity);
-        if (contract != null) {
-            tempContracts.add(contract);
-        }
-
-        contract = diplomacyManager.findContract(DiplomaticContract.TYPE_TRAITOR, mainEntity, relationEntity);
-        if (contract != null) {
-            tempContracts.add(contract);
+        for (DiplomaticContract diplomaticContract : diplomacyManager.contracts) {
+            if (!diplomaticContract.equals(mainEntity, relationEntity, -1)) continue;
+            tempContracts.add(diplomaticContract);
         }
     }
 
@@ -695,21 +696,20 @@ public class DiplomacyElement extends InterfaceElement {
         DiplomaticEntity selectedEntity = diplomacyManager.getEntity(fraction);
         DiplomaticEntity mainEntity = diplomacyManager.getMainEntity();
         int relation = mainEntity.getRelation(selectedEntity);
-        boolean blackMarked = mainEntity.isBlackMarkedWith(selectedEntity);
 
         switch (relation) {
             case DiplomaticRelation.NEUTRAL:
                 enableIcon(DipActionType.like);
                 enableIcon(DipActionType.dislike);
-                if (!blackMarked) {
+                if (diplomacyManager.isBlackMarkAllowed(mainEntity, selectedEntity)) {
                     enableIcon(DipActionType.black_mark);
                 }
                 enableIcon(DipActionType.info);
-                enableIcon(DipActionType.transfer_money);
+                enableIcon(DipActionType.exchange);
                 enableIcon(DipActionType.mail);
                 break;
             case DiplomaticRelation.FRIEND:
-                enableIcon(DipActionType.transfer_money);
+                enableIcon(DipActionType.exchange);
                 enableIcon(DipActionType.dislike);
                 enableIcon(DipActionType.info);
                 enableIcon(DipActionType.buy_hexes);
@@ -718,7 +718,8 @@ public class DiplomacyElement extends InterfaceElement {
                 break;
             case DiplomaticRelation.ENEMY:
                 enableIcon(DipActionType.like);
-                if (!blackMarked) {
+                enableIcon(DipActionType.exchange);
+                if (diplomacyManager.isBlackMarkAllowed(mainEntity, selectedEntity)) {
                     enableIcon(DipActionType.black_mark);
                 }
                 enableIcon(DipActionType.mail);
@@ -767,8 +768,20 @@ public class DiplomacyElement extends InterfaceElement {
     }
 
 
-    void enableIcon(DipActionType action) {
-        getIcon(action).visible = true;
+    void enableIcon(DipActionType actionType) {
+        if (!isDipActionAllowed(actionType)) return;
+        getIcon(actionType).visible = true;
+    }
+
+
+    private boolean isDipActionAllowed(DipActionType actionType) {
+        if (GameRules.diplomaticRelationsLocked) {
+            if (actionType == DipActionType.like) return false;
+            if (actionType == DipActionType.dislike) return false;
+            if (actionType == DipActionType.black_mark) return false;
+            if (actionType == DipActionType.attack) return false;
+        }
+        return true;
     }
 
 

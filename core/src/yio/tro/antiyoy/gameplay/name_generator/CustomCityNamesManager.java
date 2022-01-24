@@ -2,6 +2,7 @@ package yio.tro.antiyoy.gameplay.name_generator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.FieldManager;
 
 import java.util.ArrayList;
@@ -56,11 +57,29 @@ public class CustomCityNamesManager {
 
 
     public String getUnusedName(FieldManager fieldManager) {
+        if (!isThereAtLeastOneUnusedName(fieldManager)) return null;
+        int c = 100;
+        while (c > 0) {
+            c--;
+            int index = YioGdxGame.random.nextInt(names.size());
+            String randomName = names.get(index);
+            if (fieldManager.isCityNameUsed(randomName)) continue;
+            return randomName;
+        }
         for (String name : names) {
             if (fieldManager.isCityNameUsed(name)) continue;
             return name;
         }
         return null;
+    }
+
+
+    public boolean isThereAtLeastOneUnusedName(FieldManager fieldManager) {
+        for (String name : names) {
+            if (fieldManager.isCityNameUsed(name)) continue;
+            return true;
+        }
+        return false;
     }
 
 

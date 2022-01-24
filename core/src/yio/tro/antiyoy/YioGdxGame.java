@@ -23,8 +23,9 @@ import yio.tro.antiyoy.gameplay.replays.ReplaySaveSystem;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.gameplay.skins.SkinManager;
 import yio.tro.antiyoy.gameplay.user_levels.UserLevelFactory;
-import yio.tro.antiyoy.gameplay.user_levels.UserLevelProgressManager;
+import yio.tro.antiyoy.gameplay.user_levels.UserLevelsManager;
 import yio.tro.antiyoy.menu.*;
+import yio.tro.antiyoy.menu.diplomatic_exchange.ArgumentViewFactory;
 import yio.tro.antiyoy.menu.save_slot_selector.SaveSystem;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.*;
@@ -43,8 +44,7 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     public MenuControllerYio menuControllerYio;
     public MenuViewYio menuViewYio;
     private static GlyphLayout glyphLayout = new GlyphLayout();
-    public static boolean ANDROID = false;
-    public static boolean IOS = false;
+    public static PlatformType platformType;
     TextureRegion mainBackground, infoBackground, settingsBackground, pauseBackground;
     TextureRegion currentBackground;
     TextureRegion lastBackground;
@@ -157,6 +157,19 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
         YioGdxGame.say("full loading time: " + (System.currentTimeMillis() - time1));
         checkForSingleMessageOnStart();
+        checkToShowIosCheckMyGames();
+    }
+
+
+    private void checkToShowIosCheckMyGames() {
+        if (platformType != PlatformType.ios) return;
+        if (OneTimeInfo.getInstance().iosCheckMyGames) return;
+        int numberOfCompletedLevels = CampaignProgressManager.getInstance().getNumberOfCompletedLevels();
+        if (numberOfCompletedLevels < 5 && !areSkirmishOptionsModified()) return;
+
+        OneTimeInfo.getInstance().iosCheckMyGames = true;
+        OneTimeInfo.getInstance().save();
+        Scenes.sceneIosCheckMyGames.create();
     }
 
 
@@ -168,7 +181,26 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
 
     private void checkForSingleMessageOnStart() {
-        //
+        if (OneTimeInfo.getInstance().newGameRelease) return;
+        int numberOfCompletedLevels = CampaignProgressManager.getInstance().getNumberOfCompletedLevels();
+        if (numberOfCompletedLevels < 5 && !areSkirmishOptionsModified()) return;
+        if (platformType == PlatformType.ios) return;
+
+        OneTimeInfo.getInstance().newGameRelease = true;
+        OneTimeInfo.getInstance().save();
+        Scenes.sceneAttraction.create();
+    }
+
+
+    private boolean areSkirmishOptionsModified() {
+        Preferences prefs = Gdx.app.getPreferences("skirmish");
+
+        if (prefs.getInteger("difficulty", 1) != 1) return true;
+        if (prefs.getInteger("map_size", 1) != 1) return true;
+        if (prefs.getInteger("color_number", 2) != 2) return true;
+        if (prefs.getInteger("player_number", 1) != 1) return true;
+
+        return false;
     }
 
 
@@ -183,11 +215,13 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         RefuseStatistics.initialize();
         SettingsManager.initialize();
         UserLevelFactory.initialize();
-        UserLevelProgressManager.initialize();
+        UserLevelsManager.initialize();
         GlobalStatistics.initialize();
         ReplaySaveSystem.initialize();
         KeyboardManager.initialize();
         CustomCityNamesManager.initialize();
+        ArgumentViewFactory.initialize();
+        StoreLinksYio.initialize();
     }
 
 
@@ -210,18 +244,23 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
 
     public void setGamePaused(boolean gamePaused) {
-        if (gamePaused && !this.gamePaused) { // actions when paused
+        if (this.gamePaused == gamePaused) return;
+
+        if (gamePaused) { // actions when paused
             this.gamePaused = true;
             gameController.selectionManager.deselectAll();
             splatController.revealSplats();
             readyToUnPause = false;
             menuControllerYio.forceDyingButtonsToEnd();
-        } else if (!gamePaused && this.gamePaused) { // actions when unpaused
-            unPauseAfterSomeTime();
-            beginBackgroundChange(4, true, true);
-            splatController.hideSplats();
-            Fonts.gameFont.setColor(Color.WHITE);
+            DebugFlags.closerLookMode = false;
+            return;
         }
+
+        // actions when unpaused
+        unPauseAfterSomeTime();
+        beginBackgroundChange(4, true, true);
+        splatController.hideSplats();
+        Fonts.gameFont.setColor(Color.WHITE);
     }
 
 
@@ -483,7 +522,10 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
 
         exception.printStackTrace();
         alreadyShownErrorMessageOnce = true;
-        Scenes.sceneExceptionReport.create(exception);
+        gameView.destroy();
+        setGamePaused(true);
+        Scenes.sceneExceptionReport.setException(exception);
+        Scenes.sceneExceptionReport.create();
     }
 
 
@@ -556,7 +598,6 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     public void restartGame() {
         if (GameRules.campaignMode) {
             int currentLevelIndex = CampaignProgressManager.getInstance().currentLevelIndex;
-
             campaignLevelFactory.createCampaignLevel(currentLevelIndex);
             return;
         }
@@ -593,9 +634,13 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
     }
 
 
-    public void pressButtonIfVisible(int id) {
+    public boolean pressButtonIfVisible(int id) {
         ButtonYio button = menuControllerYio.getButtonById(id);
-        if (button != null && button.isVisible() && button.appearFactor.get() == 1) button.press();
+        if (button == null) return false;
+        if (!button.isVisible()) return false;
+        if (button.appearFactor.get() != 1) return false;
+        button.press();
+        return true;
     }
 
 
@@ -651,7 +696,8 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             if (!alreadyShownErrorMessageOnce) {
                 exception.printStackTrace();
                 alreadyShownErrorMessageOnce = true;
-                Scenes.sceneExceptionReport.create(exception);
+                Scenes.sceneExceptionReport.setException(exception);
+                Scenes.sceneExceptionReport.create();
             }
         }
         return false;
@@ -670,7 +716,8 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
             if (!alreadyShownErrorMessageOnce) {
                 exception.printStackTrace();
                 alreadyShownErrorMessageOnce = true;
-                Scenes.sceneExceptionReport.create(exception);
+                Scenes.sceneExceptionReport.setException(exception);
+                Scenes.sceneExceptionReport.create();
             }
         }
         return false;
@@ -763,13 +810,18 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         super.pause();
 
         if (startedExitProcess) return;
+        if (platformType == PlatformType.pc) return;
 
         if (menuControllerYio != null) {
-            menuControllerYio.onPause();
+            menuControllerYio.onAppPause();
         }
 
         if (gameView != null) {
-            gameView.onPause();
+            gameView.onAppPause();
+        }
+
+        if (gameController != null) {
+            gameController.onAppPause();
         }
     }
 
@@ -779,13 +831,14 @@ public class YioGdxGame extends ApplicationAdapter implements InputProcessor {
         super.resume();
 
         if (startedExitProcess) return;
+        if (platformType == PlatformType.pc) return;
 
         if (menuControllerYio != null) {
-            menuControllerYio.onResume();
+            menuControllerYio.onAppResume();
         }
 
         if (gameView != null) {
-            gameView.onResume();
+            gameView.onAppResume();
         }
     }
 

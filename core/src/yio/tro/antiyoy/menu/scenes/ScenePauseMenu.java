@@ -7,6 +7,7 @@ import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.TextLabelElement;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
@@ -27,11 +28,13 @@ public class ScenePauseMenu extends AbstractScene{
     private double y;
     private ButtonYio specialActionButton;
     private Reaction rbSkipLevelMenu;
+    TextLabelElement levelLabel;
 
 
     public ScenePauseMenu(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
+        levelLabel = null;
         initReactions();
     }
 
@@ -90,9 +93,35 @@ public class ScenePauseMenu extends AbstractScene{
         y += bHeight;
 
         checkToAddCheatsStuff();
+        createLevelLabel();
 
         menuControllerYio.yioGdxGame.gameController.resetTouchMode();
         menuControllerYio.endMenuCreation();
+    }
+
+
+    private void createLevelLabel() {
+        initLevelLabel();
+        levelLabel.appear();
+        updateLevelLabel();
+    }
+
+
+    private void updateLevelLabel() {
+        if (GameRules.campaignMode && !GameRules.replayMode) {
+            levelLabel.setTitle(getString("menu_level") + ": " + CampaignProgressManager.getInstance().currentLevelIndex);
+            return;
+        }
+        levelLabel.setTitle("");
+    }
+
+
+    private void initLevelLabel() {
+        if (levelLabel != null) return;
+        levelLabel = new TextLabelElement(menuControllerYio);
+        levelLabel.setPosition(generateRectangle(0, 0.95, 1, 0.05));
+        levelLabel.setAnimation(Animation.up);
+        menuControllerYio.addElementToScene(levelLabel);
     }
 
 

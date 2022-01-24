@@ -23,12 +23,13 @@ public class SceneUlFilters extends AbstractScene {
     private Reaction rbByName;
     private CheckButtonYio chkDiplomacy;
     private CheckButtonYio chkFogOfWar;
+    private CheckButtonYio chkHidden;
 
 
     public SceneUlFilters(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
-        double h = 0.6;
+        double h = 0.7;
         labelPos = new RectangleYio(0.1, (0.9 - h) / 2, 0.8, h);
         chkCompleted = null;
 
@@ -71,9 +72,7 @@ public class SceneUlFilters extends AbstractScene {
     @Override
     public void create() {
         menuControllerYio.beginMenuCreation();
-
         menuControllerYio.getYioGdxGame().beginBackgroundChange(2, true, true);
-
         menuControllerYio.spawnBackButton(810, rbUserLevels);
 
         createInternals();
@@ -124,6 +123,7 @@ public class SceneUlFilters extends AbstractScene {
         chkMultiplayer.appear();
         chkDiplomacy.appear();
         chkFogOfWar.appear();
+        chkHidden.appear();
     }
 
 
@@ -132,33 +132,45 @@ public class SceneUlFilters extends AbstractScene {
 
         chkCompleted = CheckButtonYio.getFreshCheckButton(menuControllerYio);
         chkCompleted.setParent(label);
+        chkCompleted.setAlternativeVisualMode(true);
         chkCompleted.alignTop(0.08);
         chkCompleted.setTitle(getString("completed"));
 
         chkHistorical = CheckButtonYio.getFreshCheckButton(menuControllerYio);
         chkHistorical.setParent(label);
+        chkHistorical.setAlternativeVisualMode(true);
         chkHistorical.alignUnderPreviousElement();
         chkHistorical.setTitle(getString("historical"));
 
         chkSingleplayer = CheckButtonYio.getFreshCheckButton(menuControllerYio);
         chkSingleplayer.setParent(label);
+        chkSingleplayer.setAlternativeVisualMode(true);
         chkSingleplayer.alignUnderPreviousElement();
         chkSingleplayer.setTitle(makeFirstLetterUpperCase(getString("single_player")));
 
         chkMultiplayer = CheckButtonYio.getFreshCheckButton(menuControllerYio);
         chkMultiplayer.setParent(label);
+        chkMultiplayer.setAlternativeVisualMode(true);
         chkMultiplayer.alignUnderPreviousElement();
         chkMultiplayer.setTitle(makeFirstLetterUpperCase(getString("multiplayer")));
 
         chkDiplomacy = CheckButtonYio.getFreshCheckButton(menuControllerYio);
         chkDiplomacy.setParent(label);
+        chkDiplomacy.setAlternativeVisualMode(true);
         chkDiplomacy.alignUnderPreviousElement();
         chkDiplomacy.setTitle(getString("diplomacy"));
 
         chkFogOfWar = CheckButtonYio.getFreshCheckButton(menuControllerYio);
         chkFogOfWar.setParent(label);
+        chkFogOfWar.setAlternativeVisualMode(true);
         chkFogOfWar.alignUnderPreviousElement();
         chkFogOfWar.setTitle(getString("fog_of_war"));
+
+        chkHidden = CheckButtonYio.getFreshCheckButton(menuControllerYio);
+        chkHidden.setParent(label);
+        chkHidden.setAlternativeVisualMode(true);
+        chkHidden.alignUnderPreviousElement();
+        chkHidden.setTitle(getString("hidden"));
     }
 
 
@@ -171,6 +183,7 @@ public class SceneUlFilters extends AbstractScene {
         prefs.putBoolean("multiplayer", chkMultiplayer.isChecked());
         prefs.putBoolean("diplomacy", chkDiplomacy.isChecked());
         prefs.putBoolean("fog_of_war", chkFogOfWar.isChecked());
+        prefs.putBoolean("hidden", chkHidden.isChecked());
 
         prefs.flush();
     }
@@ -185,6 +198,7 @@ public class SceneUlFilters extends AbstractScene {
         chkMultiplayer.setChecked(prefs.getBoolean("multiplayer", true));
         chkDiplomacy.setChecked(prefs.getBoolean("diplomacy", true));
         chkFogOfWar.setChecked(prefs.getBoolean("fog_of_war", true));
+        chkHidden.setChecked(prefs.getBoolean("hidden", false));
     }
 
 
@@ -197,7 +211,7 @@ public class SceneUlFilters extends AbstractScene {
         label = buttonFactory.getButton(generateRectangle(labelPos.x, labelPos.y, labelPos.width, labelPos.height), 811, null);
         if (label.notRendered()) {
             label.setTextLine(getString("filters"));
-            label.applyNumberOfLines(9);
+            label.applyNumberOfLines(12);
             menuControllerYio.getButtonRenderer().renderButton(label);
         }
         label.setTouchable(false);

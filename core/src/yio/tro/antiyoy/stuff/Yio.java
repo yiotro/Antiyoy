@@ -41,18 +41,54 @@ public class Yio {
 
 
     public static String convertTime(long time) {
-        long currentCountDown = time;
-        currentCountDown /= 60; // seconds
+        // time is in frames
+        long seconds = time / 60;
         int min = 0;
-        while (currentCountDown >= 60) {
+        while (seconds >= 60) {
             min++;
-            currentCountDown -= 60;
+            seconds -= 60;
         }
         String zero = "";
-        if (currentCountDown < 10) {
+        if (seconds < 10) {
             zero = "0";
         }
-        return min + ":" + zero + currentCountDown;
+        return min + ":" + zero + seconds;
+    }
+
+
+    public static String convertTimeToUnderstandableString(long time) {
+        // time is in frames
+        long seconds = time / 60;
+        int minutes = 0;
+        while (seconds >= 60) {
+            minutes++;
+            seconds -= 60;
+        }
+        int hours = 0;
+        while (minutes >= 60) {
+            hours++;
+            minutes -= 60;
+        }
+
+        String hString = "";
+        if (hours > 0) {
+            hString = hours + LanguagesManager.getInstance().getString("hours_abbreviation") + " ";
+        }
+        String mString = "";
+        if (minutes > 0 || hours > 0) {
+            mString = convertToTwoDigitString(minutes) + LanguagesManager.getInstance().getString("minutes_abbreviation") + " ";
+        }
+        String sString = convertToTwoDigitString(seconds) + LanguagesManager.getInstance().getString("seconds_abbreviation");
+
+        return hString + mString + sString;
+    }
+
+
+    public static String convertToTwoDigitString(long value) {
+        if (value < 10) {
+            return "0" + value;
+        }
+        return "" + value;
     }
 
 
@@ -140,8 +176,48 @@ public class Yio {
         DateYio dateYio = new DateYio();
         dateYio.applyCurrentDay();
         if (dateYio.month != 12) return false;
-        if (dateYio.day < 26) return false;
+        if (dateYio.day < 28) return false;
         return true;
+    }
+
+
+    public static String getCompactMoneyString(int srcValue) {
+        String prefix = "";
+        if (srcValue < 0) {
+            prefix = "-";
+        }
+        srcValue = Math.abs(srcValue);
+
+        if (srcValue < 1000) {
+            return prefix + srcValue;
+        }
+
+        float v;
+        int iv;
+
+        if (srcValue < 10000) {
+            v = srcValue;
+            v /= 1000;
+            v = (float) Yio.roundUp(v, 1);
+            return prefix + v + "k";
+        }
+
+        if (srcValue < 1000000) {
+            iv = srcValue;
+            iv /= 1000;
+            return prefix + iv + "k";
+        }
+
+        if (srcValue < 10000000) {
+            v = srcValue;
+            v /= 1000000;
+            v = (float) Yio.roundUp(v, 1);
+            return prefix + v + "m";
+        }
+
+        iv = srcValue;
+        iv /= 1000000;
+        return prefix + iv + "m";
     }
 
 
@@ -158,5 +234,18 @@ public class Yio {
 
     public static boolean isNumeric(String str) {
         return str.length() != 0 && str.matches("-?\\d+(\\.\\d+)?");
+    }
+
+
+    public static String getDeltaMoneyString(int value) {
+        if (value > 0) {
+            return "+$" + value;
+        }
+        return "$" + value;
+    }
+
+
+    public static String getCapitalizedString(String string) {
+        return string.substring(0, 1).toUpperCase() + string.substring(1);
     }
 }

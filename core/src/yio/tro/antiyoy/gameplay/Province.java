@@ -34,8 +34,12 @@ public class Province {
         if (GameRules.replayMode) return;
 
         Hex randomPlace = getFreeHex(random);
-        if (randomPlace == null) randomPlace = getAnyHexExceptTowers();
-        if (randomPlace == null) randomPlace = getRandomHex();
+        if (randomPlace == null) {
+            randomPlace = getAnyHexExceptTowers(random);
+        }
+        if (randomPlace == null) {
+            randomPlace = getRandomHex(random);
+        }
 
         gameController.cleanOutHex(randomPlace);
         gameController.addSolidObject(randomPlace, Obj.TOWN);
@@ -70,27 +74,32 @@ public class Province {
 
 
     public Hex getCapital() {
-        for (Hex hex : hexList)
-            if (hex.objectInside == Obj.TOWN)
-                return hex;
+        for (Hex hex : hexList) {
+            if (hex.objectInside != Obj.TOWN) continue;
+            return hex;
+        }
         return hexList.get(0);
     }
 
 
     public Hex getRandomHex() {
-        return hexList.get(gameController.random.nextInt(hexList.size()));
+        return getRandomHex(gameController.random);
     }
 
 
-    private Hex getAnyHexExceptTowers() {
+    public Hex getRandomHex(Random random) {
+        return hexList.get(random.nextInt(hexList.size()));
+    }
+
+
+    private Hex getAnyHexExceptTowers(Random random) {
         tempList.clear();
         for (Hex hex : hexList) {
-            if (!hex.containsTower()) {
-                tempList.add(hex);
-            }
+            if (hex.containsTower()) continue;
+            tempList.add(hex);
         }
         if (tempList.size() == 0) return null;
-        return tempList.get(YioGdxGame.random.nextInt(tempList.size()));
+        return tempList.get(random.nextInt(tempList.size()));
     }
 
 
@@ -104,9 +113,10 @@ public class Province {
 
     private Hex getFreeHex(Random random) {
         tempList.clear();
-        for (Hex hex : hexList)
-            if (hex.isFree())
-                tempList.add(hex);
+        for (Hex hex : hexList) {
+            if (!hex.isFree()) continue;
+            tempList.add(hex);
+        }
         if (tempList.size() == 0) return null;
         return tempList.get(random.nextInt(tempList.size()));
     }
@@ -135,6 +145,25 @@ public class Province {
     }
 
 
+    public boolean containsTrees() {
+        for (Hex hex : hexList) {
+            if (hex.containsTree()) return true;
+        }
+        return false;
+    }
+
+
+    public int countUnits(int strength) {
+        int c = 0;
+        for (Hex hex : hexList) {
+            if (!hex.hasUnit()) continue;
+            if (strength != -1 && hex.unit.strength != strength) continue;
+            c++;
+        }
+        return c;
+    }
+
+
     public int countObjects(int objType) {
         int c = 0;
         for (Hex hex : hexList) {
@@ -145,7 +174,7 @@ public class Province {
     }
 
 
-    int getTaxes() {
+    public int getTaxes() {
         int taxes = 0;
 
         for (Hex hex : hexList) {
@@ -334,7 +363,7 @@ public class Province {
     }
 
 
-    boolean containsHex(Hex hex) {
+    public boolean containsHex(Hex hex) {
         return hexList.contains(hex);
     }
 
@@ -377,10 +406,18 @@ public class Province {
     }
 
 
+    public boolean intersects(Province province) {
+        for (Hex hex : province.hexList) {
+            if (containsHex(hex)) return true;
+        }
+        return false;
+    }
+
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("[Province" + "(").append(getFraction()).append(")").append(":");
+        builder.append("[Province" + "(").append(hexList.size()).append(")").append(":");
         for (Hex hex : hexList) {
             builder.append(" ").append(hex);
         }

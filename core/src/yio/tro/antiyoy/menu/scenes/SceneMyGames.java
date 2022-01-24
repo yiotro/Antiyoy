@@ -5,17 +5,28 @@ import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
+import yio.tro.antiyoy.menu.customizable_list.AbstractCustomListItem;
+import yio.tro.antiyoy.menu.customizable_list.CustomizableListYio;
+import yio.tro.antiyoy.menu.customizable_list.ScrollListItem;
+import yio.tro.antiyoy.menu.customizable_list.SliReaction;
+import yio.tro.antiyoy.menu.scenes.editor.SceneEditorOverlay;
+import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.LanguagesManager;
+import yio.tro.antiyoy.stuff.StoreLinksYio;
+import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class SceneMyGames extends AbstractScene {
 
     private ButtonYio infoPanel;
+    CustomizableListYio customizableListYio;
 
 
     public SceneMyGames(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
+        customizableListYio = null;
     }
 
 
@@ -26,32 +37,57 @@ public class SceneMyGames extends AbstractScene {
         menuControllerYio.spawnBackButton(490, Reaction.rbHelpIndex);
 
         createInfoPanel();
-        createInternalButton(492, 0, "Achikaps", "https://play.google.com/store/apps/details?id=yio.tro.achikaps");
-        createInternalButton(493, 1, "Bleentoro", "https://play.google.com/store/apps/details?id=yio.tro.bleentoro");
-        createInternalButton(494, 2, "Shmatoosto", "https://play.google.com/store/apps/details?id=yio.tro.shmatoosto");
-        createInternalButton(495, 3, "Opacha-mda", "https://play.google.com/store/apps/details?id=yio.tro.opacha");
+        createList();
 
         menuControllerYio.endMenuCreation();
     }
 
 
-    void createInternalButton(int id, int oIndex, String key, String url) {
-        double bh = 0.055;
-        ButtonYio button = buttonFactory.getButton(generateRectangle(0.2, 0.55 - bh * oIndex, 0.6, bh), id, getString(key));
-        button.setAnimation(Animation.from_center);
-        button.appearFactor.appear(2, 1.5);
-        button.setVisualHook(infoPanel);
-        button.setReaction(new Reaction() {
+    private void createList() {
+        initList();
+        customizableListYio.appear();
+    }
+
+
+    private void initList() {
+        if (customizableListYio != null) return;
+        customizableListYio = new CustomizableListYio(menuControllerYio);
+        customizableListYio.setAnimation(Animation.from_center);
+        customizableListYio.setEmbeddedMode(true);
+        customizableListYio.setPosition(generateRectangle(0.06, 0.06, 0.88, 0.63));
+        menuControllerYio.addElementToScene(customizableListYio);
+        loadValues();
+    }
+
+
+    private void loadValues() {
+        StoreLinksYio instance = StoreLinksYio.getInstance();
+        for (String key : instance.getKeys()) {
+            if (key.equals("antiyoy")) continue;
+            String capitalizedString = Yio.getCapitalizedString(key);
+            String link = instance.getLink(key);
+            addListItem(capitalizedString, link);
+        }
+    }
+
+
+    private void addListItem(String key, final String url) {
+        ScrollListItem scrollListItem = new ScrollListItem();
+        scrollListItem.setKey(key);
+        scrollListItem.setTitle(key);
+        scrollListItem.setHeight(0.06f * GraphicsYio.height);
+        scrollListItem.setClickReaction(new SliReaction() {
             @Override
-            public void perform(ButtonYio buttonYio) {
+            public void apply(AbstractCustomListItem item) {
                 Gdx.net.openURI(url);
             }
         });
+        customizableListYio.addItem(scrollListItem);
     }
 
 
     private void createInfoPanel() {
-        infoPanel = buttonFactory.getButton(generateRectangle(0.05, 0.1, 0.9, 0.7), 491, null);
+        infoPanel = buttonFactory.getButton(generateRectangle(0.05, 0.05, 0.9, 0.8), 491, null);
         infoPanel.cleatText();
         ArrayList<String> list = menuControllerYio.getArrayListFromString(LanguagesManager.getInstance().getString("article_my_games"));
         infoPanel.addManyLines(list);

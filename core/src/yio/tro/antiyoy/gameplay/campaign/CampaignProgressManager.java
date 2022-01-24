@@ -12,7 +12,7 @@ public class CampaignProgressManager {
 
     public static final String PROGRESS_PREFS_GENERIC = "antiyoy.progress";
     public static final String PROGRESS_PREFS_SLAY = "antiyoy.progress.slay"; // maybe will be used later
-    public static final int INDEX_OF_LAST_LEVEL = 129;
+    public static final int INDEX_OF_LAST_LEVEL = 155;
 
     private static CampaignProgressManager instance;
     public int currentLevelIndex;
@@ -184,6 +184,16 @@ public class CampaignProgressManager {
         }
 
         return false;
+    }
+
+
+    public int getNumberOfCompletedLevels() {
+        int c = 0;
+        for (int i = 0; i < progress.length; i++) {
+            if (!progress[i]) continue;
+            c++;
+        }
+        return c;
     }
 
 

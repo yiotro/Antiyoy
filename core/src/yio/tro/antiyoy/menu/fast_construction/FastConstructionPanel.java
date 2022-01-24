@@ -14,6 +14,7 @@ import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.render.MenuRender;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.LongTapDetector;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
 
@@ -28,6 +29,9 @@ public class FastConstructionPanel extends InterfaceElement {
     PointYio currentTouch;
     private float itemTouchOffset;
     public ArrayList<FcpItem> items;
+    LongTapDetector longTapDetector;
+    FcpItem bufferItem;
+    boolean touched;
 
 
     public FastConstructionPanel(MenuControllerYio menuControllerYio, int id) {
@@ -38,10 +42,32 @@ public class FastConstructionPanel extends InterfaceElement {
         viewPosition = new RectangleYio();
         appearFactor = new FactorYio();
         currentTouch = new PointYio();
+        bufferItem = null;
 
         initMetrics();
         initPosition();
         initItems();
+        initLongTapDetector();
+    }
+
+
+    private void initLongTapDetector() {
+        longTapDetector = new LongTapDetector() {
+            @Override
+            public void onLongTapDetected() {
+                FastConstructionPanel.this.onLongTapDetected();
+            }
+        };
+    }
+
+
+    void onLongTapDetected() {
+        if (isInSimpleEndTurnMode()) return;
+        if (bufferItem == null) return;
+        if (bufferItem.actionType != FcpActionType.end_turn) return;
+        GameController gameController = menuControllerYio.yioGdxGame.gameController;
+        SoundManagerYio.playSound(SoundManagerYio.soundEndTurn);
+        gameController.onEndTurnButtonPressed();
     }
 
 
@@ -154,6 +180,7 @@ public class FastConstructionPanel extends InterfaceElement {
     private void onAppear() {
         rearrangeItems();
         updateTouchDeltas();
+        touched = false;
     }
 
 
@@ -251,7 +278,7 @@ public class FastConstructionPanel extends InterfaceElement {
         if (alignRight) {
             itemByAction.delta.x = (float) (position.width - (1.4 * itemTouchOffset + place * (2.5f * itemTouchOffset)));
         } else {
-            itemByAction.delta.x = itemTouchOffset + place * (2.5f * itemTouchOffset);
+            itemByAction.delta.x = 1.4f * itemTouchOffset + place * (2.5f * itemTouchOffset);
         }
         itemByAction.delta.y = height / 2;
     }
@@ -275,6 +302,7 @@ public class FastConstructionPanel extends InterfaceElement {
 
     @Override
     public boolean checkToPerformAction() {
+        longTapDetector.move();
         return false;
     }
 
@@ -288,6 +316,9 @@ public class FastConstructionPanel extends InterfaceElement {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         currentTouch.set(screenX, screenY);
+        longTapDetector.onTouchDown(currentTouch);
+        bufferItem = null;
+        touched = true;
 
         return checkToClickItems();
     }
@@ -355,7 +386,7 @@ public class FastConstructionPanel extends InterfaceElement {
                 applyUndoAction();
                 break;
             case end_turn:
-                applyEndTurn();
+                applyEndTurn(item);
                 break;
             case diplomacy:
                 applyOpenDiplomacy();
@@ -377,14 +408,19 @@ public class FastConstructionPanel extends InterfaceElement {
     }
 
 
-    private void applyEndTurn() {
-        GameController gameController = menuControllerYio.yioGdxGame.gameController;
-
-        if (gameController.haveToAskToEndTurn()) {
-            Scenes.sceneConfirmEndTurn.create();
-        } else {
-            gameController.onEndTurnButtonPressed();
+    private void applyEndTurn(FcpItem item) {
+        if (!isInSimpleEndTurnMode()) {
+            bufferItem = item;
+            return;
         }
+        GameController gameController = menuControllerYio.yioGdxGame.gameController;
+        gameController.onEndTurnButtonPressed();
+    }
+
+
+    private boolean isInSimpleEndTurnMode() {
+        if (GameRules.tutorialMode) return true;
+        return !SettingsManager.cautiosEndTurnEnabled;
     }
 
 
@@ -441,6 +477,8 @@ public class FastConstructionPanel extends InterfaceElement {
 
 
     public void onKeyPressed(int keycode) {
+        if (!menuControllerYio.yioGdxGame.gameController.selectionManager.isSomethingSelected()) return;
+
         switch (keycode) {
             case Input.Keys.NUM_1:
                 applyBuildUnit(1);
@@ -454,12 +492,15 @@ public class FastConstructionPanel extends InterfaceElement {
 
     @Override
     public boolean touchDrag(int screenX, int screenY, int pointer) {
+        longTapDetector.onTouchDrag(currentTouch);
         return false;
     }
 
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        longTapDetector.onTouchUp(currentTouch);
+        touched = false;
         return false;
     }
 

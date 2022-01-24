@@ -30,8 +30,12 @@ public class LoadingParameters {
     public String levelCode;
     public String editorProvincesData;
     public String editorRelationsData;
+    public String editorCoalitionsData;
     public String preparedMessagesData;
+    public String goalData;
     public int genProvinces;
+    public int treesPercentageIndex;
+    public boolean diplomaticRelationsLocked;
 
 
     void defaultValues() {
@@ -54,8 +58,12 @@ public class LoadingParameters {
         levelCode = "";
         editorProvincesData = "";
         editorRelationsData = "";
+        editorCoalitionsData = "";
         preparedMessagesData = "";
+        goalData = "";
         genProvinces = 0;
+        treesPercentageIndex = 2;
+        diplomaticRelationsLocked = false;
     }
 
 
@@ -82,6 +90,10 @@ public class LoadingParameters {
         editorRelationsData = src.editorRelationsData;
         preparedMessagesData = src.preparedMessagesData;
         genProvinces = src.genProvinces;
+        treesPercentageIndex = src.treesPercentageIndex;
+        goalData = src.goalData;
+        diplomaticRelationsLocked = src.diplomaticRelationsLocked;
+        editorCoalitionsData = src.editorCoalitionsData;
     }
 
 
@@ -124,12 +136,16 @@ public class LoadingParameters {
         System.out.println("editorRelationsData = " + editorRelationsData);
         System.out.println("preparedMessagesData = " + preparedMessagesData);
         System.out.println("genProvinces = " + genProvinces);
+        System.out.println("treesPercentageIndex = " + treesPercentageIndex);
+        System.out.println("goalData = " + goalData);
+        System.out.println("diplomaticRelationsLocked = " + diplomaticRelationsLocked);
+        System.out.println("editorCoalitionsData = " + editorCoalitionsData);
 
         System.out.println();
     }
 
 
-    public void applyPrefs(Preferences prefs) {
+    public void loadBasicInfo(Preferences prefs) {
         turn = prefs.getInteger("save_turn");
         playersNumber = prefs.getInteger("save_player_number");
         fractionsQuantity = prefs.getInteger("save_color_number");
@@ -147,5 +163,6 @@ public class LoadingParameters {
         userLevelMode = prefs.getBoolean("user_level_mode", false);
         ulKey = prefs.getString("ul_key", null);
         editorColorFixApplied = prefs.getBoolean("editor_color_fix_applied", false);
+        diplomaticRelationsLocked = prefs.getBoolean("lock_relations", false);
     }
 }

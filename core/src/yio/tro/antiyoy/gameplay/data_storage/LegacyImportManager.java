@@ -6,6 +6,7 @@ import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
 import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.loading.LoadingType;
+import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.StringTokenizer;
 
@@ -44,7 +45,7 @@ public class LegacyImportManager {
         this.parameters = parameters;
         int delimiterChar = fullLevel.indexOf("/");
         String basicInfo;
-        int basicInfoValues[] = new int[4];
+        int[] basicInfoValues = new int[4];
 
         if (delimiterChar < 0) { // empty slot
             return;
@@ -56,11 +57,13 @@ public class LegacyImportManager {
 
         while (stringTokenizer.hasMoreTokens()) {
             String token = stringTokenizer.nextToken();
-            basicInfoValues[i] = Integer.valueOf(token);
+            if (Yio.isNumeric(token)) {
+                basicInfoValues[i] = Integer.valueOf(token);
+            }
             i++;
         }
 
-        parameters.activeHexes = fullLevel.substring(delimiterChar + 1, fullLevel.length());
+        parameters.activeHexes = fullLevel.substring(delimiterChar + 1);
         parameters.playersNumber = basicInfoValues[2];
         parameters.fractionsQuantity = basicInfoValues[3];
         parameters.levelSize = basicInfoValues[1];

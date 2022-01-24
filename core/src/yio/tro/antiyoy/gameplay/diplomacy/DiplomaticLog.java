@@ -2,7 +2,11 @@ package yio.tro.antiyoy.gameplay.diplomacy;
 
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
+import yio.tro.antiyoy.gameplay.diplomacy.exchange.ExchangeType;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.menu.diplomatic_exchange.ExchangeUiElement;
 import yio.tro.antiyoy.menu.scenes.Scenes;
+import yio.tro.antiyoy.stuff.Yio;
 import yio.tro.antiyoy.stuff.object_pool.ObjectPoolYio;
 
 import java.util.ArrayList;
@@ -10,7 +14,7 @@ import java.util.ArrayList;
 public class DiplomaticLog {
 
 
-    public static final int TURNS_BEFORE_EASY_WIN_IS_POSSIBLE = 25;
+    public static final int TURNS_BEFORE_EASY_WIN_IS_POSSIBLE = 50;
     DiplomacyManager diplomacyManager;
     public ArrayList<DiplomaticMessage> messages;
     ObjectPoolYio<DiplomaticMessage> poolMessages;
@@ -90,9 +94,27 @@ public class DiplomaticLog {
             case attack_proposition:
                 applyReceiveAttackPropositionDialog(message);
                 break;
+            case exchange:
+                applyExchange(message);
+                return; // do not remove it now
         }
 
         removeMessage(message);
+    }
+
+
+    private void applyExchange(DiplomaticMessage message) {
+        Scenes.sceneDiplomaticLog.hide();
+        Scenes.sceneDiplomaticExchange.create();
+        ExchangeUiElement exchangeUiElement = Scenes.sceneDiplomaticExchange.exchangeUiElement;
+        exchangeUiElement.resetData();
+        exchangeUiElement.setMainEntity(message.recipient);
+        exchangeUiElement.setTargetEntity(message.sender);
+        exchangeUiElement.setReadMode(true);
+        exchangeUiElement.loadArgumentsFromMessage(message);
+        exchangeUiElement.updateSize();
+
+        Scenes.sceneDiplomaticExchange.checkToShowQuickTutorial();
     }
 
 
@@ -102,7 +124,8 @@ public class DiplomaticLog {
 
 
     private void applyHexSale(DiplomaticMessage message) {
-        int price;ArrayList<Hex> hexList = diplomacyManager.convertStringToPurchaseList(message.arg1);
+        int price;
+        ArrayList<Hex> hexList = diplomacyManager.convertStringToHexList(message.arg1);
         price = Integer.valueOf(message.arg2);
         Scenes.sceneAgreeToBuyHexes.create();
         Scenes.sceneAgreeToBuyHexes.dialog.setData(message.recipient, hexList, price);
@@ -110,7 +133,8 @@ public class DiplomaticLog {
 
 
     private void applyHexPurchase(DiplomaticMessage message) {
-        int price;ArrayList<Hex> hexesToBuy = diplomacyManager.convertStringToPurchaseList(message.arg1);
+        int price;
+        ArrayList<Hex> hexesToBuy = diplomacyManager.convertStringToHexList(message.arg1);
         price = Integer.valueOf(message.arg2);
         Scenes.sceneAgreeToSellHexes.create();
         Scenes.sceneAgreeToSellHexes.dialog.setData(message.sender, hexesToBuy, price);
@@ -124,8 +148,20 @@ public class DiplomaticLog {
 
 
     private void applyFriendshipEnded(DiplomaticMessage message) {
-        Scenes.sceneFriendshipDialog.create();
-        Scenes.sceneFriendshipDialog.dialog.setValues(message.sender, message.recipient, message);
+        Scenes.sceneDiplomaticLog.hide();
+        Scenes.sceneDiplomaticExchange.create();
+        ExchangeUiElement exchangeUiElement = Scenes.sceneDiplomaticExchange.exchangeUiElement;
+        exchangeUiElement.resetData();
+        exchangeUiElement.setMainEntity(message.recipient);
+        exchangeUiElement.setTargetEntity(message.sender);
+        exchangeUiElement.setReadMode(false);
+        exchangeUiElement.topView.setExchangeType(ExchangeType.friendship);
+        exchangeUiElement.bottomView.setExchangeType(ExchangeType.dotations);
+        int friendshipPrice = diplomacyManager.diplomaticAI.getFriendshipPrice(message.recipient);
+        exchangeUiElement.applyOptimalDotaions(friendshipPrice);
+        exchangeUiElement.updateSize();
+
+        Scenes.sceneDiplomaticExchange.checkToShowQuickTutorial();
     }
 
 
@@ -141,17 +177,43 @@ public class DiplomaticLog {
         int targetFraction = Integer.valueOf(message.arg2);
         DiplomaticEntity targetEntity = diplomacyManager.getEntity(targetFraction);
         Scenes.sceneReceiveAttackPropositionDialog.dialog.setData(message.sender, message.recipient, targetEntity, price);
+        Scenes.sceneDiplomaticLog.hide();
     }
 
 
-    void checkToRemoveInvalidHexSaleMessages() {
+    void checkToRemoveRedundantWarDeclarations() {
         for (int i = messages.size() - 1; i >= 0; i--) {
             DiplomaticMessage diplomaticMessage = messages.get(i);
-            if (diplomaticMessage.isNot(DipMessageType.hex_purchase) && diplomaticMessage.isNot(DipMessageType.hex_sale)) continue;
-            if (!diplomaticMessage.containsLandOwnedByThirdParty()) continue;
-
+            if (diplomaticMessage.isNot(DipMessageType.exchange)) continue;
+            if (!isExchangeWithWarDeclaration(diplomaticMessage)) continue;
+            int relation = diplomaticMessage.sender.getRelation(diplomaticMessage.recipient);
+            if (relation != DiplomaticRelation.ENEMY) continue;
             removeMessage(diplomaticMessage);
         }
+    }
+
+
+    private boolean isExchangeWithWarDeclaration(DiplomaticMessage diplomaticMessage) {
+        ExchangeType type1 = getExchangeTypeFromArgument(diplomaticMessage.arg1);
+        if (type1 == ExchangeType.war_declaration) return true;
+        ExchangeType type2 = getExchangeTypeFromArgument(diplomaticMessage.arg1);
+        if (type2 == ExchangeType.war_declaration) return true;
+        return false;
+    }
+
+
+    private ExchangeType getExchangeTypeFromArgument(String argument) {
+        String[] split = argument.split(" ");
+        if (split.length == 0) return null;
+
+        ExchangeType type;
+        try {
+            type = ExchangeType.valueOf(split[0]);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+
+        return type;
     }
 
 
@@ -179,16 +241,95 @@ public class DiplomaticLog {
     }
 
 
-    void checkToClearAbuseMessages() {
+    void removeInvalidMessages() {
+        checkToClearEasyWinMessages();
+        checkToClearMutuallyExclusiveMessages();
+        checkToRemoveRedundantWarDeclarations();
+        checkToRemoveForbiddenByWarExchanges();
+        checkToRemoveExchangesThatChangeRelations();
+        checkToRemoveForbiddenByLockMessages();
+    }
+
+
+    private void checkToRemoveForbiddenByLockMessages() {
+        if (!GameRules.diplomaticRelationsLocked) return;
+        for (int i = messages.size() - 1; i >= 0; i--) {
+            DiplomaticMessage diplomaticMessage = messages.get(i);
+            if (isMessageAllowedWhenRelationsLocked(diplomaticMessage)) continue;
+            removeMessage(diplomaticMessage);
+        }
+    }
+
+
+    private boolean isMessageAllowedWhenRelationsLocked(DiplomaticMessage diplomaticMessage) {
+        switch (diplomaticMessage.type) {
+            default:
+                return true;
+            case friendship_canceled:
+            case friendship_ended:
+            case friendship_proposal:
+                return false;
+        }
+    }
+
+
+    private void checkToRemoveExchangesThatChangeRelations() {
+        if (!GameRules.diplomaticRelationsLocked) return;
+        for (int i = messages.size() - 1; i >= 0; i--) {
+            DiplomaticMessage diplomaticMessage = messages.get(i);
+            if (diplomaticMessage.isNot(DipMessageType.exchange)) continue;
+            if (isExchangeAllowedWhenRelationsLocked(diplomaticMessage)) continue;
+            removeMessage(diplomaticMessage);
+        }
+    }
+
+
+    private boolean isExchangeAllowedWhenRelationsLocked(DiplomaticMessage diplomaticMessage) {
+        ExchangeType type1 = getExchangeTypeFromArgument(diplomaticMessage.arg1);
+        if (!diplomacyManager.exchangePerformer.isExchangeTypeAllowedWhenRelationsLocked(type1)) return false;
+
+        ExchangeType type2 = getExchangeTypeFromArgument(diplomaticMessage.arg2);
+        if (!diplomacyManager.exchangePerformer.isExchangeTypeAllowedWhenRelationsLocked(type2)) return false;
+
+        return true;
+    }
+
+
+    private void checkToRemoveForbiddenByWarExchanges() {
+        for (int i = messages.size() - 1; i >= 0; i--) {
+            DiplomaticMessage diplomaticMessage = messages.get(i);
+            if (diplomaticMessage.isNot(DipMessageType.exchange)) continue;
+            if (!isExchangeForbiddenByWar(diplomaticMessage)) continue;
+            removeMessage(diplomaticMessage);
+        }
+    }
+
+
+    private boolean isExchangeForbiddenByWar(DiplomaticMessage diplomaticMessage) {
+        int relation = diplomaticMessage.sender.getRelation(diplomaticMessage.recipient);
+        if (relation != DiplomaticRelation.ENEMY) return false;
+
+        ExchangeType type1 = getExchangeTypeFromArgument(diplomaticMessage.arg1);
+        if (type1 == ExchangeType.stop_war) return false;
+
+        ExchangeType type2 = getExchangeTypeFromArgument(diplomaticMessage.arg2);
+        if (type2 == ExchangeType.stop_war) return false;
+
+        return true;
+    }
+
+
+    void checkToClearEasyWinMessages() {
         DiplomaticEntity mainEntity = diplomacyManager.getMainEntity();
-        boolean oneFriendAwayFromDiplomaticVictory = mainEntity.isOneFriendAwayFromDiplomaticVictory();
+        boolean mainEntityCloseToWin = mainEntity.isOneFriendAwayFromDiplomaticVictory();
         int turnsMade = diplomacyManager.fieldManager.gameController.matchStatistics.turnsMade;
 
         for (int i = messages.size() - 1; i >= 0; i--) {
             DiplomaticMessage diplomaticMessage = messages.get(i);
             if (!isFriendshipProposalToMainEntity(diplomaticMessage)) continue;
+            if (mainEntity.isHuman() && diplomaticMessage.sender.isHuman()) continue;
 
-            if (oneFriendAwayFromDiplomaticVictory && turnsMade < TURNS_BEFORE_EASY_WIN_IS_POSSIBLE) {
+            if (mainEntityCloseToWin && turnsMade < TURNS_BEFORE_EASY_WIN_IS_POSSIBLE) {
                 removeMessage(diplomaticMessage);
                 continue;
             }
@@ -207,10 +348,12 @@ public class DiplomaticLog {
 
 
     private void removeAnyFriendshipProposalToMainEntity() {
+        DiplomaticEntity mainEntity = diplomacyManager.getMainEntity();
         for (int i = messages.size() - 1; i >= 0; i--) {
             DiplomaticMessage diplomaticMessage = messages.get(i);
 
             if (!isFriendshipProposalToMainEntity(diplomaticMessage)) continue;
+            if (mainEntity.isHuman() && diplomaticMessage.sender.isHuman()) continue;
 
             removeMessage(diplomaticMessage);
             break;
@@ -232,7 +375,18 @@ public class DiplomaticLog {
 
 
     private boolean isFriendshipProposalToMainEntity(DiplomaticMessage message) {
-        return message.recipient == diplomacyManager.getMainEntity() && message.type == DipMessageType.friendship_proposal;
+        if (message.recipient != diplomacyManager.getMainEntity()) return false;
+        if (message.type == DipMessageType.friendship_proposal) return true;
+
+        if (message.type == DipMessageType.exchange) {
+            if (message.arg1 == null || message.arg2 == null) return false;
+            ExchangeType type1 = getExchangeTypeFromArgument(message.arg1);
+            if (type1 == ExchangeType.friendship) return true;
+            ExchangeType type2 = getExchangeTypeFromArgument(message.arg2);
+            if (type2 == ExchangeType.friendship) return true;
+        }
+
+        return false;
     }
 
 

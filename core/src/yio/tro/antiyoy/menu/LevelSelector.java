@@ -79,17 +79,21 @@ public class LevelSelector extends InterfaceElement {
 
         backgroundTexture = GraphicsYio.loadTextureRegion("menu/level_selector/level_selector_background.png", false);
 
-        lockIconTextures = new TextureRegion[4];
+        lockIconTextures = new TextureRegion[6];
         lockIconTextures[0] = GraphicsYio.loadTextureRegion("menu/level_selector/easy_base.png", true);
         lockIconTextures[1] = GraphicsYio.loadTextureRegion("menu/level_selector/normal_base.png", true);
         lockIconTextures[2] = GraphicsYio.loadTextureRegion("menu/level_selector/hard_base.png", true);
         lockIconTextures[3] = GraphicsYio.loadTextureRegion("menu/level_selector/expert_base.png", true);
+        lockIconTextures[4] = GraphicsYio.loadTextureRegion("menu/level_selector/expert_base.png", true);
+        lockIconTextures[5] = GraphicsYio.loadTextureRegion("menu/level_selector/master_base.png", true);
 
-        unlockIconTextures = new TextureRegion[4];
+        unlockIconTextures = new TextureRegion[6];
         unlockIconTextures[0] = GraphicsYio.loadTextureRegion("menu/level_selector/unlocked_easy.png", false);
         unlockIconTextures[1] = GraphicsYio.loadTextureRegion("menu/level_selector/unlocked_normal.png", false);
         unlockIconTextures[2] = GraphicsYio.loadTextureRegion("menu/level_selector/unlocked_hard.png", false);
         unlockIconTextures[3] = GraphicsYio.loadTextureRegion("menu/level_selector/unlocked_expert.png", false);
+        unlockIconTextures[4] = GraphicsYio.loadTextureRegion("menu/level_selector/unlocked_expert.png", false);
+        unlockIconTextures[5] = GraphicsYio.loadTextureRegion("menu/level_selector/unlocked_master.png", false);
 
         completedIcon = GraphicsYio.loadTextureRegion("menu/level_selector/completed_level_base.png", false);
 
@@ -109,7 +113,7 @@ public class LevelSelector extends InterfaceElement {
 
     void renderPanel(int panelIndex) {
         BitmapFont font = Fonts.smallerMenuFont;
-        beginRender(panelIndex, font);
+        if (!beginRender(panelIndex, font)) return; // unable to begin render process
 
         Color color = font.getColor();
         font.setColor(Color.BLACK);
@@ -163,8 +167,9 @@ public class LevelSelector extends InterfaceElement {
     }
 
 
-    void beginRender(int panelIndex, BitmapFont font) {
+    boolean beginRender(int panelIndex, BitmapFont font) {
         frameBuffer = FrameBufferYio.getInstance(Pixmap.Format.RGB565, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+        if (frameBuffer == null) return false;
         frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         frameBuffer.begin();
         Matrix4 matrix4 = new Matrix4();
@@ -175,6 +180,7 @@ public class LevelSelector extends InterfaceElement {
         batch.begin();
         batch.draw(backgroundTexture, 0, 0, orthoWidth, orthoHeight);
         batch.end();
+        return true;
     }
 
 
@@ -201,8 +207,6 @@ public class LevelSelector extends InterfaceElement {
         if (appearFactor.get() == 1) {
             selectionFactor.move();
         }
-
-        checkToPerformAction();
     }
 
 
@@ -294,7 +298,7 @@ public class LevelSelector extends InterfaceElement {
 
 
     public void checkToReloadProgress() {
-        // TODO finish this feature later
+
     }
 
 
@@ -466,7 +470,7 @@ public class LevelSelector extends InterfaceElement {
 
 
     @Override
-    public void onPause() {
+    public void onAppPause() {
         for (int i = 0; i < textures.length; i++) {
             if (textures[i] != null) {
                 textures[i].getTexture().dispose();
@@ -476,7 +480,7 @@ public class LevelSelector extends InterfaceElement {
 
 
     @Override
-    public void onResume() {
+    public void onAppResume() {
         renderAllPanels();
     }
 

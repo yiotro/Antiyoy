@@ -96,9 +96,22 @@ public class LoadingManager {
             case editor_import:
                 createEditorImport();
                 break;
+            case restart_level_code:
+                createRestartLevelCode();
+                break;
         }
 
         endCreation();
+    }
+
+
+    private void createRestartLevelCode() {
+        gameController.fieldManager.createFieldMatrix();
+        gameController.decodeManager.perform(parameters.levelCode);
+        GameRules.fogOfWarEnabled = GameRules.editorFog;
+        GameRules.diplomacyEnabled = GameRules.editorDiplomacy;
+        gameController.fieldManager.detectProvinces();
+        gameSaver.detectRules();
     }
 
 
@@ -189,6 +202,9 @@ public class LoadingManager {
         gameSaver.detectRules();
         applyEditorChosenColorFix();
         gameController.checkToEnableAiOnlyMode();
+
+        gameController.stopAllUnitsFromJumping();
+        gameController.prepareCertainUnitsToMove();
     }
 
 
@@ -215,7 +231,6 @@ public class LoadingManager {
 
         if (parameters.campaignLevelIndex > 0) {
             GameRules.campaignMode = true;
-
             CampaignProgressManager.getInstance().setCurrentLevelIndex(parameters.campaignLevelIndex);
         }
 
@@ -296,6 +311,7 @@ public class LoadingManager {
 
     private void createSkirmish() {
         GameRules.genProvinces = parameters.genProvinces;
+        GameRules.treesSpawnChance = MapGenerator.treesPercentages[parameters.treesPercentageIndex] / 100d;
         gameController.fieldManager.generateMap();
         gameController.checkToEnableAiOnlyMode();
     }
@@ -308,6 +324,7 @@ public class LoadingManager {
         gameController.onEndCreation();
         gameController.updateInitialParameters(parameters);
         gameController.yioGdxGame.gameView.rList.renderBackgroundCache.setUpdateAllowed(true);
+        gameController.cameraController.focusOnTheMiddleOfTheLand();
         yioGdxGame.onEndCreation();
 
         if (GameRules.inEditorMode) {
@@ -321,8 +338,8 @@ public class LoadingManager {
             hideDeadDiplomaticEntities();
         }
 
-        gameController.levelEditor.checkToApplyAdditionalData();
-        gameController.messagesManager.checkToApplyAdditionalData();
+        gameController.checkToApplyAdditionalData();
+        gameController.finishGameManager.checkToShowGoalView();
     }
 
 
@@ -365,5 +382,6 @@ public class LoadingManager {
         GameRules.setSlayRules(parameters.slayRules);
         GameRules.setFogOfWarEnabled(parameters.fogOfWar);
         GameRules.setDiplomacyEnabled(parameters.diplomacy);
+        GameRules.setDiplomaticRelationsLocked(parameters.diplomaticRelationsLocked);
     }
 }

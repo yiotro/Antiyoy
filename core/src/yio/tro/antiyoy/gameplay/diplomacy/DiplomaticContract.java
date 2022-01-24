@@ -12,10 +12,12 @@ public class DiplomaticContract implements ReusableYio {
     public static final int TYPE_PIECE = 1;
     public static final int TYPE_BLACK_MARK = 2;
     public static final int TYPE_TRAITOR = 3;
+    public static final int TYPE_DOTATIONS = 4;
+    public static final int TYPE_FORBID_BLACK_MARK = 5;
 
     DiplomaticEntity one;
     DiplomaticEntity two;
-    int type;
+    public int type;
     int dotations; // if positive then one pays money to two
     int expireCountDown;
 
@@ -53,6 +55,10 @@ public class DiplomaticContract implements ReusableYio {
                 return -1;
             case TYPE_TRAITOR:
                 return DURATION_TRAITOR;
+            case TYPE_DOTATIONS:
+                return -1;
+            case TYPE_FORBID_BLACK_MARK:
+                return 10;
         }
     }
 
@@ -77,7 +83,12 @@ public class DiplomaticContract implements ReusableYio {
 
 
     public String getDotationsStringFromEntityPerspective(DiplomaticEntity entity) {
-        int dotations = getDotationsFromEntityPerspective(entity);
+        return getDotationsStringFromEntityPerspective(entity, true);
+    }
+
+
+    public String getDotationsStringFromEntityPerspective(DiplomaticEntity entity, boolean limitedByIncome) {
+        int dotations = getDotationsFromEntityPerspective(entity, limitedByIncome);
 
         if (dotations > 0) {
             return "+" + dotations;
@@ -88,12 +99,25 @@ public class DiplomaticContract implements ReusableYio {
 
 
     public int getDotationsFromEntityPerspective(DiplomaticEntity entity) {
+        return getDotationsFromEntityPerspective(entity, true);
+    }
+
+
+    public int getDotationsFromEntityPerspective(DiplomaticEntity entity, boolean limitedByIncome) {
         if (entity == one) {
-            return -dotations;
+            if (limitedByIncome) {
+                return Math.min(-dotations, two.getStateIncome());
+            } else {
+                return -dotations;
+            }
         }
 
         if (entity == two) {
-            return dotations;
+            if (limitedByIncome) {
+                return Math.min(dotations, one.getStateIncome());
+            } else {
+                return dotations;
+            }
         }
 
         return 0;

@@ -2,7 +2,6 @@ package yio.tro.antiyoy.menu.behaviors.editor;
 
 import yio.tro.antiyoy.gameplay.editor.LeInputMode;
 import yio.tro.antiyoy.menu.ButtonYio;
-import yio.tro.antiyoy.gameplay.editor.LevelEditor;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 
 /**

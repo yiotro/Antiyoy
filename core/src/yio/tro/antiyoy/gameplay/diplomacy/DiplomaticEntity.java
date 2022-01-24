@@ -1,12 +1,16 @@
 package yio.tro.antiyoy.gameplay.diplomacy;
 
 import yio.tro.antiyoy.YioGdxGame;
+import yio.tro.antiyoy.ai.AbstractAi;
+import yio.tro.antiyoy.ai.master.AiMaster;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,12 +24,14 @@ public class DiplomaticEntity implements ReusableYio {
     public boolean human;
     public boolean alive;
     public boolean hidden;
+    public ArrayList<Debt> debts;
 
 
     public DiplomaticEntity(DiplomacyManager diplomacyManager) {
         this.diplomacyManager = diplomacyManager;
 
         relations = new HashMap<>();
+        debts = new ArrayList<>();
     }
 
 
@@ -37,6 +43,7 @@ public class DiplomaticEntity implements ReusableYio {
         human = false;
         alive = true;
         hidden = false;
+        debts.clear();
     }
 
 
@@ -45,8 +52,17 @@ public class DiplomaticEntity implements ReusableYio {
 
         for (DiplomaticEntity entity : diplomacyManager.entities) {
             if (entity == this) continue;
-
             relations.put(entity, DiplomaticRelation.NEUTRAL);
+        }
+    }
+
+
+    void initDebts() {
+        debts.clear();
+
+        for (DiplomaticEntity entity : diplomacyManager.entities) {
+            if (entity == this) continue;
+            debts.add(new Debt(this, entity, 0));
         }
     }
 
@@ -83,7 +99,7 @@ public class DiplomaticEntity implements ReusableYio {
     }
 
 
-    public int getStateBalance() {
+    public int getStateProfit() {
         int balance = 0;
 
         for (Province province : diplomacyManager.fieldManager.provinces) {
@@ -93,6 +109,19 @@ public class DiplomaticEntity implements ReusableYio {
         }
 
         return balance;
+    }
+
+
+    public int getStateIncome() {
+        int income = 0;
+
+        for (Province province : diplomacyManager.fieldManager.provinces) {
+            if (province.getFraction() != fraction) continue;
+
+            income += province.getIncome();
+        }
+
+        return income;
     }
 
 
@@ -126,13 +155,13 @@ public class DiplomaticEntity implements ReusableYio {
             if (!contract.contains(this)) continue;
 
             switch (contract.type) {
-                case DiplomaticContract.TYPE_FRIENDSHIP:
-                    dotations += contract.getDotationsFromEntityPerspective(this);
-                    break;
-                case DiplomaticContract.TYPE_PIECE:
-                    dotations += contract.getDotationsFromEntityPerspective(this);
+                default:
+                    // nothing
                     break;
                 case DiplomaticContract.TYPE_TRAITOR:
+                    dotations += contract.getDotationsFromEntityPerspective(this);
+                    break;
+                case DiplomaticContract.TYPE_DOTATIONS:
                     dotations += contract.getDotationsFromEntityPerspective(this);
                     break;
             }
@@ -158,7 +187,7 @@ public class DiplomaticEntity implements ReusableYio {
 
         Hex capital;
         if (largestProvince == null) {
-            capital = diplomacyManager.fieldManager.getRandomActivehex();
+            capital = diplomacyManager.fieldManager.getRandomActiveHex();
             capitalName = CityNameGenerator.getInstance().generateName(capital);
             return;
         }
@@ -198,6 +227,48 @@ public class DiplomaticEntity implements ReusableYio {
     }
 
 
+    public Debt getDebt(DiplomaticEntity target) {
+        for (Debt debt : debts) {
+            if (debt.target != target) continue;
+            return debt;
+        }
+        return null;
+    }
+
+
+    public int getDebtPaySum() {
+        // amount of money that entity has to pay at start of each turn
+        int sum = 0;
+        for (Debt debt : debts) {
+            if (debt.value <= 0) continue;
+            if (!debt.isCurrentlyActive()) continue;
+            sum += debt.value;
+        }
+        return sum;
+    }
+
+
+    public Debt getBiggestDebtToPay() {
+        Debt result = null;
+        for (Debt debt : debts) {
+            if (debt.value <= 0) continue;
+            if (!debt.isCurrentlyActive()) continue;
+            if (result == null || debt.value > result.value) {
+                result = debt;
+            }
+        }
+        return result;
+    }
+
+
+    public boolean hasAnyDebts() {
+        for (Debt debt : debts) {
+            if (debt.value != 0) return true;
+        }
+        return false;
+    }
+
+
     public int getNumberOfMutualFriends(DiplomaticEntity entity) {
         int c = 0;
 
@@ -215,15 +286,10 @@ public class DiplomaticEntity implements ReusableYio {
     }
 
 
-    boolean acceptsFriendsRequest(DiplomaticEntity initiator) {
+    public boolean acceptsFriendsRequest(DiplomaticEntity initiator) {
         if (isAnyFriendBlackMarkedWithHim(initiator)) return false;
         if (initiator.isAnyFriendBlackMarkedWithHim(this)) return false;
         if (isBlackMarkedWith(initiator)) return false;
-
-        if (human) return true;
-
-        int dotations = diplomacyManager.calculateDotationsForFriendship(initiator, this);
-        if (dotations < -10) return false;
 
         return true;
     }
@@ -238,6 +304,13 @@ public class DiplomaticEntity implements ReusableYio {
             if (friendEntity.isBlackMarkedWith(entity)) return true;
         }
         return false;
+    }
+
+
+    public void resetDebts() {
+        for (Debt debt : debts) {
+            debt.value = 0;
+        }
     }
 
 
@@ -270,13 +343,32 @@ public class DiplomaticEntity implements ReusableYio {
             return;
         }
 
-        if (YioGdxGame.random.nextInt(9) == 0) {
-            tryToStartWar();
+        if (YioGdxGame.random.nextInt(getPeacefulness()) == 0) {
+            tryToStartWarWithRandomEntity();
         }
     }
 
 
-    private void tryToStartWar() {
+    int getPeacefulness() {
+        AbstractAi tacticalAi = getTacticalAi();
+        if (tacticalAi != null && tacticalAi instanceof AiMaster) {
+            return 3;
+        }
+        return 9;
+    }
+
+
+    AbstractAi getTacticalAi() {
+        GameController gameController = diplomacyManager.fieldManager.gameController;
+        ArrayList<AbstractAi> aiList = gameController.getAiList();
+        for (AbstractAi abstractAi : aiList) {
+            if (abstractAi.getFraction() == fraction) return abstractAi;
+        }
+        return null;
+    }
+
+
+    private void tryToStartWarWithRandomEntity() {
         if (!alive) return;
 
         for (int i = 0; i < 10; i++) {
@@ -292,7 +384,6 @@ public class DiplomaticEntity implements ReusableYio {
 
             if (isGoodIdeaToAttackEntity(randomEntity)) {
                 diplomacyManager.log.addMessage(DipMessageType.war_declaration, this, randomEntity);
-
                 diplomacyManager.onEntityRequestedToMakeRelationsWorse(this, randomEntity);
             }
 
@@ -302,9 +393,10 @@ public class DiplomaticEntity implements ReusableYio {
 
 
     private boolean isGoodIdeaToAttackEntity(DiplomaticEntity entity) {
+        if (GameRules.diplomaticRelationsLocked) return false;
         if (YioGdxGame.random.nextDouble() < 0.05) return true;
 
-        if (entity.getStateBalance() > 2 * getStateBalance()) return false;
+        if (entity.getStateProfit() > 2 * getStateProfit()) return false;
         if (entity.getStateFullMoney() > 5 * getStateFullMoney()) return false;
         if (entity.getNumberOfFriends() > getNumberOfFriends() + 1) return false;
 
@@ -362,6 +454,11 @@ public class DiplomaticEntity implements ReusableYio {
         }
 
         return c;
+    }
+
+
+    public String getName() {
+        return capitalName;
     }
 
 

@@ -7,7 +7,7 @@ import yio.tro.antiyoy.stuff.GraphicsYio;
 public class RenderTextLabel extends MenuRender{
 
 
-    private TextLabelElement textLabelElement;
+    private TextLabelElement tlElement;
 
 
     @Override
@@ -24,9 +24,9 @@ public class RenderTextLabel extends MenuRender{
 
     @Override
     public void renderSecondLayer(InterfaceElement element) {
-        textLabelElement = (TextLabelElement) element;
+        tlElement = (TextLabelElement) element;
 
-        GraphicsYio.renderTextOptimized(batch, getBlackPixel(), textLabelElement.title, textLabelElement.getFactor().get());
+        renderBlackTextOptimized(batch, getBlackPixel(), tlElement.title, tlElement.getFactor().get());
     }
 
 

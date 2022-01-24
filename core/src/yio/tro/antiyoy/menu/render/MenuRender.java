@@ -1,12 +1,13 @@
 package yio.tro.antiyoy.menu.render;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
-import yio.tro.antiyoy.menu.InterfaceElement;
-import yio.tro.antiyoy.menu.MenuViewYio;
-import yio.tro.antiyoy.menu.RenderLoadingScreenElement;
+import yio.tro.antiyoy.menu.*;
+import yio.tro.antiyoy.stuff.GraphicsYio;
+import yio.tro.antiyoy.stuff.RenderableTextYio;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -51,6 +52,16 @@ public abstract class MenuRender {
     public static RenderProfitDetailItem renderProfitDetailItem = new RenderProfitDetailItem();
     public static RenderReplayListItem renderReplayListItem = new RenderReplayListItem();
     public static RenderSimpleDipEntityItem renderSimpleDipEntityItem = new RenderSimpleDipEntityItem();
+    public static RenderExchangeUiElement renderExchangeUiElement = new RenderExchangeUiElement();
+    public static RenderScrollListItem renderScrollListItem = new RenderScrollListItem();
+    public static RenderQuickExchangeTutorialElement renderQuickExchangeTutorialElement = new RenderQuickExchangeTutorialElement();
+    public static RenderDownsidePanelElement renderDownsidePanelElement = new RenderDownsidePanelElement();
+    public static RenderSimpleButtonElement renderSimpleButtonElement = new RenderSimpleButtonElement();
+    public static RenderEditGoalElement renderEditGoalElement = new RenderEditGoalElement();
+    public static RenderGoalView renderGoalView = new RenderGoalView();
+    public static RenderIosCheckMyGamesElement renderIosCheckMyGamesElement = new RenderIosCheckMyGamesElement();
+    public static RenderExceptionViewElement renderExceptionViewElement = new RenderExceptionViewElement();
+    public static RenderEndTurnButtonElement renderEndTurnButtonElement = new RenderEndTurnButtonElement();
 
     protected MenuViewYio menuViewYio;
     protected SpriteBatch batch;
@@ -96,6 +107,24 @@ public abstract class MenuRender {
 
     public GameView getGameView() {
         return menuViewYio.yioGdxGame.gameView;
+    }
+
+
+    protected void renderBlackText(SpriteBatch batch, RenderableTextYio renderableTextYio) {
+        BitmapFont font = renderableTextYio.font;
+        Color color = font.getColor();
+        font.setColor(Color.BLACK);
+        GraphicsYio.renderText(batch, renderableTextYio);
+        font.setColor(color);
+    }
+
+
+    protected void renderBlackTextOptimized(SpriteBatch batch, TextureRegion blackPixel, RenderableTextYio renderableTextYio, float alpha) {
+        BitmapFont font = renderableTextYio.font;
+        Color color = font.getColor();
+        font.setColor(Color.BLACK);
+        GraphicsYio.renderTextOptimized(batch, blackPixel, renderableTextYio, alpha);
+        font.setColor(color);
     }
 
 

@@ -2,6 +2,7 @@ package yio.tro.antiyoy.menu.scenes;
 
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.scenes.editor.*;
+import yio.tro.antiyoy.menu.scenes.exception.SceneExceptionReport;
 import yio.tro.antiyoy.menu.scenes.gameplay.*;
 import yio.tro.antiyoy.menu.scenes.gameplay.choose_entity.SceneChooseDiplomaticEntity;
 
@@ -14,7 +15,7 @@ public class Scenes {
     public static SceneMoreSkirmishOptions sceneMoreSkirmishOptions;
     public static SceneSkirmishMenu sceneSkirmishMenu;
     public static SceneTestScreen sceneTestScreen;
-    public static SceneChoodeGameModeMenu sceneChoodeGameModeMenu;
+    public static SceneChooseGameMode sceneChooseGameMode;
     public static SceneTutorialIndex sceneTutorialIndex;
     public static SceneHelpIndex sceneHelpIndex;
     public static SceneCampaignMenu sceneCampaignMenu;
@@ -35,7 +36,6 @@ public class Scenes {
     public static SceneAfterGameMenu sceneAfterGameMenu;
     public static SceneMatchStatistics sceneMatchStatistics;
     public static SceneSingleMessage sceneSingleMessage;
-    public static SceneExceptionReport sceneExceptionReport;
     public static SceneEditorAutomationPanel sceneEditorAutomationPanel;
     public static SceneEditorConfirmRandomize sceneEditorConfirmRandomize;
     public static SceneSecretScreen sceneSecretScreen;
@@ -97,6 +97,17 @@ public class Scenes {
     public static ScenePrepareForAttackProposition scenePrepareForAttackProposition;
     public static SceneChooseDiplomaticEntity sceneChooseDiplomaticEntity;
     public static SceneReceiveAttackPropositionDialog sceneReceiveAttackPropositionDialog;
+    public static SceneAttraction sceneAttraction;
+    public static SceneDiplomaticExchange sceneDiplomaticExchange;
+    public static SceneChooseExchangeType sceneChooseExchangeType;
+    public static SceneQuickExchangeTutorial sceneQuickExchangeTutorial;
+    public static SceneUlContextMenu sceneUlContextMenu;
+    public static SceneChooseGoalType sceneChooseGoalType;
+    public static SceneGoalView sceneGoalView;
+    public static SceneIosCheckMyGames sceneIosCheckMyGames;
+    public static SceneExceptionReport sceneExceptionReport;
+    public static SceneAoButton sceneAoButton;
+    public static SceneAoArticle sceneAoArticle;
 
 
     public static void createScenes(MenuControllerYio menuController) {
@@ -107,7 +118,7 @@ public class Scenes {
         sceneMoreSkirmishOptions = new SceneMoreSkirmishOptions(menuController);
         sceneSkirmishMenu = new SceneSkirmishMenu(menuController);
         sceneTestScreen = new SceneTestScreen(menuController);
-        sceneChoodeGameModeMenu = new SceneChoodeGameModeMenu(menuController);
+        sceneChooseGameMode = new SceneChooseGameMode(menuController);
         sceneTutorialIndex = new SceneTutorialIndex(menuController);
         sceneHelpIndex = new SceneHelpIndex(menuController);
         sceneCampaignMenu = new SceneCampaignMenu(menuController);
@@ -128,7 +139,6 @@ public class Scenes {
         sceneAfterGameMenu = new SceneAfterGameMenu(menuController);
         sceneMatchStatistics = new SceneMatchStatistics(menuController);
         sceneSingleMessage = new SceneSingleMessage(menuController);
-        sceneExceptionReport = new SceneExceptionReport(menuController);
         sceneEditorAutomationPanel = new SceneEditorAutomationPanel(menuController);
         sceneEditorConfirmRandomize = new SceneEditorConfirmRandomize(menuController);
         sceneSecretScreen = new SceneSecretScreen(menuController);
@@ -190,5 +200,16 @@ public class Scenes {
         scenePrepareForAttackProposition = new ScenePrepareForAttackProposition(menuController);
         sceneChooseDiplomaticEntity = new SceneChooseDiplomaticEntity(menuController);
         sceneReceiveAttackPropositionDialog = new SceneReceiveAttackPropositionDialog(menuController);
+        sceneAttraction = new SceneAttraction(menuController);
+        sceneDiplomaticExchange = new SceneDiplomaticExchange(menuController);
+        sceneChooseExchangeType = new SceneChooseExchangeType(menuController);
+        sceneQuickExchangeTutorial = new SceneQuickExchangeTutorial(menuController);
+        sceneUlContextMenu = new SceneUlContextMenu(menuController);
+        sceneChooseGoalType = new SceneChooseGoalType(menuController);
+        sceneGoalView = new SceneGoalView(menuController);
+        sceneIosCheckMyGames = new SceneIosCheckMyGames(menuController);
+        sceneExceptionReport = new SceneExceptionReport(menuController);
+        sceneAoButton = new SceneAoButton(menuController);
+        sceneAoArticle = new SceneAoArticle(menuController);
     }
 }

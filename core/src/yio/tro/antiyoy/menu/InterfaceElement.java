@@ -57,12 +57,12 @@ public abstract class InterfaceElement {
     }
 
 
-    public void onPause() {
+    public void onAppPause() {
 
     }
 
 
-    public void onResume() {
+    public void onAppResume() {
 
     }
 
@@ -89,5 +89,13 @@ public abstract class InterfaceElement {
 
     public boolean isAnotherSceneCreationIgnored() {
         return false;
+    }
+
+
+    @Override
+    public String toString() {
+        return "[Element: " +
+                getClass().getSimpleName() +
+                "]";
     }
 }

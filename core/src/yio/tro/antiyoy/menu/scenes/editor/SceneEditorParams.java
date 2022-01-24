@@ -166,7 +166,7 @@ public class SceneEditorParams extends AbstractEditorPanel {
         double curSlY = topY;
 
         playersSlider = new SliderYio(menuControllerYio, -1);
-        playersSlider.setValues(0, 0, GameRules.MAX_FRACTIONS_QUANTITY, Animation.down);
+        playersSlider.setValues(0, 0, GameRules.MAX_FRACTIONS_QUANTITY - 1, Animation.down);
         playersSlider.setPosition(generateRectangle(0.1, 0, 0.8, 0));
         playersSlider.setParentElement(basePanel, curSlY);
         playersSlider.setTitle("player_number");
@@ -175,7 +175,7 @@ public class SceneEditorParams extends AbstractEditorPanel {
         curSlY -= slDelta;
 
         difficultySlider = new SliderYio(menuControllerYio, -1);
-        difficultySlider.setValues(1, 0, 4, Animation.down);
+        difficultySlider.setValues(1, 0, 5, Animation.down);
         difficultySlider.setPosition(generateRectangle(0.1, 0, 0.8, 0));
         difficultySlider.setParentElement(basePanel, curSlY);
         difficultySlider.setTitle("difficulty");

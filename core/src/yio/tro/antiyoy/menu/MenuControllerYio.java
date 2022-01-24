@@ -2,7 +2,6 @@ package yio.tro.antiyoy.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import yio.tro.antiyoy.SettingsManager;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.gameplay.ColorsManager;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
@@ -44,8 +43,15 @@ public class MenuControllerYio {
 
         Scenes.createScenes(this);
 
+        prepareCertainScenes();
         Scenes.sceneMainMenu.create();
         checkToCreateSingleMessage();
+    }
+
+
+    private void prepareCertainScenes() {
+        Scenes.sceneDiplomaticExchange.create();
+        Scenes.sceneDiplomaticExchange.hide();
     }
 
 
@@ -122,24 +128,24 @@ public class MenuControllerYio {
     }
 
 
-    public void onPause() {
+    public void onAppPause() {
         for (ButtonYio button : buttons) {
-            button.onPause();
+            button.onAppPause();
         }
 
         for (InterfaceElement interfaceElement : interfaceElements) {
-            interfaceElement.onPause();
+            interfaceElement.onAppPause();
         }
     }
 
 
-    public void onResume() {
+    public void onAppResume() {
         for (ButtonYio button : buttons) {
-            button.onResume();
+            button.onAppResume();
         }
 
         for (InterfaceElement interfaceElement : interfaceElements) {
-            interfaceElement.onResume();
+            interfaceElement.onAppResume();
         }
     }
 
@@ -301,6 +307,7 @@ public class MenuControllerYio {
         Scenes.sceneEditorAutomationPanel.hide();
         Scenes.sceneEditorGameRulesPanel.hide();
         Scenes.sceneEditorDiplomacy.hide();
+        Scenes.sceneEditorEditRelation.hide();
 
         yioGdxGame.gameController.getLevelEditor().onAllPanelsHide();
     }

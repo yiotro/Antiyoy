@@ -5,13 +5,14 @@ import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
 import yio.tro.antiyoy.gameplay.name_generator.CityNameGenerator;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class NamingManager implements SavableYio{
 
     GameController gameController;
-    private HashMap<Hex, String> renamedHexes;
+    public HashMap<Hex, String> renamedHexes;
     StringBuilder stringBuilder;
 
 
@@ -64,6 +65,14 @@ public class NamingManager implements SavableYio{
     }
 
 
+    public boolean isNameUsed(String string) {
+        for (String token : renamedHexes.values()) {
+            if (token.equals(string)) return true;
+        }
+        return false;
+    }
+
+
     private void updateRelatedDiplomaticEntity(Hex hex) {
         FieldManager fieldManager = gameController.fieldManager;
         DiplomacyManager diplomacyManager = fieldManager.diplomacyManager;
@@ -72,6 +81,15 @@ public class NamingManager implements SavableYio{
         if (!entity.alive) return;
 
         entity.updateCapitalName();
+    }
+
+
+    public void checkForCapitalRelocate(int previousObject, Hex previousHex, Province province) {
+        if (previousObject != Obj.TOWN) return;
+        if (!renamedHexes.containsKey(previousHex)) return;
+        String name = renamedHexes.get(previousHex);
+        renamedHexes.remove(previousHex);
+        setHexName(province.getCapital(), name);
     }
 
 
@@ -97,19 +115,45 @@ public class NamingManager implements SavableYio{
         if (src.equals("-")) return;
 
         String[] renamedHexesSplit = src.split(",");
+        for (Province province : gameController.fieldManager.provinces) {
+            province.name = "";
+        }
+        for (DiplomaticEntity entity : gameController.fieldManager.diplomacyManager.entities) {
+            entity.capitalName = null;
+        }
+        renamedHexes.clear();
         for (String token : renamedHexesSplit) {
             String[] split = token.split(" ");
             if (split.length < 3) continue;
+            if (split[0].length() == 0) continue;
+            if (split[1].length() == 0) continue;
 
             int index1 = Integer.valueOf(split[0]);
             int index2 = Integer.valueOf(split[1]);
             String name = split[2];
+            if (split.length > 3) {
+                StringBuilder builder = new StringBuilder();
+                for (int i = 2; i < split.length; i++) {
+                    builder.append(split[i]).append(" ");
+                }
+                int length = builder.length();
+                builder.delete(length - 1, length);
+                name = builder.toString();
+            }
             Hex hex = gameController.fieldManager.getHex(index1, index2);
 
             setHexName(hex, name);
         }
 
         forceProvincesToUpdateNames();
+        updateDiplomaticNames();
+    }
+
+
+    private void updateDiplomaticNames() {
+        for (DiplomaticEntity entity : gameController.fieldManager.diplomacyManager.entities) {
+            entity.updateCapitalName();
+        }
     }
 
 

@@ -12,6 +12,8 @@ public class GlobalStatistics {
     public int wins;
     public int turnsMade;
     public int moneySpent;
+    public int unitsDied;
+    public int friendshipsBroken;
     private MatchStatistics lastReceivedMatchStatistics;
 
 
@@ -42,16 +44,21 @@ public class GlobalStatistics {
         wins = prefs.getInteger("wins", 0);
         turnsMade = prefs.getInteger("turns_made", 0);
         moneySpent = prefs.getInteger("money_spent", 0);
+        unitsDied = prefs.getInteger("units_died", 0);
+        friendshipsBroken = prefs.getInteger("friendships_broken", 0);
     }
 
 
     public void updateByMatchStatistics(MatchStatistics matchStatistics) {
+        // this method is called at start of every turn
         int timeDelta = matchStatistics.timeCount - lastReceivedMatchStatistics.timeCount;
         if (timeDelta <= 0) return;
 
         timeInGame += timeDelta;
         moneySpent += Math.max(0, matchStatistics.firstPlayerMoneySpent - lastReceivedMatchStatistics.firstPlayerMoneySpent);
         turnsMade += Math.max(0, matchStatistics.turnsMade - lastReceivedMatchStatistics.turnsMade);
+        unitsDied += Math.max(0, matchStatistics.unitsDied - lastReceivedMatchStatistics.unitsDied);
+        friendshipsBroken += Math.max(0, matchStatistics.friendshipsBroken - lastReceivedMatchStatistics.friendshipsBroken);
 
         lastReceivedMatchStatistics.copyFrom(matchStatistics);
         saveValues();
@@ -71,6 +78,8 @@ public class GlobalStatistics {
          prefs.putInteger("wins", wins);
          prefs.putInteger("turns_made", turnsMade);
          prefs.putInteger("money_spent", moneySpent);
+         prefs.putInteger("units_died", unitsDied);
+         prefs.putInteger("friendships_broken", friendshipsBroken);
 
         prefs.flush();
     }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.ai.Difficulty;
+import yio.tro.antiyoy.gameplay.FinishGameManager;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
@@ -11,9 +12,9 @@ import yio.tro.antiyoy.gameplay.loading.LoadingParameters;
 import yio.tro.antiyoy.gameplay.loading.LoadingType;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.color_picking.ColorHolderElement;
+import yio.tro.antiyoy.menu.scenes.Scenes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class EditorSaveSystem {
 
@@ -49,7 +50,7 @@ public class EditorSaveSystem {
 
     public void onLevelImported(String levelCode, int slotNumber) {
         GameRules.editorSlotNumber = slotNumber;
-        gameController.levelEditor.onLevelImported(levelCode);
+        gameController.levelEditorManager.onLevelImported(levelCode);
     }
 
 
@@ -58,7 +59,7 @@ public class EditorSaveSystem {
         int index = 0;
         Preferences preferences = getPreferences();
         while (true) {
-            String key = LevelEditor.SLOT_NAME + index;
+            String key = LevelEditorManager.SLOT_NAME + index;
             if (index > 8 && !preferences.contains(key)) break;
             if (isEmpty(key)) break;
 
@@ -85,11 +86,26 @@ public class EditorSaveSystem {
         GameRules.editorDiplomacy = prefs.getBoolean("editor_diplomacy" + slotNumber, false);
         instance.diplomacy = GameRules.editorDiplomacy;
         instance.colorOffset = getColorOffsetForPlayLevelProcess();
-        instance.editorProvincesData = gameController.levelEditor.editorProvinceManager.encode();
-        instance.editorRelationsData = gameController.levelEditor.editorRelationsManager.encode();
+        LevelEditorManager levelEditorManager = gameController.levelEditorManager;
+        instance.editorProvincesData = levelEditorManager.editorProvinceManager.encode();
+        instance.editorRelationsData = levelEditorManager.editorRelationsManager.encode();
+        instance.editorCoalitionsData = levelEditorManager.coalitionsManager.encode();
         instance.preparedMessagesData = gameController.messagesManager.encode();
+        instance.goalData = gameController.finishGameManager.encode();
+        instance.diplomaticRelationsLocked = GameRules.diplomaticRelationsLocked;
 
         LoadingManager.getInstance().startGame(instance);
+
+        checkToApplyGoalColorFix();
+    }
+
+
+    public void checkToApplyGoalColorFix() {
+        FinishGameManager finishGameManager = gameController.finishGameManager;
+        if (!finishGameManager.isColorIconNeeded(finishGameManager.goalType)) return;
+        finishGameManager.arg1 = gameController.colorsManager.getFractionByColor(finishGameManager.arg1);
+        gameController.initialParameters.goalData = finishGameManager.encode(); // for restart
+        Scenes.sceneGoalView.sync();
     }
 
 
@@ -148,18 +164,28 @@ public class EditorSaveSystem {
         GameRules.editorChosenColor = prefs.getInteger("chosen_color" + slotNumber);
         GameRules.editorFog = prefs.getBoolean("editor_fog" + slotNumber, false);
         GameRules.editorDiplomacy = prefs.getBoolean("editor_diplomacy" + slotNumber, false);
+        GameRules.diplomaticRelationsLocked = prefs.getBoolean("lock_relations" + slotNumber, false);
         GameRules.editorSlotNumber = slotNumber;
+        LevelEditorManager levelEditorManager = gameController.levelEditorManager;
         String editorProvincesString = prefs.getString("editor_provinces" + slotNumber, "");
         if (editorProvincesString.length() > 4) {
-            gameController.levelEditor.editorProvinceManager.decode(editorProvincesString);
+            levelEditorManager.editorProvinceManager.decode(editorProvincesString);
         }
         String editorRelationsString = prefs.getString("editor_relations" + slotNumber, "");
         if (editorRelationsString.length() > 4) {
-            gameController.levelEditor.editorRelationsManager.decode(editorRelationsString);
+            levelEditorManager.editorRelationsManager.decode(editorRelationsString);
+        }
+        String editorCoalitionsString = prefs.getString("coalitions" + slotNumber, "");
+        if (editorCoalitionsString.length() > 4) {
+            levelEditorManager.coalitionsManager.decode(editorCoalitionsString);
         }
         String preparedMessagesString = prefs.getString("prepared_messages" + slotNumber, "");
         if (preparedMessagesString.length() > 1) {
             gameController.messagesManager.decode(preparedMessagesString);
+        }
+        String goalString = prefs.getString("goal" + slotNumber, "");
+        if (goalString.length() > 1) {
+            gameController.finishGameManager.decode(goalString);
         }
 
         gameController.getLevelEditor().resetInputMode();
@@ -176,13 +202,17 @@ public class EditorSaveSystem {
     public void saveSlot(int slotNumber) {
         String fullLevel = getFullLevelString();
         Preferences prefs = getPreferences();
+        LevelEditorManager levelEditorManager = gameController.levelEditorManager;
         prefs.putString(SLOT_NAME + slotNumber, fullLevel);
         prefs.putInteger("chosen_color" + slotNumber, GameRules.editorChosenColor);
         prefs.putBoolean("editor_fog" + slotNumber, GameRules.editorFog);
         prefs.putBoolean("editor_diplomacy" + slotNumber, GameRules.editorDiplomacy);
-        prefs.putString("editor_provinces" + slotNumber, gameController.levelEditor.editorProvinceManager.encode());
-        prefs.putString("editor_relations" + slotNumber, gameController.levelEditor.editorRelationsManager.encode());
+        prefs.putBoolean("lock_relations" + slotNumber, GameRules.diplomaticRelationsLocked);
+        prefs.putString("editor_provinces" + slotNumber, levelEditorManager.editorProvinceManager.encode());
+        prefs.putString("editor_relations" + slotNumber, levelEditorManager.editorRelationsManager.encode());
+        prefs.putString("coalitions" + slotNumber, levelEditorManager.coalitionsManager.encode());
         prefs.putString("prepared_messages" + slotNumber, gameController.messagesManager.encode());
+        prefs.putString("goal" + slotNumber, gameController.finishGameManager.encode());
         prefs.flush();
     }
 

@@ -5,10 +5,7 @@ import yio.tro.antiyoy.gameplay.FieldManager;
 import yio.tro.antiyoy.gameplay.Hex;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class CityNameGenerator {
 
@@ -74,11 +71,6 @@ public class CityNameGenerator {
             String token = tokenizer.nextToken();
             masks.add(token);
         }
-    }
-
-
-    public String generateName() {
-        return nameGenerator.generateName();
     }
 
 

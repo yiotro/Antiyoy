@@ -11,6 +11,7 @@ import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.menu.scrollable_list.ListBehaviorYio;
 import yio.tro.antiyoy.menu.scrollable_list.ListItemYio;
 import yio.tro.antiyoy.menu.scrollable_list.ScrollableListYio;
+import yio.tro.antiyoy.stuff.Fonts;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 import yio.tro.antiyoy.stuff.RectangleYio;
@@ -27,6 +28,7 @@ public class DiplomaticLogPanel extends ScrollableListYio {
 
         readyToDie = false;
         titleBackground = new RectangleYio();
+        setTitleFont(Fonts.smallerMenuFont);
 
         initBehavior();
     }
@@ -158,6 +160,7 @@ public class DiplomaticLogPanel extends ScrollableListYio {
         scrollEngineYio.resetToBottom();
 
         moveItems(); // update positions
+        centerClearItem();
     }
 
 
@@ -173,7 +176,7 @@ public class DiplomaticLogPanel extends ScrollableListYio {
     protected void updateEdgeRectangles() {
         super.updateEdgeRectangles();
 
-        topEdge.height = 1.2f * GraphicsYio.height;
+        topEdge.height = 1f * GraphicsYio.height;
     }
 
 

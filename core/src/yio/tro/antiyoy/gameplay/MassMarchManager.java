@@ -50,7 +50,7 @@ public class MassMarchManager {
     private Hex findBestHexToGo(ArrayList<Hex> moveZone, int fraction) {
         Hex bestHex = null;
         for (Hex hex : moveZone) {
-            if (!hex.isEmpty()) continue;
+            if (!hex.isEmpty() && !hex.containsTree()) continue;
             if (hex.fraction != fraction) continue;
             if (bestHex == null || hex.algoValue < bestHex.algoValue) {
                 bestHex = hex;

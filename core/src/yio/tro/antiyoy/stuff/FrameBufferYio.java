@@ -19,7 +19,12 @@ public class FrameBufferYio extends FrameBuffer{
                 try {
                     return new FrameBufferYio(Pixmap.Format.RGB565, width, height, true, 1);
                 } catch (Exception e3) {
-                    return new FrameBufferYio(format, width / 2, height / 2, hasDepth, 0.5f);
+                    try {
+                        return new FrameBufferYio(format, width / 2, height / 2, hasDepth, 0.5f);
+                    } catch (Exception e4) {
+                        System.out.println("Fake FrameBuffer created");
+                        return new FakeFbYio();
+                    }
                 }
             }
         }

@@ -61,18 +61,9 @@ public class SceneAreaSelectionUI extends AbstractModalScene {
         diplomacyManager.disableAreaSelectionMode();
 
         ArrayList<Hex> moveZone = fieldManager.moveZoneManager.moveZone;
-        if (moveZone.size() == 0) return;
 
-        if (moveZone.get(0).fraction == gameController.turn) {
-            int asFilterColor = gameController.selectionManager.getAsFilterFraction();
-            DiplomaticEntity entity = diplomacyManager.getEntity(asFilterColor);
-
-            Scenes.sceneHexSaleDialog.create();
-            Scenes.sceneHexSaleDialog.setData(entity, moveZone);
-        } else {
-            Scenes.sceneHexPurchaseDialog.create();
-            Scenes.sceneHexPurchaseDialog.setData(diplomacyManager.getMainEntity(), moveZone);
-        }
+        Scenes.sceneDiplomaticExchange.create();
+        Scenes.sceneDiplomaticExchange.exchangeUiElement.onAreaSelected(moveZone);
     }
 
 

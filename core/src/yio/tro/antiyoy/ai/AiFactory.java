@@ -1,5 +1,6 @@
 package yio.tro.antiyoy.ai;
 
+import yio.tro.antiyoy.ai.master.AiMaster;
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 public class AiFactory {
 
     private final GameController gameController;
-    ArrayList<ArtificialIntelligence> aiList;
+    ArrayList<AbstractAi> aiList;
 
 
     public AiFactory(GameController gameController) {
@@ -58,7 +59,19 @@ public class AiFactory {
             case Difficulty.BALANCER:
                 aiList.add(getBalancerAi(fraction));
                 break;
+            case Difficulty.MASTER:
+                aiList.add(getMasterAi(fraction));
+                break;
         }
+    }
+
+
+    private AbstractAi getMasterAi(int fraction) {
+        if (GameRules.slayRules) {
+            return new AiExpertSlayRules(gameController, fraction);
+        }
+
+        return new AiMaster(gameController, fraction);
     }
 
 

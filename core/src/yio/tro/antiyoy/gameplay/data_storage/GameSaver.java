@@ -53,6 +53,7 @@ public class GameSaver {
             prefs.putString("ul_key", GameRules.ulKey);
         }
         prefs.putBoolean("editor_color_fix_applied", GameRules.editorColorFixApplied);
+        prefs.putBoolean("lock_relations", GameRules.diplomaticRelationsLocked);
     }
 
 
@@ -82,8 +83,22 @@ public class GameSaver {
         saveDiplomacy();
         saveInitialLevelString();
         saveNamings();
+        saveGoal();
+        saveDebts();
         prefs.putString("save_active_hexes", legacyExportManager.getActiveHexesString());
         prefs.flush();
+    }
+
+
+    private void saveDebts() {
+        String debtsString = gameController.fieldManager.diplomacyManager.encodeDebts();
+        prefs.putString("debts", debtsString);
+    }
+
+
+    private void saveGoal() {
+        String goalString = gameController.finishGameManager.encode();
+        prefs.putString("goal", goalString);
     }
 
 
@@ -213,13 +228,25 @@ public class GameSaver {
 
         LoadingParameters instance = LoadingParameters.getInstance();
         instance.loadingType = LoadingType.load_game;
-        instance.applyPrefs(prefs);
+        instance.loadBasicInfo(prefs);
         instance.activeHexes = activeHexesString;
         LoadingManager.getInstance().startGame(instance);
         loadNamings();
         loadStatistics();
         loadDiplomacy();
         loadInitialLevelString();
+        loadGoal();
+        loadDebts();
+    }
+
+
+    private void loadDebts() {
+        gameController.fieldManager.diplomacyManager.decodeDebts(prefs.getString("debts", ""));
+    }
+
+
+    private void loadGoal() {
+        gameController.finishGameManager.decode(prefs.getString("goal", ""));
     }
 
 
@@ -246,11 +273,9 @@ public class GameSaver {
     public void detectRules() {
         GameRules.setSlayRules(true);
         for (Hex activeHex : gameController.fieldManager.activeHexes) {
-            if (doesHexRequireGenericRules(activeHex)) {
-                GameRules.setSlayRules(false);
-                System.out.println("detected generic rules");
-                return;
-            }
+            if (!doesHexRequireGenericRules(activeHex)) continue;
+            GameRules.setSlayRules(false);
+            return;
         }
     }
 

@@ -2,9 +2,12 @@ package yio.tro.antiyoy.menu.render;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import yio.tro.antiyoy.SettingsManager;
+import yio.tro.antiyoy.Storage3xTexture;
+import yio.tro.antiyoy.gameplay.skins.SkinManager;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.fast_construction.FastConstructionPanel;
 import yio.tro.antiyoy.menu.fast_construction.FcpItem;
+import yio.tro.antiyoy.stuff.AtlasLoader;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
 
@@ -29,6 +32,7 @@ public class RenderFastConstructionPanel extends MenuRender{
     private TextureRegion undoIcon;
     private TextureRegion diplomacyIcon;
     private TextureRegion mailIconTexture;
+    AtlasLoader atlasLoader;
 
 
     @Override
@@ -46,6 +50,7 @@ public class RenderFastConstructionPanel extends MenuRender{
 
 
     private void loadSkinDependentTextures() {
+        atlasLoader = getSkinManager().createAtlasLoader();
         man0 = loadFromFieldElements("man0");
         man1 = loadFromFieldElements("man1");
         man2 = loadFromFieldElements("man2");
@@ -62,8 +67,12 @@ public class RenderFastConstructionPanel extends MenuRender{
 
 
     private TextureRegion loadFromFieldElements(String name) {
-        String fieldElementsFolderPath = menuViewYio.yioGdxGame.skinManager.getFieldElementsFolderPath();
-        return GraphicsYio.loadTextureRegion(fieldElementsFolderPath + "/" + name + ".png", true);
+        return (new Storage3xTexture(atlasLoader, name + ".png")).getNormal();
+    }
+
+
+    private SkinManager getSkinManager() {
+        return menuViewYio.yioGdxGame.skinManager;
     }
 
 

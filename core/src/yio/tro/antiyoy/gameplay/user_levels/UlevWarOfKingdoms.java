@@ -1,0 +1,21 @@
+package yio.tro.antiyoy.gameplay.user_levels;
+
+public class UlevWarOfKingdoms extends AbstractUserLevel{
+
+    @Override
+    public String getLevelCode() {
+        return "antiyoy_level_code#level_size:4#general:2 1 11#map_name:Слот 164#editor_info:6 true true false #land:32 4 10 6,33 4 10 6,34 4 10 0,35 4 7 0,36 4 7 0,36 5 7 0,35 5 7 0,34 6 7 0,33 6 10 0,32 6 10 6,31 6 10 6,31 5 10 0,30 5 7 0,30 6 7 0,30 7 10 0,31 7 10 0,32 5 10 3,33 5 10 4,34 7 7 0,34 8 7 0,34 11 7 0,33 12 7 0,33 13 7 0,32 14 7 0,31 15 7 0,33 11 7 0,32 11 7 0,31 12 7 0,30 12 7 0,29 12 7 0,28 13 7 0,29 13 7 0,30 13 7 0,31 13 7 0,32 13 7 0,32 12 7 0,33 8 7 0,33 9 7 0,33 10 7 0,35 9 7 0,36 8 7 0,37 7 7 0,37 6 7 0,36 6 7 0,35 6 7 0,35 7 7 0,35 8 7 0,32 10 7 0,31 11 7 0,27 13 7 0,26 13 6 0,25 13 6 0,25 14 6 3,25 15 6 0,26 15 6 0,27 14 7 0,26 14 6 0,28 14 7 0,29 14 7 0,38 7 2 4,39 7 2 0,40 7 2 4,39 8 2 6,39 9 2 4,38 10 2 6,37 11 2 0,37 12 2 0,36 13 2 4,36 14 2 6,35 15 7 0,34 16 7 0,34 17 7 0,33 18 7 0,32 18 7 0,33 17 7 0,33 16 7 0,32 16 7 0,33 15 7 0,33 14 7 0,37 8 7 0,38 8 2 0,37 9 2 6,37 10 2 0,36 11 2 4,35 12 2 6,34 13 7 0,34 14 2 4,34 15 7 0,35 14 2 0,36 12 2 6,36 9 7 0,35 10 7 0,35 11 7 0,34 12 7 0,36 10 2 0,35 13 2 0,38 9 2 3,33 19 7 0,33 20 7 0,32 20 7 0,32 21 7 0,31 22 7 0,31 23 7 0,30 24 7 0,29 25 7 0,28 26 7 0,27 26 7 0,27 25 7 0,26 25 7 0,25 25 7 0,25 24 7 0,24 24 7 0,23 24 7 0,23 23 7 0,22 23 7 0,21 23 7 0,21 22 7 0,20 22 7 0,19 22 7 0,24 23 7 0,25 22 7 0,26 21 7 0,27 20 7 0,28 20 7 0,28 19 7 0,28 18 7 0,27 18 7 0,27 17 7 0,26 17 7 0,22 25 7 0,21 25 7 0,20 25 7 0,19 25 7 0,18 25 7 0,17 25 7 0,16 25 7 0,22 21 7 0,22 20 7 0,22 19 7 0,22 18 7 0,21 18 7 0,21 17 7 0,21 21 7 0,24 22 7 0,25 21 7 0,26 20 7 0,27 19 7 0,21 26 7 0,20 26 7 0,19 26 7 0,18 26 7 0,17 26 7 0,16 26 7 0,22 24 7 0,20 21 7 0,20 20 7 0,19 20 7 0,18 20 7 0,17 20 4 0,16 20 4 0,16 21 4 0,15 21 4 3,16 22 4 0,17 22 7 0,16 23 7 0,17 23 7 0,16 24 7 0,18 23 7 0,18 22 7 0,26 3 5 0,27 3 5 0,26 4 5 0,27 4 7 0,26 5 7 0,25 5 5 0,25 4 5 0,24 5 5 0,25 6 7 0,24 6 5 0,25 7 7 0,24 7 7 0,26 6 7 0,27 5 7 0,28 4 7 0,28 2 5 0,28 3 5 0,27 2 5 3,29 3 7 0,23 9 5 0,23 7 7 0,32 2 5 0,25 2 5 0,20 12 5 0,30 4 7 0,30 3 7 0,38 6 7 0,39 6 7 0,40 6 7 0,39 5 7 0,40 5 7 0,41 6 1 6,41 5 7 0,41 7 1 3,40 8 1 6,41 9 7 0,41 8 1 0,40 9 7 0,41 10 7 0,42 9 7 0,40 11 8 0,39 12 7 0,38 12 7 0,39 10 7 0,40 10 7 0,34 5 7 0,24 15 7 0,23 15 7 0,24 14 7 0,28 12 7 0,27 12 7 0,27 11 7 0,26 12 7 0,26 11 7 0,24 17 6 0,27 16 7 0,37 5 7 0,38 5 7 0,39 4 7 0,40 3 7 0,41 2 7 0,42 1 7 0,43 1 7 0,43 2 7 0,42 3 7 0,41 4 7 0,41 3 7 0,40 4 7 0,42 2 7 0,39 3 7 0,39 2 7 0,40 2 7 0,38 2 7 0,37 2 7 0,38 1 7 0,39 1 7 0,35 17 7 0,35 18 7 0,35 19 7 0,34 20 7 0,34 21 7 0,34 22 7 0,34 19 7 0,34 18 7 0,33 22 7 0,33 21 7 0,35 20 7 0,28 25 7 0,24 4 7 0,23 6 7 0,23 5 7 0,28 7 5 0,37 13 3 0,38 13 3 0,37 14 3 0,36 15 7 0,35 16 7 0,36 16 7 0,37 15 7 0,38 14 3 0,39 13 3 0,37 16 7 0,38 15 7 0,31 10 7 0,30 9 7 0,31 9 7 0,22 11 5 0,17 19 7 0,18 18 7 0,18 17 7 0,19 16 7 0,17 18 7 0,16 19 7 0,19 18 7 0,38 11 8 0,39 11 8 3,#units:33 6 2 false,31 5 2 false,41 8 1 false,#provinces:32@4@5@The Militarists@10,26@13@4@Peninsular King@10,38@7@3@The Holy Empire@10,17@20@2@The Cave Men@10,26@3@1@The Islanders@10,41@6@2@Empire Peasants@5,40@11@1@The Holy Pope@1000,37@13@1@Empire Nobility@100,#relations:3 1 2,1 1 2,1 2 3,8 1 2,8 1 3,8 1 1,#coalitions:temporary#messages:Hello, mortal@Are you ready to be a God King?@Let me explain the kingdoms.@The Holy Empire is the largest kingdom, but being an Empire, they don't have total control of everything.@So the Peasantry, the Nobility, and the Pope are all their own faction@The Peasants are currently revolting against the Nobility.@The Nobility are rich, that's their major upside.@The Pope cannot expand, but they are the richest faction.@The Militarists start off with an army and infrastructure to support it.@The Cave Men have many choke points and guarenteed expansion.@The Islanders are blocked by the Militarists.@And the Peninaular King is likely to be blocked by the Holy Empire.@I believe in you, you can take this world for yourself!@Good luck! The impenitrable fog blocks sight@#goal:def 0#real_money:#";
+    }
+
+
+    @Override
+    public String getMapName() {
+        return "War of Kingdoms";
+    }
+
+
+    @Override
+    public String getAuthor() {
+        return "Adewin";
+    }
+}

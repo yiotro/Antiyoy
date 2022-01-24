@@ -1,6 +1,5 @@
 package yio.tro.antiyoy.menu.scenes.editor;
 
-import yio.tro.antiyoy.gameplay.ColorsManager;
 import yio.tro.antiyoy.gameplay.editor.*;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
@@ -43,8 +42,8 @@ public class SceneEditorDiplomacy extends AbstractModalScene {
         titleListItem.setTitle(getString("diplomacy"));
         customizableListYio.addItem(titleListItem);
 
-        LevelEditor levelEditor = getGameController().levelEditor;
-        EditorRelationsManager editorRelationsManager = levelEditor.editorRelationsManager;
+        LevelEditorManager levelEditorManager = getGameController().levelEditorManager;
+        EditorRelationsManager editorRelationsManager = levelEditorManager.editorRelationsManager;
         for (EditorRelation relation : editorRelationsManager.relations) {
             RelationListItem relationListItem = new RelationListItem();
             relationListItem.set(
@@ -65,8 +64,8 @@ public class SceneEditorDiplomacy extends AbstractModalScene {
 
 
     private String getLargestProvinceName(int fraction) {
-        LevelEditor levelEditor = getGameController().levelEditor;
-        EditorProvinceManager editorProvinceManager = levelEditor.editorProvinceManager;
+        LevelEditorManager levelEditorManager = getGameController().levelEditorManager;
+        EditorProvinceManager editorProvinceManager = levelEditorManager.editorProvinceManager;
         EditorProvinceData largestProvince = editorProvinceManager.getLargestProvince(fraction);
         if (largestProvince == null) {
             return " ";

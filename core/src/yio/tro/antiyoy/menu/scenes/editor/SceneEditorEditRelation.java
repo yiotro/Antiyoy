@@ -155,7 +155,7 @@ public class SceneEditorEditRelation extends AbstractModalScene{
 
 
     private EditorRelationsManager getEditorRelationsManager() {
-        return getGameController().levelEditor.editorRelationsManager;
+        return getGameController().levelEditorManager.editorRelationsManager;
     }
 
 

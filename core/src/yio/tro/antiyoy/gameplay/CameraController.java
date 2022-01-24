@@ -3,12 +3,16 @@ package yio.tro.antiyoy.gameplay;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import yio.tro.antiyoy.*;
+import yio.tro.antiyoy.gameplay.data_storage.EncodeableYio;
+import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.stuff.RectangleYio;
 import yio.tro.antiyoy.stuff.Yio;
 
-public class CameraController {
+import java.util.ArrayList;
+
+public class CameraController implements EncodeableYio{
 
     public static final double ZOOM_CATCH_DISTANCE = 0.002;
     YioGdxGame yioGdxGame;
@@ -27,6 +31,7 @@ public class CameraController {
     PointYio delta, kinetics, actualDragBounds;
     private PointYio initialTouch;
     private float sensitivityModifier;
+    PointYio tempPoint;
 
 
     public CameraController(GameController gameController) {
@@ -48,6 +53,7 @@ public class CameraController {
         delta = new PointYio();
         kinetics = new PointYio();
         actualDragBounds = new PointYio();
+        tempPoint = new PointYio();
 
         zoomMinimum = 0.5f;
         kineticsSpeed = 0.01 * w;
@@ -370,6 +376,45 @@ public class CameraController {
     }
 
 
+    public void focusOnTheMiddleOfTheLand() {
+        FieldManager fieldManager = gameController.fieldManager;
+        if (fieldManager == null) return;
+
+        ArrayList<Hex> activeHexes = fieldManager.activeHexes;
+        if (activeHexes.size() == 0) return;
+
+        Hex firstHex = activeHexes.get(0);
+        float leftX = firstHex.pos.x;
+        float rightX = firstHex.pos.x;
+        float bottomY = firstHex.pos.y;
+        float topY = firstHex.pos.y;
+
+        for (Hex hex : activeHexes) {
+            if (GameRules.fogOfWarEnabled && fieldManager.fogOfWarManager.isHexCoveredByFog(hex)) continue;
+            if (hex.pos.x < leftX) {
+                leftX = hex.pos.x;
+            }
+            if (hex.pos.x > rightX) {
+                rightX = hex.pos.x;
+            }
+            if (hex.pos.y < bottomY) {
+                bottomY = hex.pos.y;
+            }
+            if (hex.pos.y > topY) {
+                topY = hex.pos.y;
+            }
+        }
+
+        focusOnPoint(
+                (leftX + rightX) / 2,
+                (bottomY + topY) / 2
+        );
+        for (int i = 0; i < 100; i++) {
+            move();
+        }
+    }
+
+
     void updateFrame() {
         frame.x = (0 - 0.5f * w) * orthoCam.zoom + orthoCam.position.x;
         frame.y = (0 - 0.5f * h) * orthoCam.zoom + orthoCam.position.y;
@@ -424,10 +469,59 @@ public class CameraController {
     }
 
 
+    public void focusOnHexList(ArrayList<Hex> hexList) {
+        tempPoint.reset();
+        for (Hex hex : hexList) {
+            tempPoint.add(hex.pos);
+        }
+        tempPoint.x /= hexList.size();
+        tempPoint.y /= hexList.size();
+        focusOnPoint(tempPoint);
+    }
+
+
     public void focusOnPoint(double x, double y) {
         position.x = (float) (x - gameController.levelSizeManager.boundWidth / 2);
         position.y = (float) (y - gameController.levelSizeManager.boundHeight / 2);
     }
 
 
+    public String getValuesAsString() {
+        return Yio.roundUp((position.x + boundWidth / 2) / GraphicsYio.width, 2) + " " +
+                Yio.roundUp((position.y + boundHeight / 2) / GraphicsYio.width, 2) + " " +
+                Yio.roundUp(viewZoomLevel, 2);
+    }
+
+
+    @Override
+    public String encode() {
+        return getValuesAsString();
+    }
+
+
+    @Override
+    public void decode(String source) {
+        String[] split = source.split(" ");
+        float x = Float.valueOf(split[0]);
+        float y = Float.valueOf(split[1]);
+        float z = Float.valueOf(split[2]);
+        x *= GraphicsYio.width;
+        x -= boundWidth / 2;
+        y *= GraphicsYio.width;
+        y -= boundHeight / 2;
+
+        applyImmediately(x, y, z);
+    }
+
+
+    private void applyImmediately(double x, double y, double z) {
+        setTargetZoomLevel((float) z);
+        for (int i = 0; i < 100; i++) {
+            move();
+        }
+        position.set(x, y);
+        for (int i = 0; i < 100; i++) {
+            move();
+        }
+    }
 }

@@ -43,7 +43,7 @@ public class MoveZoneDetection {
 
 
     public static boolean canBuildFarmOnHex(Hex hex) {
-        return hex.hasThisObjectNearby(Obj.FARM) || hex.hasThisObjectNearby(Obj.TOWN);
+        return hex.hasThisSupportiveObjectNearby(Obj.FARM) || hex.hasThisSupportiveObjectNearby(Obj.TOWN);
     }
 
 

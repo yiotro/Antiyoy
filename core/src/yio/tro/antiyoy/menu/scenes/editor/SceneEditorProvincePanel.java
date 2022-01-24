@@ -36,7 +36,7 @@ public class SceneEditorProvincePanel extends AbstractModalScene{
 
 
     private void initMoneyValues() {
-        moneyValues = new int[]{0, 5, 10, 25, 50, 75, 100, 125, 150, 200, 250, 500, 1000};
+        moneyValues = new int[]{0, 5, 10, 25, 50, 75, 100, 125, 150, 200, 250, 500, 1000, 2500, 5000, 10000};
     }
 
 
@@ -133,8 +133,8 @@ public class SceneEditorProvincePanel extends AbstractModalScene{
         if (textLabelElement != null) return;
         textLabelElement = new TextLabelElement(menuControllerYio);
         textLabelElement.setParent(label);
-        textLabelElement.alignTop(0.03);
-        textLabelElement.alignLeft(0.05);
+        textLabelElement.alignTitleTop(0.03);
+        textLabelElement.alignTitleLeft(0.05);
         menuControllerYio.addElementToScene(textLabelElement);
     }
 

@@ -7,7 +7,7 @@ public class SettingsManager {
 
     static SettingsManager instance = null;
     YioGdxGame yioGdxGame;
-    public static boolean askToEndTurn;
+    public static boolean cautiosEndTurnEnabled;
     public static boolean autosave;
     public static boolean longTapToMove;
     public static boolean soundEnabled;
@@ -80,7 +80,7 @@ public class SettingsManager {
 
         autosave = convertToBoolean(prefs.getInteger("autosave", 1));
         musicEnabled = prefs.getBoolean("music", false);
-        askToEndTurn = convertToBoolean(prefs.getInteger("ask_to_end_turn", 0));
+        cautiosEndTurnEnabled = prefs.getBoolean("cautious_end_turn", false);
         soundEnabled = convertToBoolean(prefs.getInteger("sound", 0));
         fastConstructionEnabled = prefs.getBoolean("fast_construction", false);
 
@@ -106,7 +106,7 @@ public class SettingsManager {
 
 
     private boolean getDefaultValueForResumeButtonOption() {
-        return YioGdxGame.IOS;
+        return YioGdxGame.platformType == PlatformType.ios;
 
     }
 
@@ -116,7 +116,7 @@ public class SettingsManager {
 
         prefs.putInteger("sound", convertToInteger(soundEnabled));
         prefs.putInteger("autosave", convertToInteger(autosave));
-        prefs.putInteger("ask_to_end_turn", convertToInteger(askToEndTurn));
+        prefs.putBoolean("cautious_end_turn", cautiosEndTurnEnabled);
         prefs.putBoolean("music", musicEnabled);
         prefs.putBoolean("fast_construction", fastConstructionEnabled);
 
@@ -130,6 +130,7 @@ public class SettingsManager {
         Preferences prefs = getPrefs();
         prefs.putInteger("city_names", convertToInteger(cityNamesEnabled));
         prefs.putBoolean("use_city_names_list", useCityNamesList);
+        prefs.flush();
     }
 
 

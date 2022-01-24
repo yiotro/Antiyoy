@@ -45,6 +45,20 @@ public class RenderableTextYio implements ReusableYio{
     }
 
 
+    public void setBy(RenderableTextYio src) {
+        font = src.font;
+        width = src.width;
+        height = src.height;
+        position.setBy(src.position);
+        string = src.string;
+        delta.setBy(src.delta);
+        bounds.setBy(src.bounds);
+        centered = src.centered;
+        previousBounds.setBy(src.previousBounds);
+        lastTravelDistance = src.lastTravelDistance;
+    }
+
+
     public void centerHorizontal(RectangleYio parent) {
         position.x = (float) (parent.x + (parent.width - width) / 2);
     }

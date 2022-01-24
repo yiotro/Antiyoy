@@ -6,6 +6,7 @@ import yio.tro.antiyoy.*;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.data_storage.EncodeableYio;
 import yio.tro.antiyoy.gameplay.diplomacy.DiplomacyManager;
+import yio.tro.antiyoy.gameplay.diplomacy.DiplomaticEntity;
 import yio.tro.antiyoy.gameplay.editor.EditorProvinceData;
 import yio.tro.antiyoy.gameplay.fog_of_war.FogOfWarManager;
 import yio.tro.antiyoy.gameplay.game_view.GameView;
@@ -17,6 +18,7 @@ import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
+import java.util.Random;
 
 public class FieldManager implements EncodeableYio{
 
@@ -201,7 +203,9 @@ public class FieldManager implements EncodeableYio{
         }
 
         for (Province province : gameController.fieldManager.provinces) {
-            array[province.getFraction()] += province.getIncome();
+            int fraction = province.getFraction();
+            if (fraction >= array.length) continue;
+            array[fraction] += province.getIncome();
         }
 
         return array;
@@ -390,7 +394,7 @@ public class FieldManager implements EncodeableYio{
     }
 
 
-    public void tryToDetectAddiotionalProvinces() {
+    public void tryToDetectAdditionalProvinces() {
         // this method doesn't erase already existing provinces, it just adds new ones
 
         if (gameController.isInEditorMode()) return;
@@ -410,16 +414,43 @@ public class FieldManager implements EncodeableYio{
             hex.flag = true;
             propagateHex(tempList, propagationList);
             if (tempList.size() >= 2) {
-                Province province = new Province(gameController, tempList);
-                addProvince(province);
+                applyAdditionalProvince(tempList);
             }
         }
 
         for (Province province : provinces) {
-            if (!province.hasCapital()) {
-                province.placeCapitalInRandomPlace(gameController.predictableRandom);
+            if (province.hasCapital()) continue;
+            province.placeCapitalInRandomPlace(gameController.predictableRandom);
+        }
+    }
+
+
+    private void applyAdditionalProvince(ArrayList<Hex> list) {
+        Province intersectedProvince = getIntersectedProvince(list);
+        if (intersectedProvince != null) {
+            for (Hex hex : list) {
+                if (intersectedProvince.containsHex(hex)) continue;
+                intersectedProvince.addHex(hex);
+            }
+            return;
+        }
+
+        Province province = new Province(gameController, list);
+        addProvince(province);
+    }
+
+
+    private Province getIntersectedProvince(ArrayList<Hex> list) {
+        if (list.size() == 0) return null;
+        int fraction = list.get(0).fraction;
+        for (Hex hex : list) {
+            for (Province province : provinces) {
+                if (province.getFraction() != fraction) continue;
+                if (!province.containsHex(hex)) continue;
+                return province;
             }
         }
+        return null;
     }
 
 
@@ -552,7 +583,6 @@ public class FieldManager implements EncodeableYio{
 
 
     public boolean atLeastOneUnitIsReadyToMove() {
-        int size = gameController.getUnitList().size();
         for (Unit unit : gameController.getUnitList()) {
             if (unit.isReadyToMove()) return true;
         }
@@ -714,11 +744,17 @@ public class FieldManager implements EncodeableYio{
             if (province.name == null) continue;
             if (province.name.equals(string)) return true;
         }
-        for (EditorProvinceData editorProvinceData : gameController.levelEditor.editorProvinceManager.provincesList) {
+        for (EditorProvinceData editorProvinceData : gameController.levelEditorManager.editorProvinceManager.provincesList) {
             if (editorProvinceData.name == null) continue;
             if (editorProvinceData.name.equals(string)) return true;
         }
-        return false;
+        if (GameRules.diplomacyEnabled) {
+            for (DiplomaticEntity entity : diplomacyManager.entities) {
+                if (entity.capitalName == null) continue;
+                if (entity.capitalName.equals(string)) return true;
+            }
+        }
+        return gameController.namingManager.isNameUsed(string);
     }
 
 
@@ -820,8 +856,9 @@ public class FieldManager implements EncodeableYio{
 
     public void destroyBuildingsOnHex(Hex hex) {
         boolean hadHouse = (hex.objectInside == Obj.TOWN);
-        if (hex.containsBuilding()) cleanOutHex(hex);
-//        if (hex.containsUnit()) killUnitOnHex(hex);
+        if (hex.containsBuilding()) {
+            cleanOutHex(hex);
+        }
         if (hadHouse) {
             spawnTree(hex);
         }
@@ -936,7 +973,7 @@ public class FieldManager implements EncodeableYio{
     public boolean buildFarm(Province province, Hex hex) {
         if (province == null) return false;
 
-        if (!hex.hasThisObjectNearby(Obj.TOWN) && !hex.hasThisObjectNearby(Obj.FARM)) {
+        if (!hex.hasThisSupportiveObjectNearby(Obj.TOWN) && !hex.hasThisSupportiveObjectNearby(Obj.FARM)) {
             return false;
         }
 
@@ -984,12 +1021,16 @@ public class FieldManager implements EncodeableYio{
             hex.addUnit(strength);
         } else {
             hex.addUnit(strength);
-            if (gameController.isCurrentTurn(hex.fraction)) {
-                hex.unit.setReadyToMove(true);
-                hex.unit.startJumping();
-            }
+            checkToPrepareNewlyAddedUnitForMovement(hex.unit);
         }
         return hex.unit;
+    }
+
+
+    private void checkToPrepareNewlyAddedUnitForMovement(Unit unit) {
+        if (!gameController.isUnitValidForMovement(unit)) return;
+        unit.setReadyToMove(true);
+        unit.startJumping();
     }
 
 
@@ -1123,18 +1164,27 @@ public class FieldManager implements EncodeableYio{
     }
 
 
+    public boolean isOnlyOneFractionAlive(int fraction) {
+        boolean detected = false;
+        for (Province province : provinces) {
+            if (province.getFraction() != fraction) return false;
+            detected = true;
+        }
+        return detected;
+    }
+
+
     public Province getProvinceByHex(Hex hex) {
         for (Province province : provinces) {
-            if (province.containsHex(hex)) {
-                return province;
-            }
+            if (!province.containsHex(hex)) continue;
+            return province;
         }
 
         return null;
     }
 
 
-    public Hex getRandomActivehex() {
+    public Hex getRandomActiveHex() {
         int index = YioGdxGame.random.nextInt(activeHexes.size());
         return activeHexes.get(index);
     }
@@ -1152,7 +1202,7 @@ public class FieldManager implements EncodeableYio{
     }
 
 
-    public void splitProvince(Hex hex, int fraction) {
+    public void splitProvince(Hex hex, int fraction, int previousObject) {
         Province oldProvince = getProvinceByHex(hex);
         if (oldProvince == null) return;
         MoveZoneDetection.unFlagAllHexesInArrayList(oldProvince.hexList);
@@ -1162,8 +1212,8 @@ public class FieldManager implements EncodeableYio{
         Hex startHex, tempHex, adjHex;
         hex.flag = true;
         gameController.getPredictableRandom().setSeed(hex.index1 + hex.index2);
-        for (int k = 0; k < 6; k++) {
-            startHex = hex.getAdjacentHex(k);
+        for (int dir = 0; dir < 6; dir++) {
+            startHex = hex.getAdjacentHex(dir);
             if (!startHex.active || startHex.fraction != fraction || startHex.flag) continue;
             tempList.clear();
             propagationList.clear();
@@ -1186,6 +1236,7 @@ public class FieldManager implements EncodeableYio{
                 province.money = 0;
                 if (!province.hasCapital()) {
                     province.placeCapitalInRandomPlace(gameController.getPredictableRandom());
+                    gameController.namingManager.checkForCapitalRelocate(previousObject, hex, province);
                 }
                 addProvince(province);
                 provincesAdded.add(province);
@@ -1255,10 +1306,11 @@ public class FieldManager implements EncodeableYio{
 
 
     public void setHexFraction(Hex hex, int fraction) {
+        int previousObject = hex.objectInside;
         cleanOutHex(hex);
         int previousFraction = hex.fraction;
         hex.setFraction(fraction);
-        splitProvince(hex, previousFraction);
+        splitProvince(hex, previousFraction, previousObject);
         checkToUniteProvinces(hex);
         joinHexToAdjacentProvince(hex);
         ListIterator animIterator = animHexes.listIterator();
@@ -1303,7 +1355,16 @@ public class FieldManager implements EncodeableYio{
         float y = selectionManager.selectY + gameView.hexViewSize;
 
         focusedHex = getHexByPos(x, y);
+    }
 
+
+    public boolean isAtLeastOneCurrentFractionProvinceAlive() {
+        for (Province province : provinces) {
+            if (province.getFraction() != gameController.turn) continue;
+            if (province.hexList.size() == 0) continue;
+            return true;
+        }
+        return false;
     }
 
 

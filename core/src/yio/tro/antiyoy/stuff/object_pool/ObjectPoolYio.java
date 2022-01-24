@@ -33,6 +33,7 @@ public abstract class ObjectPoolYio<ObjectType extends ReusableYio> {
 
 
     public void addWithCheck(ObjectType object) {
+        if (object == null) return;
         if (contains(object)) return;
 
         add(object);

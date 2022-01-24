@@ -28,6 +28,9 @@ public class GameRendersList {
     public RenderDebug renderDebug;
     public RenderTmEditProvinces renderTmEditProvinces;
     public RenderHighlights renderHighlights;
+    public RenderAiData renderAiData;
+    public RenderTextHintItems renderTextHintItems;
+    public RenderDiplomaticIndicators renderDiplomaticIndicators;
     // init them lower
 
 
@@ -59,6 +62,9 @@ public class GameRendersList {
         renderDebug = new RenderDebug(this);
         renderTmEditProvinces = new RenderTmEditProvinces(this);
         renderHighlights = new RenderHighlights(this);
+        renderAiData = new RenderAiData(this);
+        renderTextHintItems = new RenderTextHintItems(this);
+        renderDiplomaticIndicators = new RenderDiplomaticIndicators(this);
     }
 
 

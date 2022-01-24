@@ -47,7 +47,10 @@ public class ScrollEngineYio {
         correction = limits.a - slider.a;
         if (correction == 0) return;
 
+        boolean bckpBlockMovement = blockMovement;
+        blockMovement = false;
         relocate(correction);
+        blockMovement = bckpBlockMovement;
     }
 
 
@@ -56,7 +59,10 @@ public class ScrollEngineYio {
         correction = limits.b - slider.b;
         if (correction == 0) return;
 
+        boolean bckpBlockMovement = blockMovement;
+        blockMovement = false;
         relocate(correction);
+        blockMovement = bckpBlockMovement;
     }
 
 

@@ -4,6 +4,7 @@ import yio.tro.antiyoy.gameplay.data_storage.EncodeableYio;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.stuff.Yio;
 
 import java.util.ArrayList;
 
@@ -93,27 +94,6 @@ public class Unit implements EncodeableYio{
     }
 
 
-    public void marchToHex(Hex target, Province province) {
-        if (target == currentHex) return;
-        ArrayList<Hex> moveZone = gameController.detectMoveZone(currentHex, strength, GameRules.UNIT_MOVE_LIMIT);
-        if (moveZone.size() == 0) return;
-        double minDistance, currentDistance;
-        minDistance = FieldManager.distanceBetweenHexes(moveZone.get(0), target);
-        Hex closestHex = moveZone.get(0);
-        for (Hex hex : moveZone) {
-            if (!hex.sameFraction(currentHex) || !hex.nothingBlocksWayForUnit()) continue;
-            currentDistance = FieldManager.distanceBetweenHexes(target, hex);
-            if (currentDistance >= minDistance) continue;
-            minDistance = currentDistance;
-            closestHex = hex;
-        }
-
-        if (closestHex != null && closestHex != currentHex) {
-            gameController.moveUnit(this, closestHex, province);
-        }
-    }
-
-
     public void startJumping() {
         if (GameRules.replayMode) return;
 
@@ -168,8 +148,9 @@ public class Unit implements EncodeableYio{
 
     @Override
     public String toString() {
-        return "[Unit: " +
-                encode() +
+        return "[Unit: s" +
+                strength + " on " +
+                currentHex +
                 "]";
     }
 }

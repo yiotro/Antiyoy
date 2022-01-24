@@ -2,7 +2,6 @@ package yio.tro.antiyoy.gameplay.tests;
 
 import yio.tro.antiyoy.SoundManagerYio;
 import yio.tro.antiyoy.ai.Difficulty;
-import yio.tro.antiyoy.gameplay.ColorsManager;
 import yio.tro.antiyoy.gameplay.DebugFlags;
 import yio.tro.antiyoy.gameplay.LevelSize;
 import yio.tro.antiyoy.gameplay.loading.LoadingManager;
@@ -46,12 +45,13 @@ public class TestAiComparison extends AbstractTest {
 
     private void prepareAiForMatch() {
         gameController.aiFactory.createCustomAiList(new int[]{
-                Difficulty.EXPERT,
-                Difficulty.EXPERT,
-                Difficulty.EXPERT,
-                Difficulty.EXPERT,
-                Difficulty.EXPERT,
+                Difficulty.BALANCER,
+                Difficulty.BALANCER,
+                Difficulty.BALANCER,
+                Difficulty.BALANCER,
+                Difficulty.BALANCER,
         });
+//        gameController.getAiList().set(0, new AiBalancerGenericRestored(gameController, 0));
     }
 
 
@@ -127,7 +127,7 @@ public class TestAiComparison extends AbstractTest {
         gameController.yioGdxGame.gamePaused = false;
         DebugFlags.testWinner = -1;
 
-        int c = 1000;
+        int c = results.length * 200;
         while (DebugFlags.testWinner == -1) {
             gameController.move();
 
@@ -154,6 +154,8 @@ public class TestAiComparison extends AbstractTest {
         instance.slayRules = false;
         instance.fogOfWar = false;
         instance.diplomacy = false;
+        instance.genProvinces = 0;
+        instance.treesPercentageIndex = 2;
 
         LoadingManager.getInstance().startGame(instance);
     }

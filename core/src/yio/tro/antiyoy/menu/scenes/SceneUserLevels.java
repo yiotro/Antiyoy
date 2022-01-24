@@ -9,7 +9,7 @@ import yio.tro.antiyoy.gameplay.loading.LoadingType;
 import yio.tro.antiyoy.gameplay.user_levels.AbstractLegacyUserLevel;
 import yio.tro.antiyoy.gameplay.user_levels.AbstractUserLevel;
 import yio.tro.antiyoy.gameplay.user_levels.UserLevelFactory;
-import yio.tro.antiyoy.gameplay.user_levels.UserLevelProgressManager;
+import yio.tro.antiyoy.gameplay.user_levels.UserLevelsManager;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -17,7 +17,10 @@ import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.scrollable_list.ListBehaviorYio;
 import yio.tro.antiyoy.menu.scrollable_list.ListItemYio;
 import yio.tro.antiyoy.menu.scrollable_list.ScrollableListYio;
+import yio.tro.antiyoy.stuff.GraphicsYio;
 import yio.tro.antiyoy.stuff.LanguagesManager;
+
+import java.util.ArrayList;
 
 public class SceneUserLevels extends AbstractScene {
 
@@ -32,12 +35,15 @@ public class SceneUserLevels extends AbstractScene {
     private String searchName;
     private boolean diplomacyAllowed;
     private boolean fogOfWarAllowed;
+    public boolean hiddenLevelsAllowed;
+    private ArrayList<AbstractLegacyUserLevel> tempLevelsList;
 
 
     public SceneUserLevels(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
 
         scrollableListYio = null;
+        tempLevelsList = new ArrayList<>();
         initReactions();
     }
 
@@ -84,9 +90,34 @@ public class SceneUserLevels extends AbstractScene {
     }
 
 
+    public void onLevelBecameHidden() {
+        loadValues();
+        scrollableListYio.move();
+        scrollableListYio.move();
+    }
+
+
     private void loadValues() {
         scrollableListYio.clearItems();
 
+        updateFilterParams();
+        tempLevelsList.clear();
+        for (AbstractLegacyUserLevel userLevel : UserLevelFactory.getInstance().getLevels()) {
+            userLevel.setGameController(getGameController());
+            if (hasToSkipLevel(userLevel)) continue;
+            tempLevelsList.add(userLevel);
+        }
+
+        removeHiddenLevelsFromTempList();
+        for (AbstractLegacyUserLevel userLevel : tempLevelsList) {
+            addUserLevelToList(userLevel);
+        }
+
+        checkToCreateAddMapItem();
+    }
+
+
+    private void updateFilterParams() {
         Preferences filterPrefs = SceneUlFilters.getFilterPrefs();
         completedAllowed = filterPrefs.getBoolean("completed", true);
         historicalAllowed = filterPrefs.getBoolean("historical", true);
@@ -95,15 +126,27 @@ public class SceneUserLevels extends AbstractScene {
         searchName = filterPrefs.getString("search_name", "");
         diplomacyAllowed = filterPrefs.getBoolean("diplomacy", true);
         fogOfWarAllowed = filterPrefs.getBoolean("fog_of_war", true);
+        hiddenLevelsAllowed = filterPrefs.getBoolean("hidden", false);
+    }
 
-        for (AbstractLegacyUserLevel userLevel : UserLevelFactory.getInstance().getLevels()) {
-            userLevel.setGameController(getGameController());
-            if (hasToSkipLevel(userLevel)) continue;
 
-            addUserLevelToList(userLevel);
+    private void removeHiddenLevelsFromTempList() {
+        if (hiddenLevelsAllowed) return;
+        for (String hiddenKey : UserLevelsManager.getInstance().getHiddenKeys()) {
+            if (hiddenKey == null) continue;
+            if (hiddenKey.length() == 0) continue;
+            removeFromTempLevelsList(hiddenKey);
         }
+    }
 
-        checkToCreateAddMapItem();
+
+    private void removeFromTempLevelsList(String key) {
+        for (int i = tempLevelsList.size() - 1; i >= 0; i--) {
+            AbstractLegacyUserLevel userLevel = tempLevelsList.get(i);
+            if (!userLevel.getKey().equals(key)) continue;
+            tempLevelsList.remove(userLevel);
+            break;
+        }
     }
 
 
@@ -126,7 +169,7 @@ public class SceneUserLevels extends AbstractScene {
 
     private boolean hasToSkipLevel(AbstractLegacyUserLevel userLevel) {
         if (!completedAllowed) {
-            boolean levelCompleted = UserLevelProgressManager.getInstance().isLevelCompleted(userLevel.getKey());
+            boolean levelCompleted = UserLevelsManager.getInstance().isLevelCompleted(userLevel.getKey());
             if (levelCompleted) return true;
         }
 
@@ -155,7 +198,7 @@ public class SceneUserLevels extends AbstractScene {
 
 
     private boolean isAddMapItemEnabled() {
-        float numberOfCompletedLevels = UserLevelProgressManager.getInstance().getNumberOfCompletedLevels();
+        float numberOfCompletedLevels = UserLevelsManager.getInstance().getNumberOfCompletedLevels();
         float allLevels = UserLevelFactory.getInstance().getLevels().size();
         float completionRatio = numberOfCompletedLevels / allLevels;
 
@@ -164,7 +207,7 @@ public class SceneUserLevels extends AbstractScene {
 
 
     private String getMapTitle(AbstractLegacyUserLevel userLevel) {
-        if (UserLevelProgressManager.getInstance().isLevelCompleted(userLevel.getKey())) {
+        if (UserLevelsManager.getInstance().isLevelCompleted(userLevel.getKey())) {
             return "[+] " + userLevel.getMapName();
         }
 
@@ -178,7 +221,22 @@ public class SceneUserLevels extends AbstractScene {
         scrollableListYio.setTitle(LanguagesManager.getInstance().getString("user_levels"));
         scrollableListYio.setListBehavior(getListBehavior());
         scrollableListYio.setEmptySign(LanguagesManager.getInstance().getString("check_filters"));
+        scrollableListYio.setEditable(true);
+        scrollableListYio.setItemHeight(0.107f * GraphicsYio.height);
+        scrollableListYio.setLongTapReaction(getLongTapReaction());
         menuControllerYio.addElementToScene(scrollableListYio);
+    }
+
+
+    private Reaction getLongTapReaction() {
+        return new Reaction() {
+            @Override
+            public void perform(ButtonYio buttonYio) {
+                ListItemYio longTappedItem = scrollableListYio.longTappedItem;
+                Scenes.sceneUlContextMenu.create();
+                Scenes.sceneUlContextMenu.setKey(longTappedItem.key);
+            }
+        };
     }
 
 
@@ -186,7 +244,7 @@ public class SceneUserLevels extends AbstractScene {
         return new ListBehaviorYio() {
             @Override
             public void applyItem(ListItemYio item) {
-                OnItemClicked(item);
+                onItemClicked(item);
             }
 
 
@@ -204,7 +262,7 @@ public class SceneUserLevels extends AbstractScene {
     }
 
 
-    private void OnItemClicked(ListItemYio item) {
+    private void onItemClicked(ListItemYio item) {
         if (item.key.equals("add_my_map")) {
             onAddMyMapClicked();
             return;
@@ -240,8 +298,10 @@ public class SceneUserLevels extends AbstractScene {
 
     private void launchUserLevel(AbstractLegacyUserLevel level) {
         AbstractUserLevel userLevel = (AbstractUserLevel) level;
-        getGameController().importManager.launchGame(LoadingType.user_level, userLevel.getLevelCode(), userLevel.getKey());
-        getGameController().fieldManager.onUserLevelLoaded();
+        GameController gameController = getGameController();
+        gameController.importManager.launchGame(LoadingType.user_level, userLevel.getLevelCode(), userLevel.getKey());
+        gameController.fieldManager.onUserLevelLoaded();
+        gameController.editorSaveSystem.checkToApplyGoalColorFix();
     }
 
 

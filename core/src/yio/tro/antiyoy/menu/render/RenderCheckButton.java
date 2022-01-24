@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import yio.tro.antiyoy.menu.CheckButtonYio;
 import yio.tro.antiyoy.menu.InterfaceElement;
-import yio.tro.antiyoy.stuff.GraphicsYio;
-import yio.tro.antiyoy.stuff.Masking;
-import yio.tro.antiyoy.stuff.RectangleYio;
-import yio.tro.antiyoy.stuff.RenderableTextYio;
+import yio.tro.antiyoy.stuff.*;
 
 public class RenderCheckButton extends MenuRender{
 
@@ -19,12 +16,24 @@ public class RenderCheckButton extends MenuRender{
     private RectangleYio pos;
     private float alpha;
     private RenderableTextYio title;
+    private TextureRegion alterEnabledTexture;
+    private TextureRegion alterDisabledTexture;
+    private float v;
+    CircleYio tempCircle;
+
+
+    public RenderCheckButton() {
+        super();
+        tempCircle = new CircleYio();
+    }
 
 
     @Override
     public void loadTextures() {
         blackPixel = GraphicsYio.loadTextureRegion("pixels/black_pixel.png", false);
         iconTexture = GraphicsYio.loadTextureRegion("menu/check_button/chk_active.png", true);
+        alterEnabledTexture = GraphicsYio.loadTextureRegion("menu/check_button/chk_alter_enabled.png", true);
+        alterDisabledTexture = GraphicsYio.loadTextureRegion("menu/check_button/chk_alter_disabled.png", true);
     }
 
 
@@ -59,6 +68,7 @@ public class RenderCheckButton extends MenuRender{
 
 
     private void renderIcon() {
+        if (checkForAlternativeMode()) return;
         GraphicsYio.setBatchAlpha(batch, alpha * alpha);
         GraphicsYio.renderBorder(batch, blackPixel, checkButtonYio.iconPosition);
 
@@ -66,6 +76,28 @@ public class RenderCheckButton extends MenuRender{
             GraphicsYio.setBatchAlpha(batch, alpha * checkButtonYio.iconFactor.get());
             GraphicsYio.drawByRectangle(batch, iconTexture, checkButtonYio.iconPosition);
         }
+    }
+
+
+    private boolean checkForAlternativeMode() {
+        if (!checkButtonYio.alternativeVisualMode) return false;
+        v = checkButtonYio.iconFactor.get();
+        GraphicsYio.setBatchAlpha(batch, alpha * (1 - v));
+        updateTempCircle(checkButtonYio.iconPosition, 1 - v);
+        GraphicsYio.drawByCircle(batch, alterDisabledTexture, tempCircle);
+        GraphicsYio.setBatchAlpha(batch, alpha * v);
+        updateTempCircle(checkButtonYio.iconPosition, v);
+        GraphicsYio.drawByCircle(batch, alterEnabledTexture, tempCircle);
+        return true;
+    }
+
+
+    private void updateTempCircle(RectangleYio pos, double v) {
+        tempCircle.center.set(
+                pos.x + pos.width / 2,
+                pos.y + pos.height / 2
+        );
+        tempCircle.setRadius(v * 0.5 * pos.width);
     }
 
 

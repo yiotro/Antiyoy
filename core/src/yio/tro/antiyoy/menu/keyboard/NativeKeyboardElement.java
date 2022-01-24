@@ -187,6 +187,7 @@ public class NativeKeyboardElement extends InterfaceElement {
         if (c == '@') return false;
         if (c == '#') return false;
         if (c == ':') return false;
+        if (c == ',') return false;
         return c == ' ' || Fonts.getAllCharacters().contains("" + c);
     }
 

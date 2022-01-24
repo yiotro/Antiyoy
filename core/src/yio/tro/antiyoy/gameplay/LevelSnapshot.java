@@ -7,6 +7,7 @@ import yio.tro.antiyoy.gameplay.replays.Replay;
 import yio.tro.antiyoy.gameplay.replays.ReplayManager;
 import yio.tro.antiyoy.gameplay.replays.actions.RepAction;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
+import yio.tro.antiyoy.stuff.TimeMeasureYio;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -250,37 +251,43 @@ public class LevelSnapshot {
 
 
     private void recreateField() {
-        Hex currHex;
         for (int i = 0; i < fWidth; i++) {
             for (int j = 0; j < fHeight; j++) {
+                recreateSingleHex(i, j);
+            }
+        }
+    }
 
-                currHex = gameController.fieldManager.field[i][j];
-                if (!currHex.active) continue;
 
-                if (!currHex.sameFraction(fieldCopy[i][j])) {
-                    currHex.fraction = fieldCopy[i][j].fraction;
-                    gameController.addAnimHex(currHex);
-                }
+    private void recreateSingleHex(int i, int j) {
+        Hex currHex = gameController.fieldManager.field[i][j];
+        if (!currHex.active) return;
 
-                if (currHex.selected != fieldCopy[i][j].selected) {
-                    currHex.selected = fieldCopy[i][j].selected;
-                    if (!currHex.selected) currHex.selectionFactor.setValues(0, 0);
-                }
+        if (!currHex.sameFraction(fieldCopy[i][j])) {
+            currHex.fraction = fieldCopy[i][j].fraction;
+            gameController.addAnimHex(currHex);
+        }
 
-                if (fieldCopy[i][j].containsObject()) {
-                    gameController.addSolidObject(currHex, fieldCopy[i][j].objectInside);
-                }
+        if (currHex.selected != fieldCopy[i][j].selected) {
+            currHex.selected = fieldCopy[i][j].selected;
+            if (!currHex.selected) {
+                currHex.selectionFactor.setValues(0, 0);
+            }
+        }
 
-                if (fieldCopy[i][j].containsUnit()) {
-                    gameController.addUnit(currHex, fieldCopy[i][j].unit.strength);
-                    if (fieldCopy[i][j].unit.isReadyToMove()) {
-                        currHex.unit.setReadyToMove(true);
-                        currHex.unit.startJumping();
-                    } else {
-                        currHex.unit.setReadyToMove(false);
-                        currHex.unit.stopJumping();
-                    }
-                }
+        if (fieldCopy[i][j].containsObject()) {
+            gameController.addSolidObject(currHex, fieldCopy[i][j].objectInside);
+        }
+
+        if (fieldCopy[i][j].containsUnit()) {
+            Unit copyUnit = fieldCopy[i][j].unit;
+            Unit newUnit = gameController.addUnit(currHex, copyUnit.strength);
+            if (copyUnit.isReadyToMove() && gameController.isUnitValidForMovement(newUnit)) {
+                currHex.unit.setReadyToMove(true);
+                currHex.unit.startJumping();
+            } else {
+                currHex.unit.setReadyToMove(false);
+                currHex.unit.stopJumping();
             }
         }
     }

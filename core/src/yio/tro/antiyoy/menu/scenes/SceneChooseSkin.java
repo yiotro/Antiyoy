@@ -1,39 +1,34 @@
 package yio.tro.antiyoy.menu.scenes;
 
+import yio.tro.antiyoy.gameplay.skins.SkinType;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.customizable_list.*;
 import yio.tro.antiyoy.menu.scenes.gameplay.AbstractModalScene;
+import yio.tro.antiyoy.stuff.AtlasLoader;
 import yio.tro.antiyoy.stuff.GraphicsYio;
 
 public class SceneChooseSkin extends AbstractScene {
 
 
     private CustomizableListYio customizableListYio;
-    String keys[];
     private Reaction rbBack;
-    int tempCounter;
+    private AtlasLoader atlasLoader;
 
 
     public SceneChooseSkin(MenuControllerYio menuControllerYio) {
         super(menuControllerYio);
         customizableListYio = null;
+        initAtlasLoader();
         initReactions();
-        initKeys();
     }
 
 
-    private void initKeys() {
-        keys = new String[]{
-                "original",
-                "points",
-                "grid",
-                "skin_shroomarts",
-                "Domchi",
-                "Jannes Peters",
-        };
+    private void initAtlasLoader() {
+        String path = "skins/preview/";
+        atlasLoader = new AtlasLoader(path + "atlas_texture.png", path + "atlas_structure.txt", true);
     }
 
 
@@ -67,27 +62,27 @@ public class SceneChooseSkin extends AbstractScene {
         if (customizableListYio != null) return;
 
         customizableListYio = new CustomizableListYio(menuControllerYio);
-        customizableListYio.setPosition(generateRectangle(0.1, 0.15, 0.8, 0.6));
+        customizableListYio.setPosition(generateRectangle(0.05, 0.05, 0.9, 0.8));
         customizableListYio.setAnimation(Animation.from_center);
-        customizableListYio.setScrollingEnabled(false);
         menuControllerYio.addElementToScene(customizableListYio);
 
         TitleListItem titleListItem = new TitleListItem();
         titleListItem.setTitle(getString("skin"));
         customizableListYio.addItem(titleListItem);
 
-        tempCounter = 0;
-        for (String key : keys) {
-            addSkinItem(key);
+        boolean darken = true;
+        for (SkinType skinType : SkinType.values()) {
+            addSkinItem(skinType, darken);
+            darken = !darken;
         }
     }
 
 
-    private void addSkinItem(String key) {
-        SkinListItem skinListItem = new SkinListItem();
-        skinListItem.setSkinInfo(tempCounter, key);
+    private void addSkinItem(SkinType skinType, boolean darken) {
+        SkinListItem skinListItem = new SkinListItem(atlasLoader);
+        skinListItem.setSkinInfo(skinType);
+        skinListItem.setDarken(darken);
         customizableListYio.addItem(skinListItem);
-        tempCounter++;
     }
 
 

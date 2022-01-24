@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class EditorProvinceManager implements EncodeableYio{
 
-    LevelEditor levelEditor;
+    LevelEditorManager levelEditorManager;
     public ArrayList<EditorProvinceData> provincesList;
     ObjectPoolYio<EditorProvinceData> poolProvinces;
     ArrayList<Hex> tempList;
@@ -22,8 +22,8 @@ public class EditorProvinceManager implements EncodeableYio{
     EdcSnapshot snapshot;
 
 
-    public EditorProvinceManager(LevelEditor levelEditor) {
-        this.levelEditor = levelEditor;
+    public EditorProvinceManager(LevelEditorManager levelEditorManager) {
+        this.levelEditorManager = levelEditorManager;
         provincesList = new ArrayList<>();
         tempList = new ArrayList<>();
         edcProvinceMaker = new EdcProvinceMaker(this);
@@ -117,7 +117,7 @@ public class EditorProvinceManager implements EncodeableYio{
 
 
     private GameController getGameController() {
-        return levelEditor.gameController;
+        return levelEditorManager.gameController;
     }
 
 
@@ -177,6 +177,7 @@ public class EditorProvinceManager implements EncodeableYio{
         for (String token : source.split(",")) {
             String[] split = token.split("@");
             if (split.length < 2) continue;
+            if (split[0].length() == 0) continue;
             int index1 = Integer.valueOf(split[0]);
             int index2 = Integer.valueOf(split[1]);
             Hex hex = getGameController().fieldManager.getHex(index1, index2);
@@ -209,7 +210,7 @@ public class EditorProvinceManager implements EncodeableYio{
     }
 
 
-    public void checkToApplyProvincesData() {
+    public void checkToApplyData() {
         String source = getGameController().initialParameters.editorProvincesData;
         if (source == null) return;
         if (source.length() < 5) return;

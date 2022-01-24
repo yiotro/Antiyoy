@@ -6,6 +6,7 @@ import yio.tro.antiyoy.factor_yio.FactorYio;
 import yio.tro.antiyoy.gameplay.ClickDetector;
 import yio.tro.antiyoy.menu.InterfaceElement;
 import yio.tro.antiyoy.menu.MenuControllerYio;
+import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.render.MenuRender;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 import yio.tro.antiyoy.stuff.*;
@@ -31,13 +32,15 @@ public class ScrollableListYio extends InterfaceElement {
     ListItemYio clickedItem;
     protected boolean touched, alphaTriggered;
     public RectangleYio topEdge, bottomEdge;
-    private float topLabelOffset;
+    protected float topLabelOffset;
     ListBehaviorYio listBehaviorYio;
     LongTapDetector longTapDetector;
     boolean readyToProcessLongTap;
-    boolean scrollLock;
+    protected boolean scrollLock;
     boolean editable;
     public RenderableTextYio emptySign;
+    Reaction longTapReaction;
+    public ListItemYio longTappedItem;
 
 
     public ScrollableListYio(MenuControllerYio menuControllerYio) {
@@ -67,6 +70,7 @@ public class ScrollableListYio extends InterfaceElement {
         emptySign = new RenderableTextYio();
         emptySign.setFont(Fonts.smallerMenuFont);
         setEmptySign("-");
+        longTapReaction = null;
 
         initMetrics();
         initScrollEngine();
@@ -78,13 +82,13 @@ public class ScrollableListYio extends InterfaceElement {
         longTapDetector = new LongTapDetector() {
             @Override
             public void onLongTapDetected() {
-                onLongTap();
+                ScrollableListYio.this.onLongTapDetected();
             }
         };
     }
 
 
-    private void onLongTap() {
+    private void onLongTapDetected() {
         if (!editable) return;
 
         readyToProcessLongTap = true;
@@ -135,6 +139,11 @@ public class ScrollableListYio extends InterfaceElement {
     }
 
 
+    public void setTitleFont(BitmapFont titleFont) {
+        this.titleFont = titleFont;
+    }
+
+
     public void addDebugItems() {
         items.clear();
 
@@ -149,6 +158,15 @@ public class ScrollableListYio extends InterfaceElement {
 
         updateMetrics();
         updateScrollEngineLimits();
+    }
+
+
+    public ListItemYio getItem(String key) {
+        for (ListItemYio item : items) {
+            if (!item.key.equals(key)) continue;
+            return item;
+        }
+        return null;
     }
 
 
@@ -326,7 +344,7 @@ public class ScrollableListYio extends InterfaceElement {
 
 
     private void processLongTap() {
-        ListItemYio longTappedItem = null;
+        longTappedItem = null;
 
         for (ListItemYio item : items) {
             if (!item.isTouched(currentTouch)) continue;
@@ -335,6 +353,11 @@ public class ScrollableListYio extends InterfaceElement {
         }
 
         if (longTappedItem == null) return;
+
+        if (longTapReaction != null) {
+            longTapReaction.perform(null);
+            return; // override default reaction
+        }
 
         Scenes.sceneContextListMenu.create();
         Scenes.sceneContextListMenu.contextListMenuElement.setEditableItem(longTappedItem);
@@ -350,6 +373,11 @@ public class ScrollableListYio extends InterfaceElement {
 
     public void setListBehavior(ListBehaviorYio listBehaviorYio) {
         this.listBehaviorYio = listBehaviorYio;
+    }
+
+
+    public void setLongTapReaction(Reaction longTapReaction) {
+        this.longTapReaction = longTapReaction;
     }
 
 
@@ -500,6 +528,11 @@ public class ScrollableListYio extends InterfaceElement {
     public void setEmptySign(String string) {
         emptySign.setString(string);
         emptySign.updateMetrics();
+    }
+
+
+    public void setItemHeight(float itemHeight) {
+        this.itemHeight = itemHeight;
     }
 
 

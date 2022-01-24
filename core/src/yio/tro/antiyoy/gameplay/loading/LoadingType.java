@@ -28,4 +28,6 @@ public enum LoadingType {
 
     campaign_custom,
 
+    restart_level_code,
+
 }

@@ -1,6 +1,8 @@
 package yio.tro.antiyoy.menu.scenes;
 
 import com.badlogic.gdx.Gdx;
+import yio.tro.antiyoy.PlatformType;
+import yio.tro.antiyoy.YioGdxGame;
 import yio.tro.antiyoy.menu.Animation;
 import yio.tro.antiyoy.menu.ButtonYio;
 import yio.tro.antiyoy.menu.MenuControllerYio;
@@ -48,7 +50,7 @@ public class SceneArticle extends AbstractScene{
 
     @Override
     public void create() {
-        create("info_array", Reaction.rbMainMenu, 10);
+        create("info_array", getDefaultBackReaction(), 10);
 
         ButtonYio helpIndexButton = buttonFactory.getButton(generateRectangle(0.5, 0.9, 0.45, 0.07), 38123714, getString("help"));
         helpIndexButton.setReaction(Reaction.rbHelpIndex);
@@ -60,5 +62,13 @@ public class SceneArticle extends AbstractScene{
         moreInfoButton.setShadow(false);
         moreInfoButton.setVisualHook(infoPanel);
         moreInfoButton.setTouchOffset(0.05f * Gdx.graphics.getHeight());
+    }
+
+
+    private Reaction getDefaultBackReaction() {
+        if (YioGdxGame.platformType == PlatformType.ios) {
+            return Reaction.rbMainMenu;
+        }
+        return Reaction.rbSettingsMenu;
     }
 }

@@ -7,11 +7,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-public abstract class ArtificialIntelligence {
+public abstract class ArtificialIntelligence extends AbstractAi{
 
-    final GameController gameController;
     final Random random;
-    protected int fraction;
     protected ArrayList<Province> nearbyProvinces;
     protected ArrayList<Unit> unitsReadyToMove;
     private ArrayList<Hex> tempResultList;
@@ -19,9 +17,8 @@ public abstract class ArtificialIntelligence {
     int numberOfUnitsBuiltThisTurn;
 
 
-    ArtificialIntelligence(GameController gameController, int fraction) {
-        this.gameController = gameController;
-        this.fraction = fraction;
+    public ArtificialIntelligence(GameController gameController, int fraction) {
+        super(gameController, fraction);
         random = gameController.random;
         nearbyProvinces = new ArrayList<>();
         unitsReadyToMove = new ArrayList<>();
@@ -63,6 +60,7 @@ public abstract class ArtificialIntelligence {
             excludeFriendlyUnitsFromMoveZone(moveZone);
             if (moveZone.size() == 0) continue;
             Province provinceByHex = gameController.getProvinceByHex(unit.currentHex);
+            if (provinceByHex == null) continue;
             decideAboutUnit(unit, moveZone, provinceByHex);
         }
     }
@@ -91,6 +89,7 @@ public abstract class ArtificialIntelligence {
     }
 
 
+    @Override
     public void perform() {
         numberOfUnitsBuiltThisTurn = 0;
         makeMove();

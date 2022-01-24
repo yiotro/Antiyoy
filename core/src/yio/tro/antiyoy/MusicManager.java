@@ -20,21 +20,16 @@ public class MusicManager {
         if (instance == null) {
             instance = new MusicManager();
         }
-
         return instance;
     }
 
 
     public void onMusicStatusChanged() {
-        if (YioGdxGame.IOS) return;
-
         if (SettingsManager.musicEnabled) {
             if (music.isPlaying()) return;
-
             play();
         } else {
             if (!music.isPlaying()) return;
-
             stop();
         }
     }
@@ -42,7 +37,6 @@ public class MusicManager {
 
     public void play() {
         if (music == null) return;
-
         music.play();
         music.setLooping(true);
     }
@@ -50,14 +44,15 @@ public class MusicManager {
 
     public void stop() {
         if (music == null) return;
-
         music.stop();
     }
 
 
     public void load() {
-        if (YioGdxGame.IOS) return;
-
+        if (YioGdxGame.platformType == PlatformType.ios) {
+            music = Gdx.audio.newMusic(Gdx.files.internal("sound/music.mp3"));
+            return;
+        }
         music = Gdx.audio.newMusic(Gdx.files.internal("sound/music.ogg"));
     }
 

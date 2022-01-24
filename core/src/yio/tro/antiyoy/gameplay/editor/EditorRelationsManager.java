@@ -14,12 +14,12 @@ import java.util.ArrayList;
 
 public class EditorRelationsManager implements EncodeableYio{
 
-    LevelEditor levelEditor;
+    LevelEditorManager levelEditorManager;
     public ArrayList<EditorRelation> relations;
 
 
-    public EditorRelationsManager(LevelEditor levelEditor) {
-        this.levelEditor = levelEditor;
+    public EditorRelationsManager(LevelEditorManager levelEditorManager) {
+        this.levelEditorManager = levelEditorManager;
         relations = new ArrayList<>();
     }
 
@@ -95,11 +95,11 @@ public class EditorRelationsManager implements EncodeableYio{
 
 
     private GameController getGameController() {
-        return levelEditor.gameController;
+        return levelEditorManager.gameController;
     }
 
 
-    public void checkToApplyEditorRelationsData() {
+    public void checkToApplyData() {
         if (!GameRules.diplomacyEnabled) return;
 
         String source = getGameController().initialParameters.editorRelationsData;
@@ -108,6 +108,9 @@ public class EditorRelationsManager implements EncodeableYio{
 
         onEndCreation();
         decode(source);
+
+        boolean lockBackup = GameRules.diplomaticRelationsLocked;
+        GameRules.diplomaticRelationsLocked = false;
 
         DiplomacyManager diplomacyManager = getGameController().fieldManager.diplomacyManager;
         ColorsManager colorsManager = getGameController().colorsManager;
@@ -122,5 +125,7 @@ public class EditorRelationsManager implements EncodeableYio{
 
             diplomacyManager.setRelation(entity1, entity2, relation.relation);
         }
+
+        GameRules.diplomaticRelationsLocked = lockBackup;
     }
 }

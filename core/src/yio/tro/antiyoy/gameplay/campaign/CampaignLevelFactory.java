@@ -12,7 +12,6 @@ import yio.tro.antiyoy.gameplay.rules.GameRules;
 import yio.tro.antiyoy.menu.MenuControllerYio;
 import yio.tro.antiyoy.menu.color_picking.ColorHolderElement;
 import yio.tro.antiyoy.menu.scenes.Scenes;
-import yio.tro.antiyoy.menu.slider.SliderYio;
 import yio.tro.antiyoy.stuff.LanguagesManager;
 
 import java.util.ArrayList;
@@ -34,16 +33,29 @@ public class CampaignLevelFactory {
 
         levelPackOne = new LevelPackOne(this);
         levelPacks = new AbstractLevelPack[]{
-                new LevelPackTwo(this),
-                new LevelPackThree(this),
-                new LevelPackFour(this),
-                new LevelPackFive(this),
-                new LevelPackSix(this),
-                new LevelPackSeven(this),
-                new LevelPackEight(this),
-                new LevelPackNine(this),
-                new LevekPackTen(this),
-                new LevelPackEleven(this),
+                new LevelPack2(this),
+                new LevelPack3(this),
+                new LevelPack4(this),
+                new LevelPack5(this),
+                new LevelPack6(this),
+                new LevelPack7(this),
+                new LevelPack8(this),
+                new LevelPack9(this),
+                new LevelPack10(this),
+                new LevelPack11(this),
+                new LevelPack12(this),
+                new LevelPack13(this),
+                new LevelPack14(this),
+                new LevelPack15(this),
+                new LevelPack16(this),
+                new LevelPack17(this),
+                new LevelPack18(this),
+                new LevelPack19(this),
+                new LevelPack20(this),
+                new LevelPack21(this),
+                new LevelPack22(this),
+                new LevelPack23(this),
+                new LevelPack24(this),
         };
         index = -1;
     }
@@ -124,6 +136,7 @@ public class CampaignLevelFactory {
 
 
     public static int getDifficultyByIndex(int index) {
+        if (index >= 136) return Difficulty.MASTER;
         if (index <= 8) return Difficulty.EASY;
         if (index <= 23) return Difficulty.NORMAL;
         if (index >= 60) return Difficulty.EXPERT;

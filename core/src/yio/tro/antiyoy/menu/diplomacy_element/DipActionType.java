@@ -18,4 +18,6 @@ public enum DipActionType {
 
     attack,
 
+    exchange,
+
 }

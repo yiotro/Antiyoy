@@ -113,13 +113,13 @@ public class SceneEditorOverlay extends AbstractScene{
         rbEditProvinces = new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
-                getGameController(buttonYio).levelEditor.onEditProvincesButtonPressed();
+                getGameController(buttonYio).levelEditorManager.onEditProvincesButtonPressed();
             }
         };
         rbEditDiplomacy = new Reaction() {
             @Override
             public void perform(ButtonYio buttonYio) {
-                getGameController(buttonYio).levelEditor.onEditDiplomacyButtonPressed();
+                getGameController(buttonYio).levelEditorManager.onEditDiplomacyButtonPressed();
             }
         };
     }
@@ -128,7 +128,7 @@ public class SceneEditorOverlay extends AbstractScene{
     private void onPauseMenuButtonPressed() {
         YioGdxGame yioGdxGame = menuControllerYio.yioGdxGame;
         EditorSaveSystem editorSaveSystem = yioGdxGame.gameController.editorSaveSystem;
-        yioGdxGame.gameController.levelEditor.onExitedToPauseMenu();
+        yioGdxGame.gameController.levelEditorManager.onExitedToPauseMenu();
         editorSaveSystem.saveSlot(GameRules.editorSlotNumber);
         Scenes.sceneEditorPauseMenu.create();
         yioGdxGame.setGamePaused(true);

@@ -11,6 +11,7 @@ import yio.tro.antiyoy.menu.behaviors.Reaction;
 import yio.tro.antiyoy.menu.customizable_list.CustomizableListYio;
 import yio.tro.antiyoy.menu.customizable_list.RelationListItem;
 import yio.tro.antiyoy.menu.customizable_list.TitleListItem;
+import yio.tro.antiyoy.menu.scenes.AbstractScene;
 import yio.tro.antiyoy.menu.scenes.Scenes;
 
 public class SceneDiplomaticRelations extends AbstractModalScene {
@@ -20,6 +21,7 @@ public class SceneDiplomaticRelations extends AbstractModalScene {
     private double panelHeight;
     private CustomizableListYio customizableListYio;
     int chosenFraction;
+    AbstractScene parentScene;
 
 
     public SceneDiplomaticRelations(MenuControllerYio menuControllerYio) {
@@ -34,7 +36,9 @@ public class SceneDiplomaticRelations extends AbstractModalScene {
             @Override
             public void perform(ButtonYio buttonYio) {
                 hide();
-                Scenes.sceneDiplomacy.create();
+                if (parentScene != null) {
+                    parentScene.create();
+                }
             }
         };
     }
@@ -45,6 +49,7 @@ public class SceneDiplomaticRelations extends AbstractModalScene {
         createInvisibleCloseButton(rbHide);
         createBasePanel();
         createList();
+        parentScene = Scenes.sceneDiplomacy;
     }
 
 
@@ -116,6 +121,11 @@ public class SceneDiplomaticRelations extends AbstractModalScene {
             customizableListYio.destroy();
             customizableListYio.getFactor().destroy(1, 3);
         }
+    }
+
+
+    public void setParentScene(AbstractScene parentScene) {
+        this.parentScene = parentScene;
     }
 
 

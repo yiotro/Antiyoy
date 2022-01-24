@@ -2,6 +2,7 @@ package yio.tro.antiyoy.gameplay.data_storage;
 
 import yio.tro.antiyoy.gameplay.GameController;
 import yio.tro.antiyoy.gameplay.Hex;
+import yio.tro.antiyoy.gameplay.Province;
 import yio.tro.antiyoy.gameplay.Unit;
 import yio.tro.antiyoy.gameplay.rules.GameRules;
 
@@ -34,8 +35,35 @@ public class DecodeManager {
         applyUnits();
         applyEditorInfo();
         applyMapName();
+        applyGoal();
 
         end();
+    }
+
+
+    public void applyRealMoney() {
+        String realMoneySection = getSection("real_money");
+        if (realMoneySection == null) return;
+
+        for (String token : realMoneySection.split(",")) {
+            String[] split = token.split(" ");
+            int index1 = Integer.valueOf(split[0]);
+            int index2 = Integer.valueOf(split[1]);
+            int money = Integer.valueOf(split[2]);
+            Hex hex = gameController.fieldManager.getHex(index1, index2);
+            if (hex == null) continue;
+            Province province = gameController.fieldManager.getProvinceByHex(hex);
+            if (province == null) continue;
+            province.money = money;
+        }
+    }
+
+
+    private void applyGoal() {
+        String goalSection = getSection("goal");
+        if (goalSection == null) return;
+
+        gameController.finishGameManager.decode(goalSection);
     }
 
 
@@ -56,6 +84,10 @@ public class DecodeManager {
         GameRules.setEditorChosenColor(Integer.valueOf(split[0]));
         GameRules.editorDiplomacy = Boolean.valueOf(split[1]);
         GameRules.editorFog = Boolean.valueOf(split[2]);
+
+        if (split.length > 3) {
+            GameRules.diplomaticRelationsLocked = Boolean.valueOf(split[3]);
+        }
     }
 
 
@@ -100,11 +132,7 @@ public class DecodeManager {
 
 
     private void end() {
-//        GameView gameView = gameController.yioGdxGame.gameView;
-//        gameController.gameSaver.detectRules();
-//        gameController.fieldController.detectProvinces();
-//        LoadingManager.getInstance().endCreation();
-//        gameView.updateAnimationTexture();
+
     }
 
 

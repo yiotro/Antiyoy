@@ -1,6 +1,7 @@
 package yio.tro.antiyoy.menu.diplomatic_dialogs;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import yio.tro.antiyoy.stuff.Fonts;
 import yio.tro.antiyoy.stuff.PointYio;
 import yio.tro.antiyoy.stuff.RenderableTextYio;
 import yio.tro.antiyoy.stuff.object_pool.ReusableYio;
@@ -37,6 +38,12 @@ public class AcLabel implements ReusableYio {
 
 
     public void setData(BitmapFont font, String string) {
+        if (font == null) {
+            font = Fonts.smallerMenuFont;
+        }
+        if (string == null) {
+            string = "-";
+        }
         title.setFont(font);
         title.setString(string);
         title.updateMetrics();

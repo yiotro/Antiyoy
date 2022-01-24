@@ -29,12 +29,7 @@ public class RenderNotificationElement extends MenuRender{
 
     @Override
     public void renderSecondLayer(InterfaceElement element) {
-        notificationElement = (NotificationElement) element;
-        font = notificationElement.font;
 
-        renderShadow();
-        renderBackground();
-        renderMessage();
     }
 
 
@@ -75,6 +70,11 @@ public class RenderNotificationElement extends MenuRender{
 
     @Override
     public void renderThirdLayer(InterfaceElement element) {
+        notificationElement = (NotificationElement) element;
+        font = notificationElement.font;
 
+        renderShadow();
+        renderBackground();
+        renderMessage();
     }
 }

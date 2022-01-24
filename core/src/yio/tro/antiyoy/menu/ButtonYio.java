@@ -235,6 +235,7 @@ public class ButtonYio implements SliderParentElement, UiChildrenHolder {
 
 
     public boolean checkToPerformAction() {
+        if (appearFactor.getGravity() < 0) return false;
         if (needToPerformAction && System.currentTimeMillis() > timeToPerformAction && !lockAction) {
             needToPerformAction = false;
             reaction.perform(this);
@@ -467,7 +468,7 @@ public class ButtonYio implements SliderParentElement, UiChildrenHolder {
     }
 
 
-    public void onPause() {
+    public void onAppPause() {
         if (ignorePauseResume) return;
 
         if (textureRegion != null) {
@@ -480,7 +481,7 @@ public class ButtonYio implements SliderParentElement, UiChildrenHolder {
     }
 
 
-    public void onResume() {
+    public void onAppResume() {
         if (ignorePauseResume) return;
 
         if (hasCustomBackground()) {
