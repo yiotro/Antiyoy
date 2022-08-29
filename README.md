@@ -49,6 +49,8 @@ At this point you should have a working sample libgdx project (just a window wit
 
 To run in on android just do the same thing as with 'DekstopLauncher.java' but with 'AndroidLauncher.java'. Note: you'll also have to change 'screenOrientation' in 'AndroidManifest.xml' file (which you can also find by pressing shift few times and typing 'anman').
 
+If you want to make a mod, check out HD version. It has much better code quality. Link: https://github.com/yiotro/antiyoy_hd
+
 If you have some feedback about this game then please email me (yiotro93@gmail.com) about it.
 
 
