@@ -47,7 +47,7 @@ Now, here is how you open this project in Intellij IDEA, compile and run it:
 # Finally
 At this point you should have a working sample libgdx project (just a window with single image). Now just replace source and assets in this project with source and assets from the repo and check if it works. Final touch: go to DesktopLauncher.java and change window dimension there.
 
-To run in on android just do the same thing as with 'DekstopLauncher.java' but with 'AndroidLauncher.java'. Note: you'll also have to change 'screenOrientation' in 'AndroidManifest.xml' file (which you can also find by pressing shift few times and typing 'anman').
+To run in on android just do the same thing as with 'DeskstopLauncher.java' but with 'AndroidLauncher.java'. Note: you'll also have to change 'screenOrientation' in 'AndroidManifest.xml' file (which you can also find by pressing shift few times and typing 'anman').
 
 If you want to make a mod, check out HD version. It has much better code quality. Link: https://github.com/yiotro/antiyoy_hd
 
