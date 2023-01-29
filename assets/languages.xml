@@ -169,7 +169,7 @@
         <string key="gen_choose_to_merge" value="You can also merge units. Select the lower peasant."/>
         <string key="gen_merge_units" value="Now, when the peasant is selected, press on other peasant to merge them."/>
         <string key="gen_long_tap" value="If you have too many units you can move them all at once with long tap."/>
-        <string key="gen_several_provinces" value="You can have multiple cities, each with it's own economy."/>
+        <string key="gen_several_provinces" value="You can have multiple cities, each with its own economy."/>
 
         <!-- Tutorial help -->
         <string key="help" value="Help"/>
